@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+# Bundler dependencies
+require 'rubygems'
+require 'bundler/setup'
+
+# Setup load path for application (makes you realise RubyGems spoils you...)
+lib_path = File.expand_path(File.dirname(__FILE__)+ '/../lib')
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+require 'capture'
+
+capture = Capture.new
+
+begin
+  puts "IBUS Logger"
+  binding.pry
+rescue StandardError => e
+  puts e.message
+  exit
+rescue Interrupt
+  Signal.trap(0, proc { puts "Terminating: #{$$}" })
+end

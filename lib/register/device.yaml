@@ -1,0 +1,217 @@
+---
+0: !ruby/object:Device
+  address:
+    :h: '0x00'
+    :d: 0
+  short_name: GM3
+  long_name: Body Module
+  id: 0
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.368060000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.734183000 +10:00
+4: !ruby/object:Device
+  address:
+    :h: '0x04'
+    :d: 4
+  short_name: Unknown
+  long_name: Unknown
+  id: 4
+  created_at: !ruby/object:DateTime 2018-08-03 23:27:03.818939000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:25.645619000 +10:00
+48: !ruby/object:Device
+  address:
+    :h: '0x30'
+    :d: 48
+  short_name: CCM
+  long_name: Check Control Module
+  id: 48
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.403841000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.719034000 +10:00
+59: !ruby/object:Device
+  address:
+    :h: '0x3B'
+    :d: 59
+  short_name: GFX
+  long_name: Navigation and Videomodule (graphics driver?)
+  id: 59
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.382607000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.731977000 +10:00
+63: !ruby/object:Device
+  address:
+    :h: 3F
+    :d: 63
+  short_name: DIA
+  long_name: Diagnostics
+  id: 63
+  created_at: !ruby/object:DateTime 2018-07-31 14:25:16.816978000 +10:00
+  updated_at: !ruby/object:DateTime 2018-07-31 14:34:10.849982000 +10:00
+68: !ruby/object:Device
+  address:
+    :h: '0x44'
+    :d: 68
+  short_name: EWS
+  long_name: Immobilizer
+  id: 68
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:32.949247000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.718413000 +10:00
+80: !ruby/object:Device
+  address:
+    :h: '0x50'
+    :d: 80
+  short_name: MFL
+  long_name: Steering Wheel Buttons
+  id: 80
+  created_at: !ruby/object:DateTime 2018-07-31 12:20:47.324661000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.409004000 +10:00
+91: !ruby/object:Device
+  address:
+    :h: '0x5B'
+    :d: 91
+  short_name: IHK
+  long_name: Integrated Heating and Air Conditioning
+  id: 91
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.414679000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.635069000 +10:00
+96: !ruby/object:Device
+  address:
+    :h: '0x60'
+    :d: 96
+  short_name: PDC
+  long_name: Park Distance Control
+  id: 96
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.439951000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.538886000 +10:00
+104: !ruby/object:Device
+  address:
+    :h: '0x68'
+    :d: 104
+  short_name: RAD
+  long_name: Radio
+  id: 104
+  created_at: !ruby/object:DateTime 2018-07-31 12:20:47.324780000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.677997000 +10:00
+106: !ruby/object:Device
+  address:
+    :h: '0x6A'
+    :d: 106
+  short_name: DSP
+  long_name: Digital Sound Processor
+  id: 106
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.412691000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:25.739655000 +10:00
+127: !ruby/object:Device
+  address:
+    :h: '0x7F'
+    :d: 127
+  short_name: NAV-EU
+  long_name: Navigation (Europe)
+  id: 127
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.414432000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.635099000 +10:00
+128: !ruby/object:Device
+  address:
+    :h: '0x80'
+    :d: 128
+  short_name: IKE
+  long_name: Instrument Cluster
+  id: 128
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.390976000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.732673000 +10:00
+154: !ruby/object:Device
+  address:
+    :h: 9A
+    :d: 154
+  short_name: '0x9A'
+  long_name: Unknown
+  id: 154
+  created_at: !ruby/object:DateTime 2018-07-31 14:34:09.933343000 +10:00
+  updated_at: !ruby/object:DateTime 2018-07-31 14:34:10.850054000 +10:00
+172: !ruby/object:Device
+  address:
+    :h: '0xAC'
+    :d: 172
+  short_name: EHC
+  long_name: Air Suspension System
+  id: 172
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.450643000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:25.681397000 +10:00
+187: !ruby/object:Device
+  address:
+    :h: '0xBB'
+    :d: 187
+  short_name: TBC
+  long_name: TV/Navigation (Japan)
+  id: 187
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.449942000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.725983000 +10:00
+191: !ruby/object:Device
+  address:
+    :h: BF
+    :d: 191
+  short_name: GLO-L
+  long_name: Global Broadcast (relay) (lower priority broadcast?)
+  id: 191
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.368285000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.734211000 +10:00
+200: !ruby/object:Device
+  address:
+    :h: '0xC8'
+    :d: 200
+  short_name: TEL
+  long_name: Telephone
+  id: 200
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.414232000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.674058000 +10:00
+208: !ruby/object:Device
+  address:
+    :h: '0xD0'
+    :d: 208
+  short_name: LCM
+  long_name: Light Control Module
+  id: 208
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.402236000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.705394000 +10:00
+224: !ruby/object:Device
+  address:
+    :h: E0
+    :d: 224
+  short_name: '0xE0'
+  long_name: Unknown
+  id: 224
+  created_at: !ruby/object:DateTime 2018-07-31 14:28:06.655279000 +10:00
+  updated_at: !ruby/object:DateTime 2018-07-31 14:28:10.349842000 +10:00
+231: !ruby/object:Device
+  address:
+    :h: '0xE7'
+    :d: 231
+  short_name: ANZV
+  long_name: Cluster Text Display
+  id: 231
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:31.399564000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.728559000 +10:00
+237: !ruby/object:Device
+  address:
+    :h: '0xED'
+    :d: 237
+  short_name: TV
+  long_name: Television
+  id: 237
+  created_at: !ruby/object:DateTime 2018-07-31 12:58:53.367747000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.720271000 +10:00
+240: !ruby/object:Device
+  address:
+    :h: '0xF0'
+    :d: 240
+  short_name: BMBT
+  long_name: Onboard Monitor Buttons
+  id: 240
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:20.504948000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.714657000 +10:00
+255: !ruby/object:Device
+  address:
+    :h: '0xFF'
+    :d: 255
+  short_name: GLO-H
+  long_name: Global Broadcast
+  id: 255
+  created_at: !ruby/object:DateTime 2018-07-31 12:56:21.280829000 +10:00
+  updated_at: !ruby/object:DateTime 2018-08-03 23:36:27.719675000 +10:00
