@@ -31,6 +31,14 @@
       - each message is the same command 0xBF
       - the arguments are always 125 in length
       - the arguments are identical but it does include a string so can change
+24:
+  :id:
+    :h: '0x18'
+    :d: 24
+  :properties:
+    :short_name: CDC
+    :long_name: CD Changer
+  :klass: BaseDevice
 48:
   :id:
     :h: '0x30'
