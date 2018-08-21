@@ -1,0 +1,239 @@
+---
+0:
+  :id:
+    :h: '0x00'
+    :d: 0
+    :b: 0
+  :properties:
+    :short_name: GM3
+    :long_name: Body Module
+  :klass: BaseDevice
+  :meta:
+    :commands:
+      - 0x00 DIA
+      - 0x02 PONG
+      - 0x72 ???
+      - 0x7A DOOR
+      - 0x78 ???
+4:
+  :id:
+    :h: '0x04'
+    :d: 4
+    :b: '0b00000100'
+  :properties:
+    :short_name: '0x04'
+    :long_name: Unknown
+  :klass: BaseDevice
+  :meta:
+    :notes:
+      - only sent messages by LCM
+      - 85 in total between all logs to date (16/8/2018)
+      - each message is the same command 0xBF
+      - the arguments are always 125 in length
+      - the arguments are identical but it does include a string so can change
+48:
+  :id:
+    :h: '0x30'
+    :d: 48
+  :properties:
+    :short_name: CCM
+    :long_name: Check Control Module
+  :klass: BaseDevice
+59:
+  :id:
+    :h: '0x3B'
+    :d: 59
+  :properties:
+    :short_name: GFX
+    :long_name: Navigation and Videomodule (graphics driver?)
+  :klass: BaseDevice
+63:
+  :id:
+    :h: 3F
+    :d: 63
+  :properties:
+    :short_name: DIA
+    :long_name: Diagnostics
+  :klass: BaseDevice
+68:
+  :id:
+    :h: '0x44'
+    :d: 68
+  :properties:
+    :short_name: EWS
+    :long_name: Immobilizer
+  :klass: BaseDevice
+80:
+  :id:
+    :h: '0x50'
+    :d: 80
+  :properties:
+    :short_name: MFL
+    :long_name: Steering Wheel Buttons
+  :klass: BaseDevice
+91:
+  :id:
+    :h: '0x5B'
+    :d: 91
+  :properties:
+    :short_name: IHK
+    :long_name: Integrated Heating and Air Conditioning
+  :klass: BaseDevice
+96:
+  :id:
+    :h: '0x60'
+    :d: 96
+  :properties:
+    :short_name: PDC
+    :long_name: Park Distance Control
+  :klass: BaseDevice
+101:
+  :id:
+    :h: '0x65'
+    :d: 101
+  :properties:
+    :short_name: '???'
+    :long_name: Unknown
+  :klass: BaseDevice
+104:
+  :id:
+    :h: '0x68'
+    :d: 104
+  :properties:
+    :short_name: RAD
+    :long_name: Radio
+  :klass: BaseDevice
+106:
+  :id:
+    :h: '0x6A'
+    :d: 106
+  :properties:
+    :short_name: DSP
+    :long_name: Digital Sound Processor
+  :klass: BaseDevice
+127:
+  :id:
+    :h: '0x7F'
+    :d: 127
+  :properties:
+    :short_name: NAV-EU
+    :long_name: Navigation (Europe)
+  :klass: BaseDevice
+  :meta:
+    :desc: I believe EU may refer to the build type which also includes US and JP.
+128:
+  :id:
+    :h: '0x80'
+    :d: 128
+  :properties:
+    :short_name: IKE
+    :long_name: Instrument Cluster
+  :klass: BaseDevice
+  :meta:
+    :commands:
+      :sender:
+        - 0x11
+        - 0x18
+        - 0x17
+        - 0x19
+154:
+  :id:
+    :h: '0x9A'
+    :d: 154
+  :properties:
+    :short_name: '0x9A'
+    :long_name: Unknown
+  :klass: BaseDevice
+  :meta:
+    :notes:
+      - this address has only received messages from DIA, command 0x00?
+      - it has never been a message source
+      - i suspect it's being pinged for presence
+172:
+  :id:
+    :h: '0xAC'
+    :d: 172
+  :properties:
+    :short_name: EHC
+    :long_name: Air Suspension System
+  :klass: BaseDevice
+187:
+  :id:
+    :h: '0xBB'
+    :d: 187
+  :properties:
+    :short_name: NAV-JP
+    :long_name: TV/Navigation (Japan)
+  :klass: BaseDevice
+  :meta:
+    :notes:
+      - has only recived 0x4F from GFX
+      - no messages originating
+191:
+  :id:
+    :h: BF
+    :d: 191
+  :properties:
+    :short_name: GLO-L
+    :long_name: Global Broadcast (relay) (lower priority broadcast?)
+  :klass: BaseDevice
+200:
+  :id:
+    :h: '0xC8'
+    :d: 200
+  :properties:
+    :short_name: TEL
+    :long_name: Telephone
+  :klass: BaseDevice
+208:
+  :id:
+    :h: '0xD0'
+    :d: 208
+  :properties:
+    :short_name: LCM
+    :long_name: Light Control Module
+  :klass: BaseDevice
+  :meta:
+    :commands:
+      sender:
+        - 0x76
+224:
+  :id:
+    :h: E0
+    :d: 224
+  :properties:
+    :short_name: '0xE0'
+    :long_name: Unknown
+  :klass: BaseDevice
+231:
+  :id:
+    :h: '0xE7'
+    :d: 231
+  :properties:
+    :short_name: ANZV
+    :long_name: Cluster Text Display
+  :klass: BaseDevice
+237:
+  :id:
+    :h: '0xED'
+    :d: 237
+  :properties:
+    :short_name: TV
+    :long_name: Television
+  :klass: BaseDevice
+240:
+  :id:
+    :h: '0xF0'
+    :d: 240
+  :properties:
+    :short_name: BMBT
+    :long_name: Onboard Monitor Buttons
+  :klass: BaseDevice
+255:
+  :id:
+    :h: '0xFF'
+    :d: 255
+  :properties:
+    :short_name: GLO-H
+    :long_name: Global Broadcast
+  :klass: BaseDevice

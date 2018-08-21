@@ -1,0 +1,1452 @@
+---
+0:
+  :id:
+    :h: '0x00'
+    :d: 0
+    :b: 0
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - DIA
+      - GM (0x00)
+    :recipients:
+      - GM3 (0x00)
+      - TEL (0xC8)
+      - BMBT (0xF0)
+      - LCM (0xD0)
+      - MFL (0x50)
+      - GFX (0x3B)
+      - TV (0xED)
+      - 0xE0 (0xE0)
+      - RAD (0x68)
+      - PDC (0x60)
+      - 0x9A (0x9A)
+    :notes:
+      - does not include any arguemnts (based on activity to date)
+1:
+  :id:
+    :h: '0x01'
+    :d: 1
+    :b: 1
+  :properties:
+    :short_name: PING
+    :long_name: Status Request
+    :verbose: false
+  :klass: BaseCommand
+2:
+  :id:
+    :h: '0x02'
+    :d: 2
+    :b: 8
+  :properties:
+    :short_name: PONG
+    :long_name: Status Response
+    :verbose: false
+    :status_map:
+      0x00: 'Respond'
+      0x01: 'Announce'
+      0x40: 'Alt 0'
+      0x41: 'Alt 1'
+  :klass: Pong
+  :meta:
+    :desc: ''
+    :recipients:
+      0xFF: GLO-H
+      0xBF: GLO-L
+    :audience:
+      0x80: IKE
+      0x3B: GFX
+    :notes:
+      - after reset (KL15) devices will announce (0x01):
+        - 13:53:15 [INFO ] RAD	GLO-H	PONG	Announce
+        - 13:53:16 [INFO ] TEL	GLO-H	PONG	Announce
+        - 13:53:16 [INFO ] BMBT	GLO-L	PONG	Announce
+      - PONG is always broadcast, not addressed to a single module:
+        - "`MessageHandler.i.command(2).recipients => [FF, BF]`"
+        - 13:53:25 [INFO ] BMBT	RAD      PING	--
+        - 13:53:25 [INFO ] RAD	GLO-H	   PONG	Respond
+        - 14:01:06 [INFO ] GFX	IKE      PING	--
+        - 14:01:06 [INFO ] IKE	GLO-L    PONG	Respond
+      - RAD looks for accessories:
+        - 13:53:17 [INFO ] RAD	DSP	PING	--
+      - BMBT looks for accessories (note ACK to GLO-H):
+        - 13:53:25 [INFO ] BMBT	RAD	  PING	--
+        - 13:53:25 [INFO ] RAD	GLO-H	PONG	Respond
+      - BMBT will continue to PING all devices every 10 seconds:
+      - GFX only awake on KL30 (makes sense given screen is off at KL15)
+      - GFX looks for IKE?:
+        - 14:01:06 [INFO ] GFX	IKE	PING	--
+      - GFX looks for accessories (akin to RAD):
+        - DSP:
+          - 14:01:06 [INFO ] GFX	DSP	PING	--
+        - TEL:
+          - 14:01:06 [INFO ] GFX	TEL	PING	--
+          - 14:01:06 [INFO ] TEL	GLO-H	PONG	Respond
+      - Retry for no PONG:
+        - 14:01:06 [INFO ] GFX	DSP	PING	--
+        - 14:01:17 [INFO ] GFX	DSP	PING	--
+      - KBUS:
+        - PDC announces on KL30:
+          - 14:01:07 [INFO ] PDC	GLO-L	PONG	Announce
+        - GM doesn't seem to respond to a PING? (KL15):
+          - 13:56:36 [INFO ] GM3	GLO-L	PONG	Respond
+          - 14:00:04 [INFO ] GM3	GLO-L	PONG	Respond
+      - '0x40 and 0x41':
+        - GFX is the only device to use these variants
+        - it's always sent to GLO-L
+        - the lowest bit useage is consistent with 0x00/0x01:
+          - KL30:
+            - GM3   GLO-L PONG 00 (KBUS)
+            - BMBT  GLO-L PONG 01 (reset)
+            - TV    GLO-H PONG 01 (reset)
+            - GFX   GLO-L PONG 41 (reset)
+            - RAD   GLO-H PONG 01 (reset)
+            - TEL   GLO-H PONG 01 (reset)
+            - BMBT  GLO-L PONG 01 (reset)
+            - CCM   GLO-L PONG 00
+            - GFX   GLO-L PONG 40
+            - IKE   GLO-L PONG 00
+            - TEL   GLO-H PONG 00
+            - PDC   GLO-L PONG 01 (KBUS)
+            - RAD   GLO-H PONG 00
+          - 'Normal operation':
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - GM3 GLO-L PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - GFX GLO-L PONG 40,
+    :examples:
+      - BMBT  RAD	  PING	--
+      - RAD	  GLO-H	PONG	Respond
+3:
+  :id:
+    :d: 3
+    :h: '0x03'
+  :properties:
+    :short_name: B-PING
+    :long_name: BUS Status Request
+  :klass: BaseCommand
+4:
+  :id:
+    :d: 4
+    :h: '0x04'
+  :properties:
+    :short_name: B-PONG
+    :long_name: BUS Status Reponse
+  :klass: BaseCommand
+5:
+  :id:
+    :d: 5
+    :h: '0x05'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+6:
+  :id:
+    :d: 6
+    :h: '0x06'
+  :properties:
+    :short_name: DIA-R
+    :long_name: Diagnostics Read Memory
+  :klass: BaseCommand
+7:
+  :id:
+    :d: 7
+    :h: '0x07'
+  :properties:
+    :short_name: DIA-W
+    :long_name: Diagnostics Write Memory
+  :klass: BaseCommand
+8:
+  :id:
+    :d: 8
+    :h: '0x08'
+  :properties:
+    :short_name: COD-R
+    :long_name: Diagnostics READ Coding Data
+  :klass: BaseCommand
+9:
+  :id:
+    :d: 9
+    :h: '0x09'
+  :properties:
+    :short_name: COD-R
+    :long_name: Diagnostics WRITE Coding Data
+  :klass: BaseCommand
+10:
+  :id:
+    :d: 10
+    :h: '0x0A'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+11:
+  :id:
+    :d: 11
+    :h: '0x0B'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+12:
+  :id:
+    :d: 12
+    :h: '0x0C'
+  :properties:
+    :short_name: VEH
+    :long_name: Vehicle Control
+  :klass: BaseCommand
+13:
+  :id:
+    :d: 13
+    :h: '0x0D'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+14:
+  :id:
+    :d: 14
+    :h: '0x0E'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+15:
+  :id:
+    :d: 15
+    :h: '0x0F'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+16:
+  :id:
+    :d: 16
+    :h: '0x10'
+  :properties:
+    :short_name: IGN-REQ
+    :long_name: Ignition Status Request
+  :klass: BaseCommand
+17:
+  :id:
+    :d: 17
+    :h: '0x11'
+  :properties:
+    :short_name: IGN
+    :long_name: Ignition Status Response
+    :ignition:
+      # KL 0 = OFF (ignition off position)
+      # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
+      # KL 15 = ignition position 2 ("accessory" - all electronics & modules re powered)
+      # KL 50 = ignition start position
+      # KL 30 = ignition position 3 (where the ignition defauts after starting the engine)
+      0b0: Off (Position I)
+      0b1: KLR
+      0b11: KL15 (Position II)
+      0b111: KL50
+  :klass: Ignition
+  :meta:
+    :senders:
+      - IKE
+    :examples:
+      - 0b00000000
+      - 0b00000011
+      - 0b00000111
+18:
+  :id:
+    :d: 18
+    :h: '0x12'
+  :properties:
+    :short_name: IKE-SEN-REQ
+    :long_name: IKE Sensor Status REQ
+  :klass: BaseCommand
+19:
+  :id:
+    :d: 19
+    :h: '0x13'
+  :properties:
+    :short_name: IKE-SEN-ACK
+    :long_name: IKE Sensor Status ACK
+  :klass: BaseCommand
+20:
+  :id:
+    :d: 20
+    :h: '0x14'
+  :properties:
+    :short_name: COD-CN-REQ
+    :long_name: Country Coding Status Request
+  :klass: BaseCommand
+21:
+  :id:
+    :d: 21
+    :h: '0x15'
+  :properties:
+    :short_name: COD-CN-RES
+    :long_name: Country Coding Status Resonse
+  :klass: BaseCommand
+22:
+  :id:
+    :d: 22
+    :h: '0x16'
+  :properties:
+    :short_name: ODO-REQ
+    :long_name: Odometer Request
+  :klass: BaseCommand
+23:
+  :id:
+    :d: 23
+    :h: '0x17'
+  :properties:
+    :short_name: ODO-RES
+    :long_name: Odometer Response
+  :klass: BaseCommand
+  :meta:
+      :senders:
+        - IKE
+24:
+  :id:
+    :d: 24
+    :h: '0x18'
+  :properties:
+    :short_name: SPD
+    :long_name: Speed & RPM
+  :klass: Speed
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L (0xBF)
+    :notes:
+      - all messages with argument length of 2
+      - :examples:
+        - 00 00
+        - 00 0C
+        - 00 0B
+        - 00 09
+        - 00 08
+        - 00 07
+        - 02 08
+        - 05 08
+        - 06 09
+        - 05 0D
+        - 07 0E
+        - 08 10
+        - 08 11
+        - 09 0D
+        - 0A 0A
+        - 07 09
+        - 06 08
+        - 06 0B
+        - 05 0E
+        - 07 10
+        - 08 12
+        - 0B 10
+        - 0C 10
+        - 0D 10
+        - 0C 15
+        - 11 17
+        - 14 11
+        - 13 0F
+        - 12 0E
+        - 11 0E
+        - 0D 11
+        - 12 11
+        - 15 11
+        - 16 13
+        - 18 14
+        - 14 13
+        - 16 0E
+        - 17 13
+        - 14 17
+        - 16 18
+        - 13 29
+        - 17 19
+        - 18 1A
+        - 17 16
+        - 14 2B
+        - 1B 1C
+        - 1B 1B
+        - 19 18
+        - 1A 15
+        - 19 1C
+        - 1C 1F
+        - 1D 16
+        - 1B 1F
+        - 1A 1A
+        - 1E 1F
+        - 1C 1C
+        - 19 33
+        - 1D 1C
+        - 1E 20
+        - 14 2D
+        - 00 06
+        - 16 2E
+        - 15 2D
+25:
+  :id:
+    :d: 25
+    :h: '0x19'
+  :properties:
+    :short_name: TEMP
+    :long_name: Temperature
+  :klass: Temperature
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L
+    :notes:
+      -  m.command(25).length => {3=>29197}
+26:
+  :id:
+    :d: 26
+    :h: '0x1A'
+  :properties:
+    :short_name: HUD-ALRT
+    :long_name: CCM Cluster Warning
+    :verbose: true
+    :modes:
+      55: something
+    :controls:
+      15: i don't know
+  :klass: CCMDisplay
+27:
+  :id:
+    :d: 27
+    :h: '0x1B'
+  :properties:
+    :short_name: HUD-STATUS
+    :long_name: IKE Text Status
+  :klass: BaseCommand
+28:
+  :id:
+    :d: 28
+    :h: '0x1C'
+  :properties:
+    :short_name: HUD-GONG
+    :long_name: IKE Cluster Gong
+  :klass: BaseCommand
+29:
+  :id:
+    :d: 29
+    :h: '0x1D'
+  :properties:
+    :short_name: TEMP-REQ
+    :long_name: Temperature Request
+  :klass: BaseCommand
+30:
+  :id:
+    :d: 30
+    :h: '0x1E'
+  :properties:
+    :short_name: "0x1E"
+    :long_name: Unknown
+  :klass: BaseCommand
+31:
+  :id:
+    :d: 31
+    :h: '0x1F'
+  :properties:
+    :short_name: '0x1F'
+    :long_name: UTC time and date
+  :klass: BaseCommand
+32:
+  :id:
+    :d: 32
+    :h: '0x20'
+  :properties:
+    :short_name: '0x20'
+    :long_name: Unknown
+  :klass: BaseCommand
+33:
+  :id:
+    :d: 33
+    :h: '0x21'
+  :properties:
+    :short_name: TXT-3?
+    :long_name: Unknown
+    :verbose: false
+  :klass: BaseCommand
+34:
+  :id:
+    :d: 34
+    :h: '0x22'
+  :properties:
+    :short_name: '0x22'
+    :long_name: Unknown
+  :klass: BaseCommand
+35:
+  :id:
+    :d: 35
+    :h: '0x23'
+  :klass: MediaDisplay
+  :properties:
+    :short_name: TXT-MEDIA
+    :long_name: Update Text Display (BMBT, IKE)
+    :verbose: false
+    :sub_commands:
+      :gfx:
+        :index: 0
+        :length:
+          :fixed: true
+        :range: (0..1)
+      :ike:
+        :index: 1
+        :length:
+          :fixed: false
+          :min: 1
+          :max: 1
+        :range: (1..2)
+      :text:
+        :index: 2
+        :length: (0..14)
+        :range: (2..-1)
+    :gfx:
+      0x40: Radio Set Station
+      0x50: Radio [ST]
+      0x82: Tape (A) ▶︎
+      0x86: Tape (A) ▷▷
+      0x87: Tape (A) ◁◁
+      0x83: Tape (A) ▷▷▷
+      0x84: Tape (A) ◁◁◁
+      0x92: Tape (B) ▶︎
+      0x96: Tape (B) ▷▷
+      0x97: Tape (B) ◁◁
+      0x93: Tape (B) ▷▷▷
+      0x94: Tape (B) ◁◁◁
+      0x90: Tape ERROR!!!
+    :ike:
+      0x20: Set IKE
+      0x30: Overwrite IKE
+  :meta:
+    :desc: used to updated display with media informtion upon change. Text displayed
+      is based upon the media mode (radio, tape, CDC).
+    :recipients:
+      0xFF: GLO-H
+      0x80: IKE
+      0x3B: GFX
+    :audience:
+      0x80: IKE
+      0x3B: GFX
+    :notes:
+      - How you change the radio station affects what messages are sent
+      - Changing via MFL will send to GLO-H as the message is consumed by
+        multiple devices (GFX and HUD set)
+      - Changing via BMBT will only send to GFX as the IKE display is not
+        updated.
+      - When the change is made via BMBT the message will still contain the
+        sub command for the IKE but it will always be 0x20
+      - The text sub command contains control characters of 0x04, 0x03 etc,
+        but I'm not sure what their purpose is yet.
+      - i know the GFX has multiple zones and it might denote the substrings
+        intended for each screen element
+    :examples:
+      - MFL (Next/Previous)
+      - display radio freuqnecy (with CLEAR display text being displayed)
+        - RAD	GLO-H	23	40 20	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio freuqnecy (with EXISITING text being displayed)
+        - RAD	GLO-H	23	40 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio frequency updaed \'ST\'
+        - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - clear IKE display
+      - RAD	IKE	  23	50 20
+    :logged_messages:
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 31 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 31 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 31 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 35 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 36 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 32 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 31 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 31 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 35 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 36 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 32 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 31 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 31 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 35 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 36 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 32 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 31 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 30 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  82 20 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 31 30 35 2E 31 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 36 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 32 2E 33 04 20 53 54
+      - RAD [68] > GFX [3B]  40 20 46 4D 20 03 20 39 31 2E 35 04 20 20 20
+      - RAD [68] > GFX [3B]  50 20 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > IKE [80]  40 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  82 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  82 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  82 20
+      - RAD [68] > IKE [80]  40 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  40 20
+      - RAD [68] > IKE [80]  40 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  82 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > IKE [80]  50 20
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  82 20 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  86 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 3E 20
+      - RAD [68] > GLO-H [FF]  82 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 33 2D 20 08 46 4D 20 03 31 30 30 2E 33 04
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 33 2D 20 08 46 4D 20 03 31 30 30 2E 33 04
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  82 20 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  86 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 3E 20
+      - RAD [68] > GLO-H [FF]  82 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 33 2D 20 08 46 4D 20 03 31 30 30 2E 33 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04 20 53 54
+
+      - RAD [68] > GLO-H [FF]  40 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+
+      - RAD [68] > GLO-H [FF]  82 20 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  82 20 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  86 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 3E 20
+      - RAD [68] > GLO-H [FF]  82 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  86 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 3E 20
+      - RAD [68] > GLO-H [FF]  82 30 07 20 20 20 20 20 08 54 41 50 45 20 41 20 20 20 20 20
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 33 2D 20 08 46 4D 20 03 31 30 30 2E 33 04
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 36 2D 20 08 46 4D 20 03 20 39 31 2E 35 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 20 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04
+      - RAD [68] > GLO-H [FF]  50 30 07 20 2D 34 2D 20 08 46 4D 20 03 31 30 34 2E 33 04 20 53 54
+      - RAD [68] > GLO-H [FF]  40 30 07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+36:
+  :id:
+    :d: 36
+    :h: '0x24'
+  :properties:
+    :short_name: TXT-1
+    :long_name: Display text (GFX, ANZV)
+    :verbose: true
+    :modes:
+      1: Time
+      2: Date
+      3: Outside Temperature
+      4: Consumption 1
+      5: Consumption 2
+      6: Range
+      7: Distance
+      8: Arrival
+      9: Speed Limit
+      10: Average Speed
+      12: Memo
+      13: Memo
+      14: Stopwatch
+      15: Timer 1
+      16: Timer 2
+      17: Aux Heating Off
+      18: Aux Heating On
+      19: Aux Vent. Off
+      20: Aux Vent. On
+      21: End Stellmode
+      22: Emergency Disarm
+      26: Interim Time
+      27: Aux Heat/Vent
+      31: Test Mode
+      64: botton line of Multi Info Radio
+  :klass: OBCDisplay
+37:
+  :id:
+    :d: 37
+    :h: '0x25'
+  :properties:
+    :short_name: '0x25'
+    :long_name: Unknown
+  :klass: BaseCommand
+38:
+  :id:
+    :d: 38
+    :h: '0x26'
+  :properties:
+    :short_name: "0x26"
+    :long_name: Unknown
+  :klass: BaseCommand
+39:
+  :id:
+    :d: 39
+    :h: '0x27'
+  :properties:
+    :short_name: "0x27"
+    :long_name: Unknown
+  :klass: BaseCommand
+40:
+  :id:
+    :d: 40
+    :h: '0x28'
+  :properties:
+    :short_name: "0x28"
+    :long_name: Unknown
+  :klass: BaseCommand
+41:
+  :id:
+    :d: 41
+    :h: '0x29'
+  :properties:
+    :short_name: '0x29'
+    :long_name: Unknown
+  :klass: BaseCommand
+42:
+  :id:
+    :d: 42
+    :h: '0x2A'
+  :properties:
+    :short_name: '0x2A'
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - ANZV
+    :length:
+      - always 2 bytes
+      - first byte 0x00 or 0x0B
+      - second byte 0x00
+43:
+  :id:
+    :d: 43
+    :h: '0x2B'
+  :properties:
+    :short_name: '0x2B'
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+    :length:
+      - always 1 byte
+      - 0x00 or 0x01
+44:
+  :id:
+    :d: 44
+    :h: '0x2C'
+  :properties:
+    :short_name: '0x2C'
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+    :length:
+      - always 1 byte
+      - 0x00 or 0x10
+45:
+  :id:
+    :d: 45
+    :h: '0x2D'
+  :properties:
+    :short_name: '0x2D'
+    :long_name: Unknown
+  :klass: BaseCommand
+46:
+  :id:
+    :d: 46
+    :h: '0x2E'
+  :properties:
+    :short_name: '0x2E'
+    :long_name: Unknown
+  :klass: BaseCommand
+47:
+  :id:
+    :d: 47
+    :h: '0x2F'
+  :properties:
+    :short_name: '0x2F'
+    :long_name: Unknown
+  :klass: BaseCommand
+48:
+  :id:
+    :d: 48
+    :h: '0x30'
+  :properties:
+    :short_name: '0x30'
+    :long_name: Unknown
+  :klass: BaseCommand
+49:
+  :id:
+    :d: 49
+    :h: '0x31'
+  :properties:
+    :short_name: '0x31'
+    :long_name: Unknown
+  :klass: BaseCommand
+50:
+  :id:
+    :d: 50
+    :h: '0x32'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+51:
+  :id:
+    :d: 51
+    :h: '0x33'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+52:
+  :id:
+    :d: 52
+    :h: '0x34'
+  :properties:
+    :short_name: DSP-EQ
+    :long_name: DSP EQ. Button
+  :klass: BaseCommand
+53:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+54:
+  :id:
+    :d: 54
+    :h: '0x36'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+55:
+  :id:
+    :d: 55
+    :h: '0x37'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+56:
+  :id:
+    :d: 56
+    :h: '0x38'
+  :properties:
+    :short_name: CD-REQ
+    :long_name: CD Status Request
+  :klass: BaseCommand
+57:
+  :id:
+    :d: 57
+    :h: '0x39'
+  :properties:
+    :short_name: CD-ACK
+    :long_name: CD Status
+  :klass: BaseCommand
+58:
+  :id:
+    :d: 58
+    :h: '0x3A'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+59:
+  :id:
+    :d: 59
+    :h: '0x3B'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+60:
+  :id:
+    :d: 60
+    :h: '0x3C'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+61:
+  :id:
+    :d: 61
+    :h: '0x3D'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+62:
+  :id:
+    :d: 62
+    :h: '0x3E'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+63:
+  :id:
+    :d: 63
+    :h: '0x3F'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+64:
+  :id:
+    :d: 64
+    :h: '0x40'
+  :properties:
+    :short_name: OBC-Set
+    :long_name: Set OBC Data
+  :klass: BaseCommand
+65:
+  :id:
+    :d: 65
+    :h: '0x41'
+  :properties:
+    :short_name: "???"
+    :long_name: OBC Data Request
+  :klass: BaseCommand
+66:
+  :id:
+    :d: 66
+    :h: '0x42'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+67:
+  :id:
+    :d: 67
+    :h: '0x43'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+68:
+  :id:
+    :d: 68
+    :h: '0x44'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+69:
+  :id:
+    :d: 69
+    :h: '0x45'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+70:
+  :id:
+    :d: 70
+    :h: '0x46'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+71:
+  :id:
+    :d: 71
+    :h: '0x47'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+72:
+  :id:
+    :d: 72
+    :h: '0x48'
+  :properties:
+    :short_name: BMBT-BT-1
+    :long_name: BMBT Buttons
+  :klass: BaseCommand
+73:
+  :id:
+    :d: 73
+    :h: '0x49'
+  :properties:
+    :short_name: BMBT-BT-2
+    :long_name: BMBT Buttons
+  :klass: BaseCommand
+74:
+  :id:
+    :d: 74
+    :h: '0x4A'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+75:
+  :id:
+    :d: 75
+    :h: '0x4B'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+76:
+  :id:
+    :d: 76
+    :h: '0x4C'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+77:
+  :id:
+    :d: 77
+    :h: '0x4D'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+78:
+  :id:
+    :d: 78
+    :h: '0x4E'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+79:
+  :id:
+    :d: 79
+    :h: '0x4F'
+  :properties:
+    :short_name: RGB-C
+    :long_name: RBG controls
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - GFX (0x3B)
+    :recipients:
+      - NAV-JP (0xBB)
+      - BMBT (0xF0)
+80:
+  :id:
+    :d: 80
+    :h: '0x50'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+81:
+  :id:
+    :d: 81
+    :h: '0x51'
+  :properties:
+    :short_name: '0x51'
+    :long_name: Unknown
+  :klass: BaseCommand
+82:
+  :id:
+    :d: 82
+    :h: '0x52'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+83:
+  :id:
+    :d: 83
+    :h: '0x53'
+  :properties:
+    :short_name: VEH-REQ
+    :long_name: Vehicle Status Request
+  :klass: BaseCommand
+84:
+  :id:
+    :d: 84
+    :h: '0x54'
+  :properties:
+    :short_name: VEH
+    :long_name: Vehicle Status
+  :klass: BaseCommand
+85:
+  :id:
+    :d: 85
+    :h: '0x55'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+86:
+  :id:
+    :d: 86
+    :h: '0x56'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+87:
+  :id:
+    :d: 87
+    :h: '0x57'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+88:
+  :id:
+    :d: 88
+    :h: '0x58'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+89:
+  :id:
+    :d: 89
+    :h: '0x59'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+90:
+  :id:
+    :d: 90
+    :h: '0x5A'
+  :properties:
+    :short_name: LAMP-REQ
+    :long_name: Lamp Status Request
+  :klass: BaseCommand
+91:
+  :id:
+    :d: 91
+    :h: '0x5B'
+  :properties:
+    :short_name: LAMP
+    :long_name: Lamp Status
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - argument length is always 4 bytes
+      - 0:
+        - 0x00
+        - 0x01
+        - 0x03
+        - 0x23
+        - 0x43
+        - 0x21
+        - 0x07
+        - 0x63
+        - 0x0B
+        - 0x13
+        - 0x09
+        - 0x1B
+        - 0x20
+        - 0x40
+        - 0x04
+      - 1:
+        - 0x00
+      - 2:
+        - 0x00
+        - 0x04
+      - 3:
+        - 0x00
+        - 0x40
+92:
+  :id:
+    :d: 92
+    :h: '0x5C'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+93:
+  :id:
+    :d: 93
+    :h: '0x5D'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+97:
+  :id:
+    :d: 97
+    :h: '0x61'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+
+114:
+  :id:
+    :d: 114
+    :h: '0x72'
+  :properties:
+    :short_name: GM-?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - 635 messages send to date
+115:
+  :id:
+    :d: 115
+    :h: '0x73'
+  :properties:
+    :short_name: KEY?
+    :long_name: Key Status Request
+  :klass: BaseCommand
+116:
+  :id:
+    :d: 116
+    :h: '0x74'
+  :properties:
+    :short_name: KEY
+    :long_name: Key Status
+    :state:
+      0x00: No Longer Recognised
+      0x04: Valid and/or Enabled
+      0x01: Unauthenticated (Immobilizer Renabled)
+      0x05: Authenticated (Immobilizer Disabled)
+    :key:
+      0x00: Key 1
+      0x01: Key 2
+      0x02: Key 3
+      0x03: Key 4
+      0xFF: Ignition Ring Off?
+  :klass: Key
+  :meta:
+    :senders:
+      - EWS
+    :notes:
+      - 0x05 goes to 0x01
+      - 0x04 goes to 0x00
+      - i assume there's a different state if the key is IDENTIFIED but DISABLED?
+117:
+  :id:
+    :d: 117
+    :h: '0x75'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+118:
+  :id:
+    :d: 118
+    :h: '0x76'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - LCM
+119:
+  :id:
+    :d: 119
+    :h: '0x77'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+120:
+  :id:
+    :d: 120
+    :h: '0x78'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - 504 messages sent to date
+121:
+  :id:
+    :d: 121
+    :h: '0x79'
+  :properties:
+    :short_name: DOOR-REQ
+    :long_name: Door/Flag Request Status
+  :klass: BaseCommand
+122:
+  :id:
+    :d: 122
+    :h: '0x7A'
+  :properties:
+    :short_name: DOOR
+    :long_name: Door/Flap Status
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - GM3
+    :recipients:
+      - GLO-L
+134:
+  :id:
+    :d: 134
+    :h: '0x86'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+135:
+  :id:
+    :d: 135
+    :h: '0x87'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+156:
+  :id:
+    :d: 156
+    :h: '0x87'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :examples:
+      - DIA	LCM	9C 00
+      - DIA	LCM	9C 00
+      - DIA	RAD	9C 00
+      - DIA	RAD	9C 00
+      - DIA	RAD	9C 00
+160:
+  :id:
+    :d: 160
+    :h: '0xA0'
+  :properties:
+    :short_name: DIA-D
+    :long_name: Diagnostics Data
+  :klass: BaseCommand
+161:
+  :id:
+    :d: 161
+    :h: '0x9C'
+  :properties:
+    :short_name: '0x9C'
+    :long_name: Unknown
+  :klass: BaseCommand
+191:
+  :id:
+    :d: 191
+    :h: '0xBF'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      0xD0: LCM
+    :recipients:
+      0x04: Unknown!
+    :notes:
+      - i've only seen it sent from LCM and exclusively to 0x04 which I haven't identified
+      - it looks to be binary data but a 20 character string is included in the message (a_message.overlay(20, 90))
+      - +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 90  | 91  | 92  | 93  | 94  | 95  | 96  | 97  | 98  | 99  | 100 | 101 | 102 | 103 | 104 | 105 | 106 | 107 | 108 | 109 |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 20  | 20  | 20  | 52  | 41  | 4E  | 47  | 45  | 20  | 20  | 32  | 37  | 20  | 4B  | 4D  | 20  | 20  | 20  | 20  | 20  |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 32  | 32  | 32  | 82  | 65  | 78  | 71  | 69  | 32  | 32  | 50  | 55  | 32  | 75  | 77  | 32  | 32  | 32  | 32  | 32  |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        |     |     |     |  R  |  A  |  N  |  G  |  E  |     |     |  2  |  7  |     |  K  |  M  |     |     |     |     |     |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
