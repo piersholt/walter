@@ -51,6 +51,19 @@ class Commands
       i.size
     end
 
+    def controls
+      control_chars = []
+      integer.map do |i|
+        case i
+        when (0..31)
+          control_chars << i
+        when (128..255)
+          control_chars << i
+        end
+      end
+      control_chars
+    end
+
     def reload!
       parse_arguments(@byte_array)
     end
