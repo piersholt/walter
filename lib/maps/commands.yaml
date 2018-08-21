@@ -474,10 +474,15 @@
     :d: 33
     :h: '0x21'
   :properties:
-    :short_name: TXT-3?
+    :short_name: TXT-MID
     :long_name: Unknown
     :verbose: false
+  :sub_command:
+    - 0x41: select station present number (1-6)? another row?
+    - 0x43: MID display? another row?
   :klass: BaseCommand
+  :meta:
+    :notes: always RAD to GFX
 34:
   :id:
     :d: 34
