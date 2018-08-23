@@ -69,7 +69,6 @@ class GlobalListener
         update_stats(FRAME_FAILED)
       when MESSAGE_RECEIVED
         update_stats(MESSAGE_RECEIVED)
-        # register(properties)
         @message_handler.add_message(properties[:message])
         @application_layer.new_message(properties[:message])
       # when MESSAGE_DISPLAY
@@ -104,20 +103,6 @@ class GlobalListener
   def update_stats(metric)
     @stats[metric] += 1
   end
-
-  # ------------------------------ REGISTER ------------------------------ #
-
-  # populate a database of devices and commands for mapping
-  # def register(properties)
-  #   LOGGER.debug("[Handler] #{self.class}#register(#{properties})")
-  #   message = properties[:message]
-  #   # LOGGER.debug("[Handler] #{self.class}#register(#{message.to_s})")
-  #   # LOGGER.debug(message)
-  #   # Device.update(message.from.id, message.from)
-  #   # Device.update(message.to.id, message.to)
-  #   message.command.add_receiver(message.to.id[:d])
-  #   Command.update(message.command.id, message.command)
-  # end
 
   # ------------------------------ FRAME ------------------------------ #
 
