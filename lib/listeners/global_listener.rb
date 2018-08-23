@@ -71,8 +71,6 @@ class GlobalListener
         update_stats(MESSAGE_RECEIVED)
         @message_handler.add_message(properties[:message])
         @application_layer.new_message(properties[:message])
-      # when MESSAGE_DISPLAY
-      #   filter_output(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
       end
@@ -200,9 +198,4 @@ class GlobalListener
     byte_log.close
     frame_log.close
   end
-
-  # ------------------------------ LOGGING ------------------------------ #
-
-  # def filter_output(message)
-  # end
 end
