@@ -15,12 +15,9 @@ module Event
   # user configuration events
   MESSAGE_DISPLAY = :message_display
 
-
-
   # APPLICATION
   STATUS_REQUEST = :thread_status_request
   EXIT = :exit
-
 
   CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE].freeze
   RECEIVER_EVENTS = [FRAME_VALIDATED, FRAME_FAILED].freeze
