@@ -21,4 +21,8 @@ class SessionHandler
   def add_message(message)
     @messages << message
   end
+
+  def update(_action, properties)
+    add_message(properties[:message])
+  end
 end

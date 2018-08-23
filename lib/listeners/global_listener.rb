@@ -68,8 +68,8 @@ class GlobalListener
         update_stats(FRAME_FAILED)
       when MESSAGE_RECEIVED
         update_stats(MESSAGE_RECEIVED)
-        @session_handler.add_message(properties[:message])
-        @display_handler.add_message(properties[:message])
+        @session_handler.update(MESSAGE_RECEIVED, properties)
+        @display_handler.update(MESSAGE_RECEIVED, properties)
         @application_layer.new_message(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")

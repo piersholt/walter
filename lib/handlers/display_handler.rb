@@ -22,6 +22,10 @@ class DisplayHandler
     filtered_output(message)
   end
 
+  def update(_action, properties)
+    filtered_output(properties[:message])
+  end
+
   # ************************************************************************* #
   #                              OUTPUT CONTROL
   # ************************************************************************* #
