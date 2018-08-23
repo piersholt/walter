@@ -888,9 +888,18 @@
     :d: 50
     :h: '0x32'
   :properties:
-    :short_name: "???"
+    :short_name: BTN-VOL
     :long_name: Unknown
-  :klass: BaseCommand
+    :state:
+      0x10: Left/Down-1
+      0x20: Left/Down-2
+      0x30: Left/Down-3
+      0x40: Left/Down-4
+      0x11: Right/Up-1
+      0x21: Right/Up-2
+      0x31: Right/Up-3
+      0x41: Right/Up-4
+  :klass: Button
 51:
   :id:
     :d: 51
@@ -960,9 +969,21 @@
     :d: 59
     :h: '0x3B'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+    :short_name: BTN-FUNC
+    :long_name: Multifunction Steering Wheel (Controls)
+    :state:
+      0x00: "R/T: Telephone"
+      0x40: "R/T: Radio"
+      0x80: "Tel: Press"
+      0x90: "Tel: Hold"
+      0xA0: "Tel: Release"
+      0x01: "Next: Press"
+      0x11: "Next: Hold"
+      0x21: "Next: Release"
+      0x08: "Prev: Press"
+      0x18: "Prev: Hold"
+      0x28: "Prev: Release"
+  :klass: Button
 60:
   :id:
     :d: 60
@@ -1064,17 +1085,99 @@
     :d: 72
     :h: '0x48'
   :properties:
-    :short_name: BMBT-BT-1
+    :short_name: BMBT-BTN-1
     :long_name: BMBT Buttons
-  :klass: BaseCommand
+    :state:
+      0x11: "[1] Press"
+      0x51: "[1] Hold"
+      0x91: "[1] Release"
+      0x01: "[2] Press"
+      0x41: "[2] Hold"
+      0x81: "[2] Release"
+      0x12: "[3] Press"
+      0x52: "[3] Hold"
+      0x92: "[3] Release"
+      0x02: "[4] Press"
+      0x42: "[4] Hold"
+      0x82: "[4] Release"
+      0x13: "[5] Press"
+      0x52: "[5] Hold"
+      0x93: "[5] Release"
+      0x03: "[6] Press"
+      0x43: "[6] Hold"
+      0x83: "[6] Release"
+      0x21: "[AM] Press"
+      0x61: "[AM] Hold"
+      0xA1: "[AM] Release"
+      0x31: "[FM] Press"
+      0x71: "[FM] Hold"
+      0xB1: "[FM] Release"
+      0x22: "[B] Press"
+      0x62: "[B] Hold"
+      0xA2: "[B] Release"
+      0x32: "[C] Press"
+      0x72: "[C] Hold"
+      0xB2: "[C] Release"
+      0x10: "[Prev] Press"
+      0x50: "[Prev] Hold"
+      0x90: "[Prev] Release"
+      0x00: "[Next] Press"
+      0x40: "[Next] Hold"
+      0x80: "[Next] Release"
+      0x20: "[Select] Press"
+      0x60: "[Select] Hold"
+      0xA0: "[Select] Release"
+      0x04: "[Tone] Press"
+      0x44: "[Tone] Hold"
+      0x84: "[Tone] Release"
+      0x30: "[Overlay] Press"
+      0x70: "[Overlay] Hold"
+      0xB0: "[Overlay] Release"
+      0x14: "[Tape Side] Press"
+      0x54: "[Tape Side] Hold"
+      0x94: "[Tape Side] Release"
+      0x06: "[Power] Press"
+      0x46: "[Power] Hold"
+      0x86: "[Power] Release"
+      0x05: "[Confirm] Press"
+      0x45: "[Confirm] Hold"
+      0x85: "[Confirm] Release"
+      0x34: "[Menu] Press"
+      0x74: "[Menu] Hold"
+      0xB4: "[Menu] Release"
+      0x07: "[Aux. Heat] Press"
+      0x08: "[TEL] Press"
+      0x48: "[TEL] Hold"
+      0x88: "[TEL] Release"
+      0x24: "[Eject] Press"
+      0x64: "[Eject] Hold"
+      0xA4: "[Eject] Release"
+  :klass: Button
 73:
   :id:
     :d: 73
     :h: '0x49'
   :properties:
-    :short_name: BMBT-BT-2
+    :short_name: BMBT-BTN-2
     :long_name: BMBT Buttons
-  :klass: BaseCommand
+    :state:
+      0x01: Left-1
+      0x02: Left-2
+      0x03: Left-3
+      0x04: Left-4
+      0x05: Left-5
+      0x06: Left-6
+      0x07: Left-7
+      0x08: Left-8
+      0x81: Right-1
+      0x82: Right-2
+      0x83: Right-3
+      0x84: Right-4
+      0x85: Right-5
+      0x86: Right-6
+      0x87: Right-7
+      0x88: Right-8
+  :klass: Button
 74:
   :id:
     :d: 74
@@ -1088,8 +1191,19 @@
     :d: 75
     :h: '0x4B'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: TPE
+    :long_name: Tape (or just mechanism)
+    :v1:
+      0x06: Mode
+    :v2:
+        0x12: Tape (1/A) ▶︎
+        0x11: Tape (2/B) ▶︎
+        0x51: Tape ▷▷
+        0x42: Tape ▷▷▷
+        0x61: Tape ◁◁
+        0x52: Tape ◁◁◁ (Guess!)
+        0xF0: ERROR!
+        0x30: Radio
   :klass: BaseCommand
 76:
   :id:

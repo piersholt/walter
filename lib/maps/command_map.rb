@@ -9,6 +9,7 @@ require 'commands/temperature'
 require 'commands/speed'
 require 'commands/ignition'
 require 'commands/key'
+require 'commands/button'
 
 require 'singleton'
 
