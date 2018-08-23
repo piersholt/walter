@@ -3,7 +3,8 @@ require 'observer'
 require 'message'
 require 'event'
 
-require 'handlers/message_handler'
+require 'handlers/display_handler'
+require 'handlers/session_handler'
 
 require 'maps/device_map'
 require 'maps/command_map'
@@ -24,7 +25,8 @@ class GlobalListener
     # TODO split out
     @stream_logging = nil
     @stats = initialize_stats
-    @message_handler = MessageHandler.instance
+    @session_handler = SessionHandler.instance
+    @display_handler = DisplayHandler.instance
 
     @device_map = DeviceMap.instance
     @command_map = CommandMap.instance
@@ -66,7 +68,8 @@ class GlobalListener
         update_stats(FRAME_FAILED)
       when MESSAGE_RECEIVED
         update_stats(MESSAGE_RECEIVED)
-        @message_handler.add_message(properties[:message])
+        @session_handler.add_message(properties[:message])
+        @display_handler.add_message(properties[:message])
         @application_layer.new_message(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
