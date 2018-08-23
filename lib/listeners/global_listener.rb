@@ -45,7 +45,7 @@ class GlobalListener
         LOGGER.warn "[Global Listener] Exiting! Reason: #{properties[:reason]}"
         LOGGER.warn "[Global Listener] Hiding display output..."
         # hide the message output as it clutters the exit log messages
-        @message_handler.hide
+        @display_handler.update(EXIT, properties)
         LOGGER.warn "[Global Listener] Closing log files..."
         close_log_files
       when BUS_ONLINE

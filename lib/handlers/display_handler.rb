@@ -2,6 +2,7 @@ require 'singleton'
 
 class DisplayHandler
   include Singleton
+  include Event
 
   def self.i
     instance
@@ -22,8 +23,13 @@ class DisplayHandler
     filtered_output(message)
   end
 
-  def update(_action, properties)
-    filtered_output(properties[:message])
+  def update(action, properties)
+    case action
+    when EXIT
+      hide
+    when MESSAGE_RECEIVED
+      filtered_output(properties[:message])
+    end
   end
 
   # ************************************************************************* #
@@ -49,6 +55,7 @@ class DisplayHandler
   def clear_filter
     @filtered_commands = populate
     @filtered_recipients = populate
+    @filtered_senders = populate
     true
   end
 
@@ -56,6 +63,13 @@ class DisplayHandler
     filtered_recipients.clear if filtered_recipients.size >= 5
     return false if filtered_recipients.include?(to_id)
     @filtered_recipients << to_id
+    true
+  end
+
+  def f_f(from_id)
+    filtered_senders.clear if filtered_senders.size >= 5
+    return false if filtered_senders.include?(from_id)
+    filtered_senders << from_id
     true
   end
 
@@ -98,9 +112,13 @@ class DisplayHandler
       c == message.to.d
     end
 
+    matches_a_sender = filtered_senders.one? do |c|
+      c == message.from.d
+    end
+
     return false unless output_enabled?
 
-    if matches_a_command && matches_a_recipient
+    if matches_a_command && matches_a_recipient && matches_a_sender
       LOGGER.info(message)
       return true
     else
@@ -114,6 +132,10 @@ class DisplayHandler
 
   def filtered_recipients
     @filtered_recipients ||= populate
+  end
+
+  def filtered_senders
+    @filtered_senders ||= populate
   end
 
   def populate
