@@ -1,5 +1,4 @@
 require 'singleton'
-require 'messages'
 
 class DisplayHandler
   include Singleton
@@ -7,28 +6,22 @@ class DisplayHandler
 
   SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
-  attr_reader :messages
-
   def self.i
     instance
   end
 
   def initialize
-    @messages = Messages.new
-    # filter_commands(17,116)
     show
   end
 
   def inspect
-    str_buffer = "<MessageHandler>"
+    str_buffer = "<DisplayHandler>"
     str_buffer.concat("\nFilters:")
     str_buffer.concat("\n\tCommands: #{filtered_commands}")
     str_buffer.concat("\n\tTo: #{filtered_recipients}")
   end
 
   def add_message(message)
-    # inspect[MESSAGE_RECEIVED] << message
-    @messages << message
     filtered_output(message)
   end
 
