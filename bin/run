@@ -43,12 +43,12 @@ LOGGER.sev_threshold=(Logger::INFO)
 #                             DISENGAGE THE LAZY!                             #
 # *************************************************************************** #
 
-require 'app'
+require 'walter'
 
 LOGGER.info("BMW I/K-BUS Interface")
 
 begin
-  app = App.new
+  app = Walter.new
   app.launch
 rescue Interrupt
   Signal.trap(0, proc { puts "Terminating: #{$$}" })

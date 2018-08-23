@@ -17,7 +17,7 @@ require 'application_layer'
 require 'listeners/global_listener'
 
 # Container
-class App
+class Walter
   include Observable
 
   attr_reader :threads
