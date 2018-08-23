@@ -25,7 +25,7 @@ class App
   def initialize
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
-    @receiver = Receiver.new(@channel)
+    @receiver = Receiver.new(@channel.input_buffer)
     @application_layer = ApplicationLayer.new
 
     @listener = GlobalListener.new(@application_layer)

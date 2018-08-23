@@ -4,8 +4,8 @@ require 'observer'
 class Receiver
   include Observable
 
-  def initialize(channel)
-    @channel = channel
+  def initialize(input_buffer)
+    @input_buffer = input_buffer
     # @log_frames = File.new("#{Time.now.strftime'%F'}.log",  'a')
     @threads = ThreadGroup.new
   end
@@ -18,7 +18,7 @@ class Receiver
   def on
     LOGGER.debug("#{self.class}#on")
     begin
-      read_thread = thread_read_buffer(@channel.input_buffer)
+      read_thread = thread_read_buffer(@input_buffer)
       @threads.add(read_thread)
     rescue StandardError => e
       LOGGER.error(e)
@@ -45,7 +45,7 @@ class Receiver
 
   def thread_read_buffer(buffer)
     Thread.new do
-      Thread.current[:name] = 'Receiver' 
+      Thread.current[:name] = 'Receiver'
       begin
         LOGGER.debug("Receiver FRAME thread starting...")
         loop do
