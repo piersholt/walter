@@ -54,11 +54,8 @@ class GlobalListener
         disable_logging
       when BYTE_RECEIVED
         update_stats(BYTE_RECEIVED)
-        # debug(BYTE_RECEIVED, properties)
         log_byte(properties[:read_byte])
       when FRAME_VALIDATED
-        # binding.pry if LOGGER.sev_threshold == Logger::DEBUG
-        # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
         update_stats(FRAME_VALIDATED)
         log_frame(properties[:frame])
         message = process_frame(properties[:frame])
@@ -137,13 +134,6 @@ class GlobalListener
     command = @command_map.find(command_id, arguments)
 
     Message.new(from, to, command, arguments)
-  end
-
-  def debug(action, properties)
-    read_byte = properties[:read_byte]
-    parsed_byte = properties[:parsed_byte]
-
-    LOGGER.debug "Channel / #{action}: #{parsed_byte}, POS: #{properties[:pos]}"
   end
 
   # ------------------------------ LOGGING ------------------------------ #
