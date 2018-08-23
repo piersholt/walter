@@ -3,9 +3,6 @@ require 'messages'
 
 class SessionHandler
   include Singleton
-  # include Event
-
-  SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
   attr_reader :messages
 
