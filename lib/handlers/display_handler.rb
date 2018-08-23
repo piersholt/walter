@@ -2,9 +2,6 @@ require 'singleton'
 
 class DisplayHandler
   include Singleton
-  # include Event
-
-  SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
   def self.i
     instance
