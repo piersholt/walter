@@ -2,14 +2,11 @@ class DataLoggingHandler
   include Singleton
   include Event
 
-  # attr_reader :messages
-
   def self.i
     instance
   end
 
   def initialize
-    @messages = Messages.new
   end
 
   def inspect

@@ -3,8 +3,11 @@ require 'messages'
 
 class SessionHandler
   include Singleton
+  include Event
 
-  attr_reader :messages
+  METRICS = [BYTE_RECEIVED, FRAME_VALIDATED, FRAME_FAILED, MESSAGE_RECEIVED]
+
+  attr_reader :messages, :stats
 
   def self.i
     instance
@@ -22,7 +25,29 @@ class SessionHandler
     @messages << message
   end
 
-  def update(_action, properties)
-    add_message(properties[:message])
+  def update(action, properties)
+    case action
+    when BYTE_RECEIVED
+      update_stats(action)
+    when FRAME_FAILED
+      update_stats(action)
+    when FRAME_VALIDATED
+      update_stats(action)
+    when MESSAGE_RECEIVED
+      update_stats(action)
+      add_message(properties[:message])
+    end
+  end
+
+  private
+
+  def stats
+    @stats ||= METRICS.map do |metric|
+      [metric, 0]
+    end.to_h
+  end
+
+  def update_stats(metric)
+    stats[metric] += 1
   end
 end

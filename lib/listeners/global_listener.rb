@@ -23,7 +23,6 @@ class GlobalListener
   def initialize(application_layer)
     # TODO split out
     @stream_logging = nil
-    @stats = initialize_stats
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
@@ -54,16 +53,12 @@ class GlobalListener
         LOGGER.warn("[Global Listener] BUS offline!")
         @data_logging_handler.update(action, properties)
       when BYTE_RECEIVED
-        update_stats(BYTE_RECEIVED)
         @data_logging_handler.update(action, properties)
       when FRAME_VALIDATED
-        update_stats(FRAME_VALIDATED)
         @data_logging_handler.update(action, properties)
         @frame_handler.update(action, properties)
       when FRAME_FAILED
-        update_stats(FRAME_FAILED)
       when MESSAGE_RECEIVED
-        update_stats(MESSAGE_RECEIVED)
         @session_handler.update(MESSAGE_RECEIVED, properties)
         @display_handler.update(MESSAGE_RECEIVED, properties)
         @application_layer.new_message(properties[:message])
@@ -82,19 +77,4 @@ class GlobalListener
   # ************************************************************************* #
   #                                  HANDLERS
   # ************************************************************************* #
-
-  # ------------------------------ STATISTICS ------------------------------ #
-
-  # TODO split out
-  METRICS = [BYTE_RECEIVED, FRAME_VALIDATED, FRAME_FAILED, MESSAGE_RECEIVED]
-
-  def initialize_stats
-    METRICS.map do |metric|
-      [metric, 0]
-    end.to_h
-  end
-
-  def update_stats(metric)
-    @stats[metric] += 1
-  end
 end
