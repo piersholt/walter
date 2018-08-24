@@ -41,7 +41,7 @@ class GlobalListener
         LOGGER.warn "[Global Listener] Exiting! Reason: #{properties[:reason]}"
         LOGGER.warn "[Global Listener] Hiding display output..."
         # hide the message output as it clutters the exit log messages
-        @display_handler.update(EXIT, properties)
+        @display_handler.update(action, properties)
         LOGGER.warn "[Global Listener] Closing log files..."
         @data_logging_handler.update(action, properties)
       when BUS_ONLINE
@@ -56,9 +56,10 @@ class GlobalListener
         @data_logging_handler.update(action, properties)
         @frame_handler.update(action, properties)
       when FRAME_FAILED
+        @session_handler.update(action, properties)
       when MESSAGE_RECEIVED
-        @session_handler.update(MESSAGE_RECEIVED, properties)
-        @display_handler.update(MESSAGE_RECEIVED, properties)
+        @session_handler.update(action, properties)
+        @display_handler.update(action, properties)
         @application_layer.new_message(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
