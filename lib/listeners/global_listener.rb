@@ -1,14 +1,12 @@
 require 'observer'
-
-require 'message'
 require 'event'
 
 require 'handlers/display_handler'
 require 'handlers/session_handler'
 require 'handlers/data_logging_handler'
+require 'handlers/frame_handler'
 
-require 'maps/device_map'
-require 'maps/command_map'
+
 
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
@@ -29,9 +27,8 @@ class GlobalListener
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
-
-    @device_map = DeviceMap.instance
-    @command_map = CommandMap.instance
+    @frame_handler = FrameHandler.instance
+    @frame_handler.add_observer(self)
 
     @application_layer = application_layer
     add_observer(self)
@@ -62,10 +59,7 @@ class GlobalListener
       when FRAME_VALIDATED
         update_stats(FRAME_VALIDATED)
         @data_logging_handler.update(action, properties)
-        message = process_frame(properties[:frame])
-
-        changed
-        notify_observers(MESSAGE_RECEIVED, message: message)
+        @frame_handler.update(action, properties)
       when FRAME_FAILED
         update_stats(FRAME_FAILED)
       when MESSAGE_RECEIVED
@@ -102,42 +96,5 @@ class GlobalListener
 
   def update_stats(metric)
     @stats[metric] += 1
-  end
-
-  # ------------------------------ FRAME ------------------------------ #
-
-  MESSAGE_COMPONENTS = [:from, :to, :command, :arguments].freeze
-  FRAME_TO_MESSAGE_MAP = {
-    from: { frame_component: :header,
-            component_index: 0 },
-    to: { frame_component: :tail,
-          component_index: 0 },
-    command: {  frame_component: :tail,
-                component_index: 1 },
-    arguments: { frame_component: :tail,
-                 component_index: 2..-2 } }.freeze
-
-  def process_frame(frame)
-    LOGGER.debug("#{self.class}#process_frame(#{frame})")
-    LOGGER.debug frame.inspect
-
-    # FRAME = HEADER, PAYLOAD, FCS
-    # MESSAGE = FROM, TO, COMMAND, ARGUMENTS
-
-    from = frame.header[0]
-    from = from.to_d
-    from = @device_map.find(from)
-
-    to = frame.tail[0]
-    to = to.to_d
-    to = @device_map.find(to)
-
-    arguments = frame.tail[2..-2]
-
-    command = frame.tail[1]
-    command_id = command.to_d
-    command = @command_map.find(command_id, arguments)
-
-    Message.new(from, to, command, arguments)
   end
 end
