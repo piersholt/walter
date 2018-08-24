@@ -5,6 +5,7 @@ require 'event'
 
 require 'handlers/display_handler'
 require 'handlers/session_handler'
+require 'handlers/data_logging_handler'
 
 require 'maps/device_map'
 require 'maps/command_map'
@@ -27,6 +28,7 @@ class GlobalListener
     @stats = initialize_stats
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
+    @data_logging_handler = DataLoggingHandler.instance
 
     @device_map = DeviceMap.instance
     @command_map = CommandMap.instance
@@ -47,19 +49,19 @@ class GlobalListener
         # hide the message output as it clutters the exit log messages
         @display_handler.update(EXIT, properties)
         LOGGER.warn "[Global Listener] Closing log files..."
-        close_log_files
+        @data_logging_handler.update(action, properties)
       when BUS_ONLINE
         LOGGER.info("[Global Listener] BUS online!")
-        enable_logging
+        @data_logging_handler.update(action, properties)
       when BUS_OFFLINE
         LOGGER.warn("[Global Listener] BUS offline!")
-        disable_logging
+        @data_logging_handler.update(action, properties)
       when BYTE_RECEIVED
         update_stats(BYTE_RECEIVED)
-        log_byte(properties[:read_byte])
+        @data_logging_handler.update(action, properties)
       when FRAME_VALIDATED
         update_stats(FRAME_VALIDATED)
-        log_frame(properties[:frame])
+        @data_logging_handler.update(action, properties)
         message = process_frame(properties[:frame])
 
         changed
@@ -137,58 +139,5 @@ class GlobalListener
     command = @command_map.find(command_id, arguments)
 
     Message.new(from, to, command, arguments)
-  end
-
-  # ------------------------------ LOGGING ------------------------------ #
-
-  def byte_log
-    @log_stream ||= ::File.new("log/#{Time.now.strftime'%F'}.bin",  'a')
-  end
-
-  def frame_log
-    @log_frames ||= ::File.new("log/#{Time.now.strftime'%F'}.log",  'a')
-  end
-
-  def log_byte(next_byte)
-    # LOGGER.debug("[Log Handler] #{self.class}#log_byte(#{Byte.new(:encoded, next_byte).to_s(true)})")
-    return false unless logging_enabled?
-    bytes_written = byte_log.write(next_byte) if logging_enabled?
-    LOGGER.debug("[Log Handler] Byte Log: #{bytes_written} bytes written.")
-  end
-
-  def log_frame(validated_frame)
-    LOGGER.debug("[Log Handler] #{self.class}#log_frame(#{validated_frame})")
-    LOGGER.debug("[Log Handler] #{self.class}#logging_enabled? => #{logging_enabled?}")
-    return false unless logging_enabled?
-    bytes_written = frame_log.write("#{validated_frame}\n") if logging_enabled?
-    LOGGER.debug("[Log Handler] Frame Log: #{bytes_written} bytes written.")
-  end
-
-  def logging_enabled?
-    if @stream_logging == false
-      return false
-    elsif @stream_logging.nil?
-      raise StandardError, 'no logging preference...'
-    elsif @stream_logging == true
-      return true
-    end
-  end
-
-  def disable_logging
-    LOGGER.warn('[Handler] STREAM logging disabled!')
-    @stream_logging = false
-  end
-
-  def enable_logging
-    LOGGER.info('[Handler] STREAM logging enabled!')
-    @stream_logging = true
-  end
-
-  def close_log_files
-    LOGGER.debug('[Log Handler] disabling logging')
-    disable_logging
-    LOGGER.warn('[Log Handler] closing log files')
-    byte_log.close
-    frame_log.close
   end
 end
