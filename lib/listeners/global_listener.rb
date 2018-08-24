@@ -21,8 +21,6 @@ class GlobalListener
   include Event
 
   def initialize(application_layer)
-    # TODO split out
-    @stream_logging = nil
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
@@ -71,10 +69,4 @@ class GlobalListener
       binding.pry
     end
   end
-
-  private
-
-  # ************************************************************************* #
-  #                                  HANDLERS
-  # ************************************************************************* #
 end
