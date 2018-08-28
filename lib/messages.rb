@@ -30,6 +30,15 @@ class Messages
     self.class.new(results)
   end
 
+  def argument(index = 0, *argument_ids)
+    raise StandardError if argument_ids.empty?
+    results = @messages.find_all do |message|
+      arguments = message.command.arguments
+      argument_ids.any? { |argument_id| argument_id == arguments[index].d }
+    end
+    self.class.new(results)
+  end
+
   def to(to_id)
     results = where(:to_id, to_id)
     self.class.new(results)
