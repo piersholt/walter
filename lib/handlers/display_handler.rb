@@ -17,6 +17,7 @@ class DisplayHandler
     str_buffer.concat("\nFilters:")
     str_buffer.concat("\n\tCommands: #{filtered_commands}")
     str_buffer.concat("\n\tTo: #{filtered_recipients}")
+    str_buffer.concat("\n\tFrom: #{filtered_senders}")
   end
 
   def add_message(message)
