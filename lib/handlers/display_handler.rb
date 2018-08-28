@@ -4,6 +4,8 @@ class DisplayHandler
   include Singleton
   include Event
 
+  NOISEY = [0x01, 0x02, 0x18, 0x19, 0x5B, 0x10, 0x11,0x21].freeze
+
   def self.i
     instance
   end
@@ -96,6 +98,10 @@ class DisplayHandler
   end
 
   # ------------------------------ FILTER: MACRO ------------------------------ #
+
+  def shutup!
+    hide_commands(*NOISEY)
+  end
 
   private
 
