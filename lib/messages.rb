@@ -26,7 +26,6 @@ class Messages
   # ************************************************************************* #
 
   def command(*command_ids)
-    LOGGER.unknown(command_ids)
     results = where(:command_id, *command_ids)
     self.class.new(results)
   end
@@ -208,7 +207,6 @@ class Messages
 
   # TODO: implement a collection class to allow chaining calls
   def where(property, *criteria)
-    LOGGER.warn(criteria)
     raise ArgumentError, 'unrecognised property' if SEARCH_PROPERTY.none? { |p| p == property }
 
     case property
