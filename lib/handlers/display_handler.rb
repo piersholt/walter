@@ -11,7 +11,7 @@ class DisplayHandler
   end
 
   def initialize
-    show
+    enable
   end
 
   def inspect
