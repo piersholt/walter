@@ -1371,9 +1371,19 @@
     :d: 92
     :h: '0x5C'
   :properties:
-    :short_name: "???"
+    :short_name: LCM-?
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :senders:
+      - LCM
+    :recipients:
+      - GLO-L
+    :sub_commands:
+      - 0XFF:
+        - 0x00
+      - 0xED:
+        - 0x00
 93:
   :id:
     :d: 93
