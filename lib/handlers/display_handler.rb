@@ -27,7 +27,7 @@ class DisplayHandler
   def update(action, properties)
     case action
     when EXIT
-      hide
+      disable
     when MESSAGE_RECEIVED
       filtered_output(properties[:message])
     end
@@ -37,11 +37,11 @@ class DisplayHandler
   #                              OUTPUT CONTROL
   # ************************************************************************* #
 
-  def hide
+  def disable
     @output_enabled = false
   end
 
-  def show
+  def enable
     @output_enabled = true
   end
 
@@ -83,6 +83,15 @@ class DisplayHandler
     filtered_commands.clear if filtered_commands.size >= 5
     return false if command_ids.any? { |c_id| @filtered_commands.include?(c_id) }
     command_ids.each { |command_id| @filtered_commands << command_id }
+    true
+  end
+
+  def h_c(*command_ids)
+    hide_commands(*command_ids)
+  end
+
+  def hide_commands(*command_ids)
+    command_ids.each { |command_id| filtered_commands.delete(command_id) }
     true
   end
 
