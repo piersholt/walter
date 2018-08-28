@@ -97,16 +97,6 @@ class DisplayHandler
 
   # ------------------------------ FILTER: MACRO ------------------------------ #
 
-  # shortcutt for seeing TXT-1 to IKE
-  # def fct(c = 35, t = 128)
-  #   f_c(c)
-  #   f_t(t)
-  # end
-
-  # def self.fc(*c_d)
-  #   c_d.each { |c_d| i.f_c(c_d) }
-  # end
-
   private
 
   # ************************************************************************* #
