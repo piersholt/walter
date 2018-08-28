@@ -1283,6 +1283,9 @@
     :short_name: VEH
     :long_name: Vehicle Status
   :klass: BaseCommand
+  :examples:
+    - "IKE   	LCM   	53        --"
+    - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
 85:
   :id:
     :d: 85
