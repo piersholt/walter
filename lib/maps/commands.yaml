@@ -466,7 +466,7 @@
     :d: 32
     :h: '0x20'
   :properties:
-    :short_name: '0x20'
+    :short_name: TEL-3?
     :long_name: Unknown
   :klass: BaseCommand
 33:
@@ -518,6 +518,9 @@
         :length: (0..14)
         :range: (2..-1)
     :gfx:
+      0x00: Telephone Screen
+      0x01: TEL-A
+      0x02: TEL-B
       0x40: Radio Set Station
       0x50: Radio [ST]
       0x82: Tape (A) ▶︎
@@ -816,24 +819,57 @@
     :d: 43
     :h: '0x2B'
   :properties:
-    :short_name: '0x2B'
+    :short_name: TEL-LED?
     :long_name: Unknown
+    :type:
+      0: off
+      1: steady
+      2: blink
+    :status:
+      0: 0 0 0
+      1: 0 1 0
+      2: 0 2 0
+      3: 0 2 0
+      4: 1 0 0
+      5: 1 1 0
+      6: 1 2 0
+      7: NULL
+      8: 2 0 0
+      9: 2 1 0
+      10: 0 0 1
+      11: 0 1 1
+      12: 0 2 1
+      13: NULL
+      14: 2 2 0
+      15: 2 2 0
+      16: 0 0 1
+      17: 0 1 1
+      18: 0 2 1
+      19: 0 2 1
+      20: 1 0 1
+      21: 1 1 1
+      22: 1 2 1
+      23: 1 2 1
+      24: 2 0 1
+      25: 2 1 1
+
   :klass: BaseCommand
   :meta:
     :senders:
       - TEL
     :recipients:
       - ANZV
-    :length:
-      - always 1 byte
-      - 0x00 or 0x01
 44:
   :id:
     :d: 44
     :h: '0x2C'
   :properties:
-    :short_name: '0x2C'
+    :short_name: TEL-AUDIO
     :long_name: Unknown
+    :status:
+      0x10: Main Menu
+      0x13: unknown?
+      0x12: unknown?
   :klass: BaseCommand
   :meta:
     :senders:
@@ -880,9 +916,15 @@
     :d: 49
     :h: '0x31'
   :properties:
-    :short_name: '0x31'
+    :short_name: TEL-SOS?
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :examples:
+      - 17:43:00 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
+      - 17:43:01 [INFO ] GFX   	TEL   	0x31      	00 05 08
+      - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
+      - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 50:
   :id:
     :d: 50
@@ -1191,19 +1233,21 @@
     :d: 75
     :h: '0x4B'
   :properties:
-    :short_name: TPE
+    :short_name: AUDIO
     :long_name: Tape (or just mechanism)
     :v1:
       0x06: Mode
     :v2:
-        0x12: Tape (1/A) ▶︎
-        0x11: Tape (2/B) ▶︎
-        0x51: Tape ▷▷
-        0x42: Tape ▷▷▷
-        0x61: Tape ◁◁
-        0x52: Tape ◁◁◁ (Guess!)
+        0x12: Tape / (1/A) ▶︎
+        0x11: Tape / (2/B) ▶︎
+        0x51: Tape / ▷▷
+        0x42: Tape / ▷▷▷
+        0x61: Tape / ◁◁
+        0x52: Tape / ◁◁◁ (Guess!)
+
+        0x30: RADIO /
+
         0xF0: ERROR!
-        0x30: Radio
   :klass: BaseCommand
 76:
   :id:
