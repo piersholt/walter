@@ -60,17 +60,17 @@ class DisplayHandler
     true
   end
 
-  def f_t(to_id)
+  def f_t(*to_ids)
     filtered_recipients.clear if filtered_recipients.size >= 5
-    return false if filtered_recipients.include?(to_id)
-    @filtered_recipients << to_id
+    return false if filtered_recipients.any?  { |t_id| @filtered_recipients.include?(t_id) }
+    to_ids.each { |t_id| @filtered_recipients << t_id }
     true
   end
 
-  def f_f(from_id)
+  def f_f(*from_ids)
     filtered_senders.clear if filtered_senders.size >= 5
-    return false if filtered_senders.include?(from_id)
-    filtered_senders << from_id
+    return false if filtered_senders.any? { |f_id| @filtered_senders.include?(f_id) }
+    from_ids.each { |f_id| @filtered_senders << f_id  }
     true
   end
 
