@@ -14,7 +14,7 @@
 
 #### Behaviour/Functionality
   - calls
-    - when a call is received, it must interupt/take priority over system
+    - when a call is received, it must interrupt/take priority over system
   - handsfree
     - initiating while the handset is still in place means handsfree is default
     - picking up the receiver with switch handsfree off
@@ -56,57 +56,60 @@ While middleware maps commands between the external phone connected via Bluetoot
 
     17:59:16 [INFO ] BMBT  	GLO-H 	BMBT-BTN-1	[TEL] Press
 
-    17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"☐☐"
-    17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-02 | 00	"☐"
+    17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-A | --	"C7 C8"
+    17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-B | --	"C6"
+    17:59:16 [INFO ] TEL   	ANZV  	2C          13
 
-    17:59:16 [INFO ] TEL   	ANZV  	TEL-?-1   	13
-    17:59:16 [INFO ] BMBT  	RAD   	TAPE      	06 E2
-    17:59:16 [INFO ] RAD   	BMBT  	???       	48
-    17:59:16 [INFO ] BMBT  	RAD   	TAPE      	06 30
+    17:59:16 [INFO ] BMBT  	RAD   	SND-CTL?    06 E2
+    17:59:16 [INFO ] RAD   	BMBT  	4A       	  48
+    17:59:16 [INFO ] BMBT  	RAD   	SND-CTL?    06 30
 
-    # End call?
+    # End call
 
-    17:59:17 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"  "
+    17:59:17 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-A | --	"20 20"
+    17:59:17 [INFO ] TEL   	ANZV  	2C   	      12
 
-    17:59:17 [INFO ] TEL   	ANZV  	TEL-?-1   	12
+    17:59:17 [INFO ] BMBT  	RAD   	SND-CTL?    06 E1
+    17:59:17 [INFO ] RAD   	BMBT  	4A          48
+    17:59:17 [INFO ] BMBT  	RAD   	SND-CTL?    06 30
+    17:59:17 [INFO ] RAD   	BMBT  	4A          48
+    17:59:17 [INFO ] BMBT  	RAD   	SND-CTL?    06 30
 
-    17:59:17 [INFO ] BMBT  	RAD   	TAPE      	06 E1
-    17:59:17 [INFO ] RAD   	BMBT  	???       	48
-
-    17:59:17 [INFO ] BMBT  	RAD   	TAPE      	06 30
-    17:59:17 [INFO ] RAD   	BMBT  	???       	48
-
-    17:59:17 [INFO ] BMBT  	RAD   	TAPE      	06 30
-
-    17:59:26 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-02 | 00	" "
+    17:59:26 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-B | --	"20"
 
 ### Make A Call 2
 
     # Start call
+
     18:04:25 [INFO ] MFL   	TEL   	BTN-FUNC  	Tel: Press
 
-    18:04:25 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"☐☐"
-    18:04:25 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-02 | 00	"☐"
+    18:04:25 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-A | --	"C7 C8"
+    18:04:25 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-B | --	"C6"
+    18:04:25 [INFO ] TEL   	ANZV  	2C          13    
 
-    18:04:25 [INFO ] TEL   	ANZV  	TEL-?-1   	13
-    18:04:25 [INFO ] BMBT  	RAD   	TAPE      	06 E2
-    18:04:25 [INFO ] TEL   	ANZV  	TEL-?-1   	13
-    18:04:25 [INFO ] BMBT  	RAD   	TAPE      	06 E2
-    18:04:25 [INFO ] RAD   	BMBT  	???       	48
+    18:04:25 [INFO ] BMBT  	RAD   	SND-CTL?    06 E2  
+    18:04:25 [INFO ] RAD   	BMBT  	4A          48
+    18:04:25 [INFO ] BMBT  	RAD   	SND-CTL?    06 30
 
-    18:04:25 [INFO ] BMBT  	RAD   	TAPE      	06 30
-
-    # HUGE DELAY: LEDs stay on, no change to display.
-
+    # End call
     # the light goes off before the icon changes..?
-    18:04:42 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"  "
 
-    18:04:42 [INFO ] TEL   	ANZV  	TEL-?-1   	12
-    18:04:42 [INFO ] BMBT  	RAD   	TAPE      	06 E1
-    18:04:43 [INFO ] RAD   	BMBT  	???       	48
-    18:04:43 [INFO ] BMBT  	RAD   	TAPE      	06 30
+    18:04:42 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-A | --	"  "
+    18:04:42 [INFO ] TEL   	ANZV  	2C   	12
+
+    18:04:42 [INFO ] BMBT  	RAD   	SND-CTL?    06 E1
+    18:04:43 [INFO ] RAD   	BMBT  	4A          48
+    18:04:43 [INFO ] BMBT  	RAD   	SND-CTL?    06 30
     --
-    18:04:51 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-02 | 00	" "
+    18:04:51 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-B | --	" "
+
+
+
+    # it's interesting how 2C 13 is sent twice, means SND-CTL? is also sent twice..
+    # 18:04:25 [INFO ] TEL   	ANZV  	2C          13    
+    # 18:04:25 [INFO ] BMBT  	RAD   	SND-CTL?    06 E2
+    # 18:04:25 [INFO ] TEL   	ANZV  	2C          13
+    # 18:04:25 [INFO ] BMBT  	RAD   	SND-CTL?    06 E2  
 
 
 

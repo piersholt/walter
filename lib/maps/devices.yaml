@@ -219,8 +219,11 @@
     :d: 231
   :properties:
     :short_name: ANZV
-    :long_name: Cluster Text Display
+    :long_name: On Board Computer Display
   :klass: BaseDevice
+  :meta:
+    :notes:
+      - telephone related commands are also sent to this device...?
 237:
   :id:
     :h: '0xED'

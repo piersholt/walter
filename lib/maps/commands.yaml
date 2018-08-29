@@ -418,9 +418,14 @@
     :verbose: true
     :modes:
       55: something
+      0x30: unknown?
     :controls:
       15: i don't know
+      0x00: unknown?
   :klass: CCMDisplay
+  :meta:
+    :examples:
+      - CCM IKE 1A 30 00 "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"
 27:
   :id:
     :d: 27
@@ -535,6 +540,7 @@
       0x94: Tape (B) ◁◁◁
       0x90: Tape ERROR!!!
     :ike:
+      0:00: --
       0x20: Set IKE
       0x30: Overwrite IKE
   :meta:
@@ -873,21 +879,18 @@
     :d: 44
     :h: '0x2C'
   :properties:
-    :short_name: TEL-AUDIO
+    :short_name: TEL-?
     :long_name: Unknown
     :status:
-      0x10: Main Menu
-      0x13: unknown?
-      0x12: unknown?
+      0x10: exit tel?
+      0x12: end call?
+      0x13: start call?
   :klass: BaseCommand
   :meta:
     :senders:
       - TEL
     :recipients:
       - ANZV
-    :length:
-      - always 1 byte
-      - 0x00 or 0x10
 45:
   :id:
     :d: 45
@@ -1234,16 +1237,23 @@
     :d: 74
     :h: '0x4A'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: SND?
+    :long_name: Audio related?
+  :status:
+    0x48: unknown
   :klass: BaseCommand
+  :meta:
+    :senders:
+      - RAD
+    :recipients:
+      - BMBT
 75:
   :id:
     :d: 75
     :h: '0x4B'
   :properties:
-    :short_name: AUDIO
-    :long_name: Tape (or just mechanism)
+    :short_name: SND-CTL
+    :long_name: Audio control?
     :v1:
       0x06: Mode
     :v2:
@@ -1254,7 +1264,8 @@
         0x61: Tape / ◁◁
         0x52: Tape / ◁◁◁ (Guess!)
 
-        0x30: RADIO /
+        0xE2: RAD? Call taking over/mute audio?
+        0x30:
 
         0xF0: ERROR!
   :klass: BaseCommand
