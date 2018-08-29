@@ -50,13 +50,13 @@ While middleware maps commands between the external phone connected via Bluetoot
 ### I-BUS
 
 ### Make A Call
+    # NOTE: LED commands removed for brevity
 
     # Start call
 
     17:59:16 [INFO ] BMBT  	GLO-H 	BMBT-BTN-1	[TEL] Press
 
     17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"☐☐"
-    17:59:16 [INFO ] TEL   	ANZV  	LED       	11
     17:59:16 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-02 | 00	"☐"
 
     17:59:16 [INFO ] TEL   	ANZV  	TEL-?-1   	13
@@ -67,7 +67,6 @@ While middleware maps commands between the external phone connected via Bluetoot
     # End call?
 
     17:59:17 [INFO ] TEL   	ANZV  	TXT-MEDIA 	TEL-01 | 00	"  "
-    17:59:17 [INFO ] TEL   	ANZV  	LED       	01
 
     17:59:17 [INFO ] TEL   	ANZV  	TEL-?-1   	12
 

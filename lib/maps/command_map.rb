@@ -10,6 +10,7 @@ require 'commands/speed'
 require 'commands/ignition'
 require 'commands/key'
 require 'commands/button'
+require 'commands/led'
 
 require 'singleton'
 
