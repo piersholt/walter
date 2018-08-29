@@ -4,6 +4,8 @@ class Message
   include Printable
   attr_accessor :sender, :receiver, :command, :arguments
 
+  attr_accessor :frame
+
   alias :to           :receiver
   alias :from         :sender
 
@@ -18,6 +20,10 @@ class Message
 
     # Printable
     parse_mapped_bytes(bytes)
+  end
+
+  def to_f
+    @frame.string
   end
 
   # ------------------------------ INFO ------------------------------ #

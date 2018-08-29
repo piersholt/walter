@@ -67,6 +67,8 @@ class FrameHandler
     command_id = command.to_d
     command = @command_map.find(command_id, arguments)
 
-    Message.new(from, to, command, arguments)
+    m = Message.new(from, to, command, arguments)
+    m.frame= frame
+    m
   end
 end
