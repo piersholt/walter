@@ -100,7 +100,9 @@ class DisplayHandler
   # ------------------------------ FILTER: MACRO ------------------------------ #
 
   def shutup!
+    LOGGER.info("Shutting up commands: #{NOISEY.join(', ')}.")
     hide_commands(*NOISEY)
+    true
   end
 
   private
