@@ -1,15 +1,15 @@
 # require 'thread'
 require 'observer'
 
-require 'channel/bus'
-require 'channel/offline'
+require 'channel/device'
+require 'channel/file'
 require 'channel/io_buffer'
 
 class Channel
   include Observable
 
   FILE_TYPE = { tty: 'characterSpecial', file: 'file' }.freeze
-  FILE_TYPE_HANDLERS = { tty: Channel::BUS, file: Channel::Offline }.freeze
+  FILE_TYPE_HANDLERS = { tty: Channel::Device, file: Channel::File }.freeze
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
@@ -39,11 +39,11 @@ class Channel
   # NOTE this is a much better example of state, in which channel is either
   # online or offline- in saying that.. it's not implemented well, at, all.
   def offline?
-    if @stream.instance_of?(Channel::Offline)
+    if @stream.instance_of?(Channel::File)
       changed
       notify_observers(Event::BUS_OFFLINE, @stream.class)
       return true
-    elsif @stream.instance_of?(Channel::BUS)
+    elsif @stream.instance_of?(Channel::Device)
       changed
       notify_observers(Event::BUS_ONLINE, @stream.class)
       return false

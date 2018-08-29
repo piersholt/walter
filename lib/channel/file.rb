@@ -2,7 +2,7 @@ require 'forwardable'
 
 class Channel
   # The binary stream stored as a local file for offline processing
-  class Offline
+  class File
     extend Forwardable
 
     def_delegators :stream, :pos, :readpartial

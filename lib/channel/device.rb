@@ -5,7 +5,7 @@ class Channel
   # There's two elements that differentiate this from a log file
   # 1. TTY Device which will be any serial binary data stream
   # 2. IBUS which is specific TTY configuration (profile?)
-  class BUS
+  class Device
     extend Forwardable
 
     DEFAULT_TTY_CONFIGURATION =
