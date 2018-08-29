@@ -87,6 +87,12 @@ class Frame
     all.size
   end
 
+  def string
+    all.map!(&:to_e).join
+  end
+
+  alias_method :length, :size
+
   private
 
   def parse_header(header_value)

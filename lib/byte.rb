@@ -30,6 +30,10 @@ class Byte
     to_h(prefix)
   end
 
+  def to_e
+    hex_to_encoded(@hex)
+  end
+
   def d
     @decimal
   end
