@@ -83,6 +83,10 @@ class Frame
     string
   end
 
+  def to_h
+    all.map(&:to_h)
+  end
+
   def size
     all.size
   end
