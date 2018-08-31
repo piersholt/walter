@@ -37,6 +37,14 @@ class Walter
     add_observer(@listener)
   end
 
+  def shutup!
+    DisplayHandler.i.shutup!
+  end
+
+  def messages
+    SessionHandler.i.messages
+  end
+
   def launch
     LOGGER.debug "#{self.class}#launch"
     Thread.current[:name] = 'App'
