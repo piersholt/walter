@@ -14,6 +14,14 @@ module DataTools
     :bin =>:binary,
     :b =>:binary }
 
+  # ------------------------ CHECKSUM ------------------------ #
+
+  def fcs(*integers)
+    integers.reduce(0) do |c,d|
+      c^= d
+    end
+  end
+
   # ------------------------ HEX TO X ------------------------ #
 
   def hex_to_encoded(hex_value)
