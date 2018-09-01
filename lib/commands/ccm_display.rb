@@ -32,9 +32,9 @@ class Commands
 
       @mode = parse_mode(@argument_map[:mode])
       @control = parse_control(@argument_map[:control])
-      @text = parse_text(@argument_map[:data])
+      @text = parse_text(@argument_map[:string])
 
-      @chars = parse_chars(@argument_map[:chars])
+      # @chars = parse_chars(@argument_map[:chars])
     end
 
     # def inspect
@@ -65,20 +65,19 @@ class Commands
     def map_arguments(arguments)
       { mode: arguments[0],
         control: arguments[1],
-        chars: arguments[0..-1],
-        data: arguments[2..-1] }
+        string: arguments[2..-1] }
     end
 
     def parse_mode(mode_byte)
       mode_value = mode_byte.to_d
-      # @modes[mode_value]
-      mode_value
+      @modes[mode_value]
+      # mode_value
     end
 
     def parse_control(control_byte)
       control_value = control_byte.to_d
-      # @controls[control_value]
-      control_value
+      @controls[control_value]
+      # control_value
     end
 
     def parse_text(arguments)
@@ -88,16 +87,7 @@ class Commands
       end.join
     end
 
-    def parse_chars(arguments)
-      # @codepoints = arguments.map do |byte|
-      #   decimal_value = byte.to_d
-      #   [decimal_value, decimal_value.chr]
-      # end
-      #
-      # @codepoints.map do |cp|
-      #   cp[1].chr
-      # end.join
-
+    def parse_text(arguments)
       Chars.new(arguments)
     end
   end
