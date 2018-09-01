@@ -23,15 +23,15 @@ class Frame
 
   attr_reader :tail_length
 
+  # ************************************************************************* #
+  #                                  OBJECT
+  # ************************************************************************* #
+
   def initialize(args = {})
     public_send(:header=, args[:header]) if args.has_key? :header
     public_send(:payload=, args[:payload]) if args.has_key? :payload
     public_send(:tail=, args[:tail]) if args.has_key? :tail
   end
-
-  # ************************************************************************* #
-  #                                  OUTPUT
-  # ************************************************************************* #
 
   def inspect
     frame_components_grouped = COMPONENTS_ORDERED.map do |c|
@@ -68,6 +68,10 @@ class Frame
 
   def tail
     @tail
+  end
+
+  # assumes FCS byte present
+  def valid?
   end
 
   # ************************************************************************* #
