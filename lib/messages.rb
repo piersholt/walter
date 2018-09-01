@@ -2,7 +2,7 @@
 class Messages
   extend Forwardable
 
-  FORWARD_MESSAGES = %i[<< push first last each empty? size length inspect to_s count [] find_all find find_index map group_by].freeze
+  FORWARD_MESSAGES = %i[<< push first last each empty? size length to_s count [] find_all find find_index map group_by].freeze
   SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
   FORWARD_MESSAGES.each do |fwrd_message|
@@ -13,9 +13,9 @@ class Messages
     @messages = messages
   end
 
-  # def inspect
-  #   "<Messages>#inspect"
-  # end
+  def inspect
+    @messages.join("\n")
+  end
   #
   # def to_s
   #   "<Messages>#to_s"
