@@ -8,17 +8,9 @@ class ByteStream
     def_delegator :@bytes, fwrd_message
   end
 
-  # def initialize(bytes = nil)
-  #   bytes.nil? ? super(0, nil) : super(bytes)
-  # end
-
   def initialize(bytes = [])
     @bytes = bytes
   end
-
-  # def insert(*args)
-  #   @bytes.insert(*args)
-  # end
 
   def to_s
     map(&:h).join(' ').to_s
@@ -40,22 +32,4 @@ class ByteStream
     @bytes = [1,2,3]
     self[0]
   end
-
-  # replaces Frame#header_s and Frame#tail_s
-  # def to_s
-  # end
-  #
-  # def inspect
-
-  # end
-
-  # def size
-  # end
-  #
-  # def length
-  # end
-  #
-  # def []
-  #   @bytes[]
-  # end
 end
