@@ -761,7 +761,7 @@
       26: Interim Time
       27: Aux Heat/Vent
       31: Test Mode
-      64: botton line of Multi Info Radio
+      64: Radio HUD
   :klass: OBCDisplay
 37:
   :id:
