@@ -55,15 +55,6 @@ class Frame
   #                                  FRAME
   # ************************************************************************* #
 
-  # @deprecated
-  def all
-    all_frame_components = COMPONENTS_ORDERED.map do |c|
-      public_send(c)
-    end
-
-    all_frame_components.flatten.compact
-  end
-
   def header=(new_header)
     @header = new_header
     parse_header(new_header)
@@ -105,6 +96,15 @@ class Frame
 
   # @deprecated
   alias_method :length, :size
+
+  # @deprecated
+  def all
+    all_frame_components = COMPONENTS_ORDERED.map do |c|
+      public_send(c)
+    end
+
+    all_frame_components.flatten.compact
+  end
 
   private
 
