@@ -16,7 +16,7 @@ class Commands
 
       @mode = parse_mode(@argument_map[:mode])
       @control = parse_control(@argument_map[:control])
-      @chars = parse_chars(@argument_map[:chars])
+      @text = parse_chars(@argument_map[:chars])
     end
 
     # def to_s
@@ -29,9 +29,7 @@ class Commands
     # end
 
     def inspect
-      command = sn
-      text = @chars.to_s
-      str_buffer = "#{command}\t#{@mode} #{@control}\t\"#{@text}\""
+      str_buffer = "#{sn}\t#{sprintf("%-10s", mode)}\t\"#{text}\""
       str_buffer
     end
 
@@ -41,7 +39,7 @@ class Commands
     def map_byte_stream(arguments)
       { mode: arguments[0],
         control: arguments[1],
-        chars: arguments[0..-1] }
+        chars: arguments[2..-1] }
     end
 
     def parse_mode(mode_byte)
