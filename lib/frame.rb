@@ -1,6 +1,3 @@
-# frame.rb
-require 'pry-byebug'
-
 class Frame
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
@@ -11,8 +8,6 @@ class Frame
     header: { position: 0, length: 2 },
     payload: { position: 1, offset: 2, length: nil },
     fcs: { position: 2, offset: -1, length: 1 } }.freeze
-
-  # CHILDREN = {
 
   COMPONENTS_ORDERED = COMPONENTS.sort do |a, b|
     c1 = COMPONENT_PROPERTIES[a]
@@ -81,10 +76,6 @@ class Frame
     return 'No data' if all.size.zero?
     string = all.reduce('') { |s, b| s.concat("#{b} ") }
     string
-  end
-
-  def to_h
-    all.map(&:to_h)
   end
 
   def size
