@@ -29,6 +29,23 @@ class Frame
     public_send(:tail=, args[:tail]) if args.has_key? :tail
   end
 
+  def inspect
+    frame_components_grouped = COMPONENTS_ORDERED.map do |c|
+      component = public_send(c)
+      # LOGGER.warn(component)
+      str_bfr = component.respond_to?(:join) ? component.join(' ') : component
+      "[#{str_bfr}]"
+    end.join(' ')
+
+    sprintf("%-10s", "[Frame]").concat(frame_components_grouped)
+  end
+
+  def to_s
+    complete_frame = all
+    return 'No data' if all.size.zero?
+    string = all.reduce('') { |s, b| s.concat("#{b} ") }
+    string
+  end
   # @deprecated
   def all
     all_frame_components = COMPONENTS_ORDERED.map do |c|
@@ -61,24 +78,6 @@ class Frame
   # @deprecated
   def tail_s
     @tail.reduce('') { |s, b| s.concat("#{b} ") }
-  end
-
-  def inspect
-    frame_components_grouped = COMPONENTS_ORDERED.map do |c|
-      component = public_send(c)
-      # LOGGER.warn(component)
-      str_bfr = component.respond_to?(:join) ? component.join(' ') : component
-      "[#{str_bfr}]"
-    end.join(' ')
-
-    sprintf("%-10s", "[Frame]").concat(frame_components_grouped)
-  end
-
-  def to_s
-    complete_frame = all
-    return 'No data' if all.size.zero?
-    string = all.reduce('') { |s, b| s.concat("#{b} ") }
-    string
   end
 
   # @deprecated
