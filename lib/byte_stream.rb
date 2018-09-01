@@ -2,8 +2,7 @@
 class ByteStream
   extend Forwardable
 
-  FORWARD_MESSAGES = %i[<< push first last each unshift empty? size length count [] find_all reduce find find_index map group_by insert +].freeze
-
+  FORWARD_MESSAGES = Array.instance_methods(false)
   FORWARD_MESSAGES.each do |fwrd_message|
     def_delegator :@bytes, fwrd_message
   end
