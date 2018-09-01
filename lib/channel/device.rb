@@ -12,7 +12,7 @@ class Channel
       { 'baud' => 9600,
         'data_bits' => 8,
         'stop_bits' => 1,
-        'parity' => 2 }.freeze
+        'parity' => SerialPort::EVEN }.freeze
     DEFAULT_TTY_OPTIONS =
       { 'modem_params='.to_sym => DEFAULT_TTY_CONFIGURATION,
         'flow_control='.to_sym => SerialPort::HARD }.freeze
