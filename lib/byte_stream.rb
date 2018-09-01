@@ -2,7 +2,7 @@
 class ByteStream
   extend Forwardable
 
-  FORWARD_MESSAGES = %i[<< push first last each empty? size length count [] find_all reduce find find_index map group_by insert +].freeze
+  FORWARD_MESSAGES = %i[<< push first last each unshift empty? size length count [] find_all reduce find find_index map group_by insert +].freeze
 
   FORWARD_MESSAGES.each do |fwrd_message|
     def_delegator :@bytes, fwrd_message
@@ -13,7 +13,7 @@ class ByteStream
   # end
 
   def initialize(bytes = [])
-    @bytes = []
+    @bytes = bytes
   end
 
   # def insert(*args)
@@ -33,6 +33,12 @@ class ByteStream
 
   def wholesale(new_bytes)
     @bytes = new_bytes
+  end
+
+  # Testing if forwarded methods work internally... they do!
+  def test
+    @bytes = [1,2,3]
+    self[0]
   end
 
   # replaces Frame#header_s and Frame#tail_s
