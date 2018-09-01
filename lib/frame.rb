@@ -29,6 +29,7 @@ class Frame
     public_send(:tail=, args[:tail]) if args.has_key? :tail
   end
 
+  # @deprecated
   def all
     all_frame_components = COMPONENTS_ORDERED.map do |c|
       public_send(c)
@@ -52,10 +53,12 @@ class Frame
     @tail
   end
 
+  # @deprecated
   def header_s
     @header.reduce('') { |s, o| s.concat("#{o} ") }
   end
 
+  # @deprecated
   def tail_s
     @tail.reduce('') { |s, b| s.concat("#{b} ") }
   end
@@ -78,14 +81,17 @@ class Frame
     string
   end
 
+  # @deprecated
   def size
     all.size
   end
 
+  # @deprecated
   def string
     all.map!(&:to_e).join
   end
 
+  # @deprecated
   alias_method :length, :size
 
   private
