@@ -8,6 +8,7 @@ require 'pry'
 
 # local dependencies
 require 'byte'
+require 'byte_stream'
 require 'frame'
 require 'message'
 
