@@ -46,10 +46,11 @@ class Commands
     #   "[#{@arguments.map(&:h).join(' ')}]"
     # end
 
-    # def to_s
-    #   return inspect if @verbose
-    #   "#{@short_name} (#{d})\t[#{@mode} #{@control}]\t\"#{@text}\""
-    # end
+    def to_s
+      return inspect if @verbose
+      #{h}\t#{@argument_map[:gfx].h} #{@argument_map[:ike].h}\t\"#{@text}\""
+      "#{@short_name}\t#{@mode} #{@control}\t\"#{@text}\""
+    end
 
     # def to_s
     #   if @verbose
