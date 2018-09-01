@@ -29,6 +29,10 @@ class Frame
     public_send(:tail=, args[:tail]) if args.has_key? :tail
   end
 
+  # ************************************************************************* #
+  #                                  OUTPUT
+  # ************************************************************************* #
+
   def inspect
     frame_components_grouped = COMPONENTS_ORDERED.map do |c|
       component = public_send(c)
@@ -46,6 +50,11 @@ class Frame
     string = all.reduce('') { |s, b| s.concat("#{b} ") }
     string
   end
+
+  # ************************************************************************* #
+  #                                  FRAME
+  # ************************************************************************* #
+
   # @deprecated
   def all
     all_frame_components = COMPONENTS_ORDERED.map do |c|
@@ -69,6 +78,10 @@ class Frame
   def tail
     @tail
   end
+
+  # ************************************************************************* #
+  #                                OBSOLETE
+  # ************************************************************************* #
 
   # @deprecated
   def header_s
@@ -94,6 +107,10 @@ class Frame
   alias_method :length, :size
 
   private
+
+  # ************************************************************************* #
+  #                                BYTE MAPPING
+  # ************************************************************************* #
 
   def parse_header(header_value)
     @tail_length = header_value[1].to_d
