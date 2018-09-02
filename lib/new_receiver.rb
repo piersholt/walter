@@ -2,13 +2,11 @@ require 'observer'
 require 'byte_stream'
 require 'frame_header'
 
-# documentation
-class Receiver
+class NewReceiver
   include Observable
 
   def initialize(input_buffer)
     @input_buffer = input_buffer
-    # @log_frames = File.new("#{Time.now.strftime'%F'}.log",  'a')
     @threads = ThreadGroup.new
   end
 
@@ -44,8 +42,6 @@ class Receiver
       LOGGER.debug "Thread ##{i+1} / #{t.status}"
     end
   end
-
-  def
 
   def thread_read_buffer(buffer)
     Thread.new do
