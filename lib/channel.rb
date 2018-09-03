@@ -87,17 +87,17 @@ class Channel
     LOGGER.debug "#{self.class}#close_threads"
     threads = @threads.list
     threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
+      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Currently: #{t.status}"
       # LOGGER.debug "result = #{t.exit}"
-      t.exit
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
+      t.exit.join
+      LOGGER.debug "Thread ##{i+1}: #{t[:name]}  / Still alive? #{t.status}"
     end
   end
 
   def thread_read
     LOGGER.debug("#{self.class}#thread_read")
     Thread.new do
-      Thread.current[:name] = 'Channel'
+      Thread.current[:name] = 'Channel Read'
       begin
         LOGGER.debug("Channel READ thread starting...")
         # binding.pry

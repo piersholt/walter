@@ -41,10 +41,12 @@ class DisplayHandler
   # ************************************************************************* #
 
   def disable
+    LOGGER.debug("DisplayHandler") { "Disable output." }
     @output_enabled = false
   end
 
   def enable
+    LOGGER.debug("DisplayHandler") { "Enabled output." }
     @output_enabled = true
   end
 

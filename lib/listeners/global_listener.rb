@@ -42,7 +42,7 @@ class GlobalListener
 
         LOGGER.warn("Listener") { "Delegate: #{@display_handler.class}" }
         @display_handler.update(action, properties)
-        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class}  complete!" }
+        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class} complete!" }
 
         LOGGER.warn("Listener") { "Delegate: #{@data_logging_handler.class}" }
         @data_logging_handler.update(action, properties)

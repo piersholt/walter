@@ -3,6 +3,7 @@ require 'new_frame'
 
 class NewReceiver
   PROG_NAME = 'Receiver'.freeze
+  THREAD_NAME_READ = 'Receiver Read'
   PROCESS_SYNC = 'Receiver / Sync'
   PROCESS_SYNC_HEADER = 'Receiver / Header'
   PROCESS_SYNC_TAIL = 'Receiver / Tail'
@@ -43,17 +44,17 @@ class NewReceiver
     LOGGER.debug "#{self.class}#close_threads"
     threads = @threads.list
     threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
+      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Currently: #{t.status}"
       # LOGGER.debug "result = #{t.exit}"
-      t.exit
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
+      t.exit.join
+      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Still alive? #{t.alive?}"
     end
   end
 
   def thread_read_buffer(buffer)
     LOGGER.debug(PROG_NAME) { 'New Thread: Frame Synchronisation.' }
     Thread.new do
-      Thread.current[:name] = PROG_NAME
+      Thread.current[:name] = THREAD_NAME_READ
       begin
         LOGGER.debug(PROG_NAME) { 'Entering byte shift loop.' }
         shift_count = 1

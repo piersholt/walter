@@ -66,14 +66,14 @@ class Walter
       start
       binding.pry
 
-      LOGGER.warn("Publishing event: #{Event::EXIT}")
+      LOGGER.warn("Walter") { "Publishing event: #{Event::EXIT}" }
       changed
       notify_observers(Event::EXIT, {reason: 'Debug exiting'})
-      LOGGER.warn("Subscribers updated! #{Event::EXIT}")
+      LOGGER.warn("Walter") { "Subscribers updated! #{Event::EXIT}" }
 
-      LOGGER.warn("HALT!")
+      LOGGER.warn("Walter") { "Stop!" }
       stop
-      LOGGER.warn("Halted...👍")
+      LOGGER.warn("Walter") { "Halted...👍" }
 
       return -1
     rescue Interrupt

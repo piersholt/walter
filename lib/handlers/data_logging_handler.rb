@@ -65,12 +65,12 @@ class DataLoggingHandler
   end
 
   def disable_logging
-    LOGGER.warn("DataLogger") { 'Byte stream logging disabled!') }
+    LOGGER.warn("DataLogger") { 'Byte stream logging disabled!' }
     @stream_logging = false
   end
 
   def enable_logging
-    LOGGER.warn("DataLogger") { 'Byte stream logging enabled!') }
+    LOGGER.warn("DataLogger") { 'Byte stream logging enabled!' }
     @stream_logging = true
   end
 
