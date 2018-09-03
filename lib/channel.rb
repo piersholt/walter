@@ -3,7 +3,7 @@ require 'observer'
 
 require 'channel/device'
 require 'channel/file'
-require 'channel/io_buffer'
+require 'channel/byte_buffer'
 
 class Channel
   include Observable
