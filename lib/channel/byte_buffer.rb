@@ -4,7 +4,7 @@ class Channel
   # An extension of a Queue to support multi shifts, and unshifting
   # NOTE this should not handle unshift.... argh.. well.. unshift is framer behaviour..
   # but it's still capsulated with framer.. the actual behaviour of unshift is generic...
-  class IOBuffer < Queue
+  class ByteBuffer < Queue
     def initialize
       super
       @unshift_buffer = []
@@ -24,7 +24,7 @@ class Channel
     def shift(number_of_bytes = 1)
       # binding.pry
       LOGGER.debug("#{self.class}#shift(#{number_of_bytes})")
-      raise ::ArgumentError, 'IOBuffer does not support single object shift' if
+      raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
         number_of_bytes <= 1
 
       shift_result = Bytes.new

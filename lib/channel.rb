@@ -22,7 +22,7 @@ class Channel
     LOGGER.debug("File handler: #{file_type_handler}")
     @stream = file_type_handler.new(path, options)
 
-    @input_buffer = IOBuffer.new
+    @input_buffer = ByteBuffer.new
 
     @threads = ThreadGroup.new
   end
@@ -119,7 +119,7 @@ class Channel
 
             # NOTE this is intesresting.. this event isn't to do with the
             # primary processing..it's only for logging..
-            # i could technically have a state of IOBuffer being:
+            # i could technically have a state of ByteBuffer being:
             #   1. PendingData
             #   2. NoData
             changed
