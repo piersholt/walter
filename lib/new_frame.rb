@@ -72,6 +72,10 @@ class NewFrame < Bytes
     true
   end
 
+  # ************************************************************************* #
+  #                                  FRAME
+  # ************************************************************************* #
+
   def valid?
     LOGGER.debug(PROG_NAME) { "#valid?" }
     raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
