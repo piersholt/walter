@@ -62,10 +62,6 @@ class FrameTail < Bytes
   #                                 BYTE MAP
   # ************************************************************************* #
 
-  def fcs
-    self[-1]
-  end
-
   def to
     self[0]
   end
@@ -74,8 +70,13 @@ class FrameTail < Bytes
     self[1]
   end
 
+  # a command may not have any arguments
   def arguments
     length > 3 ? self[2..-2] : []
+  end
+
+  def fcs
+    self[-1]
   end
 
   private
