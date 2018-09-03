@@ -1,9 +1,12 @@
 require 'bytes'
 
-class HeaderError  < StandardError
+class HeaderValidationError  < StandardError
 end
 
-class TailError < StandardError
+class HeaderInvalidError  < StandardError
+end
+
+class TailValidationError < StandardError
 end
 
 class FrameHeader < Bytes
@@ -40,9 +43,9 @@ class FrameHeader < Bytes
   private
 
   def validate_args(bytes)
-    raise ArgumentError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
+    raise HeaderValidationError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
     tail_length_value = bytes[LENGTH_INDEX].d
-    raise HeaderError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
+    raise HeaderInvalidError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
   end
 end
 
@@ -82,6 +85,6 @@ class FrameTail < Bytes
   private
 
   def validate_args(bytes)
-    raise ArgumentError, 'invalid tail length'  unless VALID_SIZE.include?(bytes.length)
+    raise TailValidationError, 'invalid tail length'  unless VALID_SIZE.include?(bytes.length)
   end
 end
