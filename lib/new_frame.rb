@@ -5,66 +5,10 @@ class NewFrame < Bytes
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
 
-  COMPONENTS = [:header, :payload, :fcs].freeze
-
-  COMPONENT_PROPERTIES = {
-    header: { position: 0, length: 2 },
-    payload: { position: 1, offset: 2, length: nil },
-    fcs: { position: 2, offset: -1, length: 1 } }.freeze
-
-  COMPONENTS_ORDERED = COMPONENTS.sort do |a, b|
-    c1 = COMPONENT_PROPERTIES[a]
-    c2 = COMPONENT_PROPERTIES[b]
-    c1[:position] <=> c2[:position]
-  end
-
-  COMPONENTS_ORDERED.each { |e| attr_accessor e }
-
-  attr_accessor :header
-  attr_reader :payload
-  attr_accessor :fcs
-
-  attr_reader :tail_length
 
   # ************************************************************************* #
   #                                  OBJECT
   # ************************************************************************* #
-
-  def initialize(args = {})
-    public_send(:header=, args[:header]) if args.has_key? :header
-    public_send(:payload=, args[:payload]) if args.has_key? :payload
-    public_send(:tail=, args[:tail]) if args.has_key? :tail
-    super
-  end
-
-  # def inspect
-  #   frame_components_grouped = COMPONENTS_ORDERED.map do |c|
-  #     component = public_send(c)
-  #     # LOGGER.warn(component)
-  #     str_bfr = component.respond_to?(:join) ? component.join(' ') : component
-  #     "[#{str_bfr}]"
-  #   end.join(' ')
-  #
-  #   sprintf("%-10s", "[Frame]").concat(frame_components_grouped)
-  # end
-
-  # def to_s
-  #   complete_frame = all
-  #   return 'No data' if all.size.zero?
-  #   string = all.reduce('') { |s, b| s.concat("#{b} ") }
-  #   string
-  # end
-
-  # def to_s
-  #   complete_frame = all
-  #   return 'No data' if all.size.zero?
-  #   string = all.reduce('') { |s, b| s.concat("#{b} ") }
-  #   string
-  # end
-
-  def to_s
-    'test #to_s'
-  end
 
   def inspect
     'test #inspect'
@@ -74,10 +18,6 @@ class NewFrame < Bytes
   #                                  FRAME
   # ************************************************************************* #
 
-  def header=(new_header)
-    @header = new_header
-    @tail_length = new_header[1].to_d
-  end
 
   def tail=(new_tail)
     @tail = new_tail
@@ -115,24 +55,7 @@ class NewFrame < Bytes
     @bytes.insert(-1, *@frame_tail)
   end
 
-  # ************************************************************************* #
-  #                                OBSOLETE
-  # ************************************************************************* #
 
-  # @deprecated
-  def header_s
-    @header.reduce('') { |s, o| s.concat("#{o} ") }
-  end
-
-  # @deprecated
-  def tail_s
-    @tail.reduce('') { |s, b| s.concat("#{b} ") }
-  end
-
-  # @deprecated
-  def size
-    all.size
-  end
 
   # @deprecated
   def string
