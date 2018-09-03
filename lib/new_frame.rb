@@ -51,7 +51,7 @@ class NewFrame < Bytes
   end
 
   def set_header(new_header)
-    LOGGER.debug(PROG_NAME) { "#set_tail(#{new_header})." }
+    LOGGER.debug(PROG_NAME) { "#set_header(#{new_header})." }
 
     LOGGER.debug(PROG_NAME) { "Setting @header." }
     @header = FrameHeader.new(new_header)
