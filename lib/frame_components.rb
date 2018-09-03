@@ -17,6 +17,18 @@ class FrameHeader < Bytes
     super(bytes)
   end
 
+  # ************************************************************************* #
+  #                                 BYTE MAP
+  # ************************************************************************* #
+
+  def from
+    @self[0]
+  end
+
+  def tail
+    @self[1]
+  end
+
   def tail_length
     @self[1].d
   end
