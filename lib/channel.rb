@@ -29,7 +29,7 @@ class Channel
 
   def on
     offline?
-    @threads.add(thread_populate_input_buffer)
+    @threads.add(thread_read)
   end
 
   def off
@@ -89,8 +89,8 @@ class Channel
     end
   end
 
-  def thread_populate_input_buffer
-    LOGGER.debug("#{self.class}#thread_populate_input_buffer")
+  def thread_read
+    LOGGER.debug("#{self.class}#thread_read")
     Thread.new do
       Thread.current[:name] = 'Channel'
       begin
