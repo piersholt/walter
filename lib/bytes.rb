@@ -20,7 +20,7 @@ class Bytes
   end
 
   def to_s
-    "<Bytes> ".concat(map(&:h).join(' ').to_s)
+    map(&:h).join(' ').to_s
   end
 
   # ************************************************************************* #
