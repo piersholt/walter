@@ -82,6 +82,18 @@ class FrameTail < Bytes
     self[-1]
   end
 
+  def no_fcs
+    self[0..-2]
+  end
+
+  # ************************************************************************* #
+  #                             HEADER PROPERTIES
+  # ************************************************************************* #
+
+  def checksum
+    fcs.d
+  end
+
   private
 
   def validate_args(bytes)
