@@ -30,7 +30,7 @@ class Channel
       shift_result = Bytes.new
 
       # Empty unshift buffer before reading IO
-      take_unshifted_bytes(shift_result, number_of_bytes)
+      take_unshifted_bytes(shift_result, number_of_bytes) unless @unshift_buffer.empty?
 
       Array.new(number_of_bytes - shift_result.size).each do |_|
         read_byte = pop
