@@ -70,7 +70,7 @@ class NewReceiver
 
             LOGGER.debug(PROCESS_SYNC_HEADER) { "Input Buffer: #{buffer.size}." }
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Shifting #{Frame::HEADER_LENGTH} bytes." }
+            LOGGER.debug(PROCESS_SYNC_HEADER) { "Trying to shift #{Frame::HEADER_LENGTH} bytes." }
             header_bytes = buffer.shift(Frame::HEADER_LENGTH)
             LOGGER.debug(PROCESS_SYNC_HEADER) { "Shifted bytes: #{header_bytes}" }
 
