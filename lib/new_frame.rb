@@ -30,8 +30,12 @@ class NewFrame < Bytes
     super(bytes)
   end
 
+  def to_s
+    map(&:h).join(' ').to_s
+  end
+
   def inspect
-    "<Frame> [#{header}] [#{tail}]"
+    "<Frame> #{to_s}"
   end
 
   # ************************************************************************* #
