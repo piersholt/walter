@@ -40,18 +40,18 @@ class DataLoggingHandler
   end
 
   def log_byte(next_byte)
-    # LOGGER.debug("[Log Handler] #{self.class}#log_byte(#{Byte.new(:encoded, next_byte).to_s(true)})")
+    # LOGGER.debug("#{self.class}#log_byte(#{Byte.new(:encoded, next_byte).to_s(true)})")
     return false unless logging_enabled?
     bytes_written = byte_log.write(next_byte) if logging_enabled?
-    LOGGER.debug("[Log Handler] Byte Log: #{bytes_written} bytes written.")
+    # LOGGER.debug("Byte Log: #{bytes_written} bytes written.")
   end
 
   def log_frame(validated_frame)
-    LOGGER.debug("[Log Handler] #{self.class}#log_frame(#{validated_frame})")
-    LOGGER.debug("[Log Handler] #{self.class}#logging_enabled? => #{logging_enabled?}")
+    LOGGER.debug("DataLoggingHandler") { "#{self.class}#log_frame(#{validated_frame})" }
+    LOGGER.debug("DataLoggingHandler") { "#{self.class}#logging_enabled? => #{logging_enabled?}" }
     return false unless logging_enabled?
     bytes_written = frame_log.write("#{validated_frame}\n") if logging_enabled?
-    LOGGER.debug("[Log Handler] Frame Log: #{bytes_written} bytes written.")
+    LOGGER.debug("DataLoggingHandler") { "Frame Log: #{bytes_written} bytes written." }
   end
 
   def logging_enabled?
@@ -75,9 +75,9 @@ class DataLoggingHandler
   end
 
   def close_log_files
-    LOGGER.debug('[Log Handler] disabling logging')
+    LOGGER.debug("DataLoggingHandler") { 'disabling logging' }
     disable_logging
-    LOGGER.warn('[Log Handler] closing log files')
+    LOGGER.warn("DataLoggingHandler") { 'closing log files' }
     byte_log.close
     frame_log.close
   end

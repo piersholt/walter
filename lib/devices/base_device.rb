@@ -11,7 +11,7 @@ class Devices
     alias :ln :long_name
 
     def initialize(id, props)
-      LOGGER.debug("#{self.class}#initialize(#{id}, #{props})")
+      LOGGER.debug("BaseDevice") { "#initialize(#{id}, #{props})" }
       @id = id
       parse_properties(props)
     end

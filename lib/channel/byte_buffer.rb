@@ -23,7 +23,7 @@ class Channel
 
     def shift(number_of_bytes = 1)
       # binding.pry
-      LOGGER.debug("#{self.class}#shift(#{number_of_bytes})")
+      LOGGER.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
       raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
         number_of_bytes <= 1
 
@@ -43,8 +43,8 @@ class Channel
     private
 
     def take_unshifted_bytes(shift_result, number_of_bytes)
-      LOGGER.debug("#{self.class}#take_unshifted_bytes(#{number_of_bytes})")
-      LOGGER.debug("#{self.class} has #{@unshift_buffer.size} available unshifted bytes.")
+      LOGGER.debug("ByteBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
+      LOGGER.debug("ByteBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
       required_bytes = number_of_bytes
       return false if @unshift_buffer.empty?
       until @unshift_buffer.empty? || required_bytes.zero?
@@ -52,7 +52,7 @@ class Channel
         shift_result.push(unshifted_byte)
         required_bytes -= 1
       end
-      LOGGER.debug("#{self.class} had #{shift_result.size} unshifted bytes taken.")
+      LOGGER.debug("ByteBuffer") { "#{shift_result.size} unshifted bytes taken." }
       true
     end
   end

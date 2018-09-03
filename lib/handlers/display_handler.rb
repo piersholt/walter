@@ -130,7 +130,7 @@ class DisplayHandler
     return false unless output_enabled?
 
     if matches_a_command && matches_a_recipient && matches_a_sender
-      LOGGER.info(message)
+      LOGGER.info("DisplayHandler") { message }
       return true
     else
       return false

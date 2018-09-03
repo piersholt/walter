@@ -30,7 +30,7 @@ class CommandMap < Map
   end
 
   def find(command_id, args = nil)
-    LOGGER.debug("#{self.class}#find(#{command_id})")
+    LOGGER.debug("#{self.class}") { "#find(#{command_id})" }
     begin
       mapped_result = super(command_id)
     rescue IndexError
