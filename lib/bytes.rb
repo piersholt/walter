@@ -45,4 +45,20 @@ class Bytes
   def as_d
     @bytes.map(&:h)
   end
+
+  # ************************************************************************* #
+  #                               FORMATTING
+  # ************************************************************************* #
+
+  def as_string
+   self.map(&:to_e).join
+  end
+
+  def d
+    self.map(&:to_d)
+  end
+
+  def h
+    self.map(&:to_h)
+  end
 end
