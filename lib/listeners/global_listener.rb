@@ -38,13 +38,15 @@ class GlobalListener
     begin
       case action
       when EXIT
-        LOGGER.warn "[Global Listener] Exiting! Reason: #{properties[:reason]}"
-        
-        # hide the message output as it clutters the exit log messages
-        LOGGER.warn "[Global Listener] Hiding display output..."
+        LOGGER.warn "[Global Listener] EXIT! Reason: #{properties[:reason]}"
+
+        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class}" }
         @display_handler.update(action, properties)
-        LOGGER.warn "[Global Listener] Closing log files..."
+        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class}  complete!" }
+
+        LOGGER.warn("Listener") { "Delegate: #{@data_logging_handler.class}" }
         @data_logging_handler.update(action, properties)
+        LOGGER.warn("Listener") { "Delegate: #{@data_logging_handler.class} complete!" }
       when BUS_ONLINE
         LOGGER.info("[Global Listener] BUS online!")
         @data_logging_handler.update(action, properties)

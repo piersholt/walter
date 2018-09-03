@@ -24,6 +24,7 @@ class DataLoggingHandler
     when FRAME_VALIDATED
       log_frame(properties[:frame])
     when EXIT
+      LOGGER.warn("DataLoggingHandler") { " Closing log files..." }
       close_log_files
     end
   end
@@ -64,12 +65,12 @@ class DataLoggingHandler
   end
 
   def disable_logging
-    LOGGER.warn('[Handler] STREAM logging disabled!')
+    LOGGER.warn("DataLogger") { 'Byte stream logging disabled!') }
     @stream_logging = false
   end
 
   def enable_logging
-    LOGGER.info('[Handler] STREAM logging enabled!')
+    LOGGER.warn("DataLogger") { 'Byte stream logging enabled!') }
     @stream_logging = true
   end
 

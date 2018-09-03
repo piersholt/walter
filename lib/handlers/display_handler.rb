@@ -29,6 +29,7 @@ class DisplayHandler
   def update(action, properties)
     case action
     when EXIT
+      # hide the message output as it clutters the exit log messages
       disable
     when MESSAGE_RECEIVED
       filtered_output(properties[:message])

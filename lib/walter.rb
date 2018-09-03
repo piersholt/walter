@@ -66,9 +66,15 @@ class Walter
       start
       binding.pry
 
+      LOGGER.warn("Publishing event: #{Event::EXIT}")
       changed
       notify_observers(Event::EXIT, {reason: 'Debug exiting'})
+      LOGGER.warn("Subscribers updated! #{Event::EXIT}")
+
+      LOGGER.warn("HALT!")
       stop
+      LOGGER.warn("Halted...👍")
+
       return -1
     rescue Interrupt
       LOGGER.debug 'Interrupt signal caught.'
@@ -88,9 +94,15 @@ class Walter
   end
 
   def stop
-    LOGGER.warn "#{self.class}#stop"
+    LOGGER.debug "#{self.class}#stop"
+
+    LOGGER.debug("Walter") { "Switching off Receiver..." }
     @receiver.off
+    LOGGER.debug("Walter") { "Receiver is off! 👍" }
+
+    LOGGER.debug("Walter") { "Switching off Channel..." }
     @channel.off
+    LOGGER.debug("Walter") { "Channel is off! 👍" }
   end
 
   private
