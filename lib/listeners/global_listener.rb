@@ -31,7 +31,7 @@ class GlobalListener
     add_observer(self)
   end
 
-  def update(action, properties)
+  def update(action, properties = {})
     # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
     raise ::ArgumentError, 'unrecognised action' unless valid?(action)
 
