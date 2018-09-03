@@ -9,6 +9,15 @@ class NewFrame < Bytes
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
 
+  FrameHeader.instance_methods(false).each do |header_method|
+    def_delegator :header, header_method
+  end
+  
+  FrameTail.instance_methods(false).each do |tail_method|
+    def_delegator :tail, tail_method
+  end
+
+
   # TODO: forward header and tail instance methods to avoid cailling frame.header or frame.tail
 
   attr_reader :header, :tail
