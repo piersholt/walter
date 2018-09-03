@@ -1,6 +1,6 @@
-require 'byte_stream'
+require 'bytes'
 
-class Frame < ByteStream
+class NewFrame < Bytes
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
 
