@@ -1,6 +1,6 @@
-require 'byte_stream'
+require 'bytes'
 
-class FrameHeader < ByteStream
+class FrameHeader < Bytes
   VALID_SIZE = (2..2)
 
   MIN_LENGTH_VALUE = (3..255)
@@ -24,7 +24,7 @@ class FrameHeader < ByteStream
   end
 end
 
-class FrameTail < ByteStream
+class FrameTail < Bytes
   VALID_SIZE = (3..255)
 
   def initialize(bytes)
