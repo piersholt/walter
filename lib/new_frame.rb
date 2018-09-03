@@ -1,87 +1,79 @@
 require 'bytes'
 require 'frame_components'
 
+class ChecksumError < StandardError
+end
+
 class NewFrame < Bytes
+  PROG_NAME = 'NewFrame'.freeze
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
 
+  # TODO: forward header and tail instance methods to avoid cailling frame.header or frame.tail
+
+  attr_reader :header, :tail
 
   # ************************************************************************* #
   #                                  OBJECT
   # ************************************************************************* #
 
+  def initialize(bytes = [])
+    super(bytes)
+  end
+
   def inspect
-    'test #inspect'
+    "<Frame> [#{header}] [#{tail}]"
   end
 
   # ************************************************************************* #
   #                                  FRAME
   # ************************************************************************* #
 
-
-  def tail=(new_tail)
-    @tail = new_tail
-    @payload = new_tail[0..-2]
-    @fcs = new_tail[-1]
+  def header
+    @header ||= Bytes.new
   end
 
   def tail
-    @tail
+    @tail ||= Bytes.new
   end
 
-  # assumes FCS byte present
-  def valid?
-    raise ArgumentError, 'invalid frame params' unless @header && @tail
+  def set_header(new_header)
+    LOGGER.debug(PROG_NAME) { "#set_tail(#{new_header})." }
 
-    frame_bytes = @frame_header + @frame_tail.without_fcs
+    LOGGER.debug(PROG_NAME) { "Setting @header." }
+    @header = FrameHeader.new(new_header)
+
+    LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    wholesale(header + tail)
+    LOGGER.debug(PROG_NAME) { "self[0..-1]: #{self[0..-1]}" }
+
+    true
+  end
+
+  def set_tail(new_tail)
+    LOGGER.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
+
+    LOGGER.debug(PROG_NAME) { "Setting @tail." }
+    @tail = FrameTail.new(new_tail)
+
+    LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    wholesale(header + tail)
+    LOGGER.debug(PROG_NAME) { "Bytes: #{self[0..-1]}" }
+
+    true
+  end
+
+  def valid?
+    LOGGER.debug(PROG_NAME) { "#valid?" }
+    raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
+
+    frame_bytes = @header + @tail.no_fcs
     checksum = frame_bytes.reduce(0) do |c,d|
       c^= d.to_d
     end
 
-    checksum == @frame_tail.fcs
-  end
+    LOGGER.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
-  # ************************************************************************* #
-
-  def set_header(header)
-    raise ArgumentError unless @frame_header.nil?
-    @frame_header = header
-    @bytes.insert(0, *@frame_header)
-  end
-
-  def set_tail(tail)
-    raise ArgumentError unless @frame_tail.nil?
-    @frame_tail = tail
-    @bytes.insert(-1, *@frame_tail)
-  end
-
-
-
-  # @deprecated
-  def string
-    all.map!(&:to_e).join
-  end
-
-  # @deprecated
-  alias_method :length, :size
-
-  # @deprecated
-  def all
-    all_frame_components = COMPONENTS_ORDERED.map do |c|
-      public_send(c)
-    end
-
-    all_frame_components.flatten.compact
-  end
-
-  private
-
-  # ************************************************************************* #
-  #                                BYTE MAPPING
-  # ************************************************************************* #
-
-  def parse_header(header_value)
-
-
+    checksum == tail.checksum
   end
 end

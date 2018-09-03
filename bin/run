@@ -24,6 +24,8 @@ LOGGER.formatter = proc do |severity, time, progname, msg|
     color = severity_to_colour_map[severity]
 
     formatted_severity = sprintf("%-5s",severity)
+    formatted_progname = sprintf("%22s",progname)
+    formatted_progname_string =  "[#{formatted_progname}]"
 
 
     # formatted_time = time.strftime("%y-%m-%d %H:%M:%S.") << time.usec.to_s[0..2].rjust(3)
@@ -33,7 +35,7 @@ LOGGER.formatter = proc do |severity, time, progname, msg|
     msg.strip! rescue StandardError
 
     #"\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\033[0m] #{msg.strip} (pid:#{$$})\n"
-    m = "\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\033[0m] #{msg}"
+    m = "\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\033[0m] #{formatted_progname_string} #{msg}"
     m.concat("\n") unless severity == Logger::UNKNOWN
   end
 

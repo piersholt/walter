@@ -19,6 +19,15 @@ class Bytes
     map(&:h).join(' ').to_s
   end
 
+  def inspect
+    "<Bytes> ".concat(map(&:h).join(' '))
+  end
+
+  def to_s
+    string_buffer = map(&:h).join(' ').to_s
+    string_buffer.prepend("<Bytes> ")
+  end
+
   # ************************************************************************* #
   #                                  ARRAY
   # ************************************************************************* #
