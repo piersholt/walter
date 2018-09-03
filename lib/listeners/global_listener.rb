@@ -39,8 +39,9 @@ class GlobalListener
       case action
       when EXIT
         LOGGER.warn "[Global Listener] Exiting! Reason: #{properties[:reason]}"
-        LOGGER.warn "[Global Listener] Hiding display output..."
+        
         # hide the message output as it clutters the exit log messages
+        LOGGER.warn "[Global Listener] Hiding display output..."
         @display_handler.update(action, properties)
         LOGGER.warn "[Global Listener] Closing log files..."
         @data_logging_handler.update(action, properties)
