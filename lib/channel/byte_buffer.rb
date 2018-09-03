@@ -44,7 +44,7 @@ class Channel
 
     def take_unshifted_bytes(shift_result, number_of_bytes)
       LOGGER.debug("#{self.class}#take_unshifted_bytes(#{number_of_bytes})")
-      LOGGER.debug("Unshift buffer size = #{@unshift_buffer.size}")
+      LOGGER.debug("#{self.class} has #{@unshift_buffer.size} available unshifted bytes.")
       required_bytes = number_of_bytes
       return false if @unshift_buffer.empty?
       until @unshift_buffer.empty? || required_bytes.zero?
@@ -52,7 +52,7 @@ class Channel
         shift_result.push(unshifted_byte)
         required_bytes -= 1
       end
-      LOGGER.debug("Unshifted bytes: #{shift_result.size}")
+      LOGGER.debug("#{self.class} had #{shift_result.size} unshifted bytes taken.")
       true
     end
   end
