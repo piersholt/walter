@@ -58,8 +58,24 @@ class FrameTail < Bytes
     self[0..-2]
   end
 
+  # ************************************************************************* #
+  #                                 BYTE MAP
+  # ************************************************************************* #
+
   def fcs
     self[-1]
+  end
+
+  def to
+    self[0]
+  end
+
+  def command
+    self[1]
+  end
+
+  def arguments
+    length > 3 ? self[2..-2] : []
   end
 
   private
