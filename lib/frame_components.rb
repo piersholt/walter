@@ -1,5 +1,11 @@
 require 'bytes'
 
+class HeaderError  < StandardError
+end
+
+class TailError < StandardError
+end
+
 class FrameHeader < Bytes
   VALID_SIZE = (2..2)
 
@@ -7,7 +13,7 @@ class FrameHeader < Bytes
   LENGTH_INDEX = 1
 
   def initialize(bytes)
-    # validate_args(bytes)
+    validate_args(bytes)
     super(bytes)
   end
 
@@ -20,7 +26,7 @@ class FrameHeader < Bytes
   def validate_args(bytes)
     raise ArgumentError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
     tail_length_value = bytes[LENGTH_INDEX].d
-    raise ArgumentError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
+    raise HeaderError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
   end
 end
 
