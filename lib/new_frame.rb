@@ -1,4 +1,5 @@
 require 'bytes'
+require 'frame_components'
 
 class NewFrame < Bytes
   HEADER_LENGTH = 2
