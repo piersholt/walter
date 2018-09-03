@@ -16,11 +16,7 @@ class Channel
   attr_reader :input_buffer
 
   def initialize(path, options = NO_OPTIONS)
-    path = DEFAULT_PATH if path.nil?
-    path = ::File.expand_path(path)
-    file_type_handler = evaluate_stream_type(path)
-    LOGGER.debug("File handler: #{file_type_handler}")
-    @stream = file_type_handler.new(path, options)
+    @stream = parse_path(path, options)
 
     @input_buffer = ByteBuffer.new
 
@@ -53,6 +49,15 @@ class Channel
   end
 
   private
+
+  def parse_path(path, options)
+    LOGGER.debug("#{self.class}#parse_path(#{path}, #{options})")
+    path = DEFAULT_PATH if path.nil?
+    path = ::File.expand_path(path)
+    file_type_handler = evaluate_stream_type(path)
+    LOGGER.debug("File handler: #{file_type_handler}")
+    file_type_handler.new(path, options)
+  end
 
   def evaluate_stream_type(path)
     LOGGER.debug("Evaluating file type of: #{path}")
