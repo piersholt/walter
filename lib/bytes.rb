@@ -23,12 +23,12 @@ class Bytes
   #                                  ARRAY
   # ************************************************************************* #
 
-  def +(other)
-    new_byte_strean = self.class.new
-    result = @bytes[0..-1] + other[0..-1]
-    new_byte_strean.wholesale(result)
-    new_byte_strean
-  end
+  # def +(other)
+  #   new_byte_strean = Bytes.new
+  #   result = @bytes[0..-1] + other[0..-1]
+  #   new_byte_strean.wholesale(result)
+  #   new_byte_strean
+  # end
 
   # ************************************************************************* #
   #                               COLLECTION
