@@ -18,7 +18,7 @@ class FrameHeader < Bytes
   end
 
   def tail_length
-    @bytes[1].d
+    @self[1].d
   end
 
   private
@@ -39,11 +39,11 @@ class FrameTail < Bytes
   end
 
   def without_fcs
-    @bytes[0..-2]
+    self[0..-2]
   end
 
   def fcs
-    @bytes[-1].d
+    self[-1]
   end
 
   private
