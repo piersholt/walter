@@ -8,11 +8,12 @@ require 'pry'
 
 # local dependencies
 require 'byte'
+require 'bytes'
 require 'frame'
 require 'message'
 
 require 'channel'
-require 'receiver'
+require 'new_receiver'
 require 'application_layer'
 require 'listeners/global_listener'
 
@@ -25,7 +26,7 @@ class Walter
   def initialize
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
-    @receiver = Receiver.new(@channel.input_buffer)
+    @receiver = NewReceiver.new(@channel.input_buffer)
     @application_layer = ApplicationLayer.new
 
     @listener = GlobalListener.new(@application_layer)

@@ -27,7 +27,7 @@ class Channel
       raise ::ArgumentError, 'IOBuffer does not support single object shift' if
         number_of_bytes <= 1
 
-      shift_result = []
+      shift_result = Bytes.new
 
       # Empty unshift buffer before reading IO
       take_unshifted_bytes(shift_result, number_of_bytes)
