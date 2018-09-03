@@ -3,13 +3,14 @@ require 'new_frame'
 
 class NewReceiver
   PROG_NAME = 'Receiver'.freeze
-  THREAD_NAME_READ = 'Receiver Read'
-  PROCESS_SYNC = 'Receiver / Sync'
-  PROCESS_SYNC_HEADER = 'Receiver / Header'
-  PROCESS_SYNC_TAIL = 'Receiver / Tail'
-  PROCESS_SYNC_VALIDATION = 'Receiver / Validate'
-  PROCESS_SYNC_ERROR = 'Receiver / Error'
-  PROCESS_SYNC_SHIFT = 'Receiver / Unshift!'
+  THREAD_NAME_READ = 'Receiver (Read)'
+
+  SYNC = 'Sync /'
+  SYNC_HEADER = 'Header /'
+  SYNC_TAIL = 'Tail /'
+  SYNC_VALIDATION = 'Validate /'
+  SYNC_ERROR = 'Error /'
+  SYNC_SHIFT = 'Unshift! /'
 
   include Observable
 
@@ -60,7 +61,7 @@ class NewReceiver
         shift_count = 1
         # binding.pry
         loop do
-          LOGGER.debug(PROCESS_SYNC) { "##{shift_count}. Begin." }
+          LOGGER.debug(PROG_NAME) { "#{SYNC} ##{shift_count}. Begin." }
           shift_count
           new_frame = NewFrame.new
 
@@ -69,48 +70,48 @@ class NewReceiver
             #                              FRAME HEADER
             # ************************************************************************* #
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Input Buffer: #{buffer.size}." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC} Byte Buffer size: #{buffer.size}." }
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Trying to shift #{Frame::HEADER_LENGTH} bytes." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Trying to shift #{Frame::HEADER_LENGTH} bytes." }
             header_bytes = buffer.shift(Frame::HEADER_LENGTH)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Shifted bytes: #{header_bytes}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Shifted bytes: #{header_bytes}" }
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Setting new frame header." }
+            # LOGGER.debug(SYNC_HEADER) { "Setting new frame header." }
             new_frame.set_header(header_bytes)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "New frame header set: #{new_frame.header}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} New frame header set: #{new_frame.header}" }
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Getting remaining frame bytes from header." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Getting remaining frame bytes from header." }
             remaining_frame_bytes = new_frame.header.tail_length
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Remaining frame bytes: #{remaining_frame_bytes}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Remaining frame bytes: #{remaining_frame_bytes}" }
 
             # ************************************************************************* #
             #                              FRAME TAIL
             # ************************************************************************* #
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Input Buffer: #{buffer.size}." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC} Input Buffer: #{buffer.size}." }
 
-            LOGGER.debug(PROCESS_SYNC_TAIL) { "Shifting #{remaining_frame_bytes} bytes." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_TAIL} Shifting #{remaining_frame_bytes} bytes." }
             tail_bytes = buffer.shift(remaining_frame_bytes)
-            LOGGER.debug(PROCESS_SYNC_TAIL) { "Shifted bytes: #{tail_bytes}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_TAIL} Shifted bytes: #{tail_bytes}" }
 
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Setting new frame tail." }
+            # LOGGER.debug(SYNC_TAIL) { "Setting new frame tail." }
             new_frame.set_tail(tail_bytes)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "New frame tail set: #{new_frame.tail}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_TAIL} New frame tail set: #{new_frame.tail}" }
 
             # ************************************************************************* #
             #                             FRAME CHECKSUM
             # ************************************************************************* #
 
-            LOGGER.debug(PROCESS_SYNC_VALIDATION) { "Validating new frame." }
+            LOGGER.debug(PROG_NAME) { "#{SYNC_VALIDATION} Validating new frame." }
             raise ChecksumError unless new_frame.valid?
 
             # ************************************************************************* #
             #                                FINISH
             # ************************************************************************* #
 
-            LOGGER.debug(PROCESS_SYNC) { "Valid! #{new_frame}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC} Valid! #{new_frame}" }
 
-            LOGGER.debug(PROCESS_SYNC) { "Publishing event: #{Event::FRAME_VALIDATED}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC} Publishing event: #{Event::FRAME_VALIDATED}" }
             changed
             notify_observers(Event::FRAME_VALIDATED, frame: new_frame)
           rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
@@ -122,35 +123,35 @@ class NewReceiver
             e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)
           end
-          LOGGER.debug(PROCESS_SYNC) { "##{shift_count}. End." }
+          LOGGER.debug(PROG_NAME) { "#{SYNC} ##{shift_count}. End." }
           shift_count += 1
         end
       rescue Exception => e
-        LOGGER.error(PROCESS_SYNC_ERROR) { "Shift thread exception..! #{e}" }
+        LOGGER.error(PROG_NAME) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
         e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
-      LOGGER.warn(PROCESS_SYNC_ERROR) { "#{self.class} thread is finished..!" }
+      LOGGER.warn(PROG_NAME) { "#{self.class} thread is finished..!" }
     end # thread_w
   end
 
-  def clean_up(buffer, frame)
-    LOGGER.debug(PROCESS_SYNC_ERROR) { "Cleaning up..." }
+  def clean_up(buffer, new_frame)
+    LOGGER.debug(PROG_NAME) { "#{SYNC_ERROR} #clean_up" }
 
-    LOGGER.debug(PROCESS_SYNC_ERROR) { "Publishing event: #{Event::FRAME_FAILED}" }
-    changed
-    notify_observers(Event::FRAME_FAILED, frame: frame)
+    # LOGGER.debug(SYNC_ERROR) { "Publishing event: #{Event::FRAME_FAILED}" }
+    # changed
+    # notify_observers(Event::FRAME_FAILED, frame: new_frame)
 
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Bit Shift!" }
+    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Shifting one byte." }
 
     byte_to_discard = new_frame[0]
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Discard: #{byte_to_discard}." }
+    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Discard: #{byte_to_discard}." }
 
     bytes_to_unshift = new_frame[1..-1]
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Unshift: #{bytes_to_unshift}" }
+    bytes_to_unshift = Bytes.new(bytes_to_unshift)
+    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Unshift: #{bytes_to_unshift}." }
 
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Unshifting..." }
-    result = buffer.unshift(*bytes_to_unshift)
-    LOGGER.debug(PROCESS_SYNC_SHIFT) { "Unshifting result: #{result}" }
+    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Unshifting..." }
+    buffer.unshift(*bytes_to_unshift)
   end
 end
