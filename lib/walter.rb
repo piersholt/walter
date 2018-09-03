@@ -46,9 +46,15 @@ class Walter
     SessionHandler.i.messages
   end
 
+  def news
+    Thread.list.each_with_index do |t, i|
+      puts "Thread #{i} #{t[:name]}: #{t.status}"
+    end
+  end
+
   def launch
     LOGGER.debug "#{self.class}#launch"
-    Thread.current[:name] = 'App'
+    Thread.current[:name] = 'Walter (Main)'
     begin
       # TODO: menu to facilitate common features...
       raise NotImplementedError, 'menu not implemented. fallback to CLI...'
