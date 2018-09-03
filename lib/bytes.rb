@@ -36,16 +36,6 @@ class Bytes
     @bytes = new_bytes
   end
 
-  # Testing if forwarded methods work internally... they do!
-  def test
-    @bytes = [1,2,3]
-    self[0]
-  end
-
-  def as_d
-    @bytes.map(&:h)
-  end
-
   # ************************************************************************* #
   #                               FORMATTING
   # ************************************************************************* #
