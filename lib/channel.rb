@@ -15,8 +15,13 @@ class Channel
 
   attr_reader :input_buffer
 
+  # The interface should protect the channel from the implementation.
+  # i shouldn't be forwarding methods.. that's what bit me with rubyserial
+  # i was tried to the API of the library.. and not protected for it
+  # it's responsible for a consistent APi. how #read is implemented
+
   def initialize(path, options = NO_OPTIONS)
-    @stream = parse_path(path, options)
+    @interface = parse_path(path, options)
 
     @input_buffer = ByteBuffer.new
 
@@ -35,13 +40,13 @@ class Channel
   # NOTE this is a much better example of state, in which channel is either
   # online or offline- in saying that.. it's not implemented well, at, all.
   def offline?
-    if @stream.instance_of?(Channel::File)
+    if @interface.instance_of?(Channel::File)
       changed
-      notify_observers(Event::BUS_OFFLINE, @stream.class)
+      notify_observers(Event::BUS_OFFLINE, @interface.class)
       return true
-    elsif @stream.instance_of?(Channel::Device)
+    elsif @interface.instance_of?(Channel::Device)
       changed
-      notify_observers(Event::BUS_ONLINE, @stream.class)
+      notify_observers(Event::BUS_ONLINE, @interface.class)
       return false
     else
       raise StandardError, 'no status!'
@@ -104,7 +109,7 @@ class Channel
       begin
         LOGGER.debug("Channel READ thread starting...")
         # binding.pry
-        LOGGER.debug "Stream / Position: #{@stream.pos}"
+        LOGGER.debug "Stream / Position: #{@interface.pos}"
 
         read_byte = nil
         parsed_byte = nil
@@ -116,7 +121,8 @@ class Channel
             parsed_byte = nil
             # readpartial will block until 1 byte is avaialble. This will
             # cause the thread to sleep
-            read_byte = @stream.readpartial(1)
+
+            read_byte = @interface.readpartial(1)
 
             # when using ARGF to concatonate multiple log files
             # readpartial will return an empty string to denote the end
@@ -131,14 +137,14 @@ class Channel
             #   1. PendingData
             #   2. NoData
             changed
-            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, pos: @stream.pos)
+            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, pos: @interface.pos)
 
             @input_buffer.push(parsed_byte)
           rescue EncodingError => e
-            if @stream.class == FILE_TYPE_HANDLERS[:file]
+            if @interface.class == FILE_TYPE_HANDLERS[:file]
               LOGGER.warn("ARGF EOF. Files read: #{offline_file_count}.")
               offline_file_count += 1
-            elsif @stream.class == FILE_TYPE_HANDLERS[:tty]
+            elsif @interface.class == FILE_TYPE_HANDLERS[:tty]
               LOGGER.error("#readpartial returned nil. Stream type: #{}.")
             end
             # LOGGER.error(")
