@@ -29,6 +29,7 @@ class DisplayHandler
   def update(action, properties)
     case action
     when EXIT
+      LOGGER.info("DisplayHandler") { "Exit: Disabling output." }
       # hide the message output as it clutters the exit log messages
       disable
     when MESSAGE_RECEIVED
@@ -41,12 +42,12 @@ class DisplayHandler
   # ************************************************************************* #
 
   def disable
-    LOGGER.debug("DisplayHandler") { "Disable output." }
+    LOGGER.info("DisplayHandler") { "Outout disabled." }
     @output_enabled = false
   end
 
   def enable
-    LOGGER.debug("DisplayHandler") { "Enabled output." }
+    LOGGER.debug("DisplayHandler") { "Output enabled." }
     @output_enabled = true
   end
 

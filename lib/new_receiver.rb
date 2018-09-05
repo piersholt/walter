@@ -20,7 +20,7 @@ class NewReceiver
   end
 
   def off
-    LOGGER.debug "#{self.class}#off"
+    LOGGER.debug(PROG_NAME) { "#{self.class}#off" }
     close_threads
   end
 
@@ -43,12 +43,14 @@ class NewReceiver
 
   def close_threads
     LOGGER.debug "#{self.class}#close_threads"
+    LOGGER.info(PROG_NAME) { "Closing threads." }
+    LOGGER.info(PROG_NAME) { "#{@threads}" }
     threads = @threads.list
     threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Currently: #{t.status}"
+      LOGGER.info(PROG_NAME) { "Thread #{i+1}: #{t[:name]} / Currently: #{t.status}" }
       # LOGGER.debug "result = #{t.exit}"
       t.exit.join
-      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Still alive? #{t.alive?}"
+      LOGGER.info(PROG_NAME) { "Thread #{i+1}: #{t[:name]} / Stopped? #{t.stop?}" }
     end
   end
 
@@ -115,10 +117,10 @@ class NewReceiver
             changed
             notify_observers(Event::FRAME_VALIDATED, frame: new_frame)
           rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
-            LOGGER.error(e)
-            e.backtrace.each { |l| LOGGER.error(l) }
+            LOGGER.warn(SYNC_ERROR) { e }
+            # e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)
-          rescue StandardError, TailError, ChecksumError => e
+          rescue StandardError, TailError => e
             LOGGER.error(e)
             e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)

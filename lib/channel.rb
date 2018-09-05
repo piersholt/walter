@@ -85,19 +85,22 @@ class Channel
 
   def close_threads
     LOGGER.debug "#{self.class}#close_threads"
+    LOGGER.info('Channel') { "Closing threads." }
+    LOGGER.info("Channel") { "#{@threads}" }
     threads = @threads.list
     threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1}: #{t[:name]} / Currently: #{t.status}"
+      LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]} / Currently: #{t.status}" }
       # LOGGER.debug "result = #{t.exit}"
       t.exit.join
-      LOGGER.debug "Thread ##{i+1}: #{t[:name]}  / Still alive? #{t.status}"
+      LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]}  / Stopped? #{t.stop?}" }
     end
   end
 
   def thread_read
     LOGGER.debug("#{self.class}#thread_read")
     Thread.new do
-      Thread.current[:name] = 'Channel Read'
+      Thread.current[:name] = 'Channel (Read)'
+
       begin
         LOGGER.debug("Channel READ thread starting...")
         # binding.pry
@@ -152,7 +155,7 @@ class Channel
         LOGGER.error("Read thread exception..! #{e}")
         e.backtrace.each { |line| LOGGER.error line }
       end
-      LOGGER.error("#{self.class} thread is finished..!")
+      LOGGER.warn("#{self.class} thread is finished..!")
     end
   end
 

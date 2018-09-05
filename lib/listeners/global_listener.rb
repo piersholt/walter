@@ -38,20 +38,20 @@ class GlobalListener
     begin
       case action
       when EXIT
-        LOGGER.warn "[Global Listener] EXIT! Reason: #{properties[:reason]}"
+        LOGGER.info("Listener") {  "Exit: Reason: #{properties[:reason]}" }
 
-        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class}" }
+        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class}" }
         @display_handler.update(action, properties)
-        LOGGER.warn("Listener") { "Delegate: #{@display_handler.class} complete!" }
+        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class} complete!" }
 
-        LOGGER.warn("Listener") { "Delegate: #{@data_logging_handler.class}" }
+        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class}" }
         @data_logging_handler.update(action, properties)
-        LOGGER.warn("Listener") { "Delegate: #{@data_logging_handler.class} complete!" }
+        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class} complete!" }
       when BUS_ONLINE
-        LOGGER.info("[Global Listener] BUS online!")
+        LOGGER.info("Listener") { "Bus Online!" }
         @data_logging_handler.update(action, properties)
       when BUS_OFFLINE
-        LOGGER.warn("[Global Listener] BUS offline!")
+        LOGGER.warn("Listener") { "Bus Offline!" }
         @data_logging_handler.update(action, properties)
       when BYTE_RECEIVED
         @data_logging_handler.update(action, properties)

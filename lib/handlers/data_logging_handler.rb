@@ -16,15 +16,17 @@ class DataLoggingHandler
   def update(action, properties)
     case action
     when BUS_ONLINE
+      LOGGER.info("DataLoggingHandler") { "Bus Online! Enable logging." }
       enable_logging
     when BUS_OFFLINE
+      LOGGER.info("DataLoggingHandler") { "Bus Offline! Disbaling logging." }
       disable_logging
     when BYTE_RECEIVED
       log_byte(properties[:read_byte])
     when FRAME_VALIDATED
       log_frame(properties[:frame])
     when EXIT
-      LOGGER.warn("DataLoggingHandler") { " Closing log files..." }
+      LOGGER.info("DataLoggingHandler") { "Exit: Closing log files." }
       close_log_files
     end
   end
@@ -65,20 +67,22 @@ class DataLoggingHandler
   end
 
   def disable_logging
-    LOGGER.warn("DataLogger") { 'Byte stream logging disabled!' }
+    LOGGER.debug("DataLoggingHandler") { 'Logging disabled!' }
     @stream_logging = false
   end
 
   def enable_logging
-    LOGGER.warn("DataLogger") { 'Byte stream logging enabled!' }
+    LOGGER.debug("DataLoggingHandler") { 'Logging enabled!' }
     @stream_logging = true
   end
 
   def close_log_files
-    LOGGER.debug("DataLoggingHandler") { 'disabling logging' }
     disable_logging
-    LOGGER.warn("DataLoggingHandler") { 'closing log files' }
+    LOGGER.debug("DataLoggingHandler") { "Closing binary stream log #{byte_log.path}." }
     byte_log.close
+    LOGGER.info("DataLoggingHandler") { "#{byte_log.path} closed." }
+    LOGGER.debug("DataLoggingHandler") { "Closing frame log #{frame_log.path}." }
     frame_log.close
+    LOGGER.info("DataLoggingHandler") { "#{frame_log.path} closed." }
   end
 end

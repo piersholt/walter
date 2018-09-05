@@ -72,15 +72,18 @@ class Walter
       start
       binding.pry
 
-      LOGGER.warn("Walter") { "Publishing event: #{Event::EXIT}" }
+      LOGGER.info("Walter") { "Walter is closing!" }
+
+      LOGGER.info("Walter") { "Publishing event: #{Event::EXIT}" }
       changed
       notify_observers(Event::EXIT, {reason: 'Debug exiting'})
-      LOGGER.warn("Walter") { "Subscribers updated! #{Event::EXIT}" }
+      LOGGER.info("Walter") { "Subscribers updated! #{Event::EXIT}" }
 
-      LOGGER.warn("Walter") { "Stop!" }
+      LOGGER.info("Walter") { "Turning stack off ⛔️" }
       stop
-      LOGGER.warn("Walter") { "Halted...👍" }
+      LOGGER.info("Walter") { "Stack is off 👍" }
 
+      LOGGER.info("Walter") { "See you anon ✌️" }
       return -1
     rescue Interrupt
       LOGGER.debug 'Interrupt signal caught.'
