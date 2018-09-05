@@ -36,6 +36,8 @@ class Channel
     @threads.add(@read_thread)
     @test_thread = thread_test
     @threads.add(@test_thread)
+    @thread_monitor = thread_monitor
+    @threads.add(@thread_monitor)
   end
 
   def off
@@ -103,6 +105,23 @@ class Channel
       # LOGGER.debug "result = #{t.exit}"
       t.exit.join
       LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]}  / Stopped? #{t.stop?}" }
+    end
+  end
+
+  def chillin?
+    @read_thread.stop? ? true : false
+  end
+
+  # A thread that monitors the stream.....
+  # fires events: bus_idle, bus_busy, bus_active
+  # probably not... use thoes to stop write... do both
+  # it colud be based on.... thread_read sleep timout
+  def thread_monitor
+    Thread.new do
+      loop do
+        LOGGER.fatal('Read Active. BUS busy!') unless chillin?
+        sleep(0.01)
+      end
     end
   end
 
