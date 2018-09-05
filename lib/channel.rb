@@ -36,8 +36,8 @@ class Channel
     @threads.add(@read_thread)
     @test_thread = thread_test
     @threads.add(@test_thread)
-    @thread_monitor = thread_monitor
-    @threads.add(@thread_monitor)
+    @thread_activity_monitor = thread_activity_monitor
+    @threads.add(@thread_activity_monitor)
   end
 
   def off
@@ -108,20 +108,70 @@ class Channel
     end
   end
 
-  def chillin?
+  def idle?
     @read_thread.stop? ? true : false
+  end
+
+  def busy?
+    @read_thread.stop? ? false : true
   end
 
   # A thread that monitors the stream.....
   # fires events: bus_idle, bus_busy, bus_active
   # probably not... use thoes to stop write... do both
   # it colud be based on.... thread_read sleep timout
-  def thread_monitor
+  def thread_activity_monitor
     Thread.new do
+      start_time = nil
+      min_idle_time_reached = nil
+
+      min_idle_duration = 3
+
+      # While bus is idle, a transmission can begin at any time
+      # A byte takes 11 baud times, thus the intervals between bytes
+      # are a minimum of 1/6982.. sleeping for a shorter duration is likely
+      # to be ineffective?
+      idle_interval = 1/6982
+      busy_interval = 1/(9600/11)
+
+      # loop do
+      #   puts busy?
+      #   sleep(busy_interval)
+      # end
+
       loop do
-        LOGGER.fatal('Read Active. BUS busy!') unless chillin?
-        sleep(0.01)
+        until idle? do
+          # puts 'busy!'
+          sleep(busy_interval)
+        end
+
+        LOGGER.fatal('BUS idle!')
+
+        start_time = Time.now
+
+        until busy? || min_idle_time_reached do
+          # puts 'waiting for busy or min_idle!'
+          elapsed_time = Time.now - start_time
+          min_idle_time_reached = elapsed_time > min_idle_duration ? true : false
+          sleep(idle_interval)
+        end
+
+        LOGGER.fatal('BUS available!') if min_idle_time_reached
+        while idle? do
+          # puts 'idle! waiting until busy'
+          sleep(idle_interval)
+        end
+
+        min_idle_time_reached = false
+
+        LOGGER.fatal('BUS busy!')
+
+        # break
+
+        # puts 'starting the loop over again....'
       end
+
+      puts 'game over man, game over!'
     end
   end
 
