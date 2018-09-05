@@ -26,7 +26,10 @@ class Walter
   def initialize
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
+
     @receiver = NewReceiver.new(@channel.input_buffer)
+    # @transmitter = Transmitter.new(@channel.output_buffer)
+
     @application_layer = ApplicationLayer.new
 
     @listener = GlobalListener.new(@application_layer)
