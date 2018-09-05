@@ -13,7 +13,7 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
-  attr_reader :input_buffer, :output_buffer, :read_thread
+  attr_reader :input_buffer, :output_buffer, :read_thread, :test_thread
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -34,6 +34,8 @@ class Channel
 
     @read_thread = thread_read
     @threads.add(@read_thread)
+    @test_thread = thread_test
+    @threads.add(@test_thread)
   end
 
   def off
@@ -101,6 +103,20 @@ class Channel
       # LOGGER.debug "result = #{t.exit}"
       t.exit.join
       LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]}  / Stopped? #{t.stop?}" }
+    end
+  end
+
+  def thread_test
+    LOGGER.debug("#{self.class}#thread_test")
+    Thread.new do
+      Thread.current[:name] = 'Channel (Test)'
+
+      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / Sleeping..." }
+      sleep(5)
+      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / Alive!" }
+      # Thread.join
+      # Thread.stop
+      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / I shoudn't be here?" }
     end
   end
 
