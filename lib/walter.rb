@@ -47,9 +47,11 @@ class Walter
   end
 
   def news
+    puts "THREADS:"
     Thread.list.each_with_index do |t, i|
-      puts "Thread #{i} #{t[:name]}: #{t.status}"
+      LOGGER.info("#{i}. #{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
     end
+    true
   end
 
   def launch

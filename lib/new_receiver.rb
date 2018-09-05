@@ -14,6 +14,8 @@ class NewReceiver
 
   include Observable
 
+  attr_reader :threads
+
   def initialize(input_buffer)
     @input_buffer = input_buffer
     @threads = ThreadGroup.new
