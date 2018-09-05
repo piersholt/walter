@@ -13,7 +13,7 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
-  attr_reader :input_buffer
+  attr_reader :input_buffer, :read_thread
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -30,7 +30,9 @@ class Channel
 
   def on
     offline?
-    @threads.add(thread_read)
+
+    @read_thread = thread_read
+    @threads.add(@read_thread)
   end
 
   def off
