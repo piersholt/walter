@@ -13,7 +13,7 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
-  attr_reader :input_buffer, :read_thread
+  attr_reader :input_buffer, :output_buffer, :read_thread
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -24,6 +24,7 @@ class Channel
     @interface = parse_path(path, options)
 
     @input_buffer = ByteBuffer.new
+    @output_buffer = Queue.new
 
     @threads = ThreadGroup.new
   end
