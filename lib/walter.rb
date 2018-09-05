@@ -107,13 +107,13 @@ class Walter
   def stop
     LOGGER.debug "#{self.class}#stop"
 
-    LOGGER.debug("Walter") { "Switching off Receiver..." }
+    LOGGER.info("Walter") { "Switching off Receiver..." }
     @receiver.off
-    LOGGER.debug("Walter") { "Receiver is off! 👍" }
+    LOGGER.info("Walter") { "Receiver is off! 👍" }
 
-    LOGGER.debug("Walter") { "Switching off Channel..." }
+    LOGGER.info("Walter") { "Switching off Channel..." }
     @channel.off
-    LOGGER.debug("Walter") { "Channel is off! 👍" }
+    LOGGER.info("Walter") { "Channel is off! 👍" }
   end
 
   private
