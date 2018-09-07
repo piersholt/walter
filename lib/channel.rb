@@ -21,7 +21,7 @@ class Channel
   # it's responsible for a consistent APi. how #read is implemented
 
   def initialize(path, options = NO_OPTIONS)
-    @interface = parse_path(path, options)
+    @stream = parse_path(path, options)
 
     @input_buffer = ByteBuffer.new
     @output_buffer = Queue.new
@@ -32,7 +32,7 @@ class Channel
   def on
     offline?
 
-    @read_thread = thread_read
+    @read_thread = thread_populate_input_buffer(@stream, @input_buffer)
     @threads.add(@read_thread)
     @test_thread = thread_test
     @threads.add(@test_thread)
@@ -47,13 +47,13 @@ class Channel
   # NOTE this is a much better example of state, in which channel is either
   # online or offline- in saying that.. it's not implemented well, at, all.
   def offline?
-    if @interface.instance_of?(Channel::File)
+    if @stream.instance_of?(Channel::File)
       changed
-      notify_observers(Event::BUS_OFFLINE, @interface.class)
+      notify_observers(Event::BUS_OFFLINE, @stream.class)
       return true
-    elsif @interface.instance_of?(Channel::Device)
+    elsif @stream.instance_of?(Channel::Device)
       changed
-      notify_observers(Event::BUS_ONLINE, @interface.class)
+      notify_observers(Event::BUS_ONLINE, @stream.class)
       return false
     else
       raise StandardError, 'no status!'
@@ -119,7 +119,7 @@ class Channel
   # A thread that monitors the stream.....
   # fires events: bus_idle, bus_busy, bus_active
   # probably not... use thoes to stop write... do both
-  # it colud be based on.... thread_read sleep timout
+  # it colud be based on.... thread_populate_input_buffer sleep timout
   def thread_activity_monitor
     Thread.new do
       start_time = nil
@@ -189,15 +189,15 @@ class Channel
     end
   end
 
-  def thread_read
-    LOGGER.debug("#{self.class}#thread_read")
+  def thread_populate_input_buffer(stream, input_buffer)
+    LOGGER.debug("#{self.class}#thread_populate_input_buffer")
     Thread.new do
       Thread.current[:name] = 'Channel (Read)'
 
       begin
         LOGGER.debug("Channel READ thread starting...")
         # binding.pry
-        LOGGER.debug "Stream / Position: #{@interface.pos}"
+        LOGGER.debug "Stream / Position: #{stream.pos}"
 
         read_byte = nil
         parsed_byte = nil
@@ -210,7 +210,8 @@ class Channel
             # readpartial will block until 1 byte is avaialble. This will
             # cause the thread to sleep
 
-            read_byte = @interface.readpartial(1)
+            read_byte = stream.readpartial(1)
+            sleep(0.5)
 
             # when using ARGF to concatonate multiple log files
             # readpartial will return an empty string to denote the end
@@ -225,14 +226,14 @@ class Channel
             #   1. PendingData
             #   2. NoData
             changed
-            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, pos: @interface.pos)
+            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, pos: stream.pos)
 
-            @input_buffer.push(parsed_byte)
+            input_buffer.push(parsed_byte)
           rescue EncodingError => e
-            if @interface.class == FILE_TYPE_HANDLERS[:file]
+            if stream.class == FILE_TYPE_HANDLERS[:file]
               LOGGER.warn("ARGF EOF. Files read: #{offline_file_count}.")
               offline_file_count += 1
-            elsif @interface.class == FILE_TYPE_HANDLERS[:tty]
+            elsif stream.class == FILE_TYPE_HANDLERS[:tty]
               LOGGER.error("#readpartial returned nil. Stream type: #{}.")
             end
             # LOGGER.error(")
