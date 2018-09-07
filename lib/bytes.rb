@@ -3,6 +3,7 @@ class Bytes
   extend Forwardable
 
   FORWARD_MESSAGES = Array.instance_methods(false)
+  FORWARD_MESSAGES << :reduce
   FORWARD_MESSAGES.each do |fwrd_message|
     def_delegator :@bytes, fwrd_message
   end
