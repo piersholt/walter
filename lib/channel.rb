@@ -41,7 +41,7 @@ class Channel
   end
 
   def off
-    LOGGER.debug "#{self.class}#off"
+    LOGGER.debug('Channel') { "#off" }
     close_threads
   end
   # NOTE this is a much better example of state, in which channel is either
@@ -63,24 +63,24 @@ class Channel
   private
 
   def parse_path(path, options)
-    LOGGER.debug("#{self.class}#parse_path(#{path}, #{options})")
+    LOGGER.debug('Channel') { "#parse_path(#{path}, #{options})" }
     path = DEFAULT_PATH if path.nil?
     path = ::File.expand_path(path)
     file_type_handler = evaluate_stream_type(path)
-    LOGGER.debug("File handler: #{file_type_handler}")
+    LOGGER.debug('Channel') { "File handler: #{file_type_handler}" }
     file_type_handler.new(path, options)
   end
 
   def evaluate_stream_type(path)
-    LOGGER.debug("Evaluating file type of: #{path}")
+    LOGGER.debug('Channel') { "Evaluating file type of: #{path}" }
     file_type = ::File.ftype(path)
-    LOGGER.debug("#{path} of type: #{file_type}")
+    LOGGER.debug('Channel') { "#{path} of type: #{file_type}" }
     case file_type
     when FILE_TYPE[:tty]
-      LOGGER.debug("#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}")
+      LOGGER.debug('Channel') { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}" }
       FILE_TYPE_HANDLERS[:tty]
     when FILE_TYPE[:file]
-      LOGGER.debug("#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}")
+      LOGGER.debug('Channel') { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
       FILE_TYPE_HANDLERS[:file]
     else
       raise IOError, "Unrecognised file type: #{File.ftype(path)}"
@@ -96,7 +96,7 @@ class Channel
   # Each would have a different way of handling #exit()
 
   def close_threads
-    LOGGER.debug "#{self.class}#close_threads"
+    LOGGER.debug('Channel') { "#{self.class}#close_threads" }
     LOGGER.info('Channel') { "Closing threads." }
     LOGGER.info("Channel") { "#{@threads}" }
     threads = @threads.list
@@ -190,18 +190,18 @@ class Channel
   end
 
   def thread_populate_input_buffer(stream, input_buffer)
-    LOGGER.debug("#{self.class}#thread_populate_input_buffer")
+    LOGGER.debug('Channel') { "#thread_populate_input_buffer" }
     Thread.new do
-      Thread.current[:name] = 'Channel (Read)'
+      thread_name = 'Thread (Input Buffer)'
+      tn = thread_name
+      Thread.current[:name] = thread_name
 
       begin
-        LOGGER.debug("Channel READ thread starting...")
-        # binding.pry
-        LOGGER.debug "Stream / Position: #{stream.pos}"
-
         read_byte = nil
         parsed_byte = nil
         offline_file_count = 1
+
+        # LOGGER.debug "Stream / Position: #{stream.pos}"
 
         loop do
           begin
@@ -231,7 +231,7 @@ class Channel
             input_buffer.push(parsed_byte)
           rescue EncodingError => e
             if stream.class == FILE_TYPE_HANDLERS[:file]
-              LOGGER.warn("ARGF EOF. Files read: #{offline_file_count}.")
+              LOGGER.warn('Channel') { "ARGF EOF. Files read: #{offline_file_count}." }
               offline_file_count += 1
             elsif stream.class == FILE_TYPE_HANDLERS[:tty]
               LOGGER.error("#readpartial returned nil. Stream type: #{}.")
@@ -245,12 +245,12 @@ class Channel
           end
         end
       rescue EOFError
-        LOGGER.warn('Stream reached EOF!')
-      rescue Exception => e
-        LOGGER.error("Read thread exception..! #{e}")
-        e.backtrace.each { |line| LOGGER.error line }
+        LOGGER.warn('Channel') { "#{tn}: Stream reached EOF!" }
+      rescue StandardError => e
+        LOGGER.error('Channel') { "#{tn}: #{e}" }
+        e.backtrace.each { |line| LOGGER.error('Channel') { line } }
       end
-      LOGGER.warn("#{self.class} thread is finished..!")
+      LOGGER.warn('Channel') { "#{tn} thread is ending." }
     end
   end
 
