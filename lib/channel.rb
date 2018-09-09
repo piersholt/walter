@@ -40,8 +40,6 @@ class Channel
     LOGGER.debug('Channel') { "#off" }
     close_threads
   end
-  # NOTE this is a much better example of state, in which channel is either
-  # online or offline- in saying that.. it's not implemented well, at, all.
   def offline?
     if @stream.instance_of?(Channel::File)
       changed
@@ -123,7 +121,7 @@ class Channel
   def thread_populate_input_buffer(stream, input_buffer)
     LOGGER.debug('Channel') { "#thread_populate_input_buffer" }
     Thread.new do
-      thread_name = 'Thread (Input Buffer)'
+      thread_name = 'Channel (Input Buffer)'
       tn = thread_name
       Thread.current[:name] = thread_name
 
