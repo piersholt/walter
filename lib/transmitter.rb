@@ -12,7 +12,7 @@ class Transmitter
   end
 
   def off
-    LOGGER.debug "#{self.class}#off"
+    LOGGER.debug(PROG_NAME) { "#{self.class}#off" }
     close_threads
   end
 
