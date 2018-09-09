@@ -104,18 +104,6 @@ class Channel
 
 
 
-  def thread_test
-    LOGGER.debug("#{self.class}#thread_test")
-    Thread.new do
-      Thread.current[:name] = 'Channel (Test)'
-
-      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / Sleeping..." }
-      sleep(5)
-      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / Alive!" }
-      # Thread.join
-      # Thread.stop
-      LOGGER.error("Channel") { "Thread: #{Thread.current[:name]} / I shoudn't be here?" }
-    end
   end
 
   def thread_populate_input_buffer(stream, input_buffer)
