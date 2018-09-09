@@ -87,7 +87,9 @@ class FrameBuilder
     args_len =     @arguments.length
     fcs_len =      DEFAULT_LENGTH
 
-    to_len + command_len + args_len + fcs_len
+    buffer = to_len + command_len + args_len + fcs_len
+    LOGGER.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
+    buffer
   end
 
   def calculate_fcs
