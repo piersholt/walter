@@ -3,7 +3,7 @@ require 'new_frame'
 
 class NewReceiver
   PROG_NAME = 'Receiver'.freeze
-  THREAD_NAME_READ = 'Receiver (Read)'
+  THREAD_NAME = 'Receiver'
 
   SYNC = 'Sync /'
   SYNC_HEADER = 'Header /'
@@ -59,7 +59,7 @@ class NewReceiver
   def thread_read_buffer(buffer)
     LOGGER.debug(PROG_NAME) { 'New Thread: Frame Synchronisation.' }
     Thread.new do
-      Thread.current[:name] = THREAD_NAME_READ
+      Thread.current[:name] = THREAD_NAME
       begin
         LOGGER.debug(PROG_NAME) { 'Entering byte shift loop.' }
         shift_count = 1
