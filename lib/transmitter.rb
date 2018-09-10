@@ -1,13 +1,21 @@
 require 'observer'
-require 'new_frame'
+
+class TransmissionError < StandardError
+end
 
 class Transmitter
+  include Observable
   PROG_NAME = 'Transmitter'.freeze
+  THREAD_NAME = "#{PROG_NAME}".freeze
+  MAX_RETRY = 3
 
   include Observable
 
-  def initialize(output_buffer)
+  attr_reader :threads, :write_queue
+
+  def initialize(output_buffer, write_queue = Queue.new)
     @output_buffer = output_buffer
+    @write_queue = write_queue
     @threads = ThreadGroup.new
   end
 
@@ -16,11 +24,16 @@ class Transmitter
     close_threads
   end
 
+  def disable
+    LOGGER.debug(PROG_NAME) { "#{self.class}#disable" }
+    off
+  end
+
   def on
     LOGGER.debug(PROG_NAME) { "#{self.class}#on" }
     begin
-      read_thread = thread_read_buffer(@input_buffer)
-      @threads.add(read_thread)
+      write_thread = thread_write_buffer(@write_queue, @output_buffer)
+      @threads.add(write_thread)
     rescue StandardError => e
       LOGGER.error(e)
       e.backtrace.each { |l| LOGGER.error(l) }
@@ -38,88 +51,34 @@ class Transmitter
     threads = @threads.list
     threads.each_with_index do |t, i|
       LOGGER.debug "Thread ##{i+1} / #{t.status}"
-      # LOGGER.debug "result = #{t.exit}"
-      t.exit
+      t.exit.join
       LOGGER.debug "Thread ##{i+1} / #{t.status}"
     end
   end
 
-  def thread_read_buffer(buffer)
-    LOGGER.debug(PROG_NAME) { 'New Thread: Frame Synchronisation.' }
+  def thread_write_buffer(write_queue, output_buffer)
+    LOGGER.debug(PROG_NAME) { 'New Thread: Frame Write.' }
+
     Thread.new do
-      Thread.current[:name] = PROG_NAME
+      Thread.current[:name] = THREAD_NAME
+
       begin
-        LOGGER.debug(PROG_NAME) { 'Entering byte shift loop.' }
-        shift_count = 1
-        # binding.pry
         loop do
-          LOGGER.debug(PROCESS_SYNC) { "##{shift_count}. Begin." }
-          shift_count
-          new_frame = NewFrame.new
-
           begin
-            # ************************************************************************* #
-            #                              FRAME HEADER
-            # ************************************************************************* #
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Input Buffer: #{buffer.size}." }
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Shifting #{Frame::HEADER_LENGTH} bytes." }
-            header_bytes = buffer.shift(Frame::HEADER_LENGTH)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Shifted bytes: #{header_bytes}" }
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Setting new frame header." }
-            new_frame.set_header(header_bytes)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "New frame header set: #{new_frame.header}" }
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Getting remaining frame bytes from header." }
-            remaining_frame_bytes = new_frame.header.tail_length
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Remaining frame bytes: #{remaining_frame_bytes}" }
-
-            # ************************************************************************* #
-            #                              FRAME TAIL
-            # ************************************************************************* #
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Input Buffer: #{buffer.size}." }
-
-            LOGGER.debug(PROCESS_SYNC_TAIL) { "Shifting #{remaining_frame_bytes} bytes." }
-            tail_bytes = buffer.shift(remaining_frame_bytes)
-            LOGGER.debug(PROCESS_SYNC_TAIL) { "Shifted bytes: #{tail_bytes}" }
-
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "Setting new frame tail." }
-            new_frame.set_tail(tail_bytes)
-            LOGGER.debug(PROCESS_SYNC_HEADER) { "New frame tail set: #{new_frame.tail}" }
-
-            # ************************************************************************* #
-            #                             FRAME CHECKSUM
-            # ************************************************************************* #
-
-            LOGGER.debug(PROCESS_SYNC_VALIDATION) { "Validating new frame." }
-            raise ChecksumError unless new_frame.valid?
-
-            # ************************************************************************* #
-            #                                FINISH
-            # ************************************************************************* #
-
-            LOGGER.debug(PROCESS_SYNC) { "Valid! #{new_frame}" }
-
-            LOGGER.debug(PROCESS_SYNC) { "Publishing event: #{Event::FRAME_VALIDATED}" }
-            changed
-            notify_observers(Event::FRAME_VALIDATED, frame: new_frame)
-          rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
-            LOGGER.error(e)
-            e.backtrace.each { |l| LOGGER.error(l) }
-            clean_up(buffer, new_frame)
-          rescue StandardError, TailError, ChecksumError => e
-            LOGGER.error(e)
-            e.backtrace.each { |l| LOGGER.error(l) }
-            clean_up(buffer, new_frame)
-          end
-          LOGGER.debug(PROCESS_SYNC) { "##{shift_count}. End." }
-          shift_count += 1
-        end
-      rescue Exception => e
-        LOGGER.error(PROCESS_SYNC_ERROR) { "Shift thread exception..! #{e}" }
+            # frame_to_write = nil
+            LOGGER.debug(THREAD_NAME) { "Transmit queue length: #{write_queue.size}" }
+            LOGGER.debug(THREAD_NAME) { "Get next frame in queue... (blocking)" }
+            frame_to_write = write_queue.deq
+            # binding.pry
+            transmit(output_buffer, frame_to_write)
+          rescue TransmissionError => e
+              LOGGER.error(THREAD_NAME) { e }
+          rescue StandardError => e
+              LOGGER.error(THREAD_NAME) { e }
+          end # begin
+        end # loop
+      rescue StandardError => e
+        LOGGER.error(PROG_NAME) { "#{tn}: Exception: #{e}" }
         e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
@@ -127,23 +86,35 @@ class Transmitter
     end # thread_w
   end
 
-  def clean_up(buffer, frame)
-    LOGGER.debug(PROCESS_SYNC_ERROR) { "Cleaning up..." }
+  def transmit(output_buffer, frame_to_write)
+    LOGGER.debug(THREAD_NAME) { "#transmit(output_buffer, frame)" }
+    frams_as_string = frame_to_write.as_string
+    LOGGER.debug(THREAD_NAME) { "Frame as string: #{frams_as_string}" }
+    result = output_buffer.write(frams_as_string)
+    LOGGER.debug(THREAD_NAME) { "Transmit result = #{result}" }
+    return true if result
+    retransmit(output_buffer, frams_as_string)
+  end
 
-    LOGGER.debug(PROCESS_SYNC_ERROR) { "Publishing event: #{Event::FRAME_FAILED}" }
-    changed
-    notify_observers(Event::FRAME_FAILED, frame: frame)
+  def retransmit(output_buffer, frame_to_write)
+    LOGGER.debug(THREAD_NAME) { "#retransmit(output_buffer, frame)" }
+    attempts = 1
 
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Bit Shift!" }
+    LOGGER.debug(THREAD_NAME) { "Enter retransmission cycle..." }
+    until result || attempts > MAX_RETRY do
+      LOGGER.debug(THREAD_NAME) { "Retry #{attempts} of #{MAX_RETRY}" }
+      back_off = Random.rand * attempts
+      LOGGER.debug(THREAD_NAME) { "Retry back off: #{back_off}" }
+      sleep(back_off)
+      result = output_buffer.write(frame_to_write)
+      LOGGER.debug(THREAD_NAME) { "Retry result = #{result}" }
+      attempts += 1
+    end
 
-    byte_to_discard = new_frame[0]
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Discard: #{byte_to_discard}." }
+    return true if result
 
-    bytes_to_unshift = new_frame[1..-1]
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Unshift: #{bytes_to_unshift}" }
-
-    LOGGER.warn(PROCESS_SYNC_SHIFT) { "Unshifting..." }
-    result = buffer.unshift(*bytes_to_unshift)
-    LOGGER.debug(PROCESS_SYNC_SHIFT) { "Unshifting result: #{result}" }
+    # LOGGER.error(THREAD_NAME) { "Retransmission failed after #{attempts} attempts!" }
+    raise TransmissionError, "Retransmission failed after #{attempts} attempts!"
+    return false
   end
 end
