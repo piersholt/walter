@@ -35,7 +35,7 @@ class FrameHandler
 
   def update(action, properties)
     case action
-    when FRAME_VALIDATED
+    when FRAME_RECEIVED
       message = process_frame(properties[:frame])
       changed
       notify_observers(MESSAGE_RECEIVED, message: message)

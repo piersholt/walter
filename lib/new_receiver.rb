@@ -115,9 +115,9 @@ class NewReceiver
 
             LOGGER.debug(PROG_NAME) { "#{SYNC} Valid! #{new_frame}" }
 
-            LOGGER.debug(PROG_NAME) { "#{SYNC} Publishing event: #{Event::FRAME_VALIDATED}" }
+            LOGGER.debug(PROG_NAME) { "#{SYNC} Publishing event: #{Event::FRAME_RECEIVED}" }
             changed
-            notify_observers(Event::FRAME_VALIDATED, frame: new_frame)
+            notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
           rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
             LOGGER.warn(SYNC_ERROR) { e }
             # e.backtrace.each { |l| LOGGER.error(l) }

@@ -9,7 +9,7 @@ module Event
   BYTE_RECEIVED = :read_byte
 
   # Receiver
-  FRAME_VALIDATED = :frame_validated
+  FRAME_RECEIVED = :frame_received
   FRAME_FAILED = :frame_failed
 
   # top layer?
@@ -23,7 +23,7 @@ module Event
   EXIT = :exit
 
   CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
-  RECEIVER_EVENTS = [FRAME_VALIDATED, FRAME_FAILED].freeze
+  RECEIVER_EVENTS = [FRAME_RECEIVED, FRAME_FAILED].freeze
   LAYER_EVENTS    = [MESSAGE_RECEIVED].freeze
   USER_EVENTS     = [MESSAGE_DISPLAY].freeze
   APP_EVENTS      = [STATUS_REQUEST, EXIT].freeze

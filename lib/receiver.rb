@@ -88,7 +88,7 @@ class Receiver
           if frame_complete[-1].to_d == checksum && current_frame.size >= 5
             LOGGER.debug 'Frame / Checksum matches!'
             changed
-            notify_observers(Event::FRAME_VALIDATED, frame: current_frame)
+            notify_observers(Event::FRAME_RECEIVED, frame: current_frame)
 
             LOGGER.debug "Frame / #{current_frame}"
           else

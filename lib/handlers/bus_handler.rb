@@ -4,7 +4,7 @@ require 'messages'
 class BusHandler
   include Event
 
-  # METRICS = [BYTE_RECEIVED, FRAME_VALIDATED, FRAME_FAILED, MESSAGE_RECEIVED]
+  # METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 
   # attr_reader :messages, :stats, :frames
 

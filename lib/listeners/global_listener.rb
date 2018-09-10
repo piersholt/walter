@@ -58,7 +58,7 @@ class GlobalListener
       when BYTE_RECEIVED
         @data_logging_handler.update(action, properties)
         @session_handler.update(action, properties)
-      when FRAME_VALIDATED
+      when FRAME_RECEIVED
         @data_logging_handler.update(action, properties)
         @frame_handler.update(action, properties)
         @session_handler.update(action, properties)

@@ -5,7 +5,7 @@ class SessionHandler
   include Singleton
   include Event
 
-  METRICS = [BYTE_RECEIVED, FRAME_VALIDATED, FRAME_FAILED, MESSAGE_RECEIVED]
+  METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 
   attr_reader :messages, :stats, :frames
 
@@ -36,7 +36,7 @@ class SessionHandler
       update_stats(action)
     when FRAME_FAILED
       update_stats(action)
-    when FRAME_VALIDATED
+    when FRAME_RECEIVED
       update_stats(action)
       add_frame(properties[:frame])
     when MESSAGE_RECEIVED

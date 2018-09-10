@@ -23,7 +23,7 @@ class DataLoggingHandler
       disable_logging
     when BYTE_RECEIVED
       log_byte(properties[:read_byte])
-    when FRAME_VALIDATED
+    when FRAME_RECEIVED
       log_frame(properties[:frame])
     when EXIT
       LOGGER.info("DataLoggingHandler") { "Exit: Closing log files." }

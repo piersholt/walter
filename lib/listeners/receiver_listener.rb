@@ -1,13 +1,13 @@
 # documentation
 class ReceiverListener
   BYTE_RECEIVED = :read_byte
-  FRAME_VALIDATED = :frame_validated
+  FRAME_RECEIVED = :frame_received
   FRAME_FAILED = :frame_failed
 
-  EVENTS = [BYTE_RECEIVED, FRAME_VALIDATED, FRAME_FAILED].freeze
+  EVENTS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED].freeze
 
   def initialize
-    @stats = { BYTE_RECEIVED => 0, bytes_dropped: 0, FRAME_VALIDATED => 0, FRAME_FAILED => 0 }
+    @stats = { BYTE_RECEIVED => 0, bytes_dropped: 0, FRAME_RECEIVED => 0, FRAME_FAILED => 0 }
   end
 
   def update(action, properties)
@@ -17,8 +17,8 @@ class ReceiverListener
     when BYTE_RECEIVED
       update_stats(BYTE_RECEIVED)
       debug(BYTE_RECEIVED, properties)
-    when FRAME_VALIDATED
-      update_stats(FRAME_VALIDATED)
+    when FRAME_RECEIVED
+      update_stats(FRAME_RECEIVED)
     end
   end
 
