@@ -28,6 +28,7 @@ class GlobalListener
     @frame_handler.add_observer(self)
 
     @application_layer = application_layer
+    @bus_handler = handlers[:bus]
     add_observer(self)
   end
 
@@ -53,6 +54,8 @@ class GlobalListener
       when BUS_OFFLINE
         LOGGER.warn("Listener") { "Bus Offline!" }
         @data_logging_handler.update(action, properties)
+        @bus_handler.update(action, properties)
+
       when BYTE_RECEIVED
         @data_logging_handler.update(action, properties)
         @session_handler.update(action, properties)

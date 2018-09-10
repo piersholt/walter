@@ -17,6 +17,8 @@ require 'new_receiver'
 require 'application_layer'
 require 'listeners/global_listener'
 
+require 'handlers/bus_handler'
+
 # Container
 class Walter
   include Observable
@@ -31,8 +33,9 @@ class Walter
     # @transmitter = Transmitter.new(@channel.output_buffer)
 
     @application_layer = ApplicationLayer.new
+    bus_handler = BusHandler.new(@transmitter)
 
-    @listener = GlobalListener.new(@application_layer)
+    @listener = GlobalListener.new(bus: bus_handler)
     @channel.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
