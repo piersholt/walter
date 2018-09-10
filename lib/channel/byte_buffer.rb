@@ -4,7 +4,7 @@ class Channel
   # An extension of a Queue to support multi shifts, and unshifting
   # NOTE this should not handle unshift.... argh.. well.. unshift is framer behaviour..
   # but it's still capsulated with framer.. the actual behaviour of unshift is generic...
-  class IOBuffer < Queue
+  class ByteBuffer < Queue
     def initialize
       super
       @unshift_buffer = []
@@ -23,14 +23,14 @@ class Channel
 
     def shift(number_of_bytes = 1)
       # binding.pry
-      LOGGER.debug("#{self.class}#shift(#{number_of_bytes})")
-      raise ::ArgumentError, 'IOBuffer does not support single object shift' if
+      LOGGER.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
+      raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
         number_of_bytes <= 1
 
       shift_result = Bytes.new
 
       # Empty unshift buffer before reading IO
-      take_unshifted_bytes(shift_result, number_of_bytes)
+      take_unshifted_bytes(shift_result, number_of_bytes) unless @unshift_buffer.empty?
 
       Array.new(number_of_bytes - shift_result.size).each do |_|
         read_byte = pop
@@ -43,8 +43,8 @@ class Channel
     private
 
     def take_unshifted_bytes(shift_result, number_of_bytes)
-      LOGGER.debug("#{self.class}#take_unshifted_bytes(#{number_of_bytes})")
-      LOGGER.debug("Unshift buffer size = #{@unshift_buffer.size}")
+      LOGGER.debug("ByteBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
+      LOGGER.debug("ByteBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
       required_bytes = number_of_bytes
       return false if @unshift_buffer.empty?
       until @unshift_buffer.empty? || required_bytes.zero?
@@ -52,7 +52,7 @@ class Channel
         shift_result.push(unshifted_byte)
         required_bytes -= 1
       end
-      LOGGER.debug("Unshifted bytes: #{shift_result.size}")
+      LOGGER.debug("ByteBuffer") { "#{shift_result.size} unshifted bytes taken." }
       true
     end
   end

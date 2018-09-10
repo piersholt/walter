@@ -19,12 +19,12 @@ class Channel
 
     # delegate_serial_port_methods
     SerialPort.public_instance_methods(false).each do |method|
-      LOGGER.debug "Delegating: #{method} to #{@stream}"
+      LOGGER.debug('Device') { "Delegating: #{method} to SerialPort" }
       def_delegator :@stream, method
     end
 
     # delegate_io_methods
-    def_delegators :@stream, :pos, :readpartial
+    def_delegators :@stream, :pos, :readpartial, :write, :write_nonblock
 
     attr_reader :stream
 

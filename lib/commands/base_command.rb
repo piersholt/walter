@@ -13,7 +13,7 @@ class Commands
     alias :args :arguments
 
     def initialize(id, props)
-      LOGGER.debug("#{self.class}#initialize(#{id}, #{props})")
+      LOGGER.debug("BaseCommand") { "#initialize(#{id}, #{props})" }
       @id = id
       parse_properties(props)
     end

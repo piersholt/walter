@@ -16,7 +16,7 @@ class Map
   end
 
   def find(key)
-    LOGGER.debug("#{self.class.superclass}#find(#{key})")
+    # LOGGER.debug("#{self.class.superclass}") { "#find(#{key})" }
     raise IndexError, "no objet with key #{key}" unless map.key?(key)
     map[key]
   end

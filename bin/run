@@ -24,7 +24,7 @@ LOGGER.formatter = proc do |severity, time, progname, msg|
     color = severity_to_colour_map[severity]
 
     formatted_severity = sprintf("%-5s",severity)
-    formatted_progname = sprintf("%22s",progname)
+    formatted_progname = sprintf("%20s",progname)
     formatted_progname_string =  "[#{formatted_progname}]"
 
 
@@ -57,6 +57,7 @@ rescue Interrupt
   LOGGER.close
   return 1
 rescue StandardError => e
+  LOGGER.error('Bash') { 'Rescued at run:59'}
   LOGGER.error e.message
   e.backtrace.each { |e| LOGGER.error e }
   binding.pry

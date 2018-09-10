@@ -14,8 +14,11 @@ require 'message'
 
 require 'channel'
 require 'new_receiver'
+require 'transmitter'
 require 'application_layer'
 require 'listeners/global_listener'
+
+require 'handlers/bus_handler'
 
 # Container
 class Walter
@@ -26,10 +29,13 @@ class Walter
   def initialize
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
-    @receiver = NewReceiver.new(@channel.input_buffer)
-    @application_layer = ApplicationLayer.new
 
-    @listener = GlobalListener.new(@application_layer)
+    @receiver = NewReceiver.new(@channel.input_buffer)
+    @transmitter = Transmitter.new(@channel.output_buffer)
+
+    bus_handler = BusHandler.new(@transmitter)
+
+    @listener = GlobalListener.new(bus: bus_handler)
     @channel.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
@@ -46,17 +52,25 @@ class Walter
     SessionHandler.i.messages
   end
 
+  def news
+    puts "THREADS:"
+    Thread.list.each_with_index do |t, i|
+      LOGGER.info("#{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
+    end
+    true
+  end
+
   def launch
     LOGGER.debug "#{self.class}#launch"
-    Thread.current[:name] = 'App'
+    Thread.current[:name] = 'Walter (Main)'
     begin
       # TODO: menu to facilitate common features...
       raise NotImplementedError, 'menu not implemented. fallback to CLI...'
 
       LOGGER.debug "Main Thread / Entering keep alive loop..."
       loop do
-        Thread.list.each { |t| LOGGER.unknown("#{t[:name]} / #{t.status}") }
-        sleep 10
+        news
+        sleep 60
       end
 
       # TODO: menu to facilitate common features...
@@ -66,9 +80,18 @@ class Walter
       start
       binding.pry
 
+      LOGGER.info("Walter") { "Walter is closing!" }
+
+      LOGGER.info("Walter") { "Publishing event: #{Event::EXIT}" }
       changed
       notify_observers(Event::EXIT, {reason: 'Debug exiting'})
+      LOGGER.info("Walter") { "Subscribers updated! #{Event::EXIT}" }
+
+      LOGGER.info("Walter") { "Turning stack off ⛔️" }
       stop
+      LOGGER.info("Walter") { "Stack is off 👍" }
+
+      LOGGER.info("Walter") { "See you anon ✌️" }
       return -1
     rescue Interrupt
       LOGGER.debug 'Interrupt signal caught.'
@@ -85,12 +108,19 @@ class Walter
     # @threads.add(start)
     @channel.on
     @receiver.on
+    @transmitter.on
   end
 
   def stop
-    LOGGER.warn "#{self.class}#stop"
+    LOGGER.debug "#{self.class}#stop"
+
+    LOGGER.info("Walter") { "Switching off Receiver..." }
     @receiver.off
+    LOGGER.info("Walter") { "Receiver is off! 👍" }
+
+    LOGGER.info("Walter") { "Switching off Channel..." }
     @channel.off
+    LOGGER.info("Walter") { "Channel is off! 👍" }
   end
 
   private

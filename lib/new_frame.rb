@@ -51,14 +51,15 @@ class NewFrame < Bytes
   end
 
   def set_header(new_header)
-    LOGGER.debug(PROG_NAME) { "#set_tail(#{new_header})." }
+    LOGGER.debug(PROG_NAME) { "#set_header(#{new_header})." }
 
-    LOGGER.debug(PROG_NAME) { "Setting @header." }
+    # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    wholesale(new_header + tail)
+    # LOGGER.debug(PROG_NAME) { self }
+
+    # LOGGER.debug(PROG_NAME) { "Setting @header." }
     @header = FrameHeader.new(new_header)
 
-    LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
-    wholesale(header + tail)
-    LOGGER.debug(PROG_NAME) { "self[0..-1]: #{self[0..-1]}" }
 
     true
   end
@@ -66,12 +67,12 @@ class NewFrame < Bytes
   def set_tail(new_tail)
     LOGGER.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
 
-    LOGGER.debug(PROG_NAME) { "Setting @tail." }
-    @tail = FrameTail.new(new_tail)
+    # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    wholesale(header + new_tail)
+    # LOGGER.debug(PROG_NAME) { self }
 
-    LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
-    wholesale(header + tail)
-    LOGGER.debug(PROG_NAME) { "Bytes: #{self[0..-1]}" }
+    # LOGGER.debug(PROG_NAME) { "Setting @tail." }
+    @tail = FrameTail.new(new_tail)
 
     true
   end

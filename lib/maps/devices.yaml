@@ -248,3 +248,11 @@
     :short_name: GLO-H
     :long_name: Global Broadcast
   :klass: BaseDevice
+:default:
+  :id:
+    :h: '0x00'
+    :d: 0
+  :properties:
+    :short_name: ERX
+    :long_name: Fallback Default
+  :klass: BaseDevice

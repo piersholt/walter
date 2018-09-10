@@ -47,8 +47,8 @@ class FrameHandler
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
-    LOGGER.debug("#{self.class}#process_frame(#{frame})")
-    LOGGER.debug frame.inspect
+    LOGGER.debug("FrameHandler") { "#{self.class}#process_frame(#{frame})" }
+    LOGGER.debug("FrameHandler") { frame.inspect }
 
     # FRAME = HEADER, PAYLOAD, FCS
     # MESSAGE = FROM, TO, COMMAND, ARGUMENTS

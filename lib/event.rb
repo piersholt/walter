@@ -3,6 +3,9 @@ module Event
   # Channel
   BUS_OFFLINE = :offline
   BUS_ONLINE = :online
+  BUS_BUSY = :busy
+  BUS_IDLE = :idle
+  BUS_ACTIVE = :active
   BYTE_RECEIVED = :read_byte
 
   # Receiver
@@ -19,7 +22,7 @@ module Event
   STATUS_REQUEST = :thread_status_request
   EXIT = :exit
 
-  CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE].freeze
+  CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
   RECEIVER_EVENTS = [FRAME_VALIDATED, FRAME_FAILED].freeze
   LAYER_EVENTS    = [MESSAGE_RECEIVED].freeze
   USER_EVENTS     = [MESSAGE_DISPLAY].freeze

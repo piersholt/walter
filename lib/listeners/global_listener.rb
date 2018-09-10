@@ -20,36 +20,41 @@ class GlobalListener
   include Observable
   include Event
 
-  def initialize(application_layer)
+  def initialize(handlers = {})
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
     @frame_handler = FrameHandler.instance
     @frame_handler.add_observer(self)
 
-    @application_layer = application_layer
+    @bus_handler = handlers[:bus]
     add_observer(self)
   end
 
-  def update(action, properties)
+  def update(action, properties = {})
     # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
     raise ::ArgumentError, 'unrecognised action' unless valid?(action)
 
     begin
       case action
       when EXIT
-        LOGGER.warn "[Global Listener] Exiting! Reason: #{properties[:reason]}"
-        LOGGER.warn "[Global Listener] Hiding display output..."
-        # hide the message output as it clutters the exit log messages
+        LOGGER.info("Listener") {  "Exit: Reason: #{properties[:reason]}" }
+
+        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class}" }
         @display_handler.update(action, properties)
-        LOGGER.warn "[Global Listener] Closing log files..."
+        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class} complete!" }
+
+        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class}" }
         @data_logging_handler.update(action, properties)
+        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class} complete!" }
       when BUS_ONLINE
-        LOGGER.info("[Global Listener] BUS online!")
+        LOGGER.info("Listener") { "Bus Online!" }
         @data_logging_handler.update(action, properties)
       when BUS_OFFLINE
-        LOGGER.warn("[Global Listener] BUS offline!")
+        LOGGER.warn("Listener") { "Bus Offline!" }
         @data_logging_handler.update(action, properties)
+        @bus_handler.update(action, properties)
+
       when BYTE_RECEIVED
         @data_logging_handler.update(action, properties)
         @session_handler.update(action, properties)
@@ -62,7 +67,6 @@ class GlobalListener
       when MESSAGE_RECEIVED
         @session_handler.update(action, properties)
         @display_handler.update(action, properties)
-        @application_layer.new_message(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
       end

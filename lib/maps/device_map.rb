@@ -31,8 +31,12 @@ class DeviceMap < Map
   # end
 
   def find(device_id)
-    LOGGER.debug("#{self.class}#find(#{device_id})")
-    mapped_result = super(device_id)
+    LOGGER.debug("DeviceMap") { "#{self.class}#find(#{device_id})" }
+    begin
+      mapped_result = super(device_id)
+    rescue IndexError => e
+      mapped_result = super(:default)
+    end
     instantiate_klass(mapped_result)
   end
 

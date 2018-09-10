@@ -16,14 +16,17 @@ class DataLoggingHandler
   def update(action, properties)
     case action
     when BUS_ONLINE
+      LOGGER.info("DataLoggingHandler") { "Bus Online! Enable logging." }
       enable_logging
     when BUS_OFFLINE
+      LOGGER.info("DataLoggingHandler") { "Bus Offline! Disbaling logging." }
       disable_logging
     when BYTE_RECEIVED
       log_byte(properties[:read_byte])
     when FRAME_VALIDATED
       log_frame(properties[:frame])
     when EXIT
+      LOGGER.info("DataLoggingHandler") { "Exit: Closing log files." }
       close_log_files
     end
   end
@@ -39,18 +42,18 @@ class DataLoggingHandler
   end
 
   def log_byte(next_byte)
-    # LOGGER.debug("[Log Handler] #{self.class}#log_byte(#{Byte.new(:encoded, next_byte).to_s(true)})")
+    # LOGGER.debug("#{self.class}#log_byte(#{Byte.new(:encoded, next_byte).to_s(true)})")
     return false unless logging_enabled?
     bytes_written = byte_log.write(next_byte) if logging_enabled?
-    LOGGER.debug("[Log Handler] Byte Log: #{bytes_written} bytes written.")
+    # LOGGER.debug("Byte Log: #{bytes_written} bytes written.")
   end
 
   def log_frame(validated_frame)
-    LOGGER.debug("[Log Handler] #{self.class}#log_frame(#{validated_frame})")
-    LOGGER.debug("[Log Handler] #{self.class}#logging_enabled? => #{logging_enabled?}")
+    LOGGER.debug("DataLoggingHandler") { "#{self.class}#log_frame(#{validated_frame})" }
+    LOGGER.debug("DataLoggingHandler") { "#{self.class}#logging_enabled? => #{logging_enabled?}" }
     return false unless logging_enabled?
     bytes_written = frame_log.write("#{validated_frame}\n") if logging_enabled?
-    LOGGER.debug("[Log Handler] Frame Log: #{bytes_written} bytes written.")
+    LOGGER.debug("DataLoggingHandler") { "Frame Log: #{bytes_written} bytes written." }
   end
 
   def logging_enabled?
@@ -64,20 +67,22 @@ class DataLoggingHandler
   end
 
   def disable_logging
-    LOGGER.warn('[Handler] STREAM logging disabled!')
+    LOGGER.debug("DataLoggingHandler") { 'Logging disabled!' }
     @stream_logging = false
   end
 
   def enable_logging
-    LOGGER.info('[Handler] STREAM logging enabled!')
+    LOGGER.debug("DataLoggingHandler") { 'Logging enabled!' }
     @stream_logging = true
   end
 
   def close_log_files
-    LOGGER.debug('[Log Handler] disabling logging')
     disable_logging
-    LOGGER.warn('[Log Handler] closing log files')
+    LOGGER.debug("DataLoggingHandler") { "Closing binary stream log #{byte_log.path}." }
     byte_log.close
+    LOGGER.info("DataLoggingHandler") { "#{byte_log.path} closed." }
+    LOGGER.debug("DataLoggingHandler") { "Closing frame log #{frame_log.path}." }
     frame_log.close
+    LOGGER.info("DataLoggingHandler") { "#{frame_log.path} closed." }
   end
 end
