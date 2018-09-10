@@ -13,7 +13,7 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
-  attr_reader :input_buffer, :output_buffer, :threads, :read_thread, :test_thread
+  attr_reader :input_buffer, :output_buffer, :threads, :read_thread
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -170,10 +170,4 @@ class Channel
       LOGGER.warn('Channel') { "#{tn} thread is ending." }
     end
   end
-
-  # TODO Kill child threads
-  # Should be notify method and App broadcasts it
-  def kill
-  end
-
 end
