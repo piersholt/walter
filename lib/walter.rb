@@ -54,7 +54,7 @@ class Walter
   def news
     puts "THREADS:"
     Thread.list.each_with_index do |t, i|
-      LOGGER.info("#{i}. #{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
+      LOGGER.info("#{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
     end
     true
   end
@@ -68,8 +68,8 @@ class Walter
 
       LOGGER.debug "Main Thread / Entering keep alive loop..."
       loop do
-        Thread.list.each { |t| LOGGER.unknown("#{t[:name]} / #{t.status}") }
-        sleep 10
+        news
+        sleep 60
       end
 
       # TODO: menu to facilitate common features...
