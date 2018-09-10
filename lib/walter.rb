@@ -14,6 +14,7 @@ require 'message'
 
 require 'channel'
 require 'new_receiver'
+require 'transmitter'
 require 'application_layer'
 require 'listeners/global_listener'
 
@@ -30,7 +31,7 @@ class Walter
     @channel = Channel.new(ARGV.shift)
 
     @receiver = NewReceiver.new(@channel.input_buffer)
-    # @transmitter = Transmitter.new(@channel.output_buffer)
+    @transmitter = Transmitter.new(@channel.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)
 
@@ -107,6 +108,7 @@ class Walter
     # @threads.add(start)
     @channel.on
     @receiver.on
+    @transmitter.on
   end
 
   def stop

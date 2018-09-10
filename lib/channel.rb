@@ -4,6 +4,7 @@ require 'observer'
 require 'channel/device'
 require 'channel/file'
 require 'channel/byte_buffer'
+require 'channel/output_buffer'
 
 class Channel
   include Observable
@@ -24,7 +25,7 @@ class Channel
     @stream = parse_path(path, options)
 
     @input_buffer = ByteBuffer.new
-    @output_buffer = Queue.new
+    @output_buffer = OutputBuffer.new(@stream)
 
     @threads = ThreadGroup.new
   end
