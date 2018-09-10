@@ -103,10 +103,6 @@ class Channel
     end
   end
 
-
-
-  end
-
   def thread_populate_input_buffer(stream, input_buffer)
     LOGGER.debug('Channel') { "#thread_populate_input_buffer" }
     Thread.new do
