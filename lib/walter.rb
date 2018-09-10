@@ -32,7 +32,6 @@ class Walter
     @receiver = NewReceiver.new(@channel.input_buffer)
     # @transmitter = Transmitter.new(@channel.output_buffer)
 
-    @application_layer = ApplicationLayer.new
     bus_handler = BusHandler.new(@transmitter)
 
     @listener = GlobalListener.new(bus: bus_handler)

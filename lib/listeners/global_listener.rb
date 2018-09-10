@@ -20,14 +20,13 @@ class GlobalListener
   include Observable
   include Event
 
-  def initialize(application_layer)
+  def initialize(handlers = {})
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
     @frame_handler = FrameHandler.instance
     @frame_handler.add_observer(self)
 
-    @application_layer = application_layer
     @bus_handler = handlers[:bus]
     add_observer(self)
   end
@@ -68,7 +67,6 @@ class GlobalListener
       when MESSAGE_RECEIVED
         @session_handler.update(action, properties)
         @display_handler.update(action, properties)
-        @application_layer.new_message(properties[:message])
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
       end
