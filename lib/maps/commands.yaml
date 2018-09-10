@@ -1,4 +1,13 @@
 ---
+:default:
+    :id:
+      :h: '0x00'
+      :d: 0
+      :b: 0
+    :properties:
+      :short_name: DEF
+      :long_name: Unknown
+    :klass: BaseCommand
 0:
   :id:
     :h: '0x00'

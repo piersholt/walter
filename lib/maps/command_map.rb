@@ -35,6 +35,7 @@ class CommandMap < Map
       mapped_result = super(command_id)
     rescue IndexError
       LOGGER.error("Command ID:#{command_id} not found!")
+      mapped_result = super(:default)
     end
     # When a new message handler calls #find it will pass the message
     # parameters as an argument
