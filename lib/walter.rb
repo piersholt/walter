@@ -18,8 +18,6 @@ require 'transmitter'
 require 'application_layer'
 require 'listeners/global_listener'
 
-require 'handlers/bus_handler'
-
 # Container
 class Walter
   include Observable

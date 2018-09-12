@@ -5,6 +5,7 @@ require 'handlers/display_handler'
 require 'handlers/session_handler'
 require 'handlers/data_logging_handler'
 require 'handlers/frame_handler'
+require 'handlers/bus_handler'
 
 
 
