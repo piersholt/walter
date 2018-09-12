@@ -119,7 +119,7 @@ class NewReceiver
             changed
             notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
           rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
-            LOGGER.warn(SYNC_ERROR) { e }
+            LOGGER.debug(SYNC_ERROR) { e }
             # e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)
           rescue StandardError, TailError => e
@@ -146,16 +146,16 @@ class NewReceiver
     # changed
     # notify_observers(Event::FRAME_FAILED, frame: new_frame)
 
-    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Shifting one byte." }
+    LOGGER.debug(PROG_NAME) { "#{SYNC_SHIFT} Shifting one byte." }
 
     byte_to_discard = new_frame[0]
     LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Discard: #{byte_to_discard}." }
 
     bytes_to_unshift = new_frame[1..-1]
     bytes_to_unshift = Bytes.new(bytes_to_unshift)
-    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Unshift: #{bytes_to_unshift}." }
+    LOGGER.debug(PROG_NAME) { "#{SYNC_SHIFT} Unshift: #{bytes_to_unshift}." }
 
-    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Unshifting..." }
+    LOGGER.debug(PROG_NAME) { "#{SYNC_SHIFT} Unshifting..." }
     buffer.unshift(*bytes_to_unshift)
   end
 end
