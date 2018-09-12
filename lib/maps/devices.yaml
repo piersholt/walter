@@ -129,6 +129,16 @@
   :klass: BaseDevice
   :meta:
     :desc: I believe EU may refer to the build type which also includes US and JP.
+118:
+  :id:
+    :h: '0x76'
+    :d: 118
+  :properties:
+    :short_name: CD?
+    :long_name: Audio related?
+  :klass: BaseDevice
+  :meta:
+    :desc: I believe EU may refer to the build type which also includes US and JP.
 128:
   :id:
     :h: '0x80'
@@ -157,6 +167,17 @@
       - this address has only received messages from DIA, command 0x00?
       - it has never been a message source
       - i suspect it's being pinged for presence
+0xA4:
+  :id:
+    :h: '0xA4'
+    :d: 164
+  :properties:
+    :short_name: NEW-A4
+    :long_name: Unidentified
+  :klass: BaseDevice
+  :meta:
+    :notes:
+      - sends command 0x70
 172:
   :id:
     :h: '0xAC'
@@ -164,6 +185,14 @@
   :properties:
     :short_name: EHC
     :long_name: Air Suspension System
+  :klass: BaseDevice
+176:
+  :id:
+    :d: 176
+    :h: '0xB0'
+  :properties:
+    :short_name: VOICE?
+    :long_name: Telephone voice module?
   :klass: BaseDevice
 187:
   :id:
@@ -224,6 +253,20 @@
   :meta:
     :notes:
       - telephone related commands are also sent to this device...?
+0xE8:
+  :id:
+    :h: '0xE8'
+    :d: 232
+  :properties:
+    :short_name: LGHT
+    :long_name: Light sensor for auto lights/light switch?
+  :klass: BaseDevice
+  :meta:
+    :examples:
+      - LCM   59  50 00
+      - LCM   59  10 00
+      - LCM   59  30 00
+      - LCM   59  31 02
 237:
   :id:
     :h: '0xED'
