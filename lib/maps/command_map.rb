@@ -34,8 +34,9 @@ class CommandMap < Map
     begin
       mapped_result = super(command_id)
     rescue IndexError
-      LOGGER.error("Command ID:#{command_id} not found!")
+      LOGGER.error('CommandMap') {"Command ID: #{command_id}, #{DataTools.decimal_to_hex(command_id)} not found!" }
       mapped_result = super(:default)
+      mapped_result[:id][:d] = command_id
     end
     # When a new message handler calls #find it will pass the message
     # parameters as an argument

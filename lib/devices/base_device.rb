@@ -34,12 +34,13 @@ class Devices
     end
 
     def to_s
+      return inspect if @verbose
       "#{@id[:h]}: #{@short_name} / #{@long_name}"
     end
 
     def inspect
       # "<BaseDevice> #{to_s}"
-      sn
+      h
     end
 
     private

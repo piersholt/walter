@@ -1,12 +1,12 @@
 ---
 :default:
     :id:
-      :h: '0x00'
-      :d: 0
-      :b: 0
+      :d: nil
+      :h: nil
     :properties:
-      :short_name: DEF
+      :short_name: Default
       :long_name: Unknown
+      :verbose: true
     :klass: BaseCommand
 0:
   :id:
