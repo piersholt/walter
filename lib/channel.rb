@@ -103,6 +103,10 @@ class Channel
     end
   end
 
+  def sleep_if_offline
+    sleep(5) if stream.instance_of?(Channel::File)
+  end
+
   def thread_populate_input_buffer(stream, input_buffer)
     LOGGER.debug('Channel') { "#thread_populate_input_buffer" }
     Thread.new do
@@ -125,7 +129,7 @@ class Channel
             # cause the thread to sleep
 
             read_byte = stream.readpartial(1)
-            sleep(0.5)
+            sleep_if_offline
 
             # when using ARGF to concatonate multiple log files
             # readpartial will return an empty string to denote the end
