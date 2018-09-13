@@ -68,6 +68,8 @@ class GlobalListener
       when MESSAGE_RECEIVED
         @session_handler.update(action, properties)
         @display_handler.update(action, properties)
+      when MESSAGE_SENT
+      when FRAME_SENT
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
       end
