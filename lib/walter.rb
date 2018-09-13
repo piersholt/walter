@@ -32,8 +32,9 @@ class Walter
     @transmitter = Transmitter.new(@channel.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)
+    transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
 
-    @listener = GlobalListener.new(bus: bus_handler)
+    @listener = GlobalListener.new(bus: bus_handler, transmission: transmission_handler)
     @channel.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)

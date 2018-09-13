@@ -7,6 +7,7 @@ require 'handlers/data_logging_handler'
 require 'handlers/frame_handler'
 require 'handlers/multiplexing_handler'
 require 'handlers/bus_handler'
+require 'handlers/transmission_handler'
 
 
 
@@ -31,6 +32,7 @@ class GlobalListener
 
     @multiplexing_handler = MultiplexingHandler.instance
     @multiplexing_handler.add_observer(self)
+    @transmission_handler = handlers[:transmission]
     @bus_handler = handlers[:bus]
     add_observer(self)
   end
@@ -74,6 +76,7 @@ class GlobalListener
       when MESSAGE_SENT
         @multiplexing_handler.update(action, properties)
       when FRAME_SENT
+        @transmission_handler.update(action, properties)
       else
         LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
       end
