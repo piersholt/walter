@@ -15,24 +15,10 @@ class Commands
     def initialize(id, props)
       LOGGER.debug("BaseCommand") { "#initialize(#{id}, #{props})" }
       @id = id
-      parse_properties(props)
+      set_properties(props)
     end
 
-    def d
-      @id[:d]
-    end
-
-    def b
-      DataTools.decimal_to_binary(d)
-    end
-
-    def sn(padded = PADDED_DEFAULT)
-      padded ? sprintf("%-10s", short_name) : short_name
-    end
-
-    def h
-      DataTools.decimal_to_hex(d)
-    end
+    # -------------------------------- OBJECT ------------------------------- #
 
     def to_s
       return inspect if @verbose
@@ -55,6 +41,26 @@ class Commands
       str_buffer
     end
 
+    # ------------------------------ COMMAND ID ----------------------------- #
+
+    def d
+      @id.d
+    end
+
+    def b
+      @id.b
+    end
+
+    def h
+      @id.h
+    end
+
+    # ----------------------------- PROPERTIES ------------------------------ #
+
+    def sn(padded = PADDED_DEFAULT)
+      padded ? sprintf("%-10s", short_name) : short_name
+    end
+
     # ------------------------------ PRINTABLE ------------------------------ #
 
     # TODO: probaby a way of using yield?
@@ -64,7 +70,7 @@ class Commands
 
     private
 
-    def parse_properties(props)
+    def set_properties(props)
       props.each do |name, value|
         instance_variable_set(inst_var(name), value)
       end

@@ -38,6 +38,7 @@ class CommandMap < Map
       mapped_result = super(:default)
       mapped_result[:id][:d] = command_id
     end
+    mapped_result[:id] = Byte.new(:decimal, command_id)
     # When a new message handler calls #find it will pass the message
     # parameters as an argument
     mapped_result[:properties][:arguments] = args unless args.nil?
