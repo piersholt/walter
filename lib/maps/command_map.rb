@@ -48,20 +48,25 @@ class CommandMap < Map
 
   private
 
+  def command_klass(command_klass_name)
+    command_namespace = DEFAULT_COMMAND_NAMESPACE
+    command_klass_name = klass_const_string(command_namespace, command_klass_name)
+
+    # Kernel.const_defined?(klass_const)
+    Kernel.const_get(command_klass_name)
+  end
+
   def instantiate_klass(mapped_object)
-    klass_ns = DEFAULT_COMMAND_NAMESPACE
-    object_klass = mapped_object[:klass]
-    klass = klass_const(klass_ns, object_klass)
+    command_klass = command_klass(mapped_object[:klass])
 
     id = mapped_object[:id]
     properties = mapped_object[:properties]
-    Kernel.const_defined?(klass)
-    klass = Kernel.const_get(klass)
-    klass.new(id, properties)
+
+    command_klass.new(id, properties)
   end
 
-  def klass_const(klass_ns, klass)
-    "#{klass_ns}::#{klass}"
+  def klass_const_string(command_namespace, klass)
+    "#{command_namespace}::#{klass}"
   end
 
   # @deprecated
