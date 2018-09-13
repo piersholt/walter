@@ -81,12 +81,12 @@ class Commands
       # control_value
     end
 
-    def parse_text(arguments)
-      # binding.pry
-      arguments.map do |byte|
-        byte.to_d.chr
-      end.join
-    end
+    # def parse_text(arguments)
+    #   # binding.pry
+    #   arguments.map do |byte|
+    #     byte.to_d.chr
+    #   end.join
+    # end
 
     def parse_text(arguments)
       Chars.new(arguments)
