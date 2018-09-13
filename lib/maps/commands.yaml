@@ -839,22 +839,6 @@
   :properties:
     :short_name: TEL-LED
     :long_name: Telephone LEDs on BMBT
-    :index_map:
-      0: :yellow
-      1: :red
-      2: :green
-    :index_to_colour_map:
-      :yellow:  93
-      :red:     91
-      :green:   92
-    :value_map:
-      0: :off
-      1: :on
-      2: :blink
-    :value_to_type_map:
-      :off:   2
-      :on:    0
-      :blink: 5
     :state:
       0: [0, 0, 0]
       1: [0, 1, 0]
@@ -880,6 +864,24 @@
       23: [1, 2, 1]
       24: [2, 0, 1]
       25: [2, 1, 1]
+    :index_map:
+      0: :yellow
+      1: :red
+      2: :green
+    :index_to_colour_map:
+      :yellow:  93
+      :red:     91
+      :green:   92
+    :value_map:
+      0: :off
+      1: :on
+      2: :blink
+    :value_to_type_map:
+      :off:   2
+      :on:    0
+      :blink: 5
+  :map:
+
   :klass: LED
   :meta:
     :senders:
@@ -1526,6 +1528,28 @@
       0x03: Key 4
       0x04: Key 5
       0xFF: Ignition Ring Off?
+  :parameters:
+    :fuck:
+      :index: !ruby/range
+              begin: 0
+              end: 5
+              excl: false
+      :konst: :status
+      :display: Key Status
+      :klass: Hash
+      :map:
+        0x00:
+          :display: No Longer Recognised
+          :konst: unrecognised
+        0x04:
+          :display: Valid and/or Enabled
+          :konst: valid
+        0x01:
+          :display: Unauthenticated (Immobilizer Renabled)
+          :konst: unauthenticated
+        0x05:
+          :display: Authenticated (Immobilizer Disabled)
+          :konst: authenticated
   :klass: Key
   :meta:
     :senders:
