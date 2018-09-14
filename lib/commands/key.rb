@@ -19,5 +19,8 @@ class Commands
       str_buffer
     end
 
+    def inspect
+      "#<#{self.class} @key=#{key} @status=#{status}>"
+    end
   end
 end
