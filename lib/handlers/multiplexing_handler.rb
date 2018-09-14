@@ -32,11 +32,9 @@ class MultiplexingHandler
 
   # @return Frame
   def process_message(message)
-    # @frame_builder.from = message.from.id
-    # @frame_builder.to = message.to.id
-    # @frame_builder.command = message.command.id
-    # @frame_builder.arguments = message.arguments
-    @frame_builder.clone(message.frame)
+    @frame_builder.from = message.from.d
+    @frame_builder.to = message.to.d
+    @frame_builder.command = message.command
     frame = @frame_builder.result
     LOGGER.warn('MultiplexingHandler') { "Frame build: #{frame}" }
     frame
