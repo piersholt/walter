@@ -1510,9 +1510,6 @@
     :long_name: Key Status Request
   :klass: BaseCommand
 116:
-  :id:
-    :d: 116
-    :h: '0x74'
   :properties:
     :short_name: KEY
     :long_name: Key Status
