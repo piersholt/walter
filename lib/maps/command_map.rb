@@ -29,10 +29,10 @@ class CommandMap < Map
     instance.reload!
   end
 
-  def find(command_id, args = nil)
+  def klass(command_id, args = nil)
     LOGGER.debug("#{self.class}") { "#find(#{command_id})" }
     begin
-      mapped_result = super(command_id)
+      mapped_result = find(command_id)
     rescue IndexError
       LOGGER.error('CommandMap') {"Command ID: #{command_id}, #{DataTools.decimal_to_hex(command_id)} not found!" }
       mapped_result = super(:default)
