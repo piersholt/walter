@@ -1421,13 +1421,13 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-81:
+0x51:
   :id:
     :d: 81
     :h: '0x51'
   :properties:
-    :short_name: '0x51'
-    :long_name: Unknown
+    :short_name: CCM?
+    :long_name: Ignition off CCM update?
   :klass: BaseCommand
 82:
   :id:
