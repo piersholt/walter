@@ -83,6 +83,15 @@ class Commands
       param_dictionary[value]
     end
 
+    def dictionary(param_name)
+      param_data = self.class.class_variable_get(:@@parameters)
+      LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+      param_dictionary = param_data[param_name][:dictionary]
+      LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
+      value = public_send(param_name)
+      param_dictionary[value]
+    end
+
     def inst_var(name)
       name_string = name.id2name
       '@'.concat(name_string).to_sym
