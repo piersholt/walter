@@ -546,11 +546,67 @@
     :short_name: '0x22'
     :long_name: Unknown
   :klass: BaseCommand
-35:
+0x23:
   :id:
     :d: 35
     :h: '0x23'
   :klass: MediaDisplay
+  :parameters:
+    :gfx:
+      :type: :map
+      :map:
+        0x00: TEL_SCREEN
+        0x01: TEL_A
+        0x02: TEL_B
+        0x40: RADIO_SET
+        0x50: RADIO_UPDATE
+        0x82: TAPE_A_PLAY
+        0x86: TAPE_A_FF
+        0x87: TAPE_A_RW
+        0x83: TAPE_A_FFF
+        0x84: TAPE_A_RWW
+        0x92: TAPE_B_PLAY
+        0x96: TAPE_B_FF
+        0x97: TAPE_B_RW
+        0x93: TAPE_B_FFF
+        0x94: TAPE_B_RWW
+        0x90: TAPE_ERROR
+      :dictionary:
+        0x00: Telephone Screen
+        0x01: TEL-A
+        0x02: TEL-B
+        0x40: Radio Set Station
+        0x50: Radio [ST]
+        0x82: Tape (A) ▶︎
+        0x86: Tape (A) ▷▷
+        0x87: Tape (A) ◁◁
+        0x83: Tape (A) ▷▷▷
+        0x84: Tape (A) ◁◁◁
+        0x92: Tape (B) ▶︎
+        0x96: Tape (B) ▷▷
+        0x97: Tape (B) ◁◁
+        0x93: Tape (B) ▷▷▷
+        0x94: Tape (B) ◁◁◁
+        0x90: Tape ERROR!!!
+    :ike:
+      :type: :map
+      :map:
+        0:00: IKE_NA
+        0x20: SET_IKE
+        0x30: UPDATE_IKE
+      :dictionary:
+        0:00: --
+        0x20: Set IKE
+        0x30: Overwrite IKE
+    :chars:
+      :type: :string
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false"
   :properties:
     :short_name: TXT-MEDIA
     :long_name: Update Text Display (BMBT, IKE)
