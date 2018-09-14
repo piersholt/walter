@@ -2,7 +2,7 @@ require 'printable'
 
 class Message
   include Printable
-  attr_accessor :sender, :receiver, :command, :arguments
+  attr_accessor :sender, :receiver, :command
 
   attr_accessor :frame
 
@@ -16,7 +16,6 @@ class Message
     @sender     = from
     @receiver   = to
     @command    = command
-    @arguments  = arguments unless arguments.nil?
 
     # Printable
     parse_mapped_bytes(bytes)
