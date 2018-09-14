@@ -18,7 +18,7 @@ class Message
     @command    = command
 
     # Printable
-    parse_mapped_bytes(bytes)
+    # parse_mapped_bytes(bytes)
   end
 
   def to_f
@@ -59,5 +59,6 @@ class Message
     command_arguments = command.bytes
 
     { Tx: b_from, Rx: b_to, CMD: b_command }.merge(command_arguments)
+    {}
   end
 end
