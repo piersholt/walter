@@ -1516,18 +1516,6 @@
   :properties:
     :short_name: KEY
     :long_name: Key Status
-    :state:
-      0x00: No Longer Recognised
-      0x04: Valid and/or Enabled
-      0x01: Unauthenticated (Immobilizer Renabled)
-      0x05: Authenticated (Immobilizer Disabled)
-    :key:
-      0x00: Key 1
-      0x01: Key 2
-      0x02: Key 3
-      0x03: Key 4
-      0x04: Key 5
-      0xFF: Ignition Ring Off?
   :parameters:
     :fuck:
       :index: !ruby/range
