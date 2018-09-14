@@ -9,17 +9,18 @@ class Commands
     # These status reports remain in the display until the defects are corrected.
     # It is not pos- sible to delete them by pressing the CHECK button (3):
 
-    # CCM	IKE	ALRT	[54 3]	"     LIGHTS ON      "
+    # CCM	IKE	1A	[54 3]	"     LIGHTS ON      "
     # ARROW: 2 (FLASH), GONG: HIGH (DOUBLE)
     # POST TRIP
 
-    # CCM	IKE	ALRT	[55 4]	" CHECK BRAKE LIGHTS "
+    # CCM	IKE	1A	[55 4]	" CHECK BRAKE LIGHTS "
     # ARROW: 0, GONG: HIGH
     # PRIORIY 2
 
-    # CCM	IKE	ALRT	[55 16]	"   RANGE  24 KM     "
+    # CCM	IKE	1A	[55 16]	"   RANGE  24 KM     "
     # ARROW: 0: NO, GONG: LOW
 
+    # CCM IKE 1A [55 5] "CHECK LOWBEAM LIGHTS"
 
     attr_accessor :mode, :control, :text
 
