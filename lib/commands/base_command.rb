@@ -76,8 +76,11 @@ class Commands
     end
 
     def dict(param, value)
-      p = self.class.class_variable_get(:@@parameters)
-      p[param][:dictionary][value]
+      param_data = self.class.class_variable_get(:@@parameters)
+      LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+      param_dictionary = param_data[param][:dictionary]
+      LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
+      param_dictionary[value]
     end
 
     def inst_var(name)
