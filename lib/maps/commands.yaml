@@ -1388,13 +1388,13 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-79:
+0x4F:
   :id:
     :d: 79
     :h: '0x4F'
   :properties:
-    :short_name: RGB-C
-    :long_name: RBG controls
+    :short_name: SCRN
+    :long_name: Display Output
   :klass: BaseCommand
   :meta:
     :senders:
