@@ -25,7 +25,6 @@ class Commands
       # str_buffer = "#{sn}"
       abvr = short_name == '???' ? h : short_name
       str_buffer = sprintf("%-10s", abvr)
-      # args_str_buffer = @arguments.join(' ') { |a| a.to_h(true) }
       args_str_buffer = @arguments.map(&:h).join(' ')
       str_buffer.concat("\t#{args_str_buffer}") unless args_str_buffer.empty?
       str_buffer.concat("\t--") if args_str_buffer.empty?
