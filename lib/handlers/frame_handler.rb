@@ -81,10 +81,6 @@ class FrameHandler
 
       indexed_args.parameters.each do |param|
         param_value = indexed_args.lookup(param)
-        param_writer = param.id2name.concat("=").to_sym
-        # command.public_send(param_writer, param_value)
-        # command.public_send(param_writer, 1000)
-        # command.instance_variable_set(inst_var(param), 1000)
         command.instance_variable_set(inst_var(param), param_value)
       end
     end
