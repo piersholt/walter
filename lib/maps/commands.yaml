@@ -1428,6 +1428,15 @@
   :properties:
     :short_name: CCM?
     :long_name: Ignition off CCM update?
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: NO_WARNINGS
+      :dictionary:
+        0x00: No Warnings
+  :index:
+    :status: 0
   :klass: BaseCommand
 82:
   :id:
