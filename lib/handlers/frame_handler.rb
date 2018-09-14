@@ -74,13 +74,16 @@ class FrameHandler
     command = frame.tail[1]
     command_id = command.to_d
     command = @command_map.klass(command_id, arguments)
+
     parameters = @command_map.parameters(command_id)
     unless parameters.nil?
       index = @command_map.index(command_id)
       indexed_args = IndexedArguments.new(arguments, index)
 
+      LOGGER.info("FrameHandler") { "Mapping command arguments." }
       indexed_args.parameters.each do |param|
         param_value = indexed_args.lookup(param)
+        LOGGER.info("FrameHandler") { "Parameter: #{param}= #{param_value}" }
         command.instance_variable_set(inst_var(param), param_value)
       end
     end
