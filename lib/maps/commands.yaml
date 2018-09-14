@@ -1610,12 +1610,13 @@
     :short_name: KEY?
     :long_name: Key Status Request
   :klass: BaseCommand
-116:
+0x74:
   :properties:
     :short_name: KEY
     :long_name: Key Status
   :parameters:
     :status:
+      :type: :map
       :map:
         0x00: unrecognised
         0x04: valid
@@ -1627,6 +1628,7 @@
         0x01: Unauthenticated (Immobilizer Renabled)
         0x05: Authenticated (Immobilizer Disabled)
     :key:
+      :type: :map
       :map:
         0x00: key_1
         0x01: key_2
