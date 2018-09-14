@@ -77,8 +77,10 @@ class CommandMap < Map
 
     parameters = mapped_object[:parameters]
     unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
+      LOGGER.info('CommandMap') { "Setting @@parameters for #{command_klass}" }
       command_klass.class_variable_set(:@@parameters, parameters)
 
+      LOGGER.info('CommandMap') { "Setting parameter constants." }
       parameters.each do |param_name, param_data|
         next unless param_data[:type] == :map
         LOGGER.info('CommandMap') { "Parameter: #{param_name}" }
@@ -90,6 +92,7 @@ class CommandMap < Map
         end
       end
 
+      LOGGER.info('CommandMap') { "Adding parameter accessors #{parameters.keys} to #{command_klass}" }
       command_klass.class_eval do
         attr_accessor *parameters.keys
       end
