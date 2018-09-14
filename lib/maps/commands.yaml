@@ -436,16 +436,38 @@
   :meta:
     :examples:
       - CCM IKE 1A 30 00 "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"
-27:
+0x1B:
   :id:
     :d: 27
     :h: '0x1B'
   :properties:
-    :short_name: HUD-STATUS
-    :long_name: IKE Text Status
+    :short_name: CCM-STATUS
+    :long_name: IKE Text Status?
     :status:
-      0x00: Clear
+      0x00: In use (by CCM?)
+      0x01: Cluster Off?
+      0x02: Cleared/Available
   :klass: BaseCommand
+  :meta:
+    :examples:
+      - TEL   	IKE   	23        40 20,
+      - IKE   	TEL   	1B        02,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20,
+      - IKE   	CCM   	1B        00,
+      - the IKE requests something from radio?
+      - IKE   	RAD   	CCM-STATUS	02
+      - RAD   	IKE   	TXT-MEDIA 	64 (Radio Set Station) | 32 (Set IKE) 	""
+      - IKE   	RAD   	CCM-STATUS	02
+    :recipients:
+      0x30: CCM
+      0x68: RAD
+      0xC8: TEL
 28:
   :id:
     :d: 28
