@@ -29,6 +29,13 @@ class CommandMap < Map
     instance.reload!
   end
 
+
+  def index(command_id)
+    LOGGER.debug("#{self.class}") { "#index(#{command_id})" }
+    mapped_result = find(command_id)
+    mapped_result[:index]
+  end
+
   def klass(command_id, args = nil)
     LOGGER.debug("#{self.class}") { "#find(#{command_id})" }
     begin
