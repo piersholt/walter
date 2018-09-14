@@ -2,7 +2,7 @@
 class Messages
   extend Forwardable
 
-  FORWARD_MESSAGES = %i[<< push first last each empty? size length to_s count [] find_all find find_index map group_by].freeze
+  FORWARD_MESSAGES = %i[<< push first last each empty? size sort_by length to_s count [] find_all find each_with_index find_index map group_by].freeze
   SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
   FORWARD_MESSAGES.each do |fwrd_message|
