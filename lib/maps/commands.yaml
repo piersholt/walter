@@ -417,25 +417,41 @@
       - GLO-L
     :notes:
       -  m.command(25).length => {3=>29197}
-26:
+0x1A:
   :id:
     :d: 26
     :h: '0x1A'
   :properties:
     :short_name: HUD-ALRT
     :long_name: CCM Cluster Warning
-    :verbose: true
+    :verbose: false
     :modes:
       0x37: Priority 2
-      0x35: Priority 1
+      0x35: Plain ol' Text
       0x30: Clear
+      0x36: Priority 2/Gong?
     :controls:
-      0x00: --
+      0x00: NA or empty?
       0x01: Car off warning?
+      0x03: unknown?
+      0x05: Car off warning?
+      0x0F: no idea
   :klass: CCMDisplay
   :meta:
     :examples:
-      - CCM IKE 1A 30 00 "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"
+      - Constantly see this > 30 00	"                    "
+      - 1A 30 00
+      - 1B 00
+      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+      - 1B 00
+      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
+      - 1B 00
+
+      - 37 0F	"     LIGHTS ON      "
+      - 36 03	""
+
+      - 37 05	"CHECK LOWBEAM LIGHTS"
+      - 35 01	""
 0x1B:
   :id:
     :d: 27
