@@ -70,6 +70,15 @@ class CommandMap < Map
     id = mapped_object[:id]
     properties = mapped_object[:properties]
 
+    parameters = mapped_object[:parameters]
+    unless parameters.nil?
+      command_klass.class_variable_set(:@@parameters, parameters)
+
+      command_klass.class_eval do
+        attr_accessor *parameters.keys
+      end
+    end
+
     command_klass.new(id, properties)
   end
 
