@@ -1395,6 +1395,17 @@
   :properties:
     :short_name: SCRN
     :long_name: Display Output
+  :parameters:
+    :action:
+      :type: :map
+      :map:
+        0x00: DISPLAY_OFF
+        0x10: DISPLAY_ON
+      :dictionary:
+        0x00: Display Off
+        0x10: Display On
+  :index:
+    :action: 0
   :klass: BaseCommand
   :meta:
     :senders:
