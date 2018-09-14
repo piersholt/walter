@@ -53,15 +53,15 @@ class FrameHandler
     # FRAME = HEADER, PAYLOAD, FCS
     # MESSAGE = FROM, TO, COMMAND, ARGUMENTS
 
-    from = frame.header[0]
+    from = frame.from
     from = from.to_d
     from = @device_map.find(from)
 
-    to = frame.tail[0]
+    to = frame.to
     to = to.to_d
     to = @device_map.find(to)
 
-    arguments = frame.tail[2..-2]
+    arguments = frame.arguments
 
     command = frame.tail[1]
     command_id = command.to_d
