@@ -63,6 +63,7 @@ class Walter
     LOGGER.debug "#{self.class}#launch"
     Thread.current[:name] = 'Walter (Main)'
     begin
+      start
       # TODO: menu to facilitate common features...
       raise NotImplementedError, 'menu not implemented. fallback to CLI...'
 
@@ -76,7 +77,7 @@ class Walter
       # raise NotImplementedError, 'menu not implemented. fallback to CLI...'
     rescue NotImplementedError
       LOGGER.info 'fallback CLI'
-      start
+
       binding.pry
 
       LOGGER.info("Walter") { "Walter is closing!" }
