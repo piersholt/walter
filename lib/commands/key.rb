@@ -37,7 +37,7 @@ class Commands
       # speed = "#{v1}#{SPEED_UNIT}"
       # rev = "#{v2}#{REV_UNIT}"
 
-      str_buffer = "#{sn}\t#{@v2}: #{@v1}"
+      str_buffer = "#{sn}\t#{dict(:key, key)}: #{dict(:status, status)}"
       str_buffer
     end
 

@@ -76,6 +76,11 @@ class Commands
       end
     end
 
+    def dict(param, value)
+      p = self.class.class_variable_get(:@@parameters)
+      p[param][:dictionary][value]
+    end
+
     def inst_var(name)
       name_string = name.id2name
       '@'.concat(name_string).to_sym
