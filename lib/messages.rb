@@ -14,7 +14,7 @@ class Messages
   end
 
   def inspect
-    @messages.join("\n")
+    @messages.map {|m| m.inspect }.join("\n")
   end
   #
   # def to_s
