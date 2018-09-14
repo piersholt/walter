@@ -222,7 +222,7 @@ class Messages
     when :command_id
       @messages.find_all do |message|
         c = message.command
-        criteria.any? { |crit| crit == c.id[:d] }
+        criteria.any? { |crit| crit == c.d }
       end
     when :to_id
       @messages.find_all do |message|
