@@ -852,6 +852,10 @@
       31: Test Mode
       64: Radio HUD
   :klass: OBCDisplay
+  :meta:
+    :examples:
+      - RAD GLO-H TXT-1 Radio HUD "102.1   "
+      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
 37:
   :id:
     :d: 37
