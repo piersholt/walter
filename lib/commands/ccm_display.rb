@@ -37,14 +37,6 @@ class Commands
       # @chars = parse_chars(@argument_map[:chars])
     end
 
-    # def inspect
-    #   # super handles from to command
-    #   # this only appends arguments
-    #   str_buffer = super
-    #   # TODO: this needs to be a string, not have Chars print itself
-    #   # puts @chars.overlay
-    #   "[#{@arguments.map(&:h).join(' ')}]"
-    # end
 
     def to_s
       return inspect if @verbose
