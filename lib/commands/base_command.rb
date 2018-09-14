@@ -85,5 +85,10 @@ class Commands
       name_string = name.id2name
       '@'.concat(name_string).to_sym
     end
+
+    def class_var(name)
+      name_string = name.id2name
+      '@@'.concat(name_string).to_sym
+    end
   end
 end
