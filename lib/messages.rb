@@ -30,6 +30,20 @@ class Messages
     self.class.new(results)
   end
 
+  def context(command_id, before = 5, after = 5)
+    positions = []
+    @messages.each_with_index do |m, i|
+      positions << i if m.command.d == command_id
+    end
+
+    positions.map do |index|
+      start_position = index - before
+      end_position = index + after
+      results = @messages[start_position..end_position]
+      self.class.new(results)
+    end
+  end
+
   def argument(index = 0, *argument_ids)
     raise StandardError if argument_ids.empty?
     results = @messages.find_all do |message|
