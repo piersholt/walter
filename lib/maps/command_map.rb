@@ -71,7 +71,7 @@ class CommandMap < Map
     properties = mapped_object[:properties]
 
     parameters = mapped_object[:parameters]
-    unless parameters.nil?
+    unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
       command_klass.class_variable_set(:@@parameters, parameters)
 
       command_klass.class_eval do
