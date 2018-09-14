@@ -611,23 +611,6 @@
     :short_name: TXT-MEDIA
     :long_name: Update Text Display (BMBT, IKE)
     :verbose: false
-    :sub_commands:
-      :gfx:
-        :index: 0
-        :length:
-          :fixed: true
-        :range: (0..1)
-      :ike:
-        :index: 1
-        :length:
-          :fixed: false
-          :min: 1
-          :max: 1
-        :range: (1..2)
-      :text:
-        :index: 2
-        :length: (0..14)
-        :range: (2..-1)
     :gfx:
       0x00: Telephone Screen
       0x01: TEL-A
