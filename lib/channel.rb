@@ -104,7 +104,7 @@ class Channel
   end
 
   def sleep_if_offline
-    sleep(5) if stream.instance_of?(Channel::File)
+    sleep(5) if @stream.instance_of?(Channel::File)
   end
 
   def thread_populate_input_buffer(stream, input_buffer)
