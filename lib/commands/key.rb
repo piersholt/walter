@@ -8,10 +8,6 @@ class Commands
 
     def initialize(id, props)
       super(id, props)
-
-      @argument_map = map_arguments(@arguments)
-      @v1 = parse_state(@argument_map[:v1])
-      @v2 = parse_key(@argument_map[:v2])
     end
 
     # ---- Interface ---- #
@@ -27,7 +23,7 @@ class Commands
     # ---- Printable ---- #
 
     def bytes
-      { state: @argument_map[:v1], key: @argument_map[:v2] }
+      @bytes ||= {}
     end
 
     # ---- Core ---- #
@@ -43,17 +39,5 @@ class Commands
 
     private
 
-    def map_arguments(arguments)
-      { v1: arguments[0],
-        v2: arguments[1] }
-    end
-
-    def parse_state(reading)
-      @state[reading.d]
-    end
-
-    def parse_key(reading)
-      @key[reading.d]
-    end
   end
 end
