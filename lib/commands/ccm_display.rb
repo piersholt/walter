@@ -50,9 +50,10 @@ class Commands
     end
 
     def to_s
-      return inspect if @verbose
+      command = sn
+      # return inspect if @verbose
       #{h}\t#{@argument_map[:gfx].h} #{@argument_map[:ike].h}\t\"#{@text}\""
-      "#{@short_name}\t#{@mode} #{@control}\t\"#{@text}\""
+      "#{@short_name}\t#{@mode} | #{@control}\t\"#{@text.to_s}\""
     end
 
     # def to_s
