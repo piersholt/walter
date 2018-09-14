@@ -146,6 +146,7 @@ class FrameBuilder
   def all_fields
     bytes = Bytes.new([from, length, to, command])
     bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
+    LOGGER.info("FrameBuilder") { "#{bytes}" }
     bytes
   end
 
