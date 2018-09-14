@@ -79,6 +79,17 @@ class CommandMap < Map
     unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
       command_klass.class_variable_set(:@@parameters, parameters)
 
+      parameters.each do |param_name, param_data|
+        next unless param_data[:type] == :map
+        LOGGER.info('CommandMap') { "Parameter: #{param_name}" }
+        constants = param_data[:map]
+        constants.each do |value, name|
+          const_name = name.upcase
+          LOGGER.info('CommandMap') { "Constant: #{const_name}" }
+          command_klass.const_set(const_name, value)
+        end
+      end
+
       command_klass.class_eval do
         attr_accessor *parameters.keys
       end
