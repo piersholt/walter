@@ -74,7 +74,8 @@ class FrameHandler
     command = frame.tail[1]
     command_id = command.to_d
     command = @command_map.klass(command_id, arguments)
-    if command_id == 116
+    parameters = @command_map.parameters(command_id)
+    unless parameters.nil?
       index = @command_map.index(command_id)
       indexed_args = IndexedArguments.new(arguments, index)
 
