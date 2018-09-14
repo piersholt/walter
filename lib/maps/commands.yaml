@@ -1543,6 +1543,9 @@
         0x03: Key 4
         0x04: Key 5
         0xFF: Ignition Ring Off?
+  :index:
+    :status: 0
+    :key: 1
   :klass: Key
   :meta:
     :senders:

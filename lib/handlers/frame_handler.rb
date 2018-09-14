@@ -4,6 +4,8 @@ require 'message'
 require 'maps/device_map'
 require 'maps/command_map'
 
+require 'indexed_arguments'
+
 class FrameHandler
   include Observable
   include Singleton
@@ -44,6 +46,12 @@ class FrameHandler
 
   private
 
+  def inst_var(name)
+    name_string = name.id2name
+    '@'.concat(name_string).to_sym
+  end
+
+
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
@@ -66,6 +74,19 @@ class FrameHandler
     command = frame.tail[1]
     command_id = command.to_d
     command = @command_map.find(command_id, arguments)
+    if command_id == 116
+      index = @command_map.index(command_id)
+      indexed_args = IndexedArguments.new(arguments, index)
+
+      indexed_args.parameters.each do |param|
+        param_value = indexed_args.lookup(param)
+        param_writer = param.id2name.concat("=").to_sym
+        # command.public_send(param_writer, param_value)
+        # command.public_send(param_writer, 1000)
+        # command.instance_variable_set(inst_var(param), 1000)
+        command.instance_variable_set(inst_var(param), param_value)
+      end
+    end
 
     m = Message.new(from, to, command, arguments)
     m.frame= frame
