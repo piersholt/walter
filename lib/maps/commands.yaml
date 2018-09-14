@@ -1517,27 +1517,32 @@
     :short_name: KEY
     :long_name: Key Status
   :parameters:
-    :fuck:
-      :index: !ruby/range
-              begin: 0
-              end: 5
-              excl: false
-      :konst: :status
-      :display: Key Status
-      :klass: Hash
+    :status:
       :map:
-        0x00:
-          :display: No Longer Recognised
-          :konst: unrecognised
-        0x04:
-          :display: Valid and/or Enabled
-          :konst: valid
-        0x01:
-          :display: Unauthenticated (Immobilizer Renabled)
-          :konst: unauthenticated
-        0x05:
-          :display: Authenticated (Immobilizer Disabled)
-          :konst: authenticated
+        0x00: unrecognised
+        0x04: valid
+        0x01: unauthenticated
+        0x05: authenticated
+      :dictionary:
+        0x00: No Longer Recognised
+        0x04: Valid and/or Enabled
+        0x01: Unauthenticated (Immobilizer Renabled)
+        0x05: Authenticated (Immobilizer Disabled)
+    :key:
+      :map:
+        0x00: key_1
+        0x01: key_2
+        0x02: key_3
+        0x03: key_4
+        0x04: key_5
+        0xFF: "off"
+      :dictionary:
+        0x00: Key 1
+        0x01: Key 2
+        0x02: Key 3
+        0x03: Key 4
+        0x04: Key 5
+        0xFF: Ignition Ring Off?
   :klass: Key
   :meta:
     :senders:
