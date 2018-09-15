@@ -33,7 +33,14 @@ class DisplayHandler
       # hide the message output as it clutters the exit log messages
       disable
     when MESSAGE_RECEIVED
-      filtered_output(properties[:message])
+      begin
+        filtered_output(properties[:message])
+      rescue StandardError => e
+        LOGGER.error("#{self.class} Exception: #{e}")
+        # break here
+        e.backtrace.each { |l| LOGGER.error(l) }
+        puts 'waiting for a mate.'
+      end
     end
   end
 
