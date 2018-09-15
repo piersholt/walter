@@ -7,10 +7,10 @@ class Commands
 
     def initialize(id, props)
       super(id, props)
-      @argument_map = map_byte_stream(@arguments)
-      @gfx = parse_gfx(@argument_map[:gfx])
-      @ike = parse_ike(@argument_map[:ike])
-      @text = parse_text(@argument_map[:text])
+      # @argument_map = map_byte_stream(@arguments)
+      # @gfx = parse_gfx(@argument_map[:gfx])
+      # @ike = parse_ike(@argument_map[:ike])
+      # @text = parse_text(@argument_map[:text])
       # @chars = parse_chars(@argument_map[:chars])
     end
 
