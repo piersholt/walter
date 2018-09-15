@@ -2,7 +2,7 @@ require 'printable'
 
 class Message
   include Printable
-  attr_accessor :sender, :receiver, :command, :arguments
+  attr_accessor :sender, :receiver, :command
 
   attr_accessor :frame
 
@@ -16,10 +16,9 @@ class Message
     @sender     = from
     @receiver   = to
     @command    = command
-    @arguments  = arguments unless arguments.nil?
 
     # Printable
-    parse_mapped_bytes(bytes)
+    # parse_mapped_bytes(bytes)
   end
 
   def to_f
@@ -60,5 +59,6 @@ class Message
     command_arguments = command.bytes
 
     { Tx: b_from, Rx: b_to, CMD: b_command }.merge(command_arguments)
+    {}
   end
 end

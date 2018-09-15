@@ -2,7 +2,7 @@
 class Messages
   extend Forwardable
 
-  FORWARD_MESSAGES = %i[<< push first last each empty? size length to_s count [] find_all find find_index map group_by].freeze
+  FORWARD_MESSAGES = %i[<< push first last each empty? size sort_by length to_s count [] find_all find each_with_index find_index map group_by].freeze
   SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
 
   FORWARD_MESSAGES.each do |fwrd_message|
@@ -14,7 +14,7 @@ class Messages
   end
 
   def inspect
-    @messages.join("\n")
+    @messages.map {|m| m.inspect }.join("\n")
   end
   #
   # def to_s
@@ -28,6 +28,20 @@ class Messages
   def command(*command_ids)
     results = where(:command_id, *command_ids)
     self.class.new(results)
+  end
+
+  def context(command_id, before = 5, after = 5)
+    positions = []
+    @messages.each_with_index do |m, i|
+      positions << i if m.command.d == command_id
+    end
+
+    positions.map do |index|
+      start_position = index - before
+      end_position = index + after
+      results = @messages[start_position..end_position]
+      self.class.new(results)
+    end
   end
 
   def argument(index = 0, *argument_ids)
@@ -222,7 +236,7 @@ class Messages
     when :command_id
       @messages.find_all do |message|
         c = message.command
-        criteria.any? { |crit| crit == c.id[:d] }
+        criteria.any? { |crit| crit == c.d }
       end
     when :to_id
       @messages.find_all do |message|

@@ -9,17 +9,18 @@ class Commands
     # These status reports remain in the display until the defects are corrected.
     # It is not pos- sible to delete them by pressing the CHECK button (3):
 
-    # CCM	IKE	ALRT	[54 3]	"     LIGHTS ON      "
+    # CCM	IKE	1A	[54 3]	"     LIGHTS ON      "
     # ARROW: 2 (FLASH), GONG: HIGH (DOUBLE)
     # POST TRIP
 
-    # CCM	IKE	ALRT	[55 4]	" CHECK BRAKE LIGHTS "
+    # CCM	IKE	1A	[55 4]	" CHECK BRAKE LIGHTS "
     # ARROW: 0, GONG: HIGH
     # PRIORIY 2
 
-    # CCM	IKE	ALRT	[55 16]	"   RANGE  24 KM     "
+    # CCM	IKE	1A	[55 16]	"   RANGE  24 KM     "
     # ARROW: 0: NO, GONG: LOW
 
+    # CCM IKE 1A [55 5] "CHECK LOWBEAM LIGHTS"
 
     attr_accessor :mode, :control, :text
 
@@ -37,19 +38,22 @@ class Commands
       # @chars = parse_chars(@argument_map[:chars])
     end
 
-    # def inspect
-    #   # super handles from to command
-    #   # this only appends arguments
-    #   str_buffer = super
-    #   # TODO: this needs to be a string, not have Chars print itself
-    #   # puts @chars.overlay
-    #   "[#{@arguments.map(&:h).join(' ')}]"
-    # end
+    def inspect
+      # super handles from to command
+      # this only appends arguments
+      str_buffer = super
+      # TODO: this needs to be a string, not have Chars print itself
+      # puts @chars.overlay
+      # "[#{@arguments.map(&:h).join(' ')}]"
+
+      "#{h}\t#{@argument_map[:mode]} #{@argument_map[:control]}\t\"#{@text}\""
+    end
 
     def to_s
-      return inspect if @verbose
+      command = sn
+      # return inspect if @verbose
       #{h}\t#{@argument_map[:gfx].h} #{@argument_map[:ike].h}\t\"#{@text}\""
-      "#{@short_name}\t#{@mode} #{@control}\t\"#{@text}\""
+      "#{@short_name}\t#{@mode} | #{@control}\t\"#{@text.to_s}\""
     end
 
     # def to_s

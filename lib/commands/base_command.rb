@@ -2,6 +2,7 @@
 class Commands
   # Basic device class
   class BaseCommand
+    include DataTools
     # include Printable
     PADDED_DEFAULT = true
 
@@ -15,31 +16,16 @@ class Commands
     def initialize(id, props)
       LOGGER.debug("BaseCommand") { "#initialize(#{id}, #{props})" }
       @id = id
-      parse_properties(props)
+      set_properties(props)
     end
 
-    def d
-      @id[:d]
-    end
-
-    def b
-      DataTools.decimal_to_binary(d)
-    end
-
-    def sn(padded = PADDED_DEFAULT)
-      padded ? sprintf("%-10s", short_name) : short_name
-    end
-
-    def h
-      DataTools.decimal_to_hex(d)
-    end
+    # -------------------------------- OBJECT ------------------------------- #
 
     def to_s
       return inspect if @verbose
       # str_buffer = "#{sn}"
       abvr = short_name == '???' ? h : short_name
       str_buffer = sprintf("%-10s", abvr)
-      # args_str_buffer = @arguments.join(' ') { |a| a.to_h(true) }
       args_str_buffer = @arguments.map(&:h).join(' ')
       str_buffer.concat("\t#{args_str_buffer}") unless args_str_buffer.empty?
       str_buffer.concat("\t--") if args_str_buffer.empty?
@@ -55,6 +41,26 @@ class Commands
       str_buffer
     end
 
+    # ------------------------------ COMMAND ID ----------------------------- #
+
+    def d
+      @id.d
+    end
+
+    def b
+      @id.b
+    end
+
+    def h
+      @id.h
+    end
+
+    # ----------------------------- PROPERTIES ------------------------------ #
+
+    def sn(padded = PADDED_DEFAULT)
+      padded ? sprintf("%-10s", short_name) : short_name
+    end
+
     # ------------------------------ PRINTABLE ------------------------------ #
 
     # TODO: probaby a way of using yield?
@@ -64,15 +70,37 @@ class Commands
 
     private
 
-    def parse_properties(props)
+    def set_properties(props)
       props.each do |name, value|
         instance_variable_set(inst_var(name), value)
       end
     end
 
+    def dict(param, value)
+      param_data = self.class.class_variable_get(:@@parameters)
+      LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+      param_dictionary = param_data[param][:dictionary]
+      LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
+      param_dictionary[value]
+    end
+
+    def dictionary(param_name)
+      param_data = self.class.class_variable_get(:@@parameters)
+      LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+      param_dictionary = param_data[param_name][:dictionary]
+      LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
+      value = public_send(param_name)
+      param_dictionary[value]
+    end
+
     def inst_var(name)
       name_string = name.id2name
       '@'.concat(name_string).to_sym
+    end
+
+    def class_var(name)
+      name_string = name.id2name
+      '@@'.concat(name_string).to_sym
     end
   end
 end

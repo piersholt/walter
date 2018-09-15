@@ -4,6 +4,8 @@ require 'message'
 require 'maps/device_map'
 require 'maps/command_map'
 
+require 'indexed_arguments'
+
 class FrameHandler
   include Observable
   include Singleton
@@ -44,6 +46,12 @@ class FrameHandler
 
   private
 
+  def inst_var(name)
+    name_string = name.id2name
+    '@'.concat(name_string).to_sym
+  end
+
+
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
@@ -53,19 +61,32 @@ class FrameHandler
     # FRAME = HEADER, PAYLOAD, FCS
     # MESSAGE = FROM, TO, COMMAND, ARGUMENTS
 
-    from = frame.header[0]
+    from = frame.from
     from = from.to_d
     from = @device_map.find(from)
 
-    to = frame.tail[0]
+    to = frame.to
     to = to.to_d
     to = @device_map.find(to)
 
-    arguments = frame.tail[2..-2]
+    arguments = frame.arguments
 
     command = frame.tail[1]
     command_id = command.to_d
-    command = @command_map.find(command_id, arguments)
+    command = @command_map.klass(command_id, arguments)
+
+    parameters = @command_map.parameters(command_id)
+    unless parameters.nil?
+      index = @command_map.index(command_id)
+      indexed_args = IndexedArguments.new(arguments, index)
+
+      LOGGER.info("FrameHandler") { "Mapping command arguments." }
+      indexed_args.parameters.each do |param|
+        param_value = indexed_args.lookup(param)
+        LOGGER.info("FrameHandler") { "Parameter: #{param}= #{param_value}" }
+        command.instance_variable_set(inst_var(param), param_value)
+      end
+    end
 
     m = Message.new(from, to, command, arguments)
     m.frame= frame

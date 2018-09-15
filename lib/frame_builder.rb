@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'new_frame'
+require 'arguments_builder'
 
 # Class documentation
 class FrameBuilder
@@ -16,7 +17,8 @@ class FrameBuilder
   ARGS_TAIL_INDEX = ARGS_INDEX
   ARGS_FRAME_INDEX = -1
 
-  attr_accessor :from, :to, :command, :arguments
+  attr_accessor :arguments
+  attr_reader :from, :to, :command
   attr_reader :length, :fcs
 
   def initialze
@@ -35,6 +37,41 @@ class FrameBuilder
     @arguments = frame.arguments
     LOGGER.warn('FrameBuilder') { "arguments: #{arguments}" }
     true
+  end
+
+  def from=(device_id)
+    @from = Byte.new(:decimal, device_id)
+  end
+
+  def to=(device_id)
+    @to = Byte.new(:decimal, device_id)
+  end
+
+  def command=(command)
+    begin
+      command_id = command.d
+      @command = Byte.new(:decimal, command_id)
+
+      index = CommandMap.instance.index(command_id)
+      builder = ArgumentsBuilder.new(command, index)
+      args = builder.result
+      nested_arguments = args.map do |d|
+        if d.instance_of?(Array)
+          array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
+          Bytes.new(array_of_bytes)
+        else
+          Byte.new(:decimal, d)
+        end
+      end
+      flattened_arguments = nested_arguments.flatten
+
+      self.arguments= flattened_arguments
+    rescue StandardError => e
+      LOGGER.error("#{self.class} Exception: #{e}")
+      e.backtrace.each { |l| LOGGER.error(l) }
+      puts "breakpoint"
+      puts "breakpoint!"
+    end
   end
 
   def result
@@ -109,6 +146,7 @@ class FrameBuilder
   def all_fields
     bytes = Bytes.new([from, length, to, command])
     bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
+    LOGGER.info("FrameBuilder") { "#{bytes}" }
     bytes
   end
 

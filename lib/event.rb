@@ -11,9 +11,11 @@ module Event
   # Receiver
   FRAME_RECEIVED = :frame_received
   FRAME_FAILED = :frame_failed
+  FRAME_SENT = :frame_sent
 
   # top layer?
   MESSAGE_RECEIVED = :message_received
+  MESSAGE_SENT = :message_sent
 
   # user configuration events
   MESSAGE_DISPLAY = :message_display
@@ -23,8 +25,8 @@ module Event
   EXIT = :exit
 
   CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
-  RECEIVER_EVENTS = [FRAME_RECEIVED, FRAME_FAILED].freeze
-  LAYER_EVENTS    = [MESSAGE_RECEIVED].freeze
+  RECEIVER_EVENTS = [FRAME_RECEIVED, FRAME_FAILED, FRAME_SENT].freeze
+  LAYER_EVENTS    = [MESSAGE_RECEIVED, MESSAGE_SENT].freeze
   USER_EVENTS     = [MESSAGE_DISPLAY].freeze
   APP_EVENTS      = [STATUS_REQUEST, EXIT].freeze
 

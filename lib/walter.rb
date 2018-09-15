@@ -32,14 +32,20 @@ class Walter
     @transmitter = Transmitter.new(@channel.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)
+    transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
 
-    @listener = GlobalListener.new(bus: bus_handler)
+    @listener = GlobalListener.new(bus: bus_handler, transmission: transmission_handler)
     @channel.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
 
     # @threads = ThreadGroup.new
     add_observer(@listener)
+
+    require 'bus_device'
+    require 'api/basic'
+    @bus_device = BusDevice.new
+    @bus_device.add_observer(@listener)
   end
 
   def shutup!
@@ -58,10 +64,15 @@ class Walter
     true
   end
 
+  def fuck_yeah!
+    @bus_device.update(chars: "fuck yeah".bytes, ike: 0x20, gfx: 0x40)
+  end
+
   def launch
     LOGGER.debug "#{self.class}#launch"
     Thread.current[:name] = 'Walter (Main)'
     begin
+      start
       # TODO: menu to facilitate common features...
       raise NotImplementedError, 'menu not implemented. fallback to CLI...'
 
@@ -75,7 +86,7 @@ class Walter
       # raise NotImplementedError, 'menu not implemented. fallback to CLI...'
     rescue NotImplementedError
       LOGGER.info 'fallback CLI'
-      start
+
       binding.pry
 
       LOGGER.info("Walter") { "Walter is closing!" }

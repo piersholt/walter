@@ -17,7 +17,8 @@ class Commands
       row_div: '-',
       space_char: ' ' }.freeze
 
-    def initialize(byte_array)
+    def initialize(byte_array, format = false)
+      byte_array = byte_array.map {|i| Byte.new(:decimal, i) } if format
       @byte_array = byte_array
       parse_arguments(byte_array)
     end

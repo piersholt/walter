@@ -29,15 +29,28 @@ class CommandMap < Map
     instance.reload!
   end
 
-  def find(command_id, args = nil)
+  def parameters(command_id)
+    LOGGER.debug("#{self.class}") { "#parameters(#{command_id})" }
+    mapped_result = find(command_id)
+    mapped_result[:parameters]
+  end
+
+  def index(command_id)
+    LOGGER.debug("#{self.class}") { "#index(#{command_id})" }
+    mapped_result = find(command_id)
+    mapped_result[:index]
+  end
+
+  def klass(command_id, args = nil)
     LOGGER.debug("#{self.class}") { "#find(#{command_id})" }
     begin
-      mapped_result = super(command_id)
+      mapped_result = find(command_id)
     rescue IndexError
       LOGGER.error('CommandMap') {"Command ID: #{command_id}, #{DataTools.decimal_to_hex(command_id)} not found!" }
       mapped_result = super(:default)
       mapped_result[:id][:d] = command_id
     end
+    mapped_result[:id] = Byte.new(:decimal, command_id)
     # When a new message handler calls #find it will pass the message
     # parameters as an argument
     mapped_result[:properties][:arguments] = args unless args.nil?
@@ -48,20 +61,48 @@ class CommandMap < Map
 
   private
 
+  def command_klass(command_klass_name)
+    command_namespace = DEFAULT_COMMAND_NAMESPACE
+    command_klass_name = klass_const_string(command_namespace, command_klass_name)
+
+    # Kernel.const_defined?(klass_const)
+    Kernel.const_get(command_klass_name)
+  end
+
   def instantiate_klass(mapped_object)
-    klass_ns = DEFAULT_COMMAND_NAMESPACE
-    object_klass = mapped_object[:klass]
-    klass = klass_const(klass_ns, object_klass)
+    command_klass = command_klass(mapped_object[:klass])
 
     id = mapped_object[:id]
     properties = mapped_object[:properties]
-    Kernel.const_defined?(klass)
-    klass = Kernel.const_get(klass)
-    klass.new(id, properties)
+
+    parameters = mapped_object[:parameters]
+    unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
+      LOGGER.info('CommandMap') { "Setting @@parameters for #{command_klass}" }
+      command_klass.class_variable_set(:@@parameters, parameters)
+
+      LOGGER.info('CommandMap') { "Setting parameter constants." }
+      parameters.each do |param_name, param_data|
+        next unless param_data[:type] == :map
+        LOGGER.info('CommandMap') { "Parameter: #{param_name}" }
+        constants = param_data[:map]
+        constants.each do |value, name|
+          const_name = name.upcase
+          LOGGER.info('CommandMap') { "Constant: #{const_name}" }
+          command_klass.const_set(const_name, value)
+        end
+      end
+
+      LOGGER.info('CommandMap') { "Adding parameter accessors #{parameters.keys} to #{command_klass}" }
+      command_klass.class_eval do
+        attr_accessor *parameters.keys
+      end
+    end
+
+    command_klass.new(id, properties)
   end
 
-  def klass_const(klass_ns, klass)
-    "#{klass_ns}::#{klass}"
+  def klass_const_string(command_namespace, klass)
+    "#{command_namespace}::#{klass}"
   end
 
   # @deprecated

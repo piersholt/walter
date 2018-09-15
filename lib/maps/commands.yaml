@@ -417,35 +417,73 @@
       - GLO-L
     :notes:
       -  m.command(25).length => {3=>29197}
-26:
+0x1A:
   :id:
     :d: 26
     :h: '0x1A'
   :properties:
     :short_name: HUD-ALRT
     :long_name: CCM Cluster Warning
-    :verbose: true
+    :verbose: false
     :modes:
       0x37: Priority 2
-      0x35: Priority 1
+      0x35: Plain ol' Text
       0x30: Clear
+      0x36: Priority 2/Gong?
     :controls:
-      0x00: --
+      0x00: NA or empty?
       0x01: Car off warning?
+      0x03: unknown?
+      0x05: Car off warning?
+      0x0F: no idea
   :klass: CCMDisplay
   :meta:
     :examples:
-      - CCM IKE 1A 30 00 "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20"
-27:
+      - Constantly see this > 30 00	"                    "
+      - 1A 30 00
+      - 1B 00
+      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+      - 1B 00
+      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
+      - 1B 00
+
+      - 37 0F	"     LIGHTS ON      "
+      - 36 03	""
+
+      - 37 05	"CHECK LOWBEAM LIGHTS"
+      - 35 01	""
+0x1B:
   :id:
     :d: 27
     :h: '0x1B'
   :properties:
-    :short_name: HUD-STATUS
-    :long_name: IKE Text Status
+    :short_name: CCM-STATUS
+    :long_name: IKE Text Status?
     :status:
-      0x00: Clear
+      0x00: In use (by CCM?)
+      0x01: Cluster Off?
+      0x02: Cleared/Available
   :klass: BaseCommand
+  :meta:
+    :examples:
+      - TEL   	IKE   	23        40 20,
+      - IKE   	TEL   	1B        02,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20,
+      - IKE   	CCM   	1B        00,
+      - the IKE requests something from radio?
+      - IKE   	RAD   	CCM-STATUS	02
+      - RAD   	IKE   	TXT-MEDIA 	64 (Radio Set Station) | 32 (Set IKE) 	""
+      - IKE   	RAD   	CCM-STATUS	02
+    :recipients:
+      0x30: CCM
+      0x68: RAD
+      0xC8: TEL
 28:
   :id:
     :d: 28
@@ -508,32 +546,71 @@
     :short_name: '0x22'
     :long_name: Unknown
   :klass: BaseCommand
-35:
+0x23:
   :id:
     :d: 35
     :h: '0x23'
   :klass: MediaDisplay
+  :parameters:
+    :gfx:
+      :type: :map
+      :map:
+        0x00: TEL_SCREEN
+        0x01: TEL_A
+        0x02: TEL_B
+        0x40: RADIO_SET
+        0x50: RADIO_UPDATE
+        0x82: TAPE_A_PLAY
+        0x86: TAPE_A_FF
+        0x87: TAPE_A_RW
+        0x83: TAPE_A_FFF
+        0x84: TAPE_A_RWW
+        0x92: TAPE_B_PLAY
+        0x96: TAPE_B_FF
+        0x97: TAPE_B_RW
+        0x93: TAPE_B_FFF
+        0x94: TAPE_B_RWW
+        0x90: TAPE_ERROR
+      :dictionary:
+        0x00: Telephone Screen
+        0x01: TEL-A
+        0x02: TEL-B
+        0x40: Radio Set Station
+        0x50: Radio [ST]
+        0x82: Tape (A) ▶︎
+        0x86: Tape (A) ▷▷
+        0x87: Tape (A) ◁◁
+        0x83: Tape (A) ▷▷▷
+        0x84: Tape (A) ◁◁◁
+        0x92: Tape (B) ▶︎
+        0x96: Tape (B) ▷▷
+        0x97: Tape (B) ◁◁
+        0x93: Tape (B) ▷▷▷
+        0x94: Tape (B) ◁◁◁
+        0x90: Tape ERROR!!!
+    :ike:
+      :type: :map
+      :map:
+        0:00: IKE_NA
+        0x20: SET_IKE
+        0x30: UPDATE_IKE
+      :dictionary:
+        0:00: --
+        0x20: Set IKE
+        0x30: Overwrite IKE
+    :chars:
+      :type: :string
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false"
   :properties:
     :short_name: TXT-MEDIA
     :long_name: Update Text Display (BMBT, IKE)
     :verbose: false
-    :sub_commands:
-      :gfx:
-        :index: 0
-        :length:
-          :fixed: true
-        :range: (0..1)
-      :ike:
-        :index: 1
-        :length:
-          :fixed: false
-          :min: 1
-          :max: 1
-        :range: (1..2)
-      :text:
-        :index: 2
-        :length: (0..14)
-        :range: (2..-1)
     :gfx:
       0x00: Telephone Screen
       0x01: TEL-A
@@ -775,6 +852,10 @@
       31: Test Mode
       64: Radio HUD
   :klass: OBCDisplay
+  :meta:
+    :examples:
+      - RAD GLO-H TXT-1 Radio HUD "102.1   "
+      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
 37:
   :id:
     :d: 37
@@ -839,22 +920,6 @@
   :properties:
     :short_name: TEL-LED
     :long_name: Telephone LEDs on BMBT
-    :index_map:
-      0: :yellow
-      1: :red
-      2: :green
-    :index_to_colour_map:
-      :yellow:  93
-      :red:     91
-      :green:   92
-    :value_map:
-      0: :off
-      1: :on
-      2: :blink
-    :value_to_type_map:
-      :off:   2
-      :on:    0
-      :blink: 5
     :state:
       0: [0, 0, 0]
       1: [0, 1, 0]
@@ -880,6 +945,24 @@
       23: [1, 2, 1]
       24: [2, 0, 1]
       25: [2, 1, 1]
+    :index_map:
+      0: :yellow
+      1: :red
+      2: :green
+    :index_to_colour_map:
+      :yellow:  93
+      :red:     91
+      :green:   92
+    :value_map:
+      0: :off
+      1: :on
+      2: :blink
+    :value_to_type_map:
+      :off:   2
+      :on:    0
+      :blink: 5
+  :map:
+
   :klass: LED
   :meta:
     :senders:
@@ -1305,13 +1388,24 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-79:
+0x4F:
   :id:
     :d: 79
     :h: '0x4F'
   :properties:
-    :short_name: RGB-C
-    :long_name: RBG controls
+    :short_name: SCRN
+    :long_name: Display Output
+  :parameters:
+    :action:
+      :type: :map
+      :map:
+        0x00: DISPLAY_OFF
+        0x10: DISPLAY_ON
+      :dictionary:
+        0x00: Display Off
+        0x10: Display On
+  :index:
+    :action: 0
   :klass: BaseCommand
   :meta:
     :senders:
@@ -1327,13 +1421,22 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-81:
+0x51:
   :id:
     :d: 81
     :h: '0x51'
   :properties:
-    :short_name: '0x51'
-    :long_name: Unknown
+    :short_name: CCM?
+    :long_name: Ignition off CCM update?
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: NO_WARNINGS
+      :dictionary:
+        0x00: No Warnings
+  :index:
+    :status: 0
   :klass: BaseCommand
 82:
   :id:
@@ -1507,25 +1610,42 @@
     :short_name: KEY?
     :long_name: Key Status Request
   :klass: BaseCommand
-116:
-  :id:
-    :d: 116
-    :h: '0x74'
+0x74:
   :properties:
     :short_name: KEY
     :long_name: Key Status
-    :state:
-      0x00: No Longer Recognised
-      0x04: Valid and/or Enabled
-      0x01: Unauthenticated (Immobilizer Renabled)
-      0x05: Authenticated (Immobilizer Disabled)
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: unrecognised
+        0x04: valid
+        0x01: unauthenticated
+        0x05: authenticated
+      :dictionary:
+        0x00: No Longer Recognised
+        0x04: Valid and/or Enabled
+        0x01: Unauthenticated (Immobilizer Renabled)
+        0x05: Authenticated (Immobilizer Disabled)
     :key:
-      0x00: Key 1
-      0x01: Key 2
-      0x02: Key 3
-      0x03: Key 4
-      0x04: Key 5
-      0xFF: Ignition Ring Off?
+      :type: :map
+      :map:
+        0x00: key_1
+        0x01: key_2
+        0x02: key_3
+        0x03: key_4
+        0x04: key_5
+        0xFF: "off"
+      :dictionary:
+        0x00: Key 1
+        0x01: Key 2
+        0x02: Key 3
+        0x03: Key 4
+        0x04: Key 5
+        0xFF: Ignition Ring Off?
+  :index:
+    :status: 0
+    :key: 1
   :klass: Key
   :meta:
     :senders:
