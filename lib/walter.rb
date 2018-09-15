@@ -41,6 +41,11 @@ class Walter
 
     # @threads = ThreadGroup.new
     add_observer(@listener)
+
+    require 'bus_device'
+    require 'api/basic'
+    @bus_device = BusDevice.new
+    @bus_device.add_observer(@listener)
   end
 
   def shutup!
@@ -57,6 +62,10 @@ class Walter
       LOGGER.info("#{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
     end
     true
+  end
+
+  def fuck_yeah!
+    @bus_device.update(chars: "fuck yeah".bytes, ike: 0x20, gfx: 0x40)
   end
 
   def launch
