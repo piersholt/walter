@@ -122,7 +122,7 @@ class NewReceiver
             LOGGER.debug(SYNC_ERROR) { e }
             # e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)
-          rescue StandardError, TailError => e
+          rescue StandardError => e
             LOGGER.error(e)
             e.backtrace.each { |l| LOGGER.error(l) }
             clean_up(buffer, new_frame)
