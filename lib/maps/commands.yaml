@@ -543,9 +543,16 @@
     :d: 34
     :h: '0x22'
   :properties:
-    :short_name: '0x22'
+    :short_name: TEL/RAD-AUDIO?
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :notes:
+      - 00: Dial Function
+      - 01 FF: Radio On?
+# ************************************************************************* #
+#                               0-23 TXT-MEDIA
+# ************************************************************************* #
 0x23:
   :id:
     :d: 35
@@ -612,21 +619,39 @@
     :long_name: Update Text Display (BMBT, IKE)
     :verbose: false
     :gfx:
-      0x00: Telephone Screen
+      # TELEPHONE
+      0x00: No Service
       0x01: TEL-A
       0x02: TEL-B
+
+      # Headers
+      0x52: Directory Header Set
+      0x53: Directory Header Overwrite
+      0x61: Dial Header Overwrite
+      0x63: Rotary Rotary Header Overwrite
+      0x80: Default Header Overwrite
+      0x81: Top 8 Header Set
+      0x82: Top 8 Header Overwrite
+      0xC0: SOS Header Set?
+
+      0x42: Contact/Call
+      0x43: Show Contact Number
+      0x41: Clear Contact
+
+      # RADIO
       0x40: Radio Set Station
       0x50: Radio [ST]
-      0x82: Tape (A) ▶︎
-      0x86: Tape (A) ▷▷
-      0x87: Tape (A) ◁◁
+
+      # TAPE
       0x83: Tape (A) ▷▷▷
       0x84: Tape (A) ◁◁◁
+      0x86: Tape (A) ▷▷
+      0x87: Tape (A) ◁◁
       0x92: Tape (B) ▶︎
-      0x96: Tape (B) ▷▷
-      0x97: Tape (B) ◁◁
       0x93: Tape (B) ▷▷▷
       0x94: Tape (B) ◁◁◁
+      0x96: Tape (B) ▷▷
+      0x97: Tape (B) ◁◁
       0x90: Tape ERROR!!!
     :ike:
       0:00: --
@@ -828,28 +853,28 @@
     :modes:
       1: Time
       2: Date
-      3: Outside Temperature
-      4: Consumption 1
-      5: Consumption 2
+      3: Outside Temp.
+      4: Econ. 1
+      5: Econ. 2
       6: Range
       7: Distance
       8: Arrival
       9: Speed Limit
-      10: Average Speed
-      12: Memo
-      13: Memo
+      10: Avg. Speed
+      # 12: Memo
+      # 13: Memo
       14: Stopwatch
       15: Timer 1
       16: Timer 2
-      17: Aux Heating Off
-      18: Aux Heating On
-      19: Aux Vent. Off
-      20: Aux Vent. On
-      21: End Stellmode
-      22: Emergency Disarm
+      # 17: Aux Heating Off
+      # 18: Aux Heating On
+      # 19: Aux Vent. Off
+      # 20: Aux Vent. On
+      # 21: End Stellmode
+      # 22: Emergency Disarm
       26: Interim Time
-      27: Aux Heat/Vent
-      31: Test Mode
+      # 27: Aux Heat/Vent
+      # 31: Test Mode
       64: Radio HUD
   :klass: OBCDisplay
   :meta:
@@ -961,8 +986,6 @@
       :off:   2
       :on:    0
       :blink: 5
-  :map:
-
   :klass: LED
   :meta:
     :senders:
@@ -978,8 +1001,8 @@
     :long_name: Unknown
     :status:
       0x10: exit tel?
-      0x12: end call?
-      0x13: start call?
+      0x12: failed call? end call?
+      0x13: commence call?
   :klass: BaseCommand
   :meta:
     :senders:
@@ -1018,18 +1041,100 @@
     :short_name: '0x30'
     :long_name: Unknown
   :klass: BaseCommand
-49:
+# ************************************************************************* #
+#                               0x31 TEL-DATA
+# ************************************************************************* #
+0x31:
   :id:
     :d: 49
     :h: '0x31'
   :properties:
-    :short_name: TEL-SOS?
+    :short_name: TEL-DATA
     :long_name: Unknown
+    :source:
+      0x00: --
+      0x20: Info
+      0x42: Dial
+      0x43: Directory
+      0x80: Top 8
+    :function:
+      0x00: --
+      0x01:
+        name: Select Contact
+        0x00: Contact 1
+        0x02: Contact 2
+        0x04: Contact 3
+      0x02:
+        name: Select Digit
+        0x00: (0)
+        0x07: (7)
+        0x08: (8)
+        0x09: (9)
+        0x0A: DEL
+        0x1A: "*"
+        0x1B: "#"
+      0x05: SOS
+      0x07: Navigate Function
+      0x08: Navigate Info
+    :action:
+      0x08: SOS 112?
+      0x0A: Info Screen
+      0x1E: Dial Screen
+      0x1F: Directory Screen
+      0x0D: Directory Forward Page Start
+      0x2D: Directory Forward Page Scroll
+      0x4D: Directory Forward Page Stop
+      0x0C: Directory Back Page Start
+      0x2C: Directory Back Page Start
+      0x4C: Directory Back Page Start
   :klass: BaseCommand
   :meta:
+    :commands:
+      - 00 00 0D Directory Forward Page Start
+      - 00 00 2D Directory Forward Page Scroll
+      - 00 00 4D Directory Forward Page Stop
+      - 00 00 0C Directory Back Page Start
+      - 00 00 2C Directory Back Page Start
+      - 00 00 4C Directory Back Page Start
+
+      # TOP 8 (MAIN SCREEN) ---------------------------------------------------
+
+      # Navigation
+      - 80 07 1F Directory
+      - 80 07 1E Dial
+      - 80 08 0A Info
+
+      # Function
+      - 80 01 00 Select Top 8 Contact 1
+      - 80 01 02 Select Top 8 Contact 2
+
+      # INFO ------------------------------------------------------------------
+
+      # Navigation
+      - 20 07 1F Directory Index (from Info)
+      - 20 07 1E Dial (from Info)
+
+      # DIAL ------------------------------------------------------------------
+
+      # Navigation
+      - 42 08 0A Info (from Dial)
+      - 42 07 1F Directory Index (from Dial)
+
+      # DIRECTORY -------------------------------------------------------------
+
+      # Navigation
+      - 43 07 1E Dial (from Directory)
+      - 43 08 0A Info (from Directory)
+
+      # Function
+      - 43 01 00 Select Directory Contact 1
+      - 43 01 02 Select Directory Contact 2
+      - 43 01 04 Select Directory Contact 3
+
+
     :examples:
       - 17:43:00 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
-      - 17:43:01 [INFO ] GFX   	TEL   	0x31      	00 05 08
+      - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
       - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
       - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 50:
@@ -1178,9 +1283,16 @@
     :d: 65
     :h: '0x41'
   :properties:
-    :short_name: "???"
+    :short_name: OBC-DATA-REQ
     :long_name: OBC Data Request
   :klass: BaseCommand
+  :meta:
+    :notes:
+      - two bytes. first byte corresponds to same code as obc
+      - GFX IKE   41    08 01
+      - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
+      - GFX IKE   41    04 01
+      - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
 66:
   :id:
     :d: 66
@@ -1210,7 +1322,7 @@
     :d: 69
     :h: '0x45'
   :properties:
-    :short_name: "???"
+    :short_name: RAD-STATUS-REQ?
     :long_name: Unknown
   :klass: BaseCommand
 70:
@@ -1218,7 +1330,7 @@
     :d: 70
     :h: '0x46'
   :properties:
-    :short_name: "???"
+    :short_name: RAD-STATUS?
     :long_name: Unknown
   :klass: BaseCommand
 71:
@@ -1334,6 +1446,10 @@
   :properties:
     :short_name: SND?
     :long_name: Audio related?
+  :variant:
+    0x00: Audio Off
+    0xFF: Audio On
+    0x48: Radio asking something?
   :status:
     0x48: unknown
   :klass: BaseCommand
@@ -1352,15 +1468,16 @@
     :v1:
       0x06: Mode
     :v2:
+        0xE2: Mute/Telephone Priority
+        0xE1: Unmute/Telephone Non-Priority
+        0x30: No audio is playing?
+
         0x12: Tape / (1/A) ▶︎
         0x11: Tape / (2/B) ▶︎
         0x51: Tape / ▷▷
         0x42: Tape / ▷▷▷
         0x61: Tape / ◁◁
         0x52: Tape / ◁◁◁ (Guess!)
-
-        0xE2: RAD? Call taking over/mute audio?
-        0x30:
 
         0xF0: ERROR!
   :klass: BaseCommand
@@ -1579,7 +1696,7 @@
     :d: 97
     :h: '0x61'
   :properties:
-    :short_name: "???"
+    :short_name: EHC-STAT?
     :long_name: Unknown
   :klass: BaseCommand
 
@@ -1713,6 +1830,18 @@
       - GM3
     :recipients:
       - GLO-L
+    :examples:
+
+      - 50 2F Lights On
+
+      - 10 2F Lights Off
+
+      - 51 2F Driver door open
+
+      - 11 2F I opened driver door
+      - 51 2F lights came on
+      - 11 2F i mangually turned lights off
+      - 10 2F i closed door
 134:
   :id:
     :d: 134
