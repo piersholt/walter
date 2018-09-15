@@ -2,6 +2,7 @@
 class Commands
   # Basic device class
   class BaseCommand
+    include DataTools
     # include Printable
     PADDED_DEFAULT = true
 
