@@ -84,11 +84,18 @@ class CommandMap < Map
       parameters.each do |param_name, param_data|
         next unless param_data[:type] == :map
         LOGGER.info('CommandMap') { "Parameter: #{param_name}" }
+        param_ref = param_name.upcase
+        command_klass.const_set(param_ref, [])
+
         constants = param_data[:map]
-        constants.each do |value, name|
-          const_name = name.upcase
-          LOGGER.info('CommandMap') { "Constant: #{const_name}" }
-          command_klass.const_set(const_name, value)
+        constants.each do |value, const_name|
+          const_ref = const_name.upcase
+          LOGGER.info('CommandMap') { "Constant: #{const_ref}" }
+          command_klass.const_set(const_ref, value)
+
+          LOGGER.info('CommandMap') { "Adding :#{const_ref} to #{param_ref}"}
+          parameter_constants = command_klass.const_get(param_ref)
+          parameter_constants << class_const(const_name)
         end
       end
 
@@ -103,6 +110,11 @@ class CommandMap < Map
 
   def klass_const_string(command_namespace, klass)
     "#{command_namespace}::#{klass}"
+  end
+
+  def class_const(name)
+    ref_buffer = name.upcase
+    ref_buffer = ref_buffer.to_sym
   end
 
   # @deprecated

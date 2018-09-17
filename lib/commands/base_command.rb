@@ -68,6 +68,68 @@ class Commands
       { ARGS: arguments }
     end
 
+    def try_set(parameter, parameter_value)
+      LOGGER.info("#{self.class}") { "#try_set(#{parameter}, #{parameter_value})" }
+      constant_value = evaluate_parameter_value(parameter, parameter_value)
+
+      set_instance_parameter(parameter, constant_value)
+    end
+
+    def evaluate_parameter_value(parameter, const_name)
+      LOGGER.info("#{self.class}") { "#evaluate_parameter_value(#{parameter}, #{const_name})" }
+      if const_name.instance_of?(Symbol)
+        LOGGER.info("#{self.class}") { "#{const_name} is Symbol. Mapping symbol to #{self.class} constant." }
+        const_name = parse_const_name(const_name)
+        LOGGER.info("#{self.class}") { "Getting #{self.class}::#{const_name}" }
+        constant_value = command_const_get(parameter, const_name)
+      else
+        LOGGER.info("#{self.class}") { "#{const_name} is type #{const_name.class}." }
+        constant_value = const_name
+      end
+    end
+
+    def parse_const_name(const_name)
+      LOGGER.debug("#{self.class}") { "#parse_const_ref(#{const_name})" }
+      LOGGER.debug("#{self.class}") { "Parsing #{const_name} to valud class constant name." }
+      begin
+        const_name_buffer = const_name.upcase
+        const_name_buffer = const_name_buffer.to_sym
+      rescue StandardError => e
+        LOGGER.error("#{self.class}") { "When trying to change #{const_name} to constant." }
+        LOGGER.error("#{self.class}") { e }
+        e.backtrace.each { |l| LOGGER.error("#{self.class}") { l } }
+      end
+      LOGGER.debug("#{self.class}") { "Command constant name is: #{const_name_buffer}" }
+      const_name_buffer
+    end
+
+    def command_const_get(parameter, const_name)
+      LOGGER.info("#{self.class}") { "#command_const_get(:#{const_name})" }
+      begin
+        result = self.class.const_get(const_name)
+        LOGGER.info("#{self.class}") { "#{self.class}::#{const_name}=#{result}" }
+      rescue NameError => e
+        LOGGER.error("#{self.class}") { "#{const_name} does not match a #{self.class} constant." }
+        LOGGER.error("#{self.class}") { "Possible #{class_const(parameter)} constants are: #{parameter_constants(parameter)}" }
+        result = 0x00
+      end
+      result
+    end
+
+    def parameter_constants(parameter)
+      # only list the constants that correspond to the parameter
+      # don't use CommandMap. Methods performing on class's own data...
+
+      self.class.const_get(class_const(parameter))
+    end
+
+    def set_instance_parameter(parameter, constant_value)
+      LOGGER.info("#{self.class}") { "#set_instance_parameter(#{parameter}, #{constant_value})" }
+      instance_variable_value = instance_variable_set(inst_var(parameter), constant_value)
+      LOGGER.info("#{self.class}") { "#{inst_var(parameter)}=#{instance_variable_value}" }
+      return instance_variable_value == constant_value ? true : false
+    end
+
     private
 
     def set_properties(props)
@@ -75,6 +137,8 @@ class Commands
         instance_variable_set(inst_var(name), value)
       end
     end
+
+    # ------------------------------ PARAMETERS ------------------------------ #
 
     def dict(param, value)
       param_data = self.class.class_variable_get(:@@parameters)
@@ -96,6 +160,11 @@ class Commands
     def inst_var(name)
       name_string = name.id2name
       '@'.concat(name_string).to_sym
+    end
+
+    def class_const(name)
+      ref_buffer = name.upcase
+      ref_buffer = ref_buffer.to_sym
     end
 
     def class_var(name)

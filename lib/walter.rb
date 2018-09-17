@@ -65,7 +65,11 @@ class Walter
   end
 
   def fuck_yeah!
-    @bus_device.update(chars: "fuck yeah".bytes, ike: 0x20, gfx: 0x40)
+    @bus_device.update(chars: "fuck yeah".bytes, ike: :set_ike, gfx: :radio_set)
+  end
+
+  def key
+    @bus_device.state(key: :key_6, status: 0x04)
   end
 
   def launch

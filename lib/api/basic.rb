@@ -26,9 +26,9 @@ module API
         chars_value = command_arguments[:chars]
 
         command = CommandMap.instance.klass(COMMAND_ID)
-        command.gfx = gfx_value
-        command.ike = ike_value
-        command.chars = chars_value
+        command.try_set(:gfx, gfx_value)
+        command.try_set(:ike, ike_value)
+        command.try_set(:chars, chars_value)
 
         message = Message.new(from, to, command)
         post(message)
@@ -58,8 +58,8 @@ module API
         key_value = command_arguments[:key]
 
         command = CommandMap.instance.klass(COMMAND_ID)
-        command.status = status_value
-        command.key = key_value
+        command.try_set(:status, status_value)
+        command.try_set(:key, key_value)
 
         message = Message.new(from, to, command)
         post(message)
