@@ -3,9 +3,15 @@ module API
   include Observable
 
   def post(message)
-    changed
-    notify_observers(MESSAGE_SENT, message: message)
-    message
+    begin
+      changed
+      notify_observers(MESSAGE_SENT, message: message)
+      message
+    rescue StandardError => e
+      LOGGER.error("#{self.class} StandardError: #{e}")
+      e.backtrace.each { |l| LOGGER.error(l) }
+      binding.pry
+    end
   end
 end
 
@@ -31,12 +37,13 @@ module API
         command.try_set(:chars, chars_value)
 
         message = Message.new(from, to, command)
-        post(message)
       rescue StandardError => e
         LOGGER.error("#{self.class} StandardError: #{e}")
         e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
+
+      post(message)
     end
   end
 end
@@ -62,12 +69,13 @@ module API
         command.try_set(:key, key_value)
 
         message = Message.new(from, to, command)
-        post(message)
       rescue StandardError => e
         LOGGER.error("#{self.class} StandardError: #{e}")
         e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
+
+      post(message)
     end
   end
 end
