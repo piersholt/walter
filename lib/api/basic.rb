@@ -1,7 +1,8 @@
+require 'api/base_api'
 
 module API
   module Media
-    include API
+    include BaseAPI
 
     COMMAND_ID = 0x23
     TO_DEFAULT = Devices::GLOH
@@ -35,7 +36,7 @@ end
 
 module API
   module Key
-    include API
+    include BaseAPI
 
     COMMAND_ID = 0x74
     TO_DEFAULT = Devices::GLOL
