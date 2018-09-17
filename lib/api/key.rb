@@ -1,3 +1,5 @@
+require 'api/base_api'
+
 module API
   module Key
     include BaseAPI

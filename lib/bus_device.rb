@@ -1,4 +1,5 @@
-require 'api/basic'
+require 'api/key'
+require 'api/media'
 
 class BusDevice
   include API::Key

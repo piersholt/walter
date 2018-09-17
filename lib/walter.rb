@@ -43,7 +43,6 @@ class Walter
     add_observer(@listener)
 
     require 'bus_device'
-    require 'api/basic'
     @bus_device = BusDevice.new
     @bus_device.add_observer(@listener)
   end
