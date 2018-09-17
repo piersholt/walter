@@ -14,7 +14,11 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
+  DEFAULT_SLEEP_TIMER = 5
+
   attr_reader :input_buffer, :output_buffer, :threads, :read_thread
+
+  attr_writer :sleep_time
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -104,7 +108,11 @@ class Channel
   end
 
   def sleep_if_offline
-    sleep(5) if @stream.instance_of?(Channel::File)
+    sleep(sleep_time) if @stream.instance_of?(Channel::File)
+  end
+
+  def sleep_time
+    @sleep_time ||= DEFAULT_SLEEP_TIMER
   end
 
   def thread_populate_input_buffer(stream, input_buffer)

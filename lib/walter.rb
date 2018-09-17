@@ -56,6 +56,10 @@ class Walter
     SessionHandler.i.messages
   end
 
+  def rate(seconds)
+    @channel.sleep_time = seconds
+  end
+
   def news
     puts "THREADS:"
     Thread.list.each_with_index do |t, i|
