@@ -24,9 +24,10 @@ module API
     FROM_DEFAULT = Devices::RAD
 
     def update(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      from = DeviceMap.instance.find(from_id)
-      to = DeviceMap.instance.find(to_id)
       begin
+        from = DeviceMap.instance.find(from_id)
+        to = DeviceMap.instance.find(to_id)
+
         gfx_value = command_arguments[:gfx]
         ike_value = command_arguments[:ike]
         chars_value = command_arguments[:chars]
