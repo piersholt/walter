@@ -93,7 +93,7 @@ class CommandMap < Map
           LOGGER.info('CommandMap') { "Constant: #{const_ref}" }
           command_klass.const_set(const_ref, value)
 
-          LOGGER.info('CommandMap') { "Adding :#{const_ref} to #{param_ref}"}
+          LOGGER.info('CommandMap') { "Adding :#{const_ref} to #{self.class}::#{param_ref}"}
           parameter_constants = command_klass.const_get(param_ref)
           parameter_constants << class_const(const_name)
         end
