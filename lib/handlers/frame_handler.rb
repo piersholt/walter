@@ -80,10 +80,10 @@ class FrameHandler
       index = @command_map.index(command_id)
       indexed_args = IndexedArguments.new(arguments, index)
 
-      LOGGER.info("FrameHandler") { "Mapping command arguments." }
+      LOGGER.debug("FrameHandler") { "Mapping command arguments." }
       indexed_args.parameters.each do |param|
         param_value = indexed_args.lookup(param)
-        LOGGER.info("FrameHandler") { "Parameter: #{param}= #{param_value}" }
+        LOGGER.debug("FrameHandler") { "Parameter: #{param}= #{param_value}" }
         command.instance_variable_set(inst_var(param), param_value)
       end
     end
