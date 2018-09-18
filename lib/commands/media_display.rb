@@ -20,8 +20,17 @@ class Commands
       # s_ike = ike.h
       # s_text = @text.h.to_a.join(' ')
 
-      str_buffer = "#{h}\t#{@argument_map[:gfx].h} #{@argument_map[:ike].h}\t\"#{@text}\""
+      str_buffer = "#{h}\t#{d2h @gfx} #{d2h @ike}"
+      str_buffer = append_chars(str_buffer)
       str_buffer
+    end
+
+    def append_chars(str_buffer)
+      if !@chars.empty?
+        str_buffer.concat("\t\"#{Chars.new(@chars, true)}\"")
+      else
+        str_buffer
+      end
     end
 
     def to_s
