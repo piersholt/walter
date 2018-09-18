@@ -22,14 +22,14 @@ module API
         command.try_set(:ike, ike_value)
         command.try_set(:chars, chars_value)
 
-        message = Message.new(from, to, command)
+        # message = Message.new(from, to, command)
       rescue StandardError => e
         LOGGER.error("#{self.class} StandardError: #{e}")
         e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
 
-      post(message)
+      post(from, to, command)
     end
   end
 end
