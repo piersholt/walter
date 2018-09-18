@@ -36,6 +36,11 @@ class Commands
       str_buffer
     end
 
+    def inspect
+      str_buffer = "#{sn}\tIgnition: #{v1}"
+      str_buffer
+    end
+
     # def argument_map
     #   @argument_map ||= {}
     # end
