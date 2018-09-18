@@ -26,16 +26,6 @@ class Commands
 
     def initialize(id, props)
       super(id, props)
-      # LOGGER.warn props.to_s
-
-      # @arguments mapped in super class
-      @argument_map = map_arguments(@arguments)
-
-      @mode = parse_mode(@argument_map[:mode])
-      @control = parse_control(@argument_map[:control])
-      @text = parse_text(@argument_map[:string])
-
-      # @chars = parse_chars(@argument_map[:chars])
     end
 
     def inspect
@@ -50,50 +40,11 @@ class Commands
     end
 
     def to_s
-      command = sn
-      # return inspect if @verbose
-      #{h}\t#{@argument_map[:gfx].h} #{@argument_map[:ike].h}\t\"#{@text}\""
       "#{@short_name}\t#{@mode} | #{@control}\t\"#{@text.to_s}\""
     end
 
-    # def to_s
-    #   if @verbose
-    #     puts @chars.overlay
-    #     "#{@short_name} (#{d})\t [#{@arguments.map(&:h).join(' ')}]"
-    #   else
-    #     "#{@short_name}\t \"#{@string}\""
-    #   end
-    # end
-
     private
 
-    def map_arguments(arguments)
-      { mode: arguments[0],
-        control: arguments[1],
-        string: arguments[2..-1] }
-    end
-
-    def parse_mode(mode_byte)
-      mode_value = mode_byte.to_d
-      @modes[mode_value]
-      # mode_value
-    end
-
-    def parse_control(control_byte)
-      control_value = control_byte.to_d
-      @controls[control_value]
-      # control_value
-    end
-
-    # def parse_text(arguments)
-    #   # binding.pry
-    #   arguments.map do |byte|
-    #     byte.to_d.chr
-    #   end.join
-    # end
-
-    def parse_text(arguments)
-      Chars.new(arguments)
     end
   end
 end
