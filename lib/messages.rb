@@ -14,7 +14,12 @@ class Messages
   end
 
   def inspect
-    @messages.map {|m| m.inspect }.join("\n")
+    str_buffer = "\n"
+    result = @messages.map do |m|
+      m.inspect
+    end.join("\n")
+
+    str_buffer.concat(result)
   end
   #
   # def to_s
