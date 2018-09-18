@@ -77,29 +77,29 @@ class CommandMap < Map
 
     parameters = mapped_object[:parameters]
     unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
-      LOGGER.info('CommandMap') { "Setting @@parameters for #{command_klass}" }
+      LOGGER.debug('CommandMap') { "Setting @@parameters for #{command_klass}" }
       command_klass.class_variable_set(:@@parameters, parameters)
 
-      LOGGER.info('CommandMap') { "Setting parameter constants." }
+      LOGGER.debug('CommandMap') { "Setting parameter constants." }
       parameters.each do |param_name, param_data|
         next unless param_data[:type] == :map
-        LOGGER.info('CommandMap') { "Parameter: #{param_name}" }
+        LOGGER.debug('CommandMap') { "Parameter: #{param_name}" }
         param_ref = param_name.upcase
         command_klass.const_set(param_ref, [])
 
         constants = param_data[:map]
         constants.each do |value, const_name|
           const_ref = const_name.upcase
-          LOGGER.info('CommandMap') { "Constant: #{const_ref}" }
+          LOGGER.debug('CommandMap') { "Constant: #{const_ref}" }
           command_klass.const_set(const_ref, value)
 
-          LOGGER.info('CommandMap') { "Adding :#{const_ref} to #{self.class}::#{param_ref}"}
+          LOGGER.debug('CommandMap') { "Adding :#{const_ref} to #{self.class}::#{param_ref}"}
           parameter_constants = command_klass.const_get(param_ref)
           parameter_constants << class_const(const_name)
         end
       end
 
-      LOGGER.info('CommandMap') { "Adding parameter accessors #{parameters.keys} to #{command_klass}" }
+      LOGGER.debug('CommandMap') { "Adding parameter accessors #{parameters.keys} to #{command_klass}" }
       command_klass.class_eval do
         attr_accessor *parameters.keys
       end
