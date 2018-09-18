@@ -13,8 +13,8 @@ class ArgumentsBuilder
   def map_arguments
     values_with_index = @index.map do |param, index|
       param_value = @command.public_send(param)
-      [param_value, index]
-    end
+      param_value ? [param_value, index] : nil
+    end.compact
 
     values_with_index.sort_by! do |object|
       index = object[1]
