@@ -1812,34 +1812,45 @@
   :properties:
     :short_name: LAMP
     :long_name: Lamp Status
-  :klass: BaseCommand
+  :klass: Lamp
+  :index:
+    :byte1: 0
+    :byte2: 1
+    :byte3: 2
+    :byte4: 3
+  :parameters:
+    :byte1:
+      :type: :bitmap
+      :bits:
+        0: Rapid indicator modifier
+        1: right indicate
+        2: left indicate
+        3: rear fog
+        4: front fod
+        5; high bream
+        6: low beam
+        7: parking lights
+    :byte2:
+      :type: :bitmap
+      :bits:
+        1: right indicator glove out
+        2: left indicator glove out
+    :byte3:
+      :type: :bitmap
+      :bits:
+        5: indicating/hazards
+        6: brake light out, i think this drives CCM
+    :byte4:
+      :type: :bitmap
+      :bits:
+        1: rear fog switched on (stays on regardless of lights)
+        6: left break glove out (not hatch)
+        7: right break globe out (not hatch)
   :meta:
     :notes:
-      - argument length is always 4 bytes
-      - 0:
-        - 0x00
-        - 0x01
-        - 0x03
-        - 0x23
-        - 0x43
-        - 0x21
-        - 0x07
-        - 0x63
-        - 0x0B
-        - 0x13
-        - 0x09
-        - 0x1B
-        - 0x20
-        - 0x40
-        - 0x04
-      - 1:
-        - 0x00
-      - 2:
-        - 0x00
-        - 0x04
-      - 3:
-        - 0x00
-        - 0x40
+      - lamp drives the night mode on BMBT
+      - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
+      - but i can't get the CCM to fire warning
 92:
   :id:
     :d: 92
