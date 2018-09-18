@@ -34,9 +34,9 @@ class Commands
 
     def inspect
       # str_buffer = "#{h} "
-      str_buffer = sprintf("%-10s", h)
+      str_buffer = sprintf("%-10s", sn)
       args_str_buffer = @arguments.map(&:h).join(' ')
-      str_buffer.concat("#{args_str_buffer}") unless args_str_buffer.empty?
+      str_buffer.concat("\t#{args_str_buffer}") unless args_str_buffer.empty?
       str_buffer.concat("--") if args_str_buffer.empty?
       str_buffer
     end
