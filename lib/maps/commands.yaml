@@ -422,24 +422,74 @@
     :d: 26
     :h: '0x1A'
   :properties:
-    :short_name: HUD-ALRT
+    :short_name: CCM-ALRT
     :long_name: CCM Cluster Warning
     :verbose: false
-    :modes:
-      0x37: Priority 2
-      0x35: Plain ol' Text
-      0x30: Clear
-      0x36: Priority 2/Gong?
-    :controls:
-      0x00: NA or empty?
-      0x01: Car off warning?
-      0x03: unknown?
-      0x05: Car off warning?
-      0x0F: no idea
+  :parameters:
+    :mode:
+      :type: :map
+      :map:
+        0x30: clear
+        0x35: request
+        0x36: persist
+        0x37: alert
+      :dictionary:
+        0x30: Clear
+        0x35: Request Fault
+        0x36: Persist Indicators
+        0x37: Alert
+    :control:
+      :type: :map
+      :map:
+        0x00: none
+        0x01: on_off
+        0x03: blink_off
+        0x05: off_single
+        0x0F: on_single
+        0x09: blink_single
+      :dictionary:
+        0x00: "No Indicator/Gong"
+
+        0x01: "Chev: On     / Audio: Off"
+        0x03: "Chev: Blink  / Audio: Off"
+
+        0x04: "Chev: Off    / Audio: Single"
+        0x05: "Chec: On     / Audio: Single"
+        0x07: "Chev: Blink  / Audio: Single"
+
+        0xO8: "Chev: Off    / Audio: Constant"
+        0xO9: "Chev: On     / Audio: Constant"
+        0xOB: "Chev: Blink  / Audio: Constant"
+
+        0x0C: "Chev: Off    / Audio: Double"
+        0x0D: "Chev: On     / Audio: Double"
+        0x0F: "Chev: Blink  / Audio: Double"
+
+        0x10: 'something else must be duplicate?'
+    :chars:
+      :type: :string
+  :index:
+    :mode: 0
+    :control: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false"
+
   :klass: CCMDisplay
   :meta:
+    :notes:
+      - at ignition off, 0x13 reports 0x00 00 00
+      -  0x1a always follows 30 00	"                    "
+      -  this is the only time it has a blank string
+      - IKE   	GLO-L 	IKE-SEN-ACK	01 B0 00]
+      - IKE   	GLO-L 	IGN       	Ignition: Off (Position I)
+      - IKE   	GLO-L 	IKE-SEN-ACK	00 00 00]
+      - IHK   	NAV-EU	???       	00]
+      - CCM   	GLO-L 	CCM?      	00]
+      - CCM   	IKE   	CCM-ALRT  	30 00	"                   "
     :examples:
-      - Constantly see this > 30 00	"                    "
+      - Constantly see this >
       - 1A 30 00
       - 1B 00
       - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20

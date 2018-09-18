@@ -36,15 +36,27 @@ class Commands
       # puts @chars.overlay
       # "[#{@arguments.map(&:h).join(' ')}]"
 
-      "#{h}\t#{@argument_map[:mode]} #{@argument_map[:control]}\t\"#{@text}\""
+      str_buffer = sprintf("%-10s", sn)
+      str_buffer = str_buffer.concat("\t#{d2h @mode} #{d2h @control}")
+      str_buffer = append_chars(str_buffer)
+      str_buffer
     end
 
     def to_s
-      "#{@short_name}\t#{@mode} | #{@control}\t\"#{@text.to_s}\""
+      str_buffer = "#{sn}\t#{d2h @mode} (#{dictionary(:mode)}) | #{d2h @control} (#{dictionary(:control)})"
+      str_buffer = append_chars(str_buffer)
+      str_buffer
     end
 
     private
 
+    def append_chars(str_buffer)
+      if !@chars.empty?
+        str_buffer.concat("\t\"#{Chars.new(@chars, true)}\"")
+      else
+        # str_buffer.concat("\t".concat(Array.new(22).join('-')))
+        str_buffer
+      end
     end
   end
 end
