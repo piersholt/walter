@@ -290,9 +290,95 @@
     :d: 19
     :h: '0x13'
   :properties:
-    :short_name: IKE-SEN-ACK
-    :long_name: IKE Sensor Status ACK
-  :klass: BaseCommand
+    :short_name: IKE-SEN
+    :long_name: IKE Sensors
+  :klass: IKESensors
+  :parameters:
+    :byte1:
+      type: :bitmap
+      :dictionary:
+        0: unknown
+        1: unknown
+        2: unknown
+        3: unknown
+        4: unknown
+        5: Check brake linings
+        6: Ignition
+        7: Handbrake
+    :byte2:
+      type: :bitmap
+      # at ignition II: 0b1011 0000
+      # warnings: battery, oil, brakepad
+      :dictionary:
+        0: on
+        1: off
+        2: on
+        3: on
+        4: off
+        5: off
+        6: off
+        7: off
+    :byte3:
+      type: :bitmap
+  :index:
+    :byte1: 0
+    :byte2: 1
+    :byte3: 2
+  :meta:
+    :notes:
+      - the IKE has a number of various inputs (via analogue signals, or CAN
+        depending on model year).
+      - the sensor status is reported via IBUS for the use by the CCM
+      - warnings:
+        - parking brake
+        - fasten seat belt
+        - engine oil level
+        - engine oil pressure
+        - low coolant level
+        - low washer fluid
+        - brake pads
+        - brake fluid
+        - remote key battery voltage
+      - other warnings are determined with data from other IBUS messages
+      - warnings:
+        - key in ignition
+        - lights on
+        - door open
+        - trunk open
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L
+    :usage:
+      :byte1:
+        # - 0x00: 1215
+        - 0x01: 157
+        - 0x02: 56
+        - 0x03: 65
+      :byte2:
+        # - 0x00: 127
+        - 0x11: 152
+        - 0x13: 10
+        - 0x21: 53
+        - 0x23: 94
+
+        - 0x41: 44
+        - 0x43: 147
+
+        - 0x71: 77
+
+        - 0x81: 275
+        - 0x83: 208
+
+        - 0xB0: 89
+        - 0xB1: 141
+
+        - 0xC3: 4
+
+        - 0xD1: 7
+        - 0xD3: 65
+      :byte3:
+        # - 0x00: 1493
 20:
   :id:
     :d: 20

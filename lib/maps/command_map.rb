@@ -11,6 +11,7 @@ require 'commands/ignition'
 require 'commands/key'
 require 'commands/button'
 require 'commands/led'
+require 'commands/ike_sensors'
 
 require 'singleton'
 
