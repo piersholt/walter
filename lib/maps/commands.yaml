@@ -421,6 +421,14 @@
   :properties:
     :short_name: SPD
     :long_name: Speed & RPM
+  :parameters:
+    :speed:
+      :type: integer
+    :rpm:
+      :type: integer
+  :index:
+    :speed: 0
+    :rpm: 1
   :klass: Speed
   :meta:
     :senders:
@@ -1719,6 +1727,32 @@
   :properties:
     :short_name: VEH
     :long_name: Vehicle Status
+  :parameters:
+    :vin:
+      :type: :string
+    :mileage:
+      :type: integer
+    :consumption:
+      :type: integer
+    :service:
+      :type: integer
+  :index:
+      :vin: !ruby/range
+              begin: 1
+              end: 5
+              excl: false"
+      :mileage: !ruby/range
+                  begin: 6
+                  end: 7
+                  excl: false"
+      :consumption: !ruby/range
+                      begin: 8
+                      end: 9
+                      excl: false"
+      :service: !ruby/range
+                  begin: 12
+                  end: 13
+                  excl: false"
   :klass: BaseCommand
   :examples:
     - "IKE   	LCM   	53        --"
