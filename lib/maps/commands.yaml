@@ -280,6 +280,11 @@
     :short_name: IKE-SEN-REQ
     :long_name: IKE Sensor Status REQ
   :klass: BaseCommand
+  :meta:
+    :senders:
+      - CCM
+    :recipients:
+      - IKE
 19:
   :id:
     :d: 19
