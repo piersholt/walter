@@ -73,6 +73,10 @@ module DataTools
     to_binary(decimal, nibbles, prefix)
   end
 
+  def d2b(decimal, nibbles = false, prefix = false)
+    decimal_to_binary(decimal, nibbles, prefix)
+  end
+
   # ------------------------ BINARY TO X ------------------------ #
 
   # @alias
