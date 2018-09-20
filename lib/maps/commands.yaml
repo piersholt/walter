@@ -1562,6 +1562,12 @@
       0x24: "[Eject] Press"
       0x64: "[Eject] Hold"
       0xA4: "[Eject] Release"
+      0x23: "[Mode Prev] Press"
+      0x63: "[Mode Prev] Hold"
+      0xA3: "[Mode Prev] Release"
+      0x33: "[Mode Next] Press"
+      0x73: "[Mode Next] Hold"
+      0xB3: "[Mode Next] Release"
   :klass: Button
 73:
   :id:
