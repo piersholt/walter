@@ -33,7 +33,7 @@ class Commands
       state_decimal = state.d
       # LOGGER.error(instance_variables)
       return @state[state_decimal] if @state.key?(state_decimal)
-      "Unknown: #{state}"
+      "Unknown: #{d2h(state_decimal, true)}"
     end
   end
 end

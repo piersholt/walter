@@ -51,7 +51,7 @@ module DataTools
 
   # @alias
   def d2h(decimal, prefix = false)
-    decimal_to_hex(decimal, prefix = false)
+    decimal_to_hex(decimal, prefix)
   end
 
   def decimal_to_hex(decimal, prefix = false)
