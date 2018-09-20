@@ -1,15 +1,26 @@
+# frozen_string_literal: true
+
 require 'api/base_api'
 
 module API
+  # API for command related to keys
   module Key
     include BaseAPI
 
-    COMMAND_ID = 0x74
-    TO_DEFAULT = Devices::GLOL
-    FROM_DEFAULT = Devices::GLOL
+    REQUEST = {
+      id:   0x73,
+      to:   Devices::IKE,
+      from: Devices::GLOL
+    }.freeze
 
-    def state(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      command_id = COMMAND_ID
+    STATUS = {
+      id:   0x74,
+      to:   Devices::GLOL,
+      from: Devices::IKE
+    }.freeze
+
+    def state(command_arguments, from_id = STATUS[:from], to_id = STATUS[:to])
+      command_id = STATUS[:id]
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
   end
