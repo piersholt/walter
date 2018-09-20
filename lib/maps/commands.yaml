@@ -1658,7 +1658,6 @@
         0x51: Tape / ▷▷
         0x42: Tape / ▷▷▷
         0x61: Tape / ◁◁
-        0x52: Tape / ◁◁◁ (Guess!)
 
         0xF0: ERROR!
   :klass: BaseCommand
