@@ -9,23 +9,8 @@ module API
     FROM_DEFAULT = Devices::GLOL
 
     def state(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      begin
-        from = DeviceMap.instance.find(from_id)
-        to = DeviceMap.instance.find(to_id)
-
-        status_value = command_arguments[:status]
-        key_value = command_arguments[:key]
-
-        command = CommandMap.instance.klass(COMMAND_ID)
-        command.try_set(:status, status_value)
-        command.try_set(:key, key_value)
-      rescue StandardError => e
-        LOGGER.error("#{self.class} StandardError: #{e}")
-        e.backtrace.each { |l| LOGGER.error(l) }
-        binding.pry
-      end
-
-      deliver(from, to, command)
+      command_id = COMMAND_ID
+      give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
   end
 end
