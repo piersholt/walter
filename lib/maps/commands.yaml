@@ -1644,8 +1644,8 @@
     :d: 75
     :h: '0x4B'
   :properties:
-    :short_name: SND-CTL
-    :long_name: Audio control?
+    :short_name: SRC-CTL
+    :long_name: Audio Device Control
     :v1:
       0x06: Mode
     :v2:
