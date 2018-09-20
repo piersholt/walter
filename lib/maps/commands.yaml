@@ -295,31 +295,89 @@
   :klass: IKESensors
   :parameters:
     :byte1:
-      type: :bitmap
-      :dictionary:
-        0: unknown
-        1: unknown
-        2: unknown
-        3: unknown
-        4: unknown
-        5: Check brake linings
-        6: Ignition
-        7: Handbrake
+      :type: :bit_array
+      :parameters:
+        :transmission:
+          :type: :switch
+          :label: 'Transmission Program'
+          :states:
+            0: :ok
+            1: :fault
+        :brakes:
+          :type: :switch
+          :label: 'Brake Pads'
+          :states:
+            0: :ok
+            1: :fault
+        :oil:
+          :type: :switch
+          :label: 'Oil Pressure'
+          :states:
+            0: :ok
+            1: :fault
+        :handbrake:
+          :type: :switch
+          :label: 'Handbrake'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :transmission: 3
+        :brakes: 5
+        :oil: 6
+        :handbrake: 7
     :byte2:
-      type: :bitmap
-      # at ignition II: 0b1011 0000
-      # warnings: battery, oil, brakepad
-      :dictionary:
-        0: on
-        1: off
-        2: on
-        3: on
-        4: off
-        5: off
-        6: off
-        7: off
+      :type: :bit_array
+      :parameters:
+        :gear:
+          :type: :map
+          :map:
+            0b1011: gear_p
+            0b0001: gear_r
+            0b0111: gear_n
+            0b1000: gear_d
+            0b0010: gear_1
+            0b0110: gear_2
+            0b1101: gear_3
+            0b1100: gear_4
+            0b1110: gear_5
+          :dictionary:
+            0b1011: Park
+            0b0001: Reverse
+            0b0111: Neutral
+            0b1000: Drive
+            0b0010: First
+            0b0110: Second
+            0b1101: Third
+            0b1100: Fourth
+            0b1110: Fifth
+        :door:
+          :type: :switch
+          :label: 'Door Open'
+          :states:
+            0: :ok
+            1: :fault
+        :ignition:
+          :type: :map
+          :label: 'Engine'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :gear: !ruby/range
+                  begin: 0
+                  end: 3
+                  excl: false
+        :door: 6
+        :ignition: 7
     :byte3:
-      type: :bitmap
+      :type: :map
+      :map:
+        0x00: byte3_0
+        0xFF: byte3_1
+      :dictionary:
+        0x00: All 0
+        0xFF: All 1
   :index:
     :byte1: 0
     :byte2: 1
