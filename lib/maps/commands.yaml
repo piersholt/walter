@@ -1595,12 +1595,6 @@
   :properties:
     :short_name: SND?
     :long_name: Audio related?
-  :variant:
-    0x00: Audio Off
-    0xFF: Audio On
-    0x48: Radio asking something?
-  :status:
-    0x48: unknown
   :klass: BaseCommand
   :meta:
     :senders:
