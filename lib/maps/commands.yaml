@@ -1651,7 +1651,7 @@
     :v2:
       0xE2: Mute/Telephone Priority
       0xE1: Unmute/Telephone Non-Priority
-      0x30: No audio is playing?
+      0x30: Radio
 
       0x12: Tape / (1/A) ▶︎
       0x11: Tape / (2/B) ▶︎
