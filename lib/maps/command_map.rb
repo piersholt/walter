@@ -13,6 +13,7 @@ require 'commands/button'
 require 'commands/led'
 require 'commands/ike_sensors'
 require 'commands/lamp'
+require 'commands/radio_led'
 
 require 'singleton'
 

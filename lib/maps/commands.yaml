@@ -1593,9 +1593,37 @@
     :d: 74
     :h: '0x4A'
   :properties:
-    :short_name: SND?
-    :long_name: Audio related?
-  :klass: BaseCommand
+    :short_name: RAD-LED
+    :long_name: Radio LED?
+  :klass: RadioLED
+  :parameters:
+    :led:
+      :type: :map
+      :map:
+        0x00: "off"
+        0xFF: "on"
+        0x48: radio
+        0x5A: tape_1
+        0x5B: tape_2
+        0x41: tape_play
+        0x44: tape_ff
+        0x45: tape_rw
+        0x42: tape_fff
+        0x43: tape_rww
+      :dictionary:
+        0x00: "Off"
+        0xFF: "On"
+        0x48: Radio
+        # I think this is because tape is part of the BMBT?
+        0x5A: Tape 1
+        0x5B: Tape 2
+        0x41: Tape Play
+        0x44: Tape FF
+        0x45: Tape RW
+        0x42: Tape FFF
+        0x43: Tape RWW
+  :index:
+    :led: 0
   :meta:
     :senders:
       - RAD

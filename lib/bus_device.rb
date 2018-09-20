@@ -4,6 +4,7 @@ require 'api/ccm'
 require 'api/ike_sensors'
 require 'api/speed'
 require 'api/lamp'
+require 'api/radio_led'
 
 class BusDevice
   include API::Key
@@ -12,4 +13,5 @@ class BusDevice
   include API::IKESensors
   include API::Speed
   include API::Lamp
+  include API::RadioLED
 end
