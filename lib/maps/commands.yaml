@@ -1935,28 +1935,69 @@
     :byte4: 3
   :parameters:
     :byte1:
-      :type: :bitmap
-      :bits:
-        0: Rapid indicator modifier
-        1: right indicate
-        2: left indicate
-        3: rear fog
-        4: front fod
-        5: high bream
-        6: low beam
-        7: parking lights
+      :type: :bit_array
+      :parameters:
+        :rapid:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :indicate_right:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :indicate_left:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :fog_rear:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :fog_front:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :beam_high:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :beam_low:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+        :parking:
+          :type: :switch
+          :dictionary:
+            0: :off
+            1: :on
+      :index:
+        :rapid: 0
+        :indicate_right: 1
+        :indicate_left: 2
+        :fog_rear: 3
+        :fog_front: 4
+        :beam_high: 5
+        :beam_low: 6
+        :parking: 7
     :byte2:
-      :type: :bitmap
+      # :type: :bit_array
       :bits:
         1: right indicator glove out
         2: left indicator glove out
     :byte3:
-      :type: :bitmap
+      # :type: :bit_array
       :bits:
         5: indicating/hazards
         6: brake light out, i think this drives CCM
     :byte4:
-      :type: :bitmap
+      # :type: :bit_array
       :bits:
         1: rear fog switched on (stays on regardless of lights)
         6: left break glove out (not hatch)
