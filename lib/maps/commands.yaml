@@ -1674,14 +1674,17 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-78:
+0x4E:
   :id:
     :d: 78
     :h: '0x4E'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: SND-SRC
+    :long_name: Select external audio input for tv?
   :klass: BaseCommand
+  :meta:
+    - 01 00: select TV
+    - 00 00: go back to radio
 0x4F:
   :id:
     :d: 79
