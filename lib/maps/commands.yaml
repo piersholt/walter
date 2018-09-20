@@ -1482,6 +1482,8 @@
     :short_name: RAD-STATUS?
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    - 01: confirm switch?
 71:
   :id:
     :d: 71
