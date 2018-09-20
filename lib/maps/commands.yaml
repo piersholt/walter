@@ -1687,7 +1687,7 @@
     :d: 79
     :h: '0x4F'
   :properties:
-    :short_name: SCRN
+    :short_name: MON
     :long_name: Display Output
   :parameters:
     :action:
@@ -1695,18 +1695,35 @@
       :map:
         0x00: DISPLAY_OFF
         0x10: DISPLAY_ON
+        0x01: TV
+        0x02: MENU
       :dictionary:
-        0x00: Display Off
-        0x10: Display On
+        # Sent to BMBT
+        0x00: BMBT Display Off
+        0x10: BMBT Display On
+        # Sent to NAV-JP
+        0x01: TV On- disable nav?
+        0x02: TV off- resume nav?
+    :nav:
+      :type: :map
+      :map:
+        0x00: nav
+      :dictionary:
+        0x00: unknown
   :index:
     :action: 0
+    :nav: 1
   :klass: BaseCommand
   :meta:
     :senders:
       - GFX (0x3B)
     :recipients:
       - NAV-JP (0xBB)
+      - "01" to TV
+      - "02 00"
       - BMBT (0xF0)
+      - "00"
+      - "10"
 80:
   :id:
     :d: 80
