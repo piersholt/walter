@@ -1725,10 +1725,10 @@
     :senders:
       - GFX (0x3B)
     :recipients:
-      - NAV-JP (0xBB)
-      - "01" to TV
+      - "NAV-JP (0xBB)"
+      - "01 to TV"
       - "02 00"
-      - BMBT (0xF0)
+      - "BMBT (0xF0)"
       - "00"
       - "10"
 80:
@@ -1884,7 +1884,7 @@
         2: left indicate
         3: rear fog
         4: front fod
-        5; high bream
+        5: high bream
         6: low beam
         7: parking lights
     :byte2:
