@@ -1817,6 +1817,11 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - LCM
 86:
   :id:
     :d: 86
