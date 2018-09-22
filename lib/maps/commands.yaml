@@ -1946,42 +1946,42 @@
       :parameters:
         :rapid:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :indicate_right:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :indicate_left:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :fog_rear:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :fog_front:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :beam_high:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :beam_low:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
         :parking:
           :type: :switch
-          :dictionary:
+          :states:
             0: :off
             1: :on
       :index:
