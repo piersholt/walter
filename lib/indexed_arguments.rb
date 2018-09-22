@@ -12,4 +12,13 @@ class IndexedArguments < Bytes
   def parameters
     @index.keys
   end
+
+  def to_s
+    "Index: #{@index}\t".concat(super)
+  end
+
+  def inspect
+
+    to_s
+  end
 end
