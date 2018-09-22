@@ -5,11 +5,18 @@ require 'maps/device_map'
 require 'maps/command_map'
 
 require 'indexed_arguments'
+require 'indexed_bit_array'
+
+require 'command_parameter'
+
+require 'command_builder'
 
 class FrameHandler
   include Observable
   include Singleton
   include Event
+
+  PROC = 'FrameHandler'
 
   MESSAGE_COMPONENTS = [:from, :to, :command, :arguments].freeze
   FRAME_TO_MESSAGE_MAP = {
@@ -54,42 +61,114 @@ class FrameHandler
 
   # ------------------------------ FRAME ------------------------------ #
 
+  def process_message(message)
+    @frame_builder.from = message.from.d
+    @frame_builder.to = message.to.d
+    @frame_builder.command = message.command
+    frame = @frame_builder.result
+    LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+    frame
+  end
+
   def process_frame(frame)
     LOGGER.debug("FrameHandler") { "#{self.class}#process_frame(#{frame})" }
     LOGGER.debug("FrameHandler") { frame.inspect }
 
-    # FRAME = HEADER, PAYLOAD, FCS
-    # MESSAGE = FROM, TO, COMMAND, ARGUMENTS
-
-    from = frame.from
-    from = from.to_d
-    from = @device_map.find(from)
-
-    to = frame.to
-    to = to.to_d
-    to = @device_map.find(to)
-
+    from      = frame.from
+    to        = frame.to
+    command   = frame.command
     arguments = frame.arguments
 
-    command = frame.tail[1]
-    command_id = command.to_d
-    command = @command_map.klass(command_id, arguments)
 
-    parameters = @command_map.parameters(command_id)
-    unless parameters.nil?
-      index = @command_map.index(command_id)
-      indexed_args = IndexedArguments.new(arguments, index)
+    from_id     = from.to_d
+    to_id       = to.to_d
+    command_id  = command.to_d
 
-      LOGGER.debug("FrameHandler") { "Mapping command arguments." }
-      indexed_args.parameters.each do |param|
-        param_value = indexed_args.lookup(param)
-        LOGGER.debug("FrameHandler") { "Parameter: #{param}= #{param_value}" }
-        command.instance_variable_set(inst_var(param), param_value)
-      end
-    end
+    from    = @device_map.find(from_id)
+    to      = @device_map.find(to_id)
 
-    m = Message.new(from, to, command, arguments)
+
+
+    command_object = build_command(command_id, arguments)
+
+    m = Message.new(from, to, command_object, arguments)
     m.frame= frame
     m
   end
+
+  def build_command(command_id, arguments)
+    LOGGER.debug("FrameHandler") { "#build_command" }
+    begin
+      command_config = @command_map.config(command_id)
+      command_builder = command_config.builder
+      command_builder = command_builder.new(command_config)
+
+      parameter_values_hash = {}
+
+      if command_config.has_parameters? && command_config.is_base?
+        parameter_values_hash = arguments
+      elsif command_config.has_parameters?
+        LOGGER.debug("FrameHandler") { "#{command_config.sn} has parameters and is not BaseCommand." }
+        argument_index = command_config.index
+        indexed_arguments = IndexedArguments.new(arguments, argument_index)
+
+        indexed_arguments.parameters.each do |name|
+          param_value = indexed_arguments.lookup(name)
+          parameter_values_hash[name] = param_value
+        end
+      else
+        parameter_values_hash = arguments
+      end
+
+      # LOGGER.debug("FrameHandler") { "Adding parameters to command_builder: #{parameter_values_hash}" }
+      command_builder.add_parameters(parameter_values_hash)
+      LOGGER.debug("FrameHandler") { "Get builder result." }
+      command_object = command_builder.result
+      LOGGER.debug("FrameHandler") { "#build_command => command_object" }
+      command_object
+    rescue StandardError => e
+      LOGGER.error(PROC ) {"#{e}" }
+      e.backtrace.each { |l| LOGGER.error(l) }
+      binding.pry
+    end
+  end
+
+  # def map_arguments_to_parameters(command, arguments)
+  #   command_config = @command_map.config(command_id)
+  #   return false unless command_config.has_parameters?
+  #
+  #   begin
+  #     LOGGER.debug("FrameHandler") { "Mapping command arguments to parameters." }
+  #
+  #     index = command_config.index
+  #     indexed_args = IndexedArguments.new(arguments, index)
+  #
+  #     indexed_args.parameters.each do |param|
+  #       param_value = indexed_args.lookup(param)
+  #
+  #       param_config = command_config.parameters[param]
+  #       param_type = param_config.type
+  #
+  #       command_param = CommandParameter.create(param_config, param_type, param_value)
+  #       param_config.configure(command_param)
+  #       command.instance_variable_set(inst_var(param), command_param)
+  #     end
+  #   rescue StandardError => e
+  #     LOGGER.error("#{self.class} StandardError: #{e}")
+  #     e.backtrace.each { |l| LOGGER.error(l) }
+  #     binding.pry
+  #   end
+  #   true
+  # end
+
+  # def process_nested_parameters(command, data, index)
+  #   LOGGER.debug("FrameHandler") { "Mapping command nested arguments." }
+  #   bit_array = BitArray.from_i(data)
+  #   indexed_bit_array = IndexedBitArray.new(bit_array, index)
+  #   indexed_bit_array.parameters.each do |param|
+  #     param_value = indexed_bit_array.lookup(param)
+  #     LOGGER.debug("FrameHandler") { "Parameter: #{param}= #{param_value}" }
+  #     command.instance_variable_set(inst_var(param), param_value)
+  #   end
+  # end
 end
