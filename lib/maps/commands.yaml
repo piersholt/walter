@@ -294,7 +294,7 @@
     :long_name: IKE Sensors
   :klass: IKESensors
   :parameters:
-    :byte1:
+    :bit_array_1:
       :type: :bit_array
       :parameters:
         :transmission:
@@ -326,12 +326,15 @@
         :brakes: 5
         :oil: 6
         :handbrake: 7
-    :byte2:
+    :bit_array_2:
       :type: :bit_array
       :parameters:
         :gear:
           :type: :map
+          :klass: :map
+          :label: Selected Gear
           :map:
+            0b0000: gear_na
             0b1011: gear_p
             0b0001: gear_r
             0b0111: gear_n
@@ -342,6 +345,7 @@
             0b1100: gear_4
             0b1110: gear_5
           :dictionary:
+            0b0000: Ignition Off
             0b1011: Park
             0b0001: Reverse
             0b0111: Neutral
@@ -358,8 +362,8 @@
             0: :ok
             1: :fault
         :ignition:
-          :type: :map
-          :label: 'Engine'
+          :type: :switch
+          :label: 'Ignition'
           :states:
             0: :off
             1: :on
@@ -370,18 +374,24 @@
                   excl: false
         :door: 6
         :ignition: 7
-    :byte3:
-      :type: :map
-      :map:
-        0x00: byte3_0
-        0xFF: byte3_1
-      :dictionary:
-        0x00: All 0
-        0xFF: All 1
+    :bit_array_3:
+      :type: :bit_array
+      :parameters:
+        :unknown:
+          :type: :integer
+          :map:
+            0x00: unknown
+          :dictionary:
+            0x00: Unknown
+      :index:
+          :unknown: !ruby/range
+                    begin: 0
+                    end: 7
+                    excl: false
   :index:
-    :byte1: 0
-    :byte2: 1
-    :byte3: 2
+    :bit_array_1: 0
+    :bit_array_2: 1
+    :bit_array_3: 2
   :meta:
     :notes:
       - the IKE has a number of various inputs (via analogue signals, or CAN
