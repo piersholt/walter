@@ -119,39 +119,4 @@ class CommandMap < Map
     ref_buffer = name.upcase
     ref_buffer = ref_buffer.to_sym
   end
-
-  # @deprecated
-  public
-
-  # onot part of map as it's specific to the contents of the map
-  # def find_by(args)
-  #   # binding.pry
-  #   LOGGER.debug("#{self.class}#find_by(#{args})")
-  #   # puts args
-  #   id = args[:id]
-  #   # super.public_send(:find, id)
-  # end
-
-  # lookup the command by decimal ID
-  # instantiate a command of type mapped_object.klass
-  # def find()
-  #   result.add_observers(self, :update_map)
-  # end
-
-  # whenHash a command that's instanced from the map
-  # has udpate called it notifies the parent map.
-  # i want the map to be very dynamic
-  # over time i can update the mapped objet klass
-  # types and the new types are hidden from the update
-  # implementation
-  # def update_map(args)
-  #
-  # end
 end
-
-# class Command
-#   def update
-#     change(true)
-#     notify_observers(self)
-#   end
-# end
