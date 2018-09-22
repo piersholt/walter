@@ -634,7 +634,7 @@
 
         0x10: 'something else must be duplicate?'
     :chars:
-      :type: :string
+      :type: :chars
   :index:
     :mode: 0
     :control: 1
@@ -823,7 +823,7 @@
         0x20: Set IKE
         0x30: Overwrite IKE
     :chars:
-      :type: :string
+      :type: :chars
   :index:
     :gfx: 0
     :ike: 1
@@ -1849,7 +1849,7 @@
     :long_name: Vehicle Status
   :parameters:
     :vin:
-      :type: :string
+      :type: :chars
     :mileage:
       :type: integer
     :consumption:
