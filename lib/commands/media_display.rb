@@ -20,23 +20,23 @@ class Commands
       # s_ike = ike.h
       # s_text = @text.h.to_a.join(' ')
 
-      str_buffer = "#{h}\t#{d2h @gfx} #{d2h @ike}"
-      str_buffer = append_chars(str_buffer)
+      str_buffer = "#{h}\t#{d2h @gfx.value} #{d2h @ike.value}\t#{@chars}"
+      # str_buffer = append_chars(str_buffer)
       str_buffer
     end
 
-    def append_chars(str_buffer)
-      if !@chars.empty?
-        str_buffer.concat("\t\"#{Chars.new(@chars, true)}\"")
-      else
-        str_buffer
-      end
-    end
+    # def append_chars(str_buffer)
+    #   if !@chars.empty?
+    #     str_buffer.concat("\t\"#{Chars.new(@chars, true)}\"")
+    #   else
+    #     str_buffer
+    #   end
+    # end
 
     def to_s
       command = sn
       # text = @text.h.to_a.join(' ')
-      str_buffer = "#{command}\t#{d2h @gfx} (#{dictionary(:gfx)}) | #{d2h @ike} (#{dictionary(:ike)})\t\"#{Chars.new(@chars, true)}\""
+      str_buffer = "#{command}\t#{@gfx.to_s} | #{@ike.to_s}\t#{@chars}"
       str_buffer
     end
 

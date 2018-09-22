@@ -13,11 +13,8 @@ class Commands
 
     # @override
     def to_s
-      fast = parse_reading(@speed, 2)
-      fast = "#{fast}#{SPEED_UNIT}"
-
-      rev = parse_reading(@rpm, 100)
-      rev = "#{rev}#{REV_UNIT}"
+      fast = parse_reading(speed.value, 2, SPEED_UNIT)
+      rev = parse_reading(rpm.value, 100, REV_UNIT)
 
       str_buffer = sprintf("%-10s", sn)
       str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")
@@ -25,11 +22,9 @@ class Commands
     end
 
     def inspect
-      fast = parse_reading(@speed, 2)
-      fast = "#{fast}#{SPEED_UNIT}"
+      fast = parse_reading(speed.value, 2, SPEED_UNIT)
+      rev = parse_reading(rpm.value, 100, REV_UNIT)
 
-      rev = parse_reading(@rpm, 100)
-      rev = "#{rev}#{REV_UNIT}"
       str_buffer = sprintf("%-10s", sn)
       str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")
       str_buffer
@@ -37,13 +32,9 @@ class Commands
 
     private
 
-    def map_arguments(arguments)
-      { v1: arguments[0],
-        v2: arguments[1] }
-    end
-
-    def parse_reading(reading, multiplier)
-      reading * multiplier
+    def parse_reading(reading, multiplier, unit)
+      calculated_value = reading * multiplier
+      "#{calculated_value}#{unit}"
     end
   end
 end

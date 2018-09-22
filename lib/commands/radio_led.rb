@@ -15,7 +15,7 @@ class Commands
 
     # @override
     def to_s
-      str_buffer = "#{sn}\tLED: #{d2h led} (#{dictionary(:led)})"
+      str_buffer = "#{sn}\tLED: #{led}"
       str_buffer
     end
 

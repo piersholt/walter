@@ -15,12 +15,12 @@ class Commands
 
     # @override
     def to_s
-      str_buffer = "#{sn}\t#{dict(:key, key)}: #{dict(:status, status)}"
+      str_buffer = "#{sn}\t#{key}: #{status}"
       str_buffer
     end
 
     def inspect
-      "#<#{self.class} @key=#{key} (#{dict(:key, key)}) @status=#{status} (#{dict(:status, status)})>"
+      "#<#{self.class} @key=#{key} (#{dictionary(:key)}) @status=#{status} (#{dictionary(:status)})>"
     end
   end
 end

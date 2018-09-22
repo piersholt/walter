@@ -22,7 +22,7 @@ class Commands
 
     # CCM IKE 1A [55 5] "CHECK LOWBEAM LIGHTS"
 
-    attr_accessor :mode, :control, :text
+    attr_accessor :mode, :control, :chars
 
     def initialize(id, props)
       super(id, props)
@@ -31,32 +31,21 @@ class Commands
     def inspect
       # super handles from to command
       # this only appends arguments
-      str_buffer = super
+      # str_buffer = super
       # TODO: this needs to be a string, not have Chars print itself
       # puts @chars.overlay
       # "[#{@arguments.map(&:h).join(' ')}]"
 
       str_buffer = sprintf("%-10s", sn)
-      str_buffer = str_buffer.concat("\t#{d2h @mode} #{d2h @control}")
+      str_buffer = str_buffer.concat("\t#{@mode} #{@control}")
       str_buffer = append_chars(str_buffer)
       str_buffer
     end
 
     def to_s
-      str_buffer = "#{sn}\t#{d2h @mode} (#{dictionary(:mode)}) | #{d2h @control} (#{dictionary(:control)})"
-      str_buffer = append_chars(str_buffer)
+      str_buffer = "#{sn}\t#{mode.value} (#{mode.to_s}) | #{control.value} (#{control.to_s})\t#{chars.to_s}"
+      # str_buffer = append_chars(str_buffer)
       str_buffer
-    end
-
-    private
-
-    def append_chars(str_buffer)
-      if !@chars.empty?
-        str_buffer.concat("\t\"#{Chars.new(@chars, true)}\"")
-      else
-        # str_buffer.concat("\t".concat(Array.new(22).join('-')))
-        str_buffer
-      end
     end
   end
 end
