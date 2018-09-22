@@ -491,9 +491,9 @@
     :long_name: Speed & RPM
   :parameters:
     :speed:
-      :type: integer
+      :type: :integer
     :rpm:
-      :type: integer
+      :type: :integer
   :index:
     :speed: 0
     :rpm: 1
@@ -1851,11 +1851,11 @@
     :vin:
       :type: :chars
     :mileage:
-      :type: integer
+      :type: :integer
     :consumption:
-      :type: integer
+      :type: :integer
     :service:
-      :type: integer
+      :type: :integer
   :index:
       :vin: !ruby/range
               begin: 1
