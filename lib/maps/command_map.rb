@@ -14,15 +14,16 @@ require 'commands/led'
 require 'commands/ike_sensors'
 require 'commands/lamp'
 require 'commands/radio_led'
+require 'command_configuration'
 
 require 'singleton'
 
 class CommandMap < Map
+  include Singleton
+  PROC = 'CommandMap'.freeze
+
   COMMANDS_MAP_NAME = 'commands'.freeze
   DEFAULT_COMMAND_NAMESPACE = 'Commands'.freeze
-  # DEFAULT_KLASS = 'BaseCommand'
-
-  include Singleton
 
   def initialize
     super(COMMANDS_MAP_NAME)
@@ -32,91 +33,43 @@ class CommandMap < Map
     instance.reload!
   end
 
-  def parameters(command_id)
-    LOGGER.debug("#{self.class}") { "#parameters(#{command_id})" }
-    mapped_result = find(command_id)
-    mapped_result[:parameters]
-  end
+  def find_or_default(command_id)
+    LOGGER.debug(PROC) { "#find_or_default(#{command_id})" }
+    mapped_result = nil
 
-  def index(command_id)
-    LOGGER.debug("#{self.class}") { "#index(#{command_id})" }
-    mapped_result = find(command_id)
-    mapped_result[:index]
-  end
-
-  def klass(command_id, args = nil)
-    LOGGER.debug("#{self.class}") { "#find(#{command_id})" }
     begin
       mapped_result = find(command_id)
     rescue IndexError
-      LOGGER.error('CommandMap') {"Command ID: #{command_id}, #{DataTools.decimal_to_hex(command_id)} not found!" }
+      LOGGER.error(PROC) {
+        "Command ID: #{command_id}, #{DataTools.d2h(command_id)} not found!" }
       mapped_result = super(:default)
       mapped_result[:id][:d] = command_id
     end
-    mapped_result[:id] = Byte.new(:decimal, command_id)
-    # When a new message handler calls #find it will pass the message
-    # parameters as an argument
-    mapped_result[:properties][:arguments] = args unless args.nil?
-    # mapped_result[:arguments] = args unless args.nil?
 
-    instantiate_klass(mapped_result)
+    mapped_result[:default_id] = command_id
+
+    command_configuration = CommandConfiguration.new(mapped_result)
+    command_configuration
   end
 
-  private
-
-  def command_klass(command_klass_name)
-    command_namespace = DEFAULT_COMMAND_NAMESPACE
-    command_klass_name = klass_const_string(command_namespace, command_klass_name)
-
-    # Kernel.const_defined?(klass_const)
-    Kernel.const_get(command_klass_name)
+  def config(command_id)
+    find_or_default(command_id)
   end
 
-  def instantiate_klass(mapped_object)
-    command_klass = command_klass(mapped_object[:klass])
-
-    id = mapped_object[:id]
-    properties = mapped_object[:properties]
-
-    parameters = mapped_object[:parameters]
-    unless parameters.nil? || command_klass.class_variable_defined?(:@@parameters) || command_klass == Commands::BaseCommand
-      LOGGER.debug('CommandMap') { "Setting @@parameters for #{command_klass}" }
-      command_klass.class_variable_set(:@@parameters, parameters)
-
-      LOGGER.debug('CommandMap') { "Setting parameter constants." }
-      parameters.each do |param_name, param_data|
-        next unless param_data[:type] == :map
-        LOGGER.debug('CommandMap') { "Parameter: #{param_name}" }
-        param_ref = param_name.upcase
-        command_klass.const_set(param_ref, [])
-
-        constants = param_data[:map]
-        constants.each do |value, const_name|
-          const_ref = const_name.upcase
-          LOGGER.debug('CommandMap') { "Constant: #{const_ref}" }
-          command_klass.const_set(const_ref, value)
-
-          LOGGER.debug('CommandMap') { "Adding :#{const_ref} to #{self.class}::#{param_ref}"}
-          parameter_constants = command_klass.const_get(param_ref)
-          parameter_constants << class_const(const_name)
-        end
-      end
-
-      LOGGER.debug('CommandMap') { "Adding parameter accessors #{parameters.keys} to #{command_klass}" }
-      command_klass.class_eval do
-        attr_accessor *parameters.keys
-      end
-    end
-
-    command_klass.new(id, properties)
-  end
-
-  def klass_const_string(command_namespace, klass)
-    "#{command_namespace}::#{klass}"
-  end
-
-  def class_const(name)
-    ref_buffer = name.upcase
-    ref_buffer = ref_buffer.to_sym
-  end
+  # def klass(command_id, arguments = nil)
+  #   command_config = find_or_default(command_id)
+  #   instantiate_klass(command_config, arguments)
+  # end
+  #
+  # def instantiate_klass(command_config, arguments)
+  #   command_klass = command_config.klass_constant
+  #   klass_builder = command_config.klass_builder
+  #
+  #   id = command_config.id
+  #
+  #   properties = command_config.properties_hash
+  #   properties[:arguments] = arguments unless arguments.nil?
+  #
+  #   command_klass.new(id, properties)
+  # end
 end
