@@ -14,11 +14,30 @@ class Channel
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
 
-  DEFAULT_SLEEP_TIMER = 5
+
 
   attr_reader :input_buffer, :output_buffer, :threads, :read_thread
 
+
+
+  DEFAULT_SLEEP_TIMER = 5
+
   attr_writer :sleep_time
+  attr_accessor :sleep_enabled
+
+  def delay_if_offline
+    return nil unless sleep_enabled?
+    sleep(sleep_time) if @stream.instance_of?(Channel::File)
+  end
+
+  def sleep_enabled?
+    return true if @sleep_enabled.nil?
+    @sleep_enabled
+  end
+
+  def sleep_time
+    @sleep_time ||= DEFAULT_SLEEP_TIMER
+  end
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -107,14 +126,6 @@ class Channel
     end
   end
 
-  def sleep_if_offline
-    sleep(sleep_time) if @stream.instance_of?(Channel::File)
-  end
-
-  def sleep_time
-    @sleep_time ||= DEFAULT_SLEEP_TIMER
-  end
-
   def thread_populate_input_buffer(stream, input_buffer)
     LOGGER.debug('Channel') { "#thread_populate_input_buffer" }
     Thread.new do
@@ -137,7 +148,7 @@ class Channel
             # cause the thread to sleep
 
             read_byte = stream.readpartial(1)
-            sleep_if_offline
+            delay_if_offline
 
             # when using ARGF to concatonate multiple log files
             # readpartial will return an empty string to denote the end

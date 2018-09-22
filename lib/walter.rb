@@ -59,6 +59,14 @@ class Walter
     @channel.sleep_time = seconds
   end
 
+  def sleep
+    @channel.sleep_enabled = true
+  end
+
+  def no_sleep
+    @channel.sleep_enabled = false
+  end
+
   def news
     puts "THREADS:"
     Thread.list.each_with_index do |t, i|
