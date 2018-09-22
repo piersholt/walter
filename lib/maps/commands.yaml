@@ -1940,9 +1940,6 @@
   :klass: Lamp
   :index:
     :byte1: 0
-    :byte2: 1
-    :byte3: 2
-    :byte4: 3
   :parameters:
     :byte1:
       :type: :bit_array
@@ -1996,22 +1993,22 @@
         :beam_high: 5
         :beam_low: 6
         :parking: 7
-    :byte2:
-      # :type: :bit_array
-      :bits:
-        1: right indicator glove out
-        2: left indicator glove out
-    :byte3:
-      # :type: :bit_array
-      :bits:
-        5: indicating/hazards
-        6: brake light out, i think this drives CCM
-    :byte4:
-      # :type: :bit_array
-      :bits:
-        1: rear fog switched on (stays on regardless of lights)
-        6: left break glove out (not hatch)
-        7: right break globe out (not hatch)
+    # :byte2:
+    #   # :type: :bit_array
+    #   :bits:
+    #     1: right indicator glove out
+    #     2: left indicator glove out
+    # :byte3:
+    #   # :type: :bit_array
+    #   :bits:
+    #     5: indicating/hazards
+    #     6: brake light out, i think this drives CCM
+    # :byte4:
+    #   # :type: :bit_array
+    #   :bits:
+    #     1: rear fog switched on (stays on regardless of lights)
+    #     6: left break glove out (not hatch)
+    #     7: right break globe out (not hatch)
   :meta:
     :notes:
       - lamp drives the night mode on BMBT
