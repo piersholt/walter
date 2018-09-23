@@ -12,11 +12,11 @@ class Commands
 
     # @override
     def to_s
-      "#{sn}\t#{@byte1.inspect}"
+      "#{sn}\t#{@byte1}"
     end
 
     def inspect
-      "#{sn}\t#{@byte1.value} (#{@byte1.to_s})"
+      "#{sn}\t#{(@byte1.inspect)}"
     end
 
     def raw
