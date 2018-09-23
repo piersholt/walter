@@ -61,15 +61,6 @@ class FrameHandler
 
   # ------------------------------ FRAME ------------------------------ #
 
-  def process_message(message)
-    @frame_builder.from = message.from.d
-    @frame_builder.to = message.to.d
-    @frame_builder.command = message.command
-    frame = @frame_builder.result
-    LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
-    frame
-  end
-
   def process_frame(frame)
     LOGGER.debug("FrameHandler") { "#{self.class}#process_frame(#{frame})" }
     LOGGER.debug("FrameHandler") { frame.inspect }
@@ -88,44 +79,55 @@ class FrameHandler
     to      = @device_map.find(to_id)
 
 
-
-    command_object = build_command(command_id, arguments)
+    command_config = @command_map.config(command_id)
+    # LOGGER.info("FrameHandler") { "Arguments: #{arguments}" }
+    parameter_values_hash = parse_argumets(command_config, arguments)
+    # LOGGER.info("FrameHandler") { "Parameter Values: #{parameter_values_hash}" }
+    command_object = build_command(command_config, parameter_values_hash)
 
     m = Message.new(from, to, command_object, arguments)
     m.frame= frame
     m
   end
 
-  def build_command(command_id, arguments)
-    LOGGER.debug("FrameHandler") { "#build_command" }
+  def parse_argumets(command_config, arguments)
+    # LOGGER.info("FrameHandler") { "#parse_argumets" }
+    if command_config.has_parameters? && !command_config.is_base?
+      # LOGGER.info("FrameHandler") { "#{command_config.sn} has a klass and parameters. Will parse." }
+       parse_indexed_arguments(command_config, arguments)
+    else
+      # LOGGER.info("FrameHandler") { "#{command_config.sn} is getting plain old arguments." }
+      arguments
+    end
+  end
+
+  def parse_indexed_arguments(command_config, arguments)
+    parameter_values_hash = {}
     begin
-      command_config = @command_map.config(command_id)
-      command_builder = command_config.builder
-      command_builder = command_builder.new(command_config)
+      argument_index = command_config.index
+      indexed_arguments = IndexedArguments.new(arguments, argument_index)
 
-      parameter_values_hash = {}
-
-      if command_config.has_parameters? && command_config.is_base?
-        parameter_values_hash = arguments
-      elsif command_config.has_parameters?
-        LOGGER.debug("FrameHandler") { "#{command_config.sn} has parameters and is not BaseCommand." }
-        argument_index = command_config.index
-        indexed_arguments = IndexedArguments.new(arguments, argument_index)
-
-        indexed_arguments.parameters.each do |name|
-          param_value = indexed_arguments.lookup(name)
-          parameter_values_hash[name] = param_value
-        end
-      else
-        parameter_values_hash = arguments
+      indexed_arguments.parameters.each do |name|
+        param_value = indexed_arguments.lookup(name)
+        parameter_values_hash[name] = param_value
       end
 
-      # LOGGER.debug("FrameHandler") { "Adding parameters to command_builder: #{parameter_values_hash}" }
+      parameter_values_hash
+    rescue StandardError => e
+      LOGGER.error(PROC ) {"#{e}" }
+      e.backtrace.each { |l| LOGGER.error(l) }
+      binding.pry
+    end
+  end
+
+  def build_command(command_config, parameter_values_hash)
+    LOGGER.debug("FrameHandler") { "#build_command" }
+    begin
+      command_builder = command_config.builder
+      command_builder = command_builder.new(command_config)
       command_builder.add_parameters(parameter_values_hash)
-      LOGGER.debug("FrameHandler") { "Get builder result." }
-      command_object = command_builder.result
-      LOGGER.debug("FrameHandler") { "#build_command => command_object" }
-      command_object
+
+      command_builder.result
     rescue StandardError => e
       LOGGER.error(PROC ) {"#{e}" }
       e.backtrace.each { |l| LOGGER.error(l) }
