@@ -25,8 +25,8 @@ class CommandMap < Map
   COMMANDS_MAP_NAME = 'commands'.freeze
   DEFAULT_COMMAND_NAMESPACE = 'Commands'.freeze
 
-  def initialize
-    super(COMMANDS_MAP_NAME)
+  def initialize(map = COMMANDS_MAP_NAME)
+    super(map)
   end
 
   def self.reload!
