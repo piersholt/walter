@@ -108,29 +108,26 @@ class Commands
     # end
 
     # @deprecated for #nested_dictionary(param_name) which supports bit_arrays
-    def dictionary(param_name)
-      param_data = self.class.class_variable_get(:@@parameters)
-      LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
-      param_dictionary = param_data[param_name][:dictionary]
-      LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
-      value = public_send(param_name)
-      param_dictionary[value]
-    end
+    # def dictionary(param_name)
+    #   param_data = self.class.class_variable_get(:@@parameters)
+    #   LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+    #   param_dictionary = param_data[param_name][:dictionary]
+    #   LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
+    #   value = public_send(param_name)
+    #   param_dictionary[value]
+    # end
 
-    def nested_dictionary(param_name)
-      # param_data = self.class.class_variable_get(:@@parameters)
-      # LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
-      command_dictionary = self.class.const_get(:DICTIONARY)
-      LOGGER.warn("#{self.class}") { 'No command dictionary!'} unless command_dictionary
-      param_dictionary = command_dictionary[param_name]
-      LOGGER.warn("#{self.class}") { "No #{param_name} dictionary!"} unless param_dictionary
-      value = public_send(param_name)
-      param_dictionary[value]
-    end
-
-
-
-    # ------
+    # @deprecated
+    # def nested_dictionary(param_name)
+    #   # param_data = self.class.class_variable_get(:@@parameters)
+    #   # LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
+    #   command_dictionary = self.class.const_get(:DICTIONARY)
+    #   LOGGER.warn("#{self.class}") { 'No command dictionary!'} unless command_dictionary
+    #   param_dictionary = command_dictionary[param_name]
+    #   LOGGER.warn("#{self.class}") { "No #{param_name} dictionary!"} unless param_dictionary
+    #   value = public_send(param_name)
+    #   param_dictionary[value]
+    # end
 
     # ------------------ SETTING PARAMETERS (FOR API) ------------------ #
     # Setting parameters via symbol/constants
