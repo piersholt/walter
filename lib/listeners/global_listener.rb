@@ -4,7 +4,7 @@ require 'event'
 require 'handlers/display_handler'
 require 'handlers/session_handler'
 require 'handlers/data_logging_handler'
-require 'handlers/frame_handler'
+require 'handlers/demultiplexing_handler'
 require 'handlers/multiplexing_handler'
 require 'handlers/bus_handler'
 require 'handlers/transmission_handler'
@@ -27,7 +27,7 @@ class GlobalListener
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
-    @frame_handler = FrameHandler.instance
+    @frame_handler = DemultiplexingHandler.instance
     @frame_handler.add_observer(self)
 
     @multiplexing_handler = MultiplexingHandler.instance

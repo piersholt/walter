@@ -11,12 +11,12 @@ require 'base_parameter'
 
 require 'command_builder'
 
-class FrameHandler
+class DemultiplexingHandler
   include Observable
   include Singleton
   include Event
 
-  PROC = 'FrameHandler'
+  PROC = 'DemultiplexingHandler'
 
   MESSAGE_COMPONENTS = [:from, :to, :command, :arguments].freeze
   FRAME_TO_MESSAGE_MAP = {
@@ -39,7 +39,7 @@ class FrameHandler
   end
 
   def inspect
-    str_buffer = "<FrameHandler>"
+    str_buffer = "<DemultiplexingHandler>"
   end
 
   def update(action, properties)
@@ -62,8 +62,8 @@ class FrameHandler
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
-    LOGGER.debug("FrameHandler") { "#{self.class}#process_frame(#{frame})" }
-    LOGGER.debug("FrameHandler") { frame.inspect }
+    LOGGER.debug("DemultiplexingHandler") { "#{self.class}#process_frame(#{frame})" }
+    LOGGER.debug("DemultiplexingHandler") { frame.inspect }
 
     from      = frame.from
     to        = frame.to
@@ -80,9 +80,9 @@ class FrameHandler
 
 
     command_config = @command_map.config(command_id)
-    # LOGGER.info("FrameHandler") { "Arguments: #{arguments}" }
+    # LOGGER.info("DemultiplexingHandler") { "Arguments: #{arguments}" }
     parameter_values_hash = parse_argumets(command_config, arguments)
-    # LOGGER.info("FrameHandler") { "Parameter Values: #{parameter_values_hash}" }
+    # LOGGER.info("DemultiplexingHandler") { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)
 
     m = Message.new(from, to, command_object, arguments)
@@ -91,12 +91,12 @@ class FrameHandler
   end
 
   def parse_argumets(command_config, arguments)
-    # LOGGER.info("FrameHandler") { "#parse_argumets" }
+    # LOGGER.info("DemultiplexingHandler") { "#parse_argumets" }
     if command_config.has_parameters? && !command_config.is_base?
-      # LOGGER.info("FrameHandler") { "#{command_config.sn} has a klass and parameters. Will parse." }
+      # LOGGER.info("DemultiplexingHandler") { "#{command_config.sn} has a klass and parameters. Will parse." }
        parse_indexed_arguments(command_config, arguments)
     else
-      # LOGGER.info("FrameHandler") { "#{command_config.sn} is getting plain old arguments." }
+      # LOGGER.info("DemultiplexingHandler") { "#{command_config.sn} is getting plain old arguments." }
       arguments
     end
   end
@@ -121,7 +121,7 @@ class FrameHandler
   end
 
   def build_command(command_config, parameter_values_hash)
-    LOGGER.debug("FrameHandler") { "#build_command" }
+    LOGGER.debug("DemultiplexingHandler") { "#build_command" }
     begin
       command_builder = command_config.builder
       command_builder = command_builder.new(command_config)
@@ -140,7 +140,7 @@ class FrameHandler
   #   return false unless command_config.has_parameters?
   #
   #   begin
-  #     LOGGER.debug("FrameHandler") { "Mapping command arguments to parameters." }
+  #     LOGGER.debug("DemultiplexingHandler") { "Mapping command arguments to parameters." }
   #
   #     index = command_config.index
   #     indexed_args = IndexedArguments.new(arguments, index)
@@ -164,12 +164,12 @@ class FrameHandler
   # end
 
   # def process_nested_parameters(command, data, index)
-  #   LOGGER.debug("FrameHandler") { "Mapping command nested arguments." }
+  #   LOGGER.debug("DemultiplexingHandler") { "Mapping command nested arguments." }
   #   bit_array = BitArray.from_i(data)
   #   indexed_bit_array = IndexedBitArray.new(bit_array, index)
   #   indexed_bit_array.parameters.each do |param|
   #     param_value = indexed_bit_array.lookup(param)
-  #     LOGGER.debug("FrameHandler") { "Parameter: #{param}= #{param_value}" }
+  #     LOGGER.debug("DemultiplexingHandler") { "Parameter: #{param}= #{param_value}" }
   #     command.instance_variable_set(inst_var(param), param_value)
   #   end
   # end
