@@ -58,20 +58,6 @@ class CommandConfiguration
     parameters_hash.keys
   end
 
-  # def all_parameters
-  #   return parameters unless has_bit_arrays?
-  #   bit_array_parameters = {}
-  #   bit_arrays.each do |bit_array, bit_array_data|
-  #     bit_array_parameters.merge(
-  #       bit_array_data[:parameters])
-  #   end
-  #   parameters.merge(bit_array_parameters)
-  # end
-
-  # def all_indexes
-  #   return false
-  # end
-
   def index
     @command_hash[:index]
   end
@@ -82,27 +68,6 @@ class CommandConfiguration
     return false unless has_parameters?
     parameters.any? { |name, data| data.type == BIT_ARRAY }
   end
-  #
-  # def bit_array_list
-  #   bit_arrays.keys
-  # end
-  #
-  # def bit_arrays
-  #   find_bit_arrays
-  # end
-
-  # def bit_array_parameters
-  # end
-
-  # def bit_array_parameter_list
-  #   bit_arrays.map do |bit_array_name, bit_array_data|
-  #     bit_array_data[:parameters].keys
-  #   end.flatten
-  # end
-  #
-  # def find_bit_arrays
-  #   bit_arrays = parameters.select { |name, data| data[:type] == BIT_ARRAY }
-  # end
 
   def properties_hash
     @command_hash[:properties]
@@ -184,11 +149,10 @@ class CommandConfiguration
     end
   end
 
-
   def setup_class_variable
     klass_constant.class_variable_set(:@@configured, true)
-    klass_constant.class_variable_set(:@@parameters, parameters_hash)
-    klass_constant.const_set(:DICTIONARY, {})
+    # klass_constant.class_variable_set(:@@parameters, parameters_hash)
+    # klass_constant.const_set(:DICTIONARY, {})
   end
 
   def setup_klass_parameters
@@ -207,5 +171,4 @@ class CommandConfiguration
       attr_accessor parameter
     end
   end
-
 end
