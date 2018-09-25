@@ -26,6 +26,22 @@ module NameTools
     name_string = name.upcase
     name_string.to_sym
   end
+
+  # @deprecated
+  # def parse_const_name(const_name)
+  #   LOGGER.debug("#{self.class}") { "#parse_const_ref(#{const_name})" }
+  #   LOGGER.debug("#{self.class}") { "Parsing #{const_name} to valid class constant name." }
+  #   begin
+  #     const_name_buffer = const_name.upcase
+  #     const_name_buffer = const_name_buffer.to_sym
+  #   rescue StandardError => e
+  #     LOGGER.error("#{self.class}") { "When trying to change #{const_name} to constant." }
+  #     LOGGER.error("#{self.class}") { e }
+  #     e.backtrace.each { |l| LOGGER.error("#{self.class}") { l } }
+  #   end
+  #   LOGGER.debug("#{self.class}") { "Command constant name is: #{const_name_buffer}" }
+  #   const_name_buffer
+  # end
 end
 
 module Helpers
