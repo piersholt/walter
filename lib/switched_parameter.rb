@@ -1,5 +1,5 @@
 # This needs the :state and :label property of this specific parameter
-class SwitchedParameter < CommandParameter
+class SwitchedParameter < BaseParameter
   PROC = 'SwitchedParameter'.freeze
 
 

@@ -1,7 +1,7 @@
-require 'command_parameter'
+require 'base_parameter'
 require 'commands/chars'
 
-class CharsParameter < CommandParameter
+class CharsParameter < BaseParameter
   PROC = 'CharsParameter'.freeze
 
   attr_reader :chars

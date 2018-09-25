@@ -1,6 +1,6 @@
-require 'command_parameter'
+require 'base_parameter'
 
-class MappedParameter < CommandParameter
+class MappedParameter < BaseParameter
   PROC = 'MappedParameter'.freeze
 
   attr_accessor :map, :dictionary, :label

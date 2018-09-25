@@ -7,7 +7,7 @@ require 'maps/command_map'
 require 'indexed_arguments'
 require 'indexed_bit_array'
 
-require 'command_parameter'
+require 'base_parameter'
 
 require 'command_builder'
 
@@ -151,7 +151,7 @@ class FrameHandler
   #       param_config = command_config.parameters[param]
   #       param_type = param_config.type
   #
-  #       command_param = CommandParameter.create(param_config, param_type, param_value)
+  #       command_param = BaseParameter.create(param_config, param_type, param_value)
   #       param_config.configure(command_param)
   #       command.instance_variable_set(inst_var(param), command_param)
   #     end

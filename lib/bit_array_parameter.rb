@@ -1,9 +1,9 @@
-require 'command_parameter'
+require 'base_parameter'
 
 require 'bit_array'
 require 'indexed_bit_array'
 
-class BitArrayParameter < CommandParameter
+class BitArrayParameter < BaseParameter
   PROC = 'BitArrayParam'.freeze
 
   attr_reader :parameters, :index, :bit_array, :indexed_bit_array

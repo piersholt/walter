@@ -14,7 +14,7 @@ module DelegatedCommandParameter
       MAP => 'MappedParameter',
       CHARS => 'CharsParameter',
       BIT_ARRAY => 'BitArrayParameter',
-      default:  'CommandParameter' }
+      default:  'BaseParameter' }
 
   def self.create(configuration, type, value)
     LOGGER.debug(PROC) { "#create(#{configuration}, #{type}, #{value})" }
