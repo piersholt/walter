@@ -5,7 +5,7 @@ require 'delegated_command_parameter'
 # this should have the map
 # if you change the value, you shouldn't need to also set the display value etc
 # it will need to be an instance variable
-class CommandParameter
+class BaseParameter
   # extend DelegatedCommandParameter
 
   include Helpers
@@ -34,7 +34,7 @@ class CommandParameter
   end
 end
 
-require 'command_parameter'
+require 'base_parameter'
 require 'bit_array_parameter'
 require 'switched_parameter'
 require 'mapped_parameter'
