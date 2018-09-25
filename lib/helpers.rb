@@ -24,7 +24,7 @@ module NameTools
   # @return [Class Constant Name] :CONSTANT_NAME
   def class_const(name)
     name_string = name.upcase
-    name_string.to_symswitch
+    name_string.to_sym
   end
 end
 
