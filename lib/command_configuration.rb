@@ -35,7 +35,7 @@ class CommandConfiguration
     when has_parameters? && is_base?
       get_class('BaseCommandBuilder')
     when has_parameters?
-      get_class('CommandBuilder')
+      get_class('ParameterizedCommandBuilder')
     else
       get_class('BaseCommandBuilder')
     end

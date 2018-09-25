@@ -26,9 +26,10 @@ class BaseCommandBuilder
 
 end
 
-class CommandBuilder < BaseCommandBuilder
+# For command classes that have parameters
+class ParameterizedCommandBuilder < BaseCommandBuilder
   def add_parameters(parameter_value_hash)
-    LOGGER.debug('CommandBuilder') { "#add_parameters(#{parameter_value_hash})" }
+    LOGGER.debug('ParameterizedCommandBuilder') { "#add_parameters(#{parameter_value_hash})" }
     @command_config.parameters.each do |param_name, param_config|
       param_value = parameter_value_hash[param_name]
       add_parameter(param_name, param_config, param_value)
@@ -36,7 +37,7 @@ class CommandBuilder < BaseCommandBuilder
   end
 
   def add_parameter(param_name, param_config, param_value)
-    LOGGER.debug('CommandBuilder') { "#add_parameter(#{param_name}, #{param_config}, #{param_value})" }
+    LOGGER.debug('ParameterizedCommandBuilder') { "#add_parameter(#{param_name}, #{param_config}, #{param_value})" }
     param_type  = param_config.type
 
     param_object = DelegatedCommandParameter.create(param_config, param_type, param_value)
@@ -46,7 +47,7 @@ class CommandBuilder < BaseCommandBuilder
   end
 
   def result
-    LOGGER.debug('CommandBuilder') { "#result()" }
+    LOGGER.debug('ParameterizedCommandBuilder') { "#result()" }
     command_klass = @command_config.klass_constant
 
     command_id  = @command_config.id
