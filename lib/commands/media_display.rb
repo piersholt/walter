@@ -1,4 +1,4 @@
-require 'commands/chars'
+require 'command/chars'
 
 class Commands
   # 35 / 0x24

@@ -1,5 +1,5 @@
 require 'base_parameter'
-require 'commands/chars'
+require 'command/chars'
 
 class CharsParameter < BaseParameter
   PROC = 'CharsParameter'.freeze
