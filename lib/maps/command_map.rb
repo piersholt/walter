@@ -23,7 +23,7 @@ class CommandMap < Map
   PROC = 'CommandMap'.freeze
 
   COMMANDS_MAP_NAME = 'commands'.freeze
-  DEFAULT_COMMAND_NAMESPACE = 'Commands'.freeze
+  DEFAULT_COMMAND_NAMESPACE = 'Command'.freeze
 
   def initialize(map = COMMANDS_MAP_NAME)
     super(map)
