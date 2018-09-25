@@ -1,6 +1,6 @@
 require 'bit_array'
 
-class Commands
+class Command
   class Lamp < BaseCommand
     include DataTools
 

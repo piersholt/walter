@@ -1,4 +1,4 @@
-class Commands
+class Command
   # ID: 17 0x11
   class Ignition < BaseCommand
     attr_accessor :v1

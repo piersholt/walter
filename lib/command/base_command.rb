@@ -1,5 +1,5 @@
 # this is a comment about a thing?
-class Commands
+class Command
   # Basic device class
   class BaseCommand
     include DataTools

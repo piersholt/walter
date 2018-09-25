@@ -1,4 +1,4 @@
-class Commands
+class Command
   class RadioLED < BaseCommand
 
     def initialize(id, props)

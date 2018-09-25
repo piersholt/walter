@@ -1,4 +1,4 @@
-class Commands
+class Command
   class Key < BaseCommand
 
     def initialize(id, props)

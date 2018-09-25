@@ -1,4 +1,4 @@
-class Commands
+class Command
   # ID: 26 0x1A
   class CCMDisplay < BaseCommand
 

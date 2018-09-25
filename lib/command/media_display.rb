@@ -1,6 +1,6 @@
 require 'command/chars'
 
-class Commands
+class Command
   # 35 / 0x24
   class MediaDisplay < BaseCommand
     attr_accessor :text, :chars, :gfx, :ike

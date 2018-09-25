@@ -1,4 +1,4 @@
-class Commands
+class Command
   # ID: DECIMAL? HEX?
   class OBCDisplay < BaseCommand
     # Arguments Map

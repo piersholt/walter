@@ -1,6 +1,6 @@
 require 'bit_array'
 
-class Commands
+class Command
   class IKESensors < BaseCommand
     include DataTools
     def initialize(id, props)

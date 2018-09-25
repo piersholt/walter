@@ -1,7 +1,7 @@
 # require 'daru'
 require 'matrix'
 
-class Commands
+class Command
   class Chars
     # COLUMN_COUNT = 3
     COLUMN_MAP = { integer: 0, hex: 1, char: 2, control: 3 }

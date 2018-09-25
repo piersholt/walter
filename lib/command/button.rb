@@ -1,4 +1,4 @@
-class Commands
+class Command
   class Button < BaseCommand
     attr_reader :button_state
 

@@ -1,4 +1,4 @@
-class Commands
+class Command
   class LED < BaseCommand
     attr_reader :led_state
 
