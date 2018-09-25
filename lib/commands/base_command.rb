@@ -3,6 +3,7 @@ class Commands
   # Basic device class
   class BaseCommand
     include DataTools
+    include Helpers
     # include Printable
     PADDED_DEFAULT = true
 
@@ -131,7 +132,8 @@ class Commands
 
     # ------
 
-    # ------------------ SETTING PARAMETERS ------------------ #
+    # ------------------ SETTING PARAMETERS (FOR API) ------------------ #
+    # Setting parameters via symbol/constants
 
     public
 
@@ -180,39 +182,42 @@ class Commands
     # ^ ---------------- SETTING PARAMETERS VIA SYMBOL/CONSTANTS ---------------- ^ #
 
 
-
+    # @deprecated
     # @return [Instance Variable] :@variable_name
-    def inst_var(name)
-      name_string = name.id2name
-      '@'.concat(name_string).to_sym
-    end
-
+    # def inst_var(name)
+    #   name_string = name.id2name
+    #   '@'.concat(name_string).to_sym
+    # end
+    #
+    # @deprecated
     # @return [Class Variable] :@@variable_name
-    def class_var(name)
-      name_string = name.id2name
-      '@@'.concat(name_string).to_sym
-    end
-
+    # def class_var(name)
+    #   name_string = name.id2name
+    #   '@@'.concat(name_string).to_sym
+    # end
+    #
+    # @deprecated
     # @return [Class Constant] :CONSTANT_NAME
-    def class_const(name)
-      name_string = name.upcase
-      name_string.to_sym
-    end
+    # def class_const(name)
+    #   name_string = name.upcase
+    #   name_string.to_sym
+    # end
 
+    # @deprecated
     # @return [Class Constant] :CONSTANT_NAME
-    def parse_const_name(const_name)
-      LOGGER.debug("#{self.class}") { "#parse_const_ref(#{const_name})" }
-      LOGGER.debug("#{self.class}") { "Parsing #{const_name} to valid class constant name." }
-      begin
-        const_name_buffer = const_name.upcase
-        const_name_buffer = const_name_buffer.to_sym
-      rescue StandardError => e
-        LOGGER.error("#{self.class}") { "When trying to change #{const_name} to constant." }
-        LOGGER.error("#{self.class}") { e }
-        e.backtrace.each { |l| LOGGER.error("#{self.class}") { l } }
-      end
-      LOGGER.debug("#{self.class}") { "Command constant name is: #{const_name_buffer}" }
-      const_name_buffer
-    end
+    # def parse_const_name(const_name)
+    #   LOGGER.debug("#{self.class}") { "#parse_const_ref(#{const_name})" }
+    #   LOGGER.debug("#{self.class}") { "Parsing #{const_name} to valid class constant name." }
+    #   begin
+    #     const_name_buffer = const_name.upcase
+    #     const_name_buffer = const_name_buffer.to_sym
+    #   rescue StandardError => e
+    #     LOGGER.error("#{self.class}") { "When trying to change #{const_name} to constant." }
+    #     LOGGER.error("#{self.class}") { e }
+    #     e.backtrace.each { |l| LOGGER.error("#{self.class}") { l } }
+    #   end
+    #   LOGGER.debug("#{self.class}") { "Command constant name is: #{const_name_buffer}" }
+    #   const_name_buffer
+    # end
   end
 end
