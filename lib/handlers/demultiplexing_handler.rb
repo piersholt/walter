@@ -9,7 +9,7 @@ require 'indexed_bit_array'
 
 require 'base_parameter'
 
-require 'command_builder'
+require 'base_command_builder'
 
 class DemultiplexingHandler
   include Observable
