@@ -18,17 +18,6 @@ class DemultiplexingHandler
 
   PROC = 'DemultiplexingHandler'
 
-  MESSAGE_COMPONENTS = [:from, :to, :command, :arguments].freeze
-  FRAME_TO_MESSAGE_MAP = {
-    from: { frame_component: :header,
-            component_index: 0 },
-    to: { frame_component: :tail,
-          component_index: 0 },
-    command: {  frame_component: :tail,
-                component_index: 1 },
-    arguments: { frame_component: :tail,
-                 component_index: 2..-2 } }.freeze
-
   def self.i
     instance
   end
