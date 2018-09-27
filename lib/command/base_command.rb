@@ -1,3 +1,5 @@
+require 'helpers'
+
 # this is a comment about a thing?
 class Command
   # Basic device class

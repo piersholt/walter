@@ -14,7 +14,7 @@ require 'command/led'
 require 'command/ike_sensors'
 require 'command/lamp'
 require 'command/radio_led'
-require 'command_configuration'
+require 'command/builder/command_configuration'
 
 require 'singleton'
 

@@ -1,6 +1,6 @@
 require 'helpers'
 
-require 'delegated_command_parameter'
+require 'command/parameter/delegated_command_parameter'
 
 # this should have the map
 # if you change the value, you shouldn't need to also set the display value etc
@@ -34,8 +34,8 @@ class BaseParameter
   end
 end
 
-require 'base_parameter'
-require 'bit_array_parameter'
-require 'switched_parameter'
-require 'mapped_parameter'
-require 'chars_parameter'
+require 'command/parameter/base_parameter'
+require 'command/parameter/bit_array_parameter'
+require 'command/parameter/switched_parameter'
+require 'command/parameter/mapped_parameter'
+require 'command/parameter/chars_parameter'

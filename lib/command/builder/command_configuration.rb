@@ -1,8 +1,8 @@
 require 'helpers'
-require 'parameter_configuration'
-require 'bit_array_parameter_configuration'
-require 'base_command_builder'
-require 'paramaterized_command_builder'
+require 'command/builder/parameter_configuration'
+require 'command/builder/bit_array_parameter_configuration'
+require 'command/builder/base_command_builder'
+require 'command/builder/paramaterized_command_builder'
 
 class CommandConfiguration
   include Helpers

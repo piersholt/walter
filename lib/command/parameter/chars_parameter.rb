@@ -1,4 +1,4 @@
-require 'base_parameter'
+require 'command/parameter/base_parameter'
 require 'command/chars'
 
 class CharsParameter < BaseParameter

@@ -1,4 +1,4 @@
-require 'base_parameter'
+require 'command/parameter/base_parameter'
 
 require 'bit_array'
 require 'indexed_bit_array'

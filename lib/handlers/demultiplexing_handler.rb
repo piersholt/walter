@@ -7,9 +7,9 @@ require 'maps/command_map'
 require 'indexed_arguments'
 require 'indexed_bit_array'
 
-require 'base_parameter'
+require 'command/parameter/base_parameter'
 
-require 'base_command_builder'
+require 'command/builder/base_command_builder'
 
 class DemultiplexingHandler
   include Observable
