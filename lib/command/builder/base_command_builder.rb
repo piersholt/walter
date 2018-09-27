@@ -12,6 +12,7 @@ class BaseCommandBuilder
   end
 
   def result
+    LOGGER.debug('BaseCommandBuilder') { "#result()" }
     command_klass = @command_config.klass_constant
 
     command_id  = @command_config.id
