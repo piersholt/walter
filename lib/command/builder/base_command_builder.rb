@@ -2,6 +2,7 @@ require 'helpers'
 
 class BaseCommandBuilder
   include Helpers
+
   def initialize(command_config)
     @command_config = command_config
     @parameter_objects = {}
