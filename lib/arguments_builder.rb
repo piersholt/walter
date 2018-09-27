@@ -12,7 +12,8 @@ class ArgumentsBuilder
 
   def map_arguments
     values_with_index = @index.map do |param, index|
-      param_value = @command.public_send(param)
+      param_object = @command.public_send(param)
+      param_value = param_object.respond_to?(:value) ? param_object.value : param_object
       param_value ? [param_value, index] : nil
     end.compact
 
