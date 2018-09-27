@@ -11,21 +11,6 @@ class ParameterizedCommandBuilder < BaseCommandBuilder
     end
   end
 
-  def parse_parameter(param_name, param_config, param_value)
-    LOGGER.debug('ParameterizedCommandBuilder') { "#parse_parameter(#{param_name}, #{param_config}, #{param_value})" }
-    param_type  = param_config.type
-
-    param_object = DelegatedCommandParameter.create(param_config, param_type, param_value)
-    param_config.configure(param_object)
-
-    param_object
-  end
-
-  def add_parameter(param_name, param_object)
-    LOGGER.debug('ParameterizedCommandBuilder') { "#add_parameter(#{param_name}, #{param_object})" }
-    @parameter_objects[param_name] = param_object
-  end
-
   def result
     LOGGER.debug('ParameterizedCommandBuilder') { "#result()" }
     command_klass = @command_config.klass_constant
@@ -42,4 +27,20 @@ class ParameterizedCommandBuilder < BaseCommandBuilder
     command_object
   end
 
+  private
+
+  def parse_parameter(param_name, param_config, param_value)
+    LOGGER.debug('ParameterizedCommandBuilder') { "#parse_parameter(#{param_name}, #{param_config}, #{param_value})" }
+    param_type  = param_config.type
+
+    param_object = DelegatedCommandParameter.create(param_config, param_type, param_value)
+    param_config.configure(param_object)
+
+    param_object
+  end
+
+  def add_parameter(param_name, param_object)
+    LOGGER.debug('ParameterizedCommandBuilder') { "#add_parameter(#{param_name}, #{param_object})" }
+    @parameter_objects[param_name] = param_object
+  end
 end
