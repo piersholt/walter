@@ -55,21 +55,4 @@ class CommandMap < Map
   def config(command_id)
     find_or_default(command_id)
   end
-
-  # def klass(command_id, arguments = nil)
-  #   command_config = find_or_default(command_id)
-  #   instantiate_klass(command_config, arguments)
-  # end
-  #
-  # def instantiate_klass(command_config, arguments)
-  #   command_klass = command_config.klass_constant
-  #   klass_builder = command_config.klass_builder
-  #
-  #   id = command_config.id
-  #
-  #   properties = command_config.properties_hash
-  #   properties[:arguments] = arguments unless arguments.nil?
-  #
-  #   command_klass.new(id, properties)
-  # end
 end
