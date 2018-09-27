@@ -20,12 +20,8 @@ class CharsParameter < BaseParameter
   #   "A Thing: #{value} (Human Version)"
   # end
 
-  def to_s
-    "<#{PROC} @value=#{value}>"
-  end
-
   def inspect
-    "<#{PROC} @value=#{value}>"
+    "<#{PROC} @value=#{value} @chars=#{chars}>"
   end
 
 
@@ -38,6 +34,6 @@ class CharsParameter < BaseParameter
   # end
 
   def to_s
-    "\"#{}\""
+    "\"#{chars}\""
   end
 end
