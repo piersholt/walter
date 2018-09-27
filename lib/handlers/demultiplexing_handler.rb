@@ -16,7 +16,7 @@ class DemultiplexingHandler
   include Singleton
   include Event
 
-  PROC = 'DemultiplexingHandler'
+  PROC = 'DemultiplexingHandler'.freeze
 
   def self.i
     instance
@@ -28,7 +28,7 @@ class DemultiplexingHandler
   end
 
   def inspect
-    str_buffer = "<DemultiplexingHandler>"
+    str_buffer = "<#{PROC}>"
   end
 
   def update(action, properties)
@@ -47,7 +47,6 @@ class DemultiplexingHandler
     '@'.concat(name_string).to_sym
   end
 
-
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
@@ -59,14 +58,12 @@ class DemultiplexingHandler
     command   = frame.command
     arguments = frame.arguments
 
-
     from_id     = from.to_d
     to_id       = to.to_d
     command_id  = command.to_d
 
     from    = @device_map.find(from_id)
     to      = @device_map.find(to_id)
-
 
     command_config = @command_map.config(command_id)
     # LOGGER.info("DemultiplexingHandler") { "Arguments: #{arguments}" }
@@ -79,6 +76,7 @@ class DemultiplexingHandler
     m
   end
 
+  # TODO: the builder will need to deal with this
   def parse_argumets(command_config, arguments)
     # LOGGER.info("DemultiplexingHandler") { "#parse_argumets" }
     if command_config.has_parameters? && !command_config.is_base?
