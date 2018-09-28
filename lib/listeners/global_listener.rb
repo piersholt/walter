@@ -9,8 +9,6 @@ require 'datalink/handlers/multiplexing_handler'
 require 'handlers/bus_handler'
 require 'datalink/handlers/transmission_handler'
 
-
-
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
 # from the single notify_observers(args) call, ensure that the arguments are
@@ -22,6 +20,8 @@ require 'datalink/handlers/transmission_handler'
 class GlobalListener
   include Observable
   include Event
+
+  PROC = 'GlobalListener'
 
   def initialize(handlers = {})
     @session_handler = SessionHandler.instance
@@ -44,46 +44,93 @@ class GlobalListener
     begin
       case action
       when EXIT
-        LOGGER.info("Listener") {  "Exit: Reason: #{properties[:reason]}" }
-
-        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class}" }
-        @display_handler.update(action, properties)
-        LOGGER.debug("Listener") { "Delegate: #{@display_handler.class} complete!" }
-
-        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class}" }
-        @data_logging_handler.update(action, properties)
-        LOGGER.debug("Listener") { "Delegate: #{@data_logging_handler.class} complete!" }
+        exit(action, properties)
       when BUS_ONLINE
-        LOGGER.info("Listener") { "Bus Online!" }
-        @data_logging_handler.update(action, properties)
+        bus_online(action, properties)
       when BUS_OFFLINE
-        LOGGER.warn("Listener") { "Bus Offline!" }
-        @data_logging_handler.update(action, properties)
-        @bus_handler.update(action, properties)
-
+        bus_offline(action, properties)
       when BYTE_RECEIVED
-        @data_logging_handler.update(action, properties)
-        @session_handler.update(action, properties)
+        byte_received(action, properties)
       when FRAME_RECEIVED
-        @data_logging_handler.update(action, properties)
-        @frame_handler.update(action, properties)
-        @session_handler.update(action, properties)
+        frame_received(action, properties)
       when FRAME_FAILED
-        @session_handler.update(action, properties)
+        frame_failed(action, properties)
       when MESSAGE_RECEIVED
-        @session_handler.update(action, properties)
-        @display_handler.update(action, properties)
+        message_received(action, properties)
       when MESSAGE_SENT
-        @multiplexing_handler.update(action, properties)
+        message_sent(action, properties)
       when FRAME_SENT
-        @transmission_handler.update(action, properties)
+        frame_sent(action, properties)
       else
-        LOGGER.debug("#{self.class} erm.. #{action} wasn't handled?")
+        LOGGER.warn(PROC) { "#{action} not handled?" }
       end
     rescue Exception => e
       LOGGER.error("#{self.class} Exception: #{e}")
       e.backtrace.each { |l| LOGGER.error(l) }
       binding.pry
     end
+  end
+
+  private
+
+  # ---- APPLICATION --- #
+
+  def message_sent(action, properties)
+    @multiplexing_handler.update(action, properties)
+  end
+
+  def message_received(action, properties)
+    @session_handler.update(action, properties)
+    @display_handler.update(action, properties)
+  end
+
+  # ---- DATALINK --- #
+
+  def frame_sent(action, properties)
+    @transmission_handler.update(action, properties)
+  end
+
+  def frame_received(action, properties)
+    @data_logging_handler.update(action, properties)
+    @frame_handler.update(action, properties)
+    @session_handler.update(action, properties)
+  end
+
+  def frame_failed(action, properties)
+    @session_handler.update(action, properties)
+  end
+
+  # ---- PHYSICAL --- #
+
+  def byte_received(action, properties)
+    @data_logging_handler.update(action, properties)
+    @session_handler.update(action, properties)
+  end
+
+  # ---- BUS STATUS --- #
+
+  def bus_offline(action, properties)
+    LOGGER.warn(PROC) { 'Bus Offline!' }
+    @data_logging_handler.update(action, properties)
+    @bus_handler.update(action, properties)
+  end
+
+  def bus_online(action, properties)
+    LOGGER.info(PROC) { 'Bus Online!' }
+    @data_logging_handler.update(action, properties)
+  end
+
+  # ---- PROGRAM --- #
+
+  def exit(action, properties)
+    LOGGER.info(PROC) {  "Exit: Reason: #{properties[:reason]}" }
+
+    LOGGER.debug(PROC) { "Delegate: #{@display_handler.class}" }
+    @display_handler.update(action, properties)
+    LOGGER.debug(PROC) { "Delegate: #{@display_handler.class} complete!" }
+
+    LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
+    @data_logging_handler.update(action, properties)
+    LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class} complete!" }
   end
 end

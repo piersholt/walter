@@ -35,4 +35,8 @@ module Event
   def valid?(event)
     ALL_EVENTS.one? { |e| e == event }
   end
+
+  def validate_event(event)
+    raise ::ArgumentError, 'unrecognised action' unless valid?(event)
+  end
 end
