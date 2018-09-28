@@ -53,6 +53,15 @@ module WalterTools
   def key
     @bus_device.state(key: :key_6, status: 0x04)
   end
+
+  def nl
+    new_line_thread = Thread.new do
+      Thread.current[:name] = 'New Line'
+      Kernel.sleep(0.5)
+      LOGGER.unknown('Walter') { 'New Line' }
+    end
+    add_thread(new_line_thread)
+  end
 end
 
 module ClusterTools
