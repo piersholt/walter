@@ -23,6 +23,7 @@ class Walter
   include Observable
   include WalterTools
 
+  PROC = 'Walter'.freeze
 
   def initialize
     # TODO: better argument handling to support multiple log files
@@ -47,7 +48,7 @@ class Walter
   end
 
   def launch
-    LOGGER.debug "#{self.class}#launch"
+    LOGGER.debug(PROC) { '#launch' }
     Thread.current[:name] = 'Walter (Main)'
     begin
       start
@@ -91,22 +92,22 @@ class Walter
   end
 
   def start
-    LOGGER.debug("#{self.class}#start")
+    LOGGER.debug(PROC) { '#start' }
     @channel.on
     @receiver.on
     @transmitter.on
   end
 
   def stop
-    LOGGER.debug "#{self.class}#stop"
+    LOGGER.debug(PROC) { '#stop' }
 
-    LOGGER.info("Walter") { "Switching off Receiver..." }
+    LOGGER.info(PROC) { 'Switching off Receiver...' }
     @receiver.off
-    LOGGER.info("Walter") { "Receiver is off! 👍" }
+    LOGGER.info(PROC) { 'Receiver is off! 👍' }
 
-    LOGGER.info("Walter") { "Switching off Channel..." }
+    LOGGER.info(PROC) { 'Switching off Channel...' }
     @channel.off
-    LOGGER.info("Walter") { "Channel is off! 👍" }
+    LOGGER.info(PROC) { 'Channel is off! 👍' }
   end
 
   private
