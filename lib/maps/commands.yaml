@@ -442,7 +442,7 @@
     :d: 20
     :h: '0x14'
   :properties:
-    :short_name: COD-CN-REQ
+    :short_name: CNTRY-REQ
     :long_name: Country Coding Status Request
   :klass: BaseCommand
 21:
@@ -450,7 +450,7 @@
     :d: 21
     :h: '0x15'
   :properties:
-    :short_name: COD-CN-RES
+    :short_name: CNTRY-RES
     :long_name: Country Coding Status Resonse
   :klass: BaseCommand
 22:
@@ -1054,35 +1054,35 @@
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: TXT-1
-    :long_name: Display text (GFX, ANZV)
+    :short_name: OBC-DISPLAY
+    :long_name: OBC Display (IKE, GFX)
     :verbose: true
     :modes:
-      1: Time
-      2: Date
-      3: Outside Temp.
-      4: Econ. 1
-      5: Econ. 2
-      6: Range
-      7: Distance
-      8: Arrival
-      9: Speed Limit
-      10: Avg. Speed
-      # 12: Memo
-      # 13: Memo
-      14: Stopwatch
-      15: Timer 1
-      16: Timer 2
-      # 17: Aux Heating Off
-      # 18: Aux Heating On
-      # 19: Aux Vent. Off
-      # 20: Aux Vent. On
-      # 21: End Stellmode
-      # 22: Emergency Disarm
-      26: Interim Time
-      # 27: Aux Heat/Vent
-      # 31: Test Mode
-      64: Radio HUD
+      0x01: Time
+      0x02: Date
+      0x03: Outside Temp.
+      0x04: Econ. 1
+      0x05: Econ. 2
+      0x06: Range
+      0x07: Distance
+      0x08: Arrival
+      0x09: Speed Limit
+      0x0a: Avg. Speed
+      0x0c: Memo
+      0x0d: Memo
+      0x0e: Stopwatch
+      0x0f: Aux. Timer 1
+      0x10: Aux. Timer 2
+      0x11: Aux Heating Off
+      0x12: Aux Heating On
+      0x13: Aux Vent. Off
+      0x14: Aux Vent. On
+      0x15: End Stellmode
+      0x16: Emergency Disarm
+      0x1a: Interim Time
+      0x1b: Aux Heat/Vent
+      0x1f: Test Mode
+      0x40: Radio HUD
   :klass: OBCDisplay
   :meta:
     :examples:
@@ -1132,10 +1132,57 @@
   :id:
     :d: 42
     :h: '0x2A'
+  :klass: ParameterizedCommand
   :properties:
-    :short_name: '0x2A'
-    :long_name: Unknown
-  :klass: BaseCommand
+    :short_name: OBC-CTL
+    :long_name: IKE to ANZV OBC Control
+  :parameters:
+    :control:
+      :type: :bit_array
+      :parameters:
+        :memo:
+          # 00100000
+          :type: :switch
+          :label: 'Memo'
+          :states:
+            0: :off
+            1: :on
+        :timer:
+          # 0010 1010
+          :type: :switch
+          :label: 'Timer'
+          :states:
+            0: :off
+            1: :on
+        :limit:
+          # 00000010
+          :type: :switch
+          :label: 'Speed Limit'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :memo: 2
+        :limit: 6
+        :timer: 4
+      :map:
+        0x00: blank
+      :dictionary:
+        # 0x00: Memo Off?
+        # 0x02: Speed Limit On
+        # 0x20: Memo On
+        0x22: Memo On
+        0x20: Speed Limit Off
+        0x02: Memo Off
+    :unconfirmed:
+      :type: :map
+      :map:
+        0x00: blank
+      :dictionary:
+        0x00: NA
+  :index:
+    :control: 0
+    :unconfirmed: 1
   :meta:
     :senders:
       - IKE
@@ -1145,6 +1192,8 @@
       - always 2 bytes
       - first byte 0x00 or 0x0B
       - second byte 0x00
+      - memo on 20 00
+      - memo off 00 00
 43:
   :id:
     :d: 43
@@ -1482,17 +1531,83 @@
     :d: 64
     :h: '0x40'
   :properties:
-    :short_name: OBC-Set
+    :short_name: OBC-REQ
     :long_name: Set OBC Data
   :klass: BaseCommand
+  :meta:
+    - GFX   	IKE   	OBC-Set   	09 00 21
+    - IKE   	ANZV  	0x2A      	02 00
+    - IKE   	ANZV  	OBC       	Speed Limit	" 33 KM/H"
+
+    - GFX   	IKE   	OBC-Set   	09 00 36
+    - IKE   	ANZV  	0x2A      	02 00
+    - IKE   	ANZV  	OBC       	Speed Limit	" 54 KM/H"
+
+    - GFX   	IKE   	OBC-SET   	07 00 30
+    - IKE   	ANZV  	OBC       	Distance  	"  48 KM "
+    - IKE   	ANZV  	OBC       	Arrival   	"--:--  "
+
+    - GFX   	IKE   	OBC-REQ   	0F 0C 06
+    - IKE   	ANZV  	OBC       	Aux. Timer 1   	"--:--  "
+    - GFX   	IKE   	OBC-REQ   	10 03 00
+    - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
+    - AM loos like 0b = 11AM
+    - 11AM = d2b(0x8B, true, true) => "0b10001011"
+    - 11PM = d2b(0x0b, true, true) => "0b00001011"
 65:
   :id:
     :d: 65
     :h: '0x41'
+  :klass: ParameterizedCommand
   :properties:
-    :short_name: OBC-DATA-REQ
+    :short_name: OBC-REQ
     :long_name: OBC Data Request
-  :klass: BaseCommand
+  :parameters:
+    :field:
+      :type: :map
+      :map:
+        0x00: disabled
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo 1
+        0x0d: Memo 2
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :control:
+      :type: :map
+      :map:
+        0x00: empty
+      :dictionary:
+        0x01: Alt. (Interum?)
+        0x10: Reset/Recalculate
+        0x02: "0x02"
+        0x03: "0x03"
+        0x04: Switch On
+        0x08: Switch Off
+        0x20: Clear Saved
+  :index:
+    :field: 0
+    :control: 1
   :meta:
     :notes:
       - two bytes. first byte corresponds to same code as obc
@@ -1500,6 +1615,8 @@
       - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
       - GFX IKE   41    04 01
       - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
+    :recipients:
+      - IKE: IKE houses on board computer
 66:
   :id:
     :d: 66
@@ -1533,6 +1650,9 @@
     :long_name: Radio to resume?
   :klass: BaseCommand
   :meta:
+    - 1 byte parameter
+    - 01 (Audio+OBC Off)
+    - 03 (Audio+OBC ON)
     - used when switching back from TV?
 70:
   :id:
@@ -1678,6 +1798,7 @@
         0x45: tape_rw
         0x42: tape_fff
         0x43: tape_rww
+        0x90: reset
       :dictionary:
         0x00: "Off"
         0xFF: "On"
@@ -1690,6 +1811,7 @@
         0x45: Tape RW
         0x42: Tape FFF
         0x43: Tape RWW
+        0x90: "Off (Reset)"
   :index:
     :led: 0
   :meta:
