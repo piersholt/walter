@@ -6,8 +6,11 @@ require 'physical/channel/file'
 require 'physical/channel/byte_buffer'
 require 'physical/channel/output_buffer'
 
+require 'helpers'
+
 class Channel
   include Observable
+  include Delayable
 
   FILE_TYPE = { tty: 'characterSpecial', file: 'file' }.freeze
   FILE_TYPE_HANDLERS = { tty: Channel::Device, file: Channel::File }.freeze
@@ -20,24 +23,6 @@ class Channel
 
 
 
-  DEFAULT_SLEEP_TIMER = 5
-
-  attr_writer :sleep_time
-  attr_accessor :sleep_enabled
-
-  def delay_if_offline
-    return nil unless sleep_enabled?
-    sleep(sleep_time) if @stream.instance_of?(Channel::File)
-  end
-
-  def sleep_enabled?
-    return true if @sleep_enabled.nil?
-    @sleep_enabled
-  end
-
-  def sleep_time
-    @sleep_time ||= DEFAULT_SLEEP_TIMER
-  end
 
   # The interface should protect the channel from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial
@@ -148,7 +133,7 @@ class Channel
             # cause the thread to sleep
 
             read_byte = stream.readpartial(1)
-            delay_if_offline
+            delay if @stream.instance_of?(Channel::File)
 
             # when using ARGF to concatonate multiple log files
             # readpartial will return an empty string to denote the end
