@@ -53,7 +53,7 @@ class ParameterConfiguration
     LOGGER.debug(PROC) { "Configure parameter #{object.class} with #{PROPERTIES[type]}" }
 
     # LOGGER.info(PROC) { "Setting #{object.class}: name = #{name}" }
-    object.instance_variable_set(inst_var(name), name)
+    object.instance_variable_set(inst_var(:name), name)
 
     PROPERTIES[type].each do |property|
       var = inst_var(property)
