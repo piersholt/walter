@@ -52,7 +52,8 @@ class FrameBuilder
       command_id = command.d
       @command = Byte.new(:decimal, command_id)
 
-      index = CommandMap.instance.index(command_id)
+      command_config = CommandMap.instance.config(command_id)
+      index = command_config.index
       builder = ArgumentsBuilder.new(command, index)
       args = builder.result
       nested_arguments = args.map do |d|
