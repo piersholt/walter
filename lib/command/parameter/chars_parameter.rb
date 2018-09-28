@@ -13,7 +13,7 @@ class CharsParameter < BaseParameter
 
   def format_char_array
     LOGGER.warn(PROC) { "Cannot create @chars without value. Value = #{value}" } if value.nil?
-    @chars = Commands::Chars.new(value, true)
+    @chars = Command::Chars.new(value, true)
   end
 
   # def to_s
