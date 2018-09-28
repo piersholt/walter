@@ -42,10 +42,7 @@ module WalterTools
   end
 
   def news
-    puts "THREADS:"
-    Thread.list.each_with_index do |t, i|
-      LOGGER.info("#{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
-    end
+    print_status(true)
     true
   end
 

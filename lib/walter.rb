@@ -22,6 +22,7 @@ require 'helpers'
 class Walter
   include Observable
   include WalterTools
+  include ManageableThreads
 
   PROC = 'Walter'.freeze
 
