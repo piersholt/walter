@@ -19,6 +19,8 @@ module API
       from: Devices::IKE
     }.freeze
 
+    # @param Key: ID of key
+    # @param Status: status of key
     def state(command_arguments, from_id = STATUS[:from], to_id = STATUS[:to])
       command_id = STATUS[:id]
       give_it_a_go(from_id, to_id, command_id, command_arguments)
