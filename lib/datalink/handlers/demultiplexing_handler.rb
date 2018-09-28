@@ -124,43 +124,4 @@ class DemultiplexingHandler
       binding.pry
     end
   end
-
-  # def map_arguments_to_parameters(command, arguments)
-  #   command_config = @command_map.config(command_id)
-  #   return false unless command_config.has_parameters?
-  #
-  #   begin
-  #     LOGGER.debug("DemultiplexingHandler") { "Mapping command arguments to parameters." }
-  #
-  #     index = command_config.index
-  #     indexed_args = IndexedArguments.new(arguments, index)
-  #
-  #     indexed_args.parameters.each do |param|
-  #       param_value = indexed_args.lookup(param)
-  #
-  #       param_config = command_config.parameters[param]
-  #       param_type = param_config.type
-  #
-  #       command_param = BaseParameter.create(param_config, param_type, param_value)
-  #       param_config.configure(command_param)
-  #       command.instance_variable_set(inst_var(param), command_param)
-  #     end
-  #   rescue StandardError => e
-  #     LOGGER.error("#{self.class} StandardError: #{e}")
-  #     e.backtrace.each { |l| LOGGER.error(l) }
-  #     binding.pry
-  #   end
-  #   true
-  # end
-
-  # def process_nested_parameters(command, data, index)
-  #   LOGGER.debug("DemultiplexingHandler") { "Mapping command nested arguments." }
-  #   bit_array = BitArray.from_i(data)
-  #   indexed_bit_array = IndexedBitArray.new(bit_array, index)
-  #   indexed_bit_array.parameters.each do |param|
-  #     param_value = indexed_bit_array.lookup(param)
-  #     LOGGER.debug("DemultiplexingHandler") { "Parameter: #{param}= #{param_value}" }
-  #     command.instance_variable_set(inst_var(param), param_value)
-  #   end
-  # end
 end

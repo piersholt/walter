@@ -85,55 +85,6 @@ class Command
       { ARGS: arguments }
     end
 
-    # ------------------------------ PARAMETERS ------------------------------ #
-
-    # def parameters
-    #   self.class.const_get(:PARAMETERS)
-    # end
-
-    # only list the constants that correspond to the parameter
-    # don't use CommandMap. Methods performing on class's own data...
-    # KLASS::PARAMETER { constant_a: byte_value, constant_b: byte_value,  }
-    # def parameter_constants(parameter)
-    #   self.class.const_get(class_const(parameter))
-    # end
-
-    # ------------------------------ PARAMETERS ------------------------------ #
-
-    # @deprecated for #dictionary(param_name)
-    # def dict(param, value)
-    #   param_data = self.class.class_variable_get(:@@parameters)
-    #   LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
-    #   param_dictionary = param_data[param][:dictionary]
-    #   LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
-    #   param_dictionary[value]
-    # end
-
-    # @deprecated for #nested_dictionary(param_name) which supports bit_arrays
-    # def dictionary(param_name)
-    #   param_data = self.class.class_variable_get(:@@parameters)
-    #   LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
-    #   param_dictionary = param_data[param_name][:dictionary]
-    #   LOGGER.warn("#{self.class}") { 'No dictionary!'} unless param_dictionary
-    #   value = public_send(param_name)
-    #   param_dictionary[value]
-    # end
-
-    # @deprecated
-    # def nested_dictionary(param_name)
-    #   # param_data = self.class.class_variable_get(:@@parameters)
-    #   # LOGGER.warn("#{self.class}") { 'No param data, thus no dictionary! '} unless param_data
-    #   command_dictionary = self.class.const_get(:DICTIONARY)
-    #   LOGGER.warn("#{self.class}") { 'No command dictionary!'} unless command_dictionary
-    #   param_dictionary = command_dictionary[param_name]
-    #   LOGGER.warn("#{self.class}") { "No #{param_name} dictionary!"} unless param_dictionary
-    #   value = public_send(param_name)
-    #   param_dictionary[value]
-    # end
-
-    # ------------------ SETTING PARAMETERS (FOR API) ------------------ #
-    # Setting parameters via symbol/constants
-
     public
 
     def try_set(parameter, parameter_value)
@@ -179,44 +130,5 @@ class Command
     end
 
     # ^ ---------------- SETTING PARAMETERS VIA SYMBOL/CONSTANTS ---------------- ^ #
-
-
-    # @deprecated
-    # @return [Instance Variable] :@variable_name
-    # def inst_var(name)
-    #   name_string = name.id2name
-    #   '@'.concat(name_string).to_sym
-    # end
-    #
-    # @deprecated
-    # @return [Class Variable] :@@variable_name
-    # def class_var(name)
-    #   name_string = name.id2name
-    #   '@@'.concat(name_string).to_sym
-    # end
-    #
-    # @deprecated
-    # @return [Class Constant] :CONSTANT_NAME
-    # def class_const(name)
-    #   name_string = name.upcase
-    #   name_string.to_sym
-    # end
-
-    # @deprecated
-    # @return [Class Constant] :CONSTANT_NAME
-    # def parse_const_name(const_name)
-    #   LOGGER.debug("#{self.class}") { "#parse_const_ref(#{const_name})" }
-    #   LOGGER.debug("#{self.class}") { "Parsing #{const_name} to valid class constant name." }
-    #   begin
-    #     const_name_buffer = const_name.upcase
-    #     const_name_buffer = const_name_buffer.to_sym
-    #   rescue StandardError => e
-    #     LOGGER.error("#{self.class}") { "When trying to change #{const_name} to constant." }
-    #     LOGGER.error("#{self.class}") { e }
-    #     e.backtrace.each { |l| LOGGER.error("#{self.class}") { l } }
-    #   end
-    #   LOGGER.debug("#{self.class}") { "Command constant name is: #{const_name_buffer}" }
-    #   const_name_buffer
-    # end
   end
 end
