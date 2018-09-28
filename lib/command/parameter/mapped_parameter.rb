@@ -15,7 +15,8 @@ class MappedParameter < BaseParameter
   # @overide
   def to_s(width = DEFAULT_LABEL_WIDTH)
     # LOGGER.info(PROC) { "#to_s(width = #{width})" }
-    str_buffer = format("%-#{width}s", "#{label}#{LABEL_DELIMITER}")
+    # str_buffer = format("%-#{width}s", "#{label}#{LABEL_DELIMITER}")
+    str_buffer = ""
     # str_buffer = str_buffer.concat(LABEL_DELIMITER)
     str_buffer = str_buffer.concat("#{pretty}")
     str_buffer

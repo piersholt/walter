@@ -14,7 +14,7 @@ class IndexedArguments < Bytes
   end
 
   def to_s
-    "Index: #{@index}\t".concat(super)
+    "Index: #{@index}\tBytes:".concat(super)
   end
 
   def inspect
