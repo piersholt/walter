@@ -30,7 +30,8 @@ class MappedParameter < BaseParameter
       LOGGER.warn(PROC) { "Map @dictionary is nil!" }
       return "\"value\""
     elsif !@dictionary.key?(value)
-      LOGGER.warn(PROC) { "#{value} not found in @dictionary!" }
+      LOGGER.warn(PROC) { "#{name}: #{d2h(value, true)} not found in @dictionary!" }
+      LOGGER.warn(PROC) { "#{name}: Dictionary: #{dictionary}" }
       return "No states value!"
     else
       @dictionary[value]

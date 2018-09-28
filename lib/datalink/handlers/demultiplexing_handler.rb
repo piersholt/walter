@@ -92,10 +92,13 @@ class DemultiplexingHandler
     parameter_values_hash = {}
     begin
       argument_index = command_config.index
+      LOGGER.debug("DemultiplexingHandler") { "argument index: #{argument_index}" }
       indexed_arguments = IndexedArguments.new(arguments, argument_index)
+      LOGGER.debug("DemultiplexingHandler") { "indexed_arguments: #{indexed_arguments}" }
 
       indexed_arguments.parameters.each do |name|
         param_value = indexed_arguments.lookup(name)
+        LOGGER.debug("DemultiplexingHandler") { "indexed_arguments.lookup(#{name}) => #{param_value}" }
         parameter_values_hash[name] = param_value
       end
 
