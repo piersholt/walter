@@ -7,15 +7,14 @@ require 'serialport'
 require 'pry'
 
 # local dependencies
-require 'byte'
-require 'bytes'
-require 'frame'
-require 'message'
+require 'physical/byte'
+require 'physical/bytes'
+require 'application/message'
 
-require 'channel'
-require 'new_receiver'
-require 'transmitter'
-require 'application_layer'
+require 'physical/channel'
+require 'datalink/new_receiver'
+require 'datalink/transmitter'
+require 'application/application_layer'
 require 'listeners/global_listener'
 
 # Container
