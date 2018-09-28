@@ -1,4 +1,4 @@
-require 'base_parameter'
+require 'command/parameter/base_parameter'
 
 class MappedParameter < BaseParameter
   PROC = 'MappedParameter'.freeze
