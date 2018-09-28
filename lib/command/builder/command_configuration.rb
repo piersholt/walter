@@ -116,10 +116,6 @@ class CommandConfiguration
     klass == BASE_COMMAND_STRING
   end
 
-  def prepend_namespace(command_namespace, klass)
-    "#{command_namespace}::#{klass}"
-  end
-
   # Class Configuration -------------------------------------------------------
 
   def configure_class

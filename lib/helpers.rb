@@ -3,6 +3,10 @@ module ModuleTools
   def get_class(name)
     Kernel.const_get(name)
   end
+
+  def prepend_namespace(command_namespace, klass)
+    "#{command_namespace}::#{klass}"
+  end
 end
 
 module ClusterTools
