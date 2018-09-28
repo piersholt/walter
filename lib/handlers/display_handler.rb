@@ -6,7 +6,8 @@ class DisplayHandler
 
   PROC = 'DisplayHandler'.freeze
 
-  NOISEY = [0x01, 0x02, 0x18, 0x19, 0x5B, 0x10, 0x11,0x21, 0x79, 0x7A].freeze
+  NOISEY = [0x01, 0x02, 0x18, 0x19, 0x5B, 0x10, 0x11,0x21, 0x79, 0x7A, 0x49].freeze
+  OBC = [0x24, 0x2A, 0x40, 0x41]
 
   def self.i
     instance
@@ -116,6 +117,10 @@ class DisplayHandler
     LOGGER.info(PROC) { ("Shutting up commands: #{NOISEY.join(', ')}.") }
     hide_commands(*NOISEY)
     true
+  end
+
+  def obc
+    filter_commands(*OBC)
   end
 
   private
