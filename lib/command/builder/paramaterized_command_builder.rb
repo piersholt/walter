@@ -19,6 +19,7 @@ class ParameterizedCommandBuilder < BaseCommandBuilder
     properties  = @command_config.properties_hash
 
     command_object = command_klass.new(command_id, properties)
+    @command_config.configure(command_object)
     # command_object.set_parameters(@parameter_objects)
     @parameter_objects.each do |k, v|
       command_object.instance_variable_set(inst_var(k), v)

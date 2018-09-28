@@ -1,5 +1,6 @@
 require 'maps/map'
 require 'command/base_command'
+require 'command/parameterized_command'
 require 'command/obc_display'
 require 'command/ccm_display'
 require 'command/media_display'

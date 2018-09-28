@@ -15,6 +15,7 @@ class CommandConfiguration
 
   DEFAULT_COMMAND_NAMESPACE = 'Command'.freeze
   BASE_COMMAND_STRING = 'BaseCommand'.freeze
+  PARAMETERIZED_COMMAND_STRING = 'ParameterizedCommand'.freeze
 
   WRAPPER = ParameterConfiguration
 
@@ -116,12 +117,17 @@ class CommandConfiguration
     klass == BASE_COMMAND_STRING
   end
 
+  def is_parameterized?
+    klass == PARAMETERIZED_COMMAND_STRING
+  end
+
   # Class Configuration -------------------------------------------------------
 
   def configure_class
     LOGGER.debug(PROC) { "#{sn}: Class Configuration beginning." }
     setup_class_variable
     setup_klass_parameters
+    setup_parameter_accessor(:parameters)
     LOGGER.debug(PROC) { "#{sn}: Class Configuration completed." }
     true
   end
@@ -137,6 +143,9 @@ class CommandConfiguration
     elsif is_base?
       LOGGER.debug(PROC) { "Configuration not required for BaseCommand" }
       true
+    elsif is_parameterized?
+      LOGGER.debug(PROC) { "Configuration always required for #{PARAMETERIZED_COMMAND_STRING}" }
+      false
     elsif klass_constant.class_variable_defined?(:@@configured)
       LOGGER.debug(PROC) { "#{sn} configuration already completed." }
       true
@@ -163,5 +172,12 @@ class CommandConfiguration
     klass_constant.class_eval do
       attr_accessor parameter
     end
+  end
+
+  # Object Configuration -------------------------------------------------------
+
+  def configure(command_object)
+    LOGGER.debug(PROC) { "Configure command #{command_object.class}" }
+    command_object.instance_variable_set(inst_var(:parameters), parameter_list)
   end
 end
