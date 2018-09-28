@@ -4,10 +4,10 @@ require 'event'
 require 'handlers/display_handler'
 require 'handlers/session_handler'
 require 'handlers/data_logging_handler'
-require 'handlers/demultiplexing_handler'
-require 'handlers/multiplexing_handler'
+require 'datalink/handlers/demultiplexing_handler'
+require 'datalink/handlers/multiplexing_handler'
 require 'handlers/bus_handler'
-require 'handlers/transmission_handler'
+require 'datalink/handlers/transmission_handler'
 
 
 

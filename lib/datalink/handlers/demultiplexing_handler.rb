@@ -1,12 +1,12 @@
 require 'singleton'
 
-require 'message'
+require 'application/message'
 require 'maps/device_map'
 require 'maps/command_map'
 
-require 'indexed_arguments'
-require 'indexed_bit_array'
+require 'datalink/frame/indexed_arguments'
 
+require 'command/parameter/indexed_bit_array'
 require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'

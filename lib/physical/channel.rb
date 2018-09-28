@@ -1,10 +1,10 @@
 # require 'thread'
 require 'observer'
 
-require 'channel/device'
-require 'channel/file'
-require 'channel/byte_buffer'
-require 'channel/output_buffer'
+require 'physical/channel/device'
+require 'physical/channel/file'
+require 'physical/channel/byte_buffer'
+require 'physical/channel/output_buffer'
 
 class Channel
   include Observable

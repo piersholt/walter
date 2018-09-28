@@ -1,4 +1,4 @@
-require 'bytes'
+require 'physical/bytes'
 
 class HeaderValidationError  < StandardError
 end

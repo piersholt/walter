@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'new_frame'
-require 'arguments_builder'
+require 'datalink/frame/new_frame'
+require 'datalink/frame/arguments_builder'
 
 # Class documentation
 class FrameBuilder

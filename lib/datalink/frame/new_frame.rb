@@ -1,5 +1,5 @@
-require 'bytes'
-require 'frame_components'
+require 'physical/bytes'
+require 'datalink/frame/frame_components'
 
 class ChecksumError < StandardError
 end
@@ -12,7 +12,7 @@ class NewFrame < Bytes
   FrameHeader.instance_methods(false).each do |header_method|
     def_delegator :header, header_method
   end
-  
+
   FrameTail.instance_methods(false).each do |tail_method|
     def_delegator :tail, tail_method
   end

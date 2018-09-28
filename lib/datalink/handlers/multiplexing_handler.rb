@@ -1,5 +1,5 @@
 require 'singleton'
-require 'frame_builder'
+require 'datalink/frame/frame_builder'
 
 class MultiplexingHandler
   include Observable

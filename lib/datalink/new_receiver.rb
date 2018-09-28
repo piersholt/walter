@@ -1,5 +1,5 @@
 require 'observer'
-require 'new_frame'
+require 'datalink/frame/new_frame'
 
 class NewReceiver
   PROG_NAME = 'Receiver'.freeze
@@ -76,8 +76,8 @@ class NewReceiver
 
             LOGGER.debug(PROG_NAME) { "#{SYNC} Byte Buffer size: #{buffer.size}." }
 
-            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Trying to shift #{Frame::HEADER_LENGTH} bytes." }
-            header_bytes = buffer.shift(Frame::HEADER_LENGTH)
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Trying to shift #{NewFrame::HEADER_LENGTH} bytes." }
+            header_bytes = buffer.shift(NewFrame::HEADER_LENGTH)
             LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Shifted bytes: #{header_bytes}" }
 
             # LOGGER.debug(SYNC_HEADER) { "Setting new frame header." }
