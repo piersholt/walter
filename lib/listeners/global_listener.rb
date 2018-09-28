@@ -39,7 +39,7 @@ class GlobalListener
 
   def update(action, properties = {})
     # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
-    raise ::ArgumentError, 'unrecognised action' unless valid?(action)
+    validate_event(action)
 
     begin
       case action
@@ -64,8 +64,8 @@ class GlobalListener
       else
         LOGGER.warn(PROC) { "#{action} not handled?" }
       end
-    rescue Exception => e
-      LOGGER.error("#{self.class} Exception: #{e}")
+    rescue StandardError => e
+      LOGGER.error(PROC) { "#{e}" }
       e.backtrace.each { |l| LOGGER.error(l) }
       binding.pry
     end
