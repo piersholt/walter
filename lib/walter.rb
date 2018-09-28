@@ -64,30 +64,9 @@ class Walter
       # TODO: menu to facilitate common features...
       # raise NotImplementedError, 'menu not implemented. fallback to CLI...'
     rescue NotImplementedError
-      LOGGER.info 'fallback CLI'
-
-      binding.pry
-
-      LOGGER.info("Walter") { "Walter is closing!" }
-
-      LOGGER.info("Walter") { "Publishing event: #{Event::EXIT}" }
-      changed
-      notify_observers(Event::EXIT, {reason: 'Debug exiting'})
-      LOGGER.info("Walter") { "Subscribers updated! #{Event::EXIT}" }
-
-      LOGGER.info("Walter") { "Turning stack off ⛔️" }
-      stop
-      LOGGER.info("Walter") { "Stack is off 👍" }
-
-      LOGGER.info("Walter") { "See you anon ✌️" }
-      return -1
+      rescue_not_implemented
     rescue Interrupt
-      LOGGER.debug 'Interrupt signal caught.'
-      binding.pry
-      changed
-      notify_observers(Event::EXIT, {reason: 'Interrupt!'})
-      stop
-      return 1
+      rescue_interrupt
     end
   end
 
@@ -112,5 +91,32 @@ class Walter
 
   private
 
+  def rescue_interrupt
+    LOGGER.debug 'Interrupt signal caught.'
+    binding.pry
+    changed
+    notify_observers(Event::EXIT, {reason: 'Interrupt!'})
+    stop
+    return 1
+  end
+
+  def rescue_not_implemented
+    LOGGER.info(PROC) { 'fallback CLI' }
+
+    binding.pry
+
+    LOGGER.info(PROC) { "Walter is closing!" }
+
+    LOGGER.info(PROC) { "Publishing event: #{Event::EXIT}" }
+    changed
+    notify_observers(Event::EXIT, {reason: 'Debug exiting'})
+    LOGGER.info(PROC) { "Subscribers updated! #{Event::EXIT}" }
+
+    LOGGER.info(PROC) { "Turning stack off ⛔️" }
+    stop
+    LOGGER.info(PROC) { "Stack is off 👍" }
+
+    LOGGER.info(PROC) { "See you anon ✌️" }
+    return -1
   end
 end
