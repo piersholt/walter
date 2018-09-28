@@ -12,7 +12,7 @@ require 'physical/bytes'
 require 'application/message'
 
 require 'physical/channel'
-require 'datalink/new_receiver'
+require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
 
@@ -26,7 +26,7 @@ class Walter
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
 
-    @receiver = NewReceiver.new(@channel.input_buffer)
+    @receiver = Receiver.new(@channel.input_buffer)
     @transmitter = Transmitter.new(@channel.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)

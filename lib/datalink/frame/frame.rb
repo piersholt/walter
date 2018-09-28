@@ -4,8 +4,8 @@ require 'datalink/frame/frame_components'
 class ChecksumError < StandardError
 end
 
-class NewFrame < Bytes
-  PROG_NAME = 'NewFrame'.freeze
+class Frame < Bytes
+  PROG_NAME = 'Frame'.freeze
   HEADER_LENGTH = 2
   HEADER_INDEX_LENGTH = 2
 

@@ -1,7 +1,7 @@
 require 'observer'
-require 'datalink/frame/new_frame'
+require 'datalink/frame/frame'
 
-class NewReceiver
+class Receiver
   PROG_NAME = 'Receiver'.freeze
   THREAD_NAME = 'Receiver'
 
@@ -67,7 +67,7 @@ class NewReceiver
         loop do
           LOGGER.debug(PROG_NAME) { "#{SYNC} ##{shift_count}. Begin." }
           shift_count
-          new_frame = NewFrame.new
+          new_frame = Frame.new
 
           begin
             # ************************************************************************* #
@@ -76,8 +76,8 @@ class NewReceiver
 
             LOGGER.debug(PROG_NAME) { "#{SYNC} Byte Buffer size: #{buffer.size}." }
 
-            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Trying to shift #{NewFrame::HEADER_LENGTH} bytes." }
-            header_bytes = buffer.shift(NewFrame::HEADER_LENGTH)
+            LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Trying to shift #{Frame::HEADER_LENGTH} bytes." }
+            header_bytes = buffer.shift(Frame::HEADER_LENGTH)
             LOGGER.debug(PROG_NAME) { "#{SYNC_HEADER} Shifted bytes: #{header_bytes}" }
 
             # LOGGER.debug(SYNC_HEADER) { "Setting new frame header." }

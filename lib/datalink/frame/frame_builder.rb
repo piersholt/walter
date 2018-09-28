@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'datalink/frame/new_frame'
+require 'datalink/frame/frame'
 require 'datalink/frame/arguments_builder'
 
 # Class documentation
@@ -90,7 +90,7 @@ class FrameBuilder
   end
 
   def generate_new_frame
-    new_frame = NewFrame.new
+    new_frame = Frame.new
     new_frame.set_header(generate_header)
     new_frame.set_tail(generate_tail)
     new_frame
