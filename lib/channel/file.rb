@@ -15,5 +15,9 @@ class Channel
       @stream = ::File.open(path, options[:mode])
       # @stream = ::ARGF
     end
+
+    def write(args = nil)
+      raise TransmissionError, 'Device is log file. Cannot write to bus.'
+    end
   end
 end
