@@ -20,7 +20,7 @@ class Command
     end
 
     def inspect
-      "#<#{self.class} @key=#{key} (#{dictionary(:key)}) @status=#{status} (#{dictionary(:status)})>"
+      "#<#{self.class} @key=#{key.value} (#{key.to_s}) @status=#{status.value} (#{status.to_s})>"
     end
   end
 end

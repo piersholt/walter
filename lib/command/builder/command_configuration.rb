@@ -13,7 +13,7 @@ class CommandConfiguration
   BIT_ARRAY = :bit_array
   TYPES = [MAP, BIT_ARRAY, SWITCH].freeze
 
-  DEFAULT_COMMAND_NAMESPACE = 'Commands'.freeze
+  DEFAULT_COMMAND_NAMESPACE = 'Command'.freeze
   BASE_COMMAND_STRING = 'BaseCommand'.freeze
 
   WRAPPER = ParameterConfiguration
@@ -159,10 +159,6 @@ class CommandConfiguration
   def setup_klass_parameters
     parameters.each do |name, param_config|
       setup_parameter_accessor(name)
-      param_dictionary = param_config.try_and_grab(:dictionary)
-      next unless param_dictionary
-      parameter_dictionary = klass_constant.const_get(:DICTIONARY)
-      parameter_dictionary[name] = param_dictionary
     end
   end
 
