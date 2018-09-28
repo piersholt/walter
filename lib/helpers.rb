@@ -1,3 +1,4 @@
+require 'helpers/manageable_threads'
 require 'helpers/delayable'
 
 module ModuleTools

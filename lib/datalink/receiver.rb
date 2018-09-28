@@ -13,12 +13,10 @@ class Receiver
   SYNC_SHIFT = 'Unshift! /'
 
   include Observable
-
-  attr_reader :threads
+  include ManageableThreads
 
   def initialize(input_buffer)
     @input_buffer = input_buffer
-    @threads = ThreadGroup.new
   end
 
   def off
@@ -29,8 +27,8 @@ class Receiver
   def on
     LOGGER.debug(PROG_NAME) { "#{self.class}#on" }
     begin
-      read_thread = thread_read_buffer(@input_buffer)
-      @threads.add(read_thread)
+      @read_thread = thread_read_buffer(@input_buffer)
+      add_thread(@read_thread)
     rescue StandardError => e
       LOGGER.error(e)
       e.backtrace.each { |l| LOGGER.error(l) }
@@ -42,19 +40,6 @@ class Receiver
   private
 
   # ------------------------------ THREADS ------------------------------ #
-
-  def close_threads
-    LOGGER.debug "#{self.class}#close_threads"
-    LOGGER.info(PROG_NAME) { "Closing threads." }
-    LOGGER.info(PROG_NAME) { "#{@threads}" }
-    threads = @threads.list
-    threads.each_with_index do |t, i|
-      LOGGER.info(PROG_NAME) { "Thread #{i+1}: #{t[:name]} / Currently: #{t.status}" }
-      # LOGGER.debug "result = #{t.exit}"
-      t.exit.join
-      LOGGER.info(PROG_NAME) { "Thread #{i+1}: #{t[:name]} / Stopped? #{t.stop?}" }
-    end
-  end
 
   def thread_read_buffer(buffer)
     LOGGER.debug(PROG_NAME) { 'New Thread: Frame Synchronisation.' }

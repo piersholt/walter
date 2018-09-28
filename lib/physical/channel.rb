@@ -10,6 +10,7 @@ require 'helpers'
 
 class Channel
   include Observable
+  include ManageableThreads
   include Delayable
 
   FILE_TYPE = { tty: 'characterSpecial', file: 'file' }.freeze
@@ -18,10 +19,7 @@ class Channel
   NO_OPTIONS = {}.freeze
 
 
-
-  attr_reader :input_buffer, :output_buffer, :threads, :read_thread
-
-
+  attr_reader :input_buffer, :output_buffer, :read_thread
 
 
   # The interface should protect the channel from the implementation.
@@ -34,15 +32,13 @@ class Channel
 
     @input_buffer = ByteBuffer.new
     @output_buffer = OutputBuffer.new(@stream)
-
-    @threads = ThreadGroup.new
   end
 
   def on
     offline?
 
     @read_thread = thread_populate_input_buffer(@stream, @input_buffer)
-    @threads.add(@read_thread)
+    add_thread(@read_thread)
   end
 
   def off
@@ -91,25 +87,6 @@ class Channel
   end
 
   # ------------------------------ THREADS ------------------------------ #
-  # NOTE this is also good for states..
-  # State(s):
-  # 1. No threads
-  # 2. Active threads
-  # 3. Dormant
-  # Each would have a different way of handling #exit()
-
-  def close_threads
-    LOGGER.debug('Channel') { "#{self.class}#close_threads" }
-    LOGGER.info('Channel') { "Closing threads." }
-    LOGGER.info("Channel") { "#{@threads}" }
-    threads = @threads.list
-    threads.each_with_index do |t, i|
-      LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]} / Currently: #{t.status}" }
-      # LOGGER.debug "result = #{t.exit}"
-      t.exit.join
-      LOGGER.info("Channel") { "Thread #{i+1}: #{t[:name]}  / Stopped? #{t.stop?}" }
-    end
-  end
 
   def thread_populate_input_buffer(stream, input_buffer)
     LOGGER.debug('Channel') { "#thread_populate_input_buffer" }

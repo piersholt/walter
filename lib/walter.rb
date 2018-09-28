@@ -20,7 +20,6 @@ require 'listeners/global_listener'
 class Walter
   include Observable
 
-  attr_reader :threads
 
   def initialize
     # TODO: better argument handling to support multiple log files
@@ -37,7 +36,6 @@ class Walter
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
 
-    # @threads = ThreadGroup.new
     add_observer(@listener)
 
     require 'bus_device'
@@ -127,7 +125,6 @@ class Walter
 
   def start
     LOGGER.debug("#{self.class}#start")
-    # @threads.add(start)
     @channel.on
     @receiver.on
     @transmitter.on
@@ -147,50 +144,5 @@ class Walter
 
   private
 
-  # def thead_app
-  #   LOGGER.debug("#{self.class}#thread_populate_input_buffer")
-  #
-  #   Thread.new do
-  #     LOGGER.info("Starting @ #{Time.now}")
-  #
-  #     begin
-  #       @channel.on
-  #       @receiver.on
-  #
-  #
-  #     rescue Interrupt
-  #       LOGGER.debug 'Break signal detected.'
-  #       # changed
-  #       # notify_observers(Event::EXIT)
-  #       LOGGER.info 'Quiting...'
-  #
-  #
-  #       LOGGER.debug "Closing threads..."
-  #       @receiver.off
-  #       @channel.off
-  #
-  #
-  #       # TODO: decouple register via event
-  #       Device.close
-  #       Command.close
-  #
-  #       binding.pry
-  #       return 1
-  #     end
-  #   end
-  #
-  #   LOGGER.warn 'App#start returning!'
-  #   1
-  # end
-
-  def close_threads
-    LOGGER.debug "#{self.class}#close_threads"
-    threads = @threads.list
-    threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
-      # LOGGER.debug "result = #{t.exit}"
-      t.exit
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
-    end
   end
 end
