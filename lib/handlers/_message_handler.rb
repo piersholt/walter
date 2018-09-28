@@ -1,5 +1,5 @@
 require 'singleton'
-require 'messages'
+require 'application/messages'
 
 class MessageHandler
   include Singleton

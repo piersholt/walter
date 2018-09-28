@@ -11,26 +11,11 @@ module API
     FROM_DEFAULT = Devices::IKE
     TO_DEFAULT = Devices::GLOL
 
+    # @param Integer rpm (actual/100. e.g. 2000rpm = 200)
+    # @param Integer speed (actual/2. e.g. 60kmph = 30)
     def speed(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      begin
-        from = DeviceMap.instance.find(from_id)
-        to = DeviceMap.instance.find(to_id)
-
-        speed_value = command_arguments[:speed]
-        rpm_value = command_arguments[:rpm]
-
-
-        command = CommandMap.instance.klass(0x18)
-
-        command.try_set(:speed, speed_value)
-        command.try_set(:rpm, rpm_value)
-      rescue StandardError => e
-        LOGGER.error("#{self.class} StandardError: #{e}")
-        e.backtrace.each { |l| LOGGER.error(l) }
-        binding.pry
-      end
-
-      deliver(from, to, command)
+      command_id = COMMAND_ID
+      give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
   end
 end

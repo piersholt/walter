@@ -7,28 +7,30 @@ require 'serialport'
 require 'pry'
 
 # local dependencies
-require 'byte'
-require 'bytes'
-require 'frame'
-require 'message'
+require 'physical/byte'
+require 'physical/bytes'
+require 'application/message'
 
-require 'channel'
-require 'new_receiver'
-require 'transmitter'
-require 'application_layer'
+require 'physical/channel'
+require 'datalink/receiver'
+require 'datalink/transmitter'
 require 'listeners/global_listener'
+
+require 'helpers'
 
 # Container
 class Walter
   include Observable
+  include WalterTools
+  include ManageableThreads
 
-  attr_reader :threads
+  PROC = 'Walter'.freeze
 
   def initialize
     # TODO: better argument handling to support multiple log files
     @channel = Channel.new(ARGV.shift)
 
-    @receiver = NewReceiver.new(@channel.input_buffer)
+    @receiver = Receiver.new(@channel.input_buffer)
     @transmitter = Transmitter.new(@channel.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)
@@ -39,7 +41,6 @@ class Walter
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
 
-    # @threads = ThreadGroup.new
     add_observer(@listener)
 
     require 'bus_device'
@@ -47,36 +48,8 @@ class Walter
     @bus_device.add_observer(@listener)
   end
 
-  def shutup!
-    DisplayHandler.i.shutup!
-  end
-
-  def messages
-    SessionHandler.i.messages
-  end
-
-  def rate(seconds)
-    @channel.sleep_time = seconds
-  end
-
-  def news
-    puts "THREADS:"
-    Thread.list.each_with_index do |t, i|
-      LOGGER.info("#{t[:name]}") { "#{t.status} (#{t.group.inspect})" }
-    end
-    true
-  end
-
-  def fuck_yeah!
-    @bus_device.update(chars: "fuck yeah".bytes, ike: :set_ike, gfx: :radio_set)
-  end
-
-  def key
-    @bus_device.state(key: :key_6, status: 0x04)
-  end
-
   def launch
-    LOGGER.debug "#{self.class}#launch"
+    LOGGER.debug(PROC) { '#launch' }
     Thread.current[:name] = 'Walter (Main)'
     begin
       start
@@ -92,99 +65,59 @@ class Walter
       # TODO: menu to facilitate common features...
       # raise NotImplementedError, 'menu not implemented. fallback to CLI...'
     rescue NotImplementedError
-      LOGGER.info 'fallback CLI'
-
-      binding.pry
-
-      LOGGER.info("Walter") { "Walter is closing!" }
-
-      LOGGER.info("Walter") { "Publishing event: #{Event::EXIT}" }
-      changed
-      notify_observers(Event::EXIT, {reason: 'Debug exiting'})
-      LOGGER.info("Walter") { "Subscribers updated! #{Event::EXIT}" }
-
-      LOGGER.info("Walter") { "Turning stack off ⛔️" }
-      stop
-      LOGGER.info("Walter") { "Stack is off 👍" }
-
-      LOGGER.info("Walter") { "See you anon ✌️" }
-      return -1
+      rescue_not_implemented
     rescue Interrupt
-      LOGGER.debug 'Interrupt signal caught.'
-      binding.pry
-      changed
-      notify_observers(Event::EXIT, {reason: 'Interrupt!'})
-      stop
-      return 1
+      rescue_interrupt
     end
   end
 
   def start
-    LOGGER.debug("#{self.class}#start")
-    # @threads.add(start)
+    LOGGER.debug(PROC) { '#start' }
     @channel.on
     @receiver.on
     @transmitter.on
   end
 
   def stop
-    LOGGER.debug "#{self.class}#stop"
+    LOGGER.debug(PROC) { '#stop' }
 
-    LOGGER.info("Walter") { "Switching off Receiver..." }
+    LOGGER.info(PROC) { 'Switching off Receiver...' }
     @receiver.off
-    LOGGER.info("Walter") { "Receiver is off! 👍" }
+    LOGGER.info(PROC) { 'Receiver is off! 👍' }
 
-    LOGGER.info("Walter") { "Switching off Channel..." }
+    LOGGER.info(PROC) { 'Switching off Channel...' }
     @channel.off
-    LOGGER.info("Walter") { "Channel is off! 👍" }
+    LOGGER.info(PROC) { 'Channel is off! 👍' }
   end
 
   private
 
-  # def thead_app
-  #   LOGGER.debug("#{self.class}#thread_populate_input_buffer")
-  #
-  #   Thread.new do
-  #     LOGGER.info("Starting @ #{Time.now}")
-  #
-  #     begin
-  #       @channel.on
-  #       @receiver.on
-  #
-  #
-  #     rescue Interrupt
-  #       LOGGER.debug 'Break signal detected.'
-  #       # changed
-  #       # notify_observers(Event::EXIT)
-  #       LOGGER.info 'Quiting...'
-  #
-  #
-  #       LOGGER.debug "Closing threads..."
-  #       @receiver.off
-  #       @channel.off
-  #
-  #
-  #       # TODO: decouple register via event
-  #       Device.close
-  #       Command.close
-  #
-  #       binding.pry
-  #       return 1
-  #     end
-  #   end
-  #
-  #   LOGGER.warn 'App#start returning!'
-  #   1
-  # end
+  def rescue_interrupt
+    LOGGER.debug 'Interrupt signal caught.'
+    binding.pry
+    changed
+    notify_observers(Event::EXIT, {reason: 'Interrupt!'})
+    stop
+    return 1
+  end
 
-  def close_threads
-    LOGGER.debug "#{self.class}#close_threads"
-    threads = @threads.list
-    threads.each_with_index do |t, i|
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
-      # LOGGER.debug "result = #{t.exit}"
-      t.exit
-      LOGGER.debug "Thread ##{i+1} / #{t.status}"
-    end
+  def rescue_not_implemented
+    LOGGER.info(PROC) { 'fallback CLI' }
+
+    binding.pry
+
+    LOGGER.info(PROC) { "Walter is closing!" }
+
+    LOGGER.info(PROC) { "Publishing event: #{Event::EXIT}" }
+    changed
+    notify_observers(Event::EXIT, {reason: 'Debug exiting'})
+    LOGGER.info(PROC) { "Subscribers updated! #{Event::EXIT}" }
+
+    LOGGER.info(PROC) { "Turning stack off ⛔️" }
+    stop
+    LOGGER.info(PROC) { "Stack is off 👍" }
+
+    LOGGER.info(PROC) { "See you anon ✌️" }
+    return -1
   end
 end

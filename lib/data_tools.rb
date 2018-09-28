@@ -56,17 +56,8 @@ module DataTools
 
   def decimal_to_hex(decimal, prefix = false)
     raise EncodingError, 'nil byte...?' if decimal.nil?
-    value = base16(decimal)
-
-    if value.length == 1
-      value = '0'.concat(value[0])
-    elsif value.length == 2
-      value = "#{value[0]}#{value[1]}"
-    end
-
-    value = prefix ? '0x'.concat(value) : value
-
-    value
+    mask = prefix ? '%#.2x' : '%.2X'
+    Kernel.format(mask, decimal)
   end
 
   def decimal_to_binary(decimal, nibbles = false, prefix = false)
