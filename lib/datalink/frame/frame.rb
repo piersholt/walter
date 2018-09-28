@@ -1,5 +1,6 @@
 require 'physical/bytes'
-require 'datalink/frame/frame_components'
+require 'datalink/frame/frame_header'
+require 'datalink/frame/frame_tail'
 
 class ChecksumError < StandardError
 end
