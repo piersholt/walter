@@ -4,6 +4,8 @@ class DisplayHandler
   include Singleton
   include Event
 
+  PROC = 'DisplayHandler'.freeze
+
   NOISEY = [0x01, 0x02, 0x18, 0x19, 0x5B, 0x10, 0x11,0x21, 0x79, 0x7A].freeze
 
   def self.i
@@ -29,7 +31,7 @@ class DisplayHandler
   def update(action, properties)
     case action
     when EXIT
-      LOGGER.info("DisplayHandler") { "Exit: Disabling output." }
+      LOGGER.info(PROC) { "Exit: Disabling output." }
       # hide the message output as it clutters the exit log messages
       disable
     when MESSAGE_RECEIVED
@@ -49,12 +51,12 @@ class DisplayHandler
   # ************************************************************************* #
 
   def disable
-    LOGGER.info("DisplayHandler") { "Outout disabled." }
+    LOGGER.info(PROC) { "Outout disabled." }
     @output_enabled = false
   end
 
   def enable
-    LOGGER.debug("DisplayHandler") { "Output enabled." }
+    LOGGER.debug(PROC) { "Output enabled." }
     @output_enabled = true
   end
 
@@ -111,7 +113,7 @@ class DisplayHandler
   # ------------------------------ FILTER: MACRO ------------------------------ #
 
   def shutup!
-    LOGGER.info("Shutting up commands: #{NOISEY.join(', ')}.")
+    LOGGER.info(PROC) { ("Shutting up commands: #{NOISEY.join(', ')}.") }
     hide_commands(*NOISEY)
     true
   end
@@ -138,7 +140,7 @@ class DisplayHandler
     return false unless output_enabled?
 
     if matches_a_command && matches_a_recipient && matches_a_sender
-      LOGGER.info("DisplayHandler") { message }
+      LOGGER.info(PROC) { message }
       return true
     else
       return false
