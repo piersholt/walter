@@ -5,6 +5,18 @@ module ModuleTools
   end
 end
 
+module ClusterTools
+  HUD_SIZE = 20
+
+  def centered(chars_string, opts = { upcase: true })
+    upcase = opts[:upcase]
+
+    chars_string = chars_string.center(HUD_SIZE)
+    chars_string = chars_string.upcase if upcase
+    chars_string
+  end
+end
+
 module NameTools
   # Convert a symbol :name to instance variable name
   # @return [Instance Variable Name] :@variable_name
