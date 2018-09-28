@@ -56,7 +56,7 @@ module DataTools
 
   def decimal_to_hex(decimal, prefix = false)
     raise EncodingError, 'nil byte...?' if decimal.nil?
-    mask = prefix ? '%#.x' : '%.x'
+    mask = prefix ? '%#.2x' : '%.2X'
     Kernel.format(mask, decimal)
   end
 
