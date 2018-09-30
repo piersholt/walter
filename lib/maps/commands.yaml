@@ -14,25 +14,58 @@
     :d: 0
     :b: 0
   :properties:
-    :short_name: "???"
+    :short_name: DIA-INFO
     :long_name: Unknown
   :klass: BaseCommand
   :meta:
+    :notes:
+      - seems to constantly send while on main screen off module in INPA
+      - response is DIA-D (0xA0)
+      - :example:
+        - DIA RAD DIAG-0  --
+        - RAD DIA DIA-D   88 36 31 44 18 00 05 05 45 96 17 29
+      - when you load the F1/INFO screen.. there is no traffic
+      - see screenshot to see if this data aligns with info screen (which is pre-loaded seemingly...)
+      - trying F2/IDENT
+      - example:
+        - DIA     RAD     DIAG-0          --
+        - RAD     DIA     DIA-D           88 36 31 44 18 00 05 05 45 96 17 29
+        - RAD     DIA     DIA-D           42 01 11 58 49
+        - DIA     RAD     DIA-IDENT?      --
+        - DIA     RAD     DIA-IDENT?      --
+        - DIA     RAD     DIA-IDENT?      --
+        -   ^ there's no response to this... which presumably is the cause of the error (see SS)
+      - interestingly there is already data loaded... so.... i assume that's the second DIA-D message
+      - one again, parse it to see
+      - i wonder what is missing though?
+      - after an error.. it's sent again before the intened command
+      - :example:
+        - ERROR HERE
+        - DIA     RAD     DIA-POLL?       --
+        - RAD     DIA     DIA-D           88 36 31 44 18 00 05 05 45 96 17 29
+        - ACTUAL COMMAND
+        - DIA     RAD     DIA-ERR-READ    01
+        - RAD     DIA     DIA-D           00 00 40 00 80
+      - then tried again... and back to normal
+      - :example:
+        - DIA     RAD     DIA-ERR-READ    01
+        - RAD     DIA     DIA-D           00 00 40 00 80
+
     :senders:
       - DIA
       - GM (0x00)
     :recipients:
-      - GM3 (0x00)
-      - TEL (0xC8)
-      - BMBT (0xF0)
-      - LCM (0xD0)
-      - MFL (0x50)
-      - GFX (0x3B)
-      - TV (0xED)
-      - 0xE0 (0xE0)
-      - RAD (0x68)
-      - PDC (0x60)
-      - 0x9A (0x9A)
+      - GM3   (0x00): '?'
+      - TEL	  (0xC8):	1
+      - BMBT	(0xF0):	126
+      - LCM	  (0xD0):	208
+      - MFL	  (0x50):	25
+      - GFX	  (0x3B):	82
+      - TV	  (0xED):	121
+      - 0xE0	(0xE0):	9
+      - RAD	  (0x68):	272
+      - PDC	  (0x60):	63
+      - 0x9A	(0x9A):	3
     :notes:
       - does not include any arguemnts (based on activity to date)
 1:
@@ -143,22 +176,51 @@
     :short_name: B-PING
     :long_name: BUS Status Request
   :klass: BaseCommand
+  :meta:
+    - only a single message
+    - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
 4:
   :id:
     :d: 4
     :h: '0x04'
   :properties:
-    :short_name: B-PONG
+    :short_name: DIA-ERR-READ
     :long_name: BUS Status Reponse
   :klass: BaseCommand
+  :meta:
+  :notes:
+    - send when reading error memory
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+      - this had no errors
+      - see screenshot
+    - if i hit F1/READ in this screen, the same is sent again
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+  :recipients:
+    - GFX    	01
+    - TV     	01
+    - RAD    	01
+    - RAD    	01
 5:
   :id:
     :d: 5
     :h: '0x05'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: DIA-ERR-DEL
+    :long_name: Diagnostics Clear Error Memeory?
   :klass: BaseCommand
+  :meta:
+    - when radio clear error memory selected
+    - :example:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
+    - another selection
+    - example1:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
 6:
   :id:
     :d: 6
@@ -188,7 +250,7 @@
     :d: 9
     :h: '0x09'
   :properties:
-    :short_name: COD-R
+    :short_name: COD-W
     :long_name: Diagnostics WRITE Coding Data
   :klass: BaseCommand
 10:
@@ -204,9 +266,17 @@
     :d: 11
     :h: '0x0B'
   :properties:
-    :short_name: "???"
+    :short_name: DIA-STATUS
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :notes:
+      - radio got an error after this
+      - :example:
+        - DIA     RAD     0B              --
+        - RAD     DIA     DIA-D           30 00 30 30 30 30 30 30 00 00
+      - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
+      - another error and the next field was STATUS AUX ADAPTER
 12:
   :id:
     :d: 12
@@ -215,6 +285,33 @@
     :short_name: VEH
     :long_name: Vehicle Control
   :klass: BaseCommand
+  :meta:
+    :notes:
+      - radio on
+      - :example:
+        - DIA     RAD     VEH             0C
+        - RAD     DIA     DIA-D           --
+      - radio OFF
+      - :example:
+        - DIA     RAD     VEH             0B
+        - RAD     DIA     DIA-D           --
+      - antenna test 1 (switch to AM freq)
+      - :example:
+        - DIA     RAD     VEH             0A 00 06 30
+        - RAD     DIA     DIA-D           --
+      - antenna test 2 (switch to FM freq)
+      - :example:
+        - DIA     RAD     VEH             0A 08 93 00
+        - RAD     DIA     DIA-D           --
+      - activiate audio button shift+f1
+      - DIA     RAD     VEH             09
+      - RAD     DIA     DIA-D           --
+      - seek up
+      - DIA     RAD     VEH             07
+      - RAD     DIA     DIA-D           --
+      - seek down
+      - DIA     RAD     VEH             08
+      - RAD     DIA     DIA-D           --
 13:
   :id:
     :d: 13
@@ -2170,7 +2267,14 @@
     :short_name: EHC-STAT?
     :long_name: Unknown
   :klass: BaseCommand
-
+0x63:
+  :id:
+    :d: 99
+    :h: '0x61'
+  :properties:
+    :short_name: DIA-IDENT?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
 0x70:
   :id:
     :h: '0x70'
@@ -2336,13 +2440,20 @@
   :klass: BaseCommand
 156:
   :id:
-    :d: 156
-    :h: '0x87'
+    :d: 161
+    :h: '0x9C'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: DIA-TRANS
+    :long_name: Diagnostics Transport Mode?
   :klass: BaseCommand
   :meta:
+    :notes:
+      - transport mode on
+      - 11:21:21 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
+      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
+      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
+      - transport mode off
+      - 11:22:31 [INFO ] [      DisplayHandler] DIA     RAD     9C              00
     :examples:
       - DIA	LCM	9C 00
       - DIA	LCM	9C 00
@@ -2357,14 +2468,8 @@
     :short_name: DIA-D
     :long_name: Diagnostics Data
   :klass: BaseCommand
-161:
-  :id:
-    :d: 161
-    :h: '0x9C'
-  :properties:
-    :short_name: '0x9C'
-    :long_name: Unknown
-  :klass: BaseCommand
+  :meta:
+    - a response to a DIA-R command?
 165:
   :id:
     :d: 165
