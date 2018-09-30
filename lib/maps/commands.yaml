@@ -2384,41 +2384,49 @@
       :type: :bit_array
       :parameters:
         :rapid:
+          :label: Rapid.
           :type: :switch
           :states:
             0: :off
             1: :on
         :indicate_right:
+          :label: RIGHT
           :type: :switch
           :states:
             0: :off
             1: :on
         :indicate_left:
+          :label: LEFT
           :type: :switch
           :states:
             0: :off
             1: :on
         :fog_rear:
+          :label: FOG REAR
           :type: :switch
           :states:
             0: :off
             1: :on
         :fog_front:
+          :label: FOG FRONT
           :type: :switch
           :states:
             0: :off
             1: :on
         :beam_high:
+          :label: HIGH
           :type: :switch
           :states:
             0: :off
             1: :on
         :beam_low:
+          :label: LOW
           :type: :switch
           :states:
             0: :off
             1: :on
         :parking:
+          :label: Parking
           :type: :switch
           :states:
             0: :off
