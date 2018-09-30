@@ -442,7 +442,7 @@
             0b1100: gear_4
             0b1110: gear_5
           :dictionary:
-            0b0000: Ignition Off
+            0b0000: No Gear
             0b1011: Park
             0b0001: Reverse
             0b0111: Neutral
