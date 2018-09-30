@@ -2399,7 +2399,117 @@
   :properties:
     :short_name: DOOR
     :long_name: Door/Flap Status
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :byte1:
+      :type: :bit_array
+      :parameters:
+        :lamp_interior:
+          :type: :switch
+          :label: 'Interior Lights'
+          :states:
+            0: :off
+            1: :on
+        :locked:
+          :type: :switch
+          :label: 'Central Lock.'
+          :states:
+            0: :off
+            1: :on
+        :not_sure:
+          :type: :switch
+          :label: 'Not sure?'
+          :states:
+            0: :off
+            1: :on
+        :door_left:
+          :type: :switch
+          :label: 'Door Rear Left'
+          :states:
+            0: :closed
+            1: :open
+        :door_right:
+          :type: :switch
+          :label: 'Door Rear Right'
+          :states:
+            0: :closed
+            1: :open
+        :door_pass:
+            :type: :switch
+            :label: 'Door Passenger'
+            :states:
+              0: :closed
+              1: :open
+        :door_driver:
+          :type: :switch
+          :label: 'Door Driver'
+          :states:
+            0: :closed
+            1: :open
+      :index:
+        :lamp_interior: 1
+        :locked: 2
+        :not_sure: 3
+        :door_left: 4
+        :door_right: 5
+        :door_pass: 6
+        :door_driver: 7
+    :byte2:
+      :type: :bit_array
+      :parameters:
+        :release:
+          :type: :switch
+          :label: 'Boot Release'
+          :states:
+            0: :off
+            1: :on
+        :hatch:
+          :type: :switch
+          :label: 'Hatch'
+          :states:
+            0: :closed
+            1: :open
+        :sunroof:
+          :type: :switch
+          :label: 'Sunroof'
+          :states:
+            0: :closed
+            1: :open
+        :window_left:
+          :type: :switch
+          :label: 'Window Rear Left'
+          :states:
+            0: :closed
+            1: :open
+        :window_right:
+          :type: :switch
+          :label: 'Window Rear Right'
+          :states:
+            0: :closed
+            1: :open
+        :window_pass:
+            :type: :switch
+            :label: 'Window Passenger'
+            :states:
+              0: :closed
+              1: :open
+        :window_driver:
+          :type: :switch
+          :label: 'Window Driver'
+          :states:
+            0: :closed
+            1: :open
+      :index:
+        :release: 0
+        :hatch: 2
+        :sunroof: 3
+        :window_left: 4
+        :window_right: 5
+        :window_pass: 6
+        :window_driver: 7
+  :index:
+    :byte1: 0
+    :byte2: 1
   :meta:
     :senders:
       - GM3
