@@ -773,11 +773,16 @@
   :properties:
     :short_name: CCM-STATUS
     :long_name: IKE Text Status?
-    :status:
-      0x00: HUD _not_ busy/message set
-      0x01: HUD busy/message not set (priority 1 override)
-      0x02: Cleared/Available
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :hud_status:
+      :type: :map
+      :dictionary:
+        0x00: Set
+        0x01: Busy
+        0x02: Cleared
+  :index:
+    :hud_status: 0
   :meta:
     :examples:
       - TEL   	IKE   	23        40 20,
