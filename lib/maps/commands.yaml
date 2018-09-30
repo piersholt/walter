@@ -1913,9 +1913,23 @@
     :d: 69
     :h: '0x45'
   :properties:
-    :short_name: RAD-RESUME?
+    :short_name: RAD-CONFIG
     :long_name: Radio to resume?
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :config:
+      :type: :bit_array
+      :parameters:
+        :audio_obc:
+          :type: :switch
+          :label: Audio+OBC
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :audio_obc: 6
+  :index:
+    :config: 0
   :meta:
     - 1 byte parameter
     - 01 (Audio+OBC Off)
@@ -2113,6 +2127,9 @@
         0x45: Tape RW
         0x42: Tape FFF
         0x43: Tape RWW
+        0x5d: Tape Dolby B
+        0x5e: Tape Dolby C
+        0x5f: Tape Dolby OFF
         0x90: "Off (Reset)"
   :index:
     :led: 0
