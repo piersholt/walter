@@ -1756,27 +1756,64 @@
     :d: 64
     :h: '0x40'
   :properties:
-    :short_name: OBC-REQ
+    :short_name: OBC-CONFIG
     :long_name: Set OBC Data
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :b1:
+      :type: :map
+      :dictionary:
+        0x01: Set Time
+        0x02: Set Date
+        0x07: Distance
+        0x09: Speed Limit
+        0x0F: Aux Timer 1
+        0x10: Aux Timer 2
+    :b2:
+      :type: :bit_array
+      :parameters:
+        :pm:
+          :label: 'PM'
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :hour:
+          :type: :integer
+          :label: House
+      :index:
+        :pm: 0
+        :hour: !ruby/range
+                begin: 4
+                end: 7
+                excl: false
+    :b3:
+      :label: Minutes
+      :type: :integer
+  :index:
+    :b1: 0
+    :b2: 1
+    :b3: 2
   :meta:
-    - GFX   	IKE   	OBC-Set   	09 00 21
-    - IKE   	ANZV  	0x2A      	02 00
-    - IKE   	ANZV  	OBC       	Speed Limit	" 33 KM/H"
+    # LIMIT
+    - GFX   	IKE   	OBC-SET   	09 00 21
+    - IKE   	ANZV  	OBC-CTL    	02 00
+    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 33 KM/H"
 
-    - GFX   	IKE   	OBC-Set   	09 00 36
-    - IKE   	ANZV  	0x2A      	02 00
-    - IKE   	ANZV  	OBC       	Speed Limit	" 54 KM/H"
+    - GFX   	IKE   	OBC-SET   	09 00 36
+    - IKE   	ANZV  	OBC-CTL    	02 00
+    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 54 KM/H"
 
+    # DISTANCE
     - GFX   	IKE   	OBC-SET   	07 00 30
     - IKE   	ANZV  	OBC       	Distance  	"  48 KM "
-    - IKE   	ANZV  	OBC       	Arrival   	"--:--  "
+    - IKE   	ANZV  	TXT-INFO   	Arrival   	"--:--  "
 
+    # AUX TIMER
     - GFX   	IKE   	OBC-REQ   	0F 0C 06
-    - IKE   	ANZV  	OBC       	Aux. Timer 1   	"--:--  "
+    - IKE   	ANZV  	TXT-INFO   	Aux. Timer 1   	"--:--  "
     - GFX   	IKE   	OBC-REQ   	10 03 00
     - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
-    - AM loos like 0b = 11AM
     - 11AM = d2b(0x8B, true, true) => "0b10001011"
     - 11PM = d2b(0x0b, true, true) => "0b00001011"
 65:
