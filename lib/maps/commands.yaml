@@ -900,7 +900,9 @@
       :dictionary:
         0x00: Telephone Screen
         0x01: TEL-A
+        # 199 SOUND LEFT, 200 SOUND RIGHT
         0x02: TEL-B
+        # 198 SPEAKER
         0x40: Radio Set Station
         0x50: Radio [ST]
         0x82: Tape (A) ▶︎
