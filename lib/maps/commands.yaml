@@ -1923,7 +1923,42 @@
   :properties:
     :short_name: RAD-STATUS?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :state:
+      :type: :bit_array
+      :parameters:
+        :hide_alt:
+          :type: :switch
+          :label: Hide ALT?
+          :states:
+            0: :off
+            1: :on
+        :hide_eq:
+          :type: :switch
+          :label: Hide EQ?
+          :states:
+            0: :off
+            1: :on
+        :hide_panel:
+          :type: :switch
+          :label: Hide Panel
+          :states:
+            0: :off
+            1: :on
+        :unknown:
+          :type: :switch
+          :label: not background?
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :hide_eq: 4
+        :hide_alt: 5
+        :hide_panel: 6
+        :unknown: 7
+  :index:
+    :state: 0
   :meta:
     - 01: confirm switch?
 71:
