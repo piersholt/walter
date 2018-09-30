@@ -2137,25 +2137,38 @@
   :id:
     :d: 75
     :h: '0x4B'
+  :klass: ParameterizedCommand
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x06: Set Mode?
+    :mode:
+      :type: :map
+      :dictionary:
+        0xE1: Unmute/Telephone Non-Priority (Handset)
+        0xE2: Mute/Telephone Priority (Handsfree)
+
+        0x30: Radio
+
+        0x12: Tape / (1/A) ▶︎
+        0x11: Tape / (2/B) ▶︎
+        0x51: Tape / ▷▷
+        0x42: Tape / ▷▷▷
+        0x61: Tape / ◁◁
+        0x41: Tape / ◁◁◁
+
+        0x81: Tape / Dolby Off
+        0x82: Tape / Dolby C
+        0x84: Tape / Dolby B
+
+        0xF0: ERROR!
+  :index:
+    :control: 0
+    :mode: 1
   :properties:
     :short_name: SRC-CTL
     :long_name: Audio Device Control
-    :v1:
-      0x06: Mode
-    :v2:
-      0xE2: Mute/Telephone Priority
-      0xE1: Unmute/Telephone Non-Priority
-      0x30: Radio
-
-      0x12: Tape / (1/A) ▶︎
-      0x11: Tape / (2/B) ▶︎
-      0x51: Tape / ▷▷
-      0x42: Tape / ▷▷▷
-      0x61: Tape / ◁◁
-      0x41: Tape / ◁◁◁
-
-      0xF0: ERROR!
-  :klass: BaseCommand
 76:
   :id:
     :d: 76
