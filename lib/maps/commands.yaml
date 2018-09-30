@@ -923,7 +923,7 @@
       :dictionary:
         0:00: --
         0x20: Set IKE
-        0x30: Overwrite IKE
+        0x30: Append IKE
     :chars:
       :type: :chars
   :index:
@@ -932,7 +932,7 @@
     :chars: !ruby/range
               begin: 2
               end: -1
-              excl: false"
+              excl: false
   :properties:
     :short_name: TXT-MEDIA
     :long_name: Update Text Display (BMBT, IKE)
@@ -1166,7 +1166,7 @@
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: OBC-DISPLAY
+    :short_name: TXT-HUD
     :long_name: OBC Display (IKE, GFX)
     :verbose: true
     :modes:
@@ -1247,7 +1247,7 @@
   :klass: ParameterizedCommand
   :properties:
     :short_name: OBC-CTL
-    :long_name: IKE to ANZV OBC Control
+    :long_name: IKE to ANZV OBC Control (Relays command send to IKE)
   :parameters:
     :control:
       :type: :bit_array
@@ -1510,7 +1510,7 @@
     :d: 50
     :h: '0x32'
   :properties:
-    :short_name: BTN-VOL
+    :short_name: MFL-VOL
     :long_name: Unknown
     :state:
       0x10: Left/Down-1
@@ -1709,7 +1709,7 @@
     :d: 59
     :h: '0x3B'
   :properties:
-    :short_name: BTN-FUNC
+    :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
     :state:
       0x00: "R/T: Telephone"
@@ -1871,7 +1871,7 @@
         0x03: "0x03"
         0x04: Switch On
         0x08: Switch Off
-        0x20: Clear Saved
+        0x20: Set As Current Speed
   :index:
     :field: 0
     :control: 1
@@ -2610,6 +2610,14 @@
   :meta:
     :notes:
       - 504 messages sent to date
+      - GM3   	GLO-L 	78       	04
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	01
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	02
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	04
+      - GM3   	GLO-L 	78       	00
 121:
   :id:
     :d: 121
