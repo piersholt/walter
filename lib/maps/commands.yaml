@@ -1658,9 +1658,23 @@
     :d: 55
     :h: '0x37'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+    :short_name: RAD-ALT
+    :long_name: Radio Alternative Function
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        0x40: (RADIO m Manual Staion Choice) (TAPE fast forward/reverse)
+        0x50: (RADIO SCAN Radio Station Sample) (TAPE music search)
+        0x60: a Automatic Search
+        0x80: Equalizer
+        0xc0: EQ. Bass
+        0xd0: EQ. Treble
+        0xe0: EQ. Fader
+        0xf0: EQ. Balance
+  :index:
+    :mode: 0
 56:
   :id:
     :d: 56
