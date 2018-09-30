@@ -1546,9 +1546,113 @@
     :d: 54
     :h: '0x36'
   :properties:
-    :short_name: "???"
-    :long_name: Unknown
+    :short_name: RAD-EQ
+    :long_name: Radio EQ Control
   :klass: BaseCommand
+  :parameters:
+    :setting:
+      :type: :map
+      :dictionary:
+        0x60: BASS -0
+        0x62: BASS -1
+        0x64: BASS -2
+        0x66: BASS -3
+        0x68: BASS -4
+        0x6A: BASS -5
+        0x6C: BASS -6
+
+        0x70: BASS +0
+        0x72: BASS +1
+        0x74: BASS +2
+        0x76: BASS +3
+        0x78: BASS +4
+        0x7A: BASS +5
+        0x7C: BASS +6
+
+        0XD0: TREBLE -0
+        0XD2: TREBLE -1
+        0XD4: TREBLE -2
+        0XD6: TREBLE -3
+        0XD8: TREBLE -4
+        0XDA: TREBLE -5
+        0XDC: TREBLE -6
+
+        0xC0: TREBLE +0
+        0xC2: TREBLE +1
+        0xC4: TREBLE +2
+        0xC6: TREBLE +3
+        0xC8: TREBLE +4
+        0xCA: TREBLE +5
+        0xCC: TREBLE +6
+
+        0x80: FADER -0
+        0x81: FADER -1
+        0x82: FADER -2
+        0x83: FADER -3
+        0x84: FADER -4
+        0x85: FADER -5
+        0x86: FADER -6
+        0x87: FADER -7
+        0x88: FADER -8
+        0x89: FADER -9
+        0x8a: FADER -10
+        0x8b: FADER -11
+        0x8c: FADER -12
+        0x8d: FADER -13
+        0x8e: FADER -14
+        0x8f: FADER -15
+
+        0x90: FADER +0
+        0x91: FADER +1
+        0x92: FADER +2
+        0x93: FADER +3
+        0x94: FADER +4
+        0x95: FADER +5
+        0x96: FADER +6
+        0x97: FADER +7
+        0x98: FADER +8
+        0x99: FADER +9
+        0x9a: FADER +10
+        0x9b: FADER +11
+        0x9c: FADER +12
+        0x9d: FADER +13
+        0x9e: FADER +14
+        0x9f: FADER +15
+
+        0X40: BALANCE -0
+        0X41: BALANCE -1
+        0X42: BALANCE -2
+        0X43: BALANCE -3
+        0X44: BALANCE -4
+        0X45: BALANCE -5
+        0X46: BALANCE -6
+        0X47: BALANCE -7
+        0X48: BALANCE -8
+        0X49: BALANCE -9
+        0X4a: BALANCE -10
+        0X4b: BALANCE -11
+        0X4c: BALANCE -12
+        0X4d: BALANCE -13
+        0X4e: BALANCE -14
+        0X4f: BALANCE -15
+
+        0X50: BALANCE +0
+        0X51: BALANCE +1
+        0X52: BALANCE +2
+        0X53: BALANCE +3
+        0X54: BALANCE +4
+        0X55: BALANCE +5
+        0X56: BALANCE +6
+        0X57: BALANCE +7
+        0X58: BALANCE +8
+        0X59: BALANCE +9
+        0X5a: BALANCE +10
+        0X5b: BALANCE +11
+        0X5c: BALANCE +12
+        0X5d: BALANCE +13
+        0X5e: BALANCE +14
+        0X5f: BALANCE +15
+
 55:
   :id:
     :d: 55
