@@ -1367,11 +1367,16 @@
   :properties:
     :short_name: TEL-?
     :long_name: Unknown
-    :status:
-      0x10: exit tel?
-      0x12: failed call? end call?
-      0x13: commence call?
-  :klass: BaseCommand
+  :parameters:
+    :action:
+      :type: :map
+      :dictionary:
+        0x10: exit tel?
+        0x12: commence call (HANDSET)
+        0x13: commence call? (HANDSFREE)
+  :index:
+    :action: 0
+  :klass: ParameterizedCommand
   :meta:
     :senders:
       - TEL
