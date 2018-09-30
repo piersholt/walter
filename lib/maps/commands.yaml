@@ -2288,12 +2288,43 @@
     :d: 114
     :h: '0x72'
   :properties:
-    :short_name: GM-?
-    :long_name: Unknown
-  :klass: BaseCommand
+    :short_name: REMOTE
+    :long_name: Remote Central Locking
+  :klass: ParameterizedCommand
+  :parameters:
+    :byte1:
+      :type: :bit_array
+      :parameters:
+        :boot:
+          :type: :switch
+          :label: Boot Unlock
+          :states:
+            0: :off
+            1: :on
+        :unlock:
+          :type: :switch
+          :label: Remote Unlock
+          :states:
+            0: :off
+            1: :on
+        :lock:
+          :type: :switch
+          :label: Remote Lock
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :boot: 1
+        :unlock: 2
+        :lock: 3
+  :index:
+    :byte1: 0
   :meta:
     :notes:
       - 635 messages send to date
+      - GM3   	GLO-L 	72      	00
+      - GM3   	GLO-L 	72      	10
+      - GM3   	GLO-L 	72      	00
 115:
   :id:
     :d: 115
