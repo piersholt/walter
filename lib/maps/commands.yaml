@@ -2266,6 +2266,9 @@
 # ************************************************************************* #
 #                          DIAGNOSTICS/INPA
 # ************************************************************************* #
+
+# ------------------------------ INPA COMMANDS ------------------------------ #
+
 0:
   :id:
     :h: '0x00'
@@ -2273,7 +2276,7 @@
     :b: 0
   :properties:
     :short_name: DIA-GEN
-    :long_name: Unknown
+    :long_name: Module General Information (and Ping)
   :klass: BaseCommand
   :meta:
     :senders:
@@ -2291,6 +2294,7 @@
       - RAD	  (0x68):	272
       - PDC	  (0x60):	63
       - 0x9A	(0x9A):	3
+
 0x63:
   :id:
     :d: 99
@@ -2325,6 +2329,7 @@
     - TV     	01
     - RAD    	01
     - RAD    	01
+
 5:
   :id:
     :d: 5
@@ -2344,6 +2349,7 @@
       - RAD     DIA     DIA-D           --
 
 # ------------------------------ ? ------------------------------ #
+
 8:
   :id:
     :d: 8
@@ -2352,6 +2358,7 @@
     :short_name: COD-R
     :long_name: Diagnostics READ Coding Data
   :klass: BaseCommand
+
 11:
   :id:
     :d: 11
@@ -2369,7 +2376,8 @@
       - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
       - another error and the next field was STATUS AUX ADAPTER
 
-# ------------------------------ GENERAL FUBCTIONS ------------------------------ #
+# ------------------------------ GENERAL FUNCTIONS ------------------------------ #
+
 12:
   :id:
     :d: 12
@@ -2378,34 +2386,22 @@
     :short_name: VEH
     :long_name: Vehicle Control
   :klass: BaseCommand
+  :parameters:
+    :action:
+      :type: :map
+      :dictionary:
+        0x07: Seek Up
+        0x08: Seek Down
+        0x09: Activate Audio Button?
+        0x0B: Radio Off
+        0x0C: Radio On
+  :index:
+    :action: 0
   :meta:
     :notes:
-      - radio on
-      - :example:
-        - DIA     RAD     VEH             0C
-        - RAD     DIA     DIA-D           --
-      - radio OFF
-      - :example:
-        - DIA     RAD     VEH             0B
-        - RAD     DIA     DIA-D           --
-      - antenna test 1 (switch to AM freq)
-      - :example:
-        - DIA     RAD     VEH             0A 00 06 30
-        - RAD     DIA     DIA-D           --
-      - antenna test 2 (switch to FM freq)
-      - :example:
-        - DIA     RAD     VEH             0A 08 93 00
-        - RAD     DIA     DIA-D           --
-      - activiate audio button shift+f1
-      - DIA     RAD     VEH             09
-      - RAD     DIA     DIA-D           --
-      - seek up
-      - DIA     RAD     VEH             07
-      - RAD     DIA     DIA-D           --
-      - seek down
-      - DIA     RAD     VEH             08
-      - RAD     DIA     DIA-D           --
-# ------------------------------ SPECIFIC FUBCTIONS ------------------------------ #
+
+# ------------------------------ SPECIFIC FUNCTIONS ------------------------------ #
+
 48:
   :id:
     :d: 48
@@ -2423,23 +2419,23 @@
     :short_name: DIA-TRANS
     :long_name: Diagnostics Transport Mode?
   :klass: BaseCommand
+  :parameters:
+    :mode:
+      :type: :switch
+      :states:
+        0x02: :on
+        0x00: :off
+  :index:
+    :mode: 0
   :meta:
-    :notes:
-      - transport mode on
-      - 11:21:21 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - transport mode off
-      - 11:22:31 [INFO ] [      DisplayHandler] DIA     RAD     9C              00
-    :examples:
-      - DIA	LCM	9C 00
-      - DIA	LCM	9C 00
-      - DIA	RAD	9C 00
-      - DIA	RAD	9C 00
-      - DIA	RAD	9C 00
+    - also send to LCM?
+    - DIA	LCM	9C 00
+    - DIA	LCM	9C 00
+
 # ************************************************************************* #
-#                                  MODULE RESPONSES
+#                               MODULE RESPONSES
 # ************************************************************************* #
+
 0xA0:
   :id:
     :d: 160
@@ -2447,6 +2443,7 @@
     :short_name: DIA-D
     :long_name: Diagnostics Data
   :klass: BaseCommand
+
 # ************************************************************************* #
 #                                  NOT SEEN YET
 # ************************************************************************* #
@@ -2479,7 +2476,7 @@
     :long_name: Diagnostics WRITE Coding Data
   :klass: BaseCommand
 # ************************************************************************* #
-#                               UNCONFIRMED!
+#                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
 56:
   :id:
