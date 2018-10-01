@@ -22,7 +22,7 @@ class SwitchedParameter < BaseParameter
 
   # @overide
   def to_s(width = DEFAULT_LABEL_WIDTH)
-    return nil if [:ok, :off].include?(state)
+    return nil if [:ok, :off, :closed].include?(state)
     # LOGGER.info(PROC) { "#to_s(width = #{width})" }
     str_buffer = format("%-#{width}s", "#{label}")
     str_buffer = str_buffer.concat(LABEL_DELIMITER)
@@ -44,8 +44,7 @@ class SwitchedParameter < BaseParameter
       LOGGER.warn(PROC) { "Map @states is no available!" }
       return "\"value\""
     elsif !@states.key?(value)
-      LOGGER.warn(PROC) { "#{value} not found in @states!" }
-      return "No states value!"
+      return "#{d2h(value, true)} not found!"
     else
       @states[value]
     end
@@ -58,6 +57,10 @@ class SwitchedParameter < BaseParameter
       as_normal('OFF')
     when :on
       as_good('ON')
+    when :closed
+      as_normal('OFF')
+    when :open
+      as_warn('OPEN')
     when :ok
       as_good('OK')
     when :fault
@@ -67,6 +70,10 @@ class SwitchedParameter < BaseParameter
 
   def as_bad(bit)
     as_colour(bit, 31)
+  end
+
+  def as_warn(bit)
+    as_colour(bit, 33)
   end
 
   def as_good(bit)
