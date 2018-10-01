@@ -918,18 +918,24 @@
         0x42: Contact/Call
         0x43: Show Contact Number
         0x41: Clear Contact
+
+        # RADIO
         0x40: Radio Set Station
         0x50: Radio [ST]
+
+        # TAPE
         0x82: Tape (A) ▶︎
         0x86: Tape (A) ▷▷
         0x87: Tape (A) ◁◁
         0x83: Tape (A) ▷▷▷
         0x84: Tape (A) ◁◁◁
+        
         0x92: Tape (B) ▶︎
         0x96: Tape (B) ▷▷
         0x97: Tape (B) ◁◁
         0x93: Tape (B) ▷▷▷
         0x94: Tape (B) ◁◁◁
+
         0x90: Tape ERROR!!!
     :ike:
       :type: :map
