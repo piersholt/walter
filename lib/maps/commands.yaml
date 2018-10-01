@@ -8,66 +8,6 @@
       :long_name: Unknown
       :verbose: true
     :klass: BaseCommand
-0:
-  :id:
-    :h: '0x00'
-    :d: 0
-    :b: 0
-  :properties:
-    :short_name: DIA-INFO
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - seems to constantly send while on main screen off module in INPA
-      - response is DIA-D (0xA0)
-      - :example:
-        - DIA RAD DIAG-0  --
-        - RAD DIA DIA-D   88 36 31 44 18 00 05 05 45 96 17 29
-      - when you load the F1/INFO screen.. there is no traffic
-      - see screenshot to see if this data aligns with info screen (which is pre-loaded seemingly...)
-      - trying F2/IDENT
-      - example:
-        - DIA     RAD     DIAG-0          --
-        - RAD     DIA     DIA-D           88 36 31 44 18 00 05 05 45 96 17 29
-        - RAD     DIA     DIA-D           42 01 11 58 49
-        - DIA     RAD     DIA-IDENT?      --
-        - DIA     RAD     DIA-IDENT?      --
-        - DIA     RAD     DIA-IDENT?      --
-        -   ^ there's no response to this... which presumably is the cause of the error (see SS)
-      - interestingly there is already data loaded... so.... i assume that's the second DIA-D message
-      - one again, parse it to see
-      - i wonder what is missing though?
-      - after an error.. it's sent again before the intened command
-      - :example:
-        - ERROR HERE
-        - DIA     RAD     DIA-POLL?       --
-        - RAD     DIA     DIA-D           88 36 31 44 18 00 05 05 45 96 17 29
-        - ACTUAL COMMAND
-        - DIA     RAD     DIA-ERR-READ    01
-        - RAD     DIA     DIA-D           00 00 40 00 80
-      - then tried again... and back to normal
-      - :example:
-        - DIA     RAD     DIA-ERR-READ    01
-        - RAD     DIA     DIA-D           00 00 40 00 80
-
-    :senders:
-      - DIA
-      - GM (0x00)
-    :recipients:
-      - GM3   (0x00): '?'
-      - TEL	  (0xC8):	1
-      - BMBT	(0xF0):	126
-      - LCM	  (0xD0):	208
-      - MFL	  (0x50):	25
-      - GFX	  (0x3B):	82
-      - TV	  (0xED):	121
-      - 0xE0	(0xE0):	9
-      - RAD	  (0x68):	272
-      - PDC	  (0x60):	63
-      - 0x9A	(0x9A):	3
-    :notes:
-      - does not include any arguemnts (based on activity to date)
 1:
   :id:
     :h: '0x01'
@@ -179,104 +119,14 @@
   :meta:
     - only a single message
     - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
-4:
-  :id:
-    :d: 4
-    :h: '0x04'
-  :properties:
-    :short_name: DIA-ERR-READ
-    :long_name: BUS Status Reponse
-  :klass: BaseCommand
-  :meta:
-  :notes:
-    - send when reading error memory
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-      - this had no errors
-      - see screenshot
-    - if i hit F1/READ in this screen, the same is sent again
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-  :recipients:
-    - GFX    	01
-    - TV     	01
-    - RAD    	01
-    - RAD    	01
-5:
-  :id:
-    :d: 5
-    :h: '0x05'
-  :properties:
-    :short_name: DIA-ERR-DEL
-    :long_name: Diagnostics Clear Error Memeory?
-  :klass: BaseCommand
-  :meta:
-    - when radio clear error memory selected
-    - :example:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-    - another selection
-    - example1:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-6:
-  :id:
-    :d: 6
-    :h: '0x06'
-  :properties:
-    :short_name: DIA-R
-    :long_name: Diagnostics Read Memory
-  :klass: BaseCommand
-7:
-  :id:
-    :d: 7
-    :h: '0x07'
-  :properties:
-    :short_name: DIA-W
-    :long_name: Diagnostics Write Memory
-  :klass: BaseCommand
-8:
-  :id:
-    :d: 8
-    :h: '0x08'
-  :properties:
-    :short_name: COD-R
-    :long_name: Diagnostics READ Coding Data
-  :klass: BaseCommand
-9:
-  :id:
-    :d: 9
-    :h: '0x09'
-  :properties:
-    :short_name: COD-W
-    :long_name: Diagnostics WRITE Coding Data
-  :klass: BaseCommand
-10:
-  :id:
-    :d: 10
-    :h: '0x0A'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-11:
-  :id:
-    :d: 11
-    :h: '0x0B'
-  :properties:
-    :short_name: DIA-STATUS
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - radio got an error after this
-      - :example:
-        - DIA     RAD     0B              --
-        - RAD     DIA     DIA-D           30 00 30 30 30 30 30 30 00 00
-      - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
-      - another error and the next field was STATUS AUX ADAPTER
+# 10:
+#   :id:
+#     :d: 10
+#     :h: '0x0A'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 12:
   :id:
     :d: 12
@@ -312,30 +162,30 @@
       - seek down
       - DIA     RAD     VEH             08
       - RAD     DIA     DIA-D           --
-13:
-  :id:
-    :d: 13
-    :h: '0x0D'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-14:
-  :id:
-    :d: 14
-    :h: '0x0E'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-15:
-  :id:
-    :d: 15
-    :h: '0x0F'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 13:
+#   :id:
+#     :d: 13
+#     :h: '0x0D'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 14:
+#   :id:
+#     :d: 14
+#     :h: '0x0E'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 15:
+#   :id:
+#     :d: 15
+#     :h: '0x0F'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 16:
   :id:
     :d: 16
@@ -803,30 +653,30 @@
       0x30: CCM
       0x68: RAD
       0xC8: TEL
-28:
-  :id:
-    :d: 28
-    :h: '0x1C'
-  :properties:
-    :short_name: HUD-GONG
-    :long_name: IKE Cluster Gong
-  :klass: BaseCommand
-29:
-  :id:
-    :d: 29
-    :h: '0x1D'
-  :properties:
-    :short_name: TEMP-REQ
-    :long_name: Temperature Request
-  :klass: BaseCommand
-30:
-  :id:
-    :d: 30
-    :h: '0x1E'
-  :properties:
-    :short_name: "0x1E"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 28:
+#   :id:
+#     :d: 28
+#     :h: '0x1C'
+#   :properties:
+#     :short_name: HUD-GONG
+#     :long_name: IKE Cluster Gong
+#   :klass: BaseCommand
+# 29:
+#   :id:
+#     :d: 29
+#     :h: '0x1D'
+#   :properties:
+#     :short_name: TEMP-REQ
+#     :long_name: Temperature Request
+#   :klass: BaseCommand
+# 30:
+#   :id:
+#     :d: 30
+#     :h: '0x1E'
+#   :properties:
+#     :short_name: "0x1E"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 31:
   :id:
     :d: 31
@@ -929,7 +779,7 @@
         0x87: Tape (A) ◁◁
         0x83: Tape (A) ▷▷▷
         0x84: Tape (A) ◁◁◁
-        
+
         0x92: Tape (B) ▶︎
         0x96: Tape (B) ▷▷
         0x97: Tape (B) ◁◁
@@ -1223,46 +1073,46 @@
     :examples:
       - RAD GLO-H TXT-1 Radio HUD "102.1   "
       - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
-37:
-  :id:
-    :d: 37
-    :h: '0x25'
-  :properties:
-    :short_name: '0x25'
-    :long_name: Unknown
-  :klass: BaseCommand
-38:
-  :id:
-    :d: 38
-    :h: '0x26'
-  :properties:
-    :short_name: "0x26"
-    :long_name: Unknown
-  :klass: BaseCommand
-39:
-  :id:
-    :d: 39
-    :h: '0x27'
-  :properties:
-    :short_name: "0x27"
-    :long_name: Unknown
-  :klass: BaseCommand
-40:
-  :id:
-    :d: 40
-    :h: '0x28'
-  :properties:
-    :short_name: "0x28"
-    :long_name: Unknown
-  :klass: BaseCommand
-41:
-  :id:
-    :d: 41
-    :h: '0x29'
-  :properties:
-    :short_name: '0x29'
-    :long_name: Unknown
-  :klass: BaseCommand
+# 37:
+#   :id:
+#     :d: 37
+#     :h: '0x25'
+#   :properties:
+#     :short_name: '0x25'
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 38:
+#   :id:
+#     :d: 38
+#     :h: '0x26'
+#   :properties:
+#     :short_name: "0x26"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 39:
+#   :id:
+#     :d: 39
+#     :h: '0x27'
+#   :properties:
+#     :short_name: "0x27"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 40:
+#   :id:
+#     :d: 40
+#     :h: '0x28'
+#   :properties:
+#     :short_name: "0x28"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 41:
+#   :id:
+#     :d: 41
+#     :h: '0x29'
+#   :properties:
+#     :short_name: '0x29'
+#     :long_name: Unknown
+#   :klass: BaseCommand
 42:
   :id:
     :d: 42
@@ -1405,38 +1255,30 @@
       - TEL
     :recipients:
       - ANZV
-45:
-  :id:
-    :d: 45
-    :h: '0x2D'
-  :properties:
-    :short_name: '0x2D'
-    :long_name: Unknown
-  :klass: BaseCommand
-46:
-  :id:
-    :d: 46
-    :h: '0x2E'
-  :properties:
-    :short_name: '0x2E'
-    :long_name: Unknown
-  :klass: BaseCommand
-47:
-  :id:
-    :d: 47
-    :h: '0x2F'
-  :properties:
-    :short_name: '0x2F'
-    :long_name: Unknown
-  :klass: BaseCommand
-48:
-  :id:
-    :d: 48
-    :h: '0x30'
-  :properties:
-    :short_name: '0x30'
-    :long_name: Unknown
-  :klass: BaseCommand
+# 45:
+#   :id:
+#     :d: 45
+#     :h: '0x2D'
+#   :properties:
+#     :short_name: '0x2D'
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 46:
+#   :id:
+#     :d: 46
+#     :h: '0x2E'
+#   :properties:
+#     :short_name: '0x2E'
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 47:
+#   :id:
+#     :d: 47
+#     :h: '0x2F'
+#   :properties:
+#     :short_name: '0x2F'
+#     :long_name: Unknown
+#   :klass: BaseCommand
 # ************************************************************************* #
 #                               0x31 TEL-DATA
 # ************************************************************************* #
@@ -1724,14 +1566,14 @@
     :short_name: CD-ACK
     :long_name: CD Status
   :klass: BaseCommand
-58:
-  :id:
-    :d: 58
-    :h: '0x3A'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 58:
+#   :id:
+#     :d: 58
+#     :h: '0x3A'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 59:
   :id:
     :d: 59
@@ -1752,38 +1594,38 @@
       0x18: "Prev: Hold"
       0x28: "Prev: Release"
   :klass: Button
-60:
-  :id:
-    :d: 60
-    :h: '0x3C'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-61:
-  :id:
-    :d: 61
-    :h: '0x3D'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-62:
-  :id:
-    :d: 62
-    :h: '0x3E'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-63:
-  :id:
-    :d: 63
-    :h: '0x3F'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 60:
+#   :id:
+#     :d: 60
+#     :h: '0x3C'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 61:
+#   :id:
+#     :d: 61
+#     :h: '0x3D'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 62:
+#   :id:
+#     :d: 62
+#     :h: '0x3E'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 63:
+#   :id:
+#     :d: 63
+#     :h: '0x3F'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 64:
   :id:
     :d: 64
@@ -2190,22 +2032,22 @@
   :properties:
     :short_name: SRC-CTL
     :long_name: Audio Device Control
-76:
-  :id:
-    :d: 76
-    :h: '0x4C'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-77:
-  :id:
-    :d: 77
-    :h: '0x4D'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 76:
+#   :id:
+#     :d: 76
+#     :h: '0x4C'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
+# 77:
+#   :id:
+#     :d: 77
+#     :h: '0x4D'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 0x4E:
   :id:
     :d: 78
@@ -2259,14 +2101,14 @@
       - "BMBT (0xF0)"
       - "00"
       - "10"
-80:
-  :id:
-    :d: 80
-    :h: '0x50'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 80:
+#   :id:
+#     :d: 80
+#     :h: '0x50'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 0x51:
   :id:
     :d: 81
@@ -2350,14 +2192,14 @@
       - IKE
     :recipients:
       - LCM
-86:
-  :id:
-    :d: 86
-    :h: '0x56'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 86:
+#   :id:
+#     :d: 86
+#     :h: '0x56'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 87:
   :id:
     :d: 87
@@ -2626,14 +2468,14 @@
       - 0x05 goes to 0x01
       - 0x04 goes to 0x00
       - i assume there's a different state if the key is IDENTIFIED but DISABLED?
-117:
-  :id:
-    :d: 117
-    :h: '0x75'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 117:
+#   :id:
+#     :d: 117
+#     :h: '0x75'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 118:
   :id:
     :d: 118
@@ -2645,14 +2487,14 @@
   :meta:
     :senders:
       - LCM
-119:
-  :id:
-    :d: 119
-    :h: '0x77'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
+# 119:
+#   :id:
+#     :d: 119
+#     :h: '0x77'
+#   :properties:
+#     :short_name: "???"
+#     :long_name: Unknown
+#   :klass: BaseCommand
 120:
   :id:
     :d: 120
@@ -2836,38 +2678,6 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-156:
-  :id:
-    :d: 161
-    :h: '0x9C'
-  :properties:
-    :short_name: DIA-TRANS
-    :long_name: Diagnostics Transport Mode?
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - transport mode on
-      - 11:21:21 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - 11:21:22 [INFO ] [      DisplayHandler] DIA     RAD     9C              02
-      - transport mode off
-      - 11:22:31 [INFO ] [      DisplayHandler] DIA     RAD     9C              00
-    :examples:
-      - DIA	LCM	9C 00
-      - DIA	LCM	9C 00
-      - DIA	RAD	9C 00
-      - DIA	RAD	9C 00
-      - DIA	RAD	9C 00
-160:
-  :id:
-    :d: 160
-    :h: '0xA0'
-  :properties:
-    :short_name: DIA-D
-    :long_name: Diagnostics Data
-  :klass: BaseCommand
-  :meta:
-    - a response to a DIA-R command?
 165:
   :id:
     :d: 165
