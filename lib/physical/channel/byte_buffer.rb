@@ -4,9 +4,10 @@ class Channel
   # An extension of a Queue to support multi shifts, and unshifting
   # NOTE this should not handle unshift.... argh.. well.. unshift is framer behaviour..
   # but it's still capsulated with framer.. the actual behaviour of unshift is generic...
-  class ByteBuffer < Queue
+  class ByteBuffer < SizedQueue
+    SIZE = 1024
     def initialize
-      super
+      super(SIZE)
       @unshift_buffer = []
     end
 
