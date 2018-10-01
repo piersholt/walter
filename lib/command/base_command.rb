@@ -25,6 +25,10 @@ class Command
       id.d
     end
 
+    def ==(other_command)
+      self.d == other_command.d
+    end
+
     # -------------------------------- OBJECT ------------------------------- #
 
     def to_s
