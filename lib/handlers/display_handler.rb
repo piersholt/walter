@@ -56,12 +56,12 @@ class DisplayHandler
       disable
     when MESSAGE_RECEIVED
       begin
-        filtered_output(properties[:message])
+        message = properties[:message]
+        filtered_output(message)
       rescue StandardError => e
-        LOGGER.error("#{self.class} Exception: #{e}")
-        # break here
-        e.backtrace.each { |l| LOGGER.error(l) }
-        puts 'waiting for a mate.'
+        LOGGER.error(PROC) { "#{e}" }
+        LOGGER.error(PROC) { message.to_f }
+        e.backtrace.each { |l| LOGGER.error(PROC) { l } }
       end
     end
   end
