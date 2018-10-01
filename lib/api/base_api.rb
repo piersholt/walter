@@ -13,16 +13,6 @@ module API
         command_builder = command_builder.new(command_config)
         command_builder.add_parameters(command_arguments)
         command_object = command_builder.result
-
-        # command = CommandMap.instance.klass(command_id)
-
-        # parameter_value_pairs = command_arguments.map do |parameter, value|
-        #   [parameter, value]
-        # end
-        #
-        # parameter_value_pairs.each do |name_value_pair|
-        #   command.try_set(*name_value_pair)
-        # end
       rescue StandardError => e
         LOGGER.error("#{self.class} StandardError: #{e}")
         e.backtrace.each { |l| LOGGER.error(l) }
