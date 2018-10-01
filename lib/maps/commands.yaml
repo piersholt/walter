@@ -899,10 +899,25 @@
         0x90: TAPE_ERROR
       :dictionary:
         0x00: Telephone Screen
+
+        # TELEPHONE
         0x01: TEL-A
         # 199 SOUND LEFT, 200 SOUND RIGHT
         0x02: TEL-B
         # 198 SPEAKER
+
+        0x52: Directory Header Set
+        0x53: Directory Header Overwrite
+        0x61: Dial Header Overwrite
+        0x63: Rotary Rotary Header Overwrite
+        0x80: Default Header Overwrite
+        0x81: Top 8 Header Set
+        0x82: Top 8 Header Overwrite
+        0xC0: SOS Header Set?
+
+        0x42: Contact/Call
+        0x43: Show Contact Number
+        0x41: Clear Contact
         0x40: Radio Set Station
         0x50: Radio [ST]
         0x82: Tape (A) ▶︎
