@@ -42,8 +42,8 @@ class CommandMap < Map
       mapped_result = find(command_id)
     rescue IndexError
       LOGGER.error(PROC) {
-        "Command ID: #{command_id}, #{DataTools.d2h(command_id)} not found!" }
-      mapped_result = super(:default)
+        "Command ID: #{command_id}, #{DataTools.d2h(command_id, true)} not found!" }
+      mapped_result = find(:default)
       mapped_result[:id][:d] = command_id
     end
 
