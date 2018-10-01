@@ -30,12 +30,14 @@ class DeviceMap < Map
   #
   # end
 
+  PROC = 'DeviceMap'
+
   def find(device_id)
-    LOGGER.debug("DeviceMap") { "#{self.class}#find(#{device_id})" }
+    LOGGER.debug(PROC) { "#find(#{device_id})" }
     begin
       mapped_result = super(device_id)
     rescue IndexError => e
-      LOGGER.error('DeviceMap') {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
+      LOGGER.error(PROC) {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
       mapped_result = super(:default)
       mapped_result[:properties][:d] = device_id
     end
