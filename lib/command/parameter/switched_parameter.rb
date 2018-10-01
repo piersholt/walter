@@ -30,15 +30,6 @@ class SwitchedParameter < BaseParameter
     str_buffer
   end
 
-  # def state
-  #   @states[value]
-  # end
-
-  # def foramtted_state(value)
-  #   formatted_state = formatted(state)
-  #   "[#{formatted_state}]"
-  # end
-
   def state
     if @states.nil?
       LOGGER.warn(PROC) { "Map @states is no available!" }
