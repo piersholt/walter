@@ -62,8 +62,8 @@ class DemultiplexingHandler
     to_id       = to.to_d
     command_id  = command.to_d
 
-    from    = @device_map.find(from_id)
-    to      = @device_map.find(to_id)
+    from_object    = @device_map.find(from_id)
+    to_object      = @device_map.find(to_id)
 
     command_config = @command_map.config(command_id)
     # LOGGER.info("DemultiplexingHandler") { "Arguments: #{arguments}" }
@@ -71,9 +71,22 @@ class DemultiplexingHandler
     # LOGGER.info("DemultiplexingHandler") { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)
 
-    m = Message.new(from, to, command_object, arguments)
-    m.frame= frame
+    m = create_message(from_object, to_object, command_object, arguments, frame)
+
     m
+  end
+
+  def create_message(from, to, command_object, arguments, frame)
+    LOGGER.debug("DemultiplexingHandler") { "#create_message" }
+    begin
+      new_message = Message.new(from, to, command_object, arguments)
+      new_message.frame= frame
+      new_message
+    rescue StandardError => e
+      LOGGER.error(PROC) { 'Error while initializing message!' }
+      LOGGER.error(PROC) { "#{e}" }
+      e.backtrace.each { |l| LOGGER.error(l) }
+    end
   end
 
   # TODO: the builder will need to deal with this
