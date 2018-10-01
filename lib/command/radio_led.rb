@@ -19,8 +19,8 @@ class Command
       str_buffer
     end
 
-    # def inspect
-    #   "#<#{self.class} @key=#{key} (#{dict(:key, key)}) @status=#{status} (#{dict(:status, status)})>"
-    # end
+    def inspect
+      "#<#{self.class} @led=#{led.value} (#{led})>"
+    end
   end
 end
