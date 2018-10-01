@@ -25,6 +25,22 @@ class Devices
       @id[:d]
     end
 
+    def ==(other_device)
+      result = self.d == other_device.d
+      LOGGER.error('BaseDevice') { "#{self.d} == #{other_device.d} => #{result}"  }
+      result
+    end
+
+    def eql?(other_device)
+      LOGGER.error('BaseDevice') { "#eql?(#{other_device})"  }
+      self.d == other_device.d
+    end
+
+    def <=>(other_device)
+      LOGGER.error('BaseDevice') { "#<=>(#{other_device})"  }
+      self.d <=> other_device.d
+    end
+
     def sn(padded = PADDED_DEFAULT)
       padded ? sprintf("%-6s", short_name) : short_name
     end
