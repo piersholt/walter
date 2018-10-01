@@ -125,6 +125,30 @@ class Messages
     unique_length_counts.to_h
   end
 
+  def group_by_command
+    grouped_by_command = @messages.group_by do |message|
+      message.command.d
+    end
+
+    grouped_by_command.each do |command_id, messages|
+      grouped_by_command[command_id] = messages.count
+    end
+
+    grouped_by_command
+  end
+
+  def group_by_recipient
+    grouped_by_recipients = @messages.group_by do |message|
+      message.to.d
+    end
+
+    grouped_by_recipients.each do |recipient_id, messages|
+      grouped_by_recipients[recipient_id] = messages.count
+    end
+
+    grouped_by_recipients
+  end
+
   # ************************************************************************* #
   #                                  LAZY SCRIPTS
   # ************************************************************************* #
