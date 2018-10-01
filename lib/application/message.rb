@@ -22,7 +22,7 @@ class Message
   end
 
   def to_f
-    @frame.string
+    @frame.to_s
   end
 
   # ------------------------------ INFO ------------------------------ #
