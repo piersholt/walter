@@ -21,10 +21,6 @@ class Messages
 
     str_buffer.concat(result)
   end
-  #
-  # def to_s
-  #   "<Messages>#to_s"
-  # end
 
   # ************************************************************************* #
   #                                  SEARCH
@@ -68,33 +64,9 @@ class Messages
     self.class.new(results)
   end
 
-  # ---------------------------- SEARCH: HELPERS ---------------------------- #
-
-  # @deprecated in favour of chained collection methods
-  # def command_to(command_id, to_id)
-  #   everything_send_to_receiver = to(to_id)
-  #
-  #   everything_send_to_receiver.find_all do |message|
-  #     c = message.command
-  #     c.id[:d] == command_id
-  #   end
-  # end
-
   # ************************************************************************* #
   #                                  ANALYSIS
   # ************************************************************************* #
-
-  # @deprecated in favour of #recipients which is called directly on collection
-  # def receivers_of_command(command_id)
-  #   matching_messages = where(:command_id, command_id)
-  #
-  #   messages_with_unique_recipients =
-  #     matching_messages.uniq do |message|
-  #       message.to.id
-  #     end
-  #
-  #   messages_with_unique_recipients.map(&:to)
-  # end
 
   def recipients
     messages_with_unique_recipients = @messages.uniq do |m|
@@ -122,43 +94,18 @@ class Messages
     end
   end
 
-  # @note this only gathers unique based on first byte in arguments
-  # def arguments
-  #   messages_with_unique_arguments = @messages.uniq do |m|
-  #     m.command.arguments.first.d
-  #   end
-  #
-  #   messages_with_unique_arguments.map(&:command)
-  # end
-
   def arguments
-    # results = {}
-
     messages_with_unique_argument_sum = @messages.uniq do |m|
       m.command.arguments.reduce(0) { |m, arg_byte| m + arg_byte.d }
     end
-
-    # results[:total] = messages_with_unique_argument_sum.count
 
     argument_values = messages_with_unique_argument_sum.map do |message|
       message.arguments.map(&:h)
     end
 
-    # indexed[0] = all arguments in position 1 etc
     argument_values_transposed = argument_values.transpose
 
-    # results[:indexed] = { 0 => indexed[0], 1 => indexed[1], 2 => indexed[2] }
-
-    # grouped_unique_values = indexed.group_by {|i| i }
-    # grouped_lengths = message_lengths.group_by { |l| l }
-
-    # unique_arg_counts = grouped_unique_values.map { |v, grp| [v, grp.length] }.to_h
-
-    # results.merge!(argument_values)
-
     argument_values_transposed.map do |pos|
-      # uniq_grouped = pos.group_by { |h| h }
-      # uniq_grouped.map { |u, grp| [u, grp.count] }
       pos.uniq
     end
 
@@ -178,23 +125,9 @@ class Messages
     unique_length_counts.to_h
   end
 
-  # def group_by(grouped = @messages, property)
-  #   LOGGER.warn(criteria)
-  #   raise ArgumentError, 'unrecognised property' if SEARCH_PROPERTY.none? { |p| p == property }
-  # 
-  #   case property
-  #   when :command_id
-  #     grouped.group_by do |message|
-  #       message.command.d
-  #     end
-  #   end
-  # end
-
   # ************************************************************************* #
   #                                  LAZY SCRIPTS
   # ************************************************************************* #
-
-  # -------------------------------- STATUS -------------------------------- #
 
   def pingers
     command(1).senders
@@ -218,22 +151,8 @@ class Messages
     self.class.new(results)
   end
 
-  # def unique(property, index = 0)
-  #   case property
-  #   when :from
-  #   when :to
-  #   when :command
-  #   when :arguments
-  #     # messages.uniq {|m| m.command.arguments.first.d }
-  #   end
-  # end
-
-  # which commands are exclusively received by a device
-  #
-
   private
 
-  # TODO: implement a collection class to allow chaining calls
   def where(property, *criteria)
     raise ArgumentError, 'unrecognised property' if SEARCH_PROPERTY.none? { |p| p == property }
 
