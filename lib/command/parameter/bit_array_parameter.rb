@@ -68,6 +68,7 @@ class BitArrayParameter < BaseParameter
   def parse_bit_array_parameters(parameter_config, numeric)
     begin
       @bit_array = BitArray.from_i(numeric)
+      return false unless parameter_config.has_parameters?
       @indexed_bit_array = IndexedBitArray.new(@bit_array, parameter_config.index)
       @parameters = {}
 
