@@ -4,7 +4,7 @@
       :d: nil
       :h: nil
     :properties:
-      :short_name: Default
+      :short_name: NEW
       :long_name: Unknown
       :verbose: true
     :klass: BaseCommand
@@ -208,7 +208,7 @@
     :d: 115
     :h: '0x73'
   :properties:
-    :short_name: KEY?
+    :short_name: KEY-REQ
     :long_name: Key Status Request
   :klass: BaseCommand
 0x74:
@@ -263,7 +263,7 @@
     :d: 18
     :h: '0x12'
   :properties:
-    :short_name: IKE-SEN-REQ
+    :short_name: SEN-REQ
     :long_name: IKE Sensor Status REQ
   :klass: BaseCommand
   :meta:
@@ -276,7 +276,7 @@
     :d: 19
     :h: '0x13'
   :properties:
-    :short_name: IKE-SEN
+    :short_name: SEN
     :long_name: IKE Sensors
   :klass: IKESensors
   :parameters:
@@ -465,7 +465,7 @@
     :d: 23
     :h: '0x17'
   :properties:
-    :short_name: ODO-RES
+    :short_name: ODO
     :long_name: Odometer Response
   :klass: BaseCommand
   :meta:
@@ -878,6 +878,7 @@
     :short_name: RAD-EQ
     :long_name: Radio EQ Control
   :klass: BaseCommand
+  # TODO: this should be a bit array
   :parameters:
     :setting:
       :type: :map
@@ -1114,6 +1115,9 @@
     :d: 75
     :h: '0x4B'
   :klass: ParameterizedCommand
+  :properties:
+    :short_name: SRC-CTL
+    :long_name: Audio Device Control
   :parameters:
     :control:
       :type: :map
@@ -1142,9 +1146,6 @@
   :index:
     :control: 0
     :mode: 1
-  :properties:
-    :short_name: SRC-CTL
-    :long_name: Audio Device Control
 0x4E:
   :id:
     :d: 78
