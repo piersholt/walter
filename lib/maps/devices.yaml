@@ -1,4 +1,13 @@
 ---
+:default:
+  :id:
+    :d: 0
+  :properties:
+    :short_name: 'NEW'
+    :long_name: Fallback Device
+    :verbose: true
+  :klass: BaseDevice
+
 0x08:
   :id:
     :h: '0x08'
@@ -103,6 +112,10 @@
     :short_name: PDC
     :long_name: Park Distance Control
   :klass: BaseDevice
+  :meta:
+    - There is no traffic on the BUS when connected to INPA?
+    - INPA does connect so.. it must be on D-Bus?
+    - There is a single PONG message from PDC?
 101:
   :id:
     :h: '0x65'
@@ -180,7 +193,7 @@
     :h: '0xA4'
     :d: 164
   :properties:
-    :short_name: NEW-A4
+    :short_name: IxA4
     :long_name: Unidentified
   :klass: BaseDevice
   :meta:
@@ -270,6 +283,7 @@
     :long_name: Light sensor for auto lights/light switch?
   :klass: BaseDevice
   :meta:
+    - I believe the 540i had auto lights?
     :examples:
       - LCM   59  50 00
       - LCM   59  10 00
@@ -298,12 +312,5 @@
   :properties:
     :short_name: GLO-H
     :long_name: Global Broadcast
-  :klass: BaseDevice
-:default:
-  :id:
-    :d: 0
-  :properties:
-    :short_name: 'NEW'
-    :long_name: Fallback Device
-    :verbose: true
+    :bus: [:k, :i]
   :klass: BaseDevice
