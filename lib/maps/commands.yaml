@@ -228,6 +228,8 @@
         0x04: Valid and/or Enabled
         0x01: Unauthenticated (Immobilizer Renabled)
         0x05: Authenticated (Immobilizer Disabled)
+        0x0C: When old key was unhappy in INPA
+        0x08: When old key was unhappy in INPA
     :key:
       :type: :map
       :map:
@@ -662,12 +664,12 @@
           :states:
             0: :off
             1: :on
-        :not_sure:
+        :hood:
           :type: :switch
-          :label: 'Not sure?'
+          :label: 'Hood?'
           :states:
-            0: :off
-            1: :on
+            0: :closed
+            1: :open
         :door_left:
           :type: :switch
           :label: 'Door Rear Left'
@@ -695,7 +697,7 @@
       :index:
         :lamp_interior: 1
         :locked: 2
-        :not_sure: 3
+        :hood: 3
         :door_left: 4
         :door_right: 5
         :door_pass: 6
@@ -1207,7 +1209,7 @@
     :d: 81
     :h: '0x51'
   :properties:
-    :short_name: CCM?
+    :short_name: CCM-END
     :long_name: Ignition off CCM update?
   :parameters:
     :status:
@@ -2237,7 +2239,7 @@
     :d: 0
     :b: 0
   :properties:
-    :short_name: DIA-GEN
+    :short_name: DIA-HELLO
     :long_name: Module General Information (and Ping)
   :klass: BaseCommand
   :meta:
@@ -2260,7 +2262,7 @@
 0x63:
   :id:
     :d: 99
-    :h: '0x61'
+    :h: '0x63'
   :properties:
     :short_name: DIA-IDENT?
     :long_name: Diagnostics?
@@ -2317,8 +2319,8 @@
     :d: 8
     :h: '0x08'
   :properties:
-    :short_name: COD-R
-    :long_name: Diagnostics READ Coding Data
+    :short_name: DIA-COD-R
+    :long_name: Diagnostics READ Coding Data Universal
   :klass: BaseCommand
 
 11:
@@ -2373,9 +2375,53 @@
     :long_name: Unknown
   :klass: BaseCommand
 
+63:
+  :id:
+    :d: 63
+    :h: '0x3F'
+  :properties:
+    :short_name: EHC-DIG
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0x60:
+  :id:
+    :d: 96
+    :h: '0x60'
+  :properties:
+    :short_name: EWS-ISN?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+0x6B:
+  :id:
+    :d: 107
+    :h: '0x6B'
+  :properties:
+    :short_name: EWS-INT
+    :long_name: EWS Internal State
+  :klass: BaseCommand
+
+0x69:
+  :id:
+    :d: 105
+    :h: '0x69'
+  :properties:
+    :short_name: EWS-COD?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+
+0x65:
+  :id:
+    :d: 101
+    :h: '0x65'
+  :properties:
+    :short_name: EWS-KEY
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+
 156:
   :id:
-    :d: 161
+    :d: 156
     :h: '0x9C'
   :properties:
     :short_name: DIA-TRANS
@@ -2393,6 +2439,24 @@
     - also send to LCM?
     - DIA	LCM	9C 00
     - DIA	LCM	9C 00
+
+159:
+  :id:
+    :d: 159
+    :h: '0x9F'
+  :properties:
+    :short_name: EWS-X?
+    :long_name: Unknown?
+  :klass: BaseCommand
+
+162:
+  :id:
+    :d: 162
+    :h: '0xA2'
+  :properties:
+    :short_name: EWS-END?
+    :long_name: Unknown?
+  :klass: BaseCommand
 
 # ************************************************************************* #
 #                               MODULE RESPONSES
