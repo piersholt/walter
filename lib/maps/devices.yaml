@@ -1,4 +1,12 @@
 ---
+0x08:
+  :id:
+    :h: '0x08'
+    :d: 8
+  :properties:
+    :short_name: Kx08
+    :long_name: Unknown
+  :klass: BaseDevice
 0:
   :id:
     :h: '0x00'
