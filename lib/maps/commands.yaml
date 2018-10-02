@@ -832,14 +832,6 @@
     :notes:
       - 00: Dial Function
       - 01 FF: Radio On?
-51:
-  :id:
-    :d: 51
-    :h: '0x33'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
 52:
   :id:
     :d: 52
@@ -847,14 +839,6 @@
   :properties:
     :short_name: DSP-EQ
     :long_name: DSP EQ. Button
-  :klass: BaseCommand
-53:
-  :id:
-    :d: 53
-    :h: '0x35'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
   :klass: BaseCommand
 54:
   :id:
@@ -1061,14 +1045,6 @@
     :state: 0
   :meta:
     - 01: confirm switch?
-71:
-  :id:
-    :d: 71
-    :h: '0x47'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
 74:
   :id:
     :d: 74
@@ -1150,14 +1126,6 @@
   :meta:
     - 01 00: select TV
     - 00 00: go back to radio
-53:
-  :id:
-    :d: 53
-    :h: '0x35'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
 # ************************************************************************* #
 #                               NAV/TV?
 # ************************************************************************* #
@@ -1219,43 +1187,6 @@
         0x00: No Warnings
   :index:
     :status: 0
-  :klass: BaseCommand
-82:
-  :id:
-    :d: 82
-    :h: '0x52'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-85:
-  :id:
-    :d: 85
-    :h: '0x55'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - LCM
-87:
-  :id:
-    :d: 87
-    :h: '0x57'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-88:
-  :id:
-    :d: 88
-    :h: '0x58'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
   :klass: BaseCommand
 # ************************************************************************* #
 #                               BUTTONS
@@ -2478,6 +2409,94 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
+82:
+  :id:
+    :d: 82
+    :h: '0x52'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+85:
+  :id:
+    :d: 85
+    :h: '0x55'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - LCM
+87:
+  :id:
+    :d: 87
+    :h: '0x57'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+88:
+  :id:
+    :d: 88
+    :h: '0x58'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+53:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+71:
+  :id:
+    :d: 71
+    :h: '0x47'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+53:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+51:
+  :id:
+    :d: 51
+    :h: '0x33'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+131:
+  :id:
+    :d: 131
+    :h: '0x83'
+  :properties:
+    :short_name: IHK-?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - IHK
+125:
+  :id:
+    :d: 125
+    :h: '0x7D'
+  :properties:
+    :short_name: GM3-?
+    :long_name: Unknown
+  :klass: BaseCommand
 56:
   :id:
     :d: 56
