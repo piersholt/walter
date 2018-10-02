@@ -15,6 +15,7 @@
   :properties:
     :short_name: Kx08
     :long_name: Unknown
+    :bus: :k
   :klass: BaseDevice
 0:
   :id:
@@ -24,6 +25,7 @@
   :properties:
     :short_name: GM3
     :long_name: Body Module
+    :bus: :k
   :klass: BaseDevice
   :meta:
     :commands:
@@ -87,6 +89,7 @@
   :properties:
     :short_name: EWS
     :long_name: Immobilizer
+    :bus: :k
   :klass: BaseDevice
 80:
   :id:
@@ -95,6 +98,7 @@
   :properties:
     :short_name: MFL
     :long_name: Steering Wheel Buttons
+    :bus: :i
   :klass: BaseDevice
 91:
   :id:
@@ -103,6 +107,7 @@
   :properties:
     :short_name: IHK
     :long_name: Integrated Heating and Air Conditioning
+    :bus: :k
   :klass: BaseDevice
 96:
   :id:
@@ -111,6 +116,7 @@
   :properties:
     :short_name: PDC
     :long_name: Park Distance Control
+    :bus: :k
   :klass: BaseDevice
   :meta:
     - There is no traffic on the BUS when connected to INPA?
@@ -131,6 +137,7 @@
   :properties:
     :short_name: RAD
     :long_name: Radio
+    :bus: :i
   :klass: BaseDevice
 106:
   :id:
@@ -139,6 +146,7 @@
   :properties:
     :short_name: DSP
     :long_name: Digital Sound Processor
+    :bus: :i
   :klass: BaseDevice
 127:
   :id:
@@ -147,6 +155,7 @@
   :properties:
     :short_name: NAV-EU
     :long_name: Navigation (Europe)
+    :bus: :i
   :klass: BaseDevice
   :meta:
     :desc: I believe EU may refer to the build type which also includes US and JP.
@@ -167,6 +176,7 @@
   :properties:
     :short_name: IKE
     :long_name: Instrument Cluster
+    :bus: [:k, :i]
   :klass: BaseDevice
   :meta:
     :commands:
@@ -195,6 +205,7 @@
   :properties:
     :short_name: IxA4
     :long_name: Unidentified
+    :bus: :i
   :klass: BaseDevice
   :meta:
     :notes:
@@ -206,6 +217,7 @@
   :properties:
     :short_name: EHC
     :long_name: Air Suspension System
+    :bus: :k
   :klass: BaseDevice
 176:
   :id:
@@ -214,6 +226,7 @@
   :properties:
     :short_name: VOICE?
     :long_name: Telephone voice module?
+    :bus: :i
   :klass: BaseDevice
 187:
   :id:
@@ -222,6 +235,7 @@
   :properties:
     :short_name: NAV-JP
     :long_name: TV/Navigation (Japan/Oceania?)
+    :bus: :k
   :klass: BaseDevice
   :meta:
     :notes:
@@ -234,6 +248,7 @@
   :properties:
     :short_name: GLO-L
     :long_name: Global Broadcast (relay) (lower priority broadcast?)
+    :bus: [:k, :i]
   :klass: BaseDevice
 200:
   :id:
@@ -242,6 +257,7 @@
   :properties:
     :short_name: TEL
     :long_name: Telephone
+    :bus: :i
   :klass: BaseDevice
 208:
   :id:
@@ -250,6 +266,7 @@
   :properties:
     :short_name: LCM
     :long_name: Light Control Module
+    :bus: :i
   :klass: BaseDevice
   :meta:
     :commands:
@@ -270,6 +287,7 @@
   :properties:
     :short_name: ANZV
     :long_name: On Board Computer Display
+    :bus: :i
   :klass: BaseDevice
   :meta:
     :notes:
@@ -296,6 +314,7 @@
   :properties:
     :short_name: TV
     :long_name: Television
+    :bus: :i
   :klass: BaseDevice
 240:
   :id:
@@ -304,6 +323,7 @@
   :properties:
     :short_name: BMBT
     :long_name: Onboard Monitor Buttons
+    :bus: :i
   :klass: BaseDevice
 255:
   :id:
