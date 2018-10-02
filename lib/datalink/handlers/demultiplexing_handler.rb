@@ -46,8 +46,8 @@ class DemultiplexingHandler
   # ------------------------------ FRAME ------------------------------ #
 
   def process_frame(frame)
-    LOGGER.debug("DemultiplexingHandler") { "#{self.class}#process_frame(#{frame})" }
-    LOGGER.debug("DemultiplexingHandler") { frame.inspect }
+    LOGGER.debug(PROC) { "#{self.class}#process_frame(#{frame})" }
+    LOGGER.debug(PROC) { frame.inspect }
 
     from      = frame.from
     to        = frame.to
@@ -62,9 +62,8 @@ class DemultiplexingHandler
     to_object      = @device_map.find(to_id)
 
     command_config = @command_map.config(command_id)
-    # LOGGER.info("DemultiplexingHandler") { "Arguments: #{arguments}" }
     parameter_values_hash = parse_argumets(command_config, arguments)
-    # LOGGER.info("DemultiplexingHandler") { "Parameter Values: #{parameter_values_hash}" }
+    LOGGER.debug(PROC) { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)
 
     m = create_message(from_object, to_object, command_object, arguments, frame)
@@ -73,7 +72,7 @@ class DemultiplexingHandler
   end
 
   def create_message(from, to, command_object, arguments, frame)
-    LOGGER.debug("DemultiplexingHandler") { "#create_message" }
+    LOGGER.debug(PROC) { "#create_message" }
     begin
       new_message = Message.new(from, to, command_object, arguments)
       new_message.frame= frame
@@ -87,12 +86,12 @@ class DemultiplexingHandler
 
   # TODO: the builder will need to deal with this
   def parse_argumets(command_config, arguments)
-    # LOGGER.info("DemultiplexingHandler") { "#parse_argumets" }
+    # LOGGER.info(PROC) { "#parse_argumets" }
     if command_config.has_parameters? && !command_config.is_base?
-      # LOGGER.info("DemultiplexingHandler") { "#{command_config.sn} has a klass and parameters. Will parse." }
+      # LOGGER.info(PROC) { "#{command_config.sn} has a klass and parameters. Will parse." }
        parse_indexed_arguments(command_config, arguments)
     else
-      # LOGGER.info("DemultiplexingHandler") { "#{command_config.sn} is getting plain old arguments." }
+      # LOGGER.info(PROC) { "#{command_config.sn} is getting plain old arguments." }
       arguments
     end
   end
@@ -101,13 +100,13 @@ class DemultiplexingHandler
     parameter_values_hash = {}
     begin
       argument_index = command_config.index
-      LOGGER.debug("DemultiplexingHandler") { "argument index: #{argument_index}" }
+      LOGGER.debug(PROC) { "argument index: #{argument_index}" }
       indexed_arguments = IndexedArguments.new(arguments, argument_index)
-      LOGGER.debug("DemultiplexingHandler") { "indexed_arguments: #{indexed_arguments}" }
+      LOGGER.debug(PROC) { "indexed_arguments: #{indexed_arguments}" }
 
       indexed_arguments.parameters.each do |name|
         param_value = indexed_arguments.lookup(name)
-        LOGGER.debug("DemultiplexingHandler") { "indexed_arguments.lookup(#{name}) => #{param_value}" }
+        LOGGER.debug(PROC) { "indexed_arguments.lookup(#{name}) => #{param_value ? param_value : 'NULL'}" }
         parameter_values_hash[name] = param_value
       end
 
@@ -120,7 +119,7 @@ class DemultiplexingHandler
   end
 
   def build_command(command_config, parameter_values_hash)
-    LOGGER.debug("DemultiplexingHandler") { "#build_command" }
+    LOGGER.debug(PROC) { "#build_command" }
     begin
       command_builder = command_config.builder
       command_builder = command_builder.new(command_config)
