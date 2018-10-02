@@ -170,7 +170,7 @@
     :long_name: Remote Central Locking
   :klass: ParameterizedCommand
   :parameters:
-    :byte1:
+    :b1:
       :type: :bit_array
       :parameters:
         :boot:
@@ -196,13 +196,7 @@
         :unlock: 2
         :lock: 3
   :index:
-    :byte1: 0
-  :meta:
-    :notes:
-      - 635 messages send to date
-      - GM3   	GLO-L 	72      	00
-      - GM3   	GLO-L 	72      	10
-      - GM3   	GLO-L 	72      	00
+    :b1: 0
 115:
   :id:
     :d: 115
@@ -494,14 +488,6 @@
       - IKE
     :recipients:
       - GLO-L (0xBF)
-89:
-  :id:
-    :d: 89
-    :h: '0x59'
-  :properties:
-    :short_name: LIGHT-SEN
-    :long_name: Unidentified
-  :klass: BaseCommand
 90:
   :id:
     :d: 90
@@ -2504,6 +2490,14 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
+89:
+  :id:
+    :d: 89
+    :h: '0x59'
+  :properties:
+    :short_name: LIGHT-SEN
+    :long_name: Unidentified
+  :klass: BaseCommand
 82:
   :id:
     :d: 82
