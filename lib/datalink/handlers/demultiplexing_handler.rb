@@ -15,6 +15,7 @@ class DemultiplexingHandler
   include Observable
   include Singleton
   include Event
+  include Helpers
 
   PROC = 'DemultiplexingHandler'.freeze
 
@@ -41,11 +42,6 @@ class DemultiplexingHandler
   end
 
   private
-
-  def inst_var(name)
-    name_string = name.id2name
-    '@'.concat(name_string).to_sym
-  end
 
   # ------------------------------ FRAME ------------------------------ #
 
