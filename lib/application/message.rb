@@ -12,6 +12,8 @@ class Message
   alias :destination  :receiver
   alias :source       :sender
 
+  PROC = 'Message'.freeze
+
   def initialize(from, to, command, arguments = nil)
     @sender     = from
     @receiver   = to
@@ -25,15 +27,26 @@ class Message
     @frame.to_s
   end
 
-  # ------------------------------ INFO ------------------------------ #
-
-  def to_s
+  def to_string
     # LOGGER.warn("#{command.verbose}")
     return inspect if command.verbose
     str_buffer = "#{from.sn}\t#{to.sn}\t#{@command}"
     # args_str_buffer = @arguments.join(' ') { |a| a.to_h(true) }
     # str_buffer.concat(" #{args_str_buffer}") unless args_str_buffer.empty?
     str_buffer
+  end
+
+  # ------------------------------ INFO ------------------------------ #
+
+  def to_s
+    begin
+      to_string
+    rescue StandardError => e
+      LOGGER.error(PROC) { "#{e}" }
+      LOGGER.error(PROC) { "Frame of message with error: #{to_f}" }
+      e.backtrace.each { |l| LOGGER.error(PROC) { l } }
+      binding.pry
+    end
   end
 
   def inspect
