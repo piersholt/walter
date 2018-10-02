@@ -600,6 +600,36 @@
       - lamp drives the night mode on BMBT
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
+
+92:
+  :id:
+    :d: 92
+    :h: '0x5C'
+  :properties:
+    :short_name: LAMP2?
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :index:
+    :b0: 0
+  :parameters:
+    :b0:
+      :type: :bit_array
+      :parameters:
+        :rapid:
+          :label: Rapid.
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :rapid: 0
+  :meta:
+    - to date it alternates between two values 0xED and 0xFF
+    - it is triggered by the external lights being switched on
+    :senders:
+      - LCM
+    :recipients:
+      - GLO-L
 121:
   :id:
     :d: 121
@@ -2537,24 +2567,6 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-92:
-  :id:
-    :d: 92
-    :h: '0x5C'
-  :properties:
-    :short_name: LCM-?
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :senders:
-      - LCM
-    :recipients:
-      - GLO-L
-    :sub_commands:
-      - 0XFF:
-        - 0x00
-      - 0xED:
-        - 0x00
 93:
   :id:
     :d: 93
