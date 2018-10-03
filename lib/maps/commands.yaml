@@ -2142,6 +2142,69 @@
     - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
     - 11AM = d2b(0x8B, true, true) => "0b10001011"
     - 11PM = d2b(0x0b, true, true) => "0b00001011"
+65:
+  :id:
+    :d: 65
+    :h: '0x41'
+  :klass: ParameterizedCommand
+  :properties:
+    :short_name: OBC-REQ
+    :long_name: OBC Data Request
+  :parameters:
+    :field:
+      :type: :map
+      :map:
+        0x00: disabled
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo 1
+        0x0d: Memo 2
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :control:
+      :type: :map
+      :map:
+        0x00: empty
+      :dictionary:
+        0x01: Alt. (Interum?)
+        0x10: Reset/Recalculate
+        0x02: "0x02"
+        0x03: "0x03"
+        0x04: Switch On
+        0x08: Switch Off
+        0x20: Set As Current Speed
+  :index:
+    :field: 0
+    :control: 1
+  :meta:
+    :notes:
+      - two bytes. first byte corresponds to same code as obc
+      - GFX IKE   41    08 01
+      - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
+      - GFX IKE   41    04 01
+      - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
+    :recipients:
+      - IKE: IKE houses on board computer
 42:
   :id:
     :d: 42
@@ -2208,69 +2271,6 @@
       - second byte 0x00
       - memo on 20 00
       - memo off 00 00
-65:
-  :id:
-    :d: 65
-    :h: '0x41'
-  :klass: ParameterizedCommand
-  :properties:
-    :short_name: OBC-REQ
-    :long_name: OBC Data Request
-  :parameters:
-    :field:
-      :type: :map
-      :map:
-        0x00: disabled
-      :dictionary:
-        0x01: Time
-        0x02: Date
-        0x03: Outside Temp.
-        0x04: Econ. 1
-        0x05: Econ. 2
-        0x06: Range
-        0x07: Distance
-        0x08: Arrival
-        0x09: Speed Limit
-        0x0a: Avg. Speed
-        0x0c: Memo 1
-        0x0d: Memo 2
-        0x0e: Stopwatch
-        0x0f: Aux. Timer 1
-        0x10: Aux. Timer 2
-        0x11: Aux Heating Off
-        0x12: Aux Heating On
-        0x13: Aux Vent. Off
-        0x14: Aux Vent. On
-        0x15: End Stellmode
-        0x16: Emergency Disarm
-        0x1a: Interim Time
-        0x1b: Aux Heat/Vent
-        0x1f: Test Mode
-        0x40: Radio HUD
-    :control:
-      :type: :map
-      :map:
-        0x00: empty
-      :dictionary:
-        0x01: Alt. (Interum?)
-        0x10: Reset/Recalculate
-        0x02: "0x02"
-        0x03: "0x03"
-        0x04: Switch On
-        0x08: Switch Off
-        0x20: Set As Current Speed
-  :index:
-    :field: 0
-    :control: 1
-  :meta:
-    :notes:
-      - two bytes. first byte corresponds to same code as obc
-      - GFX IKE   41    08 01
-      - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
-      - GFX IKE   41    04 01
-      - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
-    :recipients:
-      - IKE: IKE houses on board computer
 # ************************************************************************* #
 #                          DIAGNOSTICS/INPA
 # ************************************************************************* #
