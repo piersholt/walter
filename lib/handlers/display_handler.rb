@@ -1,31 +1,13 @@
 require 'singleton'
 
 class DisplayHandler
+  include CommandTools
   include Singleton
   include Event
 
   PROC = 'DisplayHandler'.freeze
 
-  KEEP_ALIVE = [0x01, 0x02]
-  SPEED = [0x18]
-  TEMPERATURE = [0x1D, 0x19]
-  IGNITION = [0x10, 0x11]
-  IKE_SENSOR = [0x12, 0x13]
-  COUNTRY = [0x14, 0x15]
-
-  MID_TXT = [0x21]
-
-  OBC = [0x2A, 0x40, 0x41]
-
-  BUTTON = [0x48, 0x49]
-
-  VEHICLE = [0x53, 0x54]
-  LAMP = [0x5A, 0x5B]
-  DOOR = [0x79, 0x7A]
-
-  NAV = [0x4f]
-
-  NOISEY = [*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *MID_TXT, *BUTTON, *OBC, *VEHICLE, *LAMP].freeze
+  NOISEY = [*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *MID_TXT, *BUTTON, *VEHICLE, *LAMP].freeze
 
 
   def self.i
