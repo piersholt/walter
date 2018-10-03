@@ -121,6 +121,7 @@ class Channel
             raise EncodingError if read_byte.nil?
 
             parsed_byte = Byte.new(:encoded, read_byte)
+            byte_basic = ByteBasic.new(read_byte)
 
             # NOTE this is intesresting.. this event isn't to do with the
             # primary processing..it's only for logging..
@@ -128,9 +129,9 @@ class Channel
             #   1. PendingData
             #   2. NoData
             changed
-            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, pos: stream.pos)
+            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, byte_basic: byte_basic, pos: stream.pos)
 
-            input_buffer.push(parsed_byte)
+            input_buffer.push(byte_basic)
           rescue EncodingError => e
             if stream.class == FILE_TYPE_HANDLERS[:file]
               LOGGER.warn(tn) { "ARGF EOF. Files read: #{offline_file_count}." }

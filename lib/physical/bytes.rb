@@ -17,7 +17,7 @@ class Bytes
   end
 
   def inspect
-    "<Bytes> ".concat(map(&:h).join(' '))
+    "<Bytes ".concat(map(&:h).join(' ').concat('>'))
   end
 
   def to_s

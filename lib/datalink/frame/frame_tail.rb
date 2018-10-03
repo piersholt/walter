@@ -27,6 +27,10 @@ class FrameTail < Bytes
     self[1]
   end
 
+  def payload
+    Bytes.new(self[1..-2])
+  end
+
   # a command may not have any arguments
   def arguments
     length > 3 ? self[2..-2] : []

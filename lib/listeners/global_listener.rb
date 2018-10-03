@@ -57,6 +57,8 @@ class GlobalListener
         frame_failed(action, properties)
       when MESSAGE_RECEIVED
         message_received(action, properties)
+      when PACKET_RECEIVED
+        packet_received(action, properties)
       when MESSAGE_SENT
         message_sent(action, properties)
       when FRAME_SENT
@@ -81,7 +83,14 @@ class GlobalListener
 
   def message_received(action, properties)
     @session_handler.update(action, properties)
-    @display_handler.update(action, properties)
+    # @display_handler.update(action, properties)
+  end
+
+  def packet_received(action, properties)
+    packet = properties[:packet]
+    LOGGER.warn(PROC) { "#{packet}" }
+    # LOGGER.warn(PROC) { "Data class: #{packet.data.class}" }
+    # LOGGER.warn(PROC) { "Datum class: #{packet.data[0].class}" }
   end
 
   # ---- DATALINK --- #

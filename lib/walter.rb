@@ -8,6 +8,7 @@ require 'pry'
 
 # local dependencies
 require 'physical/byte'
+require 'physical/byte_basic'
 require 'physical/bytes'
 require 'application/message'
 
