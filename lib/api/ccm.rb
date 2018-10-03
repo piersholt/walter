@@ -6,15 +6,17 @@ module API
     include BaseAPI
     include ClusterTools
 
-    COMMAND_ID = 0x1A
-    TO_DEFAULT = Devices::IKE
-    FROM_DEFAULT = Devices::CCM
+    CCM_ALERT = {
+      id:   0x1A,
+      from: Devices::IKE,
+      to:   Devices::GLOL
+    }.freeze
 
     # @param Integer  mode
     # @param Integer  control
     # @param String   chars
-    def alert(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      command_id = COMMAND_ID
+    def alert(command_arguments, from_id = CCM_ALERT[:from], to_id = CCM_ALERT[:to])
+      command_id = CCM_ALERT[:id]
       format_chars!(command_arguments)
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
