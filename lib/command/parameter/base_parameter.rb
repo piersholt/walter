@@ -23,7 +23,7 @@ class BaseParameter
   end
 
   def inspect
-    str_buffer = "<#{PROC} @value = {value}"
+    str_buffer = "<#{PROC} @value=#{value}"
     # str_buffer = str_buffer.concat(" @indexed_bit_array=#{indexed_bit_array}")
     # str_buffer = str_buffer.concat("[#{aligned_parameters}]")
     str_buffer.concat(">")

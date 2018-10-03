@@ -134,7 +134,7 @@ class Receiver
     LOGGER.debug(PROG_NAME) { "#{SYNC_SHIFT} Shifting one byte." }
 
     byte_to_discard = new_frame[0]
-    LOGGER.warn(PROG_NAME) { "#{SYNC_SHIFT} Discard: #{byte_to_discard}." }
+    LOGGER.debug(PROG_NAME) { "#{SYNC_SHIFT} Discard: #{byte_to_discard}." }
 
     bytes_to_unshift = new_frame[1..-1]
     bytes_to_unshift = Bytes.new(bytes_to_unshift)
