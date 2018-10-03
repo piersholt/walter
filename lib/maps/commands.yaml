@@ -1944,17 +1944,57 @@
     :d: 44
     :h: '0x2C'
   :properties:
-    :short_name: TEL-?
+    :short_name: TEL-STATE
     :long_name: Unknown
   :parameters:
-    :action:
-      :type: :map
-      :dictionary:
-        0x10: exit tel?
-        0x12: commence call (HANDSET)
-        0x13: commence call? (HANDSFREE)
+    :status:
+      :type: :bit_array
+      :index:
+        :active: 2
+        :power: 3
+        :display: 4
+        :incoming: 5
+        :menu: 6
+        :hfs: 7
+      :parameters:
+        :active:
+          :label: In Use
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :power:
+          :label: Telephone
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :display:
+          :label: Display?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :incoming:
+          :label: Incoming Call
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :menu:
+          :label: Menu?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :hfs:
+          :label: Handsfree
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
   :index:
-    :action: 0
+    :status: 0
   :klass: ParameterizedCommand
   :meta:
     :senders:

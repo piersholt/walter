@@ -41,7 +41,7 @@ class SwitchedParameter < BaseParameter
     end
   end
 
-  # :off, :on, :ok, :fault
+  # No output: [:off, :on, :ok]
   def pretty
     case state
     when :off
@@ -56,6 +56,10 @@ class SwitchedParameter < BaseParameter
       as_good('OK')
     when :fault
       as_bad('FAULT')
+    when :unpowered
+      as_warn('OFF')
+    when :powered
+      as_good('ON')
     end
   end
 
