@@ -19,7 +19,9 @@ class MappedParameter < BaseParameter
   end
 
   def pretty
-    if @dictionary.nil?
+    if value.nil?
+      return '--'
+    elsif @dictionary.nil?
       LOGGER.warn(PROC) { "Map @dictionary is nil!" }
       return "\"value\""
     elsif !@dictionary.key?(value)

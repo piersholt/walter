@@ -1759,34 +1759,52 @@
   :properties:
     :short_name: HUD-TEXT
     :long_name: OBC Display (IKE, GFX)
-    :verbose: true
-    :modes:
-      0x01: Time
-      0x02: Date
-      0x03: Outside Temp.
-      0x04: Econ. 1
-      0x05: Econ. 2
-      0x06: Range
-      0x07: Distance
-      0x08: Arrival
-      0x09: Speed Limit
-      0x0a: Avg. Speed
-      0x0c: Memo
-      0x0d: Memo
-      0x0e: Stopwatch
-      0x0f: Aux. Timer 1
-      0x10: Aux. Timer 2
-      0x11: Aux Heating Off
-      0x12: Aux Heating On
-      0x13: Aux Vent. Off
-      0x14: Aux Vent. On
-      0x15: End Stellmode
-      0x16: Emergency Disarm
-      0x1a: Interim Time
-      0x1b: Aux Heat/Vent
-      0x1f: Test Mode
-      0x40: Radio HUD
-  :klass: OBCDisplay
+    :verbose: false
+  :klass: ParameterizedCommand
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo
+        0x0d: Memo
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :ike:
+      :type: :map
+      :dictionary:
+        0:00: --
+        0x20: Set
+        0x30: Update
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
   :meta:
     :examples:
       - RAD GLO-H TXT-1 Radio HUD "102.1   "

@@ -16,9 +16,9 @@ class CharsParameter < BaseParameter
     @chars = Command::Chars.new(value, true)
   end
 
-  # def to_s
-  #   "A Thing: #{value} (Human Version)"
-  # end
+  def to_s
+    "#{value} (#{@chars})"
+  end
 
   def inspect
     "<#{PROC} @value=#{value} @chars=#{chars}>"

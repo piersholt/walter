@@ -10,7 +10,9 @@ class Command
       parameters.map do |param|
         param_name = param
         param_object = public_send(param)
-        "#{param_name}: #{d2h(param_object.value, true)} (#{param_object})"
+        value = param_object.value
+        value = value.instance_of?(Numeric) ? d2h(value, true) : value
+        "#{param_name}: #{value} (#{param_object.to_s})"
       end.join(' / ')
     end
 

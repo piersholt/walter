@@ -47,12 +47,12 @@ module API
 
     private
 
-    def format_chars!(command_arguments)
+    def format_chars!(command_arguments, align = true)
       chars_string = command_arguments[:chars]
       return false unless chars_string
 
-      chars_string_aligned = centered(chars_string, upcase: true)
-      chars_array = chars_string_aligned.bytes
+      chars_string = centered(chars_string, upcase: true) if align
+      chars_array = chars_string.bytes
       command_arguments[:chars] = chars_array
     end
   end
