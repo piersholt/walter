@@ -25,7 +25,6 @@
   :id:
     :h: '0x02'
     :d: 2
-    :b: 8
   :properties:
     :short_name: PONG
     :long_name: Status Response
@@ -313,7 +312,6 @@
       :parameters:
         :gear:
           :type: :map
-          :klass: :map
           :label: Selected Gear
           :map:
             0b0000: gear_na
@@ -790,7 +788,7 @@
       :service: !ruby/range
                   begin: 12
                   end: 13
-                  excl: false"
+                  excl: false
   :klass: BaseCommand
   :examples:
     - "IKE   	LCM   	53        --"
@@ -1071,7 +1069,7 @@
     :h: '0x4A'
   :properties:
     :short_name: RAD-LED
-    :long_name: Radio LED?
+    :long_name: Radio LED
   :klass: RadioLED
   :parameters:
     :led:
