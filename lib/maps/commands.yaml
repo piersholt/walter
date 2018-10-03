@@ -2363,7 +2363,7 @@
     :d: 8
     :h: '0x08'
   :properties:
-    :short_name: DIA-COD-R
+    :short_name: DIA-COD-READ
     :long_name: Diagnostics READ Coding Data Universal
   :klass: BaseCommand
 
@@ -2391,7 +2391,7 @@
     :d: 12
     :h: '0x0C'
   :properties:
-    :short_name: VEH
+    :short_name: DIA-VEH-CTRL
     :long_name: Vehicle Control
   :klass: BaseCommand
   :parameters:
@@ -2510,7 +2510,7 @@
   :id:
     :d: 160
   :properties:
-    :short_name: DIA-D
+    :short_name: DIA-DATA
     :long_name: Diagnostics Data
   :klass: BaseCommand
 
@@ -2522,7 +2522,7 @@
     :d: 6
     :h: '0x06'
   :properties:
-    :short_name: DIA-R
+    :short_name: DIA-MEM-READ
     :long_name: Diagnostics Read Memory
   :klass: BaseCommand
   :meta:
@@ -2532,7 +2532,7 @@
     :d: 7
     :h: '0x07'
   :properties:
-    :short_name: DIA-W
+    :short_name: DIA-MEM-WRITE
     :long_name: Diagnostics Write Memory
   :klass: BaseCommand
   :meta:
@@ -2542,9 +2542,11 @@
     :d: 9
     :h: '0x09'
   :properties:
-    :short_name: COD-W
+    :short_name: DIACOD-WRITE
     :long_name: Diagnostics WRITE Coding Data
   :klass: BaseCommand
+
+
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
