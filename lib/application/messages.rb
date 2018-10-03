@@ -94,13 +94,21 @@ class Messages
     end
   end
 
-  def arguments
+  def arguments(index = (0..0))
     messages_with_unique_argument_sum = @messages.uniq do |m|
-      m.command.arguments.reduce(0) { |m, arg_byte| m + arg_byte.d }
+      result = m.command.arguments[index].reduce(0) { |m, arg_byte| m + arg_byte.d }
+      result.nil? ? -1 : result
+    end
+
+    messages_with_unique_argument_sum.each do |m|
+      range = m.command.arguments[index]
+      value = (range.nil? || range.empty?) ? ['-1'] : range.map(&:h)
+      LOGGER.warn(value)
     end
 
     argument_values = messages_with_unique_argument_sum.map do |message|
-      message.arguments.map(&:h)
+      range = message.command.arguments[index]
+      (range.nil? || range.empty?) ? ['-1'] : range.map(&:h)
     end
 
     argument_values_transposed = argument_values.transpose
@@ -109,14 +117,19 @@ class Messages
       pos.uniq
     end
 
-    messages_with_unique_argument_sum.map do |u_m|
-      u_m.arguments.map(&:h)
+    unique_arguments = messages_with_unique_argument_sum.map do |u_m|
+      range = u_m.command.arguments[index]
+      (range.nil? || range.empty?) ? ['-1'] : range.map(&:h)
+    end
+
+    unique_arguments.delete_if do |argument|
+      argument == ['-1']
     end
   end
 
   def lengths
     message_lengths = @messages.map do |m|
-      m.arguments.length
+      m.command.arguments.length
     end
 
     grouped_lengths = message_lengths.group_by { |l| l }
