@@ -12,25 +12,7 @@ require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'
 
-class Packet
-  attr_reader :from, :to, :data
-
-  def initialize(from, to, data)
-    @from = from
-    @to = to
-    @data = data
-  end
-
-  def inspect
-    "<Packet Tx: #{from} Rx: #{to} Data: #{data}>"
-  end
-
-  def to_s
-    "#{from.upcase}\t#{to.upcase}\t#{data}"
-  end
-end
-
-class DemultiplexingHandler
+class PacketHandler
   include Observable
   include Singleton
   include Event
@@ -45,7 +27,6 @@ class DemultiplexingHandler
   def initialize
     @device_map = DeviceMap.instance
     @command_map = CommandMap.instance
-    @address_lookup_table = AddressLookupTable.instance
   end
 
   def inspect
@@ -66,24 +47,6 @@ class DemultiplexingHandler
   private
 
   # ------------------------------ FRAME ------------------------------ #
-
-  def demultiplex(frame)
-    from      = frame.from
-    from_id   = from.d
-    from_device = @address_lookup_table.find(from_id)
-
-    to        = frame.to
-    to_id     = to.d
-    to_device   = @address_lookup_table.find(to_id)
-
-    payload   = frame.payload
-
-    # LOGGER.warn(PROC) { "from_device: #{from_device}" }
-    # LOGGER.warn(PROC) { "to_device: #{to_device}" }
-    # LOGGER.warn(PROC) { "payload: #{payload}" }
-
-    Packet.new(from_device, to_device, payload)
-  end
 
   def process_frame(frame)
     LOGGER.debug(PROC) { "#{self.class}#process_frame(#{frame})" }
