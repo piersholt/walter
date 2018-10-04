@@ -1481,7 +1481,7 @@
       0x97: Tape (B) ◁◁
       0x90: Tape ERROR!!!
     :ike:
-      0:00: --
+      0x00: --
       0x10: '540?'
       0x20: Set IKE
       0x30: Overwrite IKE
