@@ -164,7 +164,7 @@
     :h: '0x76'
     :d: 118
   :properties:
-    :short_name: CD?
+    :short_name: CD
     :long_name: Audio related?
   :klass: BaseDevice
   :meta:
