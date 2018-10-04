@@ -1109,6 +1109,7 @@
     :control:
       :type: :map
       :dictionary:
+        0x05: Set Mode (540)?
         0x06: Set Mode?
     :mode:
       :type: :map
@@ -1466,6 +1467,8 @@
       0x40: Radio Set Station
       0x50: Radio [ST]
 
+      0x62: 540 GFX
+
       # TAPE
       0x83: Tape (A) ▷▷▷
       0x84: Tape (A) ◁◁◁
@@ -1479,6 +1482,7 @@
       0x90: Tape ERROR!!!
     :ike:
       0:00: --
+      0x10: '540?'
       0x20: Set IKE
       0x30: Overwrite IKE
   :meta:
@@ -2556,8 +2560,16 @@
     :h: '0x59'
   :properties:
     :short_name: LIGHT-SEN
-    :long_name: Unidentified
-  :klass: BaseCommand
+    :long_name: Luminosity Reading?
+  :klass: ParameterizedCommand
+  :parameters:
+    :lum:
+      :type: :integer
+    :tbc:
+      :type: :integer
+  :index:
+    :lum: 0
+    :tbc: 1
 82:
   :id:
     :d: 82
@@ -2566,6 +2578,9 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    :notes:
+      - 540 sent 52 to CCM? looks like text.
 85:
   :id:
     :d: 85
@@ -2762,14 +2777,35 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-165:
+0xA5:
   :id:
     :d: 165
     :h: '0xA5'
   :properties:
-    :short_name: '0xA5'
+    :short_name: TXT?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        0x62: TBC
+    :ike:
+      :type: :map
+      :dictionary:
+        0x01: TBC
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :meta:
+    :notes:
+      - 540 RAD sending this to GFX
 169:
   :id:
     :d: 169
