@@ -97,6 +97,7 @@ class DisplayHandler
   end
 
   def filter_commands(*command_ids)
+    LOGGER.info(PROC) { "Filtering commands: #{command_ids}" }
     filtered_commands.clear if filtered_commands.size >= 5
     return false if command_ids.any? { |c_id| @filtered_commands.include?(c_id) }
     command_ids.each { |command_id| @filtered_commands << command_id }
@@ -118,10 +119,6 @@ class DisplayHandler
     LOGGER.info(PROC) { ("Shutting up commands: #{NOISEY.join(', ')}.") }
     hide_commands(*NOISEY)
     true
-  end
-
-  def obc
-    filter_commands(*OBC)
   end
 
   private
