@@ -36,6 +36,38 @@ module CommandTools
 end
 
 module WalterTools
+  PROC_MOD = 'WalterTools'.freeze
+
+  # Session
+
+  def messages
+    SessionHandler.i.messages
+  end
+
+  # DisplayHandler
+
+  def s
+    DisplayHandler.instance.enable
+  end
+
+  def h
+    DisplayHandler.instance.disable
+  end
+
+  def diag
+    DisplayHandler.i.filter_commands(*CommandTools::DIA)
+  end
+
+  def obc
+    DisplayHandler.i.filter_commands(*CommandTools::OBC)
+  end
+
+  def shutup!
+    DisplayHandler.i.shutup!
+  end
+
+  # Logging
+
   def debug
     LOGGER.sev_threshold=(Logger::DEBUG)
   end
@@ -44,13 +76,32 @@ module WalterTools
     LOGGER.sev_threshold=(Logger::INFO)
   end
 
-  def shutup!
-    DisplayHandler.i.shutup!
+  # Annoying Tasks :)
+
+  def hello?
+    t0 = @messages.count
+    Kernel.sleep(1)
+    t1 = @messages.count
+    r = t1 - t0
+    LOGGER.info(PROC_MOD) { "#{r} new messages in the last second." }
+    r.positive? ? true : false
   end
 
-  def messages
-    SessionHandler.i.messages
+  def news
+    print_status(true)
+    true
   end
+
+  def nl
+    new_line_thread = Thread.new do
+      Thread.current[:name] = 'New Line'
+      Kernel.sleep(0.5)
+      LOGGER.unknown('Walter') { 'New Line' }
+    end
+    add_thread(new_line_thread)
+  end
+
+  # Delay
 
   def rate(seconds)
     @channel.sleep_time = seconds
@@ -64,10 +115,7 @@ module WalterTools
     @channel.sleep_enabled = false
   end
 
-  def news
-    print_status(true)
-    true
-  end
+  # API
 
   def fuck_yeah!
     @bus_device.update(chars: "fuck yeah".bytes, ike: :set_ike, gfx: :radio_set)
@@ -75,15 +123,6 @@ module WalterTools
 
   def key
     @bus_device.state(key: :key_6, status: 0x04)
-  end
-
-  def nl
-    new_line_thread = Thread.new do
-      Thread.current[:name] = 'New Line'
-      Kernel.sleep(0.5)
-      LOGGER.unknown('Walter') { 'New Line' }
-    end
-    add_thread(new_line_thread)
   end
 end
 
