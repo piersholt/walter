@@ -11,7 +11,7 @@ class Command
         param_name = param
         param_object = public_send(param)
         value = param_object.value
-        value = value.instance_of?(Numeric) ? d2h(value, true) : value
+        value = value.kind_of?(Numeric) ? d2h(value, true) : value
         "#{param_name}: #{value} (#{param_object.to_s})"
       end.join(' / ')
     end
