@@ -61,7 +61,7 @@ class DemultiplexingHandler
     from_object    = @device_map.find(from_id)
     to_object      = @device_map.find(to_id)
 
-    command_config = @command_map.config(command_id)
+    command_config = @command_map.config(command_id, from_id)
     parameter_values_hash = parse_argumets(command_config, arguments)
     LOGGER.debug(PROC) { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)
