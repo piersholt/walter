@@ -2905,23 +2905,45 @@
     :gfx:
       :type: :map
       :dictionary:
-        0x62: TBC
+        0x62: Change Station
     :ike:
       :type: :map
       :dictionary:
         0x01: TBC
+    :zone:
+      :type: :map
+      :dictionary:
+        0: Unknown
+        2: Program (5)
+        65: A (5)
+        66: B (5)
+        67: C (5)
+        68: D (5)
+        69: E (7)
+        70: F (20)
+        7: TBC (20)
     :chars:
       :type: :chars
   :index:
     :gfx: 0
     :ike: 1
+    :zone: 2
     :chars: !ruby/range
-              begin: 2
+              begin: 3
               end: -1
               excl: false
   :meta:
     :notes:
       - 540 RAD sending this to GFX
+    :examples:
+      - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
+      - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
+      - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
+      - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
+      - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
+      - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
+      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
+      - 65, 66, 67, 68, 69, 70... too neat to be coincidence...
 169:
   :id:
     :d: 169
