@@ -1946,6 +1946,16 @@
         0x02: Cleared
   :index:
     :hud_status: 0
+  :schemas:
+    - 0x3F
+  0x3F:
+    :id:
+      :d: 27
+      :h: '0x1B'
+    :properties:
+      :short_name: DIA-PDC
+      :long_name: Test PDC Sensors
+    :klass: BaseCommand
   :meta:
     :examples:
       - TEL   	IKE   	23        40 20,
