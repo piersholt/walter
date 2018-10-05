@@ -23,6 +23,10 @@ class Command
       str_buffer
     end
 
+    def inspect
+      to_s
+    end
+
     private
 
     def map_arguments(arguments)

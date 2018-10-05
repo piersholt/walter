@@ -1570,9 +1570,6 @@
       0xFF: GLO-H
       0x80: IKE
       0x3B: GFX
-    :audience:
-      0x80: IKE
-      0x3B: GFX
     :notes:
       - How you change the radio station affects what messages are sent
       - Changing via MFL will send to GLO-H as the message is consumed by
@@ -1877,7 +1874,7 @@
     :ike:
       :type: :map
       :dictionary:
-        0:00: --
+        0x00: --
         0x20: Set
         0x30: Update
     :chars:
