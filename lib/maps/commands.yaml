@@ -1359,6 +1359,9 @@
   :id:
     :d: 35
     :h: '0x23'
+  :properties:
+    :short_name: TXT-MEDIA
+    :long_name: Update Text Display (BMBT, IKE)
   :klass: MediaDisplay
   :schemas:
     - 0xC8
