@@ -38,3 +38,6 @@ As mentioned above, it's current state is a reflection of my needs while I'm exp
 - The vehicles used in development were a 1997 BMW E39 528i Touring, and 2001 BMW E39 540i, both with High IKE.
 - The 528i (to which I have best access) has water damaged amplifier and nav. computer so related commands are a little vague/possibly utterly wrong.
 - I'll fill in the gaps with the 540i when I can.
+
+![Exposing Walter](screenshot.jpg)
+_P.S. Telephone numbers in screen shot aren't mine_ 😊
