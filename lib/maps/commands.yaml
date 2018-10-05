@@ -1360,30 +1360,12 @@
     :d: 35
     :h: '0x23'
   :klass: MediaDisplay
+  :schemas:
+    - 0xC8
   :parameters:
     :gfx:
       :type: :map
       :dictionary:
-        0x00: Telephone Screen
-
-        # TELEPHONE
-        0x01: TEL-A
-        # 199 SOUND LEFT, 200 SOUND RIGHT
-        0x02: TEL-B
-        # 198 SPEAKER
-
-        0x52: Directory Header Set
-        0x53: Directory Header Overwrite
-        0x61: Dial Header Overwrite
-        0x63: Rotary Rotary Header Overwrite
-        0x80: Default Header Overwrite
-        0x81: Top 8 Header Set
-        0x82: Top 8 Header Overwrite
-        0xC0: SOS Header Set?
-
-        0x42: Contact/Call
-        0x43: Show Contact Number
-        0x41: Clear Contact
 
         # RADIO
         0x40: Radio Set Station
@@ -1422,52 +1404,54 @@
               begin: 2
               end: -1
               excl: false
-  :properties:
-    :short_name: TXT-MEDIA
-    :long_name: Update Text Display (BMBT, IKE)
-    :verbose: false
-    :gfx:
-      # TELEPHONE
-      0x00: No Service
-      0x01: TEL-A
-      0x02: TEL-B
+  0xC8:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: TXT-MEDIA
+      :long_name: Update Text Display (BMBT, IKE)
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          0x00: Telephone Screen Set
+          # TELEPHONE
+          0x01: TEL-A
+          # 199 SOUND LEFT, 200 SOUND RIGHT
+          0x02: TEL-B
+          # 198 SPEAKER
 
-      # Headers
-      0x52: Directory Header Set
-      0x53: Directory Header Overwrite
-      0x61: Dial Header Overwrite
-      0x63: Rotary Rotary Header Overwrite
-      0x80: Default Header Overwrite
-      0x81: Top 8 Header Set
-      0x82: Top 8 Header Overwrite
-      0xC0: SOS Header Set?
+          0x05: Pin-Code Screen Header Set
 
-      0x42: Contact/Call
-      0x43: Show Contact Number
-      0x41: Clear Contact
+          0x42: Contact/Call
+          0x43: Show Contact Number
+          0x41: Clear Contact
 
-      # RADIO
-      0x40: Radio Set Station
-      0x50: Radio [ST]
+          0x52: Directory Header Set
+          0x53: Directory Header Overwrite
+          0x61: Dial Header Overwrite
+          0x63: Rotary Rotary Header Overwrite
+          0x80: Default Header Overwrite
+          0x81: Top 8 Header Set
+          0x82: Top 8 Header Overwrite
 
-      0x62: 540 GFX
+          0x91: Info Header?
 
-      # TAPE
-      0x83: Tape (A) ▷▷▷
-      0x84: Tape (A) ◁◁◁
-      0x86: Tape (A) ▷▷
-      0x87: Tape (A) ◁◁
-      0x92: Tape (B) ▶︎
-      0x93: Tape (B) ▷▷▷
-      0x94: Tape (B) ◁◁◁
-      0x96: Tape (B) ▷▷
-      0x97: Tape (B) ◁◁
-      0x90: Tape ERROR!!!
-    :ike:
-      0x00: --
-      0x10: '540?'
-      0x20: Set IKE
-      0x30: Overwrite IKE
+          0xC0: SOS Header Set?
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x20: Set IKE
+          0x30: Update IKE
+      :chars:
+        :type: :chars
   :meta:
     :desc: used to updated display with media informtion upon change. Text displayed
       is based upon the media mode (radio, tape, CDC).
@@ -1748,6 +1732,8 @@
     :long_name: OBC Display (IKE, GFX)
     :verbose: false
   :klass: ParameterizedCommand
+  :schemas:
+    - 0xC8
   :parameters:
     :gfx:
       :type: :map
@@ -1792,6 +1778,42 @@
               begin: 2
               end: -1
               excl: false
+  # 0x24 Alternative Schemas
+  0xC8:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: HUD-TEXT
+      :long_name: Update Info
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          0x91: Signal Strength
+          0x93: Call cost current
+          0x94: Call cost total
+          0x96: Call Time minutes
+          0x97: Call time seconds
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+      :chars:
+        :type: :chars
+        # 0xB2 = 7 bars
+        # 0xB3 = 6 bars
+        # 0xB4 = 5 bars
+        # 0xB5 = 4 bars
+        # 0xB6 = 3 bars
+        # 0xB7 = 2 bars
+        # 0x5F = 1 bar
+        # 0xB8 = 0 bars
   :meta:
     :examples:
       - RAD GLO-H TXT-1 Radio HUD "102.1   "
