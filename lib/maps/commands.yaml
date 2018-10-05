@@ -1369,35 +1369,143 @@
     :gfx:
       :type: :map
       :dictionary:
+        # SERVICE MODE
+        0x02: Service / Serial Number
+        0x12: Service / Serial Number
+        0x03: Service / Software Version
+        0x13: Service / Software Version
+        0x04: Service / GAL
+        0x14: Service / GAL
+        0x05: Service / F & Q?
+        0x15: Service / F & Q?
+        0x06: Service / DSP
+        0x16: Service / DSP
+        0x07: Service / Seek Level
+        0x17: Service / Seek Level
+        0x08: Service / TP Volume
+        0x18: Service / TP Volume
+
+        # NAV?
+        0x2_0: No Station
+        0x3_0: No Station
+        0x2_1: WB CH 1
+        0x3_1: WB CH 1
+        0x2_2: WB CH 2
+        0x3_2: WB CH 2
+        0x2_3: WB CH 3
+        0x3_3: WB CH 3
+        0x2_4: WB CH 4
+        0x3_4: WB CH 4
+        0x2_5: WB CH 5
+        0x3_5: WB CH 5
+        0x2_6: WB CH 6
+        0x3_6: WB CH 6
+        0x2_7: WB CH 7
+        0x3_7: WB CH 7
+        0x2_8: WB
+        0x3_8: WB
 
         # RADIO
         0x40: Radio Set Station
+        0x41: m?
+        0x42: SCAN?
+        0x43: II?
+        0x44: I?
+
+        0x46: T?
+        0x47: TP?
+        0x48: T (upper right?)
+        0x49: m + T upper right
+
         0x50: Radio [ST]
+        0x51: m?
+        0x52: SCAN?
+        0x53: II?
+        0x54: I?
+
+        0x56: T?
+        0x57: TP?
+        0x58: T (upper right)
+        0x59: m + T
+
+        0x5a: Scan + T
+        0x5b: II + T
+        0x5c: I? + T
+        0x5d: T
+        0x5e: T + T
+        0x5f: TP + T
 
         # TAPE
-        0x82: Tape (A) ▶︎
-        0x86: Tape (A) ▷▷
-        0x87: Tape (A) ◁◁
-        0x83: Tape (A) ▷▷▷
-        0x84: Tape (A) ◁◁◁
+        0x8_0: Tape Error
+        0x9_0: Tape Error
+        0x8_2: Tape (1) ▶︎
+        0x9_2: Tape (2) ▶︎
+        0x8_3: Tape (1) ▷▷▷
+        0x9_3: Tape (2) ▷▷▷
+        0x8_4: Tape (1) ◁◁◁
+        0x9_4: Tape (2) ◁◁◁
+        0x8_6: Tape (1) ▷▷
+        0x9_6: Tape (2) ▷▷
+        0x8_7: Tape (1) ◁◁
+        0x9_7: Tape (2) ◁◁
+        0x8_8: Tape Clean
+        0x9_8: Tape Clean
+        0x8_9: Tape (A) <<>>
+        0x9_9: Tape (B) <<>>
+        0x8_A: Tape (A)
+        0x9_A: TAPE (B)
 
-        0x92: Tape (B) ▶︎
-        0x96: Tape (B) ▷▷
-        0x97: Tape (B) ◁◁
-        0x93: Tape (B) ▷▷▷
-        0x94: Tape (B) ◁◁◁
+        0x8B: --
+        0x9B: --
+        0x9C: --
+        0x8C: --
+        0x9D: --
+        0x8D: --
+        0x8E: --
+        0x9E: --
+        0x8F: --
+        0x9F: --
 
-        0x90: Tape ERROR!!!
+        # No common bit...?
+        0xA0: No Station
+        0xA4: No Station
+        0xA8: No Station
+
+        # Bit 7
+        0xA1: Traffic 1
+        0xA5: Traffic 1
+        0xA9: Traffic 1
+
+        # Bit 6
+        0xA2: Traffic 2
+        0xA6: Traffic 2
+        0xAA: Traffic 2
+
+        0xA3: Nothing
+
+        # all the way through to C0, then
+        # C0..DF: display text
+        # E0..EF: nothing
+        # 0x41: IKE Set (540)
+        # 0x62: Section Update? (540)
     :ike:
-      :type: :map
-      :map:
-        0:00: IKE_NA
-        0x20: SET_IKE
-        0x30: UPDATE_IKE
-      :dictionary:
-        0:00: --
-        0x20: Set IKE
-        0x30: Append IKE
+      :type: :bit_array
+      :parameters:
+        :set:
+          :label: IKE Display
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :update:
+          :label: Update Only
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :set: 2
+        :update: 3
     :chars:
       :type: :chars
   :index:
