@@ -1,6 +1,8 @@
 module DataTools
   extend self
 
+  MOD_PROC = 'DataTools'
+
   HEX = (0..9).map { |i| i.to_s } + ('A'..'F').map {|c| c}
   BINARY_ENCODING = Encoding::ASCII_8BIT
 
@@ -13,6 +15,40 @@ module DataTools
     :dec =>:decimal,
     :bin =>:binary,
     :b =>:binary }
+
+  def common(numbers)
+    numbers = numbers.dup
+    header = (Array.new(8) {|x| 7 -x}.join(' '))
+    LOGGER.info(MOD_PROC) { '-'.center(7) + header }
+    LOGGER.info(MOD_PROC) { '-'.center(7) + Array.new(header.length, '-').join('') }
+    numbers.map! do |each_number|
+      binary_string = Kernel.format('%.8b', each_number)
+      bits_array = binary_string.split('')
+      LOGGER.info(MOD_PROC) { "#{each_number}".center(7) + "#{(bits_array.join(' '))}" }
+      bits_array.reverse!
+      bits_array.map! { |b_str| b_str.to_i }
+    end
+
+    bit_positions = numbers.transpose
+    result = bit_positions.find_index do |pos|
+      if pos.include?(0)
+        false
+      elsif pos.minmax.first == pos.minmax.last
+        true
+      end
+    end
+
+    raise RangeError, 'No common bits!' unless result
+
+    footer = Array.new(8, '.')
+    footer[-1] = '*'
+    output = '-'.center(7) + footer.join('.')
+    LOGGER.info(MOD_PROC) { output }
+
+    puts "Position of common bit: #{result}"
+
+    result
+  end
 
   # ------------------------ CHECKSUM ------------------------ #
 
