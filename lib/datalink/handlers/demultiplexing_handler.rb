@@ -53,7 +53,9 @@ class DemultiplexingHandler
   def update(action, properties)
     case action
     when FRAME_RECEIVED
-      packet = strip_frame(properties[:frame])
+      frame = properties[:frame]
+      packet = demultiplex(frame)
+
       changed
       notify_observers(PACKET_RECEIVED, packet: packet)
     end
@@ -61,7 +63,7 @@ class DemultiplexingHandler
 
   private
 
-  def strip_frame(frame)
+  def demultiplex(frame)
     from      = frame.from
     from_id   = from.to_i
     from_device = @address_lookup_table.find(from_id)
