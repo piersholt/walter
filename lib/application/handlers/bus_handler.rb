@@ -13,6 +13,9 @@ class BusHandler
 
   def initialize(options)
     @bus = options[:bus]
+    @bus.devices.each do |device|
+      register(device.ident, device)
+    end
   end
 
   def update(action, properties)
@@ -21,7 +24,10 @@ class BusHandler
       packet = properties[:packet]
       raise RoutingError, 'Packet is nil!' unless packet
       packet_received(packet)
-    when PACKET_ROUTE
+
+      changed
+      notify_observers(PACKET_ROUTABLE, packet: packet)
+    when PACKET_ROUTABLE
       packet = properties[:packet]
       raise RoutingError, 'Packet is nil!' unless packet
       publish_to_bus(packet)
@@ -29,7 +35,7 @@ class BusHandler
   end
 
   def packet_received(packet)
-    LOGGER.warn(PACKET_RECEIVED) { packet }
+    # LOGGER.warn(PACKET_RECEIVED) { packet }
     from_ident = packet.from
     has_from = bus_has_device?(from_ident)
     raise RoutingError, "#{from_ident} is not on the bus." unless has_from
@@ -38,29 +44,47 @@ class BusHandler
     raise RoutingError, "#{to_ident} is not on the bus." unless has_to
   end
 
-  def bus_has_device?(device_ident)
-    @bus.device?(device_ident)
-  end
-
-  def register(recipient, observer)
-    subscribers[recipient] << observer
-  end
-
-  def subscribers
-    @subscribers ||= {}
-  end
-
   def publish_to_bus(packet)
     recipient = packet.to
     raise RoutingError, 'Recipient is nil!' unless recipient
     observers = subscribers[recipient]
     raise RoutingError, "No observers of #{recipient}" if observers.nil? || observers.empty?
     observers.each do |subscriber|
-      send_packet(subscriber, packet)
+      route_packet(subscriber, packet)
     end
   end
 
-  def send_packet(subscriber, packet)
-    subscriber.send_packet(packet)
+  def register(to_ident, observer)
+    subscribers(to_ident) << observer
+  end
+
+  private
+
+  def bus_has_device?(device_ident)
+    @bus.device?(device_ident)
+  end
+
+  def route_packet(subscriber, packet)
+    subscriber.receive_packet(packet)
+  end
+
+  def subscribers(ident = nil)
+    # LOGGER.info(PROC) { "#subscribers(#{ident})" }
+    if ident.nil?
+      return_value = @subscribers ||= {}
+      # LOGGER.info(PROC) { "#subscribers(nil) => #{return_value}" }
+      return_value
+    else
+      var = subscribers
+      if var.key?(ident)
+        return_value = var[ident]
+      else
+        var[ident] = []
+        return_value = var[ident]
+      end
+
+      # LOGGER.info(PROC) { "#subscribers(#{ident}) => #{return_value}" }
+      return_value
+    end
   end
 end

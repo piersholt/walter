@@ -43,6 +43,10 @@ class Virtual
     def to_s
       "<:#{@ident}>"
     end
+
+    def receive_packet(packet)
+      LOGGER.info(ident) { "#{packet.from} > #{packet.data}" }
+    end
   end
 
   class Bus

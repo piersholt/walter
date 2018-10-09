@@ -41,6 +41,7 @@ class GlobalListener
 
     @demultiplexing_handler.add_observer(self)
     @multiplexing_handler.add_observer(self)
+    @bus_handler.add_observer(self)
     add_observer(self)
   end
 
@@ -66,6 +67,8 @@ class GlobalListener
         message_received(action, properties)
       when PACKET_RECEIVED
         packet_received(action, properties)
+      when PACKET_ROUTABLE
+        packet_routable(action, properties)
       when MESSAGE_SENT
         message_sent(action, properties)
       when FRAME_SENT
@@ -94,6 +97,10 @@ class GlobalListener
   end
 
   def packet_received(action, properties)
+    @bus_handler.update(action, properties)
+  end
+
+  def packet_routable(action, properties)
     @bus_handler.update(action, properties)
   end
 

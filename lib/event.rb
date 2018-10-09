@@ -17,6 +17,7 @@ module Event
   MESSAGE_RECEIVED = :message_received
   MESSAGE_SENT = :message_sent
   PACKET_RECEIVED = :packet_received
+  PACKET_ROUTABLE = :packet_routable
 
   # user configuration events
   MESSAGE_DISPLAY = :message_display
@@ -27,7 +28,7 @@ module Event
 
   CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
   RECEIVER_EVENTS = [FRAME_RECEIVED, FRAME_FAILED, FRAME_SENT].freeze
-  LAYER_EVENTS    = [MESSAGE_RECEIVED, MESSAGE_SENT, PACKET_RECEIVED].freeze
+  LAYER_EVENTS    = [MESSAGE_RECEIVED, MESSAGE_SENT, PACKET_RECEIVED, PACKET_ROUTABLE].freeze
   USER_EVENTS     = [MESSAGE_DISPLAY].freeze
   APP_EVENTS      = [STATUS_REQUEST, EXIT].freeze
 
