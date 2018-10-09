@@ -94,12 +94,6 @@ class GlobalListener
   end
 
   def packet_received(action, properties)
-    # packet = properties[:packet]
-    # LOGGER.warn(PROC) { "#{packet}" }
-    # LOGGER.warn(PROC) { "Data class: #{packet.data.class}" }
-    # LOGGER.warn(PROC) { "Datum class: #{packet.data[0].class}" }
-    # @packet_routing_handler.update(action, properties)
-    @demultiplexing_handler.update(action, properties)
     @bus_handler.update(action, properties)
   end
 
