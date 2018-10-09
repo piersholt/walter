@@ -30,6 +30,20 @@ class BusHandler
     end
   end
 
+  def packet_received(packet)
+    LOGGER.warn(PACKET_RECEIVED) { "#{packet}" }
+    from_ident = packet.from
+    has_from = bus_has_device?(from_ident)
+    raise RoutingError, "#{from_ident} is not on the bus." unless has_from
+    to_ident = packet.to
+    has_to = bus_has_device?(to_ident)
+    raise RoutingError, "#{to_ident} is not on the bus." unless has_to
+  end
+
+  def bus_has_device?(device_ident)
+    @bus.device?(device_ident)
+  end
+
   def register(recipient, observer)
     subscribers[recipient] << observer
   end

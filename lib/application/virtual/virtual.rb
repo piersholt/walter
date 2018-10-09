@@ -4,8 +4,9 @@ class Virtual
   class Devices
     extend Forwardable
 
-    FORWARD_MESSAGES = Array.instance_methods(false)
-    FORWARD_MESSAGES.each do |fwrd_message|
+    array_methods = Array.instance_methods(false)
+    array_methods = array_methods + Enumerable.instance_methods(false)
+    array_methods.each do |fwrd_message|
       def_delegator :@devices, fwrd_message
     end
 
@@ -14,7 +15,9 @@ class Virtual
     end
 
     def include?(device_ident)
-      @self.include?(device_ident)
+      @devices.one? do |device|
+        device.ident == device_ident
+      end
     end
 
     def add(device)
@@ -24,6 +27,8 @@ class Virtual
 
   class Device
     PROC = 'Device'.freeze
+
+    attr_reader :ident
 
     def initialize(device_ident)
       @ident = device_ident
