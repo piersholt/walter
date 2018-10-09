@@ -96,7 +96,7 @@ class GlobalListener
 
   def message_received(action, properties)
     @session_handler.update(action, properties)
-    # @display_handler.update(action, properties)
+    @display_handler.update(action, properties)
   end
 
   def packet_received(action, properties)

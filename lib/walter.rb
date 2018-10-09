@@ -49,6 +49,7 @@ class Walter
                          bus: bus_handler)
     @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
+    @bus.all(:add_observer, @listener)
     # @application_layer.add_observer(@listener)
 
     add_observer(@listener)
