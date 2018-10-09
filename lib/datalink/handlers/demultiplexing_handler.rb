@@ -12,23 +12,7 @@ require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'
 
-class Packet
-  attr_reader :from, :to, :data
-
-  def initialize(from, to, data)
-    @from = from
-    @to = to
-    @data = data
-  end
-
-  def inspect
-    "<Packet Tx: #{from} Rx: #{to} Data: #{data}>"
-  end
-
-  def to_s
-    "#{from.upcase}\t#{to.upcase}\t#{data}"
-  end
-end
+require 'application/packet'
 
 class DemultiplexingHandler
   include Observable
