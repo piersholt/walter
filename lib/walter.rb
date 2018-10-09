@@ -17,6 +17,8 @@ require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
 
+require 'application/virtual/virtual'
+
 require 'helpers'
 
 # Container
@@ -37,6 +39,7 @@ class Walter
     interface_handler = InterfaceHandler.new(@transmitter)
     transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
     packet_routing_handler = PacketRoutingHandler.instance
+    @bus = Virtual::Initialization.new.execute
 
     @listener =
       GlobalListener.new(interface: interface_handler,
