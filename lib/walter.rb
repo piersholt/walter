@@ -38,8 +38,8 @@ class Walter
 
     interface_handler = InterfaceHandler.new(@transmitter)
     transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
-    packet_routing_handler = PacketRoutingHandler.instance
     @bus = Virtual::Initialization.new.execute
+    bus_handler = BusHandler.new(bus: @bus)
 
     @listener =
       GlobalListener.new(interface: interface_handler,

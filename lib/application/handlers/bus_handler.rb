@@ -4,14 +4,15 @@ class RoutingError < StandardError
   end
 end
 
-class PacketRoutingHandler
+class BusHandler
   include Observable
-  include Singleton
   include Event
   include Helpers
 
-  def self.i
-    instance
+  PROC = 'BusHandler'.freeze
+
+  def initialize(options)
+    @bus = options[:bus]
   end
 
   def update(action, properties)
@@ -19,7 +20,13 @@ class PacketRoutingHandler
     when PACKET_RECEIVED
       packet = properties[:packet]
       raise RoutingError, 'Packet is nil!' unless packet
-      route_packet(packet)
+      LOGGER.warn(PACKET_RECEIVED) { "#{packet}" }
+
+      # publish_to_bus(packet)
+    when PACKET_ROUTE
+      packet = properties[:packet]
+      raise RoutingError, 'Packet is nil!' unless packet
+      publish_to_bus(packet)
     end
   end
 
@@ -31,7 +38,7 @@ class PacketRoutingHandler
     @subscribers ||= {}
   end
 
-  def route_packet(packet)
+  def publish_to_bus(packet)
     recipient = packet.to
     raise RoutingError, 'Recipient is nil!' unless recipient
     observers = subscribers[recipient]

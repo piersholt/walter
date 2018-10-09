@@ -9,7 +9,7 @@ require 'datalink/handlers/multiplexing_handler'
 require 'application/handlers/packet_handler'
 require 'handlers/interface_handler'
 require 'datalink/handlers/transmission_handler'
-require 'application/handlers/packet_routing_handler'
+require 'application/handlers/bus_handler'
 
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
@@ -38,7 +38,6 @@ class GlobalListener
     @transmission_handler = handlers[:transmission]
     @interface_handler = handlers[:interface]
     @bus_handler = handlers[:bus]
-    @packet_routing_handler = handlers[:packet_routing]
 
     @demultiplexing_handler.add_observer(self)
     @multiplexing_handler.add_observer(self)
@@ -101,6 +100,7 @@ class GlobalListener
     # LOGGER.warn(PROC) { "Datum class: #{packet.data[0].class}" }
     # @packet_routing_handler.update(action, properties)
     @demultiplexing_handler.update(action, properties)
+    @bus_handler.update(action, properties)
   end
 
   # ---- DATALINK --- #
