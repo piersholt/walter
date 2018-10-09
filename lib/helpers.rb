@@ -104,15 +104,15 @@ module WalterTools
   # Delay
 
   def rate(seconds)
-    @channel.sleep_time = seconds
+    @interface.sleep_time = seconds
   end
 
   def sleep
-    @channel.sleep_enabled = true
+    @interface.sleep_enabled = true
   end
 
   def no_sleep
-    @channel.sleep_enabled = false
+    @interface.sleep_enabled = false
   end
 
   # API

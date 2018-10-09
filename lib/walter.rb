@@ -12,7 +12,7 @@ require 'physical/byte_basic'
 require 'physical/bytes'
 require 'application/message'
 
-require 'physical/channel'
+require 'physical/interface'
 require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
@@ -29,17 +29,17 @@ class Walter
 
   def initialize
     # TODO: better argument handling to support multiple log files
-    @channel = Channel.new(ARGV.shift)
+    @interface = Interface.new(ARGV.shift)
 
-    @receiver = Receiver.new(@channel.input_buffer)
-    @transmitter = Transmitter.new(@channel.output_buffer)
+    @receiver = Receiver.new(@interface.input_buffer)
+    @transmitter = Transmitter.new(@interface.output_buffer)
 
     bus_handler = BusHandler.new(@transmitter)
     transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
     packet_routing_handler = PacketRoutingHandler.instance
 
     @listener = GlobalListener.new(bus: bus_handler, transmission: transmission_handler, packet_routing: packet_routing_handler)
-    @channel.add_observer(@listener)
+    @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
 
@@ -75,7 +75,7 @@ class Walter
 
   def start
     LOGGER.debug(PROC) { '#start' }
-    @channel.on
+    @interface.on
     @receiver.on
     @transmitter.on
   end
@@ -87,9 +87,9 @@ class Walter
     @receiver.off
     LOGGER.info(PROC) { 'Receiver is off! 👍' }
 
-    LOGGER.info(PROC) { 'Switching off Channel...' }
-    @channel.off
-    LOGGER.info(PROC) { 'Channel is off! 👍' }
+    LOGGER.info(PROC) { 'Switching off Interface...' }
+    @interface.off
+    LOGGER.info(PROC) { 'Interface is off! 👍' }
   end
 
   private
