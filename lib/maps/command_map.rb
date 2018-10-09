@@ -34,7 +34,7 @@ class CommandMap < Map
     instance.reload!
   end
 
-  def find_or_default(command_id)
+  def find_or_default(command_id, from = nil)
     LOGGER.debug(PROC) { "#find_or_default(#{command_id})" }
     mapped_result = nil
 
@@ -47,13 +47,19 @@ class CommandMap < Map
       mapped_result[:id][:d] = command_id
     end
 
+    if from
+      schemas = mapped_result[:schemas]
+      has_schema = schemas.include?(from) if schemas
+      mapped_result.replace(mapped_result[from]) if has_schema
+    end
+
     mapped_result[:default_id] = command_id
 
     command_configuration = CommandConfiguration.new(mapped_result)
     command_configuration
   end
 
-  def config(command_id)
-    find_or_default(command_id)
+  def config(command_id, from = nil)
+    find_or_default(command_id, from)
   end
 end
