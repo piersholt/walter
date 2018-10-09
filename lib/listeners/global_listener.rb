@@ -4,8 +4,9 @@ require 'event'
 require 'handlers/display_handler'
 require 'handlers/session_handler'
 require 'handlers/data_logging_handler'
-require 'datalink/handlers/demultiplexing_handler'
-require 'datalink/handlers/multiplexing_handler'
+# require 'datalink/handlers/demultiplexing_handler'
+# require 'datalink/handlers/multiplexing_handler'
+require 'datalink/handlers/frame_handler'
 require 'application/handlers/packet_handler'
 require 'handlers/interface_handler'
 require 'datalink/handlers/transmission_handler'
@@ -29,18 +30,20 @@ class GlobalListener
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
-    @demultiplexing_handler = DemultiplexingHandler.instance
+    # @demultiplexing_handler = DemultiplexingHandler.instance
+    @frame_handler = FrameHandler.instance
     @packet_handler = PacketHandler.instance
-    
 
-    @multiplexing_handler = MultiplexingHandler.instance
+
+    # @multiplexing_handler = MultiplexingHandler.instance
 
     @transmission_handler = handlers[:transmission]
     @interface_handler = handlers[:interface]
     @bus_handler = handlers[:bus]
 
-    @demultiplexing_handler.add_observer(self)
-    @multiplexing_handler.add_observer(self)
+    # @demultiplexing_handler.add_observer(self)
+    # @multiplexing_handler.add_observer(self)
+    @frame_handler.add_observer(self)
     @bus_handler.add_observer(self)
     add_observer(self)
   end
@@ -88,7 +91,7 @@ class GlobalListener
   # ---- APPLICATION --- #
 
   def message_sent(action, properties)
-    @multiplexing_handler.update(action, properties)
+    @frame_handler.update(action, properties)
   end
 
   def message_received(action, properties)
@@ -112,7 +115,7 @@ class GlobalListener
 
   def frame_received(action, properties)
     @data_logging_handler.update(action, properties)
-    @demultiplexing_handler.update(action, properties)
+    @frame_handler.update(action, properties)
     @session_handler.update(action, properties)
   end
 
