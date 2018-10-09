@@ -20,9 +20,7 @@ class BusHandler
     when PACKET_RECEIVED
       packet = properties[:packet]
       raise RoutingError, 'Packet is nil!' unless packet
-      LOGGER.warn(PACKET_RECEIVED) { "#{packet}" }
-
-      # publish_to_bus(packet)
+      packet_received(packet)
     when PACKET_ROUTE
       packet = properties[:packet]
       raise RoutingError, 'Packet is nil!' unless packet
@@ -31,7 +29,7 @@ class BusHandler
   end
 
   def packet_received(packet)
-    LOGGER.warn(PACKET_RECEIVED) { "#{packet}" }
+    LOGGER.warn(PACKET_RECEIVED) { packet }
     from_ident = packet.from
     has_from = bus_has_device?(from_ident)
     raise RoutingError, "#{from_ident} is not on the bus." unless has_from
