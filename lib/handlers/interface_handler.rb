@@ -1,7 +1,7 @@
 require 'singleton'
 require 'application/messages'
 
-class BusHandler
+class InterfaceHandler
   include Event
 
   # METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
@@ -21,13 +21,13 @@ class BusHandler
   end
 
   def inspect
-    str_buffer = "<BusHandlerr>"
+    str_buffer = "<InterfaceHandlerr>"
   end
 
   def update(action, properties)
     case action
     when BUS_OFFLINE
-      LOGGER.info("BusHandler") { "Bus Offline! Disabling transmission." }
+      LOGGER.info("InterfaceHandler") { "Bus Offline! Disabling transmission." }
       disable_transitter
     end
   end

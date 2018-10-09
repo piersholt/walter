@@ -7,7 +7,7 @@ require 'handlers/data_logging_handler'
 require 'datalink/handlers/demultiplexing_handler'
 require 'datalink/handlers/multiplexing_handler'
 require 'application/handlers/packet_handler'
-require 'handlers/bus_handler'
+require 'handlers/interface_handler'
 require 'datalink/handlers/transmission_handler'
 require 'application/handlers/packet_routing_handler'
 
@@ -36,6 +36,7 @@ class GlobalListener
     @multiplexing_handler = MultiplexingHandler.instance
 
     @transmission_handler = handlers[:transmission]
+    @interface_handler = handlers[:interface]
     @bus_handler = handlers[:bus]
     @packet_routing_handler = handlers[:packet_routing]
 
@@ -130,7 +131,7 @@ class GlobalListener
   def bus_offline(action, properties)
     LOGGER.warn(PROC) { 'Bus Offline!' }
     @data_logging_handler.update(action, properties)
-    @bus_handler.update(action, properties)
+    @interface_handler.update(action, properties)
   end
 
   def bus_online(action, properties)

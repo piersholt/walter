@@ -34,11 +34,14 @@ class Walter
     @receiver = Receiver.new(@interface.input_buffer)
     @transmitter = Transmitter.new(@interface.output_buffer)
 
-    bus_handler = BusHandler.new(@transmitter)
+    interface_handler = InterfaceHandler.new(@transmitter)
     transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
     packet_routing_handler = PacketRoutingHandler.instance
 
-    @listener = GlobalListener.new(bus: bus_handler, transmission: transmission_handler, packet_routing: packet_routing_handler)
+    @listener =
+      GlobalListener.new(interface: interface_handler,
+                         transmission: transmission_handler,
+                         bus: bus_handler)
     @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
     # @application_layer.add_observer(@listener)
