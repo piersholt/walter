@@ -28,13 +28,22 @@
   :properties:
     :short_name: PONG
     :long_name: Status Response
-    :verbose: false
     :status_map:
       0x00: 'Respond'
       0x01: 'Announce'
       0x40: 'Alt 0'
       0x41: 'Alt 1'
-  :klass: Pong
+  :klass: ParameterizedCommand
+  :parameters:
+    :status:
+      :type: :map
+      :dictionary:
+        0x00: 'Respond'
+        0x01: 'Announce'
+        0x40: 'Alt 0'
+        0x41: 'Alt 1'
+  :index:
+    :status: 0
   :meta:
     :desc: ''
     :recipients:
@@ -2892,6 +2901,8 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
+  :meta:
+    - received by :nav_eu
 135:
   :id:
     :d: 135
