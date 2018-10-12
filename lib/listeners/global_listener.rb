@@ -1,16 +1,7 @@
 require 'observer'
 require 'event'
 
-require 'handlers/display_handler'
-require 'handlers/session_handler'
-require 'handlers/data_logging_handler'
-# require 'datalink/handlers/demultiplexing_handler'
-# require 'datalink/handlers/multiplexing_handler'
-require 'datalink/handlers/frame_handler'
-require 'application/handlers/packet_handler'
-require 'handlers/interface_handler'
-require 'datalink/handlers/transmission_handler'
-require 'application/handlers/bus_handler'
+require 'handlers/base_handler'
 
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
@@ -100,11 +91,11 @@ class GlobalListener
   end
 
   def packet_received(action, properties)
-    @bus_handler.update(action, properties)
+    @bus_handler.handle(action, properties)
   end
 
   def packet_routable(action, properties)
-    @bus_handler.update(action, properties)
+    @bus_handler.handle(action, properties)
   end
 
   # ---- DATALINK --- #

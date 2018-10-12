@@ -1,4 +1,4 @@
-class TransmissionHandler
+class TransmissionHandler < BaseHandler
   include Event
 
   attr_reader :queue
@@ -14,7 +14,8 @@ class TransmissionHandler
   def update(action, properties)
     case action
     when FRAME_SENT
-      queue_frame(properties[:frame])
+      frame = fetch(properties, :frame)
+      queue_frame(frame)
     end
   end
 

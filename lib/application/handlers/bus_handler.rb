@@ -4,11 +4,7 @@ class RoutingError < StandardError
   end
 end
 
-class BusHandler
-  include Observable
-  include Event
-  include Helpers
-
+class BusHandler < BaseHandler
   PROC = 'BusHandler'.freeze
 
   def initialize(options)
@@ -21,7 +17,7 @@ class BusHandler
   def update(action, properties)
     case action
     when PACKET_RECEIVED
-      packet = properties[:packet]
+      packet = fetch(properties, :packet)
       raise RoutingError, 'Packet is nil!' unless packet
       packet_received(packet)
 

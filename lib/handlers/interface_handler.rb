@@ -1,8 +1,7 @@
 require 'singleton'
 require 'application/messages'
 
-class InterfaceHandler
-  include Event
+class InterfaceHandler < BaseHandler
 
   # METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 

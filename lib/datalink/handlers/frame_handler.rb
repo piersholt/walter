@@ -14,11 +14,8 @@ require 'command/builder/base_command_builder'
 
 require 'application/packet'
 
-class FrameHandler
-  include Observable
+class FrameHandler < BaseHandler
   include Singleton
-  include Event
-  include Helpers
 
   PROC = 'FrameHandler'.freeze
 
@@ -37,13 +34,13 @@ class FrameHandler
   def update(action, properties)
     case action
     when FRAME_RECEIVED
-      frame = properties[:frame]
+      frame = fetch(properties, :frame)
       packet = demultiplex(frame)
 
       changed
       notify_observers(PACKET_RECEIVED, packet: packet)
     when MESSAGE_SENT
-      message = properties[:message]
+      message = fetch(properties, :message)
       frame = multiplex(message)
 
       changed

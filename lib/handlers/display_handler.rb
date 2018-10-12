@@ -1,9 +1,8 @@
 require 'singleton'
 
-class DisplayHandler
+class DisplayHandler < BaseHandler
   include CommandTools
   include Singleton
-  include Event
 
   PROC = 'DisplayHandler'.freeze
 

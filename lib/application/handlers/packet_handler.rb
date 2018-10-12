@@ -12,7 +12,7 @@ require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'
 
-class PacketHandler
+class PacketHandler < BaseHandler
   include Observable
   include Singleton
   include Event
