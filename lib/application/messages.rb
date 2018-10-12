@@ -70,7 +70,7 @@ class Messages
 
   def recipients
     messages_with_unique_recipients = @messages.uniq do |m|
-      m.to.id
+      m.to
     end
 
     messages_with_unique_recipients.map(&:to)
@@ -78,7 +78,7 @@ class Messages
 
   def senders
     messages_with_unique_senders = @messages.uniq do |m|
-      m.from.id
+      m.from
     end
 
     messages_with_unique_senders.map(&:from)
@@ -177,8 +177,8 @@ class Messages
   def silent
     ping_recipients = command(1).recipients
     ping_recipients.select do |recipient|
-      recipient_id_decimal = recipient.d
-      results = command(2).from(recipient_id_decimal)
+      # recipient_id_decimal = recipient.d
+      results = command(2).from(recipient)
       results.nil? || results.empty?
     end
   end
@@ -203,13 +203,13 @@ class Messages
       @messages.find_all do |message|
         # c = message.command
         receiver = message.receiver
-        criteria.any? { |crit| crit == receiver.d }
+        criteria.any? { |crit| crit == receiver }
       end
     when :from_id
       @messages.find_all do |message|
         # c = message.command
         sender = message.sender
-        criteria.any? { |crit| crit == sender.d }
+        criteria.any? { |crit| crit == sender }
       end
     else
       raise StandardError, 'whoops!'
