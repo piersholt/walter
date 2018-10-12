@@ -239,6 +239,38 @@ class Virtual
     end
   end
 
+  class SimulatedDevice < Device
+    include BaseSimulate
+
+    PROC = 'SimulatedDevice'.freeze
+
+    def initialize(args)
+      super(args)
+
+      # announce
+    end
+
+    def type
+      :simulated
+    end
+
+    # @override Object#inspect
+    def inspect
+      "#<SimulatedDevice :#{@ident}>"
+    end
+
+    # @override Object#to_s
+    def to_s
+      "<:#{@ident}>"
+    end
+
+    def receive_packet(packet)
+      message = super(packet)
+
+      check_message(message)
+    end
+  end
+
   class Bus
     include Singleton
     attr_reader :devices
