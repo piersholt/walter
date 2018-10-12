@@ -109,10 +109,15 @@ module WalterTools
 
   def sleep
     @interface.sleep_enabled = true
+    sleep_time = @interface.sleep_time
+    LOGGER.info(PROC) { "Sleep ENABLED with rate of #{sleep_time} seconds" }
+    sleep_time
   end
 
   def no_sleep
     @interface.sleep_enabled = false
+    LOGGER.info(PROC) { "Sleep DISABLED with rate of #{sleep_time} seconds" }
+    true
   end
 
   # API
