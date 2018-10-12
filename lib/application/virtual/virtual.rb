@@ -308,7 +308,8 @@ class Virtual
 
   class Initialization
     PROC = 'Initialization'
-    def initialize
+    def initialize(opts = { simulated: [] })
+      @simulated = opts[:simulated]
       @executed = false
     end
 
@@ -333,11 +334,19 @@ class Virtual
 
     def create_devices(device_idents)
       devices = device_idents.map do |device_ident|
-        Device.new(device_ident)
+        create_device(device_ident)
       end
 
       LOGGER.debug(PROC) { "Devices: #{devices}|" }
       devices
+    end
+
+    def create_device(device_ident)
+      if @simulated.include?(device_ident)
+        SimulatedDevice.new(device_ident)
+      else
+        Device.new(device_ident)
+      end
     end
 
     def populate_bus(bus, devices)
