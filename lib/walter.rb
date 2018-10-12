@@ -53,6 +53,8 @@ class Walter
     require 'bus_device'
     @bus_device = BusDevice.new
     @bus_device.add_observer(@listener)
+
+    defaults
   end
 
   def launch

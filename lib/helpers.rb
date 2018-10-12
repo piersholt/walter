@@ -38,6 +38,12 @@ end
 module WalterTools
   PROC_MOD = 'WalterTools'.freeze
 
+  def defaults
+    LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
+    ping
+    ign
+  end
+
   # Session
 
   def messages
@@ -62,8 +68,16 @@ module WalterTools
     DisplayHandler.i.filter_commands(*CommandTools::OBC)
   end
 
+  def ping
+    DisplayHandler.i.filter_commands(*CommandTools::KEEP_ALIVE)
+  end
+
   def shutup!
     DisplayHandler.i.shutup!
+  end
+
+  def ign
+    DisplayHandler.i.filter_commands(*CommandTools::IGNITION)
   end
 
   # Logging
