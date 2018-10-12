@@ -47,7 +47,9 @@ LOGGER.sev_threshold=(Logger::INFO)
 
 require 'walter'
 
-LOGGER.info("BMW I/K-BUS Interface")
+PROC = 'Walter'.freeze
+
+LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
   app = Walter.new

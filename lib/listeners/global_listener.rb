@@ -1,13 +1,7 @@
 require 'observer'
 require 'event'
 
-require 'handlers/display_handler'
-require 'handlers/session_handler'
-require 'handlers/data_logging_handler'
-require 'datalink/handlers/demultiplexing_handler'
-require 'datalink/handlers/multiplexing_handler'
-require 'handlers/bus_handler'
-require 'datalink/handlers/transmission_handler'
+require 'handlers/base_handler'
 
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
@@ -27,13 +21,21 @@ class GlobalListener
     @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
-    @frame_handler = DemultiplexingHandler.instance
-    @frame_handler.add_observer(self)
+    # @demultiplexing_handler = DemultiplexingHandler.instance
+    @frame_handler = FrameHandler.instance
+    @packet_handler = PacketHandler.instance
 
-    @multiplexing_handler = MultiplexingHandler.instance
-    @multiplexing_handler.add_observer(self)
+
+    # @multiplexing_handler = MultiplexingHandler.instance
+
     @transmission_handler = handlers[:transmission]
+    @interface_handler = handlers[:interface]
     @bus_handler = handlers[:bus]
+
+    # @demultiplexing_handler.add_observer(self)
+    # @multiplexing_handler.add_observer(self)
+    @frame_handler.add_observer(self)
+    @bus_handler.add_observer(self)
     add_observer(self)
   end
 
@@ -57,6 +59,10 @@ class GlobalListener
         frame_failed(action, properties)
       when MESSAGE_RECEIVED
         message_received(action, properties)
+      when PACKET_RECEIVED
+        packet_received(action, properties)
+      when PACKET_ROUTABLE
+        packet_routable(action, properties)
       when MESSAGE_SENT
         message_sent(action, properties)
       when FRAME_SENT
@@ -76,12 +82,20 @@ class GlobalListener
   # ---- APPLICATION --- #
 
   def message_sent(action, properties)
-    @multiplexing_handler.update(action, properties)
+    @frame_handler.update(action, properties)
   end
 
   def message_received(action, properties)
     @session_handler.update(action, properties)
     @display_handler.update(action, properties)
+  end
+
+  def packet_received(action, properties)
+    @bus_handler.handle(action, properties)
+  end
+
+  def packet_routable(action, properties)
+    @bus_handler.handle(action, properties)
   end
 
   # ---- DATALINK --- #
@@ -112,7 +126,7 @@ class GlobalListener
   def bus_offline(action, properties)
     LOGGER.warn(PROC) { 'Bus Offline!' }
     @data_logging_handler.update(action, properties)
-    @bus_handler.update(action, properties)
+    @interface_handler.update(action, properties)
   end
 
   def bus_online(action, properties)

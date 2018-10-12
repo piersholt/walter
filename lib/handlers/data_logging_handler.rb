@@ -1,6 +1,5 @@
-class DataLoggingHandler
+class DataLoggingHandler < BaseHandler
   include Singleton
-  include Event
 
   def self.i
     instance
@@ -22,9 +21,11 @@ class DataLoggingHandler
       LOGGER.info("DataLoggingHandler") { "Bus Offline! Disbaling logging." }
       disable_logging
     when BYTE_RECEIVED
-      log_byte(properties[:read_byte])
+      read_byte = fetch(properties, :read_byte)
+      log_byte(read_byte)
     when FRAME_RECEIVED
-      log_frame(properties[:frame])
+      frame = fetch(properties, :frame)
+      log_frame(frame)
     when EXIT
       LOGGER.info("DataLoggingHandler") { "Exit: Closing log files." }
       close_log_files

@@ -5,7 +5,7 @@
 # it's not the transitters responsibioity to retry...
 
 # can... i just keep it really dumb for now?
-# basically just pull out the code that was implemented by channel
+# basically just pull out the code that was implemented by interface
 
 # argh, hang on i can't have a thread... as.. it's the transmitter thread that
 
@@ -15,7 +15,7 @@
 # maybe this doesn't either... but can i make it blocking?
 # can it give it to a thread, be locked until it returns?
 # fucking hell, i'm moving Transmitter farther and farther away from IO
-class Channel
+class Interface
   class OutputBuffer
     def initialize(stream)
       @stream = stream

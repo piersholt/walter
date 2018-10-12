@@ -3,6 +3,7 @@ require 'singleton'
 require 'application/message'
 require 'maps/device_map'
 require 'maps/command_map'
+require 'maps/address_lookup_table'
 
 require 'datalink/frame/indexed_arguments'
 
@@ -11,7 +12,7 @@ require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'
 
-class DemultiplexingHandler
+class PacketHandler < BaseHandler
   include Observable
   include Singleton
   include Event
@@ -36,7 +37,9 @@ class DemultiplexingHandler
     case action
     when FRAME_RECEIVED
       message = process_frame(properties[:frame])
+      packet = demultiplex(properties[:frame])
       changed
+      notify_observers(PACKET_RECEIVED, packet: packet)
       notify_observers(MESSAGE_RECEIVED, message: message)
     end
   end
@@ -61,7 +64,7 @@ class DemultiplexingHandler
     from_object    = @device_map.find(from_id)
     to_object      = @device_map.find(to_id)
 
-    command_config = @command_map.config(command_id, from_id)
+    command_config = @command_map.config(command_id)
     parameter_values_hash = parse_argumets(command_config, arguments)
     LOGGER.debug(PROC) { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)

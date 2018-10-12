@@ -119,8 +119,9 @@ module DataTools
 
   # ------------------------ ENC TO X ------------------------ #
 
-  def encoded_to_decimal(value)
-    value.bytes[0]
+  def encoded_to_decimal(char)
+    raise EncodingError, 'Character length is greater than one byte!' if char.length > 1
+    char.getbyte(0)
   end
 
   def encoded_to_hex(value)

@@ -1,9 +1,8 @@
 require 'singleton'
 
-class DisplayHandler
+class DisplayHandler < BaseHandler
   include CommandTools
   include Singleton
-  include Event
 
   PROC = 'DisplayHandler'.freeze
 
@@ -42,7 +41,7 @@ class DisplayHandler
         filtered_output(message)
       rescue StandardError => e
         LOGGER.error(PROC) { "#{e}" }
-        LOGGER.error(PROC) { message.to_f }
+        LOGGER.error(PROC) { "#{message}" }
         e.backtrace.each { |l| LOGGER.error(PROC) { l } }
       end
     end
@@ -77,21 +76,26 @@ class DisplayHandler
     true
   end
 
-  def f_t(*to_ids)
+  # ------------------------------ RECIPIENT ------------------------------ #
+
+  def f_t(*to_idents)
     filtered_recipients.clear if filtered_recipients.size >= 5
-    return false if filtered_recipients.any?  { |t_id| @filtered_recipients.include?(t_id) }
-    to_ids.each { |t_id| @filtered_recipients << t_id }
+    return false if filtered_recipients.any?  { |to_ident| @filtered_recipients.include?(to_ident) }
+    to_idents.each { |to_ident| @filtered_recipients << to_ident }
     true
   end
 
-  def f_f(*from_ids)
+  # ------------------------------ SENDER ------------------------------ #
+
+  def f_f(*from_idents)
     filtered_senders.clear if filtered_senders.size >= 5
-    return false if filtered_senders.any? { |f_id| @filtered_senders.include?(f_id) }
-    from_ids.each { |f_id| @filtered_senders << f_id  }
+    return false if filtered_senders.any? { |from_ident| @filtered_senders.include?(from_ident) }
+    from_idents.each { |from_ident| @filtered_senders << from_ident  }
     true
   end
 
-  # @alias
+  # ------------------------------ COMMANDS ------------------------------ #
+
   def f_c(*command_ids)
     filter_commands(*command_ids)
   end
@@ -133,11 +137,11 @@ class DisplayHandler
     end
 
     matches_a_recipient = filtered_recipients.one? do |c|
-      c == message.to.d
+      c == message.to
     end
 
     matches_a_sender = filtered_senders.one? do |c|
-      c == message.from.d
+      c == message.from
     end
 
     return false unless output_enabled?
@@ -150,19 +154,25 @@ class DisplayHandler
     end
   end
 
+  # ------------------------------ HELPERS ------------------------------ #
+
   def filtered_commands
     @filtered_commands ||= populate
   end
 
   def filtered_recipients
-    @filtered_recipients ||= populate
+    @filtered_recipients ||= populate_devices
   end
 
   def filtered_senders
-    @filtered_senders ||= populate
+    @filtered_senders ||= populate_devices
   end
 
   def populate
     Array.new(256) { |i| i }
+  end
+
+  def populate_devices
+    AddressLookupTable.instance.idents
   end
 end

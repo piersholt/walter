@@ -1,6 +1,6 @@
 require 'forwardable'
 
-class Channel
+class Interface
   # The binary stream stored as a local file for offline processing
   class File
     extend Forwardable

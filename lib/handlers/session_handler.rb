@@ -1,9 +1,8 @@
 require 'singleton'
 require 'application/messages'
 
-class SessionHandler
+class SessionHandler < BaseHandler
   include Singleton
-  include Event
 
   METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 
