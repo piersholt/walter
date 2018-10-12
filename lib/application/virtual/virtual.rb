@@ -4,6 +4,9 @@ class Virtual
   class Message
     attr_accessor :from, :to, :command
 
+    alias :receiver :to
+    alias :sender :from
+
     def initialize(from, to, command)
       @from = from
       @to = to
