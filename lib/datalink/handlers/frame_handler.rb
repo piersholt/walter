@@ -7,6 +7,8 @@ require 'maps/address_lookup_table'
 
 require 'datalink/frame/indexed_arguments'
 
+require 'datalink/frame/frame_builder'
+
 require 'command/parameter/indexed_bit_array'
 require 'command/parameter/base_parameter'
 
