@@ -31,29 +31,25 @@ class Walter
 
   def initialize
     # TODO: better argument handling to support multiple log files
-    @interface = Interface.new(ARGV.shift)
-
-    @receiver = Receiver.new(@interface.input_buffer)
+    @interface   = Interface.new(ARGV.shift)
+    @receiver    = Receiver.new(@interface.input_buffer)
     @transmitter = Transmitter.new(@interface.output_buffer)
+    @bus         = Virtual::Initialization.new.execute
 
-    interface_handler = InterfaceHandler.new(@transmitter)
-    transmission_handler = TransmissionHandler.new(@transmitter.write_queue)
+    handlers = {}
+    handlers[:interface] = InterfaceHandler.new(@transmitter)
+    handlers[:transmission] =
+      TransmissionHandler.new(@transmitter.write_queue)
+    handlers[:bus] = BusHandler.new(bus: @bus)
 
-    @bus = Virtual::Initialization.new.execute
+    @listener = GlobalListener.new(handlers)
 
-    bus_handler = BusHandler.new(bus: @bus)
-
-    @listener =
-      GlobalListener.new(interface: interface_handler,
-                         transmission: transmission_handler,
-                         bus: bus_handler)
     @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
     @bus.all(:add_observer, @listener)
-    # @application_layer.add_observer(@listener)
-
     add_observer(@listener)
 
+    
     require 'bus_device'
     @bus_device = BusDevice.new
     @bus_device.add_observer(@listener)
