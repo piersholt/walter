@@ -64,7 +64,9 @@ class FrameHandler < BaseHandler
     payload   = frame.payload
     LOGGER.debug(PROC) { "payload: #{payload}" }
 
-    Packet.new(from_device, to_device, payload)
+    packet = Packet.new(from_device, to_device, payload)
+    LOGGER.debug('MultiplexingHandler') { "Packet build: #{packet}" }
+    packet
   end
 
   # @return Frame
@@ -76,7 +78,7 @@ class FrameHandler < BaseHandler
     frame_builder.command = message.command
 
     frame = frame_builder.result
-    LOGGER.warn('MultiplexingHandler') { "Frame build: #{frame}" }
+    LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
     frame
   end
 end
