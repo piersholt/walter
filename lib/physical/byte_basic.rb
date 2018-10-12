@@ -31,6 +31,14 @@ class ByteBasic
     value == other_byte.value
   end
 
+  def >(comparison_value)
+    value > comparison_value
+  end
+
+  def <(comparison_value)
+    value < comparison_value
+  end
+
   # @override Object#<==>
   def <=>(other_byte)
     value <=> other_byte.value
