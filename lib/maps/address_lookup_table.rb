@@ -24,6 +24,31 @@ class AddressLookupTable < Map
     end
   end
 
+  def down(ident)
+    # LOGGER.debug(PROC) { "#down(#{ident})" }
+    begin
+      mapped_result = nil
+      map.each { |k, v|  mapped_result = k if v == ident }
+      raise IndexError unless mapped_result
+      mapped_result
+    rescue IndexError => e
+      LOGGER.warn(PROC) {"#{ident} not found!" }
+      mapped_result = :universal
+      mapped_result
+    end
+  end
+
+  def get_ident(device_id)
+    find(device_id)
+  end
+
+  def get_address(ident)
+    # LOGGER.debug(PROC) { "#get_address(#{ident})" }
+    address = down(ident)
+    # LOGGER.debug(PROC) { "#get_address(#{ident}) => address" }
+    address
+  end
+
   def idents
     @map.values
   end
