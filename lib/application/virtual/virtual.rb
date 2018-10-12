@@ -187,6 +187,15 @@ class Virtual
 
     def initialize
       @devices = Devices.new
+      @status = :down
+    end
+
+    def online
+      @status = :up
+    end
+
+    def offline
+      @status = :down
     end
 
     def device?(device_ident)

@@ -127,11 +127,13 @@ class GlobalListener
     LOGGER.warn(PROC) { 'Bus Offline!' }
     @data_logging_handler.update(action, properties)
     @interface_handler.update(action, properties)
+    @bus_handler.handle(action, properties)
   end
 
   def bus_online(action, properties)
     LOGGER.info(PROC) { 'Bus Online!' }
     @data_logging_handler.update(action, properties)
+    @bus_handler.handle(action, properties)
   end
 
   # ---- PROGRAM --- #

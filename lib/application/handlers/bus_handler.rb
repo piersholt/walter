@@ -24,7 +24,19 @@ class BusHandler < BaseHandler
     when PACKET_ROUTABLE
       packet = fetch(properties, :packet)
       publish_to_bus(packet)
+    when BUS_ONLINE
+      bus_online
+    when BUS_OFFLINE
+      bus_offline
     end
+  end
+
+  def bus_online
+    @bus.online
+  end
+
+  def bus_offline
+    @bus.offline
   end
 
   def packet_received(packet)
