@@ -9,9 +9,7 @@ class BusHandler < BaseHandler
 
   def initialize(options)
     @bus = options[:bus]
-    @bus.devices.each do |device|
-      register(device.ident, device)
-    end
+    register_devices(@bus.devices)
   end
 
   def update(action, properties)
@@ -24,8 +22,7 @@ class BusHandler < BaseHandler
       changed
       notify_observers(PACKET_ROUTABLE, packet: packet)
     when PACKET_ROUTABLE
-      packet = properties[:packet]
-      raise RoutingError, 'Packet is nil!' unless packet
+      packet = fetch(properties, :packet)
       publish_to_bus(packet)
     end
   end
@@ -50,7 +47,13 @@ class BusHandler < BaseHandler
     end
   end
 
-  def register(to_ident, observer)
+  def register_devices(devices)
+    devices.each do |device|
+      register_device(device.ident, device)
+    end
+  end
+
+  def register_device(to_ident, observer)
     subscribers(to_ident) << observer
   end
 
