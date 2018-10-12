@@ -115,8 +115,8 @@ class Virtual
       def_delegator :@devices, fwrd_message
     end
 
-    def initialize
-      @devices = []
+    def initialize(devices = [])
+      @devices = devices
     end
 
     def include?(device_ident)
