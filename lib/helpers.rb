@@ -112,9 +112,9 @@ module WalterTools
   # Annoying Tasks :)
 
   def hello?
-    t0 = @messages.count
+    t0 = messages.count
     Kernel.sleep(1)
-    t1 = @messages.count
+    t1 = messages.count
     r = t1 - t0
     LOGGER.info(PROC_MOD) { "#{r} new messages in the last second." }
     r.positive? ? true : false
@@ -149,6 +149,7 @@ module WalterTools
 
   def no_sleep
     @interface.sleep_enabled = false
+    sleep_time = @interface.sleep_time
     LOGGER.info(PROC) { "Sleep DISABLED with rate of #{sleep_time} seconds" }
     true
   end
