@@ -12,6 +12,10 @@ class Command
       @v1 = parse_bytes(@argument_map[:ignition])
     end
 
+    def accessory?
+      @argument_map[:ignition] > 0
+    end
+
     # ---- Interface ---- #
 
     # def ambient
