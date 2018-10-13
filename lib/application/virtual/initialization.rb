@@ -36,7 +36,9 @@ class Virtual
 
     def create_device(device_ident)
       if @simulated.include?(device_ident)
-        SimulatedDevice.new(device_ident)
+        SimulatedDevice.builder
+                       .simulate(device_ident)
+                       .result
       else
         Device.new(device_ident)
       end
