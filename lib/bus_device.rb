@@ -7,6 +7,7 @@ require 'api/lamp'
 require 'api/radio_led'
 require 'api/radio_gfx'
 
+require 'api/alive'
 
 class BusDevice
   include API::Key
@@ -17,4 +18,5 @@ class BusDevice
   include API::Lamp
   include API::RadioLED
   include API::RadioGFX
+  include API::Alive
 end
