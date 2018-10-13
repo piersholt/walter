@@ -195,6 +195,10 @@ class Virtual
       @ident = device_ident
     end
 
+    def type
+      :dumb
+    end
+
     # @override Object#inspect
     def inspect
       "#<Device :#{@ident}>"
