@@ -6,24 +6,24 @@ module PingPong
 
   def announce
     announced!
-    LOGGER.warn(ident) { "HEY EVERYONE! COME SEE HOW GOOD #{@ident} looks!" }
+    LOGGER.unknown(ident) { "HEY EVERYONE! COME SEE HOW GOOD #{@ident} looks!" }
 
     from_id = my_address
     to_id = address(:glo_h)
 
-    # LOGGER.warn(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
+    # LOGGER.unknown(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
 
     pong({status: 0x01}, from_id, to_id)
   end
 
   def respond
-    LOGGER.warn(PROC) { "So, I #{@ident} had best simulateth a pongeth!" }
+    # LOGGER.unknown(ident) { "Handling Ping." }
 
     alt = AddressLookupTable.instance
     from_id = alt.get_address(ident)
     to_id = alt.get_address(:glo_l)
 
-    # LOGGER.warn(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
+    # LOGGER.unknown(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
 
     pong({status: 0x00}, from_id, to_id)
   end
