@@ -119,6 +119,12 @@ class Virtual
       @devices = devices
     end
 
+    def send_all(method, *arguments)
+      @devices.each do |device|
+        device.public_send(method, *arguments)
+      end
+    end
+
     def include?(device_ident)
       @devices.one? do |device|
         device.ident == device_ident
@@ -294,15 +300,6 @@ class Virtual
 
     def add_device(device)
       @devices.add(device)
-    end
-
-    def all(method, *arguments)
-      @devices.each do |device|
-        # LOGGER.warn(device)
-        # LOGGER.warn(method)
-        # LOGGER.warn(arguments)
-        device.public_send(method, *arguments)
-      end
     end
   end
 

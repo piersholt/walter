@@ -46,7 +46,7 @@ class Walter
 
     @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
-    @bus.all(:add_observer, @listener)
+    @bus.send_all(:add_observer, @listener)
     add_observer(@listener)
 
     
