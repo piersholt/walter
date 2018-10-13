@@ -2824,9 +2824,89 @@
     :d: 57
     :h: '0x39'
   :properties:
-    :short_name: CD-ACK
+    :short_name: CD
     :long_name: CD Status
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: No Action
+        0x02: Playing
+        0x03: Next
+        0x04: Previous
+        0x05: FWD
+        0x06: RWD
+        0x07: Stopped
+        0x08: Changed
+    :status:
+      :type: :map
+      :label: Playing
+      :dictionary:
+        0x02: Stopped
+        0x09: Playing
+    :b2:
+      :type: :integer
+    :loader:
+      :type: :bit_array
+      :parameters:
+        :cd1:
+          :type: :switch
+          :label: CD1
+          :states:
+            0: :off
+            1: :on
+        :cd2:
+          :type: :switch
+          :label: CD2
+          :states:
+            0: :off
+            1: :on
+        :cd3:
+          :type: :switch
+          :label: CD3
+          :states:
+            0: :off
+            1: :on
+        :cd4:
+          :type: :switch
+          :label: CD4
+          :states:
+            0: :off
+            1: :on
+        :cd5:
+          :type: :switch
+          :label: CD5
+          :states:
+            0: :off
+            1: :on
+        :cd6:
+          :type: :switch
+          :label: CD6
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :cd1: 2
+        :cd2: 3
+        :cd3: 4
+        :cd4: 5
+        :cd5: 6
+        :cd6: 7
+    :b4:
+      :type: :integer
+    :cd:
+      :type: :integer
+    :track:
+      :type: :integer
+  :index:
+    :control: 0
+    :status: 1
+    :b2: 2
+    :loader: 3
+    :b4: 4
+    :cd: 5
+    :track: 6
 66:
   :id:
     :d: 66
