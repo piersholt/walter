@@ -138,6 +138,21 @@ class Virtual
     def list
       @devices.map(&:ident)
     end
+
+    def dumb
+      dumb_devices = @devices.find_all  {|d| d.type == :dumb }
+      Devices.new(dumb_devices)
+    end
+
+    def simulated
+      simulated_devices = @devices.find_all  {|d| d.type == :simulated }
+      Devices.new(simulated_devices)
+    end
+
+    def broadcast
+      broadcast_devices = @devices.find_all  {|d| d.type == :broadcast }
+      Devices.new(broadcast_devices)
+    end
   end
 
   class PacketWrapper
@@ -246,6 +261,14 @@ class Virtual
       # LOGGER.warn(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
 
       pong({status: 0x00}, from_id, to_id)
+    end
+  end
+
+  class BroadcastDevice < Device
+    PROC = 'BroadcastDevice'.freeze
+
+    def type
+      :broadcast
     end
   end
 
