@@ -1497,6 +1497,9 @@
         # E0..EF: nothing
         # 0x41: IKE Set (540)
         # 0x62: Section Update? (540)
+
+        0xC2: No Disc!
+        0xC4: Disc/Track
     :ike:
       :type: :bit_array
       :parameters:
@@ -2800,7 +2803,22 @@
   :properties:
     :short_name: CD-REQ
     :long_name: CD Status Request
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: Status!
+        0x01: Stop!
+        0x03: Play!
+        0x05: Scan!
+        0x06: Change Disc!
+    :mode:
+      :type: :integer
+  :index:
+    :control: 0
+    :mode: 1
+
 57:
   :id:
     :d: 57
