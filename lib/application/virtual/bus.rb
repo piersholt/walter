@@ -2,6 +2,7 @@ class Virtual
   class Bus
     include Singleton
     extend Forwardable
+    include NameTools
 
     attr_reader :devices
 
@@ -48,6 +49,14 @@ class Virtual
 
     def add_device(device)
       @devices.add(device)
+      setup_accessor(device)
+    end
+
+    def setup_accessor(device)
+      ident = device.ident
+      instance_variable_name = inst_var(ident)
+      instance_variable_set(instance_variable_name, device)
+      Bus.class_exec(ident) { |i| attr_reader i }
     end
   end
 end
