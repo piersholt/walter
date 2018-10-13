@@ -34,10 +34,12 @@ class BusHandler < BaseHandler
 
   def bus_online
     @bus.online
+    @bus.simulated.send_all(:enable)
   end
 
   def bus_offline
     @bus.offline
+    @bus.simulated.send_all(:disable)
   end
 
   def packet_received(packet)

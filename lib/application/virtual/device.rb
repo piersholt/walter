@@ -67,6 +67,8 @@ class Virtual
   class SimulatedDevice < Device
     include CommandTools
 
+    DEFAULT_STATUS = :down
+
     PING = 0x01
     IGNITION = 0x11
 
@@ -80,10 +82,41 @@ class Virtual
 
     def initialize(args)
       super(args)
+      @status = DEFAULT_STATUS
     end
 
     def type
       :simulated
+    end
+
+    def enable
+      @status = :up
+    end
+
+    def disable
+      @status = :down
+    end
+
+    def enabled?
+      case @status
+      when nil
+        false
+      when :up
+        true
+      when :down
+        false
+      end
+    end
+
+    def disabled?
+      case @status
+      when nil
+        false
+      when :up
+        false
+      when :down
+        true
+      end
     end
 
     # @override Object#inspect

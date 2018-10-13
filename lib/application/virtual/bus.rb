@@ -20,6 +20,28 @@ class Virtual
       @status = :down
     end
 
+    def up?
+      case @status
+      when nil
+        false
+      when :up
+        true
+      when :down
+        false
+      end
+    end
+
+    def down?
+      case @status
+      when nil
+        false
+      when :up
+        false
+      when :down
+        true
+      end
+    end
+
     def device?(device_ident)
       @devices.include?(device_ident)
     end
