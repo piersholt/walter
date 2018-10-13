@@ -210,6 +210,10 @@ class Virtual
       @ident = device_ident
     end
 
+    def i_am(other)
+      ident == other
+    end
+
     def type
       :dumb
     end
