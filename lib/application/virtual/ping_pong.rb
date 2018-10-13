@@ -8,9 +8,8 @@ module PingPong
     announced!
     LOGGER.warn(ident) { "HEY EVERYONE! COME SEE HOW GOOD #{@ident} looks!" }
 
-    alt = AddressLookupTable.instance
-    from_id = alt.get_address(ident)
-    to_id = alt.get_address(:glo_h)
+    from_id = my_address
+    to_id = address(:glo_h)
 
     # LOGGER.warn(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
 

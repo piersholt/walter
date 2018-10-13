@@ -133,6 +133,16 @@ class Virtual
     def receive_packet(packet)
       message = super(packet)
       handle_message(message)
+    def alt
+      @alt ||= AddressLookupTable.instance
+    end
+
+    def address(ident)
+      alt.get_address(ident)
+    end
+
+    def my_address
+      alt.get_address(ident)
     end
   end
 
