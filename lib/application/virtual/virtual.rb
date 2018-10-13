@@ -42,6 +42,21 @@ class Virtual
       command_object = parse_command(from_ident, command.i, args)
 
       message = Message.new(from_ident, to_ident, command_object)
+
+      notify(message)
+
+      message
+    end
+
+    def junk_mail?(message)
+      ident == message.to ? false : true
+    end
+
+    def notify(message)
+      if junk_mail?(message)
+        # LOGGER.warn(ident) { 'FOUND A JUNKER!' }
+        return false
+      end
       changed
       notify_observers(MESSAGE_RECEIVED, message: message)
     end
