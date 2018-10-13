@@ -63,7 +63,7 @@ class Virtual
     end
   end
 
-  require 'application/virtual/ping_pong'
+  require 'application/virtual/alive'
   require 'application/virtual/cd'
 
   class SimulatedDevice < Device
@@ -74,7 +74,7 @@ class Virtual
     PING = 0x01
     IGNITION = 0x11
 
-    include PingPong
+    include Alive
 
     PROC = 'SimulatedDevice'.freeze
 

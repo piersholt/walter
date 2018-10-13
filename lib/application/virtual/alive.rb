@@ -1,4 +1,4 @@
-module PingPong
+module Alive
   include API::Alive
 
   # Think about device state and need to announce etc....
