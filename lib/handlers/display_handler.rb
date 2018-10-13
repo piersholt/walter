@@ -71,8 +71,8 @@ class DisplayHandler < BaseHandler
 
   def clear_filter
     @filtered_commands = populate
-    @filtered_recipients = populate
-    @filtered_senders = populate
+    @filtered_recipients = populate_devices
+    @filtered_senders = populate_devices
     true
   end
 
