@@ -10,6 +10,7 @@ class BusHandler < BaseHandler
   def initialize(options)
     @bus = options[:bus]
     register_devices(@bus.devices)
+    register_for_broadcast(@bus.simulated)
   end
 
   def update(action, properties)
@@ -62,6 +63,13 @@ class BusHandler < BaseHandler
   def register_devices(devices)
     devices.each do |device|
       register_device(device.ident, device)
+    end
+  end
+
+  def register_for_broadcast(devices)
+    devices.each do |device|
+      register_device(:glo_l, device)
+      register_device(:glo_h, device)
     end
   end
 
