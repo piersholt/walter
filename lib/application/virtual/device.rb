@@ -42,7 +42,8 @@ class Virtual
     include ModuleTools
 
     CLASS_MAP = {
-      dsp: 'SimulatedDSP'
+      dsp: 'SimulatedDSP',
+      cdc: 'SimulatedCDC'
     }.freeze
 
     attr_reader :ident
@@ -63,6 +64,7 @@ class Virtual
   end
 
   require 'application/virtual/ping_pong'
+  require 'application/virtual/cd'
 
   class SimulatedDevice < Device
     include CommandTools
@@ -133,6 +135,16 @@ class Virtual
     def receive_packet(packet)
       message = super(packet)
       handle_message(message) if enabled?
+    end
+
+    def handle_message(message)
+      command_id = message.command.d
+      case command_id
+      when PING
+        respond
+      end
+    end
+
     def alt
       @alt ||= AddressLookupTable.instance
     end
@@ -152,11 +164,28 @@ class Virtual
     def handle_message(message)
       command_id = message.command.d
       case command_id
-      when PING
-        respond
       when IGNITION
-        announce?(message.command)
       end
+
+      super(message)
+    end
+  end
+
+  class SimulatedCDC < SimulatedDevice
+    include CD
+
+    PROC = 'SimulatedDSP'.freeze
+
+    CHANGER_REQUEST = 0x38
+
+    def handle_message(message)
+      command_id = message.command.d
+      case command_id
+      when CHANGER_REQUEST
+        handle_changer_request(message)
+      end
+
+      super(message)
     end
   end
 end

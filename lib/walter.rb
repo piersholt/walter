@@ -18,6 +18,7 @@ require 'datalink/transmitter'
 require 'listeners/global_listener'
 
 require 'api/alive'
+require 'api/cd'
 require 'application/virtual/virtual'
 
 require 'helpers'
