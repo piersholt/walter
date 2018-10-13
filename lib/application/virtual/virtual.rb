@@ -134,6 +134,10 @@ class Virtual
     def add(device)
       @devices << device
     end
+
+    def list
+      @devices.map(&:ident)
+    end
   end
 
   class PacketWrapper
