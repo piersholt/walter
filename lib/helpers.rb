@@ -12,6 +12,10 @@ module ModuleTools
   end
 end
 
+module DeviceTools
+  MEDIA = [:cdc, :cd, :rad, :dsp, :gfx, :tv, :bmbt]
+end
+
 module CommandTools
   KEEP_ALIVE = [0x01, 0x02]
   SPEED = [0x18]
@@ -29,6 +33,8 @@ module CommandTools
   VEHICLE = [0x53, 0x54]
   LAMP = [0x5A, 0x5B]
   DOOR = [0x79, 0x7A]
+
+  CD_CHANGER = [0x38, 0x39]
 
   NAV = [0x4f]
 
@@ -78,6 +84,19 @@ module WalterTools
 
   def ign
     DisplayHandler.i.filter_commands(*CommandTools::IGNITION)
+  end
+
+  def c
+    DisplayHandler.i.clear_filter
+  end
+
+  def media
+    DisplayHandler.i.f_t(* DeviceTools::MEDIA + [:glo_h, :glo_l] )
+    DisplayHandler.i.f_f(*DeviceTools::MEDIA)
+  end
+
+  def cd
+    DisplayHandler.i.filter_commands(*CommandTools::CD_CHANGER)
   end
 
   # Logging
@@ -184,4 +203,5 @@ module Helpers
   include ModuleTools
   extend ModuleTools
   include NameTools
+  include DeviceTools
 end
