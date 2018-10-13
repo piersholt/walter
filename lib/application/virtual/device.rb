@@ -132,7 +132,7 @@ class Virtual
     # @override Virtual::Device#receive_packet
     def receive_packet(packet)
       message = super(packet)
-      handle_message(message)
+      handle_message(message) if enabled?
     def alt
       @alt ||= AddressLookupTable.instance
     end
