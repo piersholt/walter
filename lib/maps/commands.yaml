@@ -2193,6 +2193,56 @@
   :id:
     :d: 43
     :h: '0x2B'
+  :klass: ParameterizedCommand
+  :parameters:
+    :leds:
+      :type: :bit_array
+      :parameters:
+        :red:
+          :label: Red
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :red_blink:
+          :label: Red Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow:
+          :label: Yellow
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow_blink:
+          :label: Yellow Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green:
+          :label: Green
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green_blink:
+          :label: Green Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :red: 7
+        :red_blink: 6
+        :yellow: 5
+        :yellow_blink: 4
+        :green: 3
+        :green_blink: 2
+  :index:
+    :leds: 0
   :properties:
     :short_name: TEL-LED
     :long_name: Telephone LEDs on BMBT
@@ -2237,7 +2287,6 @@
       :off:   2
       :on:    0
       :blink: 5
-  :klass: LED
   :meta:
     :senders:
       - TEL

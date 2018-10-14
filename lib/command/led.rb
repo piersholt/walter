@@ -1,6 +1,6 @@
 class Command
   class LED < BaseCommand
-    attr_reader :led_state
+    # attr_reader :led_state
 
     # LEDS = %i{yellow red green}
     LED_CHAR = '◼︎'.freeze
@@ -10,29 +10,40 @@ class Command
     def initialize(id, props)
       super(id, props)
 
-      @argument_map = map_arguments(@arguments)
-      @led_state = parse_led_state(@argument_map[:state])
+      # @argument_map = map_arguments(@arguments)
+      # @led_state = parse_led_state(@argument_map[:state])
+      # LOGGER.unknown(props.keys)
+      # @led_state =
     end
 
     # ---- Printable ---- #
 
     def bytes
-      { state: @argument_map[:state] }
+      # { state: @argument_map[:state] }
+      { state: nil }
     end
 
     # ---- Core ---- #
 
     # @override
     def to_s
-      str_buffer = "#{sn}\t#{@led_state}"
+      str_buffer = "#{sn}\t#{pretty_leds}"
       str_buffer
     end
 
     private
 
-    def map_arguments(arguments)
-      { state: arguments[0] }
+    def pretty_leds
+      LOGGER.unknown(PROC) { instance_variables }
+      LOGGER.unknown(PROC) { instance_variable_get(:@leds) }
+      LOGGER.unknown(PROC) { public_methods(false) }
+
+      @pretty_leds ||= parse_led_state(ByteBasic.new(@leds.value, :integer))
     end
+
+    # def map_arguments(arguments)
+    #   { state: arguments[0] }
+    # end
 
     # @return String "◼︎ ◼︎ ◼︎"
     def parse_led_state(state_byte)
