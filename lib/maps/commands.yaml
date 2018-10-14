@@ -1393,7 +1393,7 @@
     :long_name: Update Text Display (BMBT, IKE)
   :klass: MediaDisplay
   :schemas:
-    - 0xC8
+    - :tel
   :parameters:
     :gfx:
       :type: :map
@@ -1547,10 +1547,10 @@
               begin: 2
               end: -1
               excl: false
-  0xC8:
+  :tel:
     :klass: MediaDisplay
     :properties:
-      :short_name: TXT-MEDIA
+      :short_name: TXT-MEDIA*
       :long_name: Update Text Display (BMBT, IKE)
     :index:
       :gfx: 0
