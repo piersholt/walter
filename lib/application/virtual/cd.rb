@@ -2,6 +2,7 @@
 
 # Simulated CD Changer
 module CD
+  include Stateful
   include API::CD
 
   SCAN_THRESHOLD_SECONDS = 3
@@ -37,6 +38,10 @@ module CD
     status
   end
 
+  def default_state
+    DEFAULT_STATE.dup
+  end
+
   def delegate_changer_request(command)
     control = command.control
     case control.value
@@ -63,26 +68,7 @@ module CD
     changer(report_state, from_id, to_id)
   end
 
-  def state
-    @state ||= DEFAULT_STATE.dup
-  end
-
-  private
-
-  def state!(delta)
-    state.merge!(delta)
-  end
-
   # Intervals for FFD/RWD vs. Next/Previous
-
-  def start_timer
-    @t0 = Time.now
-  end
-
-  def elapased_time
-    t1 = Time.now
-    t1 - @t0
-  end
 
   def only_skip_track?
     elapased_time <= SCAN_THRESHOLD_SECONDS

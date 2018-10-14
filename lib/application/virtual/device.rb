@@ -63,6 +63,7 @@ class Virtual
     end
   end
 
+  require 'application/virtual/stateful'
   require 'application/virtual/alive'
   require 'application/virtual/cd'
 
