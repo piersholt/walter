@@ -863,15 +863,6 @@
     :short_name: '0x1F'
     :long_name: UTC time and date
   :klass: BaseCommand
-32:
-  :id:
-    :d: 32
-    :h: '0x20'
-  :properties:
-    :short_name: TEL-3?
-    :long_name: Unknown
-  :klass: BaseCommand
-
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
@@ -2032,6 +2023,17 @@
 # ************************************************************************* #
 #                               TELEPHONE
 # ************************************************************************* #
+32:
+  :id:
+    :d: 32
+    :h: '0x20'
+  :properties:
+    :short_name: TEL-3?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :examples:
+      - from GFX 02 0C
 0x31:
   :id:
     :d: 49
