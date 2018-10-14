@@ -177,8 +177,6 @@ class Virtual
 
     PROC = 'SimulatedDSP'.freeze
 
-    CHANGER_REQUEST = 0x38
-
     def handle_message(message)
       command_id = message.command.d
       case command_id
