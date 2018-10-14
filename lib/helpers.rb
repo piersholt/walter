@@ -14,6 +14,8 @@ end
 
 module DeviceTools
   MEDIA = [:cdc, :cd, :rad, :dsp, :gfx, :tv, :bmbt]
+  TELEPHONE = [:tel, :ike, :rad, :gfx, :anzv, :bmbt]
+  BROADCAST = [:glo_h, :glo_l]
 end
 
 module CommandTools
@@ -43,6 +45,7 @@ end
 
 module WalterTools
   PROC_MOD = 'WalterTools'.freeze
+  include CommandTools
 
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
@@ -86,12 +89,18 @@ module WalterTools
     DisplayHandler.i.filter_commands(*CommandTools::IGNITION)
   end
 
+  def tel
+    DisplayHandler.i.f_t(* DeviceTools::TELEPHONE + DeviceTools::BROADCAST )
+    DisplayHandler.i.f_f(*DeviceTools::TELEPHONE)
+    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + MID_TXT + VEHICLE + LAMP + IKE_SENSOR)
+  end
+
   def c
     DisplayHandler.i.clear_filter
   end
 
   def media
-    DisplayHandler.i.f_t(* DeviceTools::MEDIA + [:glo_h, :glo_l] )
+    DisplayHandler.i.f_t(* DeviceTools::MEDIA + BROADCAST )
     DisplayHandler.i.f_f(*DeviceTools::MEDIA)
   end
 
