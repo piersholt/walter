@@ -6,8 +6,8 @@ module API
 
     DISPLAYS = {
       id:   0x23,
-      from: Devices::RAD,
-      to:   Devices::GLOH
+      from: :rad,
+      to:   :glo_h
     }.freeze
 
     def displays(command_arguments,
@@ -20,8 +20,8 @@ module API
 
     HUD_TEXT = {
       id:   0x24,
-      from: Devices::IKE,
-      to:   Devices::GLOH
+      from: :ike,
+      to:   :glo_h
     }.freeze
 
     def hud(command_arguments, from_id = HUD_TEXT[:from], to_id = HUD_TEXT[:to])
