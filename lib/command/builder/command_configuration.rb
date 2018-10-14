@@ -29,7 +29,7 @@ class CommandConfiguration
   end
 
   def inspect
-    "<#{PROC}> @id=#{id} @klass=#{klass} @has_parameters=#{has_parameters?} @parameter_list=#{parameter_list}"
+    "<#{PROC} @id=#{id} @sn=#{sn} @klass=#{klass} @has_parameters=#{has_parameters?} @parameter_list=#{parameter_list}>"
   end
 
   def builder
