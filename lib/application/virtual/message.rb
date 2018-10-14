@@ -27,5 +27,13 @@ class Virtual
     def inspect
       "#{from}\t#{to}\t#{command.inspect}"
     end
+
+    def from?(ident)
+      from == ident
+    end
+
+    def to?(ident)
+      to == ident
+    end
   end
 end
