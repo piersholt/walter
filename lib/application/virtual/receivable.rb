@@ -31,8 +31,8 @@ class Virtual
       notify_observers(MESSAGE_RECEIVED, message: message)
     end
 
-    def parse_command(from, command, arguments)
-      command_config = CommandMap.instance.config(command)
+    def parse_command(from_ident, command, arguments)
+      command_config = CommandMap.instance.config(command, from_ident)
       parameter_values_hash = parse_argumets(command_config, arguments)
       LOGGER.debug(ident) { "Parameter Values: #{parameter_values_hash}" }
       command_object = build_command(command_config, parameter_values_hash)
