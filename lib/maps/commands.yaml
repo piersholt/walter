@@ -148,6 +148,36 @@
   :properties:
     :short_name: IGN
     :long_name: Ignition Status Response
+  :klass: ParameterizedCommand
+  :parameters:
+    :position:
+      :type: :bit_array
+      :parameters:
+        :KLR:
+          :label: KL R (Pos. I)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :KL15:
+          :label: KL 15 (Pos. II)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :KL50:
+          :label: KL 50 (Start)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+      :index:
+        :KL50: 5
+        :KL15: 6
+        :KLR: 7
+  :index:
+    :position: 0
+  :meta:
     :ignition:
       # KL 0 = OFF (ignition off position)
       # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
@@ -158,7 +188,6 @@
       0b1: KLR
       0b11: KL15 (Position II)
       0b111: KL50
-  :klass: Ignition
   :meta:
     :senders:
       - IKE
