@@ -18,7 +18,7 @@ module CD
               fwd: 0x05, rwd: 0x06, stop: 0x07, changed: 0x08 }.freeze
   STATUS = { no: 0x02, yes: 0x09 }.freeze
 
-  DEFAULT_LOADER = 0b0011_0000
+  DEFAULT_LOADER = 0b0011_1111
 
   DEFAULT_STATE = {
     control: CONTROL[:off],
@@ -32,6 +32,7 @@ module CD
 
   def handle_changer_request(message)
     command = message.command
+    control = command.control
     LOGGER.unknown(ident) do
       "Analysing CD changer command. Control: #{control} (#{control.value})"
     end
