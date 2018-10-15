@@ -7,6 +7,8 @@ class Virtual
 
     attr_reader :ident
 
+    alias_method :me, :ident
+
     def initialize(device_ident)
       @ident = device_ident
     end
