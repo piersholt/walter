@@ -24,6 +24,10 @@ class CharsParameter < BaseParameter
     "<#{PROC} @value=#{value} @chars=#{chars}>"
   end
 
+  def empty?
+    chars.char.nil?
+  end
+
 
   # def append_chars(str_buffer)
   #   if !@chars.empty?
