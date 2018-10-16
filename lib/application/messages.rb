@@ -32,11 +32,7 @@ class Messages
   end
 
   def context(command_id, before = 5, after = 5)
-    positions = []
-    @messages.each_with_index do |m, i|
-      positions << i if m.command.d == command_id
-    end
-
+    positions = indexes(command_id)
     positions.map do |index|
       start_position = index - before
       end_position = index + after
@@ -160,6 +156,15 @@ class Messages
     end
 
     grouped_by_recipients
+  end
+
+  def indexes(command_id)
+    positions = []
+    @messages.each_with_index do |m, i|
+      positions << i if m.command.d == command_id
+    end
+
+    positions
   end
 
   # ************************************************************************* #
