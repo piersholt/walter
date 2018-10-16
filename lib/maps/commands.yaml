@@ -1946,7 +1946,7 @@
     :d: 32
     :h: '0x20'
   :properties:
-    :short_name: TEL-DRAW?
+    :short_name: TEL-OPEN
     :long_name: Unknown
   :klass: BaseCommand
   :meta:

@@ -54,7 +54,7 @@ module CommandAliases
   KEY_REQ   = 0x73
   KEY       = 0x74
 
-  TEL_3     = 0x20
+  TEL_OPEN   = 0x20
   TEL_LED   = 0x2B
   TEL_STATE = 0x2C
   TEL_DATA  = 0x31

@@ -204,8 +204,8 @@ class Virtual
         handle_gfx_status(message)
       when TEL_DATA
         handle_data_request(message)
-      when TEL_3
-        # handle_tel_3(message)
+      when TEL_OPEN
+        handle_tel_open(message)
       end
 
       super(message)

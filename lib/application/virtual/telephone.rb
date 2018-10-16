@@ -34,6 +34,8 @@ module Telephone
   CONTACT_DELIMITER = 6
 
   DRAW_DIRECTORY = 0x43
+  DRAW_TOP_8 = 0x80
+
   MID_DEFAULT = 0x01
 
   PAGE = { 0 => 0b0110_0000, 1 => 0b0100_0100,
@@ -56,14 +58,15 @@ module Telephone
 
   # Handlers ------------------------------------------------------------------
 
-  def handle_tel_3(message)
-    tel_display
+  def handle_tel_open(message)
+    LOGGER.unknown(PROC) { "Mock: handling telephone tel open request..." }
+    delegate_favourites(message)
   end
 
   # Piggyback off the radio announce to annunce
   def handle_announce(message)
     return false unless message.from?(:rad)
-    LOGGER.unknown(PROC) { "Mock: Announce!" }
+    LOGGER.unknown(PROC) { "Mock: handling Announce!" }
     return false unless message.command.status.value == ANNOUNCE
     ready
     true
@@ -116,6 +119,11 @@ module Telephone
     else
       false
     end
+  end
+
+  def delegate_favourites(message)
+    LOGGER.unknown(PROC) { "Mock: handling favourites..." }
+    render_pending_clearance(:favourites)
   end
 
   # Transmission State  -----------------------------------------------------------------
@@ -217,9 +225,32 @@ module Telephone
     end
   end
 
+  def favourites
+    to_id = address(:gfx)
+
+    contact_groups = generate_contacts(CONTACT_DISPLAY_LIMIT,
+                                       CONTACT_PAGE_SIZE,
+                                       false)
+
+    contact_groups.each_with_index do |contact_group, i|
+      favourites_page(contact_group, i)
+    end
+  end
+
   def directory_page(contact_group, i)
     command_arguments = {}
     command_arguments[:m1] = DRAW_DIRECTORY
+    command_arguments[:m2] = MID_DEFAULT
+    command_arguments[:m3] = PAGE[i]
+    command_arguments[:chars] = contact_group
+
+    mid(command_arguments, my_address, to_id)
+    page_wait
+  end
+
+  def favourites_page(contact_group, i)
+    command_arguments = {}
+    command_arguments[:m1] = DRAW_TOP_8
     command_arguments[:m2] = MID_DEFAULT
     command_arguments[:m3] = PAGE[i]
     command_arguments[:chars] = contact_group
