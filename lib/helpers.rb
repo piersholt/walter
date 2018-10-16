@@ -153,6 +153,7 @@ module WalterTools
     DisplayHandler.i.f_t(* DeviceTools::TELEPHONE + DeviceTools::BROADCAST)
     DisplayHandler.i.f_f(*DeviceTools::TELEPHONE)
     DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + KEEP_ALIVE + IGNITION + [0x24] )
+    DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
   end
 
   def c
