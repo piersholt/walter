@@ -196,6 +196,17 @@ end
 module ClusterTools
   HUD_SIZE = 20
 
+  LEFT = :ljust
+  CENTERED = :center
+  RIGHT = :rjust
+
+  ALIGNMENTS = [LEFT, CENTERED, RIGHT].freeze
+
+  def align(chars_string, alignment = CENTERED)
+    raise ArgumentError, "Invalid alignment #{alignment}" unless ALIGNMENTS.include?(alignment)
+    chars_string.public_send(alignment, HUD_SIZE)
+  end
+
   def centered(chars_string, opts = { upcase: true })
     upcase = opts[:upcase]
 
