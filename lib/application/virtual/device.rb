@@ -164,7 +164,8 @@ class Virtual
     def handle_message(message)
       command_id = message.command.d
       case command_id
-      when IGNITION
+      when DSP_EQ
+        true
       end
 
       super(message)
