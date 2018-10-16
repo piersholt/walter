@@ -51,7 +51,7 @@ class Walter
     @bus.send_all(:add_observer, @listener)
     add_observer(@listener)
 
-    
+
     require 'bus_device'
     @bus_device = BusDevice.new
     @bus_device.add_observer(@listener)
