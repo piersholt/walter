@@ -68,8 +68,6 @@ module CommandAliases
 
   GFX_STATUS = 0x22
 
-  DSP_EQ = 0x34
-
   CHANGER_REQUEST = 0x38
 end
 
