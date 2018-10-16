@@ -234,7 +234,7 @@
         :lock: 3
   :index:
     :b1: 0
-115:
+0x73:
   :id:
     :d: 115
     :h: '0x73'
@@ -478,7 +478,7 @@
     :d: 21
     :h: '0x15'
   :properties:
-    :short_name: CNTRY-RES
+    :short_name: CNTRY
     :long_name: Country Coding Status Resonse
   :klass: BaseCommand
 # ************************************************************************* #
@@ -2145,7 +2145,7 @@
       - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
       - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
       - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
-44:
+0x2C:
   :id:
     :d: 44
     :h: '0x2C'
