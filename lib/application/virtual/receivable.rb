@@ -19,7 +19,7 @@ class Virtual
     end
 
     def junk_mail?(message)
-      message.to?(me)
+      ident == message.to ? false : true
     end
 
     def notify(message)
