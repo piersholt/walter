@@ -2,6 +2,7 @@ module API
   module BaseAPI
     include Event
     include Observable
+    include ClusterTools
 
     def give_it_a_go(from_id, to_id, command_id, command_arguments = {})
       begin

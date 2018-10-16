@@ -41,7 +41,7 @@ module API
                  from_id = DISPLAYS[:from],
                  to_id = DISPLAYS[:to])
       command_id = DISPLAYS[:id]
-      format_chars!(command_arguments, align: false)
+      format_chars!(command_arguments)
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
 
@@ -53,7 +53,7 @@ module API
 
     def hud(command_arguments, from_id = HUD_TEXT[:from], to_id = HUD_TEXT[:to])
       command_id = HUD_TEXT[:id]
-      format_chars!(command_arguments, align: :none)
+      format_chars!(command_arguments)
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
   end
