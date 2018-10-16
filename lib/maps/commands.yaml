@@ -2059,43 +2059,79 @@
   :properties:
     :short_name: TEL-DATA
     :long_name: Unknown
+  :index:
+    :source: 0
+    :function: 1
+    :action: 2
+  :parameters:
     :source:
-      0x00: --
-      0x20: Info
-      0x42: Dial
-      0x43: Directory
-      0x80: Top 8
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Info
+        0x42: Dial
+        0x43: Directory
+        0x80: Top 8
     :function:
-      0x00: --
-      0x01:
-        name: Select Contact
-        0x00: Contact 1
-        0x02: Contact 2
-        0x04: Contact 3
-      0x02:
-        name: Select Digit
-        0x00: (0)
-        0x07: (7)
-        0x08: (8)
-        0x09: (9)
-        0x0A: DEL
-        0x1A: "*"
-        0x1B: "#"
-      0x05: SOS
-      0x07: Navigate Function
-      0x08: Navigate Info
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x01: Select Contact
+          # 0x00: Contact 1
+          # 0x02: Contact 2
+          # 0x04: Contact 3
+        0x02: Select Digit
+          # 0x00: (0)
+          # 0x07: (7)
+          # 0x08: (8)
+          # 0x09: (9)
+          # 0x0A: DEL
+          # 0x1A: "*"
+          # 0x1B: "#"
+        0x05: SOS
+        0x07: Navigate Function
+        0x08: Navigate Info
     :action:
-      0x08: SOS 112?
-      0x0A: Info Screen
-      0x1E: Dial Screen
-      0x1F: Directory Screen
-      0x0D: Directory Forward Page Start
-      0x2D: Directory Forward Page Scroll
-      0x4D: Directory Forward Page Stop
-      0x0C: Directory Back Page Start
-      0x2C: Directory Back Page Start
-      0x4C: Directory Back Page Start
-  :klass: BaseCommand
+      :type: :map
+      :dictionary:
+        0x00: Offset 0
+        0x01: Offset 1
+        0x02: Offset 2
+        0x03: Offset 3
+        0x04: Offset 4
+        0x05: Offset 5
+        0x06: Offset 6
+        0x07: Offset 7
+        0x08: Offset 8
+        0x09: Offset 9
+        0x0A: Offset A
+        0x0B: Offset B
+        0x0C: Offset C
+        0x0D: Offset D
+        0x0E: Offset E
+        0x0F: Offset F
+        0x10: Offset 10
+        0x11: Offset 11
+        0x12: Offset 12
+        0x13: Offset 13
+        0x14: Offset 14
+        0x15: Offset 15
+        0x16: Offset 16
+        0x17: Offset 17
+        0x18: Offset 18
+        0x19: Offset 19
+        0x1A: Offset 1A
+        0x08: SOS 112?
+        0x0A: Info Screen
+        0x1E: Dial Screen
+        0x1F: Directory Screen
+        0x0D: Directory Forward Page Start
+        0x2D: Directory Forward Page Scroll
+        0x4D: Directory Forward Page Stop
+        0x0C: Directory Back Page Start
+        0x2C: Directory Back Page Start
+        0x4C: Directory Back Page Start
+  :klass: ParameterizedCommand
   :meta:
     :commands:
       - 00 00 0D Directory Forward Page Start
