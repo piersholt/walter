@@ -866,18 +866,6 @@
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
-34:
-  :id:
-    :d: 34
-    :h: '0x22'
-  :properties:
-    :short_name: TEL/RAD-AUDIO?
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - 00: Dial Function
-      - 01 FF: Radio On?
 52:
   :id:
     :d: 52
@@ -2019,6 +2007,36 @@
   :klass: BaseCommand
   :meta:
     :notes: always RAD to GFX
+34:
+  :id:
+    :d: 34
+    :h: '0x22'
+  :properties:
+    :short_name: GFX-STATUS
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :parameters:
+    :draw:
+      :type: :map
+      :dictionary:
+        0x00: Available/Cleared
+        0x01: Loading Complete?
+        0x02: ?
+        0x03: ?
+        0x10: ?
+  :index:
+    :draw: 0
+  :meta:
+    :notes:
+      - 00: Dial Function
+      - 01 FF: Radio On?
+      - [0, 1, 2, 3, 4, 7, 16]
+      - 0x00: Available always after screen has been cleared
+      - 0x01: Done? (always preceded by 0x21 and 0x23 AND which is when loading a screen)
+      - 0x02: (only preceded by 0x21) when... manually navigating to a screen
+      - 0x03: Done?
+      - 0x07: unknown?
+      - 0x10: Unrecognised command?
 
 # ************************************************************************* #
 #                               TELEPHONE
