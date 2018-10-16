@@ -28,6 +28,10 @@ class CharsParameter < BaseParameter
     chars.char.nil?
   end
 
+  def length
+    chars.char.length
+  end
+
 
   # def append_chars(str_buffer)
   #   if !@chars.empty?
