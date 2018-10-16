@@ -10,6 +10,33 @@ module API
       to:   :glo_h
     }.freeze
 
+    MID = {
+      id:   0x21,
+      from: :tel,
+      to:   :gfx
+    }.freeze
+
+    # @param command_arguments[:chars] Array<Integer>
+    def mid(command_arguments,
+            from_id = MID[:from],
+            to_id = MID[:to])
+      command_id = MID[:id]
+
+      command_arguments[:m1] = 0x43 unless command_arguments[:m1]
+      command_arguments[:m2] = 0x01 unless command_arguments[:m2]
+      command_arguments[:m3] = 0x32 unless command_arguments[:m3]
+
+      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    end
+
+    # @param command_arguments[:chars] Array<Integer>
+    def raw(command_arguments,
+            from_id = DISPLAYS[:from],
+            to_id = DISPLAYS[:to])
+      command_id = DISPLAYS[:id]
+      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    end
+
     def displays(command_arguments,
                  from_id = DISPLAYS[:from],
                  to_id = DISPLAYS[:to])
