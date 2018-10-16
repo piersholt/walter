@@ -81,7 +81,7 @@ module Telephone
     # when SOURCE_DIAL
     #   handle_dial(message)
     # when SOURCE_DIR
-    #   handle_directory(message)
+    #   delegate_directory(message)
     # when SOURCE_TOP
     #   handle_top(message)
     # end
@@ -89,9 +89,9 @@ module Telephone
     action = message.command.action.value
     case action
     when ACTION_DIR_BACK
-      handle_directory(message)
+      delegate_directory(message)
     when ACTION_DIR_FORWARD
-      handle_directory(message)
+      delegate_directory(message)
     end
   end
 
@@ -108,7 +108,7 @@ module Telephone
 
   # Delegates  -----------------------------------------------------------------
 
-  def handle_directory(message)
+  def delegate_directory(message)
     LOGGER.unknown(PROC) { "Mock: handling directory..." }
     if message.command.action.value == ACTION_DIR_BACK
       LOGGER.unknown(PROC) { "Mock: oh, directory pages back!" }
