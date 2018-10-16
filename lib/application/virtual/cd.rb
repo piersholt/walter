@@ -7,8 +7,6 @@ module CD
 
   SCAN_THRESHOLD_SECONDS = 3
 
-  CHANGER_REQUEST = 0x38
-
   # 0x38
   REQUEST = { status: 0x00, stop: 0x01, play: 0x03,
               scan: 0x05, change_disc: 0x06 }.freeze

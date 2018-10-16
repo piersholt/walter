@@ -70,12 +70,9 @@ class Virtual
   require 'application/virtual/cd'
 
   class SimulatedDevice < Device
-    include CommandTools
+    include CommandAliases
 
     DEFAULT_STATUS = :down
-
-    PING = 0x01
-    IGNITION = 0x11
 
     include Alive
 
