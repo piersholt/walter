@@ -19,6 +19,8 @@ require 'listeners/global_listener'
 
 require 'api/alive'
 require 'api/cd'
+require 'api/media'
+require 'api/telephone'
 require 'application/virtual/virtual'
 
 require 'helpers'

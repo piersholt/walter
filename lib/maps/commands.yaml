@@ -1846,14 +1846,67 @@
     :h: '0x21'
   :properties:
     :short_name: TXT-MID
-    :long_name: Unknown
+    :long_name: MID Display
     :verbose: false
-  :sub_command:
-    - 0x41: select station present number (1-6)? another row?
-    - 0x43: MID display? another row?
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :m1:
+      :type: :map
+      :dictionary:
+        0x42: Rotary
+        0x43: Directory
+        0x80: Top 8
+    :m2:
+      :type: :integer
+    :m3:
+      :type: :bit_array
+      :parameters:
+        :block:
+          :type: :switch
+          :label: Blocking?
+          :states:
+            0: :off
+            1: :on
+        :column_1:
+          :type: :switch
+          :label: Column 1
+          :states:
+            0: :off
+            1: :on
+        :column_2:
+          :type: :switch
+          :label: Column 2
+          :states:
+            0: :off
+            1: :on
+        :row_2:
+          :type: :switch
+          :label: Row 2
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :block: 1
+        :column_1: 2
+        :column_2: 3
+        :row_2: 5
+    :chars:
+      :type: :chars
+  :index:
+    :m1: 0
+    :m2: 1
+    :m3: 2
+    :chars: !ruby/range
+            begin: 3
+            end: -1
+            excl: false
+
   :meta:
     :notes: always RAD to GFX
+    :parameters:
+      - 0x41: select station present number (1-6)? another row?
+      - 0x43: MID display? another row?
+
 34:
   :id:
     :d: 34
@@ -1863,16 +1916,16 @@
     :long_name: Unknown
   :klass: ParameterizedCommand
   :parameters:
-    :draw:
+    :status:
       :type: :map
       :dictionary:
         0x00: Available/Cleared
         0x01: Loading Complete?
-        0x02: ?
-        0x03: ?
-        0x10: ?
+        0x02: Telephone Home Loaded
+        0x03: Done?
+        0x10: Unknown
   :index:
-    :draw: 0
+    :status: 0
   :meta:
     :notes:
       - 00: Dial Function
@@ -1969,16 +2022,18 @@
         0x18: Offset 18
         0x19: Offset 19
         0x1A: Offset 1A
+
         0x08: SOS 112?
         0x0A: Info Screen
         0x1E: Dial Screen
         0x1F: Directory Screen
-        0x0D: Directory Forward Page Start
-        0x2D: Directory Forward Page Scroll
-        0x4D: Directory Forward Page Stop
+
         0x0C: Directory Back Page Start
-        0x2C: Directory Back Page Start
-        0x4C: Directory Back Page Start
+        0x0D: Directory Forward Page Start
+        0x2C: Directory Back Page Scroll
+        0x2D: Directory Forward Page Scroll
+        0x4C: Directory Back Page Stop
+        0x4D: Directory Forward Page Stop
   :klass: ParameterizedCommand
   :meta:
     :commands:

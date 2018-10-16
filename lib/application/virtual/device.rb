@@ -45,7 +45,8 @@ class Virtual
 
     CLASS_MAP = {
       dsp: 'SimulatedDSP',
-      cdc: 'SimulatedCDC'
+      cdc: 'SimulatedCDC',
+      tel: 'SimulatedTEL'
     }.freeze
 
     attr_reader :ident
@@ -68,6 +69,7 @@ class Virtual
   require 'application/virtual/stateful'
   require 'application/virtual/alive'
   require 'application/virtual/cd'
+  require 'application/virtual/telephone'
 
   class SimulatedDevice < Device
     include CommandAliases
@@ -182,6 +184,28 @@ class Virtual
       case command_id
       when CHANGER_REQUEST
         handle_changer_request(message)
+      end
+
+      super(message)
+    end
+  end
+
+  class SimulatedTEL < SimulatedDevice
+    include Telephone
+
+    PROC = 'SimulatedTEL'.freeze
+
+    def handle_message(message)
+      command_id = message.command.d
+      case command_id
+      when PONG
+        handle_announce(message)
+      when GFX_STATUS
+        handle_gfx_status(message)
+      when TEL_DATA
+        handle_data_request(message)
+      when TEL_3
+        # handle_tel_3(message)
       end
 
       super(message)
