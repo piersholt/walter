@@ -9,23 +9,18 @@ module Alive
     LOGGER.unknown(ident) { "HEY EVERYONE! COME SEE HOW GOOD #{@ident} looks!" }
 
     from_id = my_address
-    to_id = address(:glo_h)
 
     # LOGGER.unknown(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
 
-    pong({status: 0x01}, from_id, to_id)
+    pong({status: 0x01}, from_id, address(:glo_h))
   end
 
   def respond
-    # LOGGER.unknown(ident) { "Handling Ping." }
+    LOGGER.unknown(ident) { "Handling Ping." }
+    # LOGGER.unknown(ident) { "So, I #{@ident} of #{my_address} shall talk to #{address(:glo_l)}" }
 
-    alt = AddressLookupTable.instance
-    from_id = alt.get_address(ident)
-    to_id = alt.get_address(:glo_l)
-
-    # LOGGER.unknown(PROC) { "So, I #{@ident} of #{from_id} shall talk to #{to_id}" }
-
-    pong({status: 0x00}, from_id, to_id)
+    pong({status: 0x00}, my_address, address(:glo_l))
+    # LOGGER.unknown(ident) { "ping result => #{result}" }
   end
 
   private
