@@ -40,7 +40,9 @@ class Virtual
     end
   end
 
-  class SimulatedDeviceBuilder
+  # ----------------- DYNAMIC DEVICES ----------------- #
+
+  class DynamicDeviceBuilder
     include ModuleTools
 
     CLASS_MAP = {
@@ -51,8 +53,8 @@ class Virtual
 
     attr_reader :ident
 
-    def simulate(ident)
-      raise StandardError, "no class to simulate #{ident}" unless CLASS_MAP.key?(ident)
+    def target(ident)
+      raise StandardError, "no class to target #{ident}" unless CLASS_MAP.key?(ident)
       @ident = ident
       self
     end
@@ -72,7 +74,7 @@ class Virtual
     DEFAULT_STATUS = :down
 
     def self.builder
-      SimulatedDeviceBuilder.new
+      DynamicDeviceBuilder.new
     end
 
     def initialize(args)
@@ -129,6 +131,8 @@ class Virtual
       handle_message(message) if enabled?
     end
   end
+
+  # ----------------- SIMULATED DEVICES ----------------- #
 
   require 'application/virtual/stateful'
   require 'application/virtual/alive'
@@ -226,6 +230,8 @@ class Virtual
       super(message)
     end
   end
+
+  # ----------------- AUGMENTED DEVICES ----------------- #
 
   class AugmentedDevice < DynamicDevice
     PROC = 'AugmentedDevice'.freeze

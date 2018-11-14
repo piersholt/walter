@@ -1,8 +1,9 @@
 class Virtual
   class Initialization
     PROC = 'Initialization'
-    def initialize(opts = { simulated: [] })
-      @simulated = opts[:simulated]
+    def initialize(simulated: [], augmented: [])
+      @simulated = simulated
+      @augmented = augmented
       @executed = false
     end
 
@@ -35,10 +36,10 @@ class Virtual
     end
 
     def create_device(device_ident)
-      if @simulated.include?(device_ident)
-        SimulatedDevice.builder
-                       .simulate(device_ident)
-                       .result
+      if @simulated.include?(device_ident) || @augmented.include?(device_ident)
+        DynamicDevice.builder
+                     .target(device_ident)
+                     .result
       else
         Device.new(device_ident)
       end
