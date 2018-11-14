@@ -14,6 +14,7 @@ end
 
 module DeviceTools
   MEDIA = [:cdc, :cd, :rad, :dsp, :gfx, :tv, :bmbt]
+  CD = [:cdc, :cd, :rad, :gfx, :bmbt]
   TELEPHONE = [:tel, :ike, :rad, :gfx, :anzv, :bmbt]
   BROADCAST = [:glo_h, :glo_l]
 end
@@ -58,6 +59,8 @@ module CommandAliases
   TEL_LED   = 0x2B
   TEL_STATE = 0x2C
   TEL_DATA  = 0x31
+
+  HUD_TEXT = 0x24
 
   RAD_LED = 0x4A
   SRC_CTL = 0x4B
@@ -154,6 +157,13 @@ module WalterTools
     DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
   end
 
+  def cd
+    DisplayHandler.i.f_t(* DeviceTools::CD)
+    DisplayHandler.i.f_f(* DeviceTools::CD)
+    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::HUD_TEXT] )
+    DisplayHandler.i.h_c(* [])
+  end
+
   def c
     DisplayHandler.i.clear_filter
   end
@@ -161,10 +171,6 @@ module WalterTools
   def media
     DisplayHandler.i.f_t(* DeviceTools::MEDIA + BROADCAST )
     DisplayHandler.i.f_f(*DeviceTools::MEDIA)
-  end
-
-  def cd
-    DisplayHandler.i.filter_commands(*CommandTools::CD_CHANGER)
   end
 
   # Logging
