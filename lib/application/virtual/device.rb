@@ -71,56 +71,17 @@ class Virtual
   require 'application/virtual/cd'
   require 'application/virtual/telephone'
 
-  class SimulatedDevice < Device
-    include CommandAliases
-
-    DEFAULT_STATUS = :down
-
+  class SimulatedDevice < DynamicDevice
     include Alive
 
     PROC = 'SimulatedDevice'.freeze
 
-    def self.builder
-      SimulatedDeviceBuilder.new
-    end
-
     def initialize(args)
       super(args)
-      @status = DEFAULT_STATUS
     end
 
     def type
       :simulated
-    end
-
-    def enable
-      @status = :up
-    end
-
-    def disable
-      @status = :down
-    end
-
-    def enabled?
-      case @status
-      when nil
-        false
-      when :up
-        true
-      when :down
-        false
-      end
-    end
-
-    def disabled?
-      case @status
-      when nil
-        false
-      when :up
-        false
-      when :down
-        true
-      end
     end
 
     # @override Object#inspect
@@ -145,18 +106,6 @@ class Virtual
       when PING
         respond
       end
-    end
-
-    def alt
-      @alt ||= AddressLookupTable.instance
-    end
-
-    def address(ident)
-      alt.get_address(ident)
-    end
-
-    def my_address
-      alt.get_address(ident)
     end
   end
 
