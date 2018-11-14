@@ -2848,7 +2848,8 @@
         0x00: Status!
         0x01: Stop!
         0x03: Play!
-        0x05: Scan!
+        0x04: Seek! (RWD/FFD)
+        0x05: Skip! (Previous/Next)
         0x06: Change Disc!
     :mode:
       :type: :integer
@@ -2876,6 +2877,9 @@
         0x06: RWD
         0x07: Stopped
         0x08: Changed
+      :notes:
+        - when CD play is first requested, CDC sends back 0x00
+        - it's not until it responds with 0x02 that the audio is routed
     :status:
       :type: :map
       :label: Playing
