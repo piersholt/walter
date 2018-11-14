@@ -107,9 +107,6 @@ module WalterTools
 
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
-    # ign
-    # tel
-    DisplayHandler.i.f_c(0x21)
   end
 
   # Session
@@ -153,7 +150,7 @@ module WalterTools
   def tel
     DisplayHandler.i.f_t(* DeviceTools::TELEPHONE + DeviceTools::BROADCAST)
     DisplayHandler.i.f_f(*DeviceTools::TELEPHONE)
-    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + KEEP_ALIVE + IGNITION + [0x24] )
+    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + KEEP_ALIVE + IGNITION + [CommandAliases::HUD_TEXT] )
     DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
   end
 
