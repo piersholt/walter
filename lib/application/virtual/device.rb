@@ -163,10 +163,6 @@ class Virtual
     end
 
     # @override Virtual::Device#receive_packet
-    def receive_packet(packet)
-      message = super(packet)
-      handle_message(message) if enabled?
-    end
 
     def handle_message(message)
       command_id = message.command.d
