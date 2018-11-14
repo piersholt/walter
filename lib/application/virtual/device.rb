@@ -213,4 +213,90 @@ class Virtual
       super(message)
     end
   end
+
+  class DynamicDevice < Device
+    include CommandAliases
+
+    DEFAULT_STATUS = :down
+
+    def self.builder
+      SimulatedDeviceBuilder.new
+    end
+
+    def initialize(args)
+      super(args)
+      @status = DEFAULT_STATUS
+    end
+
+    def enable
+      @status = :up
+    end
+
+    def disable
+      @status = :down
+    end
+
+    def enabled?
+      case @status
+      when nil
+        false
+      when :up
+        true
+      when :down
+        false
+      end
+    end
+
+    def disabled?
+      case @status
+      when nil
+        false
+      when :up
+        false
+      when :down
+        true
+      end
+    end
+
+    def alt
+      @alt ||= AddressLookupTable.instance
+    end
+
+    def address(ident)
+      alt.get_address(ident)
+    end
+
+    def my_address
+      alt.get_address(ident)
+    end
+
+    # @override Virtual::Device#receive_packet
+    # Allows the introduction of custom behaviour
+    def receive_packet(packet)
+      message = super(packet)
+      handle_message(message) if enabled?
+    end
+  end
+
+  class AugmentedDevice < DynamicDevice
+    PROC = 'AugmentedDevice'.freeze
+
+    def initialize(args)
+      super(args)
+    end
+
+    def type
+      :augmented
+    end
+
+    # @override Object#inspect
+    def inspect
+      "#<AugmentedDevice :#{@ident}>"
+    end
+
+    # @override Object#to_s
+    def to_s
+      "<:#{@ident}>"
+    end
+  end
 end
