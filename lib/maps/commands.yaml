@@ -2036,6 +2036,43 @@
         0x4D: Directory Forward Page Stop
   :klass: ParameterizedCommand
   :meta:
+    :digit:
+      :type: :map
+      :dictionary:
+        0x00: (0)
+        0x01: (1)
+        0x02: (2)
+        0x03: (3)
+        0x04: (4)
+        0x05: (5)
+        0x06: (6)
+        0x07: (7)
+        0x08: (8)
+        0x09: (9)
+        0x0A: DEL
+        0x1A: "*"
+        0x1B: "#"
+    :contact:
+      :type: :bit_array
+      :parameters:
+        :index:
+          :column: 3
+          :row:  !ruby/range
+                  begin: 5
+                  end: 7
+                  excl: false
+        :column:
+          :type: :map
+          :dictionary:
+            0: Column 1
+            1: Column 2
+        :row:
+          :type: :map
+          :dictionary:
+            0x00: Row 1
+            0x02: Row 2
+            0x04: Row 3
+            0x06: Row 4
     :commands:
       - 00 00 0D Directory Forward Page Start
       - 00 00 2D Directory Forward Page Scroll
