@@ -8,8 +8,8 @@ module CD
   SCAN_THRESHOLD_SECONDS = 3
 
   # 0x38
-  REQUEST = { status: 0x00, stop: 0x01, play: 0x03,
-              scan: 0x05, change_disc: 0x06 }.freeze
+  REQUEST = { status: 0x00, stop: 0x01, play: 0x03, seek: 0x04,
+              skip: 0x05, change_disc: 0x06 }.freeze
 
   # 0x39
   CONTROL = { off: 0x00, start: 0x02, next: 0x03, previous: 0x04,
@@ -52,10 +52,14 @@ module CD
       handle_stop
     when REQUEST[:play]
       handle_play
-    when REQUEST[:scan]
-      handle_scan(command)
+    when REQUEST[:skip]
+      handle_skip(command)
+    when REQUEST[:seek]
+      handle_seek(command)
     when REQUEST[:change_disc]
       handle_change_disc(command)
+      status
+      handle_play
     else
       LOGGER.error(ident) { "Nothing matches: #{control}?" }
       return false
@@ -117,10 +121,29 @@ module CD
       state! track: previous_track if only_skip_track?
     when CONTROL[:off]
       state! cd: 1, track: 1
+    else
+      state! cd: 7, track: 99
     end
   end
 
-  def handle_scan(command)
+  def handle_skip(command)
+    LOGGER.unknown(ident) { 'Handling track skip.' }
+
+    mode = command.mode
+
+    if mode.value.zero?
+      control = CONTROL[:next]
+      track = next_track
+    elsif mode.value == 1
+      control = CONTROL[:previous]
+      track = previous_track
+    end
+
+    state! control: control, status: STATUS[:no], track: track
+    start_timer
+  end
+
+  def handle_seek(command)
     LOGGER.unknown(ident) { 'Handling track scan.' }
 
     mode = command.mode
