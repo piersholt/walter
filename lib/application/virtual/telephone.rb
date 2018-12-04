@@ -68,8 +68,18 @@ module Telephone
 
   LED_OFF = 0b0000_0000
   LED_ALL = 0b0001_0101
-  TEL_OFF = 0b0000_0000
-  TEL_POWERED = 0b0001_0000
+
+  LED_RED = 0b0000_0001
+  LED_RED_BLINK = 0b0000_0010
+
+  LED_YELLOW = 0b0000_0100
+  LED_YELLOW_BLINK = 0b0000_1000
+
+  LED_GREEN = 0b0001_0000
+  LED_GREEN_BLINK = 0b0010_0000
+
+  TEL_OFF = LED_OFF
+  TEL_POWERED = LED_GREEN
 
   # Helpers  ------------------------------------------------------------------
 
@@ -80,7 +90,33 @@ module Telephone
     announce
     sleep(0.25)
     tel_state(TEL_POWERED)
-    tel_led(LED_ALL)
+    # tel_led(LED_ALL)
+    bluetooth_pending
+  end
+
+  def bluetooth_pending
+    LOGGER.unknown(PROC) { 'Bluetooth connection pending...' }
+    tel_led(LED_YELLOW_BLINK)
+  end
+
+  def bluetooth_connecting
+    LOGGER.unknown(PROC) { 'Telephone connecting...' }
+    tel_led(LED_GREEN_BLINK)
+  end
+
+  def bluetooth_connected
+    LOGGER.unknown(PROC) { 'Telephone connected!' }
+    tel_led(LED_GREEN)
+  end
+
+  def bluetooth_disconnecting
+    LOGGER.unknown(PROC) { 'Telephone disconnecting...' }
+    tel_led(LED_RED_BLINK)
+  end
+
+  def bluetooth_disconnected
+    LOGGER.unknown(PROC) { 'Telephone disconnected...' }
+    tel_led(LED_RED)
   end
 
   # Displaying Drawing  -------------------------------------------------------
