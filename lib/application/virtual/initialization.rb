@@ -55,6 +55,10 @@ class Virtual
       end
     end
 
+    def intent_listener
+      @intent_listener ||= IntentListener.instance
+    end
+
     def populate_bus(bus, devices)
       devices.each do |device|
         bus.add_device(device)
