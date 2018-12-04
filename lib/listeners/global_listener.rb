@@ -32,6 +32,8 @@ class GlobalListener
     @interface_handler = handlers[:interface]
     @bus_handler = handlers[:bus]
 
+    @intent_listener = handlers[:intent]
+
     # @demultiplexing_handler.add_observer(self)
     # @multiplexing_handler.add_observer(self)
     @frame_handler.add_observer(self)
@@ -41,7 +43,7 @@ class GlobalListener
 
   def update(action, properties = {})
     # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
-    validate_event(action)
+    return false unless event_valid?(action)
 
     begin
       case action
@@ -148,5 +150,9 @@ class GlobalListener
     LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
     @data_logging_handler.update(action, properties)
     LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class} complete!" }
+
+    # LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
+    # @intent_listener.update(action, properties)
+    # LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
   end
 end

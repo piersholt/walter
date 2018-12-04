@@ -34,11 +34,11 @@ module Event
 
   ALL_EVENTS = (CHANNEL_EVENTS + RECEIVER_EVENTS + LAYER_EVENTS + USER_EVENTS + APP_EVENTS).freeze
 
-  def valid?(event)
+  def event_valid?(event)
     ALL_EVENTS.one? { |e| e == event }
   end
 
   def validate_event(event)
-    raise ::ArgumentError, 'unrecognised action' unless valid?(event)
+    raise ::ArgumentError, 'unrecognised action' unless event_valid(event)
   end
 end

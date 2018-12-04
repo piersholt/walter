@@ -230,6 +230,8 @@ class Virtual
   # ----------------- AUGMENTED DEVICES ----------------- #
 
   class AugmentedDevice < DynamicDevice
+    include Actions
+
     PROC = 'AugmentedDevice'.freeze
 
     def initialize(args)

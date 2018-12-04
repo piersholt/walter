@@ -45,6 +45,7 @@ class Walter
     handlers[:transmission] =
       TransmissionHandler.new(@transmitter.write_queue)
     handlers[:bus] = BusHandler.new(bus: @bus)
+    handlers[:intent] = IntentListener.instance
 
     @listener = GlobalListener.new(handlers)
 

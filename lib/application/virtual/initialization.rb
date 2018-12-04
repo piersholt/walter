@@ -1,3 +1,6 @@
+require 'application/intents/intent_listener'
+require 'application/intents/intent_handler'
+
 class Virtual
   class Initialization
     PROC = 'Initialization'
