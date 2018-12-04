@@ -37,7 +37,8 @@ class DeviceMap < Map
     begin
       mapped_result = super(device_id)
     rescue IndexError => e
-      LOGGER.error(PROC) {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
+      # LOGGER.error(PROC) {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
+      LOGGER.error(PROC) {"Device #{device_id} not found!" }
       mapped_result = super(:default)
       mapped_result[:properties][:d] = device_id
     end
