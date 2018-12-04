@@ -39,13 +39,24 @@ class Virtual
     end
 
     def create_device(device_ident)
-      if @simulated.include?(device_ident) || @augmented.include?(device_ident)
+      if @simulated.include?(device_ident)
         DynamicDevice.builder
                      .target(device_ident)
                      .result
+      elsif @augmented.include?(device_ident)
+        augmented_device =
+          DynamicDevice.builder
+                       .target(device_ident)
+                       .result
+        augmented_device.add_observer(intent_listener, :handle)
+        augmented_device
       else
         Device.new(device_ident)
       end
+    end
+
+    def intent_listener
+      @intent_listener ||= IntentListener.instance
     end
 
     def populate_bus(bus, devices)
