@@ -23,6 +23,8 @@ require 'api/media'
 require 'api/telephone'
 require 'application/virtual/virtual'
 
+require 'notifications/notification_listener'
+
 require 'helpers'
 
 # Container
@@ -30,6 +32,8 @@ class Walter
   include Observable
   include WalterTools
   include ManageableThreads
+
+  attr_reader :bus
 
   PROC = 'Walter'.freeze
 
@@ -58,6 +62,8 @@ class Walter
     require 'bus_device'
     @bus_device = BusDevice.new
     @bus_device.add_observer(@listener)
+
+    Notifications.start(@bus)
 
     defaults
   end
