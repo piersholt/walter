@@ -62,6 +62,9 @@ module CommandAliases
 
   HUD_TEXT = 0x24
 
+  MFL_VOL = 0x32
+  MFL_FUNC = 0x3B
+
   RAD_LED = 0x4A
   SRC_CTL = 0x4B
   SND_SRC = 0x4E

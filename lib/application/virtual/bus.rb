@@ -6,7 +6,7 @@ class Virtual
 
     attr_reader :devices
 
-    def_delegators :@devices, :send_all, :simulated, :broadcast, :dumb
+    def_delegators :@devices, :send_all, :dynamic, :augmented, :simulated, :broadcast, :dumb
 
     def initialize
       @devices = Devices.new

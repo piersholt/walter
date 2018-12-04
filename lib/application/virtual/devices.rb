@@ -37,6 +37,18 @@ class Virtual
       Devices.new(dumb_devices)
     end
 
+    def dynamic
+      dynamic_devices = @devices.find_all do |d|
+        %i(simulated augmented).any? { |t| t == d.type }
+      end
+      Devices.new(dynamic_devices)
+    end
+
+    def augmented
+      augmented_devices = @devices.find_all  {|d| d.type == :augmented }
+      Devices.new(augmented_devices)
+    end
+
     def simulated
       simulated_devices = @devices.find_all  {|d| d.type == :simulated }
       Devices.new(simulated_devices)

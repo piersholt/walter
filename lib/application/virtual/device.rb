@@ -40,19 +40,22 @@ class Virtual
     end
   end
 
-  class SimulatedDeviceBuilder
+  # ----------------- DYNAMIC DEVICES ----------------- #
+
+  class DynamicDeviceBuilder
     include ModuleTools
 
     CLASS_MAP = {
       dsp: 'SimulatedDSP',
       cdc: 'SimulatedCDC',
-      tel: 'SimulatedTEL'
+      tel: 'SimulatedTEL',
+      rad: 'AugmentedRAD'
     }.freeze
 
     attr_reader :ident
 
-    def simulate(ident)
-      raise StandardError, "no class to simulate #{ident}" unless CLASS_MAP.key?(ident)
+    def target(ident)
+      raise StandardError, "no class to target #{ident}" unless CLASS_MAP.key?(ident)
       @ident = ident
       self
     end
@@ -66,31 +69,18 @@ class Virtual
     end
   end
 
-  require 'application/virtual/stateful'
-  require 'application/virtual/alive'
-  require 'application/virtual/cd'
-  require 'application/virtual/telephone'
-
-  class SimulatedDevice < Device
+  class DynamicDevice < Device
     include CommandAliases
 
-    DEFAULT_STATUS = :down
-
-    include Alive
-
-    PROC = 'SimulatedDevice'.freeze
+    DEFAULT_STATUS = :up
 
     def self.builder
-      SimulatedDeviceBuilder.new
+      DynamicDeviceBuilder.new
     end
 
     def initialize(args)
       super(args)
       @status = DEFAULT_STATUS
-    end
-
-    def type
-      :simulated
     end
 
     def enable
@@ -123,6 +113,46 @@ class Virtual
       end
     end
 
+    def alt
+      @alt ||= AddressLookupTable.instance
+    end
+
+    def address(ident)
+      alt.get_address(ident)
+    end
+
+    def my_address
+      alt.get_address(ident)
+    end
+
+    # @override Virtual::Device#receive_packet
+    # Allows the introduction of custom behaviour
+    def receive_packet(packet)
+      message = super(packet)
+      handle_message(message) if enabled?
+    end
+  end
+
+  # ----------------- SIMULATED DEVICES ----------------- #
+
+  require 'application/virtual/stateful'
+  require 'application/virtual/alive'
+  require 'application/virtual/cd'
+  require 'application/virtual/telephone'
+
+  class SimulatedDevice < DynamicDevice
+    include Alive
+
+    PROC = 'SimulatedDevice'.freeze
+
+    def initialize(args)
+      super(args)
+    end
+
+    def type
+      :simulated
+    end
+
     # @override Object#inspect
     def inspect
       "#<SimulatedDevice :#{@ident}>"
@@ -134,10 +164,6 @@ class Virtual
     end
 
     # @override Virtual::Device#receive_packet
-    def receive_packet(packet)
-      message = super(packet)
-      handle_message(message) if enabled?
-    end
 
     def handle_message(message)
       command_id = message.command.d
@@ -145,18 +171,6 @@ class Virtual
       when PING
         respond
       end
-    end
-
-    def alt
-      @alt ||= AddressLookupTable.instance
-    end
-
-    def address(ident)
-      alt.get_address(ident)
-    end
-
-    def my_address
-      alt.get_address(ident)
     end
   end
 
@@ -211,6 +225,106 @@ class Virtual
       end
 
       super(message)
+    end
+  end
+
+  # ----------------- AUGMENTED DEVICES ----------------- #
+
+  class AugmentedDevice < DynamicDevice
+    include Actions
+
+    PROC = 'AugmentedDevice'.freeze
+
+    def initialize(args)
+      super(args)
+    end
+
+    def type
+      :augmented
+    end
+
+    # @override Object#inspect
+    def inspect
+      "#<AugmentedDevice :#{@ident}>"
+    end
+
+    # @override Object#to_s
+    def to_s
+      "<:#{@ident}>"
+    end
+  end
+
+  class AugmentedRAD < AugmentedDevice
+    include API::Media
+    PROC = 'AugmentedRAD'.freeze
+
+    def track_change(track)
+      return false if @thread
+      @thread = Thread.new(track) do |t|
+        begin
+          LOGGER.fatal(self.class) { t }
+          title = t['Title']
+          artist = t['Artist']
+          scroll = "#{title} / #{artist}"
+
+          displays( { chars: '', gfx: 0xC4, ike: 0x20,}, my_address, address(:ike) )
+
+          i = 0
+          last = scroll.length
+
+          while i <= last do
+            scroll = scroll.bytes.rotate(i).map { |i| i.chr }.join
+            displays( { chars: scroll, gfx: 0xC4, ike: 0x30,}, my_address, address(:ike) )
+            sleep(2)
+            i += 1
+          end
+        rescue StandardError => e
+          LOGGER.error(self.class) { e }
+        end
+      end
+      @thread = nil
+      true
+    end
+
+    def handle_message(message)
+      # LOGGER.warn(PROC) { 'i am a trying to handle this hokay!' }
+      command_id = message.command.d
+      case command_id
+      when MFL_FUNC
+        seek = [0x01, 0x11, 0x21, 0x08, 0x18, 0x28]
+
+        seek_next = [0x01, 0x11, 0x21]
+        seek_previous = [0x08, 0x18, 0x28]
+
+        button_press = [0x01, 0x08]
+        button_hold = [0x11, 0x18]
+        button_release = [0x21, 0x28]
+
+        value = message.command.totally_unique_variable_name
+
+        if seek.any? { |x| x == value }
+          if seek_next.any? { |x| x == value }
+            variant = NEXT
+          elsif seek_previous.any? { |x| x == value }
+            variant = PREVIOUS
+          end
+
+          if button_press.any? { |x| x == value }
+            state = PRESS
+          elsif button_hold.any? { |x| x == value }
+            state = HOLD
+          elsif button_release.any? { |x| x == value }
+            state = RELEASE
+          end
+
+          changed(true)
+          notify_observers(SEEK, variant: variant, control: BUTTON, state: state)
+        end
+      when MFL_VOL
+        # changed(true)
+        # notify_observers(SEEK)
+        true
+      end
     end
   end
 end
