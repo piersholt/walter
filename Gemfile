@@ -9,3 +9,5 @@ gem 'pry-byebug'
 gem 'rspec'
 gem 'serialport'
 gem 'awesome_print'
+
+gem 'rbczmq'

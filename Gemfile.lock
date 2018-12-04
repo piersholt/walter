@@ -12,6 +12,7 @@ GEM
     pry-byebug (3.6.0)
       byebug (~> 10.0)
       pry (~> 0.10)
+    rbczmq (1.7.9)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -33,6 +34,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   pry-byebug
+  rbczmq
   rspec
   serialport
 
