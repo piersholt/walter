@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'application/intents/actions'
-require 'application/intents/intents'
-require 'application/intents/messaging_bus'
-
 class IntentListener
   include Singleton
   include Event

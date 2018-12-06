@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'application/intents/actions'
-
 # Comment
 class Virtual
   class AugmentedDevice < DynamicDevice

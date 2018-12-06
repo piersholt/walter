@@ -23,7 +23,6 @@ require 'api/media'
 require 'api/telephone'
 require 'application/virtual/virtual'
 
-require 'notifications/notification_listener'
 
 require 'helpers'
 

@@ -19,6 +19,4 @@ module Actions
   def valid_action?(action)
     [SEEK].one? { |i| i == action }
   end
-
-  # ----------------------------------------------------------------------------- #
 end

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'application/intents/intent_handler'
+require 'application/intents/intent_listener'
+
 module Intents
   # CHANNEL
   INTENT = :intent
@@ -16,22 +19,4 @@ module Intents
   EXECUTE = :execute
   COMMENCE = :commence
   CONCLUDE = :conclude
-
-  class Intent
-    attr_reader :action, :variant, :operation
-
-    def initialize(action:, variant:, operation:)
-      @action = action
-      @variant = variant
-      @operation = operation
-    end
-
-    def to_yaml
-      { INTENT => { action: action, variant: variant, operation: operation }}.to_yaml
-    end
-
-    def to_json
-      return ''
-    end
-  end
 end

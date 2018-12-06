@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'application/intents/actions'
+
 root = 'application/virtual'
 
 device = "#{root}/device"
