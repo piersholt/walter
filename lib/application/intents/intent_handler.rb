@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-DEFAULT_BUS = ZeroMQBus
+DEFAULT_BUS = Publisher
 # DEFAULT_BUS = MessagingBus
 
 class IntentHandler
+  include Messaging::Constants
   include Singleton
   include Event
   include Actions
@@ -12,13 +13,12 @@ class IntentHandler
   attr_reader :bus
 
   def initialize(bus = DEFAULT_BUS)
-    @bus = bus.new
+    @bus = bus
   end
 
   def close(properties)
     LOGGER.info(PROC) { "Exit: Closing bus." }
-    intent = Intent.new(action: :exit, variant: :interrupt, operation: :close)
-    @bus.close(intent)
+    @bus.close
   end
 
   def seek(properties)
@@ -29,9 +29,9 @@ class IntentHandler
     variant = properties[:variant]
     operation = EXECUTE
 
-    # LOGGER.warn(PROC) { "#{action} / #{variant} / #{operation}" }
-    intent = Intent.new(action: action, variant: variant, operation: operation)
-    @bus.publish(intent)
+    name = "#{action}_#{variant}_#{operation}"
+    action = Messaging::Action.new(topic: MEDIA, name: name)
+    @bus.send(action.topic, action.to_yaml)
   end
 
   def scan(properties)
@@ -43,11 +43,13 @@ class IntentHandler
       @is_scanning = false
       x = CONCLUDE
     end
+    
     action = SCAN
     variant = properties[:variant]
     operation = x
-    # LOGGER.warn(PROC) { "#{action} / #{variant} / #{operation}" }
-    intent = Intent.new(action: action, variant: variant, operation: operation)
-    @bus.publish(intent)
+
+    name = "#{action}_#{variant}_#{operation}"
+    action = Messaging::Action.new(topic: MEDIA, name: name)
+    @bus.send(action.topic, action.to_yaml)
   end
 end

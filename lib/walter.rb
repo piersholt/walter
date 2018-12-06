@@ -23,6 +23,7 @@ require 'api/media'
 require 'api/telephone'
 require 'application/virtual/virtual'
 
+require 'notifications/notifications'
 
 require 'helpers'
 
