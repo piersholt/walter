@@ -8,7 +8,6 @@ require 'pry-byebug'
 
 # Setup load path for application (makes you realise RubyGems spoils you...)
 lib_path = File.expand_path(File.dirname(__FILE__)+ '/../lib')
-# lib_path = File.expand_path(File.dirname(__FILE__)+ '/../samples')
 ext_path = File.expand_path(File.dirname(__FILE__)+ '/../ext')
 $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
 $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
