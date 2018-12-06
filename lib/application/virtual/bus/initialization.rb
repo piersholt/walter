@@ -1,5 +1,4 @@
-require 'application/intents/intent_listener'
-require 'application/intents/intent_handler'
+require 'application/intents/intents'
 
 class Virtual
   class Initialization
