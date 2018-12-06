@@ -1,6 +1,6 @@
 class Command
   class Button < BaseCommand
-    attr_reader :button_state
+    attr_reader :button_state, :totally_unique_variable_name
 
     def initialize(id, props)
       super(id, props)
@@ -35,6 +35,7 @@ class Command
 
     def parse_button_state(state)
       state_decimal = state.d
+      @totally_unique_variable_name = state_decimal
       # LOGGER.error(instance_variables)
       return @state[state_decimal] if @state.key?(state_decimal)
       "Unknown: #{d2h(state_decimal, true)}"
