@@ -14,7 +14,7 @@ require 'command/parameter/base_parameter'
 
 require 'command/builder/base_command_builder'
 
-require 'application/packet'
+require 'datalink/packet'
 
 class FrameHandler < BaseHandler
   include Singleton
