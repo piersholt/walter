@@ -11,7 +11,8 @@ class NotificationListener
   def setup
     Subscriber.pi
     Subscriber.subscribe(:device)
-    Subscriber.subscribe(:media)
+    Subscriber.subscribe(:target)
+    Subscriber.subscribe(:player)
   end
 
   def delegate(notification)
