@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-DEFAULT_BUS = Publisher
-# DEFAULT_BUS = MessagingBus
-
 class IntentHandler
   include Messaging::Constants
   include Singleton
@@ -10,10 +7,17 @@ class IntentHandler
   include Actions
   include Intents
 
-  attr_reader :bus
+  def initialize
+    # Publisher = bus
+    Publisher.ready
+  end
 
-  def initialize(bus = DEFAULT_BUS)
-    @bus = bus
+  def ready
+    LOGGER.info(PROC) { 'Ready bus.' }
+    n = Messaging::Notification
+        .new(topic: :walter, name: :publish,
+             properties: { status: :start })
+    Publisher.send(n.topic, n.to_yaml)
   end
 
   def close(properties)
