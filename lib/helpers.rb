@@ -110,6 +110,7 @@ module WalterTools
 
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
+    shutup!
   end
 
   # Session
