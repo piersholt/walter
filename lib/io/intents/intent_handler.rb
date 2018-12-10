@@ -9,14 +9,13 @@ class IntentHandler
   include Intents
 
   def initialize
-    # Publisher = bus
-    Publisher.ready
+    ready
   end
 
   def ready
     LOGGER.info(PROC) { 'Ready bus.' }
     n = Messaging::Notification
-        .new(topic: :walter, name: :publish,
+        .new(topic: :meta, name: :publish,
              properties: { status: :start })
     Publisher.send(n.topic, n.to_yaml)
   end
@@ -24,7 +23,7 @@ class IntentHandler
   def close(properties)
     LOGGER.info(PROC) { 'Closing bus.' }
     n = Messaging::Notification
-        .new(topic: :walter, name: :publish,
+        .new(topic: :meta, name: :publish,
              properties: { status: :end, event: properties })
     Publisher.send(n.topic, n.to_yaml)
     Publisher.close

@@ -18,5 +18,5 @@ module Intents
   CONCLUDE = :conclude
 end
 
-require 'application/intents/intent_handler'
-require 'application/intents/intent_listener'
+require 'io/intents/intent_handler'
+require 'io/intents/intent_listener'

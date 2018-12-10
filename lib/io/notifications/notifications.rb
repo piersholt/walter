@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'notifications/notification_listener'
-require 'notifications/notification_handler'
-# require 'notifications/messaging_queue'
-# require 'notifications/subscriber'
+require 'io/notifications/notification_listener'
+require 'io/notifications/notification_handler'
+# require 'io/notifications/messaging_queue'
+# require 'io/notifications/subscriber'
 
 # Comment
 class Notifications
