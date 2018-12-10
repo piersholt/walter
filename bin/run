@@ -19,7 +19,7 @@ LOGGER = get_logger
 #                             DISENGAGE THE LAZY!                             #
 # *************************************************************************** #
 
-require 'messaging/messaging'
+require 'yabber/yabber'
 require 'walter'
 
 PROC = 'Walter'.freeze
