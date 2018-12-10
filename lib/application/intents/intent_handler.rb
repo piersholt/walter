@@ -21,8 +21,12 @@ class IntentHandler
   end
 
   def close(properties)
-    LOGGER.info(PROC) { "Exit: Closing bus." }
-    @bus.close
+    LOGGER.info(PROC) { 'Closing bus.' }
+    n = Messaging::Notification
+        .new(topic: :walter, name: :publish,
+             properties: { status: :end, event: properties })
+    Publisher.send(n.topic, n.to_yaml)
+    Publisher.close
   end
 
   def seek(properties)
