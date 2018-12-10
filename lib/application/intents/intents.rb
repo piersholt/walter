@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'application/intents/intent_handler'
-require 'application/intents/intent_listener'
-
 module Intents
   # CHANNEL
   INTENT = :intent
@@ -20,3 +17,6 @@ module Intents
   COMMENCE = :commence
   CONCLUDE = :conclude
 end
+
+require 'application/intents/intent_handler'
+require 'application/intents/intent_listener'
