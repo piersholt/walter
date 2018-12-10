@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Comment
 class IntentHandler
   include Messaging::Constants
   include Singleton
@@ -38,8 +39,11 @@ class IntentHandler
     operation = EXECUTE
 
     name = "#{action}_#{variant}_#{operation}"
-    action = Messaging::Action.new(topic: MEDIA, name: name)
-    @bus.send(action.topic, action.to_yaml)
+    action = Messaging::Action.new(topic: MEDIA, name: name.to_sym)
+    Publisher.send(action.topic, action.to_yaml)
+  rescue StandardError => e
+    LOGGER.error(PROC) { e }
+    e.backtrace.each { |l| LOGGER.error(l) }
   end
 
   def scan(properties)
@@ -51,13 +55,16 @@ class IntentHandler
       @is_scanning = false
       x = CONCLUDE
     end
-    
+
     action = SCAN
     variant = properties[:variant]
     operation = x
 
     name = "#{action}_#{variant}_#{operation}"
-    action = Messaging::Action.new(topic: MEDIA, name: name)
-    @bus.send(action.topic, action.to_yaml)
+    action = Messaging::Action.new(topic: MEDIA, name: name.to_sym)
+    Publisher.send(action.topic, action.to_yaml)
+  rescue StandardError => e
+    LOGGER.error(PROC) { e }
+    e.backtrace.each { |l| LOGGER.error(l) }
   end
 end
