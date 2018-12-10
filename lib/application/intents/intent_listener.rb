@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Comment
 class IntentListener
   include Singleton
   include Event
@@ -24,17 +25,14 @@ class IntentListener
   def handle(action, properties)
     return false unless valid_action?(action)
 
-    begin
-      case action
-      when SEEK
-        handler.seek(properties)
-      else
-        LOGGER.warn(PROC) { "#{action} not handled?" }
-      end
-    rescue StandardError => e
-      LOGGER.error(PROC) { e }
-      e.backtrace.each { |l| LOGGER.error(l) }
-      binding.pry
+    case action
+    when SEEK
+      handler.seek(properties)
+    else
+      LOGGER.warn(PROC) { "#{action} not handled?" }
     end
+  rescue StandardError => e
+    LOGGER.error(PROC) { e }
+    e.backtrace.each { |l| LOGGER.error(l) }
   end
 end
