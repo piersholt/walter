@@ -1,13 +1,13 @@
-require 'api/key'
-require 'api/media'
-require 'api/ccm'
-require 'api/ike_sensors'
-require 'api/speed'
-require 'api/lamp'
-require 'api/radio_led'
-require 'api/radio_gfx'
+require 'application/virtual/api/key'
+require 'application/virtual/api/media'
+require 'application/virtual/api/ccm'
+require 'application/virtual/api/ike_sensors'
+require 'application/virtual/api/speed'
+require 'application/virtual/api/lamp'
+require 'application/virtual/api/radio_led'
+require 'application/virtual/api/radio_gfx'
 
-require 'api/alive'
+require 'application/virtual/api/alive'
 
 class BusDevice
   include API::Key

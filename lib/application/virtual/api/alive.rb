@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'api/base_api'
+require 'application/virtual/api/base_api'
 
 module API
   # API for command related to keys
