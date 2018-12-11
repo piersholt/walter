@@ -47,14 +47,8 @@ class GlobalListener
         bus_online(action, properties)
       when BUS_OFFLINE
         bus_offline(action, properties)
-      when BYTE_RECEIVED
-        byte_received(action, properties)
       when FRAME_RECEIVED
         frame_received(action, properties)
-      when FRAME_FAILED
-        frame_failed(action, properties)
-      when MESSAGE_RECEIVED
-        message_received(action, properties)
       when PACKET_RECEIVED
         packet_received(action, properties)
       when PACKET_ROUTABLE
@@ -63,8 +57,6 @@ class GlobalListener
         message_sent(action, properties)
       when FRAME_SENT
         frame_sent(action, properties)
-      else
-        LOGGER.warn(PROC) { "#{action} not handled?" }
       end
     rescue StandardError => e
       LOGGER.error(PROC) { "#{e}" }
@@ -79,9 +71,6 @@ class GlobalListener
 
   def message_sent(action, properties)
     @frame_handler.update(action, properties)
-  end
-
-  def message_received(action, properties)
   end
 
   def packet_received(action, properties)
@@ -102,13 +91,7 @@ class GlobalListener
     @frame_handler.update(action, properties)
   end
 
-  def frame_failed(action, properties)
-  end
-
   # ---- PHYSICAL --- #
-
-  def byte_received(action, properties)
-  end
 
   # ---- BUS STATUS --- #
 
