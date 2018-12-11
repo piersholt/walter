@@ -59,7 +59,11 @@ class Walter
     handlers[:bus] = BusHandler.new(bus: @bus)
 
     @session_listener = SessionListener.new
+    @data_logging_listener = DataLoggingListener.new
+
     @interface.add_observer(@session_listener)
+    @interface.add_observer(@data_logging_listener)
+
     @receiver.add_observer(@session_listener)
 
     handlers[:intent] = IntentListener.instance
@@ -68,12 +72,14 @@ class Walter
     @interface.add_observer(@listener)
 
     @receiver.add_observer(@listener)
+    @receiver.add_observer(@data_logging_listener)
 
 
     @bus.send_all(:add_observer, @listener)
     @bus.send_all(:add_observer, @session_listener)
     add_observer(@listener)
 
+    add_observer(@data_logging_listener)
 
     # require 'bus_device'
     # @bus_device = BusDevice.new

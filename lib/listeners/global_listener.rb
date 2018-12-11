@@ -20,7 +20,7 @@ class GlobalListener
   def initialize(handlers = {})
     # @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
-    @data_logging_handler = DataLoggingHandler.instance
+    # @data_logging_handler = DataLoggingHandler.instance
 
     @frame_handler = handlers[:frame]
 
@@ -105,7 +105,7 @@ class GlobalListener
   end
 
   def frame_received(action, properties)
-    @data_logging_handler.update(action, properties)
+    # @data_logging_handler.update(action, properties)
     @frame_handler.update(action, properties)
     # @session_handler.update(action, properties)
   end
@@ -117,7 +117,7 @@ class GlobalListener
   # ---- PHYSICAL --- #
 
   def byte_received(action, properties)
-    @data_logging_handler.update(action, properties)
+    # @data_logging_handler.update(action, properties)
     # @session_handler.update(action, properties)
   end
 
@@ -125,14 +125,14 @@ class GlobalListener
 
   def bus_offline(action, properties)
     LOGGER.warn(PROC) { 'Bus Offline!' }
-    @data_logging_handler.update(action, properties)
+    # @data_logging_handler.update(action, properties)
     @interface_handler.update(action, properties)
     @bus_handler.handle(action, properties)
   end
 
   def bus_online(action, properties)
     LOGGER.info(PROC) { 'Bus Online!' }
-    @data_logging_handler.update(action, properties)
+    # @data_logging_handler.update(action, properties)
     @bus_handler.handle(action, properties)
   end
 
@@ -145,9 +145,9 @@ class GlobalListener
     @display_handler.update(action, properties)
     LOGGER.debug(PROC) { "Delegate: #{@display_handler.class} complete!" }
 
-    LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
-    @data_logging_handler.update(action, properties)
-    LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class} complete!" }
+    # LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
+    # @data_logging_handler.update(action, properties)
+    # LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class} complete!" }
 
     # LOGGER.debug(PROC) { "Delegate: #{@data_logging_handler.class}" }
     # @intent_listener.update(action, properties)
