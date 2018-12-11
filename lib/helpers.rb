@@ -1,8 +1,8 @@
 require 'helpers/manageable_threads'
 require 'helpers/delayable'
-require 'helpers/device_tools'
+require 'helpers/device_groups'
 require 'helpers/command_aliases'
-require 'helpers/command_tools'
+require 'helpers/command_groups'
 require 'helpers/walter_tools'
 require 'helpers/cluster_tools'
 require 'helpers/module_tools'
@@ -12,5 +12,5 @@ module Helpers
   include ModuleTools
   extend ModuleTools
   include NameTools
-  include DeviceTools
+  include DeviceGroups
 end

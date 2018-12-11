@@ -2,7 +2,7 @@
 # Helpers for common tasks on CLI
 module WalterTools
   PROC_MOD = 'WalterTools'.freeze
-  include CommandTools
+  include CommandGroups
 
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
@@ -32,15 +32,15 @@ module WalterTools
   end
 
   def diag
-    DisplayHandler.i.filter_commands(*CommandTools::DIA)
+    DisplayHandler.i.filter_commands(*CommandGroups::DIA)
   end
 
   def obc
-    DisplayHandler.i.filter_commands(*CommandTools::OBC)
+    DisplayHandler.i.filter_commands(*CommandGroups::OBC)
   end
 
   def ping
-    DisplayHandler.i.filter_commands(*CommandTools::KEEP_ALIVE)
+    DisplayHandler.i.filter_commands(*CommandGroups::KEEP_ALIVE)
   end
 
   def shutup!
@@ -48,7 +48,7 @@ module WalterTools
   end
 
   def ign
-    DisplayHandler.i.filter_commands(*CommandTools::IGNITION)
+    DisplayHandler.i.filter_commands(*CommandGroups::IGNITION)
   end
 
   def rad
@@ -57,22 +57,22 @@ module WalterTools
   end
 
   def tel
-    DisplayHandler.i.f_t(* DeviceTools::TELEPHONE + DeviceTools::BROADCAST)
-    DisplayHandler.i.f_f(*DeviceTools::TELEPHONE)
+    DisplayHandler.i.f_t(* DeviceGroups::TELEPHONE + DeviceGroups::BROADCAST)
+    DisplayHandler.i.f_f(*DeviceGroups::TELEPHONE)
     DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + KEEP_ALIVE + IGNITION + [CommandAliases::HUD_TEXT] )
     DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
   end
 
   def cd
-    DisplayHandler.i.f_t(* DeviceTools::CD)
-    DisplayHandler.i.f_f(* DeviceTools::CD)
+    DisplayHandler.i.f_t(* DeviceGroups::CD)
+    DisplayHandler.i.f_f(* DeviceGroups::CD)
     DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::HUD_TEXT] )
     DisplayHandler.i.h_c(* [])
   end
 
   def media
-    DisplayHandler.i.f_t(* DeviceTools::MEDIA + BROADCAST )
-    DisplayHandler.i.f_f(*DeviceTools::MEDIA)
+    DisplayHandler.i.f_t(* DeviceGroups::MEDIA + BROADCAST )
+    DisplayHandler.i.f_f(*DeviceGroups::MEDIA)
   end
 
   # Logging

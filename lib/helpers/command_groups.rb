@@ -1,4 +1,4 @@
-module CommandTools
+module CommandGroups
   KEEP_ALIVE = [0x01, 0x02].freeze
   SPEED = [0x18].freeze
   TEMPERATURE = [0x1D, 0x19].freeze

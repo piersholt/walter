@@ -7,7 +7,7 @@ class Virtual
     # User Input to be published
     module Actions
       include CommandAliases
-      include CommandTools
+      include CommandGroups
       include ::Actions
 
       def handle_message(message)
