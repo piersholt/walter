@@ -26,8 +26,8 @@ class IntentListener
     return false unless valid_action?(action)
 
     case action
-    when SEEK
-      handler.seek(properties)
+    when false
+      false
     else
       LOGGER.warn(PROC) { "#{action} not handled?" }
     end
