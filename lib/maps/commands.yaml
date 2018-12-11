@@ -1098,6 +1098,7 @@
         # I think this is because tape is part of the BMBT?
         0x5A: Tape 1
         0x5B: Tape 2
+        0x40: Tape Eject
         0x41: Tape Play
         0x44: Tape FF
         0x45: Tape RW
@@ -1235,11 +1236,13 @@
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
     :state:
+      # To Telephone
       0x00: "R/T: Telephone"
       0x40: "R/T: Radio"
       0x80: "Tel: Press"
       0x90: "Tel: Hold"
       0xA0: "Tel: Release"
+      # To Radio
       0x01: "Next: Press"
       0x11: "Next: Hold"
       0x21: "Next: Release"
