@@ -18,15 +18,9 @@ class GlobalListener
   PROC = 'GlobalListener'
 
   def initialize(handlers = {})
-    @session_handler = SessionHandler.instance
+    # @session_handler = SessionHandler.instance
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
-    # @demultiplexing_handler = DemultiplexingHandler.instance
-    # @frame_handler = FrameHandler.instance
-    # @packet_handler = PacketHandler.instance
-
-
-    # @multiplexing_handler = MultiplexingHandler.instance
 
     @frame_handler = handlers[:frame]
 
@@ -36,15 +30,17 @@ class GlobalListener
 
     @intent_listener = handlers[:intent]
 
-    # @demultiplexing_handler.add_observer(self)
-    # @multiplexing_handler.add_observer(self)
     @frame_handler.add_observer(self)
     @bus_handler.add_observer(self)
     add_observer(self)
   end
 
+  def name
+    self.class.name
+  end
+
   def update(action, properties = {})
-    # LOGGER.debug("[Listener] #{self.class}#update(#{action}, #{properties})")
+    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     return false unless event_valid?(action)
 
     begin
@@ -90,7 +86,7 @@ class GlobalListener
   end
 
   def message_received(action, properties)
-    @session_handler.update(action, properties)
+    # @session_handler.update(action, properties)
     @display_handler.update(action, properties)
   end
 
@@ -111,18 +107,18 @@ class GlobalListener
   def frame_received(action, properties)
     @data_logging_handler.update(action, properties)
     @frame_handler.update(action, properties)
-    @session_handler.update(action, properties)
+    # @session_handler.update(action, properties)
   end
 
   def frame_failed(action, properties)
-    @session_handler.update(action, properties)
+    # @session_handler.update(action, properties)
   end
 
   # ---- PHYSICAL --- #
 
   def byte_received(action, properties)
     @data_logging_handler.update(action, properties)
-    @session_handler.update(action, properties)
+    # @session_handler.update(action, properties)
   end
 
   # ---- BUS STATUS --- #

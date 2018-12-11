@@ -12,6 +12,10 @@ class SessionHandler < BaseHandler
     instance
   end
 
+  def name
+    self.class.name
+  end
+
   def initialize
     @messages = Messages.new
     @frames = []
@@ -30,6 +34,7 @@ class SessionHandler < BaseHandler
   end
 
   def update(action, properties)
+    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
       update_stats(action)

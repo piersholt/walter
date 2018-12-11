@@ -17,6 +17,8 @@ require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
 
+require 'shared/shared'
+
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'
 require 'application/virtual/api/cd'
@@ -56,14 +58,20 @@ class Walter
     @bus         = Virtual::Initialization.new(augmented: [:rad], simulated: [:tel]).execute
     handlers[:bus] = BusHandler.new(bus: @bus)
 
+    @session_listener = SessionListener.new
+    @interface.add_observer(@session_listener)
+    @receiver.add_observer(@session_listener)
 
     handlers[:intent] = IntentListener.instance
 
     @listener = GlobalListener.new(handlers)
     @interface.add_observer(@listener)
+
     @receiver.add_observer(@listener)
 
+
     @bus.send_all(:add_observer, @listener)
+    @bus.send_all(:add_observer, @session_listener)
     add_observer(@listener)
 
 

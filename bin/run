@@ -1,26 +1,36 @@
 #!/usr/bin/env ruby
 
-# Bundler dependencies
-require 'rubygems'
-require 'bundler/setup'
+# *************************************************************************** #
+#                                  LOAD PATHS                                 #
+# *************************************************************************** #
+begin
+  # Bundler dependencies
+  require 'rubygems'
+  require 'bundler/setup'
 
-require 'pry-byebug'
+  require 'pry-byebug'
 
-# Setup load path for application (makes you realise RubyGems spoils you...)
-lib_path = File.expand_path(File.dirname(__FILE__)+ '/../lib')
-ext_path = File.expand_path(File.dirname(__FILE__)+ '/../ext')
-$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
-$LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
+  # Setup load path for application (makes you realise RubyGems spoils you...)
+  lib_path = File.expand_path(File.dirname(__FILE__)+ '/../lib')
+  ext_path = File.expand_path(File.dirname(__FILE__)+ '/../ext')
+  $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+  $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
 
-require 'cheap_logger'
-LOGGER = get_logger
+  require 'cheap_logger'
+  LOGGER = get_logger
+
+  require 'yabber/yabber'
+  require 'walter'
+rescue LoadError => e
+  LOGGER.error e.message
+  e.backtrace.each { |e| LOGGER.error e }
+  $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
+  exit
+end
 
 # *************************************************************************** #
-#                             DISENGAGE THE LAZY!                             #
+#                                 APPLICATION                                 #
 # *************************************************************************** #
-
-require 'yabber/yabber'
-require 'walter'
 
 PROC = 'Walter'.freeze
 
@@ -33,8 +43,13 @@ rescue Interrupt
   Signal.trap(0, proc { puts "Terminating: #{$$}" })
   LOGGER.close
   return 1
+rescue LoadError => e
+  LOGGER.error e.message
+  e.backtrace.each { |e| LOGGER.error e }
+  $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
+  # LOGGER.warn('run') {  }
 rescue StandardError => e
-  LOGGER.error('Bash') { 'Rescued at run:59'}
+  LOGGER.error('Bash') { 'Rescued at bin/run'}
   LOGGER.error e.message
   e.backtrace.each { |e| LOGGER.error e }
   binding.pry
