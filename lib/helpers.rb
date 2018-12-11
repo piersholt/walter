@@ -60,6 +60,9 @@ module CommandAliases
   TEL_STATE = 0x2C
   TEL_DATA  = 0x31
 
+  BMBT_A = 0x48
+  BMBT_B = 0x49
+
   HUD_TEXT = 0x24
 
   MFL_VOL = 0x32
@@ -89,7 +92,8 @@ module CommandTools
 
   OBC = [0x2A, 0x40, 0x41].freeze
 
-  BUTTON = [0x48, 0x49].freeze
+  BUTTON = [0x32, 0x3B, 0x48, 0x49].freeze
+  BUTTONS = BUTTON
 
   VEHICLE = [0x53, 0x54].freeze
   LAMP = [0x5A, 0x5B].freeze
