@@ -135,6 +135,10 @@ module WalterTools
 
   # DisplayHandler FILTERING
 
+  def c
+    DisplayHandler.i.clear_filter
+  end
+
   def diag
     DisplayHandler.i.filter_commands(*CommandTools::DIA)
   end
@@ -155,6 +159,11 @@ module WalterTools
     DisplayHandler.i.filter_commands(*CommandTools::IGNITION)
   end
 
+  def rad
+    DisplayHandler.i.f_t(:rad, :bmbt)
+    DisplayHandler.i.f_f(:rad, :bmbt)
+  end
+
   def tel
     DisplayHandler.i.f_t(* DeviceTools::TELEPHONE + DeviceTools::BROADCAST)
     DisplayHandler.i.f_f(*DeviceTools::TELEPHONE)
@@ -167,10 +176,6 @@ module WalterTools
     DisplayHandler.i.f_f(* DeviceTools::CD)
     DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::HUD_TEXT] )
     DisplayHandler.i.h_c(* [])
-  end
-
-  def c
-    DisplayHandler.i.clear_filter
   end
 
   def media
