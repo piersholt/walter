@@ -3,7 +3,7 @@
 root = 'application/virtual/device'
 
 require "#{root}/receivable"
-require "#{root}/stateful"
+# require "#{root}/stateful"
 
 require "#{root}/broadcast"
 require "#{root}/devices"

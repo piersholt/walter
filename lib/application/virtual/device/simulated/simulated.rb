@@ -1,6 +1,7 @@
 root = 'application/virtual/device/simulated'
 
 require "#{root}/common/alive"
+require "#{root}/common/stateful"
 
 require "#{root}/device"
 require "#{root}/cdc/changer_request"
