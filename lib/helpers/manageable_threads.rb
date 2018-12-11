@@ -12,7 +12,7 @@ module ManageableThreads
 
   def close_threads(all = false)
     target = all ? Thread : threads
-    
+
     LOGGER.debug(proc_name) { '#close_threads' }
     LOGGER.info(proc_name) { 'Threads closing.' }
 

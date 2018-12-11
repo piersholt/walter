@@ -1,3 +1,4 @@
+require 'helpers/data_tools'
 require 'helpers/manageable_threads'
 require 'helpers/delayable'
 require 'helpers/device_groups'
@@ -7,7 +8,7 @@ require 'helpers/walter_tools'
 require 'helpers/cluster_tools'
 require 'helpers/module_tools'
 require 'helpers/name_tools'
-require 'helpers/data_tools'
+require 'helpers/printable'
 
 module Helpers
   include ModuleTools

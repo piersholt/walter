@@ -1,7 +1,7 @@
-require 'printable'
+# require 'printable'
 
 class Message
-  include Printable
+  # include Printable
   attr_accessor :sender, :receiver, :command
 
   attr_accessor :frame
