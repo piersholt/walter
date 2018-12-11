@@ -2,10 +2,11 @@
 
 # Comment
 class Virtual
+  # Comment
   class SimulatedCDC < SimulatedDevice
-    include CD
+    include ChangerRequest
 
-    PROC = 'SimulatedDSP'.freeze
+    PROC = 'SimulatedCDC'.freeze
 
     def handle_message(message)
       command_id = message.command.d

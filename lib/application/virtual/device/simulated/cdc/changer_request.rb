@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Simulated CD Changer
-module CD
+module ChangerRequest
   include Stateful
   include API::CD
 
