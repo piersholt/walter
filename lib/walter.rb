@@ -60,6 +60,7 @@ class Walter
 
     @session_listener = SessionListener.new
     @data_logging_listener = DataLoggingListener.new
+    @display_listener = DisplayListener.new
 
     @interface.add_observer(@session_listener)
     @interface.add_observer(@data_logging_listener)
@@ -74,12 +75,12 @@ class Walter
     @receiver.add_observer(@listener)
     @receiver.add_observer(@data_logging_listener)
 
-
     @bus.send_all(:add_observer, @listener)
     @bus.send_all(:add_observer, @session_listener)
     add_observer(@listener)
-
+    # For exit event
     add_observer(@data_logging_listener)
+    add_observer(@display_listener)
 
     # require 'bus_device'
     # @bus_device = BusDevice.new

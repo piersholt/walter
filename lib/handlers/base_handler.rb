@@ -28,7 +28,7 @@ class BaseHandler
 end
 
 
-require 'handlers/display_handler'
+# require 'handlers/display_handler'
 # require 'handlers/session_handler'
 # require 'handlers/data_logging_handler'
 
