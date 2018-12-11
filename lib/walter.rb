@@ -18,6 +18,7 @@ require 'datalink/transmitter'
 require 'listeners/global_listener'
 
 require 'api/alive'
+require 'api/radio_led'
 require 'api/cd'
 require 'api/media'
 require 'api/telephone'
@@ -42,7 +43,7 @@ class Walter
     @interface   = Interface.new(ARGV.shift)
     @receiver    = Receiver.new(@interface.input_buffer)
     @transmitter = Transmitter.new(@interface.output_buffer)
-    @bus         = Virtual::Initialization.new.execute
+    @bus         = Virtual::Initialization.new(augmented: [:rad], simulated: [:tel]).execute
 
     handlers = {}
     handlers[:interface] = InterfaceHandler.new(@transmitter)

@@ -1,16 +1,23 @@
 require 'api/base_api'
 
+# frozen_string_literal: true
+
 module API
   module RadioLED
     include BaseAPI
 
-    COMMAND_ID = 0x4A
-    TO_DEFAULT = Devices::BMBT
-    FROM_DEFAULT = Devices::RAD
+    # 0x4A / Radio LED
+    def switch(from: 0x68, to: 0xf0, led:)
+      give_it_a_go(from, to, 0x4a, led: led)
+    end
 
-    def switch(command_arguments, from_id = FROM_DEFAULT, to_id = TO_DEFAULT)
-      command_id = COMMAND_ID
-      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    # 0x4B / Audio Device Control?
+    def control(from: 0xf0, to: 0x68, c: 0x06, m: 0x30)
+      give_it_a_go(from, to, 0x4b, control: c, mode: m)
+    end
+
+    def radio
+      control(c: 0x05, m: 0x05)
     end
   end
 end
