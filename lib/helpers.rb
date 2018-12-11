@@ -7,6 +7,7 @@ require 'helpers/walter_tools'
 require 'helpers/cluster_tools'
 require 'helpers/module_tools'
 require 'helpers/name_tools'
+require 'helpers/data_tools'
 
 module Helpers
   include ModuleTools
