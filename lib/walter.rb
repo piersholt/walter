@@ -77,6 +77,7 @@ class Walter
 
     @bus.send_all(:add_observer, @listener)
     @bus.send_all(:add_observer, @session_listener)
+    @bus.send_all(:add_observer, @display_listener)
     add_observer(@listener)
     # For exit event
     add_observer(@data_logging_listener)
