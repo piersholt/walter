@@ -23,7 +23,7 @@ class GlobalListener
     @data_logging_handler = DataLoggingHandler.instance
     # @demultiplexing_handler = DemultiplexingHandler.instance
     # @frame_handler = FrameHandler.instance
-    @packet_handler = PacketHandler.instance
+    # @packet_handler = PacketHandler.instance
 
 
     # @multiplexing_handler = MultiplexingHandler.instance
