@@ -33,6 +33,9 @@ class NotificationListener
           i += 1
         end
         LOGGER.warn('Notification') { 'Thread end!' }
+      rescue ZMQ::Socket => e
+        LOGGER.warn(PROC) { "#{e}" }
+        # e.backtrace.each { |l| LOGGER.error(l) }
       rescue StandardError => e
         LOGGER.error(self.class) { e }
         e.backtrace.each do |line|
