@@ -3,10 +3,12 @@
 # Comment
 class Virtual
   # Comment
-  class AugmentedRAD < AugmentedDevice
+  class AugmentedRadio < AugmentedDevice
+    include API::Media
+    include API::RadioLED
     include Actions
     include Notifications
 
-    PROC = 'AugmentedRAD'
+    PROC = 'AugmentedRadio'
   end
 end

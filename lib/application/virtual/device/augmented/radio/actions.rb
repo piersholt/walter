@@ -3,63 +3,116 @@
 # Comment
 class Virtual
   # Comment
-  class AugmentedRAD
+  class AugmentedRadio < AugmentedDevice
     # User Input to be published
-    class Actions
-      include API::Media
-      
+    module Actions
+      include CommandAliases
+      include CommandTools
+      include ::Actions
+
       def handle_message(message)
-        LOGGER.debug(PROC) { "#handle_message(#{message})" }
         command_id = message.command.d
-        LOGGER.debug(PROC) { "Command ID: #{command_id}" }
+        # return super if command_id == PING
+        LOGGER.debug(PROC) { "Handle? #{message.from} -> #{message.command.h}" }
 
         case command_id
         when MFL_FUNC
-          LOGGER.debug(PROC) { "#{command_id} => #{MFL_VOL}" }
-          mfl_func(message)
-        when MFL_VOL
-          LOGGER.debug(PROC) { "#{command_id} => #{MFL_VOL}" }
+          LOGGER.debug(PROC) { "Handling: MFL-FUNC" }
+          forward_back(message)
         when BMBT_A
-          LOGGER.debug(PROC) { "#{command_id} => #{BMBT_A}" }
+          LOGGER.debug(PROC) { "BMBT-1 not implemented." }
         when BMBT_B
-          LOGGER.debug(PROC) { "#{command_id} => #{BMBT_B}" }
-        when Command::Aliases::BUTTONS
-          LOGGER.warn(PROC) { "#{command_id} should be handled!" }
+          LOGGER.debug(PROC) { "BMBT-2 not implemented." }
+        when SRC_CTL
+          LOGGER.debug(PROC) { "SRC_CTL not implemented." }
         end
+      rescue StandardError => e
+        LOGGER.error(self.class) { e }
+        e.backtrace.each { |line| LOGGER.error(self.class) { line } }
       end
 
       private
 
-      def mfl_func(message)
-        seek = [0x01, 0x11, 0x21, 0x08, 0x18, 0x28]
+      def forward_back(message)
+        # forward_press = 0x01
+        forward_hold = 0x11
+        forward_release = 0x21
 
-        seek_next = [0x01, 0x11, 0x21]
-        seek_previous = [0x08, 0x18, 0x28]
-
-        button_press = [0x01, 0x08]
-        button_hold = [0x11, 0x18]
-        button_release = [0x21, 0x28]
+        # back_press = 0x0B
+        back_hold = 0x18
+        back_release = 0x28
 
         value = message.command.totally_unique_variable_name
 
-        if seek.any? { |x| x == value }
-          if seek_next.any? { |x| x == value }
-            variant = NEXT
-          elsif seek_previous.any? { |x| x == value }
-            variant = PREVIOUS
-          end
-
-          if button_press.any? { |x| x == value }
-            state = PRESS
-          elsif button_hold.any? { |x| x == value }
-            state = HOLD
-          elsif button_release.any? { |x| x == value }
-            state = RELEASE
-          end
-
-          changed(true)
-          notify_observers(SEEK, variant: variant, control: BUTTON, state: state)
+        # LOGGER.debug(PROC) { "#{MFL_FUNC}-#{value}" }
+        case value
+        when forward_hold
+          scan_forward_start
+        when back_hold
+          scan_back_start
+        when forward_release
+          return scan_forward_stop if scanning?
+          seek_forward
+        when back_release
+          return scan_back_stop if scanning?
+          seek_back
         end
+      rescue StandardError => e
+        LOGGER.error(self.class) { e }
+        e.backtrace.each { |line| LOGGER.error(self.class) { line } }
+      end
+
+      def seek_forward
+        thy_will_be_done!(:seek_forward)
+      end
+
+      def seek_back
+        thy_will_be_done!(:seek_back)
+      end
+
+      def scan_forward_start
+        scanning!
+        thy_will_be_done!(:scan_forward_start)
+      end
+
+      def scan_forward_stop
+        scanned!
+        thy_will_be_done!(:scan_forward_stop)
+      end
+
+      def scan_back_start
+        scanning!
+        thy_will_be_done!(:scan_back_start)
+      end
+
+      def scan_back_stop
+        scanned!
+        thy_will_be_done!(:scan_back_stop)
+      end
+
+      def thy_will_be_done!(command)
+        action = Messaging::Action.new(topic: :media, name: command)
+        fuckin_send_it_lads!(action)
+      end
+
+      def fuckin_send_it_lads!(action)
+        LOGGER.debug(PROC) { "sending: #{action}"}
+        Publisher.send(action.topic, action.to_yaml)
+      rescue StandardError => e
+        LOGGER.error(self.class) { e }
+        e.backtrace.each { |line| LOGGER.error(self.class) { line } }
+      end
+
+      def scanning?
+        @scanning ||= false
+      end
+
+      def scanning!
+        @scanning = true
+      end
+
+      def scanned!
+        @scanning = false
       end
     end
   end

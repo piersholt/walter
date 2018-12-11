@@ -3,8 +3,8 @@
 # Comment
 class Virtual
   # Comment
-  class AugmentedRAD
-    class Input
+  class AugmentedRadio < AugmentedDevice
+    module Notifications
       def track_change(track)
         title = track['Title']
         artist = track['Artist']
