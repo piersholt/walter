@@ -22,11 +22,13 @@ class GlobalListener
     @display_handler = DisplayHandler.instance
     @data_logging_handler = DataLoggingHandler.instance
     # @demultiplexing_handler = DemultiplexingHandler.instance
-    @frame_handler = FrameHandler.instance
+    # @frame_handler = FrameHandler.instance
     @packet_handler = PacketHandler.instance
 
 
     # @multiplexing_handler = MultiplexingHandler.instance
+
+    @frame_handler = handlers[:frame]
 
     @transmission_handler = handlers[:transmission]
     @interface_handler = handlers[:interface]

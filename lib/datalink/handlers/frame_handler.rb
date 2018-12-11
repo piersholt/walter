@@ -17,16 +17,25 @@ require 'command/builder/base_command_builder'
 require 'datalink/packet'
 
 class FrameHandler < BaseHandler
-  include Singleton
+  # include Singleton
 
   PROC = 'FrameHandler'.freeze
 
-  def self.i
-    instance
+  include Event
+
+  attr_reader :queue
+
+  # def self.i
+  #   instance
+  # end
+
+  def initialize(write_queue, address_lookup_table = AddressLookupTable.instance)
+    @queue = write_queue
+    @address_lookup_table = address_lookup_table
   end
 
-  def initialize(address_lookup_table = AddressLookupTable.instance)
-    @address_lookup_table = address_lookup_table
+  def queue_frame(frame)
+    @queue << frame
   end
 
   def inspect
@@ -35,6 +44,9 @@ class FrameHandler < BaseHandler
 
   def update(action, properties)
     case action
+    when FRAME_SENT
+      frame = fetch(properties, :frame)
+      queue_frame(frame)
     when FRAME_RECEIVED
       frame = fetch(properties, :frame)
       packet = demultiplex(frame)

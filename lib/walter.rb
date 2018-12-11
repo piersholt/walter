@@ -38,31 +38,38 @@ class Walter
 
   PROC = 'Walter'.freeze
 
+  def handlers
+    @handlers ||= {}
+  end
+
   def initialize
     # TODO: better argument handling to support multiple log files
     @interface   = Interface.new(ARGV.shift)
+
     @receiver    = Receiver.new(@interface.input_buffer)
     @transmitter = Transmitter.new(@interface.output_buffer)
-    @bus         = Virtual::Initialization.new(augmented: [:rad], simulated: [:tel]).execute
 
-    handlers = {}
     handlers[:interface] = InterfaceHandler.new(@transmitter)
-    handlers[:transmission] =
-      TransmissionHandler.new(@transmitter.write_queue)
+    handlers[:frame] = FrameHandler.new(@transmitter.write_queue)
+
+
+    @bus         = Virtual::Initialization.new(augmented: [:rad], simulated: [:tel]).execute
     handlers[:bus] = BusHandler.new(bus: @bus)
+
+
     handlers[:intent] = IntentListener.instance
 
     @listener = GlobalListener.new(handlers)
-
     @interface.add_observer(@listener)
     @receiver.add_observer(@listener)
+
     @bus.send_all(:add_observer, @listener)
     add_observer(@listener)
 
 
-    require 'bus_device'
-    @bus_device = BusDevice.new
-    @bus_device.add_observer(@listener)
+    # require 'bus_device'
+    # @bus_device = BusDevice.new
+    # @bus_device.add_observer(@listener)
 
     Notifications.start(@bus)
 
