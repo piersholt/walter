@@ -3,7 +3,7 @@ require 'physical/bytes'
 class HeaderValidationError  < StandardError
 end
 
-class HeaderInvalidError  < StandardError
+class HeaderImplausibleError  < StandardError
 end
 
 class FrameHeader < Bytes
@@ -42,6 +42,6 @@ class FrameHeader < Bytes
   def validate_args(bytes)
     raise HeaderValidationError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
     tail_length_value = bytes[LENGTH_INDEX].d
-    raise HeaderInvalidError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
+    raise HeaderImplausibleError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
   end
 end

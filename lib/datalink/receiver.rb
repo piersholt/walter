@@ -109,7 +109,7 @@ class Receiver
 
             LogActually.datalink.unknown(PROG_NAME) { "frame_input_buffer.push(#{new_frame})" }
             frame_input_buffer.push(new_frame)
-          rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
+          rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             LogActually.datalink.debug(SYNC_ERROR) { e }
             # e.backtrace.each { |l| LogActually.datalink.error(l) }
             clean_up(buffer, new_frame)
