@@ -21,7 +21,7 @@ module DataLink
     # Comment
     class Multiplexer
       include Event
-      
+
       attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
       def initialize(frame_output_buffer)
@@ -31,41 +31,41 @@ module DataLink
       end
 
       def name
-        self.class.name
+        'Multiplexer'
       end
 
       def off
-        CheapLogger.datalink.debug(name) { "#{self.class}#off" }
+        LogActually.datalink.debug(name) { "#{self.class}#off" }
         close_threads
       end
 
       def on
-        CheapLogger.datalink.debug(name) { "#{self.class}#on" }
+        LogActually.datalink.debug(name) { "#{self.class}#on" }
         @write_thread = thread_write_output_frame_buffer(@frame_output_buffer, @packet_output_buffer)
         @threads.add(@write_thread)
         true
       rescue StandardError => e
-        CheapLogger.datalink.error(e)
-        e.backtrace.each { |l| CheapLogger.datalink.error(l) }
+        LogActually.datalink.error(e)
+        e.backtrace.each { |l| LogActually.datalink.error(l) }
         raise e
       end
 
       def thread_write_output_frame_buffer(frame_output_buffer)
-        CheapLogger.datalink.debug(name) { 'New Thread: Frame Multiplexing' }
+        LogActually.datalink.debug(name) { 'New Thread: Frame Multiplexing' }
         Thread.new do
           Thread.current[:name] = name
           begin
             loop do
               message = packet_output_buffer.pop
               new_frame = multiplex(message)
-              CheapLogger.datalink.unknown(PROG_NAME) { "frame_output_buffer.push(#{new_frame})" }
+              LogActually.datalink.unknown(PROG_NAME) { "frame_output_buffer.push(#{new_frame})" }
               frame_output_buffer.push(new_frame)
             end
           rescue StandardError => e
-            CheapLogger.datalink.error(name) { e }
-            e.backtrace.each { |l| CheapLogger.datalink.error(l) }
+            LogActually.datalink.error(name) { e }
+            e.backtrace.each { |l| LogActually.datalink.error(l) }
           end
-          CheapLogger.datalink.warn(name) { "End Thread: Frame Multiplexing" }
+          LogActually.datalink.warn(name) { "End Thread: Frame Multiplexing" }
         end
       end
 
@@ -80,7 +80,7 @@ module DataLink
         frame_builder.command = message.command
 
         frame = frame_builder.result
-        CheapLogger.datalink.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+        LogActually.datalink.debug('MultiplexingHandler') { "Frame build: #{frame}" }
         frame
       end
     end

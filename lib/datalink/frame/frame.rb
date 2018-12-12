@@ -52,13 +52,13 @@ class Frame < Bytes
   end
 
   def set_header(new_header)
-    CheapLogger.datalink.debug(PROG_NAME) { "#set_header(#{new_header})." }
+    LogActually.datalink.debug(PROG_NAME) { "#set_header(#{new_header})." }
 
-    # CheapLogger.datalink.debug(PROG_NAME) { "Updating self with bytes." }
+    # LogActually.datalink.debug(PROG_NAME) { "Updating self with bytes." }
     wholesale(new_header + tail)
-    # CheapLogger.datalink.debug(PROG_NAME) { self }
+    # LogActually.datalink.debug(PROG_NAME) { self }
 
-    # CheapLogger.datalink.debug(PROG_NAME) { "Setting @header." }
+    # LogActually.datalink.debug(PROG_NAME) { "Setting @header." }
     @header = FrameHeader.new(new_header)
 
 
@@ -66,13 +66,13 @@ class Frame < Bytes
   end
 
   def set_tail(new_tail)
-    CheapLogger.datalink.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
+    LogActually.datalink.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
 
-    # CheapLogger.datalink.debug(PROG_NAME) { "Updating self with bytes." }
+    # LogActually.datalink.debug(PROG_NAME) { "Updating self with bytes." }
     wholesale(header + new_tail)
-    # CheapLogger.datalink.debug(PROG_NAME) { self }
+    # LogActually.datalink.debug(PROG_NAME) { self }
 
-    # CheapLogger.datalink.debug(PROG_NAME) { "Setting @tail." }
+    # LogActually.datalink.debug(PROG_NAME) { "Setting @tail." }
     @tail = FrameTail.new(new_tail)
 
     true
@@ -83,7 +83,7 @@ class Frame < Bytes
   # ************************************************************************* #
 
   def valid?
-    CheapLogger.datalink.debug(PROG_NAME) { "#valid?" }
+    LogActually.datalink.debug(PROG_NAME) { "#valid?" }
     raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
 
     frame_bytes = @header + @tail.no_fcs
@@ -91,7 +91,7 @@ class Frame < Bytes
       c^= d.to_d
     end
 
-    CheapLogger.datalink.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
+    LogActually.datalink.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
     checksum == tail.checksum
   end

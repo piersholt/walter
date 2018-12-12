@@ -43,7 +43,7 @@ class Interface
   end
 
   def off
-    CheapLogger.interface.debug(PROC) { "#off" }
+    LogActually.interface.debug(PROC) { "#off" }
     close_threads
   end
 
@@ -65,24 +65,24 @@ class Interface
   private
 
   def parse_path(path, options)
-    CheapLogger.interface.debug(PROC) { "#parse_path(#{path}, #{options})" }
+    LogActually.interface.debug(PROC) { "#parse_path(#{path}, #{options})" }
     path = DEFAULT_PATH if path.nil?
     path = ::File.expand_path(path)
     file_type_handler = evaluate_stream_type(path)
-    CheapLogger.interface.debug(PROC) { "File handler: #{file_type_handler}" }
+    LogActually.interface.debug(PROC) { "File handler: #{file_type_handler}" }
     file_type_handler.new(path, options)
   end
 
   def evaluate_stream_type(path)
-    CheapLogger.interface.debug(PROC) { "Evaluating file type of: #{path}" }
+    LogActually.interface.debug(PROC) { "Evaluating file type of: #{path}" }
     file_type = ::File.ftype(path)
-    CheapLogger.interface.debug(PROC) { "#{path} of type: #{file_type}" }
+    LogActually.interface.debug(PROC) { "#{path} of type: #{file_type}" }
     case file_type
     when FILE_TYPE[:tty]
-      CheapLogger.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}" }
+      LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}" }
       FILE_TYPE_HANDLERS[:tty]
     when FILE_TYPE[:file]
-      CheapLogger.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
+      LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
       FILE_TYPE_HANDLERS[:file]
     else
       raise IOError, "Unrecognised file type: #{File.ftype(path)}"
@@ -92,7 +92,7 @@ class Interface
   # ------------------------------ THREADS ------------------------------ #
 
   def thread_populate_input_buffer(stream, input_buffer)
-    CheapLogger.interface.debug(PROC) { "#thread_populate_input_buffer" }
+    LogActually.interface.debug(PROC) { "#thread_populate_input_buffer" }
     Thread.new do
       thread_name = 'Interface (Input Buffer)'
       tn = thread_name
@@ -104,7 +104,7 @@ class Interface
         parsed_byte = nil
         offline_file_count = 1
 
-        # CheapLogger.interface.debug "Stream / Position: #{stream.pos}"
+        # LogActually.interface.debug "Stream / Position: #{stream.pos}"
 
         loop do
           begin
@@ -135,26 +135,26 @@ class Interface
             input_buffer.push(byte_basic)
           rescue EncodingError => e
             if stream.class == FILE_TYPE_HANDLERS[:file]
-              CheapLogger.interface.warn(tn) { "ARGF EOF. Files read: #{offline_file_count}." }
+              LogActually.interface.warn(tn) { "ARGF EOF. Files read: #{offline_file_count}." }
               offline_file_count += 1
             elsif stream.class == FILE_TYPE_HANDLERS[:tty]
-              CheapLogger.interface.error(tn) { "#readpartial returned nil. Stream type: #{}." }
+              LogActually.interface.error(tn) { "#readpartial returned nil. Stream type: #{}." }
             end
-            # CheapLogger.interface.error(")
+            # LogActually.interface.error(")
             # sleep 2
-            # e.backtrace.each { |l| CheapLogger.interface.error l }
-            # CheapLogger.interface.error("read_byte: #{read_byte}")
-            # CheapLogger.interface.error("parsed_byte: #{parsed_byte}")
+            # e.backtrace.each { |l| LogActually.interface.error l }
+            # LogActually.interface.error("read_byte: #{read_byte}")
+            # LogActually.interface.error("parsed_byte: #{parsed_byte}")
             # binding.pry
           end
         end
       rescue EOFError
-        CheapLogger.interface.warn(PROC) { "#{tn}: Stream reached EOF!" }
+        LogActually.interface.warn(PROC) { "#{tn}: Stream reached EOF!" }
       rescue StandardError => e
-        CheapLogger.interface.error(PROC) { "#{tn}: #{e}" }
-        e.backtrace.each { |line| CheapLogger.interface.error(PROC) { line } }
+        LogActually.interface.error(PROC) { "#{tn}: #{e}" }
+        e.backtrace.each { |line| LogActually.interface.error(PROC) { line } }
       end
-      CheapLogger.interface.warn(PROC) { "#{tn} thread is ending." }
+      LogActually.interface.warn(PROC) { "#{tn} thread is ending." }
     end
   end
 end

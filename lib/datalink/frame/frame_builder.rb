@@ -29,13 +29,13 @@ class FrameBuilder
 
   def clone(frame)
     @from = frame.from
-    CheapLogger.datalink.warn('FrameBuilder') { "from: #{from}" }
+    LogActually.datalink.warn('FrameBuilder') { "from: #{from}" }
     @to = frame.to
-    CheapLogger.datalink.warn('FrameBuilder') { "to: #{to}" }
+    LogActually.datalink.warn('FrameBuilder') { "to: #{to}" }
     @command = frame.command
-    CheapLogger.datalink.warn('FrameBuilder') { "command: #{command}" }
+    LogActually.datalink.warn('FrameBuilder') { "command: #{command}" }
     @arguments = frame.arguments
-    CheapLogger.datalink.warn('FrameBuilder') { "arguments: #{arguments}" }
+    LogActually.datalink.warn('FrameBuilder') { "arguments: #{arguments}" }
     true
   end
 
@@ -68,8 +68,8 @@ class FrameBuilder
 
       self.arguments= flattened_arguments
     rescue StandardError => e
-      CheapLogger.datalink.error("#{self.class} Exception: #{e}")
-      e.backtrace.each { |l| CheapLogger.datalink.error(l) }
+      LogActually.datalink.error("#{self.class} Exception: #{e}")
+      e.backtrace.each { |l| LogActually.datalink.error(l) }
       puts "breakpoint"
       puts "breakpoint!"
     end
@@ -115,7 +115,7 @@ class FrameBuilder
     result = REQUIRED_FIELDS.none?(&:nil?)
     return true if result
     fields_not_set = REQUIRED_FIELDS.find_all(&:nil?)
-    CheapLogger.datalink.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
+    LogActually.datalink.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
     false
   end
 
@@ -126,13 +126,13 @@ class FrameBuilder
     fcs_len =      DEFAULT_LENGTH
 
     buffer = to_len + command_len + args_len + fcs_len
-    CheapLogger.datalink.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
+    LogActually.datalink.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
     buffer
   end
 
   def calculate_fcs
     checksum = all_fields.reduce(0) { |c, d| c ^= d.to_d }
-    CheapLogger.datalink.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
+    LogActually.datalink.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
     checksum
   end
 
@@ -147,7 +147,7 @@ class FrameBuilder
   def all_fields
     bytes = Bytes.new([from, length, to, command])
     bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
-    CheapLogger.datalink.debug("FrameBuilder") { "#{bytes}" }
+    LogActually.datalink.debug("FrameBuilder") { "#{bytes}" }
     bytes
   end
 

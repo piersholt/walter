@@ -81,10 +81,10 @@ class Byte
         @hex = decimal_to_hex(value)
       end
     # rescue EncodingError => e
-    #   CheapLogger.interface.error('A read byte was nil!')
-    #   e.backtrace.each { |l| CheapLogger.interface.error l }
+    #   LogActually.interface.error('A read byte was nil!')
+    #   e.backtrace.each { |l| LogActually.interface.error l }
     #   binding.pry
-    #   # CheapLogger.interface.error("POS: #{@stream}")
+    #   # LogActually.interface.error("POS: #{@stream}")
     # end
   end
 end

@@ -11,14 +11,14 @@ class FrameListener < BaseListener
   end
 
   def update(action, properties = {})
-    CheapLogger.datalink.unknown(name) { "#update(#{action}, #{properties})" }
+    LogActually.datalink.unknown(name) { "#update(#{action}, #{properties})" }
     case action
     when MESSAGE_SENT
       message_sent(action, properties)
     end
   rescue StandardError => e
-    CheapLogger.datalink.error(name) { e }
-    e.backtrace.each { |l| CheapLogger.datalink.error(l) }
+    LogActually.datalink.error(name) { e }
+    e.backtrace.each { |l| LogActually.datalink.error(l) }
   end
 
   private

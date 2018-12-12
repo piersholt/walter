@@ -18,12 +18,12 @@ begin
   $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
   $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
 
-  require 'cheap_logger'
-  CheapLogger.get_to_the_logger!(:interface)
-  CheapLogger.interface.i
-  CheapLogger.get_to_the_logger!(:datalink)
-  CheapLogger.datalink.i
-  LOGGER = CheapLogger.get_to_the_logger!(:default)
+  require 'log_actually'
+  LogActually.is_all_around(:interface)
+  LogActually.interface.i
+  LogActually.is_all_around(:datalink)
+  LogActually.datalink.i
+  LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
   require 'yabber/yabber'
