@@ -1,4 +1,4 @@
-require 'thread'
+
 
 class Interface
   # An extension of a Queue to support multi shifts, and unshifting

@@ -1,4 +1,4 @@
-require 'observer'
+
 require 'datalink/frame/frame'
 
 class Receiver

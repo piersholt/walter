@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # core dependencies
-require 'observer'
-require 'thread'
+
+
 
 # external dependencies
 require 'serialport'
@@ -22,7 +22,6 @@ require 'physical/interface'
 require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
-
 
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'

@@ -1,4 +1,4 @@
-require 'observer'
+
 # require 'event'
 
 # require 'handlers/base_handler'

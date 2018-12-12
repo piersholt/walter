@@ -1,5 +1,5 @@
-# require 'thread'
-require 'observer'
+# 
+
 
 require 'physical/interface/UART'
 require 'physical/interface/file'

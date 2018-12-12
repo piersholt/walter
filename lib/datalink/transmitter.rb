@@ -1,4 +1,4 @@
-require 'observer'
+
 
 class TransmissionError < StandardError
 end

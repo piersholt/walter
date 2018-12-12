@@ -11,16 +11,19 @@ begin
   require 'pry-byebug'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
-  lib_path = File.expand_path(File.dirname(__FILE__)+ '/../lib')
-  ext_path = File.expand_path(File.dirname(__FILE__)+ '/../ext')
+  lib_path = File.expand_path(File.dirname(__FILE__) + '/../lib')
+  ext_path = File.expand_path(File.dirname(__FILE__) + '/../ext')
   $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
   $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
 
-  require 'cheap_logger'
-  LOGGER = get_logger
+  require 'observer'
 
+  require 'cheap_logger'
   require 'yabber/yabber'
+
   require 'walter'
+
+  LOGGER = get_logger
 rescue StandardError => e
   LOGGER.error('run') { e }
   e.backtrace.each { |line| LOGGER.error('run') { line } }

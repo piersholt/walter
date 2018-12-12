@@ -1,4 +1,4 @@
-require 'observer'
+
 # require 'event'
 
 class BaseListener
