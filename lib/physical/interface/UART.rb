@@ -19,7 +19,7 @@ class Interface
 
     # delegate_serial_port_methods
     SerialPort.public_instance_methods(false).each do |method|
-      LOGGER.debug('Device') { "Delegating: #{method} to SerialPort" }
+      CheapLogger.interface.debug('Device') { "Delegating: #{method} to SerialPort" }
       def_delegator :@stream, method
     end
 
@@ -31,9 +31,9 @@ class Interface
     alias_method :serial_port, :stream
 
     def initialize(path = DEFAULT_PATH, options = DEFAULT_TTY_OPTIONS)
-      LOGGER.debug("#{self.class}#new(#{path}, #{options})")
+      CheapLogger.interface.debug("#{self.class}#new(#{path}, #{options})")
       if options.nil? || options.empty?
-        LOGGER.debug("Using default options: #{DEFAULT_TTY_OPTIONS}")
+        CheapLogger.interface.debug("Using default options: #{DEFAULT_TTY_OPTIONS}")
         options = DEFAULT_TTY_OPTIONS
       end
 

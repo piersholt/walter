@@ -29,13 +29,13 @@ class FrameBuilder
 
   def clone(frame)
     @from = frame.from
-    LOGGER.warn('FrameBuilder') { "from: #{from}" }
+    CheapLogger.datalink.warn('FrameBuilder') { "from: #{from}" }
     @to = frame.to
-    LOGGER.warn('FrameBuilder') { "to: #{to}" }
+    CheapLogger.datalink.warn('FrameBuilder') { "to: #{to}" }
     @command = frame.command
-    LOGGER.warn('FrameBuilder') { "command: #{command}" }
+    CheapLogger.datalink.warn('FrameBuilder') { "command: #{command}" }
     @arguments = frame.arguments
-    LOGGER.warn('FrameBuilder') { "arguments: #{arguments}" }
+    CheapLogger.datalink.warn('FrameBuilder') { "arguments: #{arguments}" }
     true
   end
 
@@ -68,8 +68,8 @@ class FrameBuilder
 
       self.arguments= flattened_arguments
     rescue StandardError => e
-      LOGGER.error("#{self.class} Exception: #{e}")
-      e.backtrace.each { |l| LOGGER.error(l) }
+      CheapLogger.datalink.error("#{self.class} Exception: #{e}")
+      e.backtrace.each { |l| CheapLogger.datalink.error(l) }
       puts "breakpoint"
       puts "breakpoint!"
     end
@@ -115,7 +115,7 @@ class FrameBuilder
     result = REQUIRED_FIELDS.none?(&:nil?)
     return true if result
     fields_not_set = REQUIRED_FIELDS.find_all(&:nil?)
-    LOGGER.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
+    CheapLogger.datalink.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
     false
   end
 
@@ -126,13 +126,13 @@ class FrameBuilder
     fcs_len =      DEFAULT_LENGTH
 
     buffer = to_len + command_len + args_len + fcs_len
-    LOGGER.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
+    CheapLogger.datalink.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
     buffer
   end
 
   def calculate_fcs
     checksum = all_fields.reduce(0) { |c, d| c ^= d.to_d }
-    LOGGER.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
+    CheapLogger.datalink.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
     checksum
   end
 
@@ -147,7 +147,7 @@ class FrameBuilder
   def all_fields
     bytes = Bytes.new([from, length, to, command])
     bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
-    LOGGER.debug("FrameBuilder") { "#{bytes}" }
+    CheapLogger.datalink.debug("FrameBuilder") { "#{bytes}" }
     bytes
   end
 

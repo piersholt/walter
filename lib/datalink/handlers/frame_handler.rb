@@ -65,18 +65,18 @@ class FrameHandler < BaseHandler
   #   from      = frame.from
   #   from_id   = from.to_i
   #   from_device = @address_lookup_table.find(from_id)
-  #   LOGGER.debug(PROC) { "from_device: #{from_device}" }
+  #   CheapLogger.datalink.debug(PROC) { "from_device: #{from_device}" }
   #
   #   to        = frame.to
   #   to_id     = to.to_i
   #   to_device   = @address_lookup_table.find(to_id)
-  #   LOGGER.debug(PROC) { "to_device: #{to_device}" }
+  #   CheapLogger.datalink.debug(PROC) { "to_device: #{to_device}" }
   #
   #   payload   = frame.payload
-  #   LOGGER.debug(PROC) { "payload: #{payload}" }
+  #   CheapLogger.datalink.debug(PROC) { "payload: #{payload}" }
   #
   #   packet = Packet.new(from_device, to_device, payload)
-  #   LOGGER.debug('MultiplexingHandler') { "Packet build: #{packet}" }
+  #   CheapLogger.datalink.debug('MultiplexingHandler') { "Packet build: #{packet}" }
   #   packet
   # end
   #
@@ -89,7 +89,7 @@ class FrameHandler < BaseHandler
   #   frame_builder.command = message.command
   #
   #   frame = frame_builder.result
-  #   LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+  #   CheapLogger.datalink.debug('MultiplexingHandler') { "Frame build: #{frame}" }
   #   frame
   # end
 end

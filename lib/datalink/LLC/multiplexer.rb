@@ -35,37 +35,37 @@ module DataLink
       end
 
       def off
-        LOGGER.debug(name) { "#{self.class}#off" }
+        CheapLogger.datalink.debug(name) { "#{self.class}#off" }
         close_threads
       end
 
       def on
-        LOGGER.debug(name) { "#{self.class}#on" }
+        CheapLogger.datalink.debug(name) { "#{self.class}#on" }
         @write_thread = thread_write_output_frame_buffer(@frame_output_buffer, @packet_output_buffer)
         @threads.add(@write_thread)
         true
       rescue StandardError => e
-        LOGGER.error(e)
-        e.backtrace.each { |l| LOGGER.error(l) }
+        CheapLogger.datalink.error(e)
+        e.backtrace.each { |l| CheapLogger.datalink.error(l) }
         raise e
       end
 
       def thread_write_output_frame_buffer(frame_output_buffer)
-        LOGGER.debug(name) { 'New Thread: Frame Multiplexing' }
+        CheapLogger.datalink.debug(name) { 'New Thread: Frame Multiplexing' }
         Thread.new do
           Thread.current[:name] = name
           begin
             loop do
               message = packet_output_buffer.pop
               new_frame = multiplex(message)
-              LOGGER.unknown(PROG_NAME) { "frame_output_buffer.push(#{new_frame})" }
+              CheapLogger.datalink.unknown(PROG_NAME) { "frame_output_buffer.push(#{new_frame})" }
               frame_output_buffer.push(new_frame)
             end
           rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each { |l| LOGGER.error(l) }
+            CheapLogger.datalink.error(name) { e }
+            e.backtrace.each { |l| CheapLogger.datalink.error(l) }
           end
-          LOGGER.warn(name) { "End Thread: Frame Multiplexing" }
+          CheapLogger.datalink.warn(name) { "End Thread: Frame Multiplexing" }
         end
       end
 
@@ -80,7 +80,7 @@ module DataLink
         frame_builder.command = message.command
 
         frame = frame_builder.result
-        LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+        CheapLogger.datalink.debug('MultiplexingHandler') { "Frame build: #{frame}" }
         frame
       end
     end

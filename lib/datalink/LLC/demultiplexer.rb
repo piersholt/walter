@@ -33,18 +33,18 @@ module DataLink
       end
 
       def on
-        LOGGER.debug(name) { '#on' }
+        CheapLogger.datalink.debug(name) { '#on' }
         @read_thread = thread_read_input_frame_buffer(@frame_input_buffer, @packet_input_buffer)
         add_thread(@read_thread)
         true
       rescue StandardError => e
-        LOGGER.error(e)
-        e.backtrace.each { |l| LOGGER.error(l) }
+        CheapLogger.datalink.error(e)
+        e.backtrace.each { |l| CheapLogger.datalink.error(l) }
         raise e
       end
 
       def off
-        LOGGER.debug(name) { '#off' }
+        CheapLogger.datalink.debug(name) { '#off' }
         close_threads
       end
 
@@ -55,7 +55,7 @@ module DataLink
       end
 
       def thread_read_input_frame_buffer(frame_input_buffer, packet_input_buffer)
-        LOGGER.debug(name) { 'New Thread: Frame Demultiplexing' }
+        CheapLogger.datalink.debug(name) { 'New Thread: Frame Demultiplexing' }
         Thread.new do
           Thread.current[:name] = name
           begin
@@ -66,14 +66,14 @@ module DataLink
               changed
               notify_observers(PACKET_RECEIVED, packet: new_packet)
               
-              # LOGGER.unknown(PROG_NAME) { "packet_input_buffer.push(#{new_packet})" }
+              # CheapLogger.datalink.unknown(PROG_NAME) { "packet_input_buffer.push(#{new_packet})" }
               # packet_input_buffer.push(new_packet)
             end
           rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each { |l| LOGGER.error(l) }
+            CheapLogger.datalink.error(name) { e }
+            e.backtrace.each { |l| CheapLogger.datalink.error(l) }
           end
-          LOGGER.warn(name) { "End Thread: Frame Demultiplexing" }
+          CheapLogger.datalink.warn(name) { "End Thread: Frame Demultiplexing" }
         end
       end
 
@@ -81,18 +81,18 @@ module DataLink
         from      = frame.from
         from_id   = from.to_i
         from_device = @address_lookup_table.find(from_id)
-        LOGGER.debug(name) { "from_device: #{from_device}" }
+        CheapLogger.datalink.debug(name) { "from_device: #{from_device}" }
 
         to        = frame.to
         to_id     = to.to_i
         to_device   = @address_lookup_table.find(to_id)
-        LOGGER.debug(name) { "to_device: #{to_device}" }
+        CheapLogger.datalink.debug(name) { "to_device: #{to_device}" }
 
         payload   = frame.payload
-        LOGGER.debug(name) { "payload: #{payload}" }
+        CheapLogger.datalink.debug(name) { "payload: #{payload}" }
 
         packet = Packet.new(from_device, to_device, payload)
-        LOGGER.debug(name) { "Packet build: #{packet}" }
+        CheapLogger.datalink.debug(name) { "Packet build: #{packet}" }
         packet
       end
     end

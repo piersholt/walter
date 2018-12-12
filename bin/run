@@ -10,28 +10,31 @@ begin
 
   require 'pry-byebug'
 
+  require 'observer'
+
   # Setup load path for application (makes you realise RubyGems spoils you...)
   lib_path = File.expand_path(File.dirname(__FILE__) + '/../lib')
   ext_path = File.expand_path(File.dirname(__FILE__) + '/../ext')
   $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
   $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
 
-  require 'observer'
-
   require 'cheap_logger'
+  CheapLogger.get_to_the_logger!(:interface)
+  CheapLogger.interface.i
+  CheapLogger.get_to_the_logger!(:datalink)
+  CheapLogger.datalink.i
+  LOGGER = CheapLogger.get_to_the_logger!(:default)
+  LOGGER.i
+
   require 'yabber/yabber'
-
-  require 'walter'
-
-  LOGGER = get_logger
-rescue StandardError => e
-  LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
-  exit
 rescue LoadError => e
   LOGGER.error('run') { e }
   e.backtrace.each { |line| LOGGER.error('run') { line } }
   $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
+  exit
+rescue StandardError => e
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
   exit
 end
 
@@ -44,6 +47,7 @@ PROC = 'Walter'.freeze
 LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
+  require 'walter'
   app = Walter.new
   app.launch
 rescue Interrupt

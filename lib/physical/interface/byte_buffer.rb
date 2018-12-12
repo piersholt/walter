@@ -14,7 +14,7 @@ class Interface
     # Not existing client implemention matches Array#unshift, requirin multiple
     # arguments to be splatted, i.e. buffer.unshift(*my_array)
     def unshift(*objects)
-      LOGGER.debug("#{self.class}#unshift(#{objects.size})")
+      CheapLogger.interface.debug("#{self.class}#unshift(#{objects.size})")
       @unshift_buffer.unshift(*objects)
     end
 
@@ -24,7 +24,7 @@ class Interface
 
     def shift(number_of_bytes = 1)
       # binding.pry
-      LOGGER.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
+      CheapLogger.interface.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
       raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
         number_of_bytes <= 1
 
@@ -44,8 +44,8 @@ class Interface
     private
 
     def take_unshifted_bytes(shift_result, number_of_bytes)
-      LOGGER.debug("ByteBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
-      LOGGER.debug("ByteBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
+      CheapLogger.interface.debug("ByteBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
+      CheapLogger.interface.debug("ByteBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
       required_bytes = number_of_bytes
       return false if @unshift_buffer.empty?
       until @unshift_buffer.empty? || required_bytes.zero?
@@ -53,7 +53,7 @@ class Interface
         shift_result.push(unshifted_byte)
         required_bytes -= 1
       end
-      LOGGER.debug("ByteBuffer") { "#{shift_result.size} unshifted bytes taken." }
+      CheapLogger.interface.debug("ByteBuffer") { "#{shift_result.size} unshifted bytes taken." }
       true
     end
   end

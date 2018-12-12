@@ -52,13 +52,13 @@ class Frame < Bytes
   end
 
   def set_header(new_header)
-    LOGGER.debug(PROG_NAME) { "#set_header(#{new_header})." }
+    CheapLogger.datalink.debug(PROG_NAME) { "#set_header(#{new_header})." }
 
-    # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    # CheapLogger.datalink.debug(PROG_NAME) { "Updating self with bytes." }
     wholesale(new_header + tail)
-    # LOGGER.debug(PROG_NAME) { self }
+    # CheapLogger.datalink.debug(PROG_NAME) { self }
 
-    # LOGGER.debug(PROG_NAME) { "Setting @header." }
+    # CheapLogger.datalink.debug(PROG_NAME) { "Setting @header." }
     @header = FrameHeader.new(new_header)
 
 
@@ -66,13 +66,13 @@ class Frame < Bytes
   end
 
   def set_tail(new_tail)
-    LOGGER.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
+    CheapLogger.datalink.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
 
-    # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+    # CheapLogger.datalink.debug(PROG_NAME) { "Updating self with bytes." }
     wholesale(header + new_tail)
-    # LOGGER.debug(PROG_NAME) { self }
+    # CheapLogger.datalink.debug(PROG_NAME) { self }
 
-    # LOGGER.debug(PROG_NAME) { "Setting @tail." }
+    # CheapLogger.datalink.debug(PROG_NAME) { "Setting @tail." }
     @tail = FrameTail.new(new_tail)
 
     true
@@ -83,7 +83,7 @@ class Frame < Bytes
   # ************************************************************************* #
 
   def valid?
-    LOGGER.debug(PROG_NAME) { "#valid?" }
+    CheapLogger.datalink.debug(PROG_NAME) { "#valid?" }
     raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
 
     frame_bytes = @header + @tail.no_fcs
@@ -91,7 +91,7 @@ class Frame < Bytes
       c^= d.to_d
     end
 
-    LOGGER.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
+    CheapLogger.datalink.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
     checksum == tail.checksum
   end

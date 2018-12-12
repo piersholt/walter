@@ -16,13 +16,13 @@ class ByteBasic
 
   # @override Object#to_s
   def to_s
-    # LOGGER.error(PROC) { '#to_s' }
+    # CheapLogger.interface.error(PROC) { '#to_s' }
     inspect
   end
 
   # @override Object#inspect
   def inspect
-    # LOGGER.error(PROC) { '#inspect' }
+    # CheapLogger.interface.error(PROC) { '#inspect' }
     to_h(false)
   end
 
