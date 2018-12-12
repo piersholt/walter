@@ -4,8 +4,8 @@
 class DataLoggingListener < BaseListener
   # name = self.class.name
 
-  def initialize(handlers = {})
-    @data_logging_handler = DataLoggingHandler.instance
+  def initialize(data_logging_handler = DataLoggingHandler.instance)
+    @data_logging_handler = data_logging_handler
   end
 
   def name
@@ -13,8 +13,7 @@ class DataLoggingListener < BaseListener
   end
 
   def update(action, properties = {})
-    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
-
+    # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
       byte_received(action, properties)
@@ -48,7 +47,7 @@ class DataLoggingListener < BaseListener
   end
 
   def bus_offline(action, properties)
-    LOGGER.warn(name) { 'Bus Offline!' }
+    # LOGGER.warn(name) { 'Bus Offline!' }
     @data_logging_handler.update(action, properties)
   end
 

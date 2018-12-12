@@ -3,6 +3,8 @@
 root = 'shared'
 
 base_root = "#{root}/base"
+require "#{base_root}/event"
+require "#{base_root}/base_handler"
 require "#{base_root}/base_listener"
 
 session_root = "#{root}/session"

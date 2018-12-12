@@ -4,7 +4,7 @@ class TransmissionError < StandardError
 end
 
 class Transmitter
-  include Observable
+# include Observable
   PROG_NAME = 'Transmitter'.freeze
   THREAD_NAME = "#{PROG_NAME}".freeze
   MAX_RETRY = 3
@@ -12,6 +12,8 @@ class Transmitter
   include Observable
 
   attr_reader :threads, :write_queue
+
+  alias frame_output_buffer write_queue
 
   def initialize(output_buffer, write_queue = Queue.new)
     @output_buffer = output_buffer
@@ -25,7 +27,7 @@ class Transmitter
   end
 
   def disable
-    LOGGER.debug(PROG_NAME) { "#{self.class}#disable" }
+    LOGGER.warn(PROG_NAME) { "#{self.class}#disable" }
     off
   end
 

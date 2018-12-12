@@ -4,7 +4,7 @@ class DisplayHandler < BaseHandler
   include CommandGroups
   include Singleton
 
-  PROC = 'DisplayHandler'.freeze
+  name = 'DisplayHandler'.freeze
 
   NOISEY = [*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *BUTTON, *VEHICLE, *LAMP].freeze
 
@@ -24,26 +24,36 @@ class DisplayHandler < BaseHandler
     str_buffer.concat("\n\tFrom: #{filtered_senders}")
   end
 
+  def name
+    self.class.name
+  end
+
   def add_message(message)
     filtered_output(message)
   end
 
   def update(action, properties)
+    LOGGER.unknown(name) { "\t#update(#{action}, #{properties})" }
     case action
+    when MESSAGE_RECEIVED
+      message_received(properties)
     when EXIT
-      LOGGER.info(PROC) { "Exit: Disabling output." }
+      LOGGER.info(name) { 'Exit: Disabling output.' }
       # hide the message output as it clutters the exit log messages
       disable
-    when MESSAGE_RECEIVED
-      begin
-        message = properties[:message]
-        filtered_output(message)
-      rescue StandardError => e
-        LOGGER.error(PROC) { "#{e}" }
-        LOGGER.error(PROC) { "#{message}" }
-        e.backtrace.each { |l| LOGGER.error(PROC) { l } }
-      end
     end
+  rescue StandardError => e
+    LOGGER.error(name) { e }
+    e.backtrace.each { |line| LOGGER.error(line) }
+  end
+
+  def message_received(properties)
+    message = properties[:message]
+    filtered_output(message)
+  rescue StandardError => e
+    LOGGER.error(name) { e }
+    LOGGER.error(name) { message }
+    e.backtrace.each { |l| LOGGER.error(name) { l } }
   end
 
   # ************************************************************************* #
@@ -51,12 +61,12 @@ class DisplayHandler < BaseHandler
   # ************************************************************************* #
 
   def disable
-    LOGGER.info(PROC) { "Outout disabled." }
+    LOGGER.info(name) { "Outout disabled." }
     @output_enabled = false
   end
 
   def enable
-    LOGGER.debug(PROC) { "Output enabled." }
+    LOGGER.debug(name) { "Output enabled." }
     @output_enabled = true
   end
 
@@ -100,7 +110,7 @@ class DisplayHandler < BaseHandler
   end
 
   def filter_commands(*command_ids)
-    LOGGER.info(PROC) { "Filtering commands: #{command_ids}" }
+    LOGGER.info(name) { "Filtering commands: #{command_ids}" }
     filtered_commands.clear if filtered_commands.size >= 5
     return false if command_ids.any? { |c_id| @filtered_commands.include?(c_id) }
     command_ids.each { |command_id| @filtered_commands << command_id }
@@ -112,7 +122,7 @@ class DisplayHandler < BaseHandler
   end
 
   def hide_commands(*command_ids)
-    LOGGER.info(PROC) { "Hiding commands: #{command_ids}" }
+    LOGGER.info(name) { "Hiding commands: #{command_ids}" }
     command_ids.each { |command_id| filtered_commands.delete(command_id) }
     true
   end
@@ -120,7 +130,7 @@ class DisplayHandler < BaseHandler
   # ------------------------------ FILTER: MACRO ------------------------------ #
 
   def shutup!
-    LOGGER.info(PROC) { ("Shutting up commands: #{NOISEY.join(', ')}.") }
+    LOGGER.info(name) { ("Shutting up commands: #{NOISEY.join(', ')}.") }
     hide_commands(*NOISEY)
     true
   end
@@ -147,7 +157,7 @@ class DisplayHandler < BaseHandler
     return false unless output_enabled?
 
     if matches_a_command && matches_a_recipient && matches_a_sender
-      LOGGER.info(PROC) { message }
+      LOGGER.info(name) { message }
       return true
     else
       return false

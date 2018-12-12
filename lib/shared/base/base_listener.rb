@@ -1,5 +1,5 @@
 require 'observer'
-require 'event'
+# require 'event'
 
 class BaseListener
   include Observable

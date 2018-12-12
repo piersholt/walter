@@ -1,4 +1,4 @@
-require 'singleton'
+# require 'singleton'
 
 require 'application/message'
 require 'maps/device_map'
@@ -29,13 +29,13 @@ class FrameHandler < BaseHandler
   #   instance
   # end
 
-  def initialize(write_queue, address_lookup_table = AddressLookupTable.instance)
-    @queue = write_queue
+  def initialize(frame_output_buffer, address_lookup_table = AddressLookupTable.instance)
+    @frame_output_buffer = frame_output_buffer
     @address_lookup_table = address_lookup_table
   end
 
   def queue_frame(frame)
-    @queue << frame
+    @frame_output_buffer << frame
   end
 
   def inspect
@@ -43,56 +43,53 @@ class FrameHandler < BaseHandler
   end
 
   def update(action, properties)
-    case action
-    when FRAME_SENT
-      frame = fetch(properties, :frame)
-      queue_frame(frame)
-    when FRAME_RECEIVED
-      frame = fetch(properties, :frame)
-      packet = demultiplex(frame)
+    # case action
+    # when FRAME_RECEIVED
+    #   frame = fetch(properties, :frame)
+    #   packet = demultiplex(frame)
+      # queue_packet(packet)
 
-      changed
-      notify_observers(PACKET_RECEIVED, packet: packet)
-    when MESSAGE_SENT
-      message = fetch(properties, :message)
-      frame = multiplex(message)
-
-      changed
-      notify_observers(FRAME_SENT, frame: frame)
-    end
+      # changed
+      # notify_observers(PACKET_RECEIVED, packet: packet)
+    # when MESSAGE_SENT
+    #   message = fetch(properties, :message)
+    #   frame = multiplex(message)
+    #   queue_frame(frame)
+    # end
+    false
   end
 
   private
 
-  def demultiplex(frame)
-    from      = frame.from
-    from_id   = from.to_i
-    from_device = @address_lookup_table.find(from_id)
-    LOGGER.debug(PROC) { "from_device: #{from_device}" }
-
-    to        = frame.to
-    to_id     = to.to_i
-    to_device   = @address_lookup_table.find(to_id)
-    LOGGER.debug(PROC) { "to_device: #{to_device}" }
-
-    payload   = frame.payload
-    LOGGER.debug(PROC) { "payload: #{payload}" }
-
-    packet = Packet.new(from_device, to_device, payload)
-    LOGGER.debug('MultiplexingHandler') { "Packet build: #{packet}" }
-    packet
-  end
-
-  # @return Frame
-  def multiplex(message)
-    frame_builder = FrameBuilder.new
-
-    frame_builder.from = message.from.d
-    frame_builder.to = message.to.d
-    frame_builder.command = message.command
-
-    frame = frame_builder.result
-    LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
-    frame
-  end
+  # def demultiplex(frame)
+  #   from      = frame.from
+  #   from_id   = from.to_i
+  #   from_device = @address_lookup_table.find(from_id)
+  #   LOGGER.debug(PROC) { "from_device: #{from_device}" }
+  #
+  #   to        = frame.to
+  #   to_id     = to.to_i
+  #   to_device   = @address_lookup_table.find(to_id)
+  #   LOGGER.debug(PROC) { "to_device: #{to_device}" }
+  #
+  #   payload   = frame.payload
+  #   LOGGER.debug(PROC) { "payload: #{payload}" }
+  #
+  #   packet = Packet.new(from_device, to_device, payload)
+  #   LOGGER.debug('MultiplexingHandler') { "Packet build: #{packet}" }
+  #   packet
+  # end
+  #
+  # # @return Frame
+  # def multiplex(message)
+  #   frame_builder = FrameBuilder.new
+  #
+  #   frame_builder.from = message.from.d
+  #   frame_builder.to = message.to.d
+  #   frame_builder.command = message.command
+  #
+  #   frame = frame_builder.result
+  #   LOGGER.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+  #   frame
+  # end
 end

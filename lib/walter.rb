@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # core dependencies
 require 'observer'
 require 'thread'
@@ -12,12 +14,15 @@ require 'physical/byte_basic'
 require 'physical/bytes'
 require 'application/message'
 
+require 'helpers'
+require 'shared/shared'
+require 'datalink/datalink'
+
 require 'physical/interface'
 require 'datalink/receiver'
 require 'datalink/transmitter'
 require 'listeners/global_listener'
 
-require 'shared/shared'
 
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'
@@ -27,8 +32,6 @@ require 'application/virtual/api/telephone'
 require 'application/virtual/virtual'
 
 require 'io/notifications/notifications'
-
-require 'helpers'
 
 # Container
 class Walter
@@ -51,43 +54,47 @@ class Walter
     @receiver    = Receiver.new(@interface.input_buffer)
     @transmitter = Transmitter.new(@interface.output_buffer)
 
-    handlers[:interface] = InterfaceHandler.new(@transmitter)
-    handlers[:frame] = FrameHandler.new(@transmitter.write_queue)
+    @demultiplexer =
+      DataLink::LogicalLinkLayer::Demultiplexer
+      .new(@receiver.frame_input_buffer)
+    @multiplexer =
+      DataLink::LogicalLinkLayer::Multiplexer
+      .new(@transmitter.frame_output_buffer)
 
+    @bus =
+      Virtual::Initialization
+      .new(augmented: [:rad], simulated: [:tel])
+      .execute
 
-    @bus         = Virtual::Initialization.new(augmented: [:rad], simulated: [:tel]).execute
-    handlers[:bus] = BusHandler.new(bus: @bus)
+    @interface_handler = DataLinkHandler.new(@transmitter)
+    @bus_handler = BusHandler.new(bus: @bus)
 
+    @global_listener = GlobalListener.new(handlers)
+    @data_link_listener = DataLinkListener.new(@interface_handler)
     @session_listener = SessionListener.new
     @data_logging_listener = DataLoggingListener.new
     @display_listener = DisplayListener.new
 
-    @interface.add_observer(@session_listener)
+    @interface.add_observer(@global_listener)
+    @interface.add_observer(@data_link_listener)
     @interface.add_observer(@data_logging_listener)
+    @interface.add_observer(@session_listener)
+    @interface.add_observer(@bus_handler)
 
+    @receiver.add_observer(@global_listener)
+    @receiver.add_observer(@data_logging_listener)
     @receiver.add_observer(@session_listener)
 
-    handlers[:intent] = IntentListener.instance
+    @demultiplexer.add_observer(@bus_handler)
 
-    @listener = GlobalListener.new(handlers)
-    @interface.add_observer(@listener)
-
-    @receiver.add_observer(@listener)
-    @receiver.add_observer(@data_logging_listener)
-
-    @bus.send_all(:add_observer, @listener)
+    @bus.send_all(:add_observer, @global_listener)
     @bus.send_all(:add_observer, @session_listener)
     @bus.send_all(:add_observer, @display_listener)
-    add_observer(@listener)
+
     # For exit event
+    add_observer(@global_listener)
     add_observer(@data_logging_listener)
     add_observer(@display_listener)
-
-    # require 'bus_device'
-    # @bus_device = BusDevice.new
-    # @bus_device.add_observer(@listener)
-
-    Notifications.start(@bus)
 
     defaults
   end
@@ -100,7 +107,7 @@ class Walter
       # TODO: menu to facilitate common features...
       raise NotImplementedError, 'menu not implemented. fallback to CLI...'
 
-      LOGGER.debug "Main Thread / Entering keep alive loop..."
+      LOGGER.debug 'Main Thread / Entering keep alive loop...'
       loop do
         news
         sleep 60
@@ -120,6 +127,8 @@ class Walter
     @interface.on
     @receiver.on
     @transmitter.on
+    @demultiplexer.on
+    Notifications.start(@bus)
   end
 
   def stop

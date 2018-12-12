@@ -15,8 +15,11 @@ class Receiver
   include Observable
   include ManageableThreads
 
+  attr_reader :input_buffer, :frame_input_buffer, :read_thread
+
   def initialize(input_buffer)
     @input_buffer = input_buffer
+    @frame_input_buffer = SizedQueue.new(32)
   end
 
   def off
@@ -27,7 +30,7 @@ class Receiver
   def on
     LOGGER.debug(PROG_NAME) { "#{self.class}#on" }
     begin
-      @read_thread = thread_read_buffer(@input_buffer)
+      @read_thread = thread_read_buffer(@input_buffer, @frame_input_buffer)
       add_thread(@read_thread)
     rescue StandardError => e
       LOGGER.error(e)
@@ -41,7 +44,7 @@ class Receiver
 
   # ------------------------------ THREADS ------------------------------ #
 
-  def thread_read_buffer(buffer)
+  def thread_read_buffer(buffer, frame_input_buffer)
     LOGGER.debug(PROG_NAME) { 'New Thread: Frame Synchronisation.' }
     Thread.new do
       Thread.current[:name] = THREAD_NAME
@@ -103,6 +106,9 @@ class Receiver
             LOGGER.debug(PROG_NAME) { "#{SYNC} Publishing event: #{Event::FRAME_RECEIVED}" }
             changed
             notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
+
+            LOGGER.unknown(PROG_NAME) { "frame_input_buffer.push(#{new_frame})" }
+            frame_input_buffer.push(new_frame)
           rescue HeaderValidationError, HeaderInvalidError, TailValidationError, ChecksumError => e
             LOGGER.debug(SYNC_ERROR) { e }
             # e.backtrace.each { |l| LOGGER.error(l) }

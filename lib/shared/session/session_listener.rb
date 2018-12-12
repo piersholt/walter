@@ -13,8 +13,7 @@ class SessionListener < BaseListener
   end
 
   def update(action, properties = {})
-    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
-
+    # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
       byte_received(action, properties)
@@ -26,7 +25,7 @@ class SessionListener < BaseListener
       message_received(action, properties)
     end
   rescue StandardError => e
-    LOGGER.error(name) { "#{e}" }
+    LOGGER.error(name) { e }
     e.backtrace.each { |l| LOGGER.error(l) }
   end
 

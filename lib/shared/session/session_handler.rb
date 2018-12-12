@@ -34,7 +34,7 @@ class SessionHandler < BaseHandler
   end
 
   def update(action, properties)
-    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
+    LOGGER.unknown(name) { "\t#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
       update_stats(action)

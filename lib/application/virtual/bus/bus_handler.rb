@@ -13,23 +13,26 @@ class BusHandler < BaseHandler
     register_for_broadcast(@bus.simulated)
   end
 
+  def name
+    self.class.name
+  end
+
   def update(action, properties)
+    # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     case action
     when PACKET_RECEIVED
       packet = fetch(properties, :packet)
       raise RoutingError, 'Packet is nil!' unless packet
-      packet_received(packet)
-
-      changed
-      notify_observers(PACKET_ROUTABLE, packet: packet)
-    when PACKET_ROUTABLE
-      packet = fetch(properties, :packet)
-      publish_to_bus(packet)
+      publish_to_bus(packet) if addressable?(packet)
     when BUS_ONLINE
       bus_online
     when BUS_OFFLINE
+      LOGGER.warn(name) { BUS_OFFLINE }
       bus_offline
     end
+  rescue StandardError => e
+    LOGGER.error(name) { e }
+    e.backtrace.each { |line| LOGGER.error(line) } 
   end
 
   def bus_online
@@ -42,7 +45,7 @@ class BusHandler < BaseHandler
     @bus.simulated.send_all(:disable)
   end
 
-  def packet_received(packet)
+  def addressable?(packet)
     # LOGGER.warn(PACKET_RECEIVED) { packet }
     from_ident = packet.from
     has_from = bus_has_device?(from_ident)
@@ -50,6 +53,7 @@ class BusHandler < BaseHandler
     to_ident = packet.to
     has_to = bus_has_device?(to_ident)
     raise RoutingError, "#{to_ident} is not on the bus." unless has_to
+    true
   end
 
   def publish_to_bus(packet)

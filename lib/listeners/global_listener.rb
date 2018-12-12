@@ -1,7 +1,7 @@
 require 'observer'
-require 'event'
+# require 'event'
 
-require 'handlers/base_handler'
+# require 'handlers/base_handler'
 
 # TODO this needs to be changed later. I've just chucked everything in a single
 # listener for now, but if I can define a standard event notification, i can
@@ -18,17 +18,7 @@ class GlobalListener
   PROC = 'GlobalListener'
 
   def initialize(handlers = {})
-    @frame_handler = handlers[:frame]
-
-    @transmission_handler = handlers[:transmission]
-    @interface_handler = handlers[:interface]
-    @bus_handler = handlers[:bus]
-
-    @intent_listener = handlers[:intent]
-
-    @frame_handler.add_observer(self)
-    @bus_handler.add_observer(self)
-    add_observer(self)
+    # @intent_listener = handlers[:intent]
   end
 
   def name
@@ -36,79 +26,34 @@ class GlobalListener
   end
 
   def update(action, properties = {})
-    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
+    # LOGGER.unknownrate (name) { "#update(#{action}, #{properties})" }
     return false unless event_valid?(action)
 
     begin
       case action
       when EXIT
-        exit(action, properties)
+        LOGGER.unknown(PROC) {  "Exit: Reason: #{properties[:reason]}" }
       when BUS_ONLINE
-        bus_online(action, properties)
+        LOGGER.unknown(PROC) { 'Bus Online!' }
       when BUS_OFFLINE
-        bus_offline(action, properties)
-      when FRAME_RECEIVED
-        frame_received(action, properties)
+        LOGGER.unknown(PROC) { 'Bus Offline!' }
       when PACKET_RECEIVED
-        packet_received(action, properties)
+        LOGGER.unknown(PROC) { PACKET_RECEIVED }
       when PACKET_ROUTABLE
-        packet_routable(action, properties)
-      when MESSAGE_SENT
-        message_sent(action, properties)
+        LOGGER.unknown(PROC) { PACKET_ROUTABLE }
       when FRAME_SENT
-        frame_sent(action, properties)
+        LOGGER.unknown(PROC) { FRAME_SENT }
+      when FRAME_RECEIVED
+        LOGGER.unknown(PROC) { FRAME_RECEIVED }
+      when BYTE_RECEIVED
+        LOGGER.unknown(PROC) { BYTE_RECEIVED }
+      when MESSAGE_RECEIVED
+        LOGGER.unknown(PROC) { MESSAGE_RECEIVED }
       end
     rescue StandardError => e
       LOGGER.error(PROC) { "#{e}" }
       e.backtrace.each { |l| LOGGER.error(l) }
       binding.pry
     end
-  end
-
-  private
-
-  # ---- APPLICATION --- #
-
-  def message_sent(action, properties)
-    @frame_handler.update(action, properties)
-  end
-
-  def packet_received(action, properties)
-    @bus_handler.handle(action, properties)
-  end
-
-  def packet_routable(action, properties)
-    @bus_handler.handle(action, properties)
-  end
-
-  # ---- DATALINK --- #
-
-  def frame_sent(action, properties)
-    @transmission_handler.update(action, properties)
-  end
-
-  def frame_received(action, properties)
-    @frame_handler.update(action, properties)
-  end
-
-  # ---- PHYSICAL --- #
-
-  # ---- BUS STATUS --- #
-
-  def bus_offline(action, properties)
-    LOGGER.warn(PROC) { 'Bus Offline!' }
-    @interface_handler.update(action, properties)
-    @bus_handler.handle(action, properties)
-  end
-
-  def bus_online(action, properties)
-    LOGGER.info(PROC) { 'Bus Online!' }
-    @bus_handler.handle(action, properties)
-  end
-
-  # ---- PROGRAM --- #
-
-  def exit(action, properties)
-    LOGGER.info(PROC) {  "Exit: Reason: #{properties[:reason]}" }
   end
 end

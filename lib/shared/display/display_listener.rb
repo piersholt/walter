@@ -2,8 +2,8 @@
 
 # Comment
 class DisplayListener < BaseListener
-  def initialize(handlers = {})
-    @display_handler = DisplayHandler.instance
+  def initialize(display_handler = DisplayHandler.instance)
+    @display_handler = display_handler
   end
 
   def name
@@ -11,12 +11,12 @@ class DisplayListener < BaseListener
   end
 
   def update(action, properties = {})
-    LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
+    # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
     case action
-    when EXIT
-      exit(action, properties)
     when MESSAGE_RECEIVED
       message_received(action, properties)
+    when EXIT
+      exit(action, properties)
     end
   rescue StandardError => e
     LOGGER.error(name) { e }

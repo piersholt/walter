@@ -21,10 +21,14 @@ begin
 
   require 'yabber/yabber'
   require 'walter'
+rescue StandardError => e
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  exit
 rescue LoadError => e
-  LOGGER.error e.message
-  e.backtrace.each { |e| LOGGER.error e }
-  $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
   exit
 end
 
@@ -44,14 +48,14 @@ rescue Interrupt
   LOGGER.close
   return 1
 rescue LoadError => e
-  LOGGER.error e.message
-  e.backtrace.each { |e| LOGGER.error e }
-  $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
-  # LOGGER.warn('run') {  }
+    LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
+  exit
 rescue StandardError => e
-  LOGGER.error('Bash') { 'Rescued at bin/run'}
-  LOGGER.error e.message
-  e.backtrace.each { |e| LOGGER.error e }
+  LOGGER.error('run') { 'Rescued at bin/run' }
+    LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
   binding.pry
   LOGGER.close
   return 1
