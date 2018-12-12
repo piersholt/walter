@@ -3,7 +3,7 @@ require 'devices/base_device'
 
 require 'singleton'
 
-class DeviceMap < Map
+class DeviceMap < BaseMap
   DEVICES_MAP_NAME = 'devices'.freeze
   DEFAULT_NAMESPACE = 'Devices'
   DEFAULT_KLASS = 'BaseDevice'

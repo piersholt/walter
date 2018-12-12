@@ -3,7 +3,7 @@ require 'devices/base_device'
 
 require 'singleton'
 
-class AddressLookupTable < Map
+class AddressLookupTable < BaseMap
   include Singleton
 
   PROC = 'AddressLookupTable'

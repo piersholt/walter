@@ -19,7 +19,7 @@ require 'command/builder/command_configuration'
 
 require 'singleton'
 
-class CommandMap < Map
+class CommandMap < BaseMap
   include Singleton
   PROC = 'CommandMap'.freeze
 

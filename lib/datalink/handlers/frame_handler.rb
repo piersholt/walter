@@ -1,9 +1,9 @@
 # require 'singleton'
 
 require 'application/message'
-require 'maps/device_map'
-require 'maps/command_map'
-require 'maps/address_lookup_table'
+# require 'maps/device_map'
+# require 'maps/command_map'
+# require 'maps/address_lookup_table'
 
 require 'datalink/frame/indexed_arguments'
 
