@@ -6,7 +6,7 @@ module Event
   BUS_BUSY = :busy
   BUS_IDLE = :idle
   BUS_ACTIVE = :active
-  BYTE_RECEIVED = :read_byte
+  BYTE_RECEIVED = :byte_received
 
   # Receiver
   FRAME_RECEIVED = :frame_received
