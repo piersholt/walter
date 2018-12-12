@@ -62,7 +62,7 @@ class BusHandler < BaseHandler
     observers = subscribers[recipient]
     raise RoutingError, "No observers of #{recipient}" if observers.nil? || observers.empty?
     observers.each do |subscriber|
-      route_packet(subscriber, packet)
+      subscriber.receive_packet(packet)
     end
   end
 
@@ -89,9 +89,6 @@ class BusHandler < BaseHandler
     @bus.device?(device_ident)
   end
 
-  def route_packet(subscriber, packet)
-    subscriber.receive_packet(packet)
-  end
 
   def subscribers(ident = nil)
     # LOGGER.info(PROC) { "#subscribers(#{ident})" }
