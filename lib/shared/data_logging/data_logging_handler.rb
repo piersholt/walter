@@ -41,11 +41,11 @@ class DataLoggingHandler < BaseHandler
   private
 
   def byte_log
-    @log_stream ||= ::File.new("log/#{Time.now.strftime'%F'}.bin",  'a')
+    @log_stream ||= ::File.new("log/bin/#{Time.now.strftime'%F'}.bin",  'a')
   end
 
   def frame_log
-    @log_frames ||= ::File.new("log/#{Time.now.strftime'%F'}.log",  'a')
+    @log_frames ||= ::File.new("log/frame/#{Time.now.strftime'%F'}.log",  'a')
   end
 
   def log_byte(next_byte)
