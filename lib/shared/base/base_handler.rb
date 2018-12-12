@@ -27,14 +27,4 @@ class BaseHandler
   end
 end
 
-
-# require 'handlers/display_handler'
-# require 'handlers/session_handler'
-# require 'handlers/data_logging_handler'
-
-# require 'datalink/handlers/frame_handler'
-# require 'datalink/handlers/frame_listener'
-# require 'application/virtual/bus/packet_handler'
-require 'handlers/interface_handler'
-# require 'datalink/handlers/transmission_handler'
 require 'application/virtual/bus/bus_handler'
