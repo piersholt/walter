@@ -13,11 +13,11 @@ require 'physical/bytes'
 
 require 'helpers'
 require 'shared/shared'
-require 'datalink/datalink'
+require 'data_link/datalink'
 
 require 'physical/interface'
-require 'datalink/receiver'
-require 'datalink/transmitter'
+require 'data_link/receiver'
+require 'data_link/transmitter'
 
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'

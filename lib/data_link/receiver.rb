@@ -1,5 +1,5 @@
 
-require 'datalink/frame/frame'
+require 'data_link/frame/frame'
 
 class Receiver
   PROG_NAME = 'Receiver'.freeze

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-root = 'datalink'
+root = 'data_link'
 
 map_root = "#{root}/maps"
 require "#{map_root}/address_lookup_table"

@@ -5,16 +5,16 @@
 # require 'maps/command_map'
 # require 'maps/address_lookup_table'
 
-require 'datalink/frame/indexed_arguments'
+require 'data_link/frame/indexed_arguments'
 
-require 'datalink/frame/frame_builder'
+require 'data_link/frame/frame_builder'
 
 # require 'application/commands/parameter/indexed_bit_array'
 # # require 'application/commands/parameter/base_parameter'
 
 # require 'application/commands/builder/base_command_builder'
 
-require 'datalink/packet'
+require 'data_link/packet'
 
 class FrameHandler < BaseHandler
   # include Singleton
