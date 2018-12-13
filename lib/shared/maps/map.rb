@@ -6,7 +6,7 @@
 # Map is generic.. but there's no reason the results
 
 class BaseMap
-  DEFAULT_BASE_PATH = './lib/maps/'.freeze
+  DEFAULT_BASE_PATH = './lib/shared/maps/'.freeze
   DEFAULT_FILE_EXTENSSION = '.yaml'.freeze
   FORCE_RELOAD = true
 

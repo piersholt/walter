@@ -1,4 +1,4 @@
-require 'maps/map'
+# require 'maps/map'
 require 'application/devices/base_device'
 
 require 'singleton'

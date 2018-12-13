@@ -1,4 +1,4 @@
-require 'maps/map'
+# require 'maps/map'
 require 'application/commands/base_command'
 require 'application/commands/parameterized_command'
 require 'application/commands/obc_display'

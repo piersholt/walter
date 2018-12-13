@@ -22,3 +22,6 @@ require "#{display_root}/display_listener"
 data_logging_root = "#{root}/data_logging"
 require "#{data_logging_root}/data_logging_handler"
 require "#{data_logging_root}/data_logging_listener"
+
+maps_root = "#{root}/maps"
+require "#{maps_root}/map"
