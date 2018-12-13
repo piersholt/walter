@@ -25,3 +25,5 @@ require "#{data_logging_root}/data_logging_listener"
 
 maps_root = "#{root}/maps"
 require "#{maps_root}/map"
+
+require "#{root}/global_listener"

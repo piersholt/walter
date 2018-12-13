@@ -18,7 +18,6 @@ require 'datalink/datalink'
 require 'physical/interface'
 require 'datalink/receiver'
 require 'datalink/transmitter'
-require 'listeners/global_listener'
 
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'
