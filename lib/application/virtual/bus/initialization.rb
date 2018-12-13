@@ -1,4 +1,3 @@
-require 'io/intents/intents'
 
 class Virtual
   class Initialization

@@ -17,6 +17,3 @@ module Intents
   COMMENCE = :commence
   CONCLUDE = :conclude
 end
-
-require 'io/intents/intent_handler'
-require 'io/intents/intent_listener'

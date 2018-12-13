@@ -2,11 +2,8 @@
 
 # core dependencies
 
-
-
 # external dependencies
 require 'serialport'
-require 'pry'
 
 # local dependencies
 require 'physical/byte'
@@ -30,7 +27,6 @@ require 'application/virtual/api/media'
 require 'application/virtual/api/telephone'
 require 'application/application'
 
-require 'io/notifications/notifications'
 
 # Container
 class Walter

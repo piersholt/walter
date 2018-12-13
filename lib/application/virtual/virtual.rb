@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'io/intents/actions'
-
 root = 'application/virtual'
 
 api = "#{root}/api"
