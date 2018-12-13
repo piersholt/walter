@@ -9,10 +9,10 @@ require 'datalink/frame/indexed_arguments'
 
 require 'datalink/frame/frame_builder'
 
-require 'command/parameter/indexed_bit_array'
-require 'command/parameter/base_parameter'
+# require 'application/commands/parameter/indexed_bit_array'
+require 'application/commands/parameter/base_parameter'
 
-require 'command/builder/base_command_builder'
+require 'application/commands/builder/base_command_builder'
 
 require 'datalink/packet'
 

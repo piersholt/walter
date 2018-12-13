@@ -1,4 +1,4 @@
-require 'command/builder/base_command_builder'
+require 'application/commands/builder/base_command_builder'
 
 # For command classes that have parameters
 class ParameterizedCommandBuilder < BaseCommandBuilder

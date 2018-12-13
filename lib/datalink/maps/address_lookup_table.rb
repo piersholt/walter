@@ -1,5 +1,5 @@
 require 'maps/map'
-require 'devices/base_device'
+require 'application/devices/base_device'
 
 require 'singleton'
 

@@ -1,7 +1,7 @@
-require 'command/parameter/base_parameter'
+require 'application/commands/parameter/base_parameter'
 
-require 'command/parameter/bit_array'
-require 'command/parameter/indexed_bit_array'
+# require 'application/commands/parameter/bit_array'
+# require 'application/commands/parameter/indexed_bit_array'
 
 class BitArrayParameter < BaseParameter
   PROC = 'BitArrayParam'.freeze

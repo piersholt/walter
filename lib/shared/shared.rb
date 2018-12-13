@@ -2,6 +2,10 @@
 
 root = 'shared'
 
+types_root = "#{root}/types"
+require "#{types_root}/bit_array"
+require "#{types_root}/indexed_bit_array"
+
 base_root = "#{root}/base"
 require "#{base_root}/event"
 require "#{base_root}/base_handler"

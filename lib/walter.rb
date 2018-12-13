@@ -28,7 +28,7 @@ require 'application/virtual/api/radio_led'
 require 'application/virtual/api/cd'
 require 'application/virtual/api/media'
 require 'application/virtual/api/telephone'
-require 'application/virtual/virtual'
+require 'application/application'
 
 require 'io/notifications/notifications'
 

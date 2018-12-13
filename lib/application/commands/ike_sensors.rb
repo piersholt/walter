@@ -1,4 +1,4 @@
-require 'command/parameter/bit_array'
+# require 'application/commands/parameter/bit_array'
 
 class Command
   class IKESensors < BaseCommand

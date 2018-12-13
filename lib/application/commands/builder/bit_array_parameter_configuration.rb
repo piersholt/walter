@@ -1,4 +1,4 @@
-require 'command/builder/parameter_configuration'
+require 'application/commands/builder/parameter_configuration'
 
 class BitArrayParameterConfiguration < ParameterConfiguration
   PROC = 'BitArrayParamConf'.freeze
