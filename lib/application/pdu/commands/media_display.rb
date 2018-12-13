@@ -1,4 +1,4 @@
-require 'application/commands/chars'
+# require 'application/commands/chars'
 
 class Command
   # 35 / 0x24

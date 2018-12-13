@@ -1,5 +1,5 @@
 require 'singleton'
-require 'application/messages'
+# require 'application/messages'
 
 class SessionHandler < BaseHandler
   include Singleton

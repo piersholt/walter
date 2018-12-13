@@ -2,8 +2,10 @@
 
 root = 'application'
 
+pdu_root = "#{root}/pdu"
+require "#{pdu_root}/pdu"
+
 map_root = "#{root}/maps"
-# require "#{map_root}/address_lookup_table"
 require "#{map_root}/device_map"
 require "#{map_root}/command_map"
 

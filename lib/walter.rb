@@ -9,7 +9,7 @@ require 'serialport'
 require 'physical/byte'
 require 'physical/byte_basic'
 require 'physical/bytes'
-require 'application/message'
+# require 'application/message'
 
 require 'helpers'
 require 'shared/shared'
