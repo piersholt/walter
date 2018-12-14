@@ -58,7 +58,7 @@ module DataLink
             loop do
               message = packet_output_buffer.pop
               new_frame = multiplex(message)
-              LogActually.datalink.unknown(PROG_NAME) { "frame_output_buffer.push(#{new_frame})" }
+              LogActually.datalink.debug(name) { "frame_output_buffer.push(#{new_frame})" }
               frame_output_buffer.push(new_frame)
             end
           rescue StandardError => e
@@ -73,6 +73,7 @@ module DataLink
 
       # @return Frame
       def multiplex(message)
+        LogActually.datalink.debug(name) { "#multiplex(#{message})" }
         frame_builder = FrameBuilder.new
 
         frame_builder.from = message.from.d
@@ -80,7 +81,7 @@ module DataLink
         frame_builder.command = message.command
 
         frame = frame_builder.result
-        LogActually.datalink.debug('MultiplexingHandler') { "Frame build: #{frame}" }
+        LogActually.datalink.unknown(name) { "Frame build: #{frame.h}" }
         frame
       end
     end

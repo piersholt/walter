@@ -33,7 +33,7 @@ class DisplayHandler < BaseHandler
   end
 
   def update(action, properties)
-    LOGGER.unknown(name) { "\t#update(#{action}, #{properties})" }
+    LOGGER.debug(name) { "\t#update(#{action}, #{properties})" }
     case action
     when MESSAGE_RECEIVED
       message_received(properties)

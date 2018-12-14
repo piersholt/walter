@@ -26,29 +26,31 @@ class GlobalListener
   end
 
   def update(action, properties = {})
-    # LOGGER.unknownrate (name) { "#update(#{action}, #{properties})" }
+    # LOGGER.debugrate (name) { "#update(#{action}, #{properties})" }
     return false unless event_valid?(action)
 
     begin
       case action
       when EXIT
-        LOGGER.unknown(PROC) {  "Exit: Reason: #{properties[:reason]}" }
+        LOGGER.debug(PROC) {  "Exit: Reason: #{properties[:reason]}" }
       when BUS_ONLINE
-        LOGGER.unknown(PROC) { 'Bus Online!' }
+        LOGGER.debug(PROC) { 'Bus Online!' }
       when BUS_OFFLINE
-        LOGGER.unknown(PROC) { 'Bus Offline!' }
+        LOGGER.debug(PROC) { 'Bus Offline!' }
+      when MESSAGE_SENT
+        LOGGER.debug(PROC) { MESSAGE_SENT }
       when PACKET_RECEIVED
-        LOGGER.unknown(PROC) { PACKET_RECEIVED }
+        LOGGER.debug(PROC) { PACKET_RECEIVED }
       when PACKET_ROUTABLE
-        LOGGER.unknown(PROC) { PACKET_ROUTABLE }
+        LOGGER.debug(PROC) { PACKET_ROUTABLE }
       when FRAME_SENT
-        LOGGER.unknown(PROC) { FRAME_SENT }
+        LOGGER.debug(PROC) { FRAME_SENT }
       when FRAME_RECEIVED
-        LOGGER.unknown(PROC) { FRAME_RECEIVED }
+        LOGGER.debug(PROC) { FRAME_RECEIVED }
       when BYTE_RECEIVED
-        LOGGER.unknown(PROC) { BYTE_RECEIVED }
+        LOGGER.debug(PROC) { BYTE_RECEIVED }
       when MESSAGE_RECEIVED
-        LOGGER.unknown(PROC) { MESSAGE_RECEIVED }
+        LOGGER.debug(PROC) { MESSAGE_RECEIVED }
       end
     rescue StandardError => e
       LOGGER.error(PROC) { "#{e}" }

@@ -14,7 +14,7 @@ class DataLoggingHandler < BaseHandler
   end
 
   def update(action, properties)
-    # LOGGER.unknown(name) { "\t#update(#{action}, #{properties})" }
+    # LOGGER.debug(name) { "\t#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
       read_byte = fetch(properties, :read_byte)

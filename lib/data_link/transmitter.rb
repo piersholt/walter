@@ -89,7 +89,7 @@ class Transmitter
   end
 
   def transmit(output_buffer, frame_to_write)
-    LogActually.datalink.debug(THREAD_NAME) { "#transmit(output_buffer, frame)" }
+    LogActually.datalink.debug(THREAD_NAME) { "#transmit(#{output_buffer}, #{frame_to_write})" }
     frams_as_string = frame_to_write.as_string
     LogActually.datalink.debug(THREAD_NAME) { "Frame as string: #{frams_as_string}" }
     result = output_buffer.write(frams_as_string)

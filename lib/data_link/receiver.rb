@@ -107,7 +107,7 @@ class Receiver
             changed
             notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
 
-            LogActually.datalink.unknown(PROG_NAME) { "frame_input_buffer.push(#{new_frame})" }
+            LogActually.datalink.debug(PROG_NAME) { "frame_input_buffer.push(#{new_frame})" }
             frame_input_buffer.push(new_frame)
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             LogActually.datalink.debug(SYNC_ERROR) { e }

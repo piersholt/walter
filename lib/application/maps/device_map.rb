@@ -9,6 +9,7 @@ class DeviceMap < BaseMap
   DEFAULT_KLASS = 'BaseDevice'
 
   include Singleton
+  include LogActually::ErrorOutput
 
   def initialize
     super(DEVICES_MAP_NAME)
@@ -79,6 +80,9 @@ class DeviceMap < BaseMap
     Kernel.const_defined?(klass)
     klass = Kernel.const_get(klass)
     klass.new(id, properties)
+  rescue StandardError => e
+    extra(LOGGER, "#{mapped_object[:id][:d]}", name)
+    raise e
   end
 
   def klass_const(klass_ns, klass)

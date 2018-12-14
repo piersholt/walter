@@ -15,6 +15,7 @@ class Virtual
     attr_reader :ident
 
     def target(ident)
+      LOGGER.unknown(DynamicDeviceBuilder) { ident }
       raise StandardError, "no class to target #{ident}" unless CLASS_MAP.key?(ident)
       @ident = ident
       self

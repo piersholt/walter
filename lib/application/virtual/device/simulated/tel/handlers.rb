@@ -274,7 +274,7 @@ module Telephone
 
     return false unless message.from?(:rad)
     return false unless message.command.status.value == ANNOUNCE
-    LOGGER.warn(PROC) { "Radio has announced. Piggybacking (sic)" }
+    LOGGER.info(PROC) { "Radio has announced. Piggybacking (sic)" }
     ready
     true
   end
