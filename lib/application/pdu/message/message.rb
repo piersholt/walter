@@ -52,7 +52,7 @@ class Message
   def inspect
     # LOGGER.warn('inspect')
     # sprintf("%-10s", "[Message]").concat(str_buffer)
-    "#{from.sn}\t#{to.sn}\t#{command.inspect}"
+    "#{from}\t#{to}\t#{command.inspect}"
   end
 
   # ------------------------------ PRINTABLE ------------------------------ #
