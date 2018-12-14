@@ -48,31 +48,21 @@ class FrameBuilder
   end
 
   def command=(command)
-    begin
-      command_id = command.d
-      @command = Byte.new(:decimal, command_id)
+    command_id = command.d
+    @command = Byte.new(:decimal, command_id)
+    command_config = CommandMap.instance.config(command_id)
 
-      command_config = CommandMap.instance.config(command_id)
+    if command_config.has_parameters?
       index = command_config.index
-      builder = ArgumentsBuilder.new(command, index)
-      args = builder.result
-      nested_arguments = args.map do |d|
-        if d.instance_of?(Array)
-          array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
-          Bytes.new(array_of_bytes)
-        else
-          Byte.new(:decimal, d)
-        end
-      end
-      flattened_arguments = nested_arguments.flatten
-
-      self.arguments= flattened_arguments
-    rescue StandardError => e
-      LogActually.datalink.error("#{self.class} Exception: #{e}")
-      e.backtrace.each { |l| LogActually.datalink.error(l) }
-      puts "breakpoint"
-      puts "breakpoint!"
+      self.arguments= process_arguments(command, index)
+    elsif !command_config.has_parameters? && command.arguments
+      self.arguments= command.arguments
+    else
+      self.arguments= []
     end
+  rescue StandardError => e
+    LogActually.datalink.error("#{self.class} Exception: #{e}")
+    e.backtrace.each { |l| LogActually.datalink.error(l) }
   end
 
   def result
@@ -82,6 +72,21 @@ class FrameBuilder
     new_frame = generate_new_frame
     new_frame.valid?
     new_frame
+  end
+
+  def process_arguments(command, index)
+    builder = ArgumentsBuilder.new(command, index)
+    args = builder.result
+
+    nested_arguments = args.map do |d|
+      if d.instance_of?(Array)
+        array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
+        Bytes.new(array_of_bytes)
+      else
+        Byte.new(:decimal, d)
+      end
+    end
+    nested_arguments.flatten
   end
 
   def generate_calculated_fields
