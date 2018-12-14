@@ -15,46 +15,48 @@ module CommandAliases
   ODO       = 0x17
 
   SPEED     = 0x18
-  LAMP_REQ  = 0x5A
-  LAMP      = 0x5B
-
-  DOOR_REQ = 0x79
-  DOOR = 0x7A
-
-  VEH_REQ   = 0x53
-  VEH       = 0x54
 
   TEMP_REQ = 0x1D
-  TEMP = 0x19
-
-  DSP_EQ = 0x34
-  RAD_EQ = 0x36
-
-  REMOTE    = 0x72
-  KEY_REQ   = 0x73
-  KEY       = 0x74
+  TEMP     = 0x19
 
   TEL_OPEN   = 0x20
+
+  GFX_STATUS = 0x22
+  HUD_TEXT = 0x24
+
   TEL_LED   = 0x2B
   TEL_STATE = 0x2C
   TEL_DATA  = 0x31
 
+  MFL_VOL = 0x32
+
+  DSP_EQ = 0x34
+  RAD_EQ = 0x36
+
+  CHANGER_REQUEST = 0x38
+
+  MFL_FUNC = 0x3B
+
+  RAD_CONFIG = 0x45
+  RAD_STATUS = 0x46
+
   BMBT_A = 0x48
   BMBT_B = 0x49
-
-  HUD_TEXT = 0x24
-
-  MFL_VOL = 0x32
-  MFL_FUNC = 0x3B
 
   RAD_LED = 0x4A
   SRC_CTL = 0x4B
   SND_SRC = 0x4E
 
-  RAD_CONFIG = 0x45
-  RAD_STATUS = 0x46
+  VEH_REQ   = 0x53
+  VEH       = 0x54
 
-  GFX_STATUS = 0x22
+  LAMP_REQ  = 0x5A
+  LAMP      = 0x5B
 
-  CHANGER_REQUEST = 0x38
+  REMOTE    = 0x72
+  KEY_REQ   = 0x73
+  KEY       = 0x74
+
+  DOOR_REQ = 0x79
+  DOOR     = 0x7A
 end
