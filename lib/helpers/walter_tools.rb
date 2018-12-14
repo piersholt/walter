@@ -31,6 +31,10 @@ module WalterTools
     DisplayHandler.i.clear_filter
   end
 
+  def dia
+    DisplayHandler.i.hide_commands(*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *LAMP)
+  end
+
   def diag
     DisplayHandler.i.filter_commands(*CommandGroups::DIA)
   end
