@@ -6,24 +6,28 @@ module Capabilities
     include API::Alive
 
     # Request
-    def ping(to:)
+    def ping(to)
       p1ng(from: me, to: to)
     end
 
-    # Broadcast
-    def ann0unce(from: me)
-      return false if announced
-      p0ng(from: from, status: 0x01)
+    # Reply
+    def pong(to)
+      p0ng(from: me, to: to, status: 0x00)
     end
 
-    # Reply
-    def pong(from: me); end
+    # Broadcast
+    def ann0unce
+      return false if announced?
+      p0ng(from: from, status: 0x01)
+      announced!
+    end
+
+    private
+
 
     def announced?
       announced
     end
-
-    private
 
     def announced!
       @announced = true
