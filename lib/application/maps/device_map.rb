@@ -68,6 +68,7 @@ class DeviceMap < BaseMap
   end
 
   def create_device_constant(id_d, device)
+    LOGGER.debug(name) { "#create_device_constant(#{id_d}, device)" }
     device_sn = device[:properties][:short_name]
     device_ln = device[:properties][:long_name]
     return false if device_ln.eql?('Unknown')
