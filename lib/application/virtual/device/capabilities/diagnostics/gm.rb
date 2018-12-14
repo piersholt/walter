@@ -5,8 +5,7 @@ module Capabilities
       TRUNK_OPEN_REMOTE = '00 08 01'
 
 
-      HATCH_OPEN        = '00 07 01'
-      TRUNK_OPEN_REMOTE = '00 08 01'
+      # HATCH_OPEN        = '00 07 01'
       TRUNK_OPEN        = '00 09 01'
 
       TRUNK_CONTACT     = '00 0A 01'
@@ -108,16 +107,25 @@ module Capabilities
 
     module Seats
       # all good
-      FORWARD      = '05 00 01'
-      BACKWARD     = '05 01 01'
+      FORWARD      = [0x05, 0x00, 0x01]
+      BACKWARD     = [0x05, 0x01, 0x01]
       UP           = '05 02 01'
       DOWN         = '05 03 01'
       TILT_BACK    = '05 04 01'
       TILT_FORWARD = '05 05 01'
-      BACK_BACK    = '05 06 01'
-      BACK_FORWARD = '05 07 01'
-      08 = headrest up
-      09 = headrest down
+      BACK_FORWARD = '05 06 01'
+      BACK_BACK    = '05 07 01'
+      # 08 = headrest up
+      # 09 = headrest down
+
+      def seat_forward
+        vehicle_control(to: :gm3, arguments: array(FORWARD))
+      end
+
+      def seat_backward
+        vehicle_control(to: :gm3, arguments: array(BACKWARD))
+      end
+
     end
 
     module Wheel
