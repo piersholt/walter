@@ -11,6 +11,10 @@ class DeviceMap < BaseMap
   include Singleton
   include LogActually::ErrorOutput
 
+  def name
+    'DeviceMap'
+  end
+
   def initialize
     super(DEVICES_MAP_NAME)
     create_device_constants

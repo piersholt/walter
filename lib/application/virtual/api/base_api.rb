@@ -3,6 +3,11 @@ module API
     include Event
     include Observable
     include ClusterTools
+    include LogActually::ErrorOutput
+
+    def name
+      'BaseAPI'
+    end
 
     def give_it_a_go(from_id, to_id, command_id, command_arguments = {})
       begin
