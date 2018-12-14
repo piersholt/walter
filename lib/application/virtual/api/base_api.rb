@@ -9,41 +9,26 @@ module API
       'BaseAPI'
     end
 
-    def give_it_a_go(from_id, to_id, command_id, command_arguments = {})
-      begin
-        from = DeviceMap.instance.find(from_id)
-        to = DeviceMap.instance.find(to_id)
+    def try(from, to, command_id, command_arguments = {})
+      from = DeviceMap.instance.find_by_ident(from)
+      to = DeviceMap.instance.find_by_ident(to)
+      command_object = to_command(command_id: command_id,
+                                  command_arguments: command_arguments,
+                                  schema_from: from)
 
-        command_config = CommandMap.instance.config(command_id)
-        command_builder = command_config.builder
-        command_builder = command_builder.new(command_config)
-        command_builder.add_parameters(command_arguments)
-        command_object = command_builder.result
-      rescue StandardError => e
-        LOGGER.error("#{self.class} StandardError: #{e}")
-        e.backtrace.each { |l| LOGGER.error(l) }
-        binding.pry
-      end
-
-      deliver(from, to, command_object)
+      send_it!(from, to, command_object)
+    rescue StandardError => e
+      LOGGER.error("#{self.class} StandardError: #{e}")
+      e.backtrace.each { |l| LOGGER.error(l) }
+      binding.pry
     end
 
-    def deliver(from, to, command)
+    def send_it!(from, to, command)
+      LOGGER.unknown(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
       begin
         message = Message.new(from, to, command)
-        send_message(message)
-      rescue StandardError => e
-        LOGGER.error("#{self.class} StandardError: #{e}")
-        e.backtrace.each { |l| LOGGER.error(l) }
-        binding.pry
-      end
-    end
-
-    def send_message(message)
-      begin
         changed
         notify_observers(MESSAGE_SENT, message: message)
-        message
       rescue StandardError => e
         LOGGER.error("#{self.class} StandardError: #{e}")
         e.backtrace.each { |l| LOGGER.error(l) }
@@ -51,7 +36,19 @@ module API
       end
     end
 
+    alias give_it_a_go try
+
     private
+
+    def to_command(command_id:, command_arguments:, schema_from:)
+      command_config = CommandMap.instance.config(command_id, schema_from)
+      command_builder = command_config.builder
+      command_builder = command_builder.new(command_config)
+      command_builder.add_parameters(command_arguments)
+      command_builder.result
+    rescue StandardError => e
+      with_backtrace(LOGGER, e)
+    end
 
     def format_chars!(command_arguments, opts = { align: :center })
       chars_string = command_arguments[:chars]
