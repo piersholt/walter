@@ -9,7 +9,8 @@ class Virtual
       dsp: 'SimulatedDSP',
       cdc: 'SimulatedCDC',
       tel: 'SimulatedTEL',
-      rad: 'AugmentedRadio'
+      rad: 'AugmentedRadio',
+      dia: 'ManualDiagnostics'
     }.freeze
 
     attr_reader :ident
