@@ -76,6 +76,9 @@ class DeviceMap < BaseMap
     sanitized_device_sn = device_sn.gsub(/[^A-Z]/, '')
     # LOGGER.unknown("#{sanitized_device_sn}")
     ns.const_set(sanitized_device_sn, id_d)
+    true
+  rescue StandardError => e
+    simple(LOGGER, e, name)
   end
 
   def instantiate_klass(mapped_object)
