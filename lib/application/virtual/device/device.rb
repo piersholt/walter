@@ -10,6 +10,7 @@ require "#{root}/devices"
 
 require "#{root}/capabilities/alive"
 require "#{root}/capabilities/diagnostics/gm"
+require "#{root}/capabilities/diagnostics/lcm"
 require "#{root}/capabilities/diagnostics"
 
 require "#{root}/dynamic/dynamic"
