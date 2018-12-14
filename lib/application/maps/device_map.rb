@@ -37,14 +37,30 @@ class DeviceMap < BaseMap
 
   PROC = 'DeviceMap'
 
+  def address_lookup_table
+    @address_lookup_table ||= AddressLookupTable.instance
+  end
+
+  def to_id(ident)
+    address_lookup_table.get_address(ident)
+  rescue StandardError => e
+    LOGGER.error(name) { e }
+    e.backtrace.each { |line| LOGGER.error(line) }
+  end
+
+  def find_by_ident(device_ident)
+    device_id = to_id(device_ident)
+    find(device_id)
+  end
+
   def find(device_id)
     LOGGER.debug(PROC) { "#find(#{device_id})" }
     begin
       mapped_result = super(device_id)
     rescue IndexError => e
       # LOGGER.error(PROC) {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
-      LOGGER.error(PROC) {"Device #{device_id} not found!" }
-      mapped_result = super(:default)
+      LOGGER.warn(PROC) {"Device #{device_id} not found!" }
+      mapped_result = super(:universal)
       mapped_result[:properties][:d] = device_id
     end
     instantiate_klass(mapped_result)
