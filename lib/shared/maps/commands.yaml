@@ -11,7 +11,7 @@
 # ************************************************************************* #
 #                             BUS DEVICE STATUS
 # ************************************************************************* #
-1:
+0x01:
   :id:
     :h: '0x01'
     :d: 1
@@ -21,7 +21,7 @@
     :long_name: Status Request
     :verbose: false
   :klass: BaseCommand
-2:
+0x02:
   :id:
     :h: '0x02'
     :d: 2
@@ -119,7 +119,7 @@
     :examples:
       - BMBT  RAD	  PING	--
       - RAD	  GLO-H	PONG	Respond
-3:
+0x03:
   :id:
     :d: 3
     :h: '0x03'
@@ -133,7 +133,7 @@
 # ************************************************************************* #
 #                               IGNITION
 # ************************************************************************* #
-16:
+0x10:
   :id:
     :d: 16
     :h: '0x10'
@@ -141,7 +141,7 @@
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
   :klass: BaseCommand
-17:
+0x11:
   :id:
     :d: 17
     :h: '0x11'
@@ -330,7 +330,7 @@
 # ************************************************************************* #
 #                               IKE SENSORS
 # ************************************************************************* #
-18:
+0x12:
   :id:
     :d: 18
     :h: '0x12'
@@ -343,7 +343,7 @@
       - CCM
     :recipients:
       - IKE
-19:
+0x13:
   :id:
     :d: 19
     :h: '0x13'
@@ -521,7 +521,7 @@
         - 0xD3: 65
       :byte3:
         # - 0x00: 1493
-20:
+0x14:
   :id:
     :d: 20
     :h: '0x14'
@@ -529,7 +529,7 @@
     :short_name: CNTRY-REQ
     :long_name: Country Coding Status Request
   :klass: BaseCommand
-21:
+0x15:
   :id:
     :d: 21
     :h: '0x15'
@@ -540,7 +540,7 @@
 # ************************************************************************* #
 #                               VEHICLE STATUS
 # ************************************************************************* #
-22:
+0x16:
   :id:
     :d: 22
     :h: '0x16'
@@ -548,7 +548,7 @@
     :short_name: ODO-REQ
     :long_name: Odometer Request
   :klass: BaseCommand
-23:
+0x17:
   :id:
     :d: 23
     :h: '0x17'
@@ -559,7 +559,7 @@
   :meta:
       :senders:
         - IKE
-24:
+0x18:
   :id:
     :d: 24
     :h: '0x18'
@@ -580,7 +580,7 @@
       - IKE
     :recipients:
       - GLO-L (0xBF)
-90:
+0x5A:
   :id:
     :d: 90
     :h: '0x5A'
@@ -588,7 +588,7 @@
     :short_name: LAMP-REQ
     :long_name: Lamp Status Request
   :klass: BaseCommand
-91:
+0x5B:
   :id:
     :d: 91
     :h: '0x5B'
@@ -686,7 +686,7 @@
     :d: 92
     :h: '0x5C'
   :properties:
-    :short_name: LAMP2?
+    :short_name: CLSTR
     :long_name: Unknown
   :klass: ParameterizedCommand
   :index:
@@ -696,7 +696,7 @@
       :type: :bit_array
       :parameters:
         :rapid:
-          :label: Rapid.
+          :label: "-"
           :type: :switch
           :states:
             0: :off
@@ -842,7 +842,7 @@
       - GM3
     :recipients:
       - GLO-L
-83:
+0x53:
   :id:
     :d: 83
     :h: '0x53'
@@ -850,7 +850,7 @@
     :short_name: VEH-REQ
     :long_name: Vehicle Status Request
   :klass: BaseCommand
-84:
+0x54:
   :id:
     :d: 84
     :h: '0x54'
@@ -914,7 +914,7 @@
 # ************************************************************************* #
 #                               TEMPERATURE
 # ************************************************************************* #
-29:
+0x1D:
   :id:
     :d: 29
     :h: '0x1D'
@@ -922,7 +922,7 @@
     :short_name: TEMP-REQ
     :long_name: Temperature Request
   :klass: BaseCommand
-25:
+0x19:
   :id:
     :d: 25
     :h: '0x19'
@@ -935,7 +935,7 @@
       - IKE
     :recipients:
       - GLO-L
-31:
+0x1F:
   :id:
     :d: 31
     :h: '0x1F'
@@ -946,7 +946,7 @@
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
-52:
+0x34:
   :id:
     :d: 52
     :h: '0x34'
@@ -954,7 +954,7 @@
     :short_name: DSP-EQ
     :long_name: DSP EQ. Button
   :klass: BaseCommand
-54:
+0x36:
   :id:
     :d: 54
     :h: '0x36'
@@ -1066,7 +1066,7 @@
         0X5d: BALANCE +13
         0X5e: BALANCE +14
         0X5f: BALANCE +15
-55:
+0x37:
   :id:
     :d: 55
     :h: '0x37'
@@ -1088,7 +1088,7 @@
         0xf0: EQ. Balance
   :index:
     :mode: 0
-69:
+0x45:
   :id:
     :d: 69
     :h: '0x45'
@@ -1160,7 +1160,7 @@
     :state: 0
   :meta:
     - 01: confirm switch?
-74:
+0x4A:
   :id:
     :d: 74
     :h: '0x4A'
@@ -1195,7 +1195,7 @@
       - RAD
     :recipients:
       - BMBT
-75:
+0x4B:
   :id:
     :d: 75
     :h: '0x4B'
@@ -1308,7 +1308,7 @@
 # ************************************************************************* #
 #                               BUTTONS
 # ************************************************************************* #
-59:
+0x3B:
   :id:
     :d: 59
     :h: '0x3B'
@@ -1330,7 +1330,7 @@
       0x18: "Prev: Hold"
       0x28: "Prev: Release"
   :klass: Button
-50:
+0x32:
   :id:
     :d: 50
     :h: '0x32'
@@ -1347,7 +1347,7 @@
       0x31: Right/Up-3
       0x41: Right/Up-4
   :klass: Button
-72:
+0x48:
   :id:
     :d: 72
     :h: '0x48'
@@ -1427,7 +1427,7 @@
       0x45: "[Confirm] Hold"
       0x85: "[Confirm] Release"
   :klass: Button
-73:
+0x49:
   :id:
     :d: 73
     :h: '0x49'
@@ -1781,7 +1781,7 @@
 
       - 37 05	"CHECK LOWBEAM LIGHTS"
       - 35 01	""
-36:
+0x24:
   :id:
     :d: 36
     :h: '0x24'
@@ -1923,7 +1923,7 @@
       0x30: CCM
       0x68: RAD
       0xC8: TEL
-33:
+0x21:
   :id:
     :d: 33
     :h: '0x21'
