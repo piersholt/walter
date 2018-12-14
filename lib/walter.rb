@@ -61,7 +61,10 @@ class Walter
       .execute
 
     @interface_handler = DataLinkHandler.new(@transmitter)
-    @bus_handler = BusHandler.new(bus: @bus)
+    @bus_handler = BusHandler
+                   .new(bus: @bus,
+                        packet_output_buffer:
+                          @multiplexer.packet_output_buffer)
 
     @global_listener = GlobalListener.new(handlers)
     @data_link_listener = DataLinkListener.new(@interface_handler)
@@ -84,6 +87,7 @@ class Walter
     @bus.send_all(:add_observer, @global_listener)
     @bus.send_all(:add_observer, @session_listener)
     @bus.send_all(:add_observer, @display_listener)
+    @bus.send_all(:add_observer, @bus_handler)
 
     # For exit event
     add_observer(@global_listener)
@@ -122,6 +126,7 @@ class Walter
     @receiver.on
     @transmitter.on
     @demultiplexer.on
+    @multiplexer.on
     Notifications.start(@bus)
   end
 

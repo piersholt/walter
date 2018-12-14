@@ -5,10 +5,12 @@ class RoutingError < StandardError
 end
 
 class BusHandler < BaseHandler
+  include LogActually::ErrorOutput
   PROC = 'BusHandler'.freeze
 
-  def initialize(options)
-    @bus = options[:bus]
+  def initialize(bus:, packet_output_buffer:)
+    @bus = bus
+    @packet_output_buffer = packet_output_buffer
     register_devices(@bus.devices)
     register_for_broadcast(@bus.simulated)
   end
@@ -17,9 +19,20 @@ class BusHandler < BaseHandler
     self.class.name
   end
 
+  def message_sent(action, properties)
+    LOGGER.debug(name) { "#message_sent" }
+    message = fetch(properties, :message)
+    raise RoutingError, 'Message is nil!' unless message
+    add_to_output_buffer(message)
+  rescue StandardError => e
+    with_backtrace(LOGGER, e)
+  end
+
   def update(action, properties)
-    # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
+    LOGGER.debug(name) { "#update(#{action}, #{properties})" }
     case action
+    when MESSAGE_SENT
+      message_sent(action, properties)
     when PACKET_RECEIVED
       packet = fetch(properties, :packet)
       raise RoutingError, 'Packet is nil!' unless packet
@@ -32,7 +45,7 @@ class BusHandler < BaseHandler
     end
   rescue StandardError => e
     LOGGER.error(name) { e }
-    e.backtrace.each { |line| LOGGER.error(line) } 
+    e.backtrace.each { |line| LOGGER.error(line) }
   end
 
   def bus_online
@@ -46,13 +59,14 @@ class BusHandler < BaseHandler
   end
 
   def addressable?(packet)
-    # LOGGER.warn(PACKET_RECEIVED) { packet }
     from_ident = packet.from
     has_from = bus_has_device?(from_ident)
     raise RoutingError, "#{from_ident} is not on the bus." unless has_from
     to_ident = packet.to
     has_to = bus_has_device?(to_ident)
     raise RoutingError, "#{to_ident} is not on the bus." unless has_to
+    true
+  rescue RoutingError
     true
   end
 
@@ -64,6 +78,9 @@ class BusHandler < BaseHandler
     observers.each do |subscriber|
       subscriber.receive_packet(packet)
     end
+  rescue RoutingError
+    packet.instance_variable_set(:@from, :dia)
+    @bus.dia.receive_packet(packet)
   end
 
   def register_devices(devices)
@@ -87,6 +104,11 @@ class BusHandler < BaseHandler
 
   def bus_has_device?(device_ident)
     @bus.device?(device_ident)
+  end
+
+  def add_to_output_buffer(message)
+    result = @packet_output_buffer.push(message)
+    LOGGER.debug(name) { "#add_to_output_buffer(#{message}) => #{result}" }
   end
 
 

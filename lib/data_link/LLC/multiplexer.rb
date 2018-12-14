@@ -50,7 +50,7 @@ module DataLink
         raise e
       end
 
-      def thread_write_output_frame_buffer(frame_output_buffer)
+      def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
         LogActually.datalink.debug(name) { 'New Thread: Frame Multiplexing' }
         Thread.new do
           Thread.current[:name] = name
