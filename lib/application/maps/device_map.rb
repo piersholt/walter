@@ -63,15 +63,19 @@ class DeviceMap < BaseMap
 
   def create_device_constants
     map.each do |id_d, device|
-      device_sn = device[:properties][:short_name]
-      device_ln = device[:properties][:long_name]
-      next if device_ln.eql?('Unknown')
-      ns = Kernel.const_get(DEFAULT_NAMESPACE)
-      # LOGGER.unknown("#{device_sn}")
-      sanitized_device_sn = device_sn.gsub(/[^A-Z]/, '')
-      # LOGGER.unknown("#{sanitized_device_sn}")
-      ns.const_set(sanitized_device_sn, id_d)
+      create_device_constant(id_d, device)
     end
+  end
+
+  def create_device_constant(id_d, device)
+    device_sn = device[:properties][:short_name]
+    device_ln = device[:properties][:long_name]
+    return false if device_ln.eql?('Unknown')
+    ns = Kernel.const_get(DEFAULT_NAMESPACE)
+    # LOGGER.unknown("#{device_sn}")
+    sanitized_device_sn = device_sn.gsub(/[^A-Z]/, '')
+    # LOGGER.unknown("#{sanitized_device_sn}")
+    ns.const_set(sanitized_device_sn, id_d)
   end
 
   def instantiate_klass(mapped_object)
