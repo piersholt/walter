@@ -198,7 +198,7 @@
 # ************************************************************************* #
 #                               KEY/REMOTE
 # ************************************************************************* #
-114:
+0x72:
   :id:
     :d: 114
     :h: '0x72'
@@ -288,6 +288,45 @@
       - 0x05 goes to 0x01
       - 0x04 goes to 0x00
       - i assume there's a different state if the key is IDENTIFIED but DISABLED?
+# ************************************************************************* #
+#                                 MEMORY?
+# ************************************************************************* #
+0x78:
+  :id:
+    :d: 120
+    :h: '0x78'
+  :properties:
+    :short_name: MEM-LOAD
+    :long_name: Memory
+  :klass: ParameterizedCommand
+  :index:
+    :status: 0
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: complete
+        0x01: preset_1
+        0x02: preset_2
+        0x03: preset_3
+      :dictionary:
+        0x00: Complete
+        0x01: Preset 1
+        0x02: Preset 2
+        0x03: Preset 2
+  :meta:
+    :notes:
+      - 504 messages sent to date
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	01
+      - GM3   	GLO-L 	78       	02
+      - GM3   	GLO-L 	78       	04
+      - GM3   	GLO-L 	78       	04
+      - this was being sent after DIA request memory preset
+      - argument seemingly correlated with preset number/ID
 # ************************************************************************* #
 #                               IKE SENSORS
 # ************************************************************************* #
@@ -431,6 +470,23 @@
         - lights on
         - door open
         - trunk open
+      - noted on comm.se:
+        - handbrake on
+        - oil pressure low
+        - brake pads worn
+        - transmission emergency program gearbox not in P
+        - motor running
+        - vehicle driving
+        - reverse not plausible
+        - Gear R
+        - Gear 1
+        - Gear 2
+        - Gear D
+        - alarm horn on
+        - immobiliser on
+        - Aux heating on
+        - Aux ventillation on
+        - Temp deg F
     :senders:
       - IKE
     :recipients:
@@ -625,7 +681,7 @@
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
 
-92:
+0x5C:
   :id:
     :d: 92
     :h: '0x5C'
@@ -655,7 +711,7 @@
       - LCM
     :recipients:
       - GLO-L
-121:
+0x79:
   :id:
     :d: 121
     :h: '0x79'
@@ -663,7 +719,7 @@
     :short_name: DOOR-REQ
     :long_name: Door/Flag Request Status
   :klass: BaseCommand
-122:
+0x7A:
   :id:
     :d: 122
     :h: '0x7A'
@@ -801,6 +857,8 @@
   :properties:
     :short_name: VEH
     :long_name: Vehicle Status
+  :schemas:
+    - :dia
   :parameters:
     :vin:
       :type: :chars
@@ -828,6 +886,28 @@
                   end: 13
                   excl: false
   :klass: BaseCommand
+  :dia:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: VEH*
+      :long_name: Diagnostics Control
+    :parameters:
+      :b1:
+        :type: :map
+        :dictionary:
+          0x05: Seat Memory
+      :b2:
+        :type: :map
+        :dictionary:
+          0x04: Angle Up
+          0x05: Angle Down
+      :b3:
+        :label: Unknown
+        :type: :integer
+    :index:
+      :b1: 0
+      :b2: 1
+      :b3: 2
   :examples:
     - "IKE   	LCM   	53        --"
     - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
@@ -1035,12 +1115,12 @@
     - 01 (Audio+OBC Off)
     - 03 (Audio+OBC ON)
     - used when switching back from TV?
-70:
+0x46:
   :id:
     :d: 70
     :h: '0x46'
   :properties:
-    :short_name: RAD-STATUS?
+    :short_name: MENU?
     :long_name: Unknown
   :klass: ParameterizedCommand
   :parameters:
@@ -1909,7 +1989,57 @@
     :parameters:
       - 0x41: select station present number (1-6)? another row?
       - 0x43: MID display? another row?
-
+0xA5:
+  :id:
+    :d: 165
+    :h: '0xA5'
+  :properties:
+    :short_name: TXT?
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        0x62: Change Station
+    :ike:
+      :type: :map
+      :dictionary:
+        0x01: TBC
+    :zone:
+      :type: :map
+      :dictionary:
+        0: Unknown
+        2: Program (5)
+        65: A (5)
+        66: B (5)
+        67: C (5)
+        68: D (5)
+        69: E (7)
+        70: F (20)
+        7: TBC (20)
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :zone: 2
+    :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+  :meta:
+    :notes:
+      - 540 RAD sending this to GFX
+    :examples:
+      - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
+      - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
+      - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
+      - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
+      - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
+      - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
+      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
+      - 65, 66, 67, 68, 69, 70... too neat to be coincidence...
 34:
   :id:
     :d: 34
@@ -2609,18 +2739,19 @@
   :properties:
     :short_name: DIA-VEH-CTRL
     :long_name: Vehicle Control
+    :verbose: true
   :klass: BaseCommand
-  :parameters:
-    :action:
-      :type: :map
-      :dictionary:
-        0x07: Seek Up
-        0x08: Seek Down
-        0x09: Activate Audio Button?
-        0x0B: Radio Off
-        0x0C: Radio On
-  :index:
-    :action: 0
+  # :parameters:
+  #   :action:
+  #     :type: :map
+  #     :dictionary:
+  #       0x07: Seek Up
+  #       0x08: Seek Down
+  #       0x09: Activate Audio Button?
+  #       0x0B: Radio Off
+  #       0x0C: Radio On
+  # :index:
+  #   :action: 0
   :meta:
     :notes:
 
@@ -2793,6 +2924,8 @@
   :meta:
     :notes:
       - 540 sent 52 to CCM? looks like text.
+      - ike	ccm	???       	11 A4 20 20 20 52 41 4E 47 45 20 20 34 37 20 4B 4D 20 20 20 20 20
+      - ike	ccm	???       	10 80
 85:
   :id:
     :d: 85
@@ -2891,6 +3024,9 @@
         0x04: Seek! (RWD/FFD)
         0x05: Skip! (Previous/Next)
         0x06: Change Disc!
+        0x07: Scan Mode
+        0x08: Random Mode
+        0x0A: Change Track
     :mode:
       :type: :integer
   :index:
@@ -3048,25 +3184,8 @@
   :meta:
     :senders:
       - LCM
-120:
-  :id:
-    :d: 120
-    :h: '0x78'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - 504 messages sent to date
-      - GM3   	GLO-L 	78       	04
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	01
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	02
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	04
-      - GM3   	GLO-L 	78       	00
+  :notes:
+    - GM can sent 0x76 to control lights..?
 0x82:
     :properties:
       :short_name: "???"
@@ -3090,57 +3209,6 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
-0xA5:
-  :id:
-    :d: 165
-    :h: '0xA5'
-  :properties:
-    :short_name: TXT?
-    :long_name: Unknown
-  :klass: ParameterizedCommand
-  :parameters:
-    :gfx:
-      :type: :map
-      :dictionary:
-        0x62: Change Station
-    :ike:
-      :type: :map
-      :dictionary:
-        0x01: TBC
-    :zone:
-      :type: :map
-      :dictionary:
-        0: Unknown
-        2: Program (5)
-        65: A (5)
-        66: B (5)
-        67: C (5)
-        68: D (5)
-        69: E (7)
-        70: F (20)
-        7: TBC (20)
-    :chars:
-      :type: :chars
-  :index:
-    :gfx: 0
-    :ike: 1
-    :zone: 2
-    :chars: !ruby/range
-              begin: 3
-              end: -1
-              excl: false
-  :meta:
-    :notes:
-      - 540 RAD sending this to GFX
-    :examples:
-      - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
-      - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
-      - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
-      - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
-      - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
-      - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
-      - 65, 66, 67, 68, 69, 70... too neat to be coincidence...
 169:
   :id:
     :d: 169
