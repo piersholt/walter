@@ -54,7 +54,6 @@ class Receiver
         # binding.pry
         loop do
           LogActually.datalink.debug(PROG_NAME) { "#{SYNC} ##{shift_count}. Begin." }
-          shift_count
           new_frame = Frame.new
 
           begin
