@@ -16,7 +16,6 @@ require 'shared/shared'
 require 'data_link/datalink'
 
 require 'physical/interface'
-require 'data_link/receiver'
 require 'data_link/transmitter'
 
 require 'application/virtual/api/alive'
@@ -25,7 +24,6 @@ require 'application/virtual/api/cd'
 require 'application/virtual/api/media'
 require 'application/virtual/api/telephone'
 require 'application/application'
-
 
 # Container
 class Walter

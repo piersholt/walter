@@ -2,6 +2,10 @@
 
 root = 'data_link'
 
+require "#{root}/frame/frame"
+require "#{root}/frame/frame_synchronisation"
+require "#{root}/receiver"
+
 map_root = "#{root}/maps"
 require "#{map_root}/address_lookup_table"
 
