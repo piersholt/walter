@@ -55,17 +55,19 @@ rescue Interrupt
   LOGGER.close
   return 1
 rescue LoadError => e
-    LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
-  $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
-  exit
+  LOGGER.error('run') { 'Application LoadError' }
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.warn('run') { line } }
+  # $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
+  exit(false)
 rescue StandardError => e
   LOGGER.error('run') { 'Rescued at bin/run' }
-    LOGGER.error('run') { e }
+  LOGGER.error('run') { e }
   e.backtrace.each { |line| LOGGER.error('run') { line } }
-  binding.pry
   LOGGER.close
-  return 1
+  exit(false)
+rescue SystemExit
+  puts "rescued a SystemExit exception"
 end
 
 return 0
