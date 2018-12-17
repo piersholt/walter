@@ -104,6 +104,7 @@ class Interface
       Thread.current[:name] = tn
 
       begin
+        delay_defaults
         read_byte = nil
         parsed_byte = nil
         offline_file_count = 1

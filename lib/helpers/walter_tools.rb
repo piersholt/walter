@@ -121,28 +121,23 @@ module WalterTools
     @interface.read_thread.thread_variable_set(:sleep_time, seconds)
   end
 
+  def sleepy?
+    # @interface.read_thread[:sleep_enabled] = false
+    @interface.read_thread.thread_variable_get(:sleep_enabled)
+  end
+
   def awake!
     t = @interface.read_thread
     # @interface.read_thread[:sleep_enabled] = false
     t.thread_variable_set(:sleep_enabled, false)
-    puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
-  end
-
-  def awake?
-    # @interface.read_thread[:sleep_enabled] = false
-    !@interface.read_thread.thread_variable_get(:sleep_enabled)
-  end
-
-  def sleepy?
-    # @interface.read_thread[:sleep_enabled] = false
-    @interface.read_thread.thread_variable_get(:sleep_enabled)
+    # puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
   end
 
   def sleepy!
     t = @interface.read_thread
     # @interface.read_thread[:sleep_enabled] = true
     t.thread_variable_set(:sleep_enabled, true)
-    puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
+    # puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
   end
 
   # API
