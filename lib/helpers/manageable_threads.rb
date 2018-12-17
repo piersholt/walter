@@ -5,7 +5,7 @@ module ManageableThreads
   include DataTools
 
   def log_threads
-    threads.list.each do |this_thread|
+    threads.list.each do |printhis_thread|
       LOGGER.warn(proc_name) { this_thread.to_s }
     end
   end
@@ -22,6 +22,10 @@ module ManageableThreads
     end
     LOGGER.info(proc_name) { 'Threads closed.' }
     true
+  end
+
+  def thread_list
+    threads.list
   end
 
   def threads

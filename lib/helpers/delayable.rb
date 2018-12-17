@@ -1,21 +1,50 @@
 module Delayable
-  DEFAULT_SLEEP_TIMER = 5
-
-  attr_writer :sleep_time
-  attr_accessor :sleep_enabled
+  DEFAULT_ENABLED = true
+  DEFAULT_TIME = 5
 
   def delay
-    return false unless sleep_enabled?
-    sleep(sleep_time)
-    true
+    case sleep_enabled
+    when true
+      LogActually.send(log).debug(Thread.current[:name]) { 'You go sleep now.' }
+      Kernel.sleep(sleep_time)
+      true
+    when false
+      LogActually.send(log).debug(Thread.current[:name]) { 'Go go go!' }
+      false
+    end
+  end
+
+  def delay_defaults
+    sleep_enabled!
+    sleep_time!
   end
 
   def sleep_enabled?
-    return true if @sleep_enabled.nil?
-    @sleep_enabled
+    LogActually.send(log).debug(Thread.current[:name]) { ":sleep_enabled => #{sleep_enabled}" }
+    sleep_enabled
+  end
+
+  def nap(seconds)
+    Thread.current.thread_variable_set(:sleep_time, seconds)
+  end
+
+  private
+
+  def sleep_enabled
+    Thread.current.thread_variable_get(:sleep_enabled)
+  end
+
+  def sleep_enabled!
+    LogActually.send(log).debug(Thread.current[:name]) { ":sleep_enabled = #{DEFAULT_ENABLED}" }
+    Thread.current.thread_variable_set(:sleep_enabled, DEFAULT_ENABLED)
   end
 
   def sleep_time
-    @sleep_time ||= DEFAULT_SLEEP_TIMER
+    Thread.current.thread_variable_get(:sleep_time)
+  end
+
+  def sleep_time!
+    LogActually.send(log).debug(Thread.current[:name]) { ":sleep_time = #{DEFAULT_TIME}" }
+    Thread.current.thread_variable_set(:sleep_time, DEFAULT_TIME)
   end
 end

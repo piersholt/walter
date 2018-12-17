@@ -116,22 +116,33 @@ module WalterTools
 
   # Delay
 
-  def rate(seconds)
-    @interface.sleep_time = seconds
+  def nap(seconds)
+    # @interface.read_thread[:sleep_time] = seconds
+    @interface.read_thread.thread_variable_set(:sleep_time, seconds)
   end
 
-  def sleep
-    @interface.sleep_enabled = true
-    sleep_time = @interface.sleep_time
-    LOGGER.info(PROC) { "Sleep ENABLED with rate of #{sleep_time} seconds" }
-    sleep_time
+  def awake!
+    t = @interface.read_thread
+    # @interface.read_thread[:sleep_enabled] = false
+    t.thread_variable_set(:sleep_enabled, false)
+    puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
   end
 
-  def no_sleep
-    @interface.sleep_enabled = false
-    sleep_time = @interface.sleep_time
-    LOGGER.info(PROC) { "Sleep DISABLED with rate of #{sleep_time} seconds" }
-    true
+  def awake?
+    # @interface.read_thread[:sleep_enabled] = false
+    !@interface.read_thread.thread_variable_get(:sleep_enabled)
+  end
+
+  def sleepy?
+    # @interface.read_thread[:sleep_enabled] = false
+    @interface.read_thread.thread_variable_get(:sleep_enabled)
+  end
+
+  def sleepy!
+    t = @interface.read_thread
+    # @interface.read_thread[:sleep_enabled] = true
+    t.thread_variable_set(:sleep_enabled, true)
+    puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
   end
 
   # API
