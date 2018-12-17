@@ -30,6 +30,7 @@ class Walter
   include Observable
   include WalterTools
   include ManageableThreads
+  include Analyze
 
   attr_reader :bus
 

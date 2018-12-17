@@ -53,7 +53,8 @@ class DeviceMap < BaseMap
     find(device_id)
   end
 
-  def find(device_id)
+  # Analyze: this was #find.. will cause bugs?
+  def find_or_default(device_id)
     LOGGER.debug(PROC) { "#find(#{device_id})" }
     begin
       mapped_result = super(device_id)

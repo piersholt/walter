@@ -27,3 +27,5 @@ maps_root = "#{root}/maps"
 require "#{maps_root}/map"
 
 require "#{root}/global_listener"
+
+require "#{root}/analyze"
