@@ -74,9 +74,11 @@ class Receiver
 
     LogActually.datalink.debug(name) { "#{Event::FRAME_RECEIVED}: #{new_frame}" }
     # reset_interval
-    output(new_frame)
+    # output(new_frame)
     changed
     notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
+
+    frame_input_buffer.push(new_frame)
   rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
     LogActually.datalink.warn(name) { "#{e}: #{synchronisation.frame[0]}" }
     clean_up(buffer, synchronisation.frame)
