@@ -27,8 +27,8 @@ class ByteBasic
   end
 
   # @override Object#eql?
-  def eql?(other_byte)
-    value == other_byte.value
+  def eql?(other_value)
+    value == other_value
   end
 
   def >(comparison_value)

@@ -8,7 +8,6 @@ class FrameSynchronisation
   SYNC_ERROR = 'Error /'
   SYNC_SHIFT = 'Unshift! /'
 
-
   def initialize(buffer, frame = Frame.new)
     @buffer = buffer
     @frame = frame

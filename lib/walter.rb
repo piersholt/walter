@@ -43,7 +43,10 @@ class Walter
     # TODO: better argument handling to support multiple log files
     @interface   = Interface.new(ARGV.shift)
 
-    @receiver    = Receiver.new(@interface.input_buffer)
+    frame_type = FrameSynchronisation
+    # frame_type = PBus::Frame::Synchronisation
+
+    @receiver    = Receiver.new(@interface.input_buffer, frame_type)
     @transmitter = Transmitter.new(@interface.output_buffer)
 
     @demultiplexer =

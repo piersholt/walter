@@ -1,6 +1,3 @@
-#
-
-
 require 'physical/interface/UART'
 require 'physical/interface/file'
 require 'physical/interface/byte_buffer'
@@ -22,6 +19,13 @@ class Interface
 
   attr_reader :input_buffer, :output_buffer, :read_thread
 
+  def log
+    :interface
+  end
+
+  def name
+    Thread.current[:name]
+  end
 
   # The interface should protect the interface from the implementation.
   # i shouldn't be forwarding methods.. that's what bit me with rubyserial

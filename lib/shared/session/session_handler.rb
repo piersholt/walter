@@ -19,6 +19,7 @@ class SessionHandler < BaseHandler
   def initialize
     @messages = Messages.new
     @frames = []
+    # @frames = PBus::Frames.new
   end
 
   def inspect

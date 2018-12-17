@@ -25,8 +25,8 @@ class Interface
     def shift(number_of_bytes = 1)
       # binding.pry
       LogActually.interface.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
-      raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
-        number_of_bytes <= 1
+      # raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
+      #   number_of_bytes <= 1
 
       shift_result = Bytes.new
 

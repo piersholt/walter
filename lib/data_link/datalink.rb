@@ -2,6 +2,11 @@
 
 root = 'data_link'
 
+p_bus_root = "#{root}/p-bus"
+require "#{p_bus_root}/frames"
+require "#{p_bus_root}/frame_adapter"
+require "#{p_bus_root}/frame_synchronisation"
+
 require "#{root}/frame/frame"
 require "#{root}/frame/frame_synchronisation"
 require "#{root}/receiver"
