@@ -537,6 +537,22 @@
     :short_name: CNTRY
     :long_name: Country Coding Status Resonse
   :klass: BaseCommand
+0x59:
+  :id:
+    :d: 89
+    :h: '0x59'
+  :properties:
+    :short_name: LIGHT-SEN
+    :long_name: Luminosity Reading?
+  :klass: ParameterizedCommand
+  :parameters:
+    :lum:
+      :type: :integer
+    :tbc:
+      :type: :integer
+  :index:
+    :lum: 0
+    :tbc: 1
 # ************************************************************************* #
 #                               VEHICLE STATUS
 # ************************************************************************* #
@@ -1347,6 +1363,19 @@
       0x31: Right/Up-3
       0x41: Right/Up-4
   :klass: Button
+0x47:
+  :id:
+    :d: 71
+    :h: '0x47'
+  :properties:
+    :short_name: BMBT-?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :notes:
+    - six messages in total since started logs
+    - 3 of each
+    - F0 05 FF 47 00 38 75
+    - F0 05 FF 47 00 B8 F5
 0x48:
   :id:
     :d: 72
@@ -1786,7 +1815,7 @@
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: HUD-TEXT
+    :short_name: TXT-IKE
     :long_name: OBC Display (IKE, GFX)
     :verbose: false
   :klass: ParameterizedCommand
@@ -2423,7 +2452,7 @@
 # ************************************************************************* #
 #                               ON BOARD COMPUTER (OBC)
 # ************************************************************************* #
-64:
+0x40:
   :id:
     :d: 64
     :h: '0x40'
@@ -2488,7 +2517,7 @@
     - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
     - 11AM = d2b(0x8B, true, true) => "0b10001011"
     - 11PM = d2b(0x0b, true, true) => "0b00001011"
-65:
+0x41:
   :id:
     :d: 65
     :h: '0x41'
@@ -2551,7 +2580,7 @@
       - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
     :recipients:
       - IKE: IKE houses on board computer
-42:
+0x2A:
   :id:
     :d: 42
     :h: '0x2A'
@@ -2897,22 +2926,6 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
-89:
-  :id:
-    :d: 89
-    :h: '0x59'
-  :properties:
-    :short_name: LIGHT-SEN
-    :long_name: Luminosity Reading?
-  :klass: ParameterizedCommand
-  :parameters:
-    :lum:
-      :type: :integer
-    :tbc:
-      :type: :integer
-  :index:
-    :lum: 0
-    :tbc: 1
 82:
   :id:
     :d: 82
@@ -2959,14 +2972,6 @@
   :id:
     :d: 53
     :h: '0x35'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-71:
-  :id:
-    :d: 71
-    :h: '0x47'
   :properties:
     :short_name: "???"
     :long_name: Unknown
