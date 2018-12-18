@@ -3,6 +3,7 @@
 module Capabilities
   # Comment
   module Diagnostics
+    include Helpers
     include API::Diagnostics
     include Windows
     include Seats
@@ -14,21 +15,6 @@ module Capabilities
       LOGGER.info(name) { arguments }
 
       vehicle_control(to: :gm3, arguments: arguments)
-    end
-
-    # private
-
-    def integers(*arguments)
-      bytes(arguments)
-    end
-
-    def array(arguments)
-      bytes(arguments)
-    end
-
-    def bytes(arguments)
-      array_of_bytes = arguments.map { |int| Byte.new(:decimal, int) }
-      Bytes.new(array_of_bytes)
     end
   end
 end
