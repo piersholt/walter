@@ -29,19 +29,19 @@ module PBus
       }.freeze
 
       # 0x11
-      WINDOW_BITS = {
+      DRIVER_WINDOW_BITS = {
         3 => :window_driver_front_closed
       }
 
       # 0x12
-      WINDOW_BITS = {
+      PASS_WINDOW_BITS = {
         3 => :window_passenger_front_closed
       }
 
       MEMORY_DRIVER = {
         0x01 => :preset_1,
         0x02 => :preset_2,
-        0x01 => :preset_3,
+        0x03 => :preset_3,
         0x04 => :complete
       }
 
