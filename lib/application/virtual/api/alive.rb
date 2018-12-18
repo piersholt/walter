@@ -25,13 +25,5 @@ module API
       command_id = PONG_FUCK_OFF[:id]
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
-    
-    def p1ng(from: me, to:)
-      try(from, to, 0x01)
-    end
-
-    def p0ng(from: me, to: :glo_h, status:)
-      try(from, to, 0x02, status: status)
-    end
   end
 end
