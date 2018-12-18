@@ -1,4 +1,4 @@
-root = 'application/virtual/device/augmented'
+root = 'application/virtual/device/dynamic/augmented'
 
 require "#{root}/device"
 require "#{root}/radio/actions"

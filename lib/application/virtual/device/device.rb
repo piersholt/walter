@@ -18,8 +18,6 @@ require "#{root}/capabilities/bmbt"
 require "#{root}/capabilities/radio"
 
 require "#{root}/dynamic/dynamic"
-require "#{root}/augmented/augmented"
-require "#{root}/simulated/simulated"
 
 # Comment
 class Virtual

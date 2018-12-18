@@ -13,7 +13,7 @@ class Virtual
       LOGGER.debug(PROC) { "Handle? #{message.from} -> #{message.command.h}" }
 
       case command_id
-      when CHANGER_REQUEST
+      when CDC_REQ
         handle_changer_request(message)
       end
 
