@@ -727,6 +727,30 @@
       - LCM
     :recipients:
       - GLO-L
+0x5D:
+  :id:
+    :d: 93
+    :h: '0x5D'
+  :properties:
+    :short_name: CLSTR-REQ?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - always from IKE 0x80 to LCM 0xD0
+      - seems to preceed 0x5C
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
 0x79:
   :id:
     :d: 121
@@ -1321,6 +1345,78 @@
   :index:
     :status: 0
   :klass: BaseCommand
+  :notes:
+    - only ever from CCM
+    - followed by 0x52 from
+0x52:
+  :id:
+    :d: 82
+    :h: '0x52'
+  :properties:
+    :short_name: CCM-?
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :index:
+    :b1: 0
+    :b2: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :parameters:
+    :b1:
+      :type: :integer
+    :b2:
+      :type: :integer
+  :chars:
+      :type: :chars
+  :meta:
+    :notes:
+      - every 0x52 command to date
+      - always from IKE 0x80 to CCM 0x30?
+      - "   RANGE  50 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  41 KM     "
+      - "   RANGE  40 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "      CODE ----     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+
 # ************************************************************************* #
 #                               BUTTONS
 # ************************************************************************* #
@@ -2926,19 +3022,6 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
-82:
-  :id:
-    :d: 82
-    :h: '0x52'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :notes:
-      - 540 sent 52 to CCM? looks like text.
-      - ike	ccm	???       	11 A4 20 20 20 52 41 4E 47 45 20 20 34 37 20 4B 4D 20 20 20 20 20
-      - ike	ccm	???       	10 80
 85:
   :id:
     :d: 85
@@ -2952,6 +3035,43 @@
       - IKE
     :recipients:
       - LCM
+    :examples:
+      - IKE 0B LCM 55 09 83 40 3F 00 00 02 3D C4
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 3D BB
+      - IKE 0B LCM 55 09 83 40 3F 00 00 02 3D C4
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 3D BB
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 57 D1
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 5B DD
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 5F D9
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 62 E4
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 6C EA
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 70 F6
+      - IKE 0B LCM 55 09 83 40 40 00 00 02 74 F2
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 74 F3
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 76 F1
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 77 F0
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 78 FF
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 7A FD
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 7F F8
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 81 06
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 82 05
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 84 03
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 85 02
+      - IKE 0B LCM 55 09 83 40 41 00 00 02 87 00
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 8B 0B
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 8E 0E
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 90 10
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 91 11
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 92 12
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 93 13
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 A2 22
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 A4 24
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 AB 2B
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 BA 3A
+      - IKE 0B LCM 55 09 84 40 41 00 00 02 BF 3F
+      - IKE 0B LCM 55 09 84 40 42 00 00 02 C5 46
+      - IKE 0B LCM 55 09 84 40 42 00 00 02 C8 4B
+      - IKE 0B LCM 55 09 84 40 42 00 00 02 C9 4A
 87:
   :id:
     :d: 87
@@ -2960,6 +3080,7 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: BaseCommand
+  :notes:
 88:
   :id:
     :d: 88
@@ -3149,14 +3270,6 @@
   :id:
     :d: 68
     :h: '0x44'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-93:
-  :id:
-    :d: 93
-    :h: '0x5D'
   :properties:
     :short_name: "???"
     :long_name: Unknown
