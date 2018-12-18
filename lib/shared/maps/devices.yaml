@@ -219,7 +219,7 @@
     :short_name: BMBT
     :long_name: Onboard Monitor
     :bus: :i
-    :klass: BaseDevice
+  :klass: BaseDevice
 0x3b:
   :id:
     :h: '0x3B'

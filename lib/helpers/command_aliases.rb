@@ -33,7 +33,8 @@ module CommandAliases
   DSP_EQ = 0x34
   RAD_EQ = 0x36
 
-  CHANGER_REQUEST = 0x38
+  CDC_REQ = 0x38
+  CDC = 0x39
 
   MFL_FUNC = 0x3B
 

@@ -1133,7 +1133,7 @@
     :d: 69
     :h: '0x45'
   :properties:
-    :short_name: RAD-CONFIG
+    :short_name: MENU-GFX
     :long_name: Radio to resume?
   :klass: ParameterizedCommand
   :parameters:
@@ -1146,8 +1146,15 @@
           :states:
             0: :off
             1: :on
+        :main_menu:
+          :type: :switch
+          :label: Main Menu
+          :states:
+            0: :off
+            1: :on
       :index:
         :audio_obc: 6
+        :main_menu: 7
   :index:
     :config: 0
   :meta:
@@ -1160,7 +1167,7 @@
     :d: 70
     :h: '0x46'
   :properties:
-    :short_name: MENU?
+    :short_name: MENU-RAD
     :long_name: Unknown
   :klass: ParameterizedCommand
   :parameters:
@@ -1185,9 +1192,9 @@
           :states:
             0: :off
             1: :on
-        :unknown:
+        :main_menu:
           :type: :switch
-          :label: not background?
+          :label: Main Menu
           :states:
             0: :off
             1: :on
@@ -1195,7 +1202,7 @@
         :hide_eq: 4
         :hide_alt: 5
         :hide_panel: 6
-        :unknown: 7
+        :main_menu: 7
   :index:
     :state: 0
   :meta:
@@ -1328,6 +1335,9 @@
       - "BMBT (0xF0)"
       - "00"
       - "10"
+# ************************************************************************* #
+#                           CHECK CONTROL MODULE
+# ************************************************************************* #
 0x51:
   :id:
     :d: 81
@@ -3164,7 +3174,7 @@
     :d: 56
     :h: '0x38'
   :properties:
-    :short_name: CD-REQ
+    :short_name: CDC-REQ
     :long_name: CD Status Request
   :klass: ParameterizedCommand
   :parameters:
@@ -3174,12 +3184,12 @@
         0x00: Status!
         0x01: Stop!
         0x03: Play!
-        0x04: Seek! (RWD/FFD)
-        0x05: Skip! (Previous/Next)
+        0x04: Scan! (RWD/FFD)
+        0x05: Seek! (Previous/Next)
         0x06: Change Disc!
-        0x07: Scan Mode
-        0x08: Random Mode
-        0x0A: Change Track
+        0x07: Scan Mode!
+        0x08: Random Mode!
+        0x0A: Change Track!
     :mode:
       :type: :integer
   :index:
@@ -3191,8 +3201,8 @@
     :d: 57
     :h: '0x39'
   :properties:
-    :short_name: CD
-    :long_name: CD Status
+    :short_name: CDC
+    :long_name: CDC Status
   :klass: ParameterizedCommand
   :parameters:
     :control:

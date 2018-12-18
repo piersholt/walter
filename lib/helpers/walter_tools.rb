@@ -55,11 +55,6 @@ module WalterTools
     DisplayHandler.i.filter_commands(*CommandGroups::IGNITION)
   end
 
-  def rad
-    DisplayHandler.i.f_t(:rad, :bmbt)
-    DisplayHandler.i.f_f(:rad, :bmbt)
-  end
-
   def tel
     DisplayHandler.i.f_t(* DeviceGroups::TELEPHONE + DeviceGroups::BROADCAST)
     DisplayHandler.i.f_f(*DeviceGroups::TELEPHONE)
@@ -67,11 +62,10 @@ module WalterTools
     DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
   end
 
-  def cd
+  def cdc
     DisplayHandler.i.f_t(* DeviceGroups::CD)
     DisplayHandler.i.f_f(* DeviceGroups::CD)
-    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::HUD_TEXT] )
-    DisplayHandler.i.h_c(* [])
+    DisplayHandler.i.h_c(* KEEP_ALIVE + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION)
   end
 
   def media
