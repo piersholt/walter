@@ -6,9 +6,8 @@ api = "#{root}/api"
 require "#{api}/api"
 
 require "#{root}/receivable"
-# require "#{root}/stateful"
 
-require "#{root}/broadcast"
+# require "#{root}/broadcast"
 
 require "#{root}/capabilities/helpers"
 require "#{root}/capabilities/ready"
@@ -27,7 +26,7 @@ class Virtual
     include Observable
     include Receivable
 
-    PROC = 'Device'.freeze
+    PROC = 'Device'
 
     attr_reader :ident
 
@@ -53,6 +52,15 @@ class Virtual
     # @override Object#to_s
     def to_s
       "<:#{@ident}>"
+    end
+  end
+
+  # Comment
+  class BroadcastDevice < Device
+    PROC = 'BroadcastDevice'
+
+    def type
+      :broadcast
     end
   end
 end
