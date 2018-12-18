@@ -2,7 +2,7 @@
 
 # Comment
 class Virtual
-  class SimulatedDSP < SimulatedDevice
+  class SimulatedDSP < EmulatedDevice
     PROC = 'SimulatedDSP'.freeze
 
     def handle_message(message)

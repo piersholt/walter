@@ -3,7 +3,7 @@
 # Comment
 class Virtual
   # Comment
-  class SimulatedCDC < SimulatedDevice
+  class SimulatedCDC < EmulatedDevice
     include ChangerRequest
 
     PROC = 'SimulatedCDC'.freeze

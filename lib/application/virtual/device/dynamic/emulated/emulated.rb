@@ -1,4 +1,4 @@
-root = 'application/virtual/device/dynamic/simulated'
+root = 'application/virtual/device/dynamic/emulated'
 
 require "#{root}/common/alive"
 require "#{root}/common/stateful"

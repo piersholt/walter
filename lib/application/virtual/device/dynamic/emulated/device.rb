@@ -4,10 +4,10 @@
 # require 'application/virtual/telephone'
 
 class Virtual
-  class SimulatedDevice < DynamicDevice
+  class EmulatedDevice < DynamicDevice
     include Alive
 
-    PROC = 'SimulatedDevice'.freeze
+    PROC = 'EmulatedDevice'.freeze
 
     def initialize(args)
       super(args)
@@ -19,7 +19,7 @@ class Virtual
 
     # @override Object#inspect
     def inspect
-      "#<SimulatedDevice :#{@ident}>"
+      "#<EmulatedDevice :#{@ident}>"
     end
 
     # @override Object#to_s

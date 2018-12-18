@@ -6,4 +6,4 @@ require "#{root}/device"
 # require "#{root}/diagnostics/device"
 
 require "#{root}/augmented/augmented"
-require "#{root}/simulated/simulated"
+require "#{root}/emulated/emulated"

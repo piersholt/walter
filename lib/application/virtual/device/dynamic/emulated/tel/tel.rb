@@ -2,7 +2,7 @@
 
 # Comment
 class Virtual
-  class SimulatedTEL < SimulatedDevice
+  class SimulatedTEL < EmulatedDevice
     include Telephone
 
     PROC = 'SimulatedTEL'.freeze
