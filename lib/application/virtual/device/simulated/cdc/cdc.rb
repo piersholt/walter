@@ -10,6 +10,8 @@ class Virtual
 
     def handle_message(message)
       command_id = message.command.d
+      LOGGER.debug(PROC) { "Handle? #{message.from} -> #{message.command.h}" }
+
       case command_id
       when CHANGER_REQUEST
         handle_changer_request(message)
