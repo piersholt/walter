@@ -2743,6 +2743,33 @@
       - memo on 20 00
       - memo off 00 00
 # ************************************************************************* #
+#                         CLIMATE?
+# ************************************************************************* #
+0x87:
+  :id:
+    :d: 135
+    :h: '0x87'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - send by :nav_eu???? to IKHA
+0x86:
+  :id:
+    :d: 134
+    :h: '0x86'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - reply from IHKA to nav_eu
+      - it's not addressed to global? very specific?
+
+# ************************************************************************* #
 #                          DIAGNOSTICS/INPA
 # ************************************************************************* #
 
@@ -3309,24 +3336,6 @@
       :short_name: "???"
       :long_name: Unknown
     :klass: BaseCommand
-134:
-  :id:
-    :d: 134
-    :h: '0x86'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    - received by :nav_eu
-135:
-  :id:
-    :d: 135
-    :h: '0x87'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
 169:
   :id:
     :d: 169
