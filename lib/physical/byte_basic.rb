@@ -3,7 +3,7 @@ require 'helpers'
 class ByteBasic
   include DataTools
 
-  TYPES = [:char, :integer]
+  TYPES = %i[char integer hex].freeze
 
   attr_reader :value
 
@@ -28,7 +28,7 @@ class ByteBasic
 
   # @override Object#eql?
   def eql?(other_value)
-    value == other_value
+    value == other_value.value
   end
 
   def >(comparison_value)
@@ -69,6 +69,8 @@ class ByteBasic
       fail ArgumentError, 'Length greater than 1' if value.length > 1
     when :integer
       fail ArgumentError, 'Length greater than 255' if value > 255
+    when :hex
+      fail ArgumentError, 'Length greater than 2' if value.length > 2
     else
       raise StandardError, "errr, no valid type to validate? type is #{type}"
     end
@@ -80,6 +82,8 @@ class ByteBasic
       encoded_to_decimal(value)
     when :integer
       value
+    when :hex
+      hex_to_decimal(value)
     else
       raise StandardError, 'errr, no valid type to parse?'
     end
