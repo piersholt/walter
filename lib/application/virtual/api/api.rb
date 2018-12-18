@@ -2,6 +2,7 @@ root = 'application/virtual/api'
 
 require "#{root}/base_api"
 require "#{root}/alive"
+require "#{root}/ready"
 require "#{root}/cd"
 require "#{root}/led"
 require "#{root}/display"

@@ -2,8 +2,8 @@
 
 module Capabilities
   # Comment
-  module Alive
-    include API::Alive
+  module Ready
+    include API::Ready
 
     # Request
     def ping(to)
@@ -23,7 +23,6 @@ module Capabilities
     end
 
     private
-
 
     def announced?
       announced

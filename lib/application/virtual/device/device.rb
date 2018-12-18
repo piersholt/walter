@@ -9,7 +9,7 @@ require "#{root}/broadcast"
 require "#{root}/devices"
 
 require "#{root}/capabilities/helpers"
-require "#{root}/capabilities/alive"
+require "#{root}/capabilities/ready"
 require "#{root}/capabilities/diagnostics/gm"
 require "#{root}/capabilities/diagnostics/lcm"
 require "#{root}/capabilities/diagnostics"
