@@ -9,14 +9,7 @@ require "#{root}/receivable"
 
 # require "#{root}/broadcast"
 
-require "#{root}/capabilities/helpers"
-require "#{root}/capabilities/ready"
-require "#{root}/capabilities/diagnostics/gm"
-require "#{root}/capabilities/diagnostics/lcm"
-require "#{root}/capabilities/diagnostics"
-
-require "#{root}/capabilities/bmbt"
-require "#{root}/capabilities/radio"
+require "#{root}/capabilities/capabilities"
 
 require "#{root}/dynamic/dynamic"
 
