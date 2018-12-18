@@ -4,7 +4,7 @@
 class Virtual
   # Comment
   class AugmentedRadio < AugmentedDevice
-    include API::Media
+    include API::Display
     include API::RadioLED
     include Actions
     include Notifications

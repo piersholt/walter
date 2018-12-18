@@ -21,7 +21,6 @@ require 'data_link/transmitter'
 require 'application/virtual/api/alive'
 require 'application/virtual/api/radio_led'
 require 'application/virtual/api/cd'
-require 'application/virtual/api/media'
 require 'application/virtual/api/telephone'
 require 'application/application'
 

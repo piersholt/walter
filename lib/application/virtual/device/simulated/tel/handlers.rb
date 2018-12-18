@@ -4,7 +4,7 @@
 module Telephone
   include Stateful
   include API::Telephone
-  include API::Media
+  include API::Display
 
   PROC = 'SimTelephone'
 

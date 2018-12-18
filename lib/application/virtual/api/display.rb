@@ -1,7 +1,7 @@
 require 'application/virtual/api/base_api'
 
 module API
-  module Media
+  module Display
     include BaseAPI
 
     DISPLAYS = {
