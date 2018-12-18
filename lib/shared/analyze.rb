@@ -122,6 +122,12 @@ module Analyze
     frames.map { |f| f[C] }.uniq.sort
   end
 
+  def command(*command_ids)
+    frames.find_all do |f|
+      command_ids.any? { |c_id| c_id == f[C] }
+    end
+  end
+
   def command_name(hex_string)
     CommandMap.instance.find(hex_string.hex)[:properties][:short_name]
   end
