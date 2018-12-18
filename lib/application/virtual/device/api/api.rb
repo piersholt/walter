@@ -1,4 +1,4 @@
-root = 'application/virtual/api'
+root = 'application/virtual/device/api'
 
 require "#{root}/base_api"
 require "#{root}/alive"

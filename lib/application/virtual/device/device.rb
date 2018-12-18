@@ -2,6 +2,9 @@
 
 root = 'application/virtual/device'
 
+api = "#{root}/api"
+require "#{api}/api"
+
 require "#{root}/receivable"
 # require "#{root}/stateful"
 

@@ -2,9 +2,6 @@
 
 root = 'application/virtual'
 
-api = "#{root}/api"
-require "#{api}/api"
-
 device = "#{root}/device"
 require "#{device}/device"
 
