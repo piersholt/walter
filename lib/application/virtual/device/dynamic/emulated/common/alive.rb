@@ -5,6 +5,7 @@ module Alive
   # Some devices will only be ignition position II, some I...
 
   def announce
+    LOGGER.warn(self.class) { 'Deprecated!' }
     announced!
     LOGGER.unknown(ident) { "HEY EVERYONE! COME SEE HOW GOOD #{@ident} looks!" }
 
@@ -16,6 +17,7 @@ module Alive
   end
 
   def respond
+    LOGGER.warn(self.class) { 'Deprecated!' }
     LOGGER.unknown(ident) { "Handling Ping." }
     # LOGGER.unknown(ident) { "So, I #{@ident} of #{my_address} shall talk to #{address(:glo_l)}" }
 
