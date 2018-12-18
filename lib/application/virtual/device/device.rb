@@ -14,6 +14,9 @@ require "#{root}/capabilities/diagnostics/gm"
 require "#{root}/capabilities/diagnostics/lcm"
 require "#{root}/capabilities/diagnostics"
 
+require "#{root}/capabilities/bmbt"
+require "#{root}/capabilities/radio"
+
 require "#{root}/dynamic/dynamic"
 require "#{root}/augmented/augmented"
 require "#{root}/simulated/simulated"

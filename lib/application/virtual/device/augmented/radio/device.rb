@@ -8,6 +8,8 @@ class Virtual
     include API::RadioLED
     include Actions
     include Notifications
+    include Capabilities::OnBoardMonitor
+    include Capabilities::Radio 
 
     PROC = 'AugmentedRadio'
 
