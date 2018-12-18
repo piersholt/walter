@@ -4,7 +4,7 @@
 class Virtual
   # Comment
   class ManualDiagnostics < DynamicDevice
-    include API::Diagnostics
+    # include API::Diagnostics
     include Capabilities::Diagnostics
 
     PROC = 'ManualDiagnostics'
