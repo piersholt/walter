@@ -6,11 +6,11 @@ require "#{root}/common/stateful"
 require "#{root}/device"
 
 require "#{root}/cdc/changer_request"
-require "#{root}/cdc/cdc"
+require "#{root}/cdc/device"
 
-require "#{root}/dsp/dsp"
+require "#{root}/dsp/device"
 
 require "#{root}/tel/handlers"
-require "#{root}/tel/tel"
+require "#{root}/tel/device"
 
 require "#{root}/diagnostics/device"
