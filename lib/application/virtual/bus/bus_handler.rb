@@ -40,7 +40,7 @@ class BusHandler < BaseHandler
     when BUS_ONLINE
       bus_online
     when BUS_OFFLINE
-      LOGGER.warn(name) { BUS_OFFLINE }
+      LOGGER.warn(name) { 'Bus Offline! Disabling virtual bus.' }
       bus_offline
     end
   rescue StandardError => e

@@ -21,6 +21,7 @@ module DataLink
     # Comment
     class Multiplexer
       include Event
+      include ManageableThreads
 
       attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
@@ -33,6 +34,8 @@ module DataLink
       def name
         'Multiplexer'
       end
+
+      alias proc_name name
 
       def off
         LogActually.datalink.debug(name) { "#{self.class}#off" }

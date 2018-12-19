@@ -27,7 +27,7 @@ class Transmitter
   end
 
   def disable
-    LogActually.datalink.warn(PROG_NAME) { "#{self.class}#disable" }
+    LogActually.datalink.debug(PROG_NAME) { "#{self.class}#disable" }
     off
   end
 

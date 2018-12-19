@@ -27,7 +27,7 @@ class DataLoggingHandler < BaseHandler
       enable_logging
     when BUS_OFFLINE
       # LOGGER.warn(name) { BUS_OFFLINE }
-      LOGGER.warn(name) { 'Bus Offline! Disbaling logging.' }
+      LOGGER.warn(name) { 'Bus Offline! Disabling logging.' }
       disable_logging
     when EXIT
       LOGGER.info(name) { 'Exit: Closing log files.' }

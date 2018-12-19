@@ -44,7 +44,7 @@ module ManageableThreads
     object_id = d2h(object_id, true)
 
 
-    str_buffer = '<Thread>'
+    str_buffer = '[Thread]'
     str_buffer = str_buffer << " #{index + 1}."
     str_buffer = str_buffer << " / #{thread[:name]}"
     str_buffer = str_buffer << " / #{thread_status}"

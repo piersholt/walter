@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Comment
 class Virtual
+  # Comment
   class DynamicDeviceBuilder
     include ModuleTools
 
@@ -15,8 +15,12 @@ class Virtual
 
     attr_reader :ident
 
+    def name
+      'DynamicDeviceBuilder'
+    end
+
     def target(ident)
-      LOGGER.unknown(DynamicDeviceBuilder) { ident }
+      LOGGER.debug(name) { ident }
       raise StandardError, "no class to target #{ident}" unless CLASS_MAP.key?(ident)
       @ident = ident
       self

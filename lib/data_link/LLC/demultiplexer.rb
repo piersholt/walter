@@ -54,6 +54,8 @@ module DataLink
         'Demultiplexer'
       end
 
+      alias proc_name name
+
       def thread_read_input_frame_buffer(frame_input_buffer, packet_input_buffer)
         LogActually.datalink.debug(name) { 'New Thread: Frame Demultiplexing' }
         Thread.new do
