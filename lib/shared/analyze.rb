@@ -88,7 +88,8 @@ module Analyze
     puts 'grouped_by_command: '
     # puts grouped_by_command
     grouped_by_command.each do |sender_id, counts_by_command|
-      puts "#{sender_id}:\n"
+      sender_name = device_name(sender_id)
+      puts "#{sender_name}:\n"
       counts_by_command.each do |command_id, count|
         command_name = command_name(command_id)
         puts "  #{command_id} (#{command_name}): #{count}"
@@ -152,6 +153,21 @@ module Analyze
     senders.map do |sender_id|
       result = frames.find_all {|f| f[0] == sender_id }.map {|f| f.length }.uniq
       [sender_id, result]
+    end
+  end
+
+  def a5
+    mapped = frames.map do |f|
+      header = f[0..2]
+      command = f[3..3]
+      args = f[4..5]
+      zone = f[6..6] + [f[6].hex.chr]
+      chars = f[7..-2].map { |h| h.hex.chr }
+      [header, command, args, zone, chars]
+    end
+
+    mapped.sort do |x, y|
+      x[3][1] <=> y[3][1]
     end
   end
 end
