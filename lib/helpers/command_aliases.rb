@@ -40,8 +40,8 @@ module CommandAliases
 
   MFL_FUNC = 0x3B
 
-  RAD_CONFIG = 0x45
-  RAD_STATUS = 0x46
+  MENU_GFX = 0x45
+  MENU_RAD = 0x46
 
   BMBT_A = 0x48
   BMBT_B = 0x49
@@ -62,4 +62,6 @@ module CommandAliases
 
   DOOR_REQ = 0x79
   DOOR     = 0x7A
+
+  TXT_NAV = 0xA5
 end
