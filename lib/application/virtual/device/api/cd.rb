@@ -24,7 +24,7 @@ module API
     # @param loader: Number of CD loaded into changer
     # @param cd: Current CD number
     # @param track: Current Track number
-    def changer(command_arguments, from_id = STATUS[:from], to_id = STATUS[:to])
+    def cdc_status_reply(command_arguments, from_id = STATUS[:from], to_id = STATUS[:to])
       # LOGGER.warn(PROC) { (command_arguments) }
       command_id = STATUS[:id]
       give_it_a_go(from_id, to_id, command_id, command_arguments)
