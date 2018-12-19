@@ -17,4 +17,8 @@ module Stateful
     t1 = Time.now
     t1 - @t0
   end
+
+  def default_state
+    raise StandardError, 'Inheriting class has not implemented default state!'
+  end
 end
