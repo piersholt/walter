@@ -20,10 +20,6 @@ module API
       try(from, to, MENU_RAD, arguments)
     end
 
-    def config(from: :gfx, to: :rad, arguments:)
-      try(from, to, MENU_GFX, arguments)
-    end
-
     # DISPLAY
 
     def output(from: :rad, to: :gfx, **arguments)

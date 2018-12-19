@@ -13,6 +13,8 @@ require "#{root}/radio/cd_changer_display"
 require "#{root}/radio/user_interface"
 require "#{root}/radio"
 
+require "#{root}/gfx"
+
 require "#{root}/bmbt/constants"
 require "#{root}/bmbt/user_controls"
 require "#{root}/bmbt"
