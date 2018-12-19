@@ -11,14 +11,14 @@ module Capabilities
     end
 
     # Reply
-    def pong(to)
+    def pong(to: :glo_l)
       p0ng(from: me, to: to, status: 0x00)
     end
 
     # Broadcast
-    def ann0unce
+    def announce
       return false if announced?
-      p0ng(from: from, status: 0x01)
+      p0ng(from: me, status: 0x01)
       announced!
     end
 

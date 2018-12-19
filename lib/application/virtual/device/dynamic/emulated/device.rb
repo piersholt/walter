@@ -5,7 +5,7 @@
 
 class Virtual
   class EmulatedDevice < DynamicDevice
-    include Alive
+    include Capabilities::Ready
 
     PROC = 'EmulatedDevice'.freeze
 
@@ -33,7 +33,7 @@ class Virtual
       command_id = message.command.d
       case command_id
       when PING
-        respond
+        pong
       end
     end
   end
