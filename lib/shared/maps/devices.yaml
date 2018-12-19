@@ -147,7 +147,7 @@
     :h: '0xE8'
     :d: 232
   :properties:
-    :short_name: LGHT
+    :short_name: RLS
     :long_name: Light sensor for auto lights/light switch?
   :klass: BaseDevice
   :meta:
@@ -236,11 +236,11 @@
     :short_name: NAV-JP
     :long_name: TV/Navigation (Japan/Oceania?)
     :bus: :k
-    :klass: BaseDevice
-    :meta:
-      :notes:
-        - has only recived 0x4F from GFX
-        - no messages originating
+  :klass: BaseDevice
+  :meta:
+    :notes:
+      - has only recived 0x4F from GFX
+      - no messages originating
 0x7f:
   :id:
     :h: '0x7F'
@@ -300,6 +300,15 @@
     :long_name: Digital Sound Processor
     :bus: :i
   :klass: BaseDevice
+0x72:
+  :id:
+    :h: '0x72'
+    :d: 114
+  :properties:
+    :short_name: SDRS
+    :long_name: Satelite Digital Radio
+    :bus: :i
+  :klass: BaseDevice
 0x50:
   :id:
     :h: '0x50'
@@ -321,7 +330,7 @@
     :short_name: TEL
     :long_name: Telephone
     :bus: :i
-    :klass: BaseDevice
+  :klass: BaseDevice
 0xb0:
   :id:
     :d: 176

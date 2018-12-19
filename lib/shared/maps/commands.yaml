@@ -1126,6 +1126,7 @@
         0xd0: EQ. Treble
         0xe0: EQ. Fader
         0xf0: EQ. Balance
+        0x70: CD Music Search
   :index:
     :mode: 0
 0x45:
@@ -1606,58 +1607,73 @@
       :dictionary:
         # SERVICE MODE
         0x02: Service / Serial Number
-        0x12: Service / Serial Number
         0x03: Service / Software Version
-        0x13: Service / Software Version
         0x04: Service / GAL
-        0x14: Service / GAL
         0x05: Service / F & Q?
-        0x15: Service / F & Q?
         0x06: Service / DSP
-        0x16: Service / DSP
         0x07: Service / Seek Level
-        0x17: Service / Seek Level
         0x08: Service / TP Volume
+
+        0x12: Service / Serial Number
+        0x13: Service / Software Version
+        0x14: Service / GAL
+        0x15: Service / F & Q?
+        0x16: Service / DSP
+        0x17: Service / Seek Level
         0x18: Service / TP Volume
 
-        # NAV?
+        # RDS?
         0x2_0: No Station
-        0x3_0: No Station
         0x2_1: WB CH 1
-        0x3_1: WB CH 1
         0x2_2: WB CH 2
-        0x3_2: WB CH 2
         0x2_3: WB CH 3
-        0x3_3: WB CH 3
         0x2_4: WB CH 4
-        0x3_4: WB CH 4
         0x2_5: WB CH 5
-        0x3_5: WB CH 5
         0x2_6: WB CH 6
-        0x3_6: WB CH 6
         0x2_7: WB CH 7
-        0x3_7: WB CH 7
         0x2_8: WB
+
+        0x3_0: No Station
+        0x3_1: WB CH 1
+        0x3_2: WB CH 2
+        0x3_3: WB CH 3
+        0x3_4: WB CH 4
+        0x3_5: WB CH 5
+        0x3_6: WB CH 6
+        0x3_7: WB CH 7
         0x3_8: WB
 
         # RADIO
         0x40: Radio Set Station
+
+        # Selection
+
+        # Mode: Manual
         0x41: m?
+        # Mode: SCAN
         0x42: SCAN?
+        # Mode: Search (Sensitive)
         0x43: II?
+        # Mode: Search (Non Sensitive)
         0x44: I?
 
         0x46: T?
+        # Traffic Reports
         0x47: TP?
         0x48: T (upper right?)
-        0x49: m + T upper right
+        0x49: m + T
+        # 0x4a: Scan + T
+        # 0x4b: II + T
+        # 0x4c: I? + T
+        # 0x4d: T
+        # 0x4e: T + T
+        # 0x4f: TP + T
 
         0x50: Radio [ST]
         0x51: m?
         0x52: SCAN?
         0x53: II?
         0x54: I?
-
         0x56: T?
         0x57: TP?
         0x58: T (upper right)
@@ -1670,62 +1686,77 @@
         0x5e: T + T
         0x5f: TP + T
 
+        # 0x60 to 0x7F are Nav Screens
+        0x62: (Nav) Header
+
         # TAPE
         0x8_0: Tape Error
-        0x9_0: Tape Error
         0x8_2: Tape (1) ▶︎
-        0x9_2: Tape (2) ▶︎
         0x8_3: Tape (1) ▷▷▷
-        0x9_3: Tape (2) ▷▷▷
         0x8_4: Tape (1) ◁◁◁
-        0x9_4: Tape (2) ◁◁◁
         0x8_6: Tape (1) ▷▷
-        0x9_6: Tape (2) ▷▷
         0x8_7: Tape (1) ◁◁
-        0x9_7: Tape (2) ◁◁
         0x8_8: Tape Clean
-        0x9_8: Tape Clean
         0x8_9: Tape (A) <<>>
-        0x9_9: Tape (B) <<>>
         0x8_A: Tape (A)
+        0x8b: --
+        0x8c: --
+        0x8d: --
+        0x8e: --
+        0x8f: --
+
+        0x9_0: Tape Error
+        0x9_2: Tape (2) ▶︎
+        0x9_3: Tape (2) ▷▷▷
+        0x9_4: Tape (2) ◁◁◁
+        0x9_6: Tape (2) ▷▷
+        0x9_7: Tape (2) ◁◁
+        0x9_8: Tape Clean
+        0x9_9: Tape (B) <<>>
         0x9_A: TAPE (B)
+        0x9b: --
+        0x9c: --
+        0x9d: --
+        0x9f: --
+        0x9e: --
 
-        0x8B: --
-        0x9B: --
-        0x9C: --
-        0x8C: --
-        0x9D: --
-        0x8D: --
-        0x8E: --
-        0x9E: --
-        0x8F: --
-        0x9F: --
-
-        # No common bit...?
+        # RDS?
         0xA0: No Station
-        0xA4: No Station
-        0xA8: No Station
-
-        # Bit 7
         0xA1: Traffic 1
-        0xA5: Traffic 1
-        0xA9: Traffic 1
-
-        # Bit 6
         0xA2: Traffic 2
+        0xA3: --
+        0xA4: No Station
+        0xA5: Traffic 1
         0xA6: Traffic 2
+        0xA7: --
+        0xA8: No Station
+        0xA9: Traffic 1
         0xAA: Traffic 2
-
-        0xA3: Nothing
+        0xAB: --
+        0xAC: --
+        0xAD: --
+        0xAE: --
+        0xAF: --
 
         # all the way through to C0, then
         # C0..DF: display text
+
         # E0..EF: nothing
         # 0x41: IKE Set (540)
         # 0x62: Section Update? (540)
 
-        0xC2: No Disc!
-        0xC4: Disc/Track
+        # To have the 'Track' layout applied, the below format must be used
+        # otherwise the zone defaults to 11 characters without a layout.
+        # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
+        0xC2: (CD) No Disc!
+        0xC4: (CD) [< >] Disc/Track
+
+        0xCA: '(CD) [<< >>] Fast Forward/Reverse'
+        0xC5: '(CD) >>'
+        0xC6: '(CD) <<R'
+
+        0xC7: '(CD) [SCAN]'
+        0xC7: '(CD) [RANDOM]'
     :ike:
       :type: :bit_array
       :parameters:
@@ -1975,7 +2006,7 @@
   0xC8:
     :klass: MediaDisplay
     :properties:
-      :short_name: HUD-TEXT
+      :short_name: TXT-HUD
       :long_name: Update Info
     :index:
       :gfx: 0
@@ -2074,6 +2105,7 @@
         0x42: Rotary
         0x43: Directory
         0x80: Top 8
+        0x60: Index?
     :m2:
       :type: :integer
     :m3:
@@ -2129,7 +2161,7 @@
     :d: 165
     :h: '0xA5'
   :properties:
-    :short_name: TXT?
+    :short_name: TXT-NAV?
     :long_name: Unknown
   :klass: ParameterizedCommand
   :parameters:
@@ -2142,17 +2174,39 @@
       :dictionary:
         0x01: TBC
     :zone:
-      :type: :map
-      :dictionary:
-        0: Unknown
-        2: Program (5)
-        65: A (5)
-        66: B (5)
-        67: C (5)
-        68: D (5)
-        69: E (7)
-        70: F (20)
-        7: TBC (20)
+      :type: :bit_array
+      :parameters:
+        :zone:
+          :type: :map
+          :label: 'Zone'
+          :map:
+            0b001: :a
+            0b010: :b
+            0b011: :c
+            0b100: :d
+            0b101: :e
+            0b110: :h2
+            0b111: :h3
+          :dictionary:
+            0b001: 'Ax5'
+            0b010: 'Bx5'
+            0b011: 'Cx5'
+            0b100: 'Dx5'
+            0b101: 'Ex7'
+            0b110: 'H2x20'
+            0b111: 'H3x20'
+        :flash:
+          :type: :switch
+          :label: 'Flash'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :zone: !ruby/range
+                  begin: 4
+                  end: 7
+                  excl: false
+        :flash: 0
     :chars:
       :type: :chars
   :index:
@@ -2166,15 +2220,15 @@
   :meta:
     :notes:
       - 540 RAD sending this to GFX
+      - command 0x23 with gfx argument of 0x60..0x7f must be used to change display layout to 'nav'
     :examples:
+      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
       - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
       - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
       - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
       - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
-      - 65, 66, 67, 68, 69, 70... too neat to be coincidence...
 34:
   :id:
     :d: 34
@@ -3169,7 +3223,7 @@
     :short_name: GM3-?
     :long_name: Unknown
   :klass: BaseCommand
-56:
+0x38:
   :id:
     :d: 56
     :h: '0x38'
@@ -3196,7 +3250,7 @@
     :control: 0
     :mode: 1
 
-57:
+0x39:
   :id:
     :d: 57
     :h: '0x39'
@@ -3210,10 +3264,10 @@
       :dictionary:
         0x00: No Action
         0x02: Playing
-        0x03: Next
-        0x04: Previous
-        0x05: FWD
-        0x06: RWD
+        0x03: FFW
+        0x04: RWD
+        0x05: Next Track
+        0x06: Previous Track
         0x07: Stopped
         0x08: Changed
       :notes:

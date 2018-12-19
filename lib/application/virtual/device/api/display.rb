@@ -45,7 +45,7 @@ module API
       give_it_a_go(from_id, to_id, command_id, command_arguments)
     end
 
-    HUD_TEXT = {
+    TXT_HUD = {
       id:   0x24,
       from: :ike,
       to:   :glo_h

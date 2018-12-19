@@ -65,7 +65,7 @@ module WalterTools
   def cdc
     DisplayHandler.i.f_t(* DeviceGroups::CD)
     DisplayHandler.i.f_f(* DeviceGroups::CD)
-    DisplayHandler.i.h_c(* KEEP_ALIVE + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION)
+    DisplayHandler.i.h_c(* KEEP_ALIVE + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::TXT_MID])
   end
 
   def media

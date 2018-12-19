@@ -21,8 +21,9 @@ module CommandAliases
 
   TEL_OPEN   = 0x20
 
+  TXT_MID = 0x21
   GFX_STATUS = 0x22
-  HUD_TEXT = 0x24
+  TXT_HUD = 0x24
 
   TEL_LED   = 0x2B
   TEL_STATE = 0x2C
