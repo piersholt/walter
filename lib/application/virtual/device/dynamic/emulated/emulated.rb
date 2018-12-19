@@ -5,6 +5,7 @@ require "#{root}/common/stateful"
 
 require "#{root}/device"
 
+require "#{root}/cdc/constants"
 require "#{root}/cdc/changer_request"
 require "#{root}/cdc/device"
 
