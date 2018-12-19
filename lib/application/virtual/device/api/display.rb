@@ -1,60 +1,30 @@
-# require 'application/virtual/api/base_api'
+# frozen_string_literal: false
 
 module API
+  # Comment
   module Display
     include BaseAPI
+    include CommandAliases
 
-    DISPLAYS = {
-      id:   0x23,
-      from: :rad,
-      to:   :glo_h
-    }.freeze
-
-    MID = {
-      id:   0x21,
-      from: :tel,
-      to:   :gfx
-    }.freeze
-
-    # @param command_arguments[:chars] Array<Integer>
-    def mid(command_arguments,
-            from_id = MID[:from],
-            to_id = MID[:to])
-      command_id = MID[:id]
-
-      command_arguments[:m1] = 0x43 unless command_arguments[:m1]
-      command_arguments[:m2] = 0x01 unless command_arguments[:m2]
-      command_arguments[:m3] = 0x32 unless command_arguments[:m3]
-
-      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    # 0x21
+    def mid(from: :tel, to: :gfx, **arguments)
+      arguments[:m1] = 0x43 unless arguments[:m1]
+      arguments[:m2] = 0x01 unless arguments[:m2]
+      arguments[:m3] = 0x32 unless arguments[:m3]
+      # format_chars!(arguments)
+      try(from, to, TXT_MID, arguments)
     end
 
-    # @param command_arguments[:chars] Array<Integer>
-    def raw(command_arguments,
-            from_id = DISPLAYS[:from],
-            to_id = DISPLAYS[:to])
-      command_id = DISPLAYS[:id]
-      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    # 0x23
+    def displays(from: :tel, to: :gfx, **arguments)
+      format_chars!(arguments)
+      try(from, to, TXT_GFX, arguments)
     end
 
-    def displays(command_arguments,
-                 from_id = DISPLAYS[:from],
-                 to_id = DISPLAYS[:to])
-      command_id = DISPLAYS[:id]
-      format_chars!(command_arguments)
-      give_it_a_go(from_id, to_id, command_id, command_arguments)
-    end
-
-    TXT_HUD = {
-      id:   0x24,
-      from: :ike,
-      to:   :glo_h
-    }.freeze
-
-    def hud(command_arguments, from_id = HUD_TEXT[:from], to_id = HUD_TEXT[:to])
-      command_id = HUD_TEXT[:id]
-      format_chars!(command_arguments)
-      give_it_a_go(from_id, to_id, command_id, command_arguments)
+    # 0x24
+    def hud(from: :rad, to: :glo_h, **arguments)
+      format_chars!(arguments)
+      try(from, to, TXT_HUD, arguments)
     end
   end
 end
