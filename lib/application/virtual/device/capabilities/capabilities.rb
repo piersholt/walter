@@ -9,6 +9,7 @@ require "#{root}/diagnostics/lcm"
 require "#{root}/diagnostics"
 
 require "#{root}/radio/cd_changer_control"
+require "#{root}/radio/cd_changer_display"
 require "#{root}/radio/user_interface"
 require "#{root}/radio"
 

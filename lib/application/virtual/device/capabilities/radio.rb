@@ -6,5 +6,6 @@ module Capabilities
     include Helpers
     include UserInterface
     include CDChangerControl
+    include CDChangerDisplay
   end
 end
