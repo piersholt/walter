@@ -125,7 +125,7 @@ module Telephone
     LOGGER.unknown(PROC) { "Mock: clearing :#{display}!" }
     command_arguments = {}
 
-    command_arguments[:m1] =
+    m1 =
       case display
       when :directory
         DRAW_DIRECTORY
@@ -133,11 +133,7 @@ module Telephone
         DRAW_FAVOURITES
       end
 
-    command_arguments[:m2]    = MID_DEFAULT
-    command_arguments[:m3]    = NO_PAGINATION
-    command_arguments[:chars] = CLEAR
-
-    mid(command_arguments, my_address, address(:gfx))
+    mid(m1: m1, m2: MID_DEFAULT, m3: NO_PAGINATION, chars: CLEAR)
   end
 
   def directory
@@ -214,24 +210,12 @@ module Telephone
   # xxx  -----------------------------------------------------------------
 
   def directory_page(contact_group, i)
-    command_arguments = {}
-    command_arguments[:m1] = DRAW_DIRECTORY
-    command_arguments[:m2] = MID_DEFAULT
-    command_arguments[:m3] = PAGE[i]
-    command_arguments[:chars] = contact_group
-
-    mid(command_arguments, my_address, address(:gfx))
+    mid(m1: DRAW_DIRECTORY, m2: MID_DEFAULT, m3: PAGE[i], chars: contact_group)
     page_wait
   end
 
   def favourites_page(contact_group, i)
-    command_arguments = {}
-    command_arguments[:m1] = DRAW_FAVOURITES
-    command_arguments[:m2] = MID_DEFAULT
-    command_arguments[:m3] = PAGE[i]
-    command_arguments[:chars] = contact_group
-
-    mid(command_arguments, my_address, address(:gfx))
+    mid(m1: DRAW_FAVOURITES, m2: MID_DEFAULT, m3: PAGE[i], chars: contact_group)
     page_wait
   end
 
@@ -249,15 +233,11 @@ module Telephone
   end
 
   def tel_state(telephone_state = TEL_OFF)
-    to_id = address(:anzv)
-
-    status({ status: telephone_state }, my_address, to_id)
+    status(status: telephone_state)
   end
 
   def tel_led(value = LED_ALL)
-    to_id = address(:anzv)
-
-    led({ leds: value }, my_address, to_id)
+    led(leds: value)
   end
 
   # Handlers ------------------------------------------------------------------
