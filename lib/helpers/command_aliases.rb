@@ -23,6 +23,7 @@ module CommandAliases
 
   TXT_MID = 0x21
   GFX_STATUS = 0x22
+  TXT_GFX = 0x23
   TXT_HUD = 0x24
 
   TEL_LED   = 0x2B
