@@ -49,8 +49,14 @@ class CommandMap < BaseMap
 
     if from
       schemas = mapped_result[:schemas]
-      has_schema = schemas.include?(from) if schemas
-      mapped_result.replace(mapped_result[from]) if has_schema
+      if schemas
+        # puts 'breakable point'
+        has_schema = schemas.include?(from)
+      end
+      if has_schema
+        # puts 'breakable point'
+        mapped_result.replace(mapped_result[from])
+      end
     end
 
     mapped_result[:default_id] = command_id
