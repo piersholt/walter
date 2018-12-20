@@ -31,45 +31,47 @@ module WalterTools
     DisplayHandler.i.clear_filter
   end
 
-  def dia
-    DisplayHandler.i.hide_commands(*READY, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *LAMP)
-  end
-
   def diag
-    DisplayHandler.i.filter_commands(*CommandGroups::DIA)
+    DisplayHandler.i.filter_commands(*DIAGNOSTICS)
   end
 
   def obc
-    DisplayHandler.i.filter_commands(*CommandGroups::OBC)
+    DisplayHandler.i.filter_commands(*OBC)
   end
 
-  def ping
+  def ready
     DisplayHandler.i.filter_commands(*READY)
+  end
+
+  def ign
+    DisplayHandler.i.filter_commands(*IGNITION)
   end
 
   def shutup!
     DisplayHandler.i.shutup!
   end
 
-  def ign
-    DisplayHandler.i.filter_commands(*CommandGroups::IGNITION)
-  end
-
   def tel
-    DisplayHandler.i.f_t(* DeviceGroups::TELEPHONE + DeviceGroups::BROADCAST)
+    DisplayHandler.i.f_t(*DeviceGroups::TELEPHONE + DeviceGroups::BROADCAST)
     DisplayHandler.i.f_f(*DeviceGroups::TELEPHONE)
-    DisplayHandler.i.h_c(* SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + KEEP_ALIVE + IGNITION + [CommandAliases::HUD_TEXT] )
-    DisplayHandler.i.h_c(* [CommandAliases::RAD_LED, CommandAliases::SRC_CTL, CommandAliases::SND_SRC, CommandAliases::RAD_CONFIG, CommandAliases::RAD_STATUS])
+    DisplayHandler.i.h_c(
+      *SPEED, *TEMPERATURE, *COUNTRY, *VEHICLE, *LAMP,
+      *SENSORS, *OBC, *READY, *IGNITION
+    )
+    DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SND_SRC, MENU_GFX, MENU_RAD)
   end
 
   def cdc
-    DisplayHandler.i.f_t(* DeviceGroups::CD)
-    DisplayHandler.i.f_f(* DeviceGroups::CD)
-    DisplayHandler.i.h_c(* READY + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::TXT_MID])
+    DisplayHandler.i.f_t(*DeviceGroups::CD)
+    DisplayHandler.i.f_f(*DeviceGroups::CD)
+    DisplayHandler.i.h_c(
+      *READY, *SPEED, *TEMPERATURE, *COUNTRY,
+      *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
+    )
   end
 
   def media
-    DisplayHandler.i.f_t(* DeviceGroups::MEDIA + BROADCAST )
+    DisplayHandler.i.f_t(*DeviceGroups::MEDIA + BROADCAST)
     DisplayHandler.i.f_f(*DeviceGroups::MEDIA)
   end
 

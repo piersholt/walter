@@ -9,7 +9,7 @@ module API
     include BaseAPI
 
     def cd_changer_status(from: :cdc, to: :rad, arguments:)
-      try(from, to, CDC_STATUS, arguments)
+      try(from, to, CDC_REP, arguments)
     end
   end
 end

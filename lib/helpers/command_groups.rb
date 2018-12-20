@@ -1,25 +1,50 @@
 module CommandGroups
-  READY = [0x01, 0x02].freeze
-  SPEED = [0x18].freeze
-  TEMPERATURE = [0x1D, 0x19].freeze
-  IGNITION = [0x10, 0x11].freeze
-  IKE_SENSOR = [0x12, 0x13].freeze
-  COUNTRY = [0x14, 0x15].freeze
+  include CommandAliases
 
-  MID_TXT = [0x21].freeze
+  READY = [PING, PONG].freeze
 
-  OBC = [0x2A, 0x40, 0x41].freeze
+  SPEED = [SPEED_STATUS].freeze
+  TEMPERATURE = [TEMP_REQ, TEMP_REP].freeze
+  IGNITION = [IGNITION_REQ, IGNITION_REP].freeze
+  SENSORS = [SENSORS_REQ, SENSORS_REP].freeze
+  COUNTRY = [COUNTRY_REQ, COUNTRY_REP].freeze
+  ODOMETER = [ODO_REQ, ODO_REP].freeze
+  VEHICLE = [VEH_REQ, VEH_REP].freeze
+  LAMP = [LAMP_REQ, LAMP_REP].freeze
+  DOOR = [DOOR_REQ, DOOR_REP].freeze
 
-  BUTTON = [0x32, 0x3B, 0x48, 0x49].freeze
-  BUTTONS = BUTTON
+  OBC = [OBC_CTL, OBC_CONFIG, OBC_REQ].freeze
 
-  VEHICLE = [0x53, 0x54].freeze
-  LAMP = [0x5A, 0x5B].freeze
-  DOOR = [0x79, 0x7A].freeze
+  DISPLAY = [TXT_MID, TXT_GFX, TXT_HUD, TXT_NAV, GFX_STATUS].freeze
+  BUTTON = [MFL_VOL, MFL_FUNC, BMBT_A, BMBT_B].freeze
 
-  CD_CHANGER = [0x38, 0x39].freeze
+  TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA].freeze
+  CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 
-  NAV = [0x4f].freeze
+  DIAGNOSTICS = [
+    DIA_HELLO,
+    DIA_ERR_READ,
+    DIA_ERR_DEL,
+    DIA_COD_READ,
+    DIA_STATUS,
+    DIA_VEH_CTRL,
+    SLF_CHK,
+    EHC_DIG,
+    EWS_ISN,
+    EWS_INT,
+    EWS_COD,
+    EWS_KEY,
+    DIA_TRANS,
+    EWS_X,
+    EWS_END,
+    DIA_DATA,
+    DIA_MEM_READ,
+    DIA_MEM_WRITE,
+    DIA_COD_WRITE
+  ].freeze
 
-  DIA = [0x00, 0x04, 0x05, 0x08, 0x0B, 0x0C, 0x30, 0x3F, 0x60, 0x6B, 0x69, 0x65, 0x9C, 0x9F, 0xA2, 0xA0, 0x06, 0x07, 0x09, 0x1b].freeze
+  NOISEY =
+    READY + SPEED + TEMPERATURE + IGNITION +
+    SENSORS + COUNTRY + ODOMETER + BUTTON +
+    VEHICLE + LAMP + DOOR
 end
