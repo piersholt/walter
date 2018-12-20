@@ -23,6 +23,8 @@ begin
   LogActually.interface.i
   LogActually.is_all_around(:datalink)
   LogActually.datalink.i
+  LogActually.is_all_around(:virtual)
+  LogActually.virtual.i
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
