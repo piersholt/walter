@@ -130,9 +130,15 @@ class Walter
   def stop
     LOGGER.debug(PROC) { '#stop' }
 
-    LOGGER.info(PROC) { 'Switching off Receiver...' }
+    LOGGER.info(PROC) { 'Switching off Multiplexing...' }
+    @demultiplexer.off
+    @multiplexer.off
+    LOGGER.info(PROC) { 'Multiplexing is off! 👍' }
+
+    LOGGER.info(PROC) { 'Switching off Transceiver...' }
     @receiver.off
-    LOGGER.info(PROC) { 'Receiver is off! 👍' }
+    @transmitter.off
+    LOGGER.info(PROC) { 'Transceiver is off! 👍' }
 
     LOGGER.info(PROC) { 'Switching off Interface...' }
     @interface.off
