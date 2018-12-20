@@ -25,9 +25,15 @@ class Devices
       @id[:d]
     end
 
-    def ==(other_device)
-      result = self.d == other_device.d
-      LOGGER.error('BaseDevice') { "#{self.d} == #{other_device.d} => #{result}"  }
+    def ==(other_object)
+      if other_object.kind_of?(Numeric)
+        other_value = other_object
+        result = self.d == other_value
+      elsif other_object.respond_to?(:d)
+        other_value = other_object.d
+        result = self.d == other_value
+      end
+      LOGGER.error('BaseDevice') { "#{self.d} == #{other_value} => #{result}"  }
       result
     end
 
