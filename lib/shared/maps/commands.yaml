@@ -1118,15 +1118,17 @@
     :mode:
       :type: :map
       :dictionary:
-        0x40: (RADIO m Manual Staion Choice) (TAPE fast forward/reverse)
-        0x50: (RADIO SCAN Radio Station Sample) (TAPE music search)
-        0x60: a Automatic Search
+        # Selection
+        0x40: (Mode) (RADIO [m] Manual Staion Choice) (TAPE fast forward/reverse)
+        0x50: (Mode) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
+        0x60: (Mode) (RADIO [a] Automatic Search)
+        0x70: (Mode) CD Music Search
+        # Tone
         0x80: Equalizer
         0xc0: EQ. Bass
         0xd0: EQ. Treble
         0xe0: EQ. Fader
         0xf0: EQ. Balance
-        0x70: CD Music Search
   :index:
     :mode: 0
 0x45:
@@ -1249,7 +1251,7 @@
     :h: '0x4B'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: SRC-CTL
+    :short_name: TAPE?
     :long_name: Audio Device Control
   :parameters:
     :control:
@@ -1291,6 +1293,15 @@
   :meta:
     - 01 00: select TV
     - 00 00: go back to radio
+0xd4:
+  :id:
+    :d: 212
+    :h: '0xd4'
+  :properties:
+    :short_name: RDS?
+    :long_name: Channel list?
+  :klass: BaseCommand
+
 # ************************************************************************* #
 #                               NAV/TV?
 # ************************************************************************* #
@@ -1552,6 +1563,14 @@
       0x46: "[Power] Hold"
       0x86: "[Power] Release"
 
+      0x32: '[TP] Press'
+      0x72: '[TP] Hold'
+      0xB2: '[TP] Release'
+
+      0x22: '[RDS] Press'
+      0x62: '[RDS] Hold'
+      0xA2: '[RDS] Release'
+
       0x08: "[Tel] Press"
       0x48: "[Tel] Hold"
       0x88: "[TEL] Release"
@@ -1596,7 +1615,7 @@
     :d: 35
     :h: '0x23'
   :properties:
-    :short_name: TXT-GFX
+    :short_name: TXT-23
     :long_name: Update Text Display (BMBT, IKE)
   :klass: MediaDisplay
   :schemas:
@@ -1720,7 +1739,7 @@
         0x9f: --
         0x9e: --
 
-        # RDS?
+        # RDS: TP?
         0xA0: No Station
         0xA1: Traffic 1
         0xA2: Traffic 2
@@ -1787,7 +1806,7 @@
   :tel:
     :klass: MediaDisplay
     :properties:
-      :short_name: TXT-MEDIA*
+      :short_name: TXT-23*
       :long_name: Update Text Display (BMBT, IKE)
     :index:
       :gfx: 0
@@ -1952,12 +1971,12 @@
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: TXT-IKE
+    :short_name: TXT-24
     :long_name: OBC Display (IKE, GFX)
     :verbose: false
   :klass: ParameterizedCommand
   :schemas:
-    - 0xC8
+    - :tel
   :parameters:
     :gfx:
       :type: :map
@@ -2003,10 +2022,10 @@
               end: -1
               excl: false
   # 0x24 Alternative Schemas
-  0xC8:
+  :tel:
     :klass: MediaDisplay
     :properties:
-      :short_name: TXT-HUD
+      :short_name: TXT-24*
       :long_name: Update Info
     :index:
       :gfx: 0
@@ -2094,7 +2113,7 @@
     :d: 33
     :h: '0x21'
   :properties:
-    :short_name: TXT-MID
+    :short_name: TXT-21
     :long_name: MID Display
     :verbose: false
   :klass: ParameterizedCommand
@@ -2102,10 +2121,11 @@
     :m1:
       :type: :map
       :dictionary:
-        0x42: Rotary
-        0x43: Directory
-        0x80: Top 8
-        0x60: Index?
+        0x42: '[TEL] Rotary'
+        0x43: '[TEL] Directory'
+        0x80: '[TEL] Top 8'
+
+        0x60: '[RAD] Index?'
     :m2:
       :type: :integer
     :m3:
@@ -2161,18 +2181,52 @@
     :d: 165
     :h: '0xA5'
   :properties:
-    :short_name: TXT-NAV?
+    :short_name: TXT-A5
     :long_name: Unknown
   :klass: ParameterizedCommand
   :parameters:
     :gfx:
       :type: :map
       :dictionary:
+        # 0x00 - 0x5f are good
+        0x60: --
+        0x61: --
         0x62: Change Station
+        0x63: --
+        0x64: --
+        0x65: --
+        0x66: --
+        0x67: --
+        0x68: --
+        0x69: --
+        0x6A: --
+        0x6B: --
+        0x6C: --
+        0x6D: --
+        0x6E: --
+        0x6F: --
+        0x70: --
+        0x71: --
+        0x72: --
+        0x73: --
+        0x74: --
+        0x75: --
+        0x76: --
+        0x77: --
+        0x78: --
+        0x79: --
+        0x7A: --
+        0x7B: --
+        0x7C: --
+        0x7D: --
+        0x7E: --
+        0x7F: --
+
     :ike:
       :type: :map
       :dictionary:
-        0x01: TBC
+        0x00: Block
+        0x01: No Block
     :zone:
       :type: :bit_array
       :parameters:
@@ -3168,7 +3222,7 @@
     :d: 87
     :h: '0x57'
   :properties:
-    :short_name: "???"
+    :short_name: "55?"
     :long_name: Unknown
   :klass: BaseCommand
   :notes:
@@ -3230,7 +3284,7 @@
   :properties:
     :short_name: CDC-REQ
     :long_name: CD Status Request
-  :klass: ParameterizedCommand
+  :klass: CDChangerRequest
   :parameters:
     :control:
       :type: :map
@@ -3258,6 +3312,14 @@
     :short_name: CDC
     :long_name: CDC Status
   :klass: ParameterizedCommand
+  :index:
+    :control: 0
+    :status: 1
+    :b2: 2
+    :loader: 3
+    :b4: 4
+    :cd: 5
+    :track: 6
   :parameters:
     :control:
       :type: :map
@@ -3333,14 +3395,6 @@
       :type: :integer
     :track:
       :type: :integer
-  :index:
-    :control: 0
-    :status: 1
-    :b2: 2
-    :loader: 3
-    :b4: 4
-    :cd: 5
-    :track: 6
 66:
   :id:
     :d: 66

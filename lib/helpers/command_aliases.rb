@@ -37,6 +37,7 @@ module CommandAliases
 
   CDC_REQ = 0x38
   CDC = 0x39
+  CDC_STATUS = CDC
 
   MFL_FUNC = 0x3B
 
