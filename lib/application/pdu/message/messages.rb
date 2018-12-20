@@ -50,13 +50,13 @@ class Messages
     self.class.new(results)
   end
 
-  def to(to_id)
-    results = where(:to_id, to_id)
+  def to(*to_ids)
+    results = where(:to_id, *to_ids)
     self.class.new(results)
   end
 
-  def from(from_id)
-    results = where(:from_id, from_id)
+  def from(*from_ids)
+    results = where(:from_id, *from_ids)
     self.class.new(results)
   end
 
