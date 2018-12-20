@@ -4,9 +4,12 @@ module WalterTools
   PROC_MOD = 'WalterTools'.freeze
   include CommandGroups
 
+  # Defaults
+
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
-    shutup!
+    # shutup!
+    cdc
   end
 
   # Session
@@ -31,6 +34,16 @@ module WalterTools
     DisplayHandler.i.clear_filter
   end
 
+  def shutup!
+    DisplayHandler.i.shutup!
+  end
+
+  alias shh! shutup!
+
+  def ready
+    DisplayHandler.i.filter_commands(*READY)
+  end
+
   def diag
     DisplayHandler.i.filter_commands(*DIAGNOSTICS)
   end
@@ -39,16 +52,8 @@ module WalterTools
     DisplayHandler.i.filter_commands(*OBC)
   end
 
-  def ready
-    DisplayHandler.i.filter_commands(*READY)
-  end
-
   def ign
     DisplayHandler.i.filter_commands(*IGNITION)
-  end
-
-  def shutup!
-    DisplayHandler.i.shutup!
   end
 
   def tel
@@ -77,13 +82,13 @@ module WalterTools
 
   # Logging
 
-  def debug
-    LOGGER.sev_threshold=(Logger::DEBUG)
-  end
-
-  def info
-    LOGGER.sev_threshold=(Logger::INFO)
-  end
+  # def debug
+  #   LOGGER.sev_threshold=(Logger::DEBUG)
+  # end
+  #
+  # def info
+  #   LOGGER.sev_threshold=(Logger::INFO)
+  # end
 
   # Annoying Tasks :)
 
