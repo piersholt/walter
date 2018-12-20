@@ -7,5 +7,6 @@ module Capabilities
     include UserInterface
     include CDChangerControl
     include CDChangerDisplay
+    include NavigationDisplay
   end
 end
