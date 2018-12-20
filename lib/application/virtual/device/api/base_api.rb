@@ -24,7 +24,7 @@ module API
     end
 
     def send_it!(from, to, command)
-      LOGGER.unknown(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
+      LOGGER.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
       begin
         message = Message.new(from, to, command)
         changed

@@ -10,29 +10,39 @@ module API
 
     # CD CHANGER
 
+    # 0x3?
     def cd_changer_request(from: :rad, to: :cdc, arguments:)
       try(from, to, CDC_REQ, arguments)
     end
 
-    # MENU
+    # MENU/USER INTERFACE
 
+    # 0x46 MENU-RAD
     def interface(from: :rad, to: :gfx, arguments:)
       try(from, to, MENU_RAD, arguments)
     end
 
+    # 0x37 RAD-ALT
+    def mode(from: :rad, to: :gfx, **arguments)
+      try(from, to, 0x37, arguments)
+    end
+
     # DISPLAY
 
-    def output(from: :rad, to: :gfx, **arguments)
+    # 0x23
+    def primary(from: :rad, to: :gfx, **arguments)
       format_chars!(arguments)
       try(from, to, TXT_GFX, arguments)
     end
 
-    def output_alt(from: :rad, to: :gfx, **arguments)
+    # 0xA5
+    def secondary(from: :rad, to: :gfx, **arguments)
       format_chars!(arguments)
       try(from, to, TXT_NAV, arguments)
     end
 
-    def index(from: :rad, to: :gfx, **arguments)
+    # 0x21
+    def list(from: :rad, to: :gfx, **arguments)
       format_chars!(arguments)
       try(from, to, TXT_MID, arguments)
     end
