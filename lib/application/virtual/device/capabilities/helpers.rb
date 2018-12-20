@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Capabilities
   module Helpers
@@ -24,5 +24,26 @@ module Capabilities
       array_of_bytes = decimal_array.map { |int| Byte.new(:decimal, int) }
       Bytes.new(array_of_bytes)
     end
+
+    def generate_ints(length = 1)
+      Array.new(length) do
+        Random.rand(0..9)
+      end.join
+    end
+
+    def generate_chars(length = 20, range = 0x21..0x7a)
+      Array.new(length) do
+        Random.rand(range).chr
+      end.join
+    end
+
+    def delimitered_chars(delimiter = 6, items = 2)
+      items.times.map do
+        "#{delimiter.chr}#{genc(5)}"
+      end.join
+    end
+
+    alias genc generate_chars
+    alias geni generate_ints
   end
 end
