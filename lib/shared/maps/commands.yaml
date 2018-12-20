@@ -2807,7 +2807,7 @@
       :type: :bit_array
       :parameters:
         :memo:
-          # 00100000
+          # 0010 0000
           :type: :switch
           :label: 'Memo'
           :states:
@@ -2821,7 +2821,7 @@
             0: :off
             1: :on
         :limit:
-          # 00000010
+          # 0000 0010
           :type: :switch
           :label: 'Speed Limit'
           :states:
@@ -3032,7 +3032,7 @@
     :d: 48
     :h: '0x30'
   :properties:
-    :short_name: Self Check
+    :short_name: SLF_CHK
     :long_name: Unknown
   :klass: BaseCommand
 
@@ -3080,7 +3080,7 @@
     :long_name: Diagnostics?
   :klass: BaseCommand
 
-156:
+0x9c:
   :id:
     :d: 156
     :h: '0x9C'
@@ -3101,7 +3101,7 @@
     - DIA	LCM	9C 00
     - DIA	LCM	9C 00
 
-159:
+0x9F:
   :id:
     :d: 159
     :h: '0x9F'
@@ -3110,7 +3110,7 @@
     :long_name: Unknown?
   :klass: BaseCommand
 
-162:
+0xA2:
   :id:
     :d: 162
     :h: '0xA2'
@@ -3134,7 +3134,7 @@
 # ************************************************************************* #
 #                                  NOT SEEN YET
 # ************************************************************************* #
-6:
+0x06:
   :id:
     :d: 6
     :h: '0x06'
@@ -3144,7 +3144,7 @@
   :klass: BaseCommand
   :meta:
     - the read memory function in INPA?
-7:
+0x07:
   :id:
     :d: 7
     :h: '0x07'
@@ -3154,7 +3154,7 @@
   :klass: BaseCommand
   :meta:
     - if above is correct, then presumably the write...
-9:
+0x09:
   :id:
     :d: 9
     :h: '0x09'
