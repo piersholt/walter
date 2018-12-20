@@ -23,6 +23,18 @@ module Capabilities
       CONFIRM_PRESS   = 0x05
       CONFIRM_HOLD    = 0x45
       CONFIRM_RELEASE = 0x85
+
+      TONE_PRESS   = 0x04
+      TONE_HOLD    = 0x44
+      TONE_RELEASE = 0x84
+
+      TP_PRESS = 0x32
+      TP_HOLD = 0x72
+      TP_RELEASE = 0xB2
+
+      RDS_PRESS = 0x22
+      RDS_HOLD = 0x62
+      RDS_RELEASE = 0xA2
     end
   end
 end

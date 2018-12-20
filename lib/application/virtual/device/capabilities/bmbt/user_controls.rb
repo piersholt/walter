@@ -27,6 +27,18 @@ module Capabilities
         press_and_release(press: CONFIRM_PRESS, release: CONFIRM_RELEASE)
       end
 
+      def tone
+        press_and_release(press: TONE_PRESS, release: TONE_RELEASE)
+      end
+
+      def rds
+        press_and_release(press: RDS_PRESS, release: RDS_RELEASE)
+      end
+
+      def tp
+        press_and_release(press: TP_PRESS, release: TP_RELEASE)
+      end
+
       private
 
       def press_and_release(press:, release:)
