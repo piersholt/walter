@@ -15,14 +15,17 @@ class Virtual
         state
       end
 
-      def current_track
-        state[:track]
-      end
-
+      # Byte 1
       def current_control
         state[:control]
       end
 
+      # Byte 6
+      def current_track
+        state[:track]
+      end
+
+      # Calculated Values
       def next_track
         current_track + 1
       end
