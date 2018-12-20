@@ -6,7 +6,7 @@ class DisplayHandler < BaseHandler
 
   name = 'DisplayHandler'.freeze
 
-  NOISEY = [*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *BUTTON, *VEHICLE, *LAMP].freeze
+  NOISEY = [*READY, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *BUTTON, *VEHICLE, *LAMP].freeze
 
   def self.i
     instance

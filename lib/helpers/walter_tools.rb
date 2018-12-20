@@ -32,7 +32,7 @@ module WalterTools
   end
 
   def dia
-    DisplayHandler.i.hide_commands(*KEEP_ALIVE, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *LAMP)
+    DisplayHandler.i.hide_commands(*READY, *SPEED, *TEMPERATURE, *IGNITION, *COUNTRY, *LAMP)
   end
 
   def diag
@@ -44,7 +44,7 @@ module WalterTools
   end
 
   def ping
-    DisplayHandler.i.filter_commands(*CommandGroups::KEEP_ALIVE)
+    DisplayHandler.i.filter_commands(*READY)
   end
 
   def shutup!
@@ -65,7 +65,7 @@ module WalterTools
   def cdc
     DisplayHandler.i.f_t(* DeviceGroups::CD)
     DisplayHandler.i.f_f(* DeviceGroups::CD)
-    DisplayHandler.i.h_c(* KEEP_ALIVE + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::TXT_MID])
+    DisplayHandler.i.h_c(* READY + SPEED + TEMPERATURE + COUNTRY + VEHICLE + LAMP + IKE_SENSOR + OBC + IGNITION + [CommandAliases::TXT_MID])
   end
 
   def media
