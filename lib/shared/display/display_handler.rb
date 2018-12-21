@@ -77,6 +77,7 @@ class DisplayHandler < BaseHandler
   # ************************************************************************* #
 
   def clear_filter
+    LOGGER.info(name) { "Clearing filter..." }
     @filtered_commands = populate
     @filtered_recipients = populate_devices
     @filtered_senders = populate_devices

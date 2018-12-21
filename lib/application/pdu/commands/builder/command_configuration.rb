@@ -17,15 +17,23 @@ class CommandConfiguration
   BASE_COMMAND_STRING = 'BaseCommand'.freeze
   PARAMETERIZED_COMMAND_STRING = 'ParameterizedCommand'.freeze
 
+  BASE_COMMMAND_BUILDER_STRING = 'BaseCommandBuilder'.freeze
+  PARAMETERIZED_COMMAND_BUILDER_STRING = 'ParameterizedCommandBuilder'.freeze
+
   WRAPPER = ParameterConfiguration
 
   attr_reader :id, :parameters, :normal_fucking_decimal
 
   def initialize(mapped_command)
+    LogActually.parameterized.debug(PROC) { "#initialize" }
+    LogActually.parameterized.debug(PROC) { "Command Configuration starting..." }
     @command_hash = mapped_command.dup
+    # LogActually.parameterized.debug(PROC) { "#initialize: parsing command and parameters..." }
     parse_command(@command_hash)
     parse_parameters(parameters_hash) if has_parameters?
+    # LogActually.parameterized.debug(PROC) { "#initialize: configured?" }
     configure_class unless configured?
+    LogActually.parameterized.debug(PROC) { "Command Configuraging completed..." }
   end
 
   def inspect
@@ -35,11 +43,11 @@ class CommandConfiguration
   def builder
     case
     when has_parameters? && is_base?
-      get_class('BaseCommandBuilder')
+      get_class(BASE_COMMMAND_BUILDER_STRING)
     when has_parameters?
-      get_class('ParameterizedCommandBuilder')
+      get_class(PARAMETERIZED_COMMAND_BUILDER_STRING)
     else
-      get_class('BaseCommandBuilder')
+      get_class(BASE_COMMMAND_BUILDER_STRING)
     end
   end
 
@@ -110,25 +118,44 @@ class CommandConfiguration
   # Class Properties -------------------------------------------------------
 
   def has_parameters?
-    parameters_hash.nil? ? false : true
+    result = parameters_hash.nil? ? false : true
+    # LogActually.parameterized.debug(PROC) { "#has_parameters? => #{result}" }
+    result
   end
 
   def is_base?
-    klass == BASE_COMMAND_STRING
+    result = klass == BASE_COMMAND_STRING
+    # LogActually.parameterized.debug(PROC) { "#is_base? => #{result}" }
+    result
   end
 
+
   def is_parameterized?
-    klass == PARAMETERIZED_COMMAND_STRING
+    # result_constant = klass_constant.kind_of?(parameterized_command)nap
+    # result_constant2 = parameterized_command.kind_of?(klass_constant)
+    # LogActually.parameterized.debug(PROC) { "#{klass_constant}: Class: #{klass_constant.class}, Superclass: #{parameterized_command.superclass}" }
+    # LogActually.parameterized.debug(PROC) { "#{klass_constant}.kind_of?(#{parameterized_command}) => #{result_constant}" }
+    # LogActually.parameterized.debug(PROC) { "#{parameterized_command}.kind_of?(#{klass_constant}) => #{result_constant2}" }
+    # klass == PARAMETERIZED_COMMAND_STRING
+    result = klass_constant <= parameterized_command
+    result = result.nil? ? false : result
+    LogActually.parameterized.debug(PROC) { "#{klass_constant} <= #{parameterized_command} => #{result}" }
+    result
+  end
+
+  def parameterized_command
+    full_klass_name = prepend_namespace(DEFAULT_COMMAND_NAMESPACE, PARAMETERIZED_COMMAND_STRING)
+    get_class(full_klass_name)
   end
 
   # Class Configuration -------------------------------------------------------
 
   def configure_class
-    LOGGER.debug(PROC) { "#{sn}: Class Configuration beginning." }
+    LogActually.parameterized.debug(PROC) { "#{sn}: Class Configuration beginning." }
     setup_class_variable
     setup_klass_parameters
     setup_parameter_accessor(:parameters)
-    LOGGER.debug(PROC) { "#{sn}: Class Configuration completed." }
+    LogActually.parameterized.debug(PROC) { "#{sn}: Class Configuration completed." }
     true
   end
 
@@ -136,21 +163,28 @@ class CommandConfiguration
     properties_hash[:short_name]
   end
 
+  def configured_defined?
+    result = klass_constant.class_variable_defined?(:@@configured)
+    # LogActually.parameterized.debug(PROC) { "#configured_defined? => #{result}" }
+    result
+  end
+
   def configured?
+    LogActually.parameterized.debug(PROC) { "#configured?" }
     if !has_parameters?
-      LOGGER.debug(PROC) { "#{sn} has no parameters! Configuration not required." }
+      LogActually.parameterized.debug(PROC) { "#{sn} has no parameters! Configuration not required." }
       true
     elsif is_base?
-      LOGGER.debug(PROC) { "Configuration not required for BaseCommand" }
+      LogActually.parameterized.debug(PROC) { "#{sn} is BaseCommand. Configuration not required." }
       true
     elsif is_parameterized?
-      LOGGER.debug(PROC) { "Configuration always required for #{PARAMETERIZED_COMMAND_STRING}" }
+      LogActually.parameterized.debug(PROC) { "#{sn} is, or ancesor of #{PARAMETERIZED_COMMAND_STRING}. Configuration always required." }
       false
-    elsif klass_constant.class_variable_defined?(:@@configured)
-      LOGGER.debug(PROC) { "#{sn} configuration already completed." }
+    elsif configured_defined?
+      LogActually.parameterized.debug(PROC) { "#{sn} @@configured defined. Configuration already completed." }
       true
     else
-      LOGGER.debug(PROC) { "Thy #{sn} configuration be done!" }
+      LogActually.parameterized.debug(PROC) { "Defaulting to false. Configuration required." }
       false
     end
   end
@@ -168,7 +202,7 @@ class CommandConfiguration
   end
 
   def setup_parameter_accessor(parameter)
-    LOGGER.debug(PROC) { "Adding #{parameter} accessor" }
+    LogActually.parameterized.debug(PROC) { "Adding #{parameter} accessor" }
     klass_constant.class_eval do
       attr_accessor parameter
     end
@@ -177,7 +211,7 @@ class CommandConfiguration
   # Object Configuration -------------------------------------------------------
 
   def configure(command_object)
-    LOGGER.debug(PROC) { "Configure command #{command_object.class}" }
+    LogActually.parameterized.debug(PROC) { "Configure command #{command_object.class}" }
     command_object.instance_variable_set(inst_var(:parameters), parameter_list)
   end
 end

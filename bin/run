@@ -25,6 +25,8 @@ begin
   LogActually.datalink.i
   LogActually.is_all_around(:virtual)
   LogActually.virtual.i
+  LogActually.is_all_around(:parameterized)
+  LogActually.parameterized.d
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
