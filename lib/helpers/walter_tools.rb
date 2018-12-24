@@ -35,7 +35,10 @@ module WalterTools
   end
 
   def shutup!
-    DisplayHandler.i.shutup!
+    NOISE.each do |group, command_ids|
+      LOGGER.info { "Shutting up: #{group}" }
+      DisplayHandler.i.h_c(*command_ids)
+    end
   end
 
   def touch!

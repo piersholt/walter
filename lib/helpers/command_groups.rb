@@ -43,8 +43,21 @@ module CommandGroups
     DIA_COD_WRITE
   ].freeze
 
+  NOISE = {
+    ready: READY,
+    speed: SPEED,
+    temperature: TEMPERATURE,
+    ignition: IGNITION,
+    sensors: SENSORS,
+    country: COUNTRY,
+    odometer: ODOMETER,
+    vehicle: VEHICLE,
+    lamp: LAMP,
+    door: DOOR
+  }.freeze
+
   NOISEY =
-    READY + SPEED + TEMPERATURE + IGNITION +
-    SENSORS + COUNTRY + ODOMETER +
-    VEHICLE + LAMP + DOOR
+    NOISE[:ready] + NOISE[:speed] + NOISE[:temperature] + NOISE[:ignition] +
+    NOISE[:sensors] + NOISE[:country] + NOISE[:odometer] +
+    NOISE[:vehicle] + NOISE[:lamp] + NOISE[:door]
 end
