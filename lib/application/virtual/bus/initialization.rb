@@ -23,7 +23,7 @@ class Virtual
     def lookup_devices
       alt = AddressLookupTable.instance
       idents = alt.idents
-      LOGGER.debug(PROC) { "Idents: #{idents}|" }
+      LogActually.virtual.debug(PROC) { "Idents: #{idents}|" }
       idents
     end
 
@@ -35,10 +35,12 @@ class Virtual
 
     def create_device(device_ident)
       if @emulated.include?(device_ident)
+        LogActually.virtual.info(PROC) { "Create Emulated #{device_ident}" }
         DynamicDevice.builder
                      .target(device_ident)
                      .result
       elsif @augmented.include?(device_ident)
+        LogActually.virtual.info(PROC) { "Create Augmented #{device_ident}" }
         augmented_device =
           DynamicDevice.builder
                        .target(device_ident)
@@ -46,6 +48,7 @@ class Virtual
         augmented_device.add_observer(intent_listener, :handle)
         augmented_device
       else
+        LogActually.virtual.debug(PROC) { "Create dumb: #{device_ident}|" }
         Device.new(device_ident)
       end
     end
@@ -59,7 +62,7 @@ class Virtual
         bus.add_device(device)
       end
 
-      LOGGER.debug(PROC) { "Bus Devices: #{bus.devices}" }
+      LogActually.virtual.debug(PROC) { "Bus Devices: #{bus.devices}" }
       true
     end
   end
