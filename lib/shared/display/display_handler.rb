@@ -121,7 +121,7 @@ class DisplayHandler < BaseHandler
   end
 
   def hide_commands(*command_ids)
-    LOGGER.info(name) { "Hiding commands: #{command_ids}" }
+    LOGGER.debug(name) { "Hiding commands: #{command_ids}" }
     command_ids.each { |command_id| filtered_commands.delete(command_id) }
     true
   end

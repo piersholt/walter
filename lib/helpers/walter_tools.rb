@@ -36,13 +36,17 @@ module WalterTools
 
   def shutup!
     NOISE.each do |group, command_ids|
-      LOGGER.info { "Shutting up: #{group}" }
+      LOGGER.debug { "Shutting up: #{group}" }
       DisplayHandler.i.h_c(*command_ids)
     end
   end
 
   def touch!
     DisplayHandler.i.h_c(*BUTTON)
+  end
+
+  def mid!
+    DisplayHandler.i.h_c(*MID)
   end
 
   alias shh! shutup!

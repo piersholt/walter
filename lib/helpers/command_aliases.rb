@@ -55,7 +55,8 @@ module CommandAliases
 
   RAD_LED = 0x4A
   SRC_CTL = 0x4B
-  SND_SRC = 0x4E
+  SRC_SND = 0x4E
+  SRC_GFX = 0x4F
 
   VEH_REQ   = 0x53
   VEH_REP   = 0x54
