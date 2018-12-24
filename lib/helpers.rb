@@ -9,6 +9,7 @@ require 'helpers/cluster_tools'
 require 'helpers/module_tools'
 require 'helpers/name_tools'
 require 'helpers/printable'
+require 'helpers/stateful'
 
 module Helpers
   include ModuleTools

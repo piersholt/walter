@@ -1,7 +1,6 @@
 root = 'application/virtual/device/dynamic/emulated'
 
 require "#{root}/common/alive"
-require "#{root}/common/stateful"
 
 require "#{root}/device"
 
