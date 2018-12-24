@@ -28,15 +28,19 @@ class BusHandler < BaseHandler
     with_backtrace(LOGGER, e)
   end
 
+  def packet_received(action, properties)
+    packet = fetch(properties, :packet)
+    raise RoutingError, 'Packet is nil!' unless packet
+    publish_to_bus(packet) if addressable?(packet)
+  end
+
   def update(action, properties)
     LOGGER.debug(name) { "#update(#{action}, #{properties})" }
     case action
     when MESSAGE_SENT
       message_sent(action, properties)
     when PACKET_RECEIVED
-      packet = fetch(properties, :packet)
-      raise RoutingError, 'Packet is nil!' unless packet
-      publish_to_bus(packet) if addressable?(packet)
+      packet_received(action, properties)
     when BUS_ONLINE
       bus_online
     when BUS_OFFLINE
