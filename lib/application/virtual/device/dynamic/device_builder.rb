@@ -10,7 +10,10 @@ class Virtual
       cdc: 'SimulatedCDC',
       tel: 'SimulatedTEL',
       rad: 'AugmentedRadio',
-      dia: 'ManualDiagnostics'
+      dia: 'ManualDiagnostics',
+      iris: 'EmulationDummy',
+      nav_jp: 'EmulationDummy',
+      nav_eu: 'EmulationDummy'
     }.freeze
 
     attr_reader :ident

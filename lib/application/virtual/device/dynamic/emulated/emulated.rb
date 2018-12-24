@@ -14,3 +14,5 @@ require "#{root}/tel/handlers"
 require "#{root}/tel/device"
 
 require "#{root}/diagnostics/device"
+
+require "#{root}/dummy/device"
