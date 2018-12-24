@@ -31,6 +31,9 @@ begin
   LogActually.virtual.i
   LogActually.is_all_around(:parameterized)
   LogActually.parameterized.d
+  LogActually.is_all_around(:rad)
+  LogActually.rad.i
+
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
