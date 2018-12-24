@@ -19,6 +19,7 @@ require "#{root}/cdc/chainable"
 require "#{root}/cdc/state"
 require "#{root}/cdc"
 
+require "#{root}/gfx/user_interface"
 require "#{root}/gfx"
 
 require "#{root}/bmbt/constants"
