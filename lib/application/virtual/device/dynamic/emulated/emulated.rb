@@ -4,8 +4,7 @@ require "#{root}/common/alive"
 
 require "#{root}/device"
 
-require "#{root}/cdc/constants"
-require "#{root}/cdc/changer_request"
+require "#{root}/cdc/handlers"
 require "#{root}/cdc/device"
 
 require "#{root}/dsp/device"

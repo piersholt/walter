@@ -3,43 +3,41 @@
 # Comment
 class Virtual
   # Comment
-  class SimulatedCDC < EmulatedDevice
-    include Constants
-    include ChangerRequest
+  class EmulatedCDC < EmulatedDevice
+    # include Constants
+    # include State
+    include Handlers
+    include Capabilities::CDChanger
+    include Capabilities::GFX
+    include Capabilities::Radio
 
     attr_reader :message, :from, :to,
                 :command, :command_id,
                 :control, :control_value,
                 :mode, :mode_value
 
-    PROC = 'SimulatedCDC'
+    PROC = 'EmulatedCDC'
 
     def name
-      'SimulatedCDC'
+      'EmulatedCDC'
     end
 
-    def message=(message)
-      @message = message
-      @from = message.from
-      @to = message.to
-      @command = message.command
-      @command_id = command.d
-      @control = command.control
-      @control_value = control.d
-      @mode = command.mode
-      @mode_value = mode.d
+    def logger
+      LogActually.cdc
     end
 
     def handle_message(message)
-      public_send(:message=, message)
-      LOGGER.debug(PROC) { "Handle? #{from} -> #{command.h}" }
-
-      case command_id
+      id = message.command.normal_fucking_decimal
+      case id
       when CDC_REQ
-        changer_request(message)
+        handle_cd_changer_request(message.command)
+      # when TXT_GFX
+      #   handle_cd_changer_request(message.command)
       end
 
       super(message)
+    rescue StandardError => e
+      LOGGER.error e
     end
   end
 end

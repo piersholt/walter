@@ -14,6 +14,11 @@ require "#{root}/radio/nav_display"
 require "#{root}/radio/user_interface"
 require "#{root}/radio"
 
+require "#{root}/cdc/constants"
+require "#{root}/cdc/chainable"
+require "#{root}/cdc/state"
+require "#{root}/cdc"
+
 require "#{root}/gfx"
 
 require "#{root}/bmbt/constants"

@@ -7,7 +7,7 @@ class Virtual
 
     CLASS_MAP = {
       dsp: 'SimulatedDSP',
-      cdc: 'SimulatedCDC',
+      cdc: 'EmulatedCDC',
       tel: 'SimulatedTEL',
       rad: 'AugmentedRadio',
       dia: 'ManualDiagnostics',

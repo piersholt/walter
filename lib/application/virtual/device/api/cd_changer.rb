@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# # require 'application/virtual/api/base_api'
-
 module API
   # API for command related to keys
   module CDChanger
