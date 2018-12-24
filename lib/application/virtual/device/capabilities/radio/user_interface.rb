@@ -6,7 +6,7 @@ module Capabilities
     module UserInterface
       include API::Radio
 
-      def home
+      def main
         interface(arguments: { state: 0b0000_0001 })
       end
 

@@ -2,15 +2,23 @@
 
 module Capabilities
   module GFX
+    # BMBT Interface Control
     module UserInterface
       include API::GFX
 
-      def main_menu
+      # Shortcuts
+      def main
         config(arguments: { config: 0b0000_0001 })
       end
 
+      # DIRECT API ---------
+
       def test_gfx(option = 0b0000_0010)
         config(arguments: { config: option })
+      end
+
+      def source(source = 0x10, b2 = 0x00)
+        sound_source(arguments: { source: source, b2: b2 })
       end
 
       def go

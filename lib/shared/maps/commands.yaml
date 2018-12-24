@@ -1170,7 +1170,7 @@
       :parameters:
         :hide_alt:
           :type: :switch
-          :label: Hide ALT?
+          :label: Hide Select?
           :states:
             0: :off
             1: :on
@@ -1278,9 +1278,20 @@
     :d: 78
     :h: '0x4E'
   :properties:
-    :short_name: SND-SRC
+    :short_name: SRC-SND
     :long_name: Select external audio input for tv?
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :index:
+    :source: 0
+    :b2: 1
+  :parameters:
+    :source:
+      :type: :map
+      :dictionary:
+        0b0000_0000: Radio
+        0b0000_0001: TV
+    :b2:
+      :type: :integer
   :meta:
     - 01 00: select TV
     - 00 00: go back to radio
@@ -1309,7 +1320,7 @@
     :d: 79
     :h: '0x4F'
   :properties:
-    :short_name: MON
+    :short_name: SRC-GFX
     :long_name: Display Output
   :parameters:
     :action:
@@ -1340,12 +1351,12 @@
     :senders:
       - GFX (0x3B)
     :recipients:
-      - "NAV-JP (0xBB)"
-      - "01 to TV"
-      - "02 00"
-      - "BMBT (0xF0)"
-      - "00"
-      - "10"
+      :nav_jp:
+        - 01    (TV ON)
+        - 02 00 (TV OFF)
+      :bmbt:
+        - 00 (Monitor Off)
+        - 10 (Monitor On)
 # ************************************************************************* #
 #                           CHECK CONTROL MODULE
 # ************************************************************************* #
