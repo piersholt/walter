@@ -44,7 +44,6 @@ class BusHandler < BaseHandler
     when BUS_ONLINE
       bus_online
     when BUS_OFFLINE
-      LOGGER.warn(name) { 'Bus Offline! Disabling virtual bus.' }
       bus_offline
     end
   rescue StandardError => e
@@ -53,11 +52,13 @@ class BusHandler < BaseHandler
   end
 
   def bus_online
+    LOGGER.info(name) { 'Bus Offline! Disabling virtual bus.' }
     @bus.online
     @bus.simulated.send_all(:enable)
   end
 
   def bus_offline
+    LOGGER.warn(name) { 'Bus Offline! Disabling virtual bus.' }
     @bus.offline
     @bus.simulated.send_all(:disable)
   end
