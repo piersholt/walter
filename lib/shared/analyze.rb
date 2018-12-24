@@ -5,6 +5,7 @@ module Analyze
   L = 1
   R = 2
   C = 3
+  A = (4..-2)
 
   def load_all(*filenames)
     filenames.each do |id|
