@@ -23,6 +23,8 @@ begin
   LogActually.interface.i
   LogActually.is_all_around(:datalink)
   LogActually.datalink.i
+  LogActually.is_all_around(:multiplexer)
+  LogActually.multiplexer.i
   LogActually.is_all_around(:transmitter)
   LogActually.transmitter.i
   LogActually.is_all_around(:virtual)
