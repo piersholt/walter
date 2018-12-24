@@ -38,6 +38,10 @@ module WalterTools
     DisplayHandler.i.shutup!
   end
 
+  def touch!
+    DisplayHandler.i.h_c(*BUTTON)
+  end
+
   alias shh! shutup!
 
   def ready
@@ -66,6 +70,15 @@ module WalterTools
     DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SND_SRC, MENU_GFX, MENU_RAD)
   end
 
+  def nav
+    DisplayHandler.i.f_t(*DeviceGroups::NAV)
+    DisplayHandler.i.f_f(*DeviceGroups::NAV)
+    DisplayHandler.i.h_c(
+      *SPEED, *TEMPERATURE, *VEHICLE, *LAMP,
+      *SENSORS, *OBC, *IGNITION
+    )
+  end
+
   def cdc
     DisplayHandler.i.f_t(*DeviceGroups::CD)
     DisplayHandler.i.f_f(*DeviceGroups::CD)
@@ -73,6 +86,17 @@ module WalterTools
       *READY, *SPEED, *TEMPERATURE, *COUNTRY,
       *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
     )
+  end
+
+  def cdc!
+    DisplayHandler.i.f_t(*DeviceGroups::CD)
+    DisplayHandler.i.f_f(*DeviceGroups::CD)
+    DisplayHandler.i.h_c(
+      *READY, *SPEED, *TEMPERATURE, *COUNTRY,
+      *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
+    )
+
+    DisplayHandler.i.h_c(*DISPLAY, *BUTTON)
   end
 
   def media
