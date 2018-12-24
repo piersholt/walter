@@ -34,6 +34,9 @@ begin
   LogActually.is_all_around(:rad)
   LogActually.rad.i
 
+  LogActually.is_all_around(:cdc)
+  LogActually.cdc.d
+
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
