@@ -22,6 +22,11 @@ module Capabilities
       announced!
     end
 
+    def announce!
+      p0ng(from: me, status: 0x01)
+      announced!
+    end
+
     private
 
     def announced?
