@@ -28,12 +28,9 @@ class Virtual
     end
 
     def create_devices(device_idents)
-      devices = device_idents.map do |device_ident|
+      device_idents.map do |device_ident|
         create_device(device_ident)
       end
-
-      LOGGER.debug(PROC) { "Devices: #{devices}|" }
-      devices
     end
 
     def create_device(device_ident)

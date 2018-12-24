@@ -24,10 +24,7 @@ class Virtual
       end
 
       def notify(message)
-        if junk_mail?(message)
-          # LOGGER.warn(ident) { 'FOUND A JUNKER!' }
-          return false
-        end
+        return false if junk_mail?(message)
         changed
         notify_observers(MESSAGE_RECEIVED, message: message)
       end

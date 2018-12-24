@@ -25,15 +25,13 @@ module API
 
     def send_it!(from, to, command)
       LOGGER.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
-      begin
-        message = Message.new(from, to, command)
-        changed
-        notify_observers(MESSAGE_SENT, message: message)
-      rescue StandardError => e
-        LOGGER.error("#{self.class} StandardError: #{e}")
-        e.backtrace.each { |l| LOGGER.error(l) }
-        binding.pry
-      end
+      message = Message.new(from, to, command)
+      changed
+      notify_observers(MESSAGE_SENT, message: message)
+    rescue StandardError => e
+      LOGGER.error("#{self.class} StandardError: #{e}")
+      e.backtrace.each { |l| LOGGER.error(l) }
+      binding.pry
     end
 
     alias give_it_a_go try
