@@ -14,10 +14,6 @@ module Capabilities
         interface(arguments: { state: option })
       end
 
-      def manual
-        selection(mode: 0x40)
-      end
-
       def eq(band = :eq)
         case band
         when :bass

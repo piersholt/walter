@@ -8,17 +8,19 @@ module Capabilities
 
       # Title 11 chars
       def title(to: :gfx,
+                from: :rad,
                 gfx: 0x62, ike: 0x30,
                 chars: genc(12))
-        primary(to: to, gfx: gfx, ike: ike, chars: chars)
+        primary(to: to, from: from, gfx: gfx, ike: ike, chars: chars)
       end
 
       # Subtitles 20 chars
       def subtitle(to: :gfx,
+                   from: :rad,
                    gfx: 0x62, ike: 0x01,
                    zone: ZONE_H2,
                    chars: genc(20))
-        secondary(to: to, gfx: gfx, ike: ike, zone: zone, chars: chars)
+        secondary(to: to, from: from, gfx: gfx, ike: ike, zone: zone, chars: chars)
       end
 
       def index

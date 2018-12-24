@@ -10,7 +10,7 @@ module API
 
     # CD CHANGER
 
-    # 0x3?
+    # 0x38
     def cd_changer_request(from: :rad, to: :cdc, arguments:)
       try(from, to, CDC_REQ, arguments)
     end
@@ -23,7 +23,7 @@ module API
     end
 
     # 0x37 RAD-ALT
-    def mode(from: :rad, to: :gfx, **arguments)
+    def select(from: :rad, to: :gfx, **arguments)
       try(from, to, 0x37, arguments)
     end
 
