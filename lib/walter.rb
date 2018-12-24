@@ -82,9 +82,9 @@ class Walter
     @demultiplexer.add_observer(@bus_handler)
 
     @bus.send_all(:add_observer, @global_listener)
-    @bus.send_all(:add_observer, @session_listener)
     @bus.send_all(:add_observer, @display_listener)
     @bus.send_all(:add_observer, @bus_handler)
+    @bus.send_all(:add_observer, @session_listener)
 
     # For exit event
     add_observer(@global_listener)
@@ -105,7 +105,7 @@ class Walter
       LOGGER.debug 'Main Thread / Entering keep alive loop...'
       loop do
         news
-        sleep 60
+        sleep 120
       end
 
       # TODO: menu to facilitate common features...
@@ -124,7 +124,7 @@ class Walter
     @transmitter.on
     @demultiplexer.on
     @multiplexer.on
-    Notifications.start(@bus)
+    # Notifications.start(@bus)
   end
 
   def stop
