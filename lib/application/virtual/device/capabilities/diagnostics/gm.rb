@@ -57,6 +57,22 @@ module Capabilities
 
       # SUNROOF_OPEN  = '7E 01'
       SUNROOF_CLOSE = '7F 01'
+
+      def window_fr_down
+          vehicle_control(to: :gm3, arguments: integers_input(0x00, 0x00, 0x01))
+      end
+
+      def window_fr_up
+        vehicle_control(to: :gm3, arguments: integers_input(0x00, 0x01, 0x01))
+      end
+
+      def window_fl_down
+        vehicle_control(to: :gm3, arguments: integers_input(0x00, 0x03, 0x01))
+      end
+
+      def window_fl_up
+        vehicle_control(to: :gm3, arguments: integers_input(0x00, 0x04, 0x01))
+      end
     end
 
     module Windscreen
