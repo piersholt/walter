@@ -703,22 +703,13 @@
     :h: '0x5C'
   :properties:
     :short_name: CLSTR
-    :long_name: Unknown
+    :long_name: Cluster Backlight
   :klass: ParameterizedCommand
   :index:
-    :b0: 0
+    :light: 0
   :parameters:
-    :b0:
-      :type: :bit_array
-      :parameters:
-        :rapid:
-          :label: "-"
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-      :index:
-        :rapid: 0
+    :light:
+      :type: :integer
   :meta:
     :notes:
       - to date it alternates between two values 0xED and 0xFF
