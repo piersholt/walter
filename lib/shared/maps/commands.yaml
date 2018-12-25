@@ -1677,18 +1677,14 @@
 
         # Selection
 
-        # Mode: Manual
-        0x41: m?
-        # Mode: SCAN
-        0x42: SCAN?
-        # Mode: Search (Sensitive)
-        0x43: II?
-        # Mode: Search (Non Sensitive)
-        0x44: I?
 
-        0x46: T?
-        # Traffic Reports
-        0x47: TP?
+        0x41: m?    # Mode: Manual
+        0x42: SCAN? # Mode: SCAN
+        0x43: II?   # Mode: Search (Sensitive)
+        0x44: I?    # Mode: Search (Non Sensitive)
+
+        0x46: T?    # Traffic Reports
+        0x47: TP?   # ?
         0x48: T (upper right?)
         0x49: m + T
         # 0x4a: Scan + T
@@ -1707,7 +1703,6 @@
         0x57: TP?
         0x58: T (upper right)
         0x59: m + T
-
         0x5a: Scan + T
         0x5b: II + T
         0x5c: I? + T
@@ -1777,16 +1772,17 @@
         # To have the 'Track' layout applied, the below format must be used
         # otherwise the zone defaults to 11 characters without a layout.
         # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
+        # 0xc0: No apparent action
         0xC1: (CD) No Magazine!
         0xC2: (CD) No Disc!
+        # 0xc3: No Apparent Action
         0xC4: (CD) [< >] Disc/Track
-
-        0xCA: '(CD) [<< >>] Fast Forward/Reverse'
-        0xC5: '(CD) >>'
-        0xC6: '(CD) <<R'
-
-        0xC7: '(CD) [SCAN]'
-        0xC7: '(CD) [RANDOM]'
+        0xC5: (CD) >>
+        0xC6: (CD) <<R
+        0xC7: (CD) [SCAN]
+        0xC8: (CD) [RANDOM]
+        # 0xC9: No apparent action
+        0xCA: (CD) [<< >>] Fast Forward/Reverse
     :ike:
       :type: :bit_array
       :parameters:
@@ -2197,44 +2193,24 @@
     :short_name: TXT-A5
     :long_name: Unknown
   :klass: ParameterizedCommand
+  :index:
+    :gfx: 0
+    :ike: 1
+    :zone: 2
+    :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
   :parameters:
     :gfx:
       :type: :map
       :dictionary:
-        # 0x00 - 0x5f are good
-        0x60: --
-        0x61: --
+        # (0x00..0x5f) are good
+        # (0x80..0xff) normal
+        # (0x60..0x7f) are different
+        0x60: List A
+        0x61: List B
         0x62: Change Station
-        0x63: --
-        0x64: --
-        0x65: --
-        0x66: --
-        0x67: --
-        0x68: --
-        0x69: --
-        0x6A: --
-        0x6B: --
-        0x6C: --
-        0x6D: --
-        0x6E: --
-        0x6F: --
-        0x70: --
-        0x71: --
-        0x72: --
-        0x73: --
-        0x74: --
-        0x75: --
-        0x76: --
-        0x77: --
-        0x78: --
-        0x79: --
-        0x7A: --
-        0x7B: --
-        0x7C: --
-        0x7D: --
-        0x7E: --
-        0x7F: --
-
     :ike:
       :type: :map
       :dictionary:
@@ -2276,14 +2252,6 @@
         :flash: 0
     :chars:
       :type: :chars
-  :index:
-    :gfx: 0
-    :ike: 1
-    :zone: 2
-    :chars: !ruby/range
-              begin: 3
-              end: -1
-              excl: false
   :meta:
     :notes:
       - 540 RAD sending this to GFX
