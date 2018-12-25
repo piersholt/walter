@@ -1887,234 +1887,6 @@
         - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
       - clear IKE display
       - RAD	IKE	  23	50 20
-
-0x1A:
-  :id:
-    :d: 26
-    :h: '0x1A'
-  :properties:
-    :short_name: CCM-ALRT
-    :long_name: CCM Cluster Warning
-    :verbose: false
-  :parameters:
-    :mode:
-      :type: :map
-      :map:
-        0x30: clear
-        0x35: request
-        0x36: persist
-        0x37: alert
-      :dictionary:
-        0x30: Clear
-        0x35: Request Fault
-        0x36: Persist Indicators
-        0x37: Alert
-    :control:
-      :type: :map
-      :map:
-        0x00: none
-        0x01: on_off
-        0x03: blink_off
-        0x05: off_single
-        0x0F: on_single
-        0x09: blink_single
-      :dictionary:
-        0x00: "No Indicator/Gong"
-
-        0x01: "Chev: On     / Audio: Off"
-        0x03: "Chev: Blink  / Audio: Off"
-
-        0x04: "Chev: Off    / Audio: Single"
-        0x05: "Chec: On     / Audio: Single"
-        0x07: "Chev: Blink  / Audio: Single"
-
-        0xO8: "Chev: Off    / Audio: Constant"
-        0xO9: "Chev: On     / Audio: Constant"
-        0xOB: "Chev: Blink  / Audio: Constant"
-
-        0x0C: "Chev: Off    / Audio: Double"
-        0x0D: "Chev: On     / Audio: Double"
-        0x0F: "Chev: Blink  / Audio: Double"
-
-        0x10: 'something else must be duplicate?'
-    :chars:
-      :type: :chars
-  :index:
-    :mode: 0
-    :control: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false"
-
-  :klass: CCMDisplay
-  :meta:
-    :notes:
-      - at ignition off, 0x13 reports 0x00 00 00
-      -  0x1a always follows 30 00	"                    "
-      -  this is the only time it has a blank string
-      - IKE   	GLO-L 	IKE-SEN-ACK	01 B0 00]
-      - IKE   	GLO-L 	IGN       	Ignition: Off (Position I)
-      - IKE   	GLO-L 	IKE-SEN-ACK	00 00 00]
-      - IHK   	NAV-EU	???       	00]
-      - CCM   	GLO-L 	CCM?      	00]
-      - CCM   	IKE   	CCM-ALRT  	30 00	"                   "
-    :examples:
-      - Constantly see this >
-      - 1A 30 00
-      - 1B 00
-      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
-      - 1B 00
-      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
-      - 1B 00
-
-      - 37 0F	"     LIGHTS ON      "
-      - 36 03	""
-
-      - 37 05	"CHECK LOWBEAM LIGHTS"
-      - 35 01	""
-0x24:
-  :id:
-    :d: 36
-    :h: '0x24'
-  :properties:
-    :short_name: TXT-24
-    :long_name: OBC Display (IKE, GFX)
-    :verbose: false
-  :klass: ParameterizedCommand
-  :schemas:
-    - :tel
-  :parameters:
-    :gfx:
-      :type: :map
-      :dictionary:
-        0x01: Time
-        0x02: Date
-        0x03: Outside Temp.
-        0x04: Econ. 1
-        0x05: Econ. 2
-        0x06: Range
-        0x07: Distance
-        0x08: Arrival
-        0x09: Speed Limit
-        0x0a: Avg. Speed
-        0x0c: Memo
-        0x0d: Memo
-        0x0e: Stopwatch
-        0x0f: Aux. Timer 1
-        0x10: Aux. Timer 2
-        0x11: Aux Heating Off
-        0x12: Aux Heating On
-        0x13: Aux Vent. Off
-        0x14: Aux Vent. On
-        0x15: End Stellmode
-        0x16: Emergency Disarm
-        0x1a: Interim Time
-        0x1b: Aux Heat/Vent
-        0x1f: Test Mode
-        0x40: Radio HUD
-    :ike:
-      :type: :map
-      :dictionary:
-        0x00: --
-        0x20: Set
-        0x30: Update
-    :chars:
-      :type: :chars
-  :index:
-    :gfx: 0
-    :ike: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false
-  # 0x24 Alternative Schemas
-  :tel:
-    :klass: MediaDisplay
-    :properties:
-      :short_name: TXT-24*
-      :long_name: Update Info
-    :index:
-      :gfx: 0
-      :ike: 1
-      :chars: !ruby/range
-                begin: 2
-                end: -1
-                excl: false
-    :parameters:
-      :gfx:
-        :type: :map
-        :dictionary:
-          0x91: Signal Strength
-          0x93: Call cost current
-          0x94: Call cost total
-          0x96: Call Time minutes
-          0x97: Call time seconds
-      :ike:
-        :type: :map
-        :dictionary:
-          0x00: --
-      :chars:
-        :type: :chars
-        # 0xB2 = 7 bars
-        # 0xB3 = 6 bars
-        # 0xB4 = 5 bars
-        # 0xB5 = 4 bars
-        # 0xB6 = 3 bars
-        # 0xB7 = 2 bars
-        # 0x5F = 1 bar
-        # 0xB8 = 0 bars
-  :meta:
-    :examples:
-      - RAD GLO-H TXT-1 Radio HUD "102.1   "
-      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
-0x1B:
-  :id:
-    :d: 27
-    :h: '0x1B'
-  :properties:
-    :short_name: HUD-STATUS
-    :long_name: IKE Text Status?
-  :klass: ParameterizedCommand
-  :parameters:
-    :hud_status:
-      :type: :map
-      :dictionary:
-        0x00: Set
-        0x01: Busy
-        0x02: Cleared
-  :index:
-    :hud_status: 0
-  :schemas:
-    - 0x3F
-  0x3F:
-    :id:
-      :d: 27
-      :h: '0x1B'
-    :properties:
-      :short_name: DIA-PDC
-      :long_name: Test PDC Sensors
-    :klass: BaseCommand
-  :meta:
-    :examples:
-      - TEL   	IKE   	23        40 20,
-      - IKE   	TEL   	1B        02,
-      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
-      - IKE   	CCM   	1B        00,
-      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
-      - IKE   	CCM   	1B        00,
-      - CCM   	IKE   	1A        30 00,
-      - IKE   	CCM   	1B        00,
-      - CCM   	IKE   	1A        30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20,
-      - IKE   	CCM   	1B        00,
-      - the IKE requests something from radio?
-      - IKE   	RAD   	CCM-STATUS	02
-      - RAD   	IKE   	TXT-MEDIA 	64 (Radio Set Station) | 32 (Set IKE) 	""
-      - IKE   	RAD   	CCM-STATUS	02
-    :recipients:
-      0x30: CCM
-      0x68: RAD
-      0xC8: TEL
 0x21:
   :id:
     :d: 33
@@ -2264,7 +2036,102 @@
       - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-34:
+0x24:
+  :id:
+    :d: 36
+    :h: '0x24'
+  :properties:
+    :short_name: TXT-24
+    :long_name: OBC Display (IKE, GFX)
+    :verbose: false
+  :klass: ParameterizedCommand
+  :schemas:
+    - :tel
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo
+        0x0d: Memo
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :ike:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Set
+        0x30: Update
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  # 0x24 Alternative Schemas
+  :tel:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: TXT-24*
+      :long_name: Update Info
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          0x91: Signal Strength
+          0x93: Call cost current
+          0x94: Call cost total
+          0x96: Call Time minutes
+          0x97: Call time seconds
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+      :chars:
+        :type: :chars
+        # 0xB2 = 7 bars
+        # 0xB3 = 6 bars
+        # 0xB4 = 5 bars
+        # 0xB5 = 4 bars
+        # 0xB6 = 3 bars
+        # 0xB7 = 2 bars
+        # 0x5F = 1 bar
+        # 0xB8 = 0 bars
+  :meta:
+    :examples:
+      - RAD GLO-H TXT-1 Radio HUD "102.1   "
+      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
+0x22:
   :id:
     :d: 34
     :h: '0x22'
@@ -2294,6 +2161,142 @@
       - 0x03: Done?
       - 0x07: unknown?
       - 0x10: Unrecognised command?
+
+# ************************************************************************* #
+#                             CLUSTER HUD
+# ************************************************************************* #
+0x1A:
+  :id:
+    :d: 26
+    :h: '0x1A'
+  :properties:
+    :short_name: CCM-ALRT
+    :long_name: CCM Cluster Warning
+    :verbose: false
+  :parameters:
+    :mode:
+      :type: :map
+      :map:
+        0x30: clear
+        0x35: request
+        0x36: persist
+        0x37: alert
+      :dictionary:
+        0x30: Clear
+        0x35: Request Fault
+        0x36: Persist Indicators
+        0x37: Alert
+    :control:
+      :type: :map
+      :map:
+        0x00: none
+        0x01: on_off
+        0x03: blink_off
+        0x05: off_single
+        0x0F: on_single
+        0x09: blink_single
+      :dictionary:
+        0x00: "No Indicator/Gong"
+
+        0x01: "Chev: On     / Audio: Off"
+        0x03: "Chev: Blink  / Audio: Off"
+
+        0x04: "Chev: Off    / Audio: Single"
+        0x05: "Chec: On     / Audio: Single"
+        0x07: "Chev: Blink  / Audio: Single"
+
+        0xO8: "Chev: Off    / Audio: Constant"
+        0xO9: "Chev: On     / Audio: Constant"
+        0xOB: "Chev: Blink  / Audio: Constant"
+
+        0x0C: "Chev: Off    / Audio: Double"
+        0x0D: "Chev: On     / Audio: Double"
+        0x0F: "Chev: Blink  / Audio: Double"
+
+        0x10: 'something else must be duplicate?'
+    :chars:
+      :type: :chars
+  :index:
+    :mode: 0
+    :control: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false"
+
+  :klass: CCMDisplay
+  :meta:
+    :notes:
+      - at ignition off, 0x13 reports 0x00 00 00
+      -  0x1a always follows 30 00	"                    "
+      -  this is the only time it has a blank string
+      - IKE   	GLO-L 	IKE-SEN-ACK	01 B0 00]
+      - IKE   	GLO-L 	IGN       	Ignition: Off (Position I)
+      - IKE   	GLO-L 	IKE-SEN-ACK	00 00 00]
+      - IHK   	NAV-EU	???       	00]
+      - CCM   	GLO-L 	CCM?      	00]
+      - CCM   	IKE   	CCM-ALRT  	30 00	"                   "
+    :examples:
+      - Constantly see this >
+      - 1A 30 00
+      - 1B 00
+      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+      - 1B 00
+      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
+      - 1B 00
+
+      - 37 0F	"     LIGHTS ON      "
+      - 36 03	""
+
+      - 37 05	"CHECK LOWBEAM LIGHTS"
+      - 35 01	""
+0x1B:
+  :id:
+    :d: 27
+    :h: '0x1B'
+  :properties:
+    :short_name: HUD-STATUS
+    :long_name: IKE Text Status?
+  :klass: ParameterizedCommand
+  :parameters:
+    :hud_status:
+      :type: :map
+      :dictionary:
+        0x00: Set
+        0x01: Busy
+        0x02: Cleared
+  :index:
+    :hud_status: 0
+  :schemas:
+    - 0x3F
+  0x3F:
+    :id:
+      :d: 27
+      :h: '0x1B'
+    :properties:
+      :short_name: DIA-PDC
+      :long_name: Test PDC Sensors
+    :klass: BaseCommand
+  :meta:
+    :examples:
+      - TEL   	IKE   	23        40 20,
+      - IKE   	TEL   	1B        02,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20,
+      - IKE   	CCM   	1B        00,
+      - the IKE requests something from radio?
+      - IKE   	RAD   	CCM-STATUS	02
+      - RAD   	IKE   	TXT-MEDIA 	64 (Radio Set Station) | 32 (Set IKE) 	""
+      - IKE   	RAD   	CCM-STATUS	02
+    :recipients:
+      0x30: CCM
+      0x68: RAD
+      0xC8: TEL
 
 # ************************************************************************* #
 #                               TELEPHONE
