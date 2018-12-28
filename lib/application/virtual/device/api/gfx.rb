@@ -17,5 +17,12 @@ module API
     def sound_source(from: :gfx, to: :rad, arguments:)
       try(from, to, SRC_SND, arguments)
     end
+
+    # 0x4F SRC-GFX
+    # @param action
+    # @param nav
+    def sound_source(from: :tv, to: :bmbt, arguments:)
+      try(from, to, SRC_GFX, arguments)
+    end
   end
 end
