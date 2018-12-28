@@ -35,7 +35,7 @@ module CommandAliases
 
   DSP_EQ = 0x34
   RAD_EQ = 0x36
-
+  RAD_ALT = 0x37
   CDC_REQ = 0x38
   CDC_REP = 0x39
   # CDC_REP = CDC

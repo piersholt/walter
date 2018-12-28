@@ -1634,87 +1634,88 @@
     :gfx:
       :type: :map
       :dictionary:
-        # SERVICE MODE
-        0x02: Service / Serial Number
-        0x03: Service / Software Version
-        0x04: Service / GAL
-        0x05: Service / F & Q?
-        0x06: Service / DSP
-        0x07: Service / Seek Level
-        0x08: Service / TP Volume
+        # Service Mode
+        0x0_2: (Service) Serial Number
+        0x0_3: (Service) Software Version
+        0x0_4: (Service) GAL
+        0x0_5: (Service) F & Q?
+        0x0_6: (Service) DSP
+        0x0_7: (Service) Seek Level
+        0x0_8: (Service) TP Volume
 
-        0x12: Service / Serial Number
-        0x13: Service / Software Version
-        0x14: Service / GAL
-        0x15: Service / F & Q?
-        0x16: Service / DSP
-        0x17: Service / Seek Level
-        0x18: Service / TP Volume
+        0x1_2: (Service) Serial Number
+        0x1_3: (Service) Software Version
+        0x1_4: (Service) GAL
+        0x1_5: (Service) F & Q?
+        0x1_6: (Service) DSP
+        0x1_7: (Service) Seek Level
+        0x1_8: (Service) TP Volume
 
-        # RDS?
-        0x2_0: No Station
-        0x2_1: WB CH 1
-        0x2_2: WB CH 2
-        0x2_3: WB CH 3
-        0x2_4: WB CH 4
-        0x2_5: WB CH 5
-        0x2_6: WB CH 6
-        0x2_7: WB CH 7
-        0x2_8: WB
+        # Weather Band
+        0x2_0: (Weather Band) No Station
+        0x2_1: (Weather Band) WB CH 1
+        0x2_2: (Weather Band) WB CH 2
+        0x2_3: (Weather Band) WB CH 3
+        0x2_4: (Weather Band) WB CH 4
+        0x2_5: (Weather Band) WB CH 5
+        0x2_6: (Weather Band) WB CH 6
+        0x2_7: (Weather Band) WB CH 7
+        0x2_8: (Weather Band) WB
 
-        0x3_0: No Station
-        0x3_1: WB CH 1
-        0x3_2: WB CH 2
-        0x3_3: WB CH 3
-        0x3_4: WB CH 4
-        0x3_5: WB CH 5
-        0x3_6: WB CH 6
-        0x3_7: WB CH 7
-        0x3_8: WB
+        0x3_0: (Weather Band) No Station
+        0x3_1: (Weather Band) WB CH 1
+        0x3_2: (Weather Band) WB CH 2
+        0x3_3: (Weather Band) WB CH 3
+        0x3_4: (Weather Band) WB CH 4
+        0x3_5: (Weather Band) WB CH 5
+        0x3_6: (Weather Band) WB CH 6
+        0x3_7: (Weather Band) WB CH 7
+        0x3_8: (Weather Band) WB
 
-        # RADIO
-        0x40: Radio Set Station
+        # Radio
+        0x4_0: (Radio) Set Station
+        0x4_1: (Radio) m    # Mode: Manual
+        0x4_2: (Radio) SCAN # Mode: SCAN
+        0x4_3: (Radio) II   # Mode: Search (Sensitive)
+        0x4_4: (Radio) I    # Mode: Search (Non Sensitive)
+        0x4_5: (Radio) --
+        0x4_6: (Radio) T    # Traffic Reports
+        0x4_7: (Radio) TP   # Traffic Program
+        0x4_8: (Radio) T (upper right?)
+        0x4_9: (Radio) m + T
+        0x4_a: (Radio) Scan + T
+        0x4_b: (Radio) II + T
+        0x4_c: (Radio) I? + T
+        0x4_d: (Radio) T
+        0x4_e: (Radio) T + T
+        0x4_f: (Radio) TP + T
 
-        # Selection
+        0x5_0: (Radio) Stereo
+        0x5_1: (Radio) m
+        0x5_2: (Radio) SCAN
+        0x5_3: (Radio) II
+        0x5_4: (Radio) I
+        0x5_5: (Radio) --
+        0x5_6: (Radio) T
+        0x5_7: (Radio) TP
+        0x5_8: (Radio) T (upper right)
+        0x5_9: (Radio) m + T
+        0x5_a: (Radio) Scan + T
+        0x5_b: (Radio) II + T
+        0x5_c: (Radio) I? + T
+        0x5_d: (Radio) T
+        0x5_e: (Radio) T + T
+        0x5_f: (Radio) TP + T
 
+        # 0x60 to 0x7F are 'nav' screens
+        # so far... only 0x62 sets anything
+        0x6_0: (RDS)
+        0x6_1: (RDS)
+        0x6_2: (RDS)
 
-        0x41: m?    # Mode: Manual
-        0x42: SCAN? # Mode: SCAN
-        0x43: II?   # Mode: Search (Sensitive)
-        0x44: I?    # Mode: Search (Non Sensitive)
-
-        0x46: T?    # Traffic Reports
-        0x47: TP?   # ?
-        0x48: T (upper right?)
-        0x49: m + T
-        # 0x4a: Scan + T
-        # 0x4b: II + T
-        # 0x4c: I? + T
-        # 0x4d: T
-        # 0x4e: T + T
-        # 0x4f: TP + T
-
-        0x50: Radio [ST]
-        0x51: m?
-        0x52: SCAN?
-        0x53: II?
-        0x54: I?
-        0x56: T?
-        0x57: TP?
-        0x58: T (upper right)
-        0x59: m + T
-        0x5a: Scan + T
-        0x5b: II + T
-        0x5c: I? + T
-        0x5d: T
-        0x5e: T + T
-        0x5f: TP + T
-
-        # 0x60 to 0x7F are Nav Screens
-        0x62: (Nav) Header
-
-        # TAPE
+        # Tape
         0x8_0: Tape Error
+        0x8_1: --
         0x8_2: Tape (1) ▶︎
         0x8_3: Tape (1) ▷▷▷
         0x8_4: Tape (1) ◁◁◁
@@ -1722,14 +1723,15 @@
         0x8_7: Tape (1) ◁◁
         0x8_8: Tape Clean
         0x8_9: Tape (A) <<>>
-        0x8_A: Tape (A)
-        0x8b: --
-        0x8c: --
-        0x8d: --
-        0x8e: --
-        0x8f: --
+        0x8_a: Tape (A)
+        0x8_b: --
+        0x8_c: --
+        0x8_d: --
+        0x8_e: --
+        0x8_f: --
 
         0x9_0: Tape Error
+        0x9_1: --
         0x9_2: Tape (2) ▶︎
         0x9_3: Tape (2) ▷▷▷
         0x9_4: Tape (2) ◁◁◁
@@ -1737,30 +1739,30 @@
         0x9_7: Tape (2) ◁◁
         0x9_8: Tape Clean
         0x9_9: Tape (B) <<>>
-        0x9_A: TAPE (B)
-        0x9b: --
-        0x9c: --
-        0x9d: --
-        0x9f: --
-        0x9e: --
+        0x9_a: Tape (B)
+        0x9_b: --
+        0x9_c: --
+        0x9_d: --
+        0x9_f: --
+        0x9_e: --
 
         # RDS: TP?
-        0xA0: No Station
-        0xA1: Traffic 1
-        0xA2: Traffic 2
-        0xA3: --
-        0xA4: No Station
-        0xA5: Traffic 1
-        0xA6: Traffic 2
-        0xA7: --
-        0xA8: No Station
-        0xA9: Traffic 1
-        0xAA: Traffic 2
-        0xAB: --
-        0xAC: --
-        0xAD: --
-        0xAE: --
-        0xAF: --
+        0xa_0: (Traffic) No Station
+        0xa_1: (Traffic) Traffic 1
+        0xa_2: (Traffic) Traffic 2
+        0xa_3: --
+        0xa_4: (Traffic) No Station
+        0xa_5: (Traffic) Traffic 1
+        0xa_6: (Traffic) Traffic 2
+        0xa_7: --
+        0xa_8: (Traffic) No Station
+        0xa_9: (Traffic) Traffic 1
+        0xa_a: (Traffic) Traffic 2
+        0xa_b: --
+        0xa_c: --
+        0xa_d: --
+        0xa_e: --
+        0xa_f: --
 
         # all the way through to C0, then
         # C0..DF: display text
@@ -1772,17 +1774,17 @@
         # To have the 'Track' layout applied, the below format must be used
         # otherwise the zone defaults to 11 characters without a layout.
         # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
-        # 0xc0: No apparent action
-        0xC1: (CD) No Magazine!
-        0xC2: (CD) No Disc!
-        # 0xc3: No Apparent Action
-        0xC4: (CD) [< >] Disc/Track
-        0xC5: (CD) >>
-        0xC6: (CD) <<R
-        0xC7: (CD) [SCAN]
-        0xC8: (CD) [RANDOM]
-        # 0xC9: No apparent action
-        0xCA: (CD) [<< >>] Fast Forward/Reverse
+        0xc_0: --
+        0xc_1: (CD) No Magazine!
+        0xc_2: (CD) No Disc!
+        0xc_3: --
+        0xc_4: (CD) [< >] Disc/Track
+        0xc_5: (CD) >>
+        0xc_6: (CD) <<R
+        0xc_7: (CD) [SCAN]
+        0xc_8: (CD) [RANDOM]
+        0xc_9: --
+        0xc_a: (CD) [<< >>] Fast Forward/Reverse
     :ike:
       :type: :bit_array
       :parameters:
@@ -1826,36 +1828,36 @@
       :gfx:
         :type: :map
         :dictionary:
-          0x00: Telephone Screen Set
+          0x0_0: Telephone Screen Set
 
           # TELEPHONE
-          0x01: MID HFS On [▷ ◁]
-          0x02: Header HFS [🔊]
+          0x0_1: MID HFS On [▷ ◁]
+          0x0_2: Header HFS [🔊]
 
-          0x05: Pin-Code Screen Header Set
+          0x0_5: Pin-Code Screen Header Set
 
-          0x40: End Call Clear?
-          0x42: Contact/Call
-          0x43: Show Contact Number
-          0x41: Clear Contact
+          0x4_0: End Call Clear?
+          0x4_2: Contact/Call
+          0x4_3: Show Contact Number
+          0x4_1: Clear Contact
 
-          0x52: Directory Header Set
-          0x53: Directory Header Overwrite
-          0x61: Dial Header Overwrite
-          0x63: Rotary Rotary Header Overwrite
-          0x80: Default Header Overwrite
-          0x81: Top 8 Header Set
-          0x82: Top 8 Header Overwrite
+          0x5_2: Directory Header Set
+          0x5_3: Directory Header Overwrite
+          0x6_1: Dial Header Overwrite
+          0x6_3: Rotary Rotary Header Overwrite
+          0x8_0: Default Header Overwrite
+          0x8_1: Top 8 Header Set
+          0x8_2: Top 8 Header Overwrite
 
-          0x91: Info Header?
+          0x9_1: Info Header?
 
-          0xC0: SOS Header Set?
+          0xc_0: SOS Header Set?
       :ike:
         :type: :map
         :dictionary:
-          0x00: --
-          0x20: Set IKE
-          0x30: Update IKE
+          0x0_0: --
+          0x2_0: Set IKE
+          0x3_0: Update IKE
       :chars:
         :type: :chars
   :meta:
@@ -1891,58 +1893,13 @@
   :id:
     :d: 33
     :h: '0x21'
+  :schemas:
+    - :tel
   :properties:
     :short_name: TXT-21
     :long_name: MID Display
     :verbose: false
   :klass: ParameterizedCommand
-  :parameters:
-    :m1:
-      :type: :map
-      :dictionary:
-        0x42: '[TEL] Rotary'
-        0x43: '[TEL] Directory'
-        0x80: '[TEL] Top 8'
-
-        0xc0: '[CD?] Discs?'
-
-        0x60: '[RAD] Index?'
-    :m2:
-      :type: :integer
-    :m3:
-      :type: :bit_array
-      :parameters:
-        :block:
-          :type: :switch
-          :label: Blocking?
-          :states:
-            0: :off
-            1: :on
-        :column_1:
-          :type: :switch
-          :label: Column 1
-          :states:
-            0: :off
-            1: :on
-        :column_2:
-          :type: :switch
-          :label: Column 2
-          :states:
-            0: :off
-            1: :on
-        :row_2:
-          :type: :switch
-          :label: Row 2
-          :states:
-            0: :off
-            1: :on
-      :index:
-        :block: 1
-        :column_1: 2
-        :column_2: 3
-        :row_2: 5
-    :chars:
-      :type: :chars
   :index:
     :m1: 0
     :m2: 1
@@ -1951,7 +1908,103 @@
             begin: 3
             end: -1
             excl: false
-
+  :parameters:
+    :m1:
+      :type: :map
+      :dictionary:
+        0xc0: '(CD?) Discs?'
+        0x60: '(RDS) Menu A'
+        # Heading: 0x49
+        # Cell: 0x5a
+        0x61: '(RDS) Menu B'
+    :m2:
+      :type: :integer
+    :m3:
+      :type: :bit_array
+      :parameters:
+        :block:
+          :type: :switch
+          :label: Block
+          :states:
+            0: :off
+            1: :on
+        :flush:
+          :type: :switch
+          :label: Flush
+          :states:
+            0: :off
+            1: :on
+        :index:
+          :type: :integer
+      :index:
+        :block: 1
+        :flush: 2
+        :index:  !ruby/range
+                  begin: 3
+                  end: 7
+                  excl: false
+    :chars:
+      :type: :chars
+  :tel:
+    :id:
+      :d: 33
+      :h: '0x21'
+    :properties:
+      :short_name: TEL-21
+      :long_name: MID Display
+      :verbose: false
+    :klass: ParameterizedCommand
+    :index:
+      :m1: 0
+      :m2: 1
+      :m3: 2
+      :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+    :parameters:
+      :m1:
+        :type: :map
+        :dictionary:
+          0x42: '[TEL] Rotary'
+          0x43: '[TEL] Directory'
+          0x80: '[TEL] Top 8'
+      :m2:
+        :type: :integer
+      :m3:
+        :type: :bit_array
+        :parameters:
+          :block:
+            :type: :switch
+            :label: Blocking?
+            :states:
+              0: :off
+              1: :on
+          :column_1:
+            :type: :switch
+            :label: Column 1
+            :states:
+              0: :off
+              1: :on
+          :column_2:
+            :type: :switch
+            :label: Column 2
+            :states:
+              0: :off
+              1: :on
+          :row_2:
+            :type: :switch
+            :label: Row 2
+            :states:
+              0: :off
+              1: :on
+        :index:
+          :block: 1
+          :column_1: 2
+          :column_2: 3
+          :row_2: 5
+      :chars:
+        :type: :chars
   :meta:
     :notes: always RAD to GFX
     :parameters:
@@ -1966,62 +2019,89 @@
     :long_name: Unknown
   :klass: ParameterizedCommand
   :index:
-    :gfx: 0
-    :ike: 1
+    :layout: 0
+    :padding: 1
     :zone: 2
     :chars: !ruby/range
               begin: 3
               end: -1
               excl: false
   :parameters:
-    :gfx:
+    :layout:
       :type: :map
       :dictionary:
-        # (0x00..0x5f) are good
-        # (0x80..0xff) normal
-        # (0x60..0x7f) are different
-        0x60: List A
-        0x61: List B
-        0x62: Change Station
-    :ike:
+        0b0110_0000: Menu A
+        0b0110_0001: Menu B
+        0b0110_0010: Header A
+    :padding:
       :type: :map
       :dictionary:
-        0x00: Block
-        0x01: No Block
+        0: Do nothing?
+        1: No Padding
+        2: Pad 1
+        3: Pad 2
+        4: Pad 3
+        5: Pad 4
+        6: Pad 5
+        7: Pad 6
+        8: Pad 7
+        9: Pad 8
+        10: Pad 9
+        11: Pad 10
+        12: Pad 11
+        13: Pad 12
+        14: Pad 13
+        15: Pad 14
+        16: Pad 15
+        17: Pad 16
+        18: Pad 17
     :zone:
       :type: :bit_array
+      :index:
+        :zone: !ruby/range
+                  begin: 3
+                  end: 7
+                  excl: false
+        :menu: 1
+        :flash: 0
       :parameters:
-        :zone:
-          :type: :map
-          :label: 'Zone'
-          :map:
-            0b001: :a
-            0b010: :b
-            0b011: :c
-            0b100: :d
-            0b101: :e
-            0b110: :h2
-            0b111: :h3
-          :dictionary:
-            0b001: 'Ax5'
-            0b010: 'Bx5'
-            0b011: 'Cx5'
-            0b100: 'Dx5'
-            0b101: 'Ex7'
-            0b110: 'H2x20'
-            0b111: 'H3x20'
         :flash:
           :type: :switch
           :label: 'Flash'
           :states:
             0: :off
             1: :on
-      :index:
-        :zone: !ruby/range
-                  begin: 4
-                  end: 7
-                  excl: false
-        :flash: 0
+        :menu:
+          :type: :switch
+          :label: 'Menu'
+          :states:
+            0: :off
+            1: :on
+        :zone:
+          :type: :map
+          :label: 'Zone'
+          :map:
+            0b0001: :a
+            0b0010: :b
+            0b0011: :c
+            0b0100: :d
+            0b0101: :e
+            0b0110: :h2
+            0b0111: :h3
+          :dictionary:
+            0b0000: '0'
+            0b0001: 'A/1'
+            0b0010: 'B/2'
+            0b0011: 'C/3'
+            0b0100: 'D/4'
+            0b0101: 'E/5'
+            0b0110: 'H2/6'
+            0b0111: 'H3/7'
+            0b1000: '8'
+            0b1001: '9'
+            0b1010: '10'
+            0b1011: '11'
+            0b1100: '12'
     :chars:
       :type: :chars
   :meta:

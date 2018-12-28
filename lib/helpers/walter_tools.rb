@@ -74,7 +74,7 @@ module WalterTools
       *SPEED, *TEMPERATURE, *COUNTRY, *VEHICLE, *LAMP,
       *SENSORS, *OBC, *READY, *IGNITION
     )
-    DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SND_SRC, MENU_GFX, MENU_RAD)
+    DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SRC_SND, MENU_GFX, MENU_RAD)
   end
 
   def nav
