@@ -3,7 +3,7 @@
 module Capabilities
   module Radio
     # CD Changer Reqests
-    module NavigationDisplay
+    module RDSDisplay
       include API::Radio
       include Constants
       include DataTools

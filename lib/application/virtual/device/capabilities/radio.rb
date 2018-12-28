@@ -7,6 +7,6 @@ module Capabilities
     include UserInterface
     include CDChangerControl
     include CDChangerDisplay
-    include NavigationDisplay
+    include RDSDisplay
   end
 end

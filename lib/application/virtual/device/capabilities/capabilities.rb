@@ -12,7 +12,7 @@ require "#{root}/radio/constants"
 require "#{root}/radio/cd_changer_control"
 require "#{root}/radio/cd_changer_display"
 require "#{root}/radio/radio_display"
-require "#{root}/radio/nav_display"
+require "#{root}/radio/rds_display"
 require "#{root}/radio/user_interface"
 require "#{root}/radio"
 
