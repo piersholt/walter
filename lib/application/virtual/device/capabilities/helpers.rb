@@ -47,6 +47,10 @@ module Capabilities
       array.map {|i| i.chr }.join
     end
 
+    def wait
+      Kernel.sleep(0.01)
+    end
+
     alias genc generate_chars
     alias geni generate_ints
   end

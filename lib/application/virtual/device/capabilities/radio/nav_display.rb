@@ -5,87 +5,129 @@ module Capabilities
     # CD Changer Reqests
     module NavigationDisplay
       include API::Radio
+      include Constants
+      include DataTools
+
+      # --------------------------------------------------------------------- #
 
       # Title 11 chars
-      def title(to: :gfx,
-                from: :rad,
-                gfx: 0x62, ike: 0x30,
-                chars: genc(12))
-        primary(to: to, from: from, gfx: gfx, ike: ike, chars: chars)
+      def title(gfx: LAYOUT_HEADER,
+                ike: 0x30,
+                chars: genc(11))
+        primary(gfx: gfx, ike: ike, chars: chars)
       end
 
       # Subtitles 20 chars
-      def subtitle(to: :gfx,
-                   from: :rad,
-                   gfx: 0x62, ike: 0x01,
-                   zone: ZONE_H2,
-                   chars: genc(20))
-        secondary(to: to, from: from, gfx: gfx, ike: ike, zone: zone, chars: chars)
+      def h2(layout: LAYOUT_HEADER,
+             padding: PADDING_NONE,
+             zone: INDEX_FIELD_6,
+             chars: genc(20))
+        secondary(layout: layout, padding: padding, zone: zone, chars: chars)
       end
 
-      def index
-        list(m1: 0x60, m2: 0x00, m3: i, chars: geni(5))
+      # Subtitles 20 chars
+      def h3(layout: LAYOUT_HEADER,
+             padding: PADDING_NONE,
+             zone: INDEX_FIELD_7,
+             chars: genc(10))
+        secondary(layout: layout, padding: padding, zone: zone, chars: chars)
       end
 
-      REFRESH = 0x00
-      ZONE_A = 0b001
-      ZONE_B = 0b010
-      ZONE_C = 0b011
-      ZONE_D = 0b100
-      ZONE_E = 0b101
-      ZONE_H2 = 0b110
-      ZONE_H3 = 0b111
+      # ------------------------------- 0xa5 ------------------------------- #
 
-      # INDEXES = [0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49]
-      INDEXES = [0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9]
+      # ok, if CD Track XX comes up due to track change
+      # it doesn't erase the menus
+      # if i'm on 0x23 62.. then track changes
+      # when i pull up the menus they're still in memory
 
-      def h2
-        sub_heading(zone: ZONE_H2)
-      end
-
-      def h3
-        sub_heading(zone: ZONE_H3)
-      end
-
-      def zone(zone_id)
-        case zone_id
-        when :a
-          sub_heading(zone: ZONE_A)
-        when :b
-          sub_heading(zone: ZONE_B)
-        when :c
-          sub_heading(zone: ZONE_C)
-        when :d
-          sub_heading(zone: ZONE_D)
-        when :e
-          sub_heading(zone: ZONE_E)
+      # i want to try blocking here.. can i draw all, then mass update?
+      def header_a5(layout: LAYOUT_HEADER)
+        FIELD_INDEXES.each do |field_id|
+          item_a5(layout: layout, padding: PADDING_NONE, zone: field_id, chars: "a5#{d2h(layout)}#{d2h(field_id)}#{geni(1)}")
+          wait
         end
+        # flush(layout: LAYOUT_MENU_A)
       end
 
-      def test_macro(gfx: 0x60)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_A, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_B, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_C, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_D, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_E, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_H2, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x00, zone: ZONE_H3, chars: genc(5))
-        Kernel.sleep(0.05)
-        subtitle(gfx: gfx, ike: 0x01, zone: REFRESH, chars: '')
-      end
-
-      def index_macro(gfx: 0x60)
-        INDEXES.each do |i|
-          list(m1: gfx, m2: 0x00, m3: i, chars: geni(5))
-          Kernel.sleep(0.05)
+      def clear_a5(layout: LAYOUT_HEADER)
+        FIELD_INDEXES.each do |field_id|
+          item_a5(layout: layout, padding: PADDING_NONE, zone: field_id, chars: CLEAR_CHARS)
+          Kernel.sleep(0.01)
         end
-        subtitle(gfx: gfx, ike: 0x01, zone: REFRESH, chars: '')
+        # flush(layout: LAYOUT_MENU_A)
+      end
+
+      # current issue is this doesn't draw row 1 column 1
+      # it was the same with.... both indexes...
+      # interestingly 0x60 _does_ draw menus....
+
+      # when you use this... every messget gets GFX-STATUS reply...
+      # i can see the screen visibly dim...
+      # is there a block/unblock argument?
+      # well... what do you know... 0b0100_0000 stops refresh...
+      # or because.... it's not a valid field, so it does nothing...?
+
+      # menu A5 _kinda_ works...
+      # def menu_a5(layout: LAYOUT_MENU_A, padding: PADDING_NONE, index: ITEM_INDEXES)
+      #   index.each do |index_id|
+      #     item_a5(layout: layout, padding: padding, zone: index_id)
+      #     wait
+      #   end
+      #   flush(layout: layout)
+      # end
+
+      def item_a5(layout:,
+                  padding:,
+                  zone: rfi,
+                  chars: "a5_#{d2h(layout)}_#{d2h(zone)}_#{genc(2)}")
+        secondary(layout: layout,
+                  padding: padding,
+                  zone: zone,
+                  chars: chars)
+      end
+
+      def flush(layout:)
+        secondary(layout: layout,
+                  padding: PADDING_NONE,
+                  zone: NO_INDEX,
+                  chars: NO_CHARS)
+      end
+
+      # ------------------------------- 0x21 ------------------------------- #
+
+      # current issue it doesn't refresh
+      # that was independent of index IDs
+      # the documents do say use (A5 60 01 00 '')
+
+      def menu_21(layout: LAYOUT_MENU_A, index: ITEM_INDEXES)
+        index.each do |index_id|
+          item_21(layout: layout, zone: index_id, chars: "#{d2h(layout)}_#{d2h(index_id)}_#{genc(1)}")
+          wait
+        end
+        # the layout must match
+        flush(layout: layout)
+      end
+
+      def item_21(layout:,
+                  m2: 0x01,
+                  zone:,
+                  chars:)
+        list(m1: layout,
+             m2: m2,
+             m3: zone,
+             chars: chars)
+      end
+
+      # ------------------------------------------------------------------- #
+
+      def rii
+        index = Random.rand(0..(ITEM_INDEXES.length - 1))
+        ITEM_INDEXES[index]
+      end
+
+      def rfi
+        index = Random.rand(0..(FIELD_INDEXES.length - 3))
+        FIELD_INDEXES[index]
       end
     end
   end
