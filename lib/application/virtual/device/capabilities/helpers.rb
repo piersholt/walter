@@ -43,6 +43,10 @@ module Capabilities
       end.join
     end
 
+    def integer_array_to_chars(array)
+      array.map {|i| i.chr }.join
+    end
+
     alias genc generate_chars
     alias geni generate_ints
   end

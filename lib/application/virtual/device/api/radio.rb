@@ -18,13 +18,13 @@ module API
     # MENU/USER INTERFACE
 
     # 0x46 MENU-RAD
-    def interface(from: :rad, to: :gfx, arguments:)
+    def menu_rad(from: :rad, to: :gfx, arguments:)
       try(from, to, MENU_RAD, arguments)
     end
 
     # 0x37 RAD-ALT
-    def select(from: :rad, to: :gfx, **arguments)
-      try(from, to, 0x37, arguments)
+    def rad_alt(from: :rad, to: :gfx, **arguments)
+      try(from, to, RAD_ALT, arguments)
     end
 
     # DISPLAY

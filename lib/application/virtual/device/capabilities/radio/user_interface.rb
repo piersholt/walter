@@ -7,25 +7,25 @@ module Capabilities
       include API::Radio
 
       def main
-        interface(arguments: { state: 0b0000_0001 })
+        menu_rad(arguments: { state: 0b0000_0001 })
       end
 
-      def overlay(option = 0b0000_1110)
-        interface(arguments: { state: option })
+      def menu_rad!(option = 0b0000_1110)
+        menu_rad(arguments: { state: option })
       end
 
       def eq(band = :eq)
         case band
         when :bass
-          selection(mode: 0xc0)
+          rad_alt(mode: 0xc0)
         when :treble
-          selection(mode: 0xd0)
+          rad_alt(mode: 0xd0)
         when :fader
-          selection(mode: 0xe0)
+          rad_alt(mode: 0xe0)
         when :balance
-          selection(mode: 0xf0)
+          rad_alt(mode: 0xf0)
         when :eq
-          selection(mode: 0x80)
+          rad_alt(mode: 0x80)
         end
       end
     end
