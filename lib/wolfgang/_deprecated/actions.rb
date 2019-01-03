@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Actions
+  def self.included(mod)
+    raise ScriptError, "#{mod} cannot use Actions due to deprececation."
+  end
+
   # ACTION
   SEEK = :seek
   SCAN = :scan

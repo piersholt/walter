@@ -45,7 +45,7 @@ class Virtual
           DynamicDevice.builder
                        .target(device_ident)
                        .result
-        augmented_device.add_observer(intent_listener, :handle)
+        # augmented_device.add_observer(intent_listener, :handle)
         augmented_device
       else
         LogActually.virtual.debug(PROC) { "Create dumb: #{device_ident}|" }
@@ -53,9 +53,9 @@ class Virtual
       end
     end
 
-    def intent_listener
-      @intent_listener ||= IntentListener.instance
-    end
+    # def intent_listener
+    #   @intent_listener ||= IntentListener.instance
+    # end
 
     def populate_bus(bus, devices)
       devices.each do |device|

@@ -3,7 +3,7 @@
 # Comment
 class Virtual
   class AugmentedDevice < DynamicDevice
-    include Actions
+    # include Actions
 
     PROC = 'AugmentedDevice'.freeze
 

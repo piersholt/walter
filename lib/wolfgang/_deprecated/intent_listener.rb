@@ -4,7 +4,7 @@
 class IntentListener
   include Singleton
   include Event
-  include Actions
+  # include Actions
   include Intents
 
   attr_reader :handler

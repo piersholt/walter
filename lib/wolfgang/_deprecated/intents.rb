@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Intents
+  def self.included(mod)
+    raise ScriptError, "#{mod} cannot use #{self} due to deprececation."
+  end
   # CHANNEL
   INTENT = :intent
 
