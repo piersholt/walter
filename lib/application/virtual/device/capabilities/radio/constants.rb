@@ -18,6 +18,11 @@ module Capabilities
       NO_CHARS = ''
       CLEAR_CHARS = Array.new(20) { ' ' }.join
 
+      LENGTH_TITLE = 11
+      LENGTH_SUBHEADING = 20
+      LENGTH_A = 5
+      LENGTH_B = 7
+
       INDEX_FIELD_1 = 0b0001
       INDEX_FIELD_2 = 0b0010
       INDEX_FIELD_3 = 0b0011
@@ -43,6 +48,23 @@ module Capabilities
         [INDEX_ITEM_0, INDEX_ITEM_1, INDEX_ITEM_2, INDEX_ITEM_3,
          INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6, INDEX_ITEM_7,
          INDEX_ITEM_8, INDEX_ITEM_9].freeze
+
+    # def rii
+    #   index = Random.rand(0..(ITEM_INDEXES.length - 1))
+    #   ITEM_INDEXES[index]
+    # end
+    #
+    # def rfi
+    #   index = Random.rand(0..(FIELD_INDEXES.length - 3))
+    #   FIELD_INDEXES[index]
+    # end
+
+    # def index(id, block = false, flush = false)
+    #   return id unless block || flush
+    #   result = id + 0b0100_0000 if block
+    #   result = id + 0b0100_0000 if flush
+    #   result
+    # end
     end
   end
 end

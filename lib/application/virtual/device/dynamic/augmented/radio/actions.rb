@@ -8,11 +8,39 @@ class Virtual
     module Actions
       include CommandAliases
       include CommandGroups
-      include ::Actions
+      # include ::Actions
+      include Messaging::Constants
+      include Messaging::API
+
+      NEXT_PRESS = 0x00
+      NEXT_HOLD = 0x40
+      NEXT_RELEASE = 0x80
+
+      PREV_PRESS = 0x10
+      PREV_HOLD = 0x50
+      PREV_RELEASE = 0x90
 
       private
 
-      def forward_back(message)
+      def bmbt_button_1(message)
+        value = message.command.totally_unique_variable_name
+
+        # LOGGER.debug(PROC) { "#{MFL_FUNC}-#{value}" }
+        case value
+        when NEXT_HOLD
+          scan_forward_start
+        when PREV_HOLD
+          scan_back_start
+        when NEXT_RELEASE
+          return scan_forward_stop if scanning?
+          seek_forward
+        when PREV_RELEASE
+          return scan_back_stop if scanning?
+          seek_back
+        end
+      end
+
+      def mfl_function(message)
         # forward_press = 0x01
         forward_hold = 0x11
         forward_release = 0x21
@@ -42,45 +70,45 @@ class Virtual
       end
 
       def seek_forward
-        thy_will_be_done!(:seek_forward)
+        thy_will_be_done!(MEDIA, SEEK_NEXT)
       end
 
       def seek_back
-        thy_will_be_done!(:seek_back)
+        thy_will_be_done!(MEDIA, SEEK_PREVIOUS)
       end
 
       def scan_forward_start
         scanning!
-        thy_will_be_done!(:scan_forward_start)
+        thy_will_be_done!(MEDIA, SCAN_FORWARD_START)
       end
 
       def scan_forward_stop
         scanned!
-        thy_will_be_done!(:scan_forward_stop)
+        thy_will_be_done!(MEDIA, SCAN_FORWARD_STOP)
       end
 
       def scan_back_start
         scanning!
-        thy_will_be_done!(:scan_back_start)
+        thy_will_be_done!(MEDIA, SCAN_BACKWARD_START)
       end
 
       def scan_back_stop
         scanned!
-        thy_will_be_done!(:scan_back_stop)
+        thy_will_be_done!(MEDIA, SCAN_BACKWARD_STOP)
       end
 
-      def thy_will_be_done!(command)
-        action = Messaging::Action.new(topic: :media, name: command)
-        fuckin_send_it_lads!(action)
-      end
-
-      def fuckin_send_it_lads!(action)
-        LOGGER.debug(PROC) { "sending: #{action}"}
-        Publisher.send(action.topic, action.to_yaml)
-      rescue StandardError => e
-        LOGGER.error(self.class) { e }
-        e.backtrace.each { |line| LOGGER.error(self.class) { line } }
-      end
+      # def thy_will_be_done!(command)
+      #   action = Messaging::Action.new(topic: MEDIA, name: command)
+      #   fuckin_send_it_lads!(action)
+      # end
+      #
+      # def fuckin_send_it_lads!(action)
+      #   LogActually.messaging.debug(PROC) { "sending: #{action}"}
+      #   Publisher.send!(action)
+      # rescue StandardError => e
+      #   LogActually.messaging.error(self.class) { e }
+      #   e.backtrace.each { |line| LogActually.messaging.warn(self.class) { line } }
+      # end
 
       def scanning?
         @scanning ||= false

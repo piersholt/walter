@@ -4,12 +4,12 @@
 class Virtual
   # Comment
   class AugmentedRadio < AugmentedDevice
-    include API::Display
+    # include API::Display
     include API::RadioLED
     include Actions
     include Notifications
     include Capabilities::OnBoardMonitor
-    include Capabilities::Radio 
+    include Capabilities::Radio
 
     PROC = 'AugmentedRadio'
 
@@ -21,9 +21,11 @@ class Virtual
       case command_id
       when MFL_FUNC
         LogActually.rad.debug(PROC) { "Handling: MFL-FUNC" }
-        forward_back(message)
+        mfl_function(message)
       when BMBT_A
-        LogActually.rad.debug(PROC) { "BMBT-1 not implemented." }
+        # LogActually.rad.debug(PROC) { "BMBT-1 not implemented." }
+        LogActually.rad.debug(PROC) { "Handling: BMBT-1" }
+        bmbt_button_1(message)
       when BMBT_B
         LogActually.rad.debug(PROC) { "BMBT-2 not implemented." }
       when SRC_CTL
