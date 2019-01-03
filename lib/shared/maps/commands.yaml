@@ -1461,8 +1461,8 @@
     :long_name: Multifunction Steering Wheel (Controls)
     :state:
       # To Telephone
-      0x00: "R/T: Telephone"
-      0x40: "R/T: Radio"
+      0x00: "R/T: RADIO MODE"
+      0x40: "R/T: TELEPHONE MODE"
       0x80: "Tel: Press"
       0x90: "Tel: Hold"
       0xA0: "Tel: Release"
