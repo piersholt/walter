@@ -30,12 +30,15 @@ begin
   LogActually.is_all_around(:virtual)
   LogActually.virtual.i
   LogActually.is_all_around(:parameterized)
-  LogActually.parameterized.d
+  LogActually.parameterized.i
   LogActually.is_all_around(:rad)
   LogActually.rad.i
 
   LogActually.is_all_around(:cdc)
   LogActually.cdc.d
+
+  LogActually.is_all_around(:messaging)
+  LogActually.messaging.d
 
   LogActually.is_all_around(:wolfgang)
   LogActually.wolfgang.d

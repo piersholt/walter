@@ -56,7 +56,7 @@ class Walter
 
     @bus =
       Virtual::Initialization
-      .new(augmented: [:rad], simulated: [:tel])
+      .new(augmented: [], emulated: [])
       .execute
 
     @interface_handler = DataLinkHandler.new(@transmitter)
