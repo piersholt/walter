@@ -44,6 +44,10 @@ module Capabilities
         state[:track]
       end
 
+      def current_cd
+        state[:cd]
+      end
+
       def next_track
         current_track + 1
       end

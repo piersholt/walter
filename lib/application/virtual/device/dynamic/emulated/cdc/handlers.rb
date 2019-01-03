@@ -4,66 +4,95 @@ class Virtual
   class EmulatedCDC < EmulatedDevice
     # Incoming command handlers
     module Handlers
+      include Capabilities::CDChanger::Constants
+      include Messaging::API
+      include LogActually::ErrorOutput
+
       def handle_cd_changer_request(command)
+        LogActually.cdc.debug(ident) { "State prior to handling: #{mapped}" }
         delegate_changer_request(command)
-        # send_status(current_state)
+        send_status(current_state)
       end
 
       def delegate_changer_request(command)
-        LogActually.cdc.debug(name) { "#{command.control?}, #{command.mode.value}" }
+        LogActually.cdc.debug(name) { "Control: #{command.control?}, Mode: #{command.mode.value}" }
         case command.control?
         when :status
-          LogActually.cdc.debug(name) { ':status!' }
-          # handle_status_request
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :status!" }
+          handle_status_request
         when :play
-          LogActually.cdc.debug(name) { ':play!' }
-          # handle_play
-        when :stopped
-          LogActually.cdc.debug(name) { ':stopped!' }
-          # handle_stop
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :play!" }
+          handle_play
+          play!
+        when :stop
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :stop!" }
+          handle_stop
+          stop!
         when :seek
-          LogActually.cdc.debug(name) { ':seek!' }
-          # handle_seek(request_mode: command.mode.value)
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :seek!" }
+          handle_seek(request_mode: command.mode.value)
         when :scan
-          LogActually.cdc.debug(name) { ':scan!' }
-          # handle_scan(request_mode: command.mode.value)
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :scan!" }
+          handle_scan(request_mode: command.mode.value)
         when :change_disc
-          LogActually.cdc.debug(name) { ':change_disc!' }
-          # handle_change_disc(request_mode: command.mode.value)
-          # send_status(current_state)
-          # handle_play
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :change_disc!" }
+          handle_change_disc(request_mode: command.mode.value)
+          send_status(current_state)
+          handle_play
         else
           LogActually.cdc.warn(name) { "Control: #{control}, not handled?" }
           return false
         end
+      rescue StandardError => e
+        with_backtrace(LogActually.cdc, e)
       end
 
       # Radio Request Handling
 
       def handle_status_request
-        LogActually.cdc.debug(ident) { 'Handling CDC status.' }
+        LogActually.cdc.info(ident) { 'Handling CDC status.' }
       end
 
       def handle_stop
-        LogActually.cdc.debug(ident) { 'Handling disc stop.' }
+        LogActually.cdc.info(ident) { 'Handling disc stop.' }
 
-        new_state = { control: CONTROL[:stopped],
-                      status: STATUS[:idle] }
-        state!(new_state)
+        stopped
+        LogActually.cdc.debug(ident) { "Stopped => #{mapped}" }
+        idle
+        LogActually.cdc.debug(ident) { "Idle => #{mapped}" }
+      end
+
+      def stop!
+        LogActually.cdc.info(ident) { 'Notification: stop!' }
+        thy_will_be_done!(MEDIA, STOP)
+      rescue StandardError => e
+        with_backtrace(LogActually.cdc, e)
+      end
+
+      def play!
+        LogActually.cdc.info(ident) { 'Notification: play!' }
+        thy_will_be_done!(MEDIA, PLAY)
+      rescue StandardError => e
+        with_backtrace(LogActually.cdc, e)
       end
 
       def handle_play
-        LogActually.cdc.debug(ident) { 'Handling disc play.' }
-        state!(control: CONTROL[:playing], status: STATUS[:active])
+        LogActually.cdc.info(ident) { 'Handling disc play.' }
+        playing
+        LogActually.cdc.debug(ident) { "Playing => #{mapped}" }
+        active
+        LogActually.cdc.debug(ident) { "Active => #{mapped}" }
         case current_control
         when CONTROL[:fwd]
-          state!(track: next_track) if too_short_to_be_scan?
+          track(next_track) if too_short_to_be_scan?
         when CONTROL[:rwd]
-          state!(track: previous_track) if too_short_to_be_scan?
+          track(previous_track)  if too_short_to_be_scan?
         when CONTROL[:off]
           state!(cd: 0, track: 0)
         when CONTROL[:playing]
-          state!(cd: 1, track: current_track)
+          cd(current_cd)
+          track(current_track)
+          LogActually.cdc.debug(ident) { "CD & Track => #{mapped}" }
         else
           LogActually.cdc.warn(ident) { 'handle play current control not handled?' }
           state!(cd: 9, track: 99)
@@ -71,53 +100,63 @@ class Virtual
       end
 
       def handle_seek(request_mode:)
-        LogActually.cdc.debug(ident) { "#handle_seek(#{mode})" }
-        # LogActually.cdc.debug(ident) { 'Handling track skip.' }
+        LogActually.cdc.info(ident) { "#handle_seek(#{mode})" }
 
         case request_mode
         when 0
           LogActually.cdc.debug(ident) { "mode 0 => next_track" }
-          control = CONTROL[:next]
-          track = next_track
+          control_next
+          LogActually.cdc.debug(ident) { "Next => #{mapped}" }
+          track(next_track)
+          LogActually.cdc.debug(ident) { "Track => #{mapped}" }
         when 1
           LogActually.cdc.debug(ident) { "mode 1 => previous_track" }
-          control = CONTROL[:previous]
-          track = previous_track
+          previous
+          LogActually.cdc.debug(ident) { "Previous => #{mapped}" }
+          track(previous_track)
+          LogActually.cdc.debug(ident) { "Track => #{mapped}" }
         else
-            LogActually.cdc.warn(ident) { "mode #{mode} => ???" }
+          LogActually.cdc.warn(ident) { "mode #{mode} => ???" }
         end
 
-        state!(control: control, status: STATUS[:active], track: track)
-        start_timer
+        idle
+        # start_timer
       end
 
       def handle_scan(request_mode:)
-        LogActually.cdc.debug(ident) { 'Handling track scan.' }
+        LogActually.cdc.info(ident) { 'Handling track scan.' }
 
         case request_mode
         when 0
           LogActually.cdc.debug(ident) { "mode 0 => fwd" }
-          control = CONTROL[:fwd]
+          fwd
+          LogActually.cdc.debug(ident) { "FWD => #{mapped}" }
         when 1
           LogActually.cdc.debug(ident) { "mode 0 => rwd" }
-          control = CONTROL[:rwd]
+          rwd
+          LogActually.cdc.debug(ident) { "RWD => #{mapped}" }
         end
 
-        state! control: control, status: STATUS[:idle]
-        start_timer
+        idle
+        # start_timer
       end
 
       def handle_change_disc(request_mode:)
-        LogActually.cdc.debug(ident) { 'Handling disc change.' }
+        LogActually.cdc.info(ident) { 'Handling disc change.' }
 
         requested_disc = request_mode
         LogActually.cdc.debug(ident) { "Requested disc: #{requested_disc}" }
 
-        new_state = { control: CONTROL[:changed],
-                      status: STATUS[:active],
-                      cd: requested_disc,
-                      track: 1 }
-        state!(new_state)
+        ready
+        active
+        cd(requested_disc)
+        track(1)
+
+        # new_state = { control: CONTROL[:changed],
+        #               status: STATUS[:active],
+        #               cd: requested_disc,
+        #               track: 1 }
+        # state!(new_state)
       end
     end
   end

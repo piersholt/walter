@@ -8,8 +8,8 @@ class Virtual
     # include State
     include Handlers
     include Capabilities::CDChanger
-    include Capabilities::GFX
-    include Capabilities::Radio
+    # include Capabilities::GFX
+    # include Capabilities::Radio
 
     attr_reader :message, :from, :to,
                 :command, :command_id,
@@ -30,6 +30,7 @@ class Virtual
       id = message.command.normal_fucking_decimal
       case id
       when CDC_REQ
+        LogActually.cdc.debug(ident) { "#handle_message => CDC_REQ (#{CDC_REQ})" }
         handle_cd_changer_request(message.command)
       # when TXT_GFX
       #   handle_cd_changer_request(message.command)
