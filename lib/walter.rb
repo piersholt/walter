@@ -19,6 +19,7 @@ require 'physical/interface'
 require 'data_link/transmitter'
 
 require 'application/application'
+require 'wolfgang/wolfgang'
 
 # Container
 class Walter
@@ -27,7 +28,8 @@ class Walter
   include ManageableThreads
   include Analyze
 
-  attr_reader :bus
+  attr_reader :bus, :wolfgang
+  alias w wolfgang
 
   PROC = 'Walter'.freeze
 
@@ -92,6 +94,9 @@ class Walter
     add_observer(@display_listener)
 
     defaults
+
+    @wolfgang = Wolfgang::Service.new
+    @wolfgang.bus = @bus
   end
 
   def launch
@@ -124,7 +129,8 @@ class Walter
     @transmitter.on
     @demultiplexer.on
     @multiplexer.on
-    # Notifications.start(@bus)
+    @wolfgang.open
+    # ::Notifications.start(@bus)
   end
 
   def stop

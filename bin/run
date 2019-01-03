@@ -37,6 +37,9 @@ begin
   LogActually.is_all_around(:cdc)
   LogActually.cdc.d
 
+  LogActually.is_all_around(:wolfgang)
+  LogActually.wolfgang.d
+
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
