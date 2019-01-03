@@ -40,6 +40,7 @@ begin
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
+  require 'helpers/manageable_threads'
   require 'yabber/yabber'
 rescue LoadError => e
   LOGGER.error('run') { e }
