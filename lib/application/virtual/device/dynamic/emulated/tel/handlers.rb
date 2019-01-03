@@ -4,7 +4,6 @@
 module Telephone
   include Stateful
   include API::Telephone
-  include API::Display
 
   PROC = 'SimTelephone'
 
@@ -63,6 +62,9 @@ module Telephone
   ACTION_DIR_OPEN = 0x1F
   ACTION_DIR_BACK = 0x0C
   ACTION_DIR_FORWARD = 0x0D
+
+  ACTION_INFO_OPEN = 0x0A
+  ACTION_DIAL_OPEN = 0x1E
 
   # VALUES ------------------------------------------------------------------
 
@@ -123,7 +125,6 @@ module Telephone
 
   def clear(display)
     LOGGER.unknown(PROC) { "Mock: clearing :#{display}!" }
-    command_arguments = {}
 
     m1 =
       case display
@@ -176,22 +177,22 @@ module Telephone
   end
 
   def generate_contact(position = 1, inverse = false)
-    contacts = CONTACTS.dup
+    contacts = CONTACTS.dup.shuffle
     contacts.reverse! if inverse
     contacts[position]
   end
 
   # Delegates  -----------------------------------------------------------------
 
-  def delegate_directory(message)
+  def delegate_directory(action)
     LOGGER.unknown(PROC) { "Mock: handling directory..." }
-    if message.command.action.value == ACTION_DIR_BACK
+    if action == ACTION_DIR_BACK
       LOGGER.unknown(PROC) { "Mock: oh, directory pages back!" }
       render_pending_clearance(:directory)
-    elsif message.command.action.value == ACTION_DIR_FORWARD
+    elsif action == ACTION_DIR_FORWARD
       LOGGER.unknown(PROC) { "Mock: oh, directory pages forward!" }
       render_pending_clearance(:directory)
-    elsif message.command.action.value == ACTION_DIR_OPEN
+    elsif action == ACTION_DIR_OPEN
       LOGGER.unknown(PROC) { "Mock: oh, directory pages forward!" }
       render_pending_clearance(:directory)
     else
@@ -199,7 +200,12 @@ module Telephone
     end
   end
 
-  def delegate_favourites(message)
+  STRENGTH = [0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0x5F, 0xB8].freeze
+  def delegate_info
+    hud(from: :tel, to: :gfx, gfx: 0x91, ike: 0x00, chars: [STRENGTH.shuffle.first])
+  end
+
+  def delegate_favourites
     LOGGER.unknown(PROC) { "Mock: handling favourites..." }
     LOGGER.unknown(PROC) { "Mock: oh, directory open!!" }
     render_pending_clearance(:favourites)
@@ -225,12 +231,13 @@ module Telephone
 
   # API calls  ----------------------------------------------------------------
 
-  def tel_display
-    to_id = address(:gfx)
-
-    args = { gfx: 0x80, ike: 0x20, chars: '' }
-    displays(args, my_address, to_id)
-  end
+  # def tel_display
+  #   to_id = address(:gfx)
+  #
+  #   args = { gfx: 0x80, ike: 0x20, chars: '' }
+  #   # displays(args, my_address, to_id)
+  #   displays(gfx: 0x80, ike: 0x20, chars: '')
+  # end
 
   def tel_state(telephone_state = TEL_OFF)
     status(status: telephone_state)
@@ -244,7 +251,7 @@ module Telephone
 
   def handle_tel_open(message)
     LOGGER.unknown(PROC) { "Mock: handling telephone tel open request..." }
-    delegate_favourites(message)
+    delegate_favourites
   end
 
   # Piggyback off the radio announce to annunce
@@ -272,15 +279,18 @@ module Telephone
     # when SOURCE_TOP
     #   handle_top(message)
     # end
-
+    source = message.command.source.value
+    function = message.command.function.value
     action = message.command.action.value
     case action
     when ACTION_DIR_OPEN
-      delegate_directory(message)
+      delegate_directory(action)
     when ACTION_DIR_BACK
-      delegate_directory(message)
+      delegate_directory(action)
     when ACTION_DIR_FORWARD
-      delegate_directory(message)
+      delegate_directory(action)
+    when ACTION_INFO_OPEN
+      delegate_info
     end
   end
 
