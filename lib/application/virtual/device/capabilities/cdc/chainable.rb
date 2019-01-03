@@ -21,8 +21,20 @@ module Capabilities
         self
       end
 
+      def rwd
+        state!(control: CONTROL[:rwd])
+        self
+      end
+
       def next
         state!(control: CONTROL[:next])
+        self
+      end
+
+      alias control_next next
+
+      def previous
+        state!(control: CONTROL[:previous])
         self
       end
 
