@@ -96,6 +96,13 @@ module DataLink
         packet = Packet.new(from_device, to_device, payload)
         LogActually.datalink.debug(name) { "Packet build: #{packet}" }
         packet
+      rescue TypeError => e
+        LogActually.datalink.error(name) { e }
+        LogActually.datalink.error(name) { cause }
+        e.backtrace.each { |l| LogActually.datalink.error(l) }
+      rescue StandardError => e
+        LogActually.datalink.error(name) { e }
+        e.backtrace.each { |l| LogActually.datalink.error(l) }
       end
     end
   end

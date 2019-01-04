@@ -73,6 +73,9 @@ class FrameSynchronisation
     LogActually.datalink.debug(name) { "#{SYNC_VALIDATION} Validating new frame." }
     raise ChecksumError unless frame.valid?
     LogActually.datalink.debug(name) { "#{SYNC} Valid! #{frame}" }
+  rescue ChecksumError => e
+    # Need to rescue and raise this again otherwise StandardError rescue buggers it up
+    raise e
   rescue StandardError => e
     LogActually.datalink.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
     e.backtrace.each { |l| LogActually.datalink.warn(l) }
