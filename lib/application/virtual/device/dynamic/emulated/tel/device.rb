@@ -7,7 +7,7 @@ class Virtual
 
     PROC = 'SimulatedTEL'.freeze
 
-    def handle_message(message)
+    def handle_virtual_receive(message)
       command_id = message.command.d
       LOGGER.debug('SimulatedTEL!') { "handle message id: #{command_id}" }
       case command_id

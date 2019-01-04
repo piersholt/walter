@@ -26,7 +26,7 @@ class Virtual
       LogActually.cdc
     end
 
-    def handle_message(message)
+    def handle_virtual_receive(message)
       id = message.command.normal_fucking_decimal
       case id
       when CDC_REQ

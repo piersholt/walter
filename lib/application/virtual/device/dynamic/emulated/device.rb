@@ -29,12 +29,16 @@ class Virtual
 
     # @override Virtual::Device#receive_packet
 
-    def handle_message(message)
+    def handle_virtual_receive(message)
       command_id = message.command.d
       case command_id
       when PING
         pong
       end
+    end
+
+    def handle_virtual_transmit(message)
+      false
     end
   end
 end

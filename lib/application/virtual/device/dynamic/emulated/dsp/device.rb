@@ -5,7 +5,7 @@ class Virtual
   class SimulatedDSP < EmulatedDevice
     PROC = 'SimulatedDSP'.freeze
 
-    def handle_message(message)
+    def handle_virtual_receive(message)
       command_id = message.command.d
       case command_id
       when DSP_EQ

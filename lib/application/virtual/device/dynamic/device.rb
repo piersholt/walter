@@ -60,9 +60,24 @@ class Virtual
 
     # @override Virtual::Device#receive_packet
     # Allows the introduction of custom behaviour
-    def receive_packet(packet)
-      message = super(packet)
-      handle_message(message) if enabled?
+    # def receive_packet(packet)
+    #   message = super(packet)
+    #   handle_message(message) if enabled?
+    # end
+
+    # def publish_packet(packet)
+    #   message = super(packet)
+    #   handle_publish(message) if enabled?
+    # end
+
+    # @override Virtual::Device#virtual_receive (Receivable)
+    def virtual_receive(message)
+      handle_virtual_receive(message) if enabled?
+    end
+
+    # @override Virtual::Device#receive_packet (Receivable)
+    def virtual_transmit(message)
+      handle_virtual_transmit(message) if enabled?
     end
   end
 end

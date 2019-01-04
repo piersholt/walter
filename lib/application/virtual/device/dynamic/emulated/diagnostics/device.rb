@@ -23,7 +23,7 @@ class Virtual
       "<:#{@ident}>"
     end
 
-    def handle_message(message)
+    def handle_virtual_receive(message)
       command_id = message.command.d
       # return super if command_id == PING
       LOGGER.unknown(PROC) { "Handle? #{message.from} -> #{message.command.h}" }

@@ -83,10 +83,14 @@ class Walter
 
     @demultiplexer.add_observer(@bus_handler)
 
-    @bus.send_all(:add_observer, @global_listener)
-    @bus.send_all(:add_observer, @display_listener)
+    @bus_handler.add_observer(@display_listener)
+    @bus_handler.add_observer(@session_listener)
+    @bus_handler.add_observer(@bus_handler)
+
+    @bus_handler.add_observer(@global_listener)
+    # @bus.send_all(:add_observer, @display_listener)
     @bus.send_all(:add_observer, @bus_handler)
-    @bus.send_all(:add_observer, @session_listener)
+    # @bus.send_all(:add_observer, @session_listener)
 
     # For exit event
     add_observer(@global_listener)
@@ -129,7 +133,7 @@ class Walter
     @transmitter.on
     @demultiplexer.on
     @multiplexer.on
-    @wolfgang.open
+    # @wolfgang.open
     # ::Notifications.start(@bus)
   end
 
