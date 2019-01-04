@@ -1217,14 +1217,14 @@
         0xFF: "On"
         0x48: Radio
         # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
-        0x5A: Tape 1
-        0x5B: Tape 2
         0x40: Tape Eject
         0x41: Tape Play
-        0x44: Tape FF
-        0x45: Tape RW
         0x42: Tape FFF
         0x43: Tape RWW
+        0x44: Tape FF
+        0x45: Tape RW
+        0x5a: Tape 1
+        0x5b: Tape 2
         0x5d: Tape Dolby B
         0x5e: Tape Dolby C
         0x5f: Tape Dolby OFF
@@ -1913,10 +1913,13 @@
       :type: :map
       :dictionary:
         0xc0: '(CD?) Discs?'
+        0x41: '(RAD) Presets'
+        0x43: '(RAD) Source'
         0x60: '(RDS) Menu A'
         # Heading: 0x49
         # Cell: 0x5a
         0x61: '(RDS) Menu B'
+        0x83: '(TAPE) Side'
     :m2:
       :type: :integer
     :m3:
