@@ -55,6 +55,10 @@ module WalterTools
     DisplayHandler.i.filter_commands(*READY)
   end
 
+  def menus
+    DisplayHandler.i.filter_commands(*MENUS)
+  end
+
   def diag
     DisplayHandler.i.filter_commands(*DIAGNOSTICS)
   end

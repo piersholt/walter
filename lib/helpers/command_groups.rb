@@ -16,6 +16,9 @@ module CommandGroups
   OBC = [OBC_CTL, OBC_CONFIG, OBC_REQ].freeze
 
   DISPLAY = [TXT_MID, TXT_GFX, TXT_HUD, TXT_NAV, GFX_STATUS].freeze
+
+  MENUS = [MENU_GFX, MENU_RAD].freeze
+  
   MID = [TXT_MID, GFX_STATUS].freeze
   BUTTON = [MFL_VOL, MFL_FUNC, BMBT_A, BMBT_B].freeze
 
