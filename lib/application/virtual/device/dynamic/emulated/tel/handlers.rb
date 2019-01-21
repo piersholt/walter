@@ -37,6 +37,7 @@ module Telephone
 
   CONTACT_DELIMITER = 6
 
+  DRAW_DIAL = 0x42
   DRAW_DIRECTORY = 0x43
   DRAW_FAVOURITES = 0x80
 
@@ -283,6 +284,8 @@ module Telephone
     function = message.command.function.value
     action = message.command.action.value
     case action
+    when ACTION_DIAL_OPEN
+      mid(m1: DRAW_DIAL, m2: MID_DEFAULT, m3: 0x00, chars: [])
     when ACTION_DIR_OPEN
       delegate_directory(action)
     when ACTION_DIR_BACK
