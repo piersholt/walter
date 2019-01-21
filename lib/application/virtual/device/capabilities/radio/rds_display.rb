@@ -40,10 +40,12 @@ module Capabilities
         secondary(layout: layout, padding: padding, zone: zone, chars: padded_chars)
       end
 
-      def a1(padding: PADDING_NONE,
+      def a1(layout: LAYOUT_HEADER,
+             padding: PADDING_NONE,
+             zone: INDEX_FIELD_1,
              chars: genc(LENGTH_A))
         padded_chars = pad_chars(chars, LENGTH_A)
-        secondary(layout: LAYOUT_HEADER, padding: padding, zone: INDEX_FIELD_1, chars: padded_chars)
+        secondary(layout: layout, padding: padding, zone: zone, chars: padded_chars)
       end
 
       def a2(layout: LAYOUT_HEADER,
@@ -81,6 +83,13 @@ module Capabilities
                   chars: NO_CHARS)
       end
 
+      def render(layout)
+        secondary(layout: layout,
+                  padding: PADDING_NONE,
+                  zone: NO_INDEX,
+                  chars: NO_CHARS)
+      end
+
       def clear(layout: LAYOUT_HEADER, indices: FIELD_INDEXES)
         indices.each do |index|
           secondary(layout: layout,
@@ -111,15 +120,34 @@ module Capabilities
                chars: generate_21(layout, index))
           wait
         end
+        Kernel.sleep(1)
         render_menu(layout: layout)
+        true
+      end
+
+      # (0x00..0xFF).step(5).each {|i| bus.rad.menu(layout: 0x60, indices: (i..i+8).to_a); Kernel.sleep(2); }
+
+      # the layout must match
+      def menu(layout: LAYOUT_MENU_A, padding: PADDING_NONE, indices: ITEM_INDEXES)
+        indices.each do |index|
+          secondary(layout: layout,
+                    padding: padding,
+                    zone: index,
+                    chars: generate_a5(layout, index))
+          wait
+          # Kernel.sleep(1)
+        end
+        # Kernel.sleep(1)
+        # render_menu(layout: layout)
+        true
       end
 
       def generate_a5(layout, index)
-        "a5 #{d2h(layout)} #{d2h(index)} #{genc(2)}"
+        "a5 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
       end
 
       def generate_21(layout, index)
-        "21 #{d2h(layout)} #{d2h(index)} #{genc(2)}"
+        "21 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
       end
     end
   end
