@@ -8,6 +8,99 @@
       :long_name: Unknown
       :verbose: true
     :klass: BaseCommand
+
+
+# ************************************************************************* #
+#                                 NAVIGATION
+# ************************************************************************* #
+
+0xA2:
+  :id:
+    :d: 162
+    :h: '0xA2'
+  :properties:
+    :verbose: true
+    :short_name: LATLONG
+    :long_name: Unknown?
+  :klass: BaseCommand
+  :index:
+    :signal: 0
+    :latitude_hours: !ruby/range
+                      begin: 1
+                      end: 2
+    :latitude_minutes: 3
+    :latitude_seconds: 4
+    :altitude: 12
+    :hour: 14
+    :minute: 15
+    :second: 16
+  :parameters:
+    :signal:
+      :type: :map
+      :map:
+        0x00: disconnected
+        0x01: connected
+      :dictionary:
+        0x00: 'No Signal'
+        0x01: 'Signal'
+    :latitude_hours:
+      :type: :integer
+    :latitude_minutes:
+      :type: :integer
+    :latitude_seconds:
+      :type: :integer
+    :altitude:
+      :type: :integer
+    :hour:
+      :type: :integer
+    :minute:
+      :type: :integer
+    :second:
+      :type: :integer
+  :schemas:
+    - :dia
+  :dia:
+    :klass: BaseCommand
+    :properties:
+      :short_name: EWS-END
+      :long_name: Diagnostics Control
+
+0xA4:
+  :id:
+    :d: 164
+    :h: '0xA4'
+  :properties:
+    :short_name: ADDR
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xA7:
+  :id:
+    :d: 167
+    :h: '0xA7'
+  :properties:
+    :short_name: A7-SRC-GFX
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xA9:
+  :id:
+    :d: 169
+    :h: '0xA9'
+  :properties:
+    :short_name: NAV-A9
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xAB:
+  :id:
+    :d: 171
+    :h: '0xAB'
+  :properties:
+    :short_name: AB-UI?
+    :long_name: Unknown
+  :klass: BaseCommand
+
 # ************************************************************************* #
 #                             BUS DEVICE STATUS
 # ************************************************************************* #
@@ -971,7 +1064,7 @@
     :d: 31
     :h: '0x1F'
   :properties:
-    :short_name: '0x1F'
+    :short_name: UTC
     :long_name: UTC time and date
   :klass: BaseCommand
 # ************************************************************************* #
@@ -3177,15 +3270,6 @@
     :long_name: Unknown?
   :klass: BaseCommand
 
-0xA2:
-  :id:
-    :d: 162
-    :h: '0xA2'
-  :properties:
-    :short_name: EWS-END?
-    :long_name: Unknown?
-  :klass: BaseCommand
-
 # ************************************************************************* #
 #                               MODULE RESPONSES
 # ************************************************************************* #
@@ -3526,14 +3610,6 @@
       :short_name: "???"
       :long_name: Unknown
     :klass: BaseCommand
-169:
-  :id:
-    :d: 169
-    :h: '0xA9'
-  :properties:
-    :short_name: '0xA9'
-    :long_name: Unknown
-  :klass: BaseCommand
 191:
   :id:
     :d: 191

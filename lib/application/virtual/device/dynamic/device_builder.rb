@@ -14,7 +14,7 @@ class Virtual
       dia: 'ManualDiagnostics',
       iris: 'EmulationDummy',
       nav_jp: 'EmulationDummy',
-      nav_eu: 'EmulationDummy'
+      nav: 'EmulationDummy'
     }.freeze
 
     attr_reader :ident

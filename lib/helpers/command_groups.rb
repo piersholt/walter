@@ -17,8 +17,10 @@ module CommandGroups
 
   DISPLAY = [TXT_MID, TXT_GFX, TXT_HUD, TXT_NAV, GFX_STATUS].freeze
 
+  NAVIGATION = [COORDINATES, ADDRESS, REAR, CELL, UTC].freeze
+
   MENUS = [MENU_GFX, MENU_RAD].freeze
-  
+
   MID = [TXT_MID, GFX_STATUS].freeze
   BUTTON = [MFL_VOL, MFL_FUNC, BMBT_A, BMBT_B].freeze
 
@@ -57,7 +59,8 @@ module CommandGroups
     odometer: ODOMETER,
     vehicle: VEHICLE,
     lamp: LAMP,
-    door: DOOR
+    door: DOOR,
+    navigation: NAVIGATION
   }.freeze
 
   NOISEY =

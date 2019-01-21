@@ -72,6 +72,12 @@ module CommandAliases
   DOOR_REQ = 0x79
   DOOR_REP = 0x7A
 
+  COORDINATES = 0xA2
+  ADDRESS     = 0xA4
+  REAR        = 0xAB
+  CELL        = 0xA9
+  UTC         = 0x1F
+
   DIA_HELLO     = 0x00
   DIA_ERR_READ  = 0x04
   DIA_ERR_DEL   = 0x05
