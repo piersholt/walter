@@ -71,6 +71,8 @@ class Walter
     @data_logging_listener = DataLoggingListener.new
     @display_listener = DisplayListener.new
 
+    @virtual_display_listener = Virtual::Display.instance
+
     @interface.add_observer(@global_listener)
     @interface.add_observer(@data_link_listener)
     @interface.add_observer(@data_logging_listener)
@@ -90,6 +92,7 @@ class Walter
     @bus_handler.add_observer(@global_listener)
     # @bus.send_all(:add_observer, @display_listener)
     @bus.send_all(:add_observer, @bus_handler)
+    @bus.send_all(:add_observer, @virtual_display_listener)
     # @bus.send_all(:add_observer, @session_listener)
 
     # For exit event
