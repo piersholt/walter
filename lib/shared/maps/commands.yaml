@@ -2364,6 +2364,8 @@
         0x02: Telephone Home Loaded
         0x03: Done?
         0x10: Unknown
+        # Seeing this in respond to 0x21 MID type commands to MK1 GFX
+        0x0b: Menu Dead!?
   :index:
     :status: 0
   :meta:
