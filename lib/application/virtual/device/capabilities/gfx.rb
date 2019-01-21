@@ -5,5 +5,6 @@ module Capabilities
   module GFX
     include Helpers
     include UserInterface
+    include UserControls
   end
 end
