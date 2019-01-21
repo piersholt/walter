@@ -2534,7 +2534,7 @@
     :d: 49
     :h: '0x31'
   :properties:
-    :short_name: TEL-DATA
+    :short_name: DATA
     :long_name: Unknown
   :index:
     :source: 0
@@ -2549,6 +2549,8 @@
         0x42: Dial
         0x43: Directory
         0x80: Top 8
+        0x60: RDS 1
+        0x61: RDS 2
     :function:
       :type: :map
       :dictionary:
@@ -2572,7 +2574,13 @@
       :type: :map
       :dictionary:
         0x00: Offset 0
+        0x20: Offset 0 (Hold)
+        0x40: Offset 0 (Release)
+
         0x01: Offset 1
+        0x21: Offset 1 (Hold)
+        0x41: Offset 1 (Release)
+
         0x02: Offset 2
         0x03: Offset 3
         0x04: Offset 4
@@ -2602,6 +2610,8 @@
         0x08: SOS 112?
         0x0A: Info Screen
         0x1E: Dial Screen
+        0x3E: Dial Screen (Hold)
+        0x5E: Dial Screen (Release)
         0x1F: Directory Screen
 
         0x0C: Directory Back Page Start
