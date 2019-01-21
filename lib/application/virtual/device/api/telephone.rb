@@ -25,7 +25,7 @@ module API
 
     # 0x23
     def primary(from: :tel, to: :gfx, **arguments)
-      # format_chars!(arguments)
+      format_chars!(arguments)
       try(from, to, TXT_GFX, arguments)
     end
 

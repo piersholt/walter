@@ -18,11 +18,16 @@ module API
       try(from, to, SRC_SND, arguments)
     end
 
-    # 0x4F SRC-GFX
-    # @param action
-    # @param nav
-    def sound_source(from: :tv, to: :bmbt, arguments:)
-      try(from, to, SRC_GFX, arguments)
+    # 0x23
+    def user_input(from: :gfx, to: :rad, **arguments)
+      try(from, to, 0x31, arguments)
     end
+
+    # # 0x4F SRC-GFX
+    # # @param action
+    # # @param nav
+    # def sound_source(from: :tv, to: :bmbt, arguments:)
+    #   try(from, to, SRC_GFX, arguments)
+    # end
   end
 end
