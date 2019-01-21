@@ -1951,30 +1951,34 @@
       :gfx:
         :type: :map
         :dictionary:
-          0x0_0: Telephone Screen Set
-
-          # TELEPHONE
-          0x0_1: MID HFS On [▷ ◁]
-          0x0_2: Header HFS [🔊]
-
-          0x0_5: Pin-Code Screen Header Set
-
+          # 0x80 IKE and 0xE7 ANVZ
+          0x0_1: 'MID HFS On [▷ ◁]'
+          # 0xE7 ANZV
+          0x0_2: 'Header HFS [🔊]'
+          # 0x80 IKE
+          # always used to clear, or write 'INSERT CARD!'
           0x4_0: End Call Clear?
+          # this is always no text
+          0x4_1: Clear Contact
           0x4_2: Contact/Call
           0x4_3: Show Contact Number
-          0x4_1: Clear Contact
 
-          0x5_2: Directory Header Set
-          0x5_3: Directory Header Overwrite
-          0x6_1: Dial Header Overwrite
-          0x6_3: Rotary Rotary Header Overwrite
+          0x0_0: '[Layout] [Header] Telephone Screen Set'
+          0x0_5: '[Layout] [Pin-Code] Screen'
+          0x9_1: '[Layout] [Info] Screen'
+
+          0x5_2: '[Header] [Directory] Header Set'
+          0x5_3: '[Header] [Directory] Header Overwrite'
+
+          0x6_1: '[Header] [Dial] Header Overwrite'
+          0x6_3: '[Header] [Dial] Header Overwrite 2'
+
+          0x8_1: '[Header] [Top 8] Set'
+          0x8_2: '[Header] [Top 8] Overwrite'
+
+          0xc_0: '[Header] [SOS] Set?'
+          # Doesn't seem to work?
           0x8_0: Default Header Overwrite
-          0x8_1: Top 8 Header Set
-          0x8_2: Top 8 Header Overwrite
-
-          0x9_1: Info Header?
-
-          0xc_0: SOS Header Set?
       :ike:
         :type: :map
         :dictionary:
