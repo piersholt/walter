@@ -202,8 +202,16 @@ module Telephone
   end
 
   STRENGTH = [0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0x5F, 0xB8].freeze
+  # 0x93: Call cost current
+  # 0x94: Call cost total
+  # 0x96: Call Time minutes
+  # 0x97: Call time seconds
   def delegate_info
     hud(from: :tel, to: :gfx, gfx: 0x91, ike: 0x00, chars: [STRENGTH.shuffle.first])
+    hud(from: :tel, to: :gfx, gfx: 0x93, ike: 0x00, chars: '123456789abcdef'.bytes)
+    hud(from: :tel, to: :gfx, gfx: 0x94, ike: 0x00, chars: '123456789abcdef'.bytes)
+    hud(from: :tel, to: :gfx, gfx: 0x96, ike: 0x00, chars: '123456789abcdef'.bytes)
+    hud(from: :tel, to: :gfx, gfx: 0x97, ike: 0x00, chars: '123456789abcdef'.bytes)
   end
 
   def delegate_favourites
