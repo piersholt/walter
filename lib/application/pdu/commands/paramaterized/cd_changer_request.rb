@@ -7,6 +7,7 @@ class Command
     CONTROL_MAP = {
       0x00 => :status,
       0x01 => :stop,
+      0x02 => :resume,
       0x03 => :play,
       0x04 => :scan,
       0x05 => :seek,
@@ -34,6 +35,10 @@ class Command
 
     def stop?
       is?(:stop)
+    end
+
+    def resume?
+      is?(:resume)
     end
 
     def play?
@@ -74,6 +79,8 @@ class Command
         :status
       when 0x01
         :stop
+      when 0x02
+        :resume
       when 0x03
         :play
       when 0x04

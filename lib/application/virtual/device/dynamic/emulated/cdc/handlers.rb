@@ -6,6 +6,7 @@ class Virtual
     module Handlers
       include Capabilities::CDChanger::Constants
       include Messaging::API
+      include Messaging::Constants
       include LogActually::ErrorOutput
 
       def handle_cd_changer_request(command)
@@ -20,6 +21,10 @@ class Virtual
         when :status
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :status!" }
           handle_status_request
+        when :resume
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :resume!" }
+          handle_play
+          play!
         when :play
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :play!" }
           handle_play
@@ -31,6 +36,7 @@ class Virtual
         when :seek
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :seek!" }
           handle_seek(request_mode: command.mode.value)
+          play!
         when :scan
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :scan!" }
           handle_scan(request_mode: command.mode.value)
@@ -39,6 +45,9 @@ class Virtual
           handle_change_disc(request_mode: command.mode.value)
           send_status(current_state)
           handle_play
+        when :change_track
+          LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :change_track!" }
+          handle_seek(request_mode: command.mode.value)
         else
           LogActually.cdc.warn(name) { "Control: #{control}, not handled?" }
           return false
