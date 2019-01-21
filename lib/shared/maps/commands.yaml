@@ -124,6 +124,8 @@
     :status_map:
       0x00: 'Respond'
       0x01: 'Announce'
+      0x30: 'External Offline Respond'
+      0x31: 'External Offline Reset'
       0x40: 'Alt 0'
       0x41: 'Alt 1'
   :klass: ParameterizedCommand
@@ -133,6 +135,8 @@
       :dictionary:
         0x00: 'Respond'
         0x01: 'Announce'
+        0x30: 'External Offline Respond'
+        0x31: 'External Offline Reset'
         0x40: 'Alt 0'
         0x41: 'Alt 1'
   :index:
