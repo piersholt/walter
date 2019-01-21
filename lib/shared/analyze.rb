@@ -56,6 +56,10 @@ module Analyze
     frames.sort { |b,a| a[0] <=> b[0] }
   end
 
+  def sorted_by_command_id(frames)
+    frames.sort { |b,a| a[C] <=> b[C] }
+  end
+
   def sorted(frames)
     frames.sort { |b,a| a[1] <=> b[1] }
   end
@@ -101,12 +105,13 @@ module Analyze
   def grouped_by_command
     result = senders_frames.map do |sender_id, frames_sent_by_sender|
       grouped_by_command = frames_sent_by_sender.group_by { |f| f[C] }
-
+      # sorted_by_command_id(command_group_count)
       command_group_count =
         grouped_by_command.map do |command_id, that_commands_frames|
           [command_id, that_commands_frames.count]
         end
-      sorted_by_id(command_group_count)
+      command_group_count.sort! {|x,y| x[0] <=> y [0] }
+      # command_group_count = sorted_by_id(command_group_count)
       [sender_id, command_group_count.to_h]
     end
 
@@ -131,7 +136,10 @@ module Analyze
   end
 
   def command_name(hex_string)
-    CommandMap.instance.find(hex_string.hex)[:properties][:short_name]
+    result = CommandMap.instance.find(hex_string.hex)
+    result[:properties][:short_name]
+  rescue IndexError
+    'No Result'
   end
 
   def device_name(hex_string)
