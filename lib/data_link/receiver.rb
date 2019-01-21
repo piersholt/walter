@@ -80,7 +80,7 @@ class Receiver
 
     frame_input_buffer.push(new_frame)
   rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
-    LogActually.datalink.warn(name) { "#{e}: #{synchronisation.frame[0]}" }
+    LogActually.datalink.warn(name) { "#{e}!" }
     clean_up(buffer, synchronisation.frame)
   rescue StandardError => e
     LogActually.datalink.error(name) { e }
@@ -96,16 +96,17 @@ class Receiver
     # changed
     # notify_observers(Event::FRAME_FAILED, frame: new_frame)
 
-    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
+    # LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
 
     byte_to_discard = new_frame[0]
-    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Discard: #{byte_to_discard}." }
+    LogActually.datalink.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
 
     bytes_to_unshift = new_frame[1..-1]
     bytes_to_unshift = Bytes.new(bytes_to_unshift)
-    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Unshift: #{bytes_to_unshift}." }
+    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
+    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
 
-    LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Unshifting..." }
+    # LogActually.datalink.debug(name) { "#{SYNC_SHIFT} ..." }
     buffer.unshift(*bytes_to_unshift)
   end
 

@@ -22,6 +22,10 @@ class Interface
     #   super.push(args)
     # end
 
+    def register
+      @unshift_buffer.length
+    end
+
     def shift(number_of_bytes = 1)
       # binding.pry
       LogActually.interface.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }

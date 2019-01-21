@@ -61,7 +61,6 @@ class Frame < Bytes
     # LogActually.datalink.debug(PROG_NAME) { "Setting @header." }
     @header = FrameHeader.new(new_header)
 
-
     true
   end
 
@@ -86,6 +85,9 @@ class Frame < Bytes
     LogActually.datalink.debug(PROG_NAME) { "#valid?" }
     raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
 
+    LogActually.datalink.debug(PROG_NAME) { "@header => #{@header}" }
+    LogActually.datalink.debug(PROG_NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
+
     frame_bytes = @header + @tail.no_fcs
     checksum = frame_bytes.reduce(0) do |c,d|
       c^= d.to_d
@@ -94,5 +96,11 @@ class Frame < Bytes
     LogActually.datalink.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
     checksum == tail.checksum
+  rescue TypeError => e
+    LogActually.datalink.error(name) { e.class }
+    LogActually.datalink.error(name) { e }
+    e.backtrace.each { |l| LogActually.datalink.warn(l) }
+    binding.pry
+    LogActually.datalink.warn(name) { 'Debug end...'}
   end
 end
