@@ -2039,19 +2039,19 @@
     :m1:
       :type: :map
       :dictionary:
-        0xc0: '(CD?) Discs?'
+        # notice how these match 0x23 layout parameter?
         0x41: '(RAD) Presets'
         0x43: '(RAD) Source'
         0x60: '(RDS) Menu A'
-        # Heading: 0x49
-        # Cell: 0x5a
         0x61: '(RDS) Menu B'
         0x83: '(TAPE) Side'
+        0xc0: '(CD) Discs?'
     :m2:
       :type: :integer
     :m3:
       :type: :bit_array
       :parameters:
+        # no GFX-STATUS using this using MK1 GFX
         :block:
           :type: :switch
           :label: Block
@@ -2160,9 +2160,9 @@
     :layout:
       :type: :map
       :dictionary:
-        0b0110_0000: Menu A
-        0b0110_0001: Menu B
-        0b0110_0010: Header A
+        0x60: Menu A
+        0x61: Menu B
+        0x62: Header
     :padding:
       :type: :map
       :dictionary:
@@ -2203,7 +2203,7 @@
             1: :on
         :menu:
           :type: :switch
-          :label: 'Menu'
+          :label: 'Block'
           :states:
             0: :off
             1: :on
@@ -2211,27 +2211,33 @@
           :type: :map
           :label: 'Zone'
           :map:
-            0b0001: :a
-            0b0010: :b
-            0b0011: :c
-            0b0100: :d
-            0b0101: :e
-            0b0110: :h2
-            0b0111: :h3
+            0b0_0000: :none
+
+            0b0_0001: :a
+            0b0_0010: :b
+            0b0_0011: :c
+            0b0_0100: :d
+            0b0_0101: :e
+
+            0b0_0110: :h2
+            0b0_0111: :h3
           :dictionary:
-            0b0000: '0'
-            0b0001: 'A/1'
-            0b0010: 'B/2'
-            0b0011: 'C/3'
-            0b0100: 'D/4'
-            0b0101: 'E/5'
-            0b0110: 'H2/6'
-            0b0111: 'H3/7'
-            0b1000: '8'
-            0b1001: '9'
-            0b1010: '10'
-            0b1011: '11'
-            0b1100: '12'
+            0b0_0000: '0'
+
+            0b0_0001: 'A/1'
+            0b0_0010: 'B/2'
+            0b0_0011: 'C/3'
+            0b0_0100: 'D/4'
+            0b0_0101: 'E/5'
+
+            0b0_0110: 'H2/6'
+            0b0_0111: 'H3/7'
+
+            0b0_1000: '8'
+            0b0_1001: '9'
+            0b0_1010: '10'
+            0b0_1011: '11'
+            0b0_1100: '12'
     :chars:
       :type: :chars
   :meta:
