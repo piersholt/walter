@@ -1842,10 +1842,12 @@
         0x9_b: --
         0x9_c: --
         0x9_d: --
-        0x9_f: --
         0x9_e: --
+        0x9_f: --
 
         # RDS: TP?
+        # On a Euro car, the button you have labelled as TRAFFIC becomes
+        # RDS TP (only the labelling on the button changes)
         0xa_0: (Traffic) No Station
         0xa_1: (Traffic) Traffic 1
         0xa_2: (Traffic) Traffic 2
@@ -1862,6 +1864,23 @@
         0xa_d: --
         0xa_e: --
         0xa_f: --
+
+        0xb_0: Untested
+        0xb_1: Untested
+        0xb_2: Untested
+        0xb_3: Untested
+        0xb_4: Untested
+        0xb_5: Untested
+        0xb_6: Untested
+        0xb_7: Untested
+        0xb_8: Untested
+        0xb_9: Untested
+        0xb_a: Untested
+        0xb_b: Untested
+        0xb_c: Untested
+        0xb_d: Untested
+        0xb_e: Untested
+        0xb_f: Untested
 
         # all the way through to C0, then
         # C0..DF: display text
@@ -1884,6 +1903,11 @@
         0xc_8: (CD) [RANDOM]
         0xc_9: --
         0xc_a: (CD) [<< >>] Fast Forward/Reverse
+        0xc_b: (CD) Empty Casette Track Change?
+        0xc_c: --
+        0xc_d: --
+        0xc_e: --
+        0xc_f: --
     :ike:
       :type: :bit_array
       :parameters:
