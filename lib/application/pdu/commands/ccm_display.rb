@@ -37,8 +37,9 @@ class Command
       # "[#{@arguments.map(&:h).join(' ')}]"
 
       str_buffer = sprintf("%-10s", sn)
-      str_buffer = str_buffer.concat("\t#{@mode} #{@control}")
-      str_buffer = append_chars(str_buffer)
+      # str_buffer = str_buffer.concat("\t#{@mode} #{@control}")
+      str_buffer = str_buffer.concat("#{sn}\t#{mode.value} (#{mode.to_s}) | #{control.value} (#{control.to_s})\t#{chars.to_s}")
+      # str_buffer = append_chars(str_buffer)
       str_buffer
     end
 
