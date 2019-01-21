@@ -55,7 +55,7 @@ class CommandMap < BaseMap
       end
       if has_schema
         # puts 'breakable point'
-        mapped_result.replace(mapped_result[from])
+        mapped_result = mapped_result[from]
       end
     end
 
