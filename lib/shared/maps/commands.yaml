@@ -3492,6 +3492,7 @@
       :dictionary:
         0x00: Status!
         0x01: Stop!
+        0x02: Resume!?
         0x03: Play!
         0x04: Scan! (RWD/FFD)
         0x05: Seek! (Previous/Next)
@@ -3526,6 +3527,7 @@
       :type: :map
       :dictionary:
         0x00: Stopped
+        0x01: (BM53) Ready?
         0x02: Playing
         0x03: FFW
         0x04: RWD
@@ -3544,6 +3546,9 @@
       :dictionary:
         0x02: Stopped
         0x09: Playing
+        0x82: (BM53) Stopped
+        0x89: (BM53) Playing
+        0x8c: (BM53) Ready?
     :magazine:
       :type: :map
       :dictionary:
