@@ -1739,6 +1739,8 @@
         0x0_6: (Service) DSP
         0x0_7: (Service) Seek Level
         0x0_8: (Service) TP Volume
+        0x0_9: (Service) AF
+        0x0_a: (Service) Region
 
         0x1_2: (Service) Serial Number
         0x1_3: (Service) Software Version
