@@ -10,6 +10,7 @@ class Virtual
       cdc: 'EmulatedCDC',
       tel: 'SimulatedTEL',
       rad: 'AugmentedRadio',
+      gfx: 'AugmentedGFX',
       dia: 'ManualDiagnostics',
       iris: 'EmulationDummy',
       nav_jp: 'EmulationDummy',
