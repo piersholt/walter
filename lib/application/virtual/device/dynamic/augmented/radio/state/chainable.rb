@@ -6,8 +6,10 @@ class Virtual
       # Chianable state commands
       module Chainable
         include Constants
+        include Observable
+        include Events
 
-        def log_state(delta, level = :info)
+        def log_state(delta, level = :debug)
           logger.public_send(level, 'Radio') { "#{delta}" }
         end
 
@@ -37,31 +39,71 @@ class Virtual
 
         # Displays
 
-        def foreground
-          state!(header: :on)
-          log_state(header: :on)
-          self
-        end
+        # Layout/Header
+        # def foreground
+        #   state!(layout: :on)
+        #   log_state(layout: :on)
+        #   self
+        # end
 
         def background
-          state!(header: :off)
-          log_state(header: :off)
+          state!(layout: :off)
+          log_state(layout: :off)
           self
         end
 
-        def selection
+        def radio_layout
+          state!(layout: :radio)
+          log_state(layout: :radio)
+          changed
+          notify_observers(RADIO_LAYOUT_RADIO, device: :rad)
+          self
+        end
+
+        def tape_layout
+          state!(layout: :tape)
+          log_state(layout: :tape)
+          changed
+          notify_observers(RADIO_LAYOUT_TAPE, device: :rad)
+          self
+        end
+
+        def cdc_layout
+          state!(layout: :cdc)
+          log_state(layout: :cdc)
+          changed
+          notify_observers(RADIO_LAYOUT_CDC, device: :rad)
+          self
+        end
+
+        def audio_obc_on
+          return false if audio_obc?
+          state!(audio_obc: ON)
+          log_state(audio_obc: ON)
+          self
+        end
+
+        def audio_obc_off
+          return false unless audio_obc?
+          state!(audio_obc: OFF)
+          log_state(audio_obc: OFF)
+          self
+        end
+
+        # Menu/Index (body?)
+        def body_select
           state!(index: :selection)
           log_state(index: :selection)
           self
         end
 
-        def eq
+        def body_eq
           state!(index: :eq)
           log_state(index: :eq)
           self
         end
 
-        def hide
+        def body_hide
           state!(index: :hidden)
           log_state(index: :hidden)
           self
@@ -99,24 +141,19 @@ class Virtual
           self
         end
 
-        def next_source
+        def cycle_source(direction = 1)
           i = source_sequence.index(source)
           return self unless i && on?
-          new_mode = source_sequence.rotate!(1)[i]
+          new_mode = source_sequence.rotate!(direction)[i]
           public_send(new_mode)
-          # state!(source: new_mode)
-          # log_state(source: new_mode)
-          # self
+        end
+
+        def next_source
+          cycle_source(1)
         end
 
         def previous_source
-          i = source_sequence.index(source)
-          return self unless i && on?
-          new_mode = source_sequence.rotate!(-1)[i]
-          public_send(new_mode)
-          # state!(source: new_mode)
-          # log_state(source: new_mode)
-          # self
+          cycle_source(-1)
         end
 
         # Dependencies

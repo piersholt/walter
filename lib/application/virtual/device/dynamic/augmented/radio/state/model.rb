@@ -11,9 +11,10 @@ class Virtual
           power: :off,
           source: UNKNOWN,
           dependencies: EMPTY_ARRAY.dup,
-          header: UNKNOWN,
+          layout: UNKNOWN,
           index: UNKNOWN,
-          last_pong: ZERO
+          last_pong: ZERO,
+          audio_obc: UNKNOWN
         }.freeze
 
           def default_state
@@ -37,8 +38,11 @@ class Virtual
           def on?
             power
           end
-        end
 
+          def audio_obc?
+            state[:audio_obc]
+          end
+        end
     end
   end
 end

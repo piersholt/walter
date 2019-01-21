@@ -40,12 +40,12 @@ class Virtual
         depend(dependent)
       when PONG
         logger.debug('Radio') { "Ready." }
-        seen
+        # seen
       when TXT_MID
         # logger.debug('Radio') { "Drawing to MID!" }
       when TXT_GFX
         logger.debug('Radio') { "Drawing to BMBT!" }
-        foreground
+        # foreground
         evaluate_display_layout(message.command)
       when CDC_REQ
         logger.debug('Radio') { "CDC Mode!" }
@@ -74,12 +74,12 @@ class Virtual
       case command_id
       when MFL_FUNC
         logger.debug(PROC) { "Handling: MFL-FUNC" }
-        mfl_function(message)
+        action_mfl_function(message)
       when BMBT_A
         # logger.debug(PROC) { "BMBT-1 not implemented." }
         logger.debug(PROC) { "Handling: BMBT-1" }
-        bmbt_button_1_state(message)
-        bmbt_button_1(message)
+        handle_bmbt_1_button(message)
+        action_bmbt_1_button(message)
       when BMBT_B
         logger.debug(PROC) { "BMBT-2 not implemented." }
       when SRC_CTL

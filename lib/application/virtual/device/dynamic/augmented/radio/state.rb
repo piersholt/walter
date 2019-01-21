@@ -9,10 +9,10 @@ class Virtual
 
       def evaluate_menu_rad(command)
         case command.state.value
-        when 0x01
+        when 0b0000_0001
           background
         when (0b0000_0010..0b0000_1111)
-          hide
+          body_hide
         end
       end
 
@@ -20,35 +20,15 @@ class Virtual
         case command.gfx.value
         when (0x40..0x5F)
           radio
+          radio_layout
         when (0x60..0x7F)
           external
         when (0x80..0x9F)
           tape
+          tape_layout
         when (0xc0..0xcF)
           cdc
-        end
-      end
-
-      def handle_source_sound(command)
-        case command.source.value
-        when 0x00
-          radio
-        when 0x01
-          background
-          tv
-        else
-          logger.warn(self.class) { "Unknown SRC-SND value: #{command.source.value}" }
-        end
-      end
-
-      def evaluate_radio_alt(command)
-        case command.mode.value
-        when (0x40..0x70)
-          selection
-        when (0x80..0xff)
-          eq
-        else
-          logger.warn(self.class) { "Unknown RAD-ALT value: #{command.mode.value}" }
+          cdc_layout
         end
       end
 
@@ -74,6 +54,16 @@ class Virtual
         end
       end
 
+      def evaluate_radio_alt(command)
+        case command.mode.value
+        when (0x40..0x70)
+          body_select
+        when (0x80..0xff)
+          body_eq
+        else
+          logger.warn(self.class) { "Unknown RAD-ALT value: #{command.mode.value}" }
+        end
+      end
 
       def handle_menu_gfx(command)
         # logger.unknown(command.instance_variables)
@@ -87,13 +77,31 @@ class Virtual
         #   end
         # end
         case command.config.value
+        when 0b0000_0001
+          background
+          audio_obc_off
+        when 0b0000_0010
+          audio_obc_on
+        when 0b0000_0011
+          background
+          audio_obc_on
+        end
+      end
+
+      def handle_source_sound(command)
+        case command.source.value
+        when 0x00
+          radio
         when 0x01
           background
+          tv
+        else
+          logger.warn(self.class) { "Unknown SRC-SND value: #{command.source.value}" }
         end
       end
 
       # Handlers?
-      def bmbt_button_1_state(message)
+      def handle_bmbt_1_button(message)
         # LogActually.rad.debug('Radio') { "Handling: BMBT-1" }
         value = message.command.totally_unique_variable_name
 

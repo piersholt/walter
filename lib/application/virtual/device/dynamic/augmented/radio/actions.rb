@@ -22,7 +22,7 @@ class Virtual
 
       private
 
-      def bmbt_button_1(message)
+      def action_bmbt_1_button(message)
         value = message.command.totally_unique_variable_name
 
         # LOGGER.debug(PROC) { "#{MFL_FUNC}-#{value}" }
@@ -40,7 +40,7 @@ class Virtual
         end
       end
 
-      def mfl_function(message)
+      def action_mfl_function(message)
         # forward_press = 0x01
         forward_hold = 0x11
         forward_release = 0x21
