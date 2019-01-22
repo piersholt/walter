@@ -101,6 +101,15 @@
     :long_name: Unknown
   :klass: BaseCommand
 
+0xAF:
+  :id:
+    :d: 175
+    :h: '0xAF'
+  :properties:
+    :short_name: af-SES?
+    :long_name: Unknown
+  :klass: BaseCommand
+
 # ************************************************************************* #
 #                             BUS DEVICE STATUS
 # ************************************************************************* #
