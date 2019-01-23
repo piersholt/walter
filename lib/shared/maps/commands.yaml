@@ -1602,9 +1602,31 @@
     :d: 71
     :h: '0x47'
   :properties:
-    :short_name: BMBT-?
+    :short_name: BMBT-INFO
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :index:
+    :unknown: 0
+    :button: 1
+  :parameters:
+    :unknown:
+      :type: :integer
+    :button:
+      :type: :map
+      :map:
+        0x0_f: "[Select] A"
+        0x4_f: "[Select] B"
+        0x8_f: "[Select] C"
+        0x3_8: "[Info] Press"
+        0x7_8: "[Info] Hold"
+        0xb_8: "[Info] Release"
+      :dictionary:
+        0x0_f: "[Select BM53] ?"
+        0x4_f: "[Select BM53] ?"
+        0x8_f: "[Select BM53] ?"
+        0x3_8: "[Info] Press"
+        0x7_8: "[Info] Hold"
+        0xb_8: "[Info] Release"
   :notes:
     - six messages in total since started logs
     - 3 of each
