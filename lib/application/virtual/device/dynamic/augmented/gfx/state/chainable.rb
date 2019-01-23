@@ -9,8 +9,26 @@ class Virtual
         include Events
         include Observable
 
-        def log_state(delta, level = :info)
+        def log_state(delta, level = :debug)
           logger.public_send(level, moi) { delta }
+        end
+
+        def monitor_on
+          delta = { monitor: ON }
+          state!(delta)
+          log_state(delta)
+          changed
+          notify_observers(GFX_MONITOR_ON, device: :gfx)
+          self
+        end
+
+        def monitor_off
+          delta = { monitor: OFF }
+          state!(delta)
+          log_state(delta)
+          changed
+          notify_observers(GFX_MONITOR_OFF, device: :gfx)
+          self
         end
 
         # Priority
@@ -20,6 +38,8 @@ class Virtual
           delta = { priority: :gfx }
           state!(delta)
           log_state(delta)
+          changed
+          notify_observers(GFX_IDLE, device: :gfx)
           self
         end
 
@@ -28,6 +48,8 @@ class Virtual
           delta = { priority: :rad }
           state!(delta)
           log_state(delta)
+          changed
+          notify_observers(GFX_BUSY, device: :gfx)
           self
         end
 
@@ -38,6 +60,8 @@ class Virtual
           delta = { radio_overlay: ON }
           state!(delta)
           log_state(delta)
+          changed
+          notify_observers(GFX_BUSY, device: :gfx)
           self
         end
 
@@ -46,6 +70,8 @@ class Virtual
           delta = { radio_overlay: OFF }
           state!(delta)
           log_state(delta)
+          changed
+          notify_observers(GFX_IDLE, device: :gfx)
           self
         end
 

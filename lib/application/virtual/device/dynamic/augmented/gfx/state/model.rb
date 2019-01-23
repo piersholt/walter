@@ -9,9 +9,10 @@ class Virtual
         include Constants
 
         DEFAULT_STATE = {
-          source: UNKNOWN,
+          monitor: ON,
+          source: GFX,
           priority: UNKNOWN,
-          audio_obc: UNKNOWN,
+          audio_obc: OFF,
           last_activity: ZERO,
           radio_overlay: UNKNOWN,
           radio_display: {
@@ -23,6 +24,10 @@ class Virtual
 
         def default_state
           DEFAULT_STATE.dup
+        end
+
+        def monitor?
+          state[:monitor]
         end
 
         def source?

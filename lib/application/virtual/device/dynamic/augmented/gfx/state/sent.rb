@@ -17,6 +17,15 @@ class Virtual
             audio_obc_on
           end
         end
+
+        def evaluate_src_gfx(command)
+          case command.action.value
+          when 0x00
+            monitor_off
+          when 0x10
+            monitor_on
+          end
+        end
       end
     end
   end

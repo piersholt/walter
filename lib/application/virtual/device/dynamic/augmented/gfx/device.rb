@@ -55,13 +55,13 @@ class Virtual
       # when PONG
       #   logger.debug(moi) { "Ready." }
       when MENU_GFX
-        logger.info(moi) { "Menu GFX" }
+        logger.debug(moi) { "Transmit: Menu GFX (#{DataTools.d2h(MENU_GFX)})" }
         evaluate_menu_gfx(message.command)
       when SRC_GFX
-        logger.info(moi) { "Source GFX" }
-        # evaluate_menu_gfx(message.command)
+        logger.debug(moi) { "Transmit: Source GFX (#{DataTools.d2h(SRC_GFX)})" }
+        evaluate_src_gfx(message.command)
       when SRC_SND
-        logger.info(moi) { "Source GFX" }
+        logger.debug(moi) { "Transmit: Source SND (#{DataTools.d2h(SRC_SND)})" }
         # evaluate_menu_gfx(message.command)
       end
     end
@@ -73,17 +73,23 @@ class Virtual
 
       case command_id
       when TXT_GFX
-        logger.info(moi) { "Render 0x#{DataTools.d2h(TXT_GFX)}" }
+        logger.debug(moi) { "Receive: Render 0x#{DataTools.d2h(TXT_GFX)}" }
         handle_draw_23(message.command)
       when MENU_RAD
-        logger.info(moi) { "MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
+        logger.debug(moi) { "Receive: MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
         handle_menu_rad(message.command)
       when RAD_ALT
-        logger.info(moi) { "RAD_ALT 0x#{DataTools.d2h(RAD_ALT)}" }
+        logger.debug(moi) { "Receive: RAD_ALT 0x#{DataTools.d2h(RAD_ALT)}" }
         handle_radio_alt(message.command)
       when TXT_NAV
-        logger.info(moi) { "TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
+        logger.debug(moi) { "Receive: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
         handle_draw_a5(message.command)
+      when BMBT_A
+        logger.debug(moi) { "Receive: BMBT_A 0x#{DataTools.d2h(BMBT_A)}" }
+        handle_bmbt_1_button(message.command)
+      when BMBT_B
+        logger.debug(moi) { "Receive: BMBT_B 0x#{DataTools.d2h(BMBT_B)}" }
+        handle_bmbt_2_button(message.command)
       end
     end
   end
