@@ -60,7 +60,8 @@ module CommandGroups
     vehicle: VEHICLE,
     lamp: LAMP,
     door: DOOR,
-    navigation: NAVIGATION
+    navigation: NAVIGATION,
+    cdc: CD_CHANGER
   }.freeze
 
   NOISEY =
