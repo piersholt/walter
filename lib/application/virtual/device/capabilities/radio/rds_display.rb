@@ -101,7 +101,7 @@ module Capabilities
 
       # ------------------------------- MACROS ------------------------------- #
 
-      def generate_header(layout: LAYOUT_HEADER, indices: (0x1..0x7))
+      def generate_header(layout: LAYOUT_HEADER, indices: (0x41..0x47))
         indices.each do |index|
           secondary(layout: layout,
                     padding: PADDING_NONE,
@@ -111,8 +111,21 @@ module Capabilities
         end
       end
 
+      def build_menu(layout, menu_items_with_index)
+        ITEM_INDEXES.each_with_index do |item_index, index|
+          menu_item = menu_items_with_index.fetch(index, false)
+          next unless menu_item
+          list(m1: layout,
+               m2: ZERO,
+               m3: item_index,
+               chars: menu_item)
+        end
+        render_menu(layout: layout)
+        true
+      end
+
       # the layout must match
-      def generate_menu(layout: LAYOUT_MENU_B, indices: ITEM_INDEXES)
+      def generate_menu(layout: LAYOUT_MENU_A, indices: ITEM_INDEXES)
         indices.each do |index|
           list(m1: layout,
                m2: ZERO,
@@ -144,6 +157,14 @@ module Capabilities
 
       def generate_a5(layout, index)
         "a5 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
+      end
+
+      def generate_21(layout, index)
+        "21 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
+      end
+
+      def extreme
+        @extreme ||= 20
       end
 
       def generate_21(layout, index)

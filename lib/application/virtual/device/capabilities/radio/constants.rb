@@ -30,7 +30,7 @@ module Capabilities
       INDEX_FIELD_5 = 0b0101
       INDEX_FIELD_6 = 0b0110
       INDEX_FIELD_7 = 0b0111
-      INDEX_ITEM_0 = 0x4_0
+      INDEX_ITEM_0 = 0x6_0
       INDEX_ITEM_1 = 0x4_1
       INDEX_ITEM_2 = 0x4_2
       INDEX_ITEM_3 = 0x4_3

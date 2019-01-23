@@ -22,7 +22,23 @@ class Virtual
           radio
           radio_layout
         when (0x60..0x7F)
-          external
+          digital_layout
+        when (0x80..0x9F)
+          tape
+          tape_layout
+        when (0xc0..0xcF)
+          cdc
+          cdc_layout
+        end
+      end
+
+      def evaluate_nav_layout(command)
+        case command.layout.value
+        when (0x40..0x5F)
+          radio
+          radio_layout
+        when (0x60..0x7F)
+          digital_layout
         when (0x80..0x9F)
           tape
           tape_layout
@@ -62,6 +78,15 @@ class Virtual
           body_eq
         else
           logger.warn(self.class) { "Unknown RAD-ALT value: #{command.mode.value}" }
+        end
+      end
+
+      def evaluate_cdc_request(command)
+        case command.control?
+        when :status
+          # ignore
+        else
+          cdc
         end
       end
 

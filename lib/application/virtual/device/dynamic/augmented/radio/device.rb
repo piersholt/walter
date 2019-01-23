@@ -14,7 +14,7 @@ class Virtual
 
     PROC = 'AugmentedRadio'
 
-    PUBLISH     = [PING, PONG, TXT_MID, TXT_GFX, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
+    PUBLISH     = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
     SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX]
 
     def logger
@@ -47,9 +47,12 @@ class Virtual
         logger.debug('Radio') { "Drawing to BMBT!" }
         # foreground
         evaluate_display_layout(message.command)
+      when TXT_NAV
+        logger.debug('Radio') { "Drawing to BMBT!" }
+        # evaluate_nav_layout(message.command)
       when CDC_REQ
-        logger.debug('Radio') { "CDC Mode!" }
-        cdc
+        logger.debug('Radio') { "CDC Request!" }
+        evaluate_cdc_request(message.command)
       when MENU_RAD
         logger.debug('Radio') { "Menu Radio" }
         # background

@@ -22,12 +22,16 @@ class Virtual
         def on
           state!(power: POWER[ON])
           log_state(power: POWER[ON])
+          changed
+          notify_observers(GFX_BUSY, device: :rad)
           self
         end
 
         def off
           state!(power: POWER[OFF])
           log_state(power: POWER[OFF])
+          changed
+          notify_observers(GFX_IDLE, device: :rad)
           self
         end
 
@@ -73,6 +77,14 @@ class Virtual
           log_state(layout: :cdc)
           changed
           notify_observers(RADIO_LAYOUT_CDC, device: :rad)
+          self
+        end
+
+        def digital_layout
+          state!(layout: :digital)
+          log_state(layout: :digital)
+          changed
+          notify_observers(RADIO_LAYOUT_DIGITAL, device: :rad)
           self
         end
 

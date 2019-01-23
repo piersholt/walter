@@ -8,13 +8,13 @@ class Virtual
         include Constants
 
         DEFAULT_STATE = {
-          power: :off,
+          power: OFF,
           source: UNKNOWN,
           dependencies: EMPTY_ARRAY.dup,
           layout: UNKNOWN,
           index: UNKNOWN,
           last_pong: ZERO,
-          audio_obc: UNKNOWN
+          audio_obc: OFF
         }.freeze
 
           def default_state
@@ -33,6 +33,10 @@ class Virtual
 
           def dependencies
             state[:dependencies]
+          end
+
+          def layout
+            state[:layout]
           end
 
           def on?
