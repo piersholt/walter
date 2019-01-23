@@ -1216,16 +1216,25 @@
       :type: :map
       :dictionary:
         # Selection
-        0x40: (Mode) (RADIO [m] Manual Staion Choice) (TAPE fast forward/reverse)
-        0x50: (Mode) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
-        0x60: (Mode) (RADIO [a] Automatic Search)
-        0x70: (Mode) CD Music Search
+        0x40: (Select) (RADIO [m] Manual Staion Choice) (TAPE fast forward/reverse)
+        0x50: (Select) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
+        0x60: (Select) (RADIO [a] Automatic Search)
+        0x70: (Select) CD Music Search
         # Tone
-        0x80: Equalizer
-        0xc0: EQ. Bass
-        0xd0: EQ. Treble
-        0xe0: EQ. Fader
-        0xf0: EQ. Balance
+        0x80: (Tone) Equalizer
+        0xc0: (Tone) EQ. Bass
+        0xd0: (Tone) EQ. Treble
+        0xe0: (Tone) EQ. Fader
+        0xf0: (Tone) EQ. Balance
+
+        0x86: (Tone) (BM53) (Radio) Equalizer
+        0x84: (Tone) (BM53) (CD) Equalizer
+        0x90: (Tone) (BM53) (Radio) Equalizer
+
+        0x0_4: (Tone) (BM53) (RADIO [m] Manual Staion Choice)
+        0x1_4: (Tone) (BM53) (RADIO [SCAN] Station sample)
+        0x2_4: (Tone) (BM53) (RADIO [II] Search sensitive)
+        0x3_4: (Tone) (BM53) (RADIO [I] Search non sensitive)
   :index:
     :mode: 0
 0x45:
