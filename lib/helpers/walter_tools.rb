@@ -8,8 +8,7 @@ module WalterTools
 
   def defaults
     LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
-    # shutup!
-    cdc
+    shutup!
   end
 
   # Session
@@ -53,6 +52,10 @@ module WalterTools
 
   def ready
     DisplayHandler.i.filter_commands(*READY)
+  end
+
+  def buttons
+    DisplayHandler.i.filter_commands(*BUTTON)
   end
 
   def menus
