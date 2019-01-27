@@ -1,28 +1,6 @@
 Walter
 ====
-
-*
-The receiver reads two bytes as the frame header (sender and length), then reading the frame tail. If the checksum does not match the frame check sequence, the receiver will byte shift, and continue doing so until the stream is synchronised.
-
-I had considered using an inter packet gap to deliniate frames given the absence of any other flags. Sampling of the data had incredibly consisent timing, but I think this is partly a function of the bus running at a very low speed and otherwise not a particuarly robust solution when being so far away from the hardware, with many buffers separating you from the transmission medium.
-
-As it happens, I rarely see the byte shifting in operation. Collisions between existing bus devices are rare, and I almost never see the stream opened mid-message, meaning I usually have synchronisation immediately. The other benefit of the byte shifting is I'm not dependent on timing, meaning I can pipe in stream that was previously logged which is very useful for debugging.
-
-----
-
-I've had success with building menus on the MK1 Video/GFX/TV module.
-
-It's hard as the radio will only play the audio signal with a specific flag being set by the CD Changer. Unfortunatley it's this flag that causes the radio to immediately write to the display.
-
-I'm testing all kinds of CD Changer status messages to prevent the radio from rendering any updates as I end up tussling with it as it tries to take over the screen. I've managed to limit the radio to writing only once with a combination of no magazine/loading bits. In this state, using the MFL or BMBMT track navigation causes no additional writes..
-I've noticed that even devices like the Intravee seem to have ths fight, and with such a mature solution still having not totally solved it, I might assume this is as close as I'll get.
-
 ---
-
-I've also managed to emulate most functions of the telephone, allowing use of the telephone via BMBT including, directories, info screen etc. The only thing I'm short of is the messages used to facilitate a call. In the absence of a network connection, I can attempt a call which of some help, but anything regarding inconing calls is nonbueono, and how the telephone interacts with the radio is non-beuno. The second E39 does have a much later Motorollo T interface, which, if those devices are still usable, I'll pick up.
-
----
-
 A BMW I/K-BUS ~~interface~~ _tool thingy_ written in Ruby.
 
 ### Description
@@ -46,10 +24,16 @@ I'm still in the throws of tinkering with the bus, and software currently reflec
 
 ### Progress
 
+28 January 2019
+
+- A rudimentary framework for an extensible UI has been implemented.
+- Currently this just applies to the radio mode menus as I figure out how to best handle notifications callbacks. These are likely to be implemented via the radio mode header/overlay with will mean that contention for the header will need to be considered.
+- I've pulled the majority of the modules related to the I/K-Bus from my 540i. I've fashioned some rudimentary wiring harnesses and adapters to install the BM53 radio and ~~MK3~~ MK4 navigation computer. (I found an MK4 for less than most MK3s go for in AU.)
+
 22 December 2018
 
 - Streaming audio via Bluetooth has been implemented in semi-reasonable form. The heavy lifting is been done by Bluez which has support for the A2DP and AVRCP profiles out of the box via PulseAudio, and offers an API over the D-BUS. A second project- Wolfgang, makes the Bluez D-BUS API a little friendlier and emulates an car kit for the purposes of acting as broker for the vehicle.
-- Wolfgang communicates with this library via ZeroMQ using a shared message standard.
+- Wolfgang communicates with this library via ZeroMQ using a common message standard.
 
 17 October 2018
 
