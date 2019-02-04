@@ -49,7 +49,7 @@ module CommandGroups
     DIA_COD_WRITE
   ].freeze
 
-  NOISE = {
+  NOISEY_NG = {
     ready: READY,
     speed: SPEED,
     temperature: TEMPERATURE,
@@ -64,8 +64,24 @@ module CommandGroups
     cdc: CD_CHANGER
   }.freeze
 
-  NOISEY =
-    NOISE[:ready] + NOISE[:speed] + NOISE[:temperature] + NOISE[:ignition] +
-    NOISE[:sensors] + NOISE[:country] + NOISE[:odometer] +
-    NOISE[:vehicle] + NOISE[:lamp] + NOISE[:door]
+  NOISEY = {
+    ready: READY,
+    speed: SPEED,
+    temperature: TEMPERATURE,
+    ignition: IGNITION,
+    sensors: SENSORS,
+    country: COUNTRY,
+    odometer: ODOMETER,
+    vehicle: VEHICLE,
+    lamp: LAMP,
+    door: DOOR,
+    navigation: NAVIGATION
+  }.freeze
+
+  # NOISE = NOISEY_NG
+  #
+  # NOISEY =
+  #   NOISE[:ready] + NOISE[:speed] + NOISE[:temperature] + NOISE[:ignition] +
+  #   NOISE[:sensors] + NOISE[:country] + NOISE[:odometer] +
+  #   NOISE[:vehicle] + NOISE[:lamp] + NOISE[:door]
 end

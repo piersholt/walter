@@ -8,6 +8,12 @@ module Wolfgang
       include LogActually::ErrorOutput
       include Logger
 
+      def manager!(context)
+        logger.debug(self.class) { '#manager' }
+        context.manager = create_manager(context)
+        true
+      end
+
       def audio!(context)
         logger.debug(self.class) { '#audio' }
         context.audio = create_audio(context)
@@ -54,15 +60,23 @@ module Wolfgang
 
       def create_audio(context)
         audio = Audio.new
-        audio.enable
+        audio.on
         audio
+      rescue StandardError => e
+        with_backtrace(logger, e)
+      end
+
+      def create_manager(context)
+        manager = Manager.new
+        manager.on
+        manager
       rescue StandardError => e
         with_backtrace(logger, e)
       end
 
       def create_notifications(context)
         logger.debug(self.class) { '#create_notifications' }
-        notifications = Notifications.new(context.bus)
+        notifications = Notifications.new(context)
         # logger.debug(self.class) { '#notifications.start =>' }
         notifications.start
         # logger.debug(self.class) { '#notifications' }

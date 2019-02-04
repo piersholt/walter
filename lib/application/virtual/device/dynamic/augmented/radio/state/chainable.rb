@@ -23,7 +23,7 @@ class Virtual
           state!(power: POWER[ON])
           log_state(power: POWER[ON])
           changed
-          notify_observers(GFX_BUSY, device: :rad)
+          notify_observers(PRIORITY_RADIO, device: :rad)
           self
         end
 
@@ -31,7 +31,7 @@ class Virtual
           state!(power: POWER[OFF])
           log_state(power: POWER[OFF])
           changed
-          notify_observers(GFX_IDLE, device: :rad)
+          notify_observers(PRIORITY_GFX, device: :rad)
           self
         end
 
@@ -59,32 +59,32 @@ class Virtual
         def radio_layout
           state!(layout: :radio)
           log_state(layout: :radio)
-          changed
-          notify_observers(RADIO_LAYOUT_RADIO, device: :rad)
+          # changed
+          # notify_observers(RADIO_LAYOUT_RADIO, device: :rad)
           self
         end
 
         def tape_layout
           state!(layout: :tape)
           log_state(layout: :tape)
-          changed
-          notify_observers(RADIO_LAYOUT_TAPE, device: :rad)
+          # changed
+          # notify_observers(RADIO_LAYOUT_TAPE, device: :rad)
           self
         end
 
         def cdc_layout
           state!(layout: :cdc)
           log_state(layout: :cdc)
-          changed
-          notify_observers(RADIO_LAYOUT_CDC, device: :rad)
+          # changed
+          # notify_observers(RADIO_LAYOUT_CDC, device: :rad)
           self
         end
 
         def digital_layout
           state!(layout: :digital)
           log_state(layout: :digital)
-          changed
-          notify_observers(RADIO_LAYOUT_DIGITAL, device: :rad)
+          # changed
+          # notify_observers(RADIO_LAYOUT_DIGITAL, device: :rad)
           self
         end
 
@@ -115,9 +115,23 @@ class Virtual
           self
         end
 
-        def body_hide
-          state!(index: :hidden)
-          log_state(index: :hidden)
+        def body_select!
+          state!(index: :cleared)
+          log_state(index: :cleared)
+          self
+        end
+
+        def body_eq!
+          state!(index: :cleared)
+          log_state(index: :cleared)
+          self
+        end
+
+        def body_cleared
+          state!(index: :cleared)
+          log_state(index: :cleared)
+          changed
+          notify_observers(RADIO_BODY_CLEARED, device: :rad)
           self
         end
 
@@ -171,7 +185,7 @@ class Virtual
         # Dependencies
 
         def depend(ident)
-          log_state(dependencies)
+          # log_state(dependencies)
           return self if dependencies.include?(ident)
           state!(dependencies: (dependencies << ident))
           log_state(dependencies: dependencies)

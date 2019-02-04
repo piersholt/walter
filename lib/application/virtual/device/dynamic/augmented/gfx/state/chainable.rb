@@ -39,7 +39,7 @@ class Virtual
           state!(delta)
           log_state(delta)
           changed
-          notify_observers(GFX_IDLE, device: :gfx)
+          notify_observers(PRIORITY_GFX, device: :gfx)
           self
         end
 
@@ -49,7 +49,7 @@ class Virtual
           state!(delta)
           log_state(delta)
           changed
-          notify_observers(GFX_BUSY, device: :gfx)
+          notify_observers(PRIORITY_RADIO, device: :gfx)
           self
         end
 
@@ -60,8 +60,8 @@ class Virtual
           delta = { radio_overlay: ON }
           state!(delta)
           log_state(delta)
-          changed
-          notify_observers(GFX_BUSY, device: :gfx)
+          # changed
+          # notify_observers(PRIORITY_RADIO, device: :gfx)
           self
         end
 
@@ -70,8 +70,8 @@ class Virtual
           delta = { radio_overlay: OFF }
           state!(delta)
           log_state(delta)
-          changed
-          notify_observers(GFX_IDLE, device: :gfx)
+          # changed
+          # notify_observers(PRIORITY_GFX, device: :gfx)
           self
         end
 

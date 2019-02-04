@@ -163,8 +163,8 @@ class BusHandler < BaseHandler
   def message_received(action, properties)
     message = fetch(properties, :message)
     raise RoutingError, 'Message is nil!' unless message
-    route_to_receivers(message)
     route_to_senders(message)
+    route_to_receivers(message)
   end
 
   def route_to_receivers(packet)

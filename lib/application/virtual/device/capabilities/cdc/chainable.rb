@@ -6,8 +6,15 @@ module Capabilities
     module Chainable
       include Constants
 
+      # CONTROL ---------------------------------------------------------------
+
       def stopped
         state!(control: CONTROL[:stopped])
+        self
+      end
+
+      def playing_new
+        state!(control: CONTROL[:playing_new])
         self
       end
 
@@ -30,8 +37,6 @@ module Capabilities
         state!(control: CONTROL[:next])
         self
       end
-
-      alias control_next next
 
       def previous
         state!(control: CONTROL[:previous])
@@ -58,6 +63,10 @@ module Capabilities
         self
       end
 
+      alias control_next next
+
+      # STATUS ----------------------------------------------------------------
+
       def idle
         state!(status: STATUS[:idle])
         self
@@ -68,6 +77,8 @@ module Capabilities
         self
       end
 
+      # MAGAZINE --------------------------------------------------------------
+
       def ok
         state!(magazine: MAGAZINE[:ok])
         self
@@ -77,6 +88,8 @@ module Capabilities
         state!(magazine: MAGAZINE[:error])
         self
       end
+
+      # LOADER --------------------------------------------------------------
 
       def zero
         state!(loader: LOADER[:zero])
@@ -113,10 +126,14 @@ module Capabilities
         self
       end
 
+      # TRACK --------------------------------------------------------------
+
       def track(index)
         state!(track: index)
         self
       end
+
+      # CD --------------------------------------------------------------
 
       def cd(index)
         state!(cd: index)

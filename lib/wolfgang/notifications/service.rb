@@ -4,13 +4,19 @@
 module Wolfgang
   class Notifications
     include LogActually::ErrorOutput
-    attr_accessor :listener, :handler, :bus
+    attr_accessor :listener, :handler, :context
+    attr_writer :bus
+    alias wolfgang_context context
 
     include Logger
 
-    def initialize(bus)
-      @bus = bus
+    def initialize(wolfgang_context)
+      @context = wolfgang_context
       @state = Inactive.new
+    end
+
+    def bus
+      context.bus
     end
 
     def start

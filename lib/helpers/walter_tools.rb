@@ -17,6 +17,10 @@ module WalterTools
     SessionHandler.i.messages
   end
 
+  def d
+    instance_variable_get(:@virtual_display)
+  end
+
   # DisplayHandler
 
   def s
@@ -33,8 +37,8 @@ module WalterTools
     DisplayHandler.i.clear_filter
   end
 
-  def shutup!
-    NOISE.each do |group, command_ids|
+  def shutup!(set = NOISEY_NG)
+    set.each do |group, command_ids|
       LOGGER.debug { "Shutting up: #{group}" }
       DisplayHandler.i.h_c(*command_ids)
     end

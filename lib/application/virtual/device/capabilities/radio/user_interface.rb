@@ -22,6 +22,14 @@ module Capabilities
         menu_rad(arguments: { state: 0b0000_1100 })
       end
 
+      def hide_select
+        menu_rad(arguments: { state: 0b0000_0100 })
+      end
+
+      def hide_tone
+        menu_rad(arguments: { state: 0b0000_1000 })
+      end
+
       def eq(band = :eq)
         case band
         when :bass

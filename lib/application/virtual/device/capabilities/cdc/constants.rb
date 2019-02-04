@@ -8,6 +8,7 @@ module Capabilities
 
       # CONTROL 0x39
       CONTROL_STOPPED  = 0x00
+      CONTROL_PLAYING_NEW = 0x01
       CONTROL_PLAYING  = 0x02
       CONTROL_FWD      = 0x03
       CONTROL_RWD      = 0x04
@@ -20,6 +21,7 @@ module Capabilities
 
       CONTROL = {
         stopped: CONTROL_STOPPED,
+        playing_new: CONTROL_PLAYING_NEW,
         playing: CONTROL_PLAYING,
         fwd: CONTROL_FWD,
         rwd: CONTROL_RWD,
@@ -33,6 +35,7 @@ module Capabilities
 
       CONTROL_MAP = {
         CONTROL_STOPPED => :stopped,
+        CONTROL_PLAYING_NEW => :playing_new,
         CONTROL_PLAYING => :playing,
         CONTROL_FWD => :fwd,
         CONTROL_RWD => :rwd,

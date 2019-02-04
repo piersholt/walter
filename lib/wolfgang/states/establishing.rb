@@ -24,6 +24,7 @@ module Wolfgang
 
       def online!(context)
         context.change_state(Online.new)
+        context.manager!
         context.audio!
         context.notifications!
         context.alive?

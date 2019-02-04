@@ -6,13 +6,41 @@ class Virtual
       include Constants
       include Model
       include Chainable
+      include Events
+
+      # source: 0x60 (RDS 1) / function: 00 (--) / action: 00 (Offset 0)
+      def handle_tel_data(command)
+        # logger.error('oh hai!') { command }
+        case command.source.value
+        when (0x60..0x63)
+          index = command.action.value
+          state = case index
+                  when (0x00..0x09)
+                    :press
+                  when (0x20..0x29)
+                    :hold
+                  when (0x40..0x49)
+                    :release
+                  end
+          changed
+          notify_observers(DATA_REQUEST, index: index, state: state)
+        end
+      end
 
       def evaluate_menu_rad(command)
         case command.state.value
         when 0b0000_0001
           background
+        when 0b0000_0010
+          background
+        when 0b0000_0100
+          body_select!
+        when 0b0000_1000
+          body_eq!
+        when 0b0000_1100
+          body_cleared
         when (0b0000_0010..0b0000_1111)
-          body_hide
+          body_cleared
         end
       end
 
@@ -32,39 +60,46 @@ class Virtual
         end
       end
 
+      RADIO_LAYOUTS = (0x40..0x5F)
+      RDS_LAYOUTS = (0x60..0x7F)
+      TAPE_LAYOUTS = (0x80..0x9F)
+      CDC_LAYOUTS = (0xc0..0xcF)
+
       def evaluate_nav_layout(command)
         case command.layout.value
-        when (0x40..0x5F)
+        when RADIO_LEDS
           radio
           radio_layout
-        when (0x60..0x7F)
+        when RDS_LEDS
           digital_layout
-        when (0x80..0x9F)
+        when TAPE_LEDS
           tape
           tape_layout
-        when (0xc0..0xcF)
+        when CDC_LEDS
           cdc
           cdc_layout
         end
       end
 
+      RAD_LED_RESET = 0x90
+
       def evaluate_radio_led(command)
         case command.led.value
         when 0x00
           off
-        when 0x90
-          off
+        when RAD_LED_RESET
+          # off
         when 0xFF
           on
         when 0x48
           radio
           on
         when (0x41..0x45)
-          tape
-          on
-        when (0x5a..0x5f)
-          tape
-          on
+          # tape
+          # on
+        when (0x5a..0x5e)
+          # tape
+          # on
         else
           logger.warn(self.class) { "Unknown RAD-LED value: #{command.led.value}" }
         end
@@ -132,13 +167,13 @@ class Virtual
 
         case value
         when POWER_PRESS
-          LogActually.rad.debug('Radio') { "POWER_PRESS" }
+          # LogActually.rad.debug('Radio') { "POWER_PRESS" }
           switch_power
         when MODE_PREV_PRESS
-          LogActually.rad.debug('Radio') { "MODE_PREV_PRESS" }
+          # LogActually.rad.debug('Radio') { "MODE_PREV_PRESS" }
           previous_source
         when MODE_NEXT_PRESS
-          LogActually.rad.debug('Radio') { "MODE_NEXT_PRESS" }
+          # LogActually.rad.debug('Radio') { "MODE_NEXT_PRESS" }
           next_source
         when MENU_PRESS
         when OVERLAY_PRESS

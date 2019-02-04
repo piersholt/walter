@@ -52,7 +52,6 @@ module Wolfgang
           Thread.new do
             Thread.current[:name] = 'CommandListener'
             Subscriber.pi
-            Subscriber.subscribe('')
             begin
               logger.debug('CommandListener') { 'Thread listen start!' }
               listen_loop

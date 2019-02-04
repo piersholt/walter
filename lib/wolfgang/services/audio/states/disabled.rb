@@ -5,6 +5,11 @@ module Wolfgang
 
       def enable(context)
         context.change_state(Enabled.new)
+        context.on
+      end
+
+      def on(context)
+        context.change_state(On.new(context))
       end
     end
   end

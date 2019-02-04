@@ -15,7 +15,7 @@ class Virtual
     PROC = 'AugmentedRadio'
 
     PUBLISH     = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
-    SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX]
+    SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, TEL_DATA]
 
     def logger
       LogActually.rad
@@ -36,32 +36,32 @@ class Virtual
       case command_id
       when PING
         dependent = message.to
-        logger.debug('Radio') { "Depends on: #{dependent}" }
+        # logger.debug('Radio') { "Tx: Depends on: #{dependent}" }
         depend(dependent)
       when PONG
-        logger.debug('Radio') { "Ready." }
+        # logger.debug('Radio') {Tx:  "Ready." }
         # seen
       when TXT_MID
-        # logger.debug('Radio') { "Drawing to MID!" }
+        # logger.debug('Radio') {Tx:  "Drawing to MID!" }
       when TXT_GFX
-        logger.debug('Radio') { "Drawing to BMBT!" }
+        logger.debug('Radio') { "Tx: TXT_GFX 0x#{DataTools.d2h(TXT_GFX)}" }
         # foreground
         evaluate_display_layout(message.command)
       when TXT_NAV
-        logger.debug('Radio') { "Drawing to BMBT!" }
+        # logger.debug('Radio') { "Tx: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
         # evaluate_nav_layout(message.command)
       when CDC_REQ
-        logger.debug('Radio') { "CDC Request!" }
+        # logger.debug('Radio') { "Tx: CDC_REQ 0x#{DataTools.d2h(CDC_REQ)}!" }
         evaluate_cdc_request(message.command)
       when MENU_RAD
-        logger.debug('Radio') { "Menu Radio" }
+        logger.debug('Radio') { "Tx: MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
         # background
         evaluate_menu_rad(message.command)
       when RAD_LED
-        logger.debug('Radio') { "Radio LED!" }
+        logger.debug('Radio') { "Tx: RAD_LED 0x#{DataTools.d2h(RAD_LED)}!" }
         evaluate_radio_led(message.command)
       when RAD_ALT
-        logger.debug('Radio') { "Radio SELECT/TONE" }
+        logger.debug('Radio') { "Tx: RAD_ALT 0x#{DataTools.d2h(RAD_ALT)}" }
         evaluate_radio_alt(message.command)
       end
 
@@ -76,25 +76,27 @@ class Virtual
 
       case command_id
       when MFL_FUNC
-        logger.debug(PROC) { "Handling: MFL-FUNC" }
+        logger.debug(PROC) { "Rx: Handling: MFL-FUNC" }
         action_mfl_function(message)
       when BMBT_A
-        # logger.debug(PROC) { "BMBT-1 not implemented." }
-        logger.debug(PROC) { "Handling: BMBT-1" }
+        logger.debug(PROC) { "Rx: Handling: BMBT-1" }
         handle_bmbt_1_button(message)
         action_bmbt_1_button(message)
       when BMBT_B
-        logger.debug(PROC) { "BMBT-2 not implemented." }
+        # logger.debug(PROC) { "Rx: Handling BMBT-2 not implemented." }
       when SRC_CTL
-        logger.debug(PROC) { "SRC_CTL not implemented." }
+        # logger.debug(PROC) { "Rx: Handling SRC_CTL not implemented." }
         # can get tape
       when SRC_SND
-        # logger.debug(PROC) { "SRC_CTL not implemented." }
+        # logger.debug(PROC) { "Rx: SRC_CTL not implemented." }
         # can get tape
         handle_source_sound(message.command)
       when MENU_GFX
-        logger.debug(PROC) { "Handling: MENU_GFX"  }
+        logger.debug(PROC) { "Rx: Handling: MENU_GFX"  }
         handle_menu_gfx(message.command)
+      when TEL_DATA
+        logger.debug(PROC) { "Rx: Handling: TEL_DATA"  }
+        handle_tel_data(message.command)
       end
     rescue StandardError => e
       logger.error(self.class) { e }

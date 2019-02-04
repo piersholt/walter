@@ -43,8 +43,8 @@ class Virtual
         when :change_disc
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :change_disc!" }
           handle_change_disc(request_mode: command.mode.value)
-          send_status(current_state)
-          handle_play
+          # send_status(current_state)
+          # handle_play
         when :change_track
           LogActually.cdc.debug(name) { "Mode: #{command.mode.value} => :change_track!" }
           handle_seek(request_mode: command.mode.value)
@@ -60,6 +60,8 @@ class Virtual
 
       def handle_status_request
         LogActually.cdc.info(ident) { 'Handling CDC status.' }
+        playing
+        active
       end
 
       def handle_stop
@@ -99,6 +101,10 @@ class Virtual
         when CONTROL[:off]
           state!(cd: 0, track: 0)
         when CONTROL[:playing]
+          cd(current_cd)
+          track(current_track)
+          LogActually.cdc.debug(ident) { "CD & Track => #{mapped}" }
+        when CONTROL[:playing_new]
           cd(current_cd)
           track(current_track)
           LogActually.cdc.debug(ident) { "CD & Track => #{mapped}" }
@@ -156,9 +162,9 @@ class Virtual
         requested_disc = request_mode
         LogActually.cdc.debug(ident) { "Requested disc: #{requested_disc}" }
 
-        ready
+        stopped
         active
-        cd(requested_disc)
+        cd(1)
         track(1)
 
         # new_state = { control: CONTROL[:changed],

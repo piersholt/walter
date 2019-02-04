@@ -1327,11 +1327,12 @@
   :parameters:
     :led:
       :type: :map
+      # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
       :dictionary:
         0x00: "Off"
+        0x90: "Off (Reset)"
         0xFF: "On"
         0x48: Radio
-        # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
         0x40: Tape Eject
         0x41: Tape Play
         0x42: Tape FFF
@@ -1343,7 +1344,6 @@
         0x5d: Tape Dolby B
         0x5e: Tape Dolby C
         0x5f: Tape Dolby OFF
-        0x90: "Off (Reset)"
   :index:
     :led: 0
   :meta:
@@ -1461,7 +1461,7 @@
   :index:
     :action: 0
     :nav: 1
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
   :meta:
     :senders:
       - GFX (0x3B)
@@ -1645,6 +1645,7 @@
   :id:
     :d: 72
     :h: '0x48'
+  :klass: Button
   :properties:
     :short_name: BMBT-BTN-1
     :long_name: BMBT Buttons
@@ -1728,7 +1729,7 @@
       0x05: "[Confirm] Press"
       0x45: "[Confirm] Hold"
       0x85: "[Confirm] Release"
-  :klass: Button
+
 0x49:
   :id:
     :d: 73
@@ -2406,10 +2407,12 @@
         0x10: Unknown
         # Seeing this in respond to 0x21 MID type commands to MK1 GFX
         0x0b: Menu Dead!?
+        0x34: Overwrite?!
   :index:
     :status: 0
   :meta:
     :notes:
+      - I _think_ this is.... cache/buffered count....?
       - 00: Dial Function
       - 01 FF: Radio On?
       - [0, 1, 2, 3, 4, 7, 16]
@@ -2615,52 +2618,56 @@
     :action:
       :type: :map
       :dictionary:
-        0x00: Offset 0
-        0x20: Offset 0 (Hold)
-        0x40: Offset 0 (Release)
+        0x00: Index 0
+        0x01: Index 1
+        0x02: Index 2
+        0x03: Index 3
+        0x04: Index 4
+        0x05: Index 5
+        0x06: Index 6
+        0x07: Index 7
+        0x08: Index 8
+        0x09: Index 9
 
-        0x01: Offset 1
-        0x21: Offset 1 (Hold)
-        0x41: Offset 1 (Release)
+        0x20: Index 0 (Hold)
+        0x21: Index 1 (Hold)
+        0x22: Index 2 (Hold)
+        0x23: Index 3 (Hold)
+        0x24: Index 4 (Hold)
+        0x25: Index 5 (Hold)
+        0x26: Index 6 (Hold)
+        0x27: Index 7 (Hold)
+        0x28: Index 8 (Hold)
+        0x29: Index 9 (Hold)
 
-        0x02: Offset 2
-        0x03: Offset 3
-        0x04: Offset 4
-        0x05: Offset 5
-        0x06: Offset 6
-        0x07: Offset 7
-        0x08: Offset 8
-        0x09: Offset 9
-        0x0A: Offset A
-        0x0B: Offset B
-        0x0C: Offset C
-        0x0D: Offset D
-        0x0E: Offset E
-        0x0F: Offset F
-        0x10: Offset 10
-        0x11: Offset 11
-        0x12: Offset 12
-        0x13: Offset 13
-        0x14: Offset 14
-        0x15: Offset 15
-        0x16: Offset 16
-        0x17: Offset 17
-        0x18: Offset 18
-        0x19: Offset 19
-        0x1A: Offset 1A
+        0x40: Index 0 (Release)
+        0x41: Index 1 (Release)
+        0x42: Index 2 (Release)
+        0x43: Index 3 (Release)
+        0x44: Index 4 (Release)
+        0x45: Index 5 (Release)
+        0x46: Index 6 (Release)
+        0x47: Index 7 (Release)
+        0x48: Index 8 (Release)
+        0x49: Index 9 (Release)
 
         0x08: SOS 112?
         0x0A: Info Screen
+
         0x1E: Dial Screen
         0x3E: Dial Screen (Hold)
         0x5E: Dial Screen (Release)
+
         0x1F: Directory Screen
+        0x3F: Directory Screen (Hold)
+        0x5F: Directory Screen (Release)
 
         0x0C: Directory Back Page Start
-        0x0D: Directory Forward Page Start
         0x2C: Directory Back Page Scroll
-        0x2D: Directory Forward Page Scroll
         0x4C: Directory Back Page Stop
+
+        0x0D: Directory Forward Page Start
+        0x2D: Directory Forward Page Scroll
         0x4D: Directory Forward Page Stop
   :klass: ParameterizedCommand
   :meta:

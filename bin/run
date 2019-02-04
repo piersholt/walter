@@ -38,9 +38,10 @@ begin
   LogActually.cdc.w
 
   LogActually.is_all_around(:rad)
-  LogActually.rad.i
+  LogActually.rad.d
   LogActually.is_all_around(:gfx)
   LogActually.gfx.d
+
   LogActually.is_all_around(:display)
   LogActually.display.d
 
@@ -48,7 +49,7 @@ begin
   LogActually.messaging.i
 
   LogActually.is_all_around(:wolfgang)
-  LogActually.wolfgang.i
+  LogActually.wolfgang.d
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i

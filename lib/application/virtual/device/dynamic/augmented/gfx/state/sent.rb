@@ -12,9 +12,13 @@ class Virtual
           when 0b0000_0001
             priority_gfx
             audio_obc_off
+            changed
+            notify_observers(INPUT_MENU, device: :gfx)
           when 0b0000_0011
             priority_gfx
             audio_obc_on
+          when 0b1001_0001
+            priority_gfx
           end
         end
 

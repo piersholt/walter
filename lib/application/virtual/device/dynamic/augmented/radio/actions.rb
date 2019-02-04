@@ -97,19 +97,6 @@ class Virtual
         thy_will_be_done!(MEDIA, SCAN_BACKWARD_STOP)
       end
 
-      # def thy_will_be_done!(command)
-      #   action = Messaging::Action.new(topic: MEDIA, name: command)
-      #   fuckin_send_it_lads!(action)
-      # end
-      #
-      # def fuckin_send_it_lads!(action)
-      #   LogActually.messaging.debug(PROC) { "sending: #{action}"}
-      #   Publisher.send!(action)
-      # rescue StandardError => e
-      #   LogActually.messaging.error(self.class) { e }
-      #   e.backtrace.each { |line| LogActually.messaging.warn(self.class) { line } }
-      # end
-
       def scanning?
         @scanning ||= false
       end

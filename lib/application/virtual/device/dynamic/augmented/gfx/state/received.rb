@@ -13,17 +13,17 @@ class Virtual
 
           case value
           when CONFIRM_PRESS
-            logger.debug(moi) { "CONFIRM_PRESS" }
-            changed
-            notify_observers(INPUT_CONFIRM_SELECT, source: ident)
+            # logger.debug(moi) { "|-> CONFIRM_PRESS" }
+            # changed
+            # notify_observers(INPUT_CONFIRM_SELECT, source: ident, offset: value)
           when CONFIRM_HOLD
-            logger.debug(moi) { "CONFIRM_HOLD" }
-            changed
-            notify_observers(INPUT_CONFIRM_HOLD, source: ident)
+            # logger.debug(moi) { "|-> CONFIRM_HOLD" }
+            # changed
+            # notify_observers(INPUT_CONFIRM_HOLD, source: ident)
           when CONFIRM_RELEASE
-            logger.debug(moi) { "CONFIRM_RELEASE" }
-            changed
-            notify_observers(INPUT_CONFIRM_RELEASE, source: ident)
+            # logger.debug(moi) { "|-> CONFIRM_RELEASE" }
+            # changed
+            # notify_observers(INPUT_CONFIRM_RELEASE, source: ident)
           end
         end
 
@@ -99,9 +99,10 @@ class Virtual
         end
 
         HIDE_RADIO = 0b0000_0001
-        HIDE_OVERLAY = 0b0000_0010
+        HIDE_PANEL = 0b0000_0010
         HIDE_SELECT = 0b0000_0100
         HIDE_EQ = 0b0000_0100
+        HIDE_BODY = 0b0000_1100
         HIDE_ALL = 0b0000_1110
 
         def handle_menu_rad(command)
@@ -109,8 +110,9 @@ class Virtual
           when HIDE_RADIO
             priority_gfx
             radio_display_off
-          when HIDE_OVERLAY
-            # priority_radio
+          when HIDE_PANEL
+            priority_gfx
+            radio_display_off
           when HIDE_EQ
             # priority_radio
             # radio_display_on
@@ -118,13 +120,17 @@ class Virtual
           when HIDE_SELECT
             # priority_radio
             # radio_display_on
-            radio_body(:off)
+            # radio_body(:off)
+          when HIDE_BODY
+            # priority_radio
+            # radio_display_on
+            # radio_body(:off)
           when HIDE_ALL
             priority_gfx
             radio_display_off
             radio_body(:off)
           when (0b0000_0010..0b0000_1110)
-            priority_radio
+            # priority_radio
             # radio_hide_select
             # radio_hide_eq
           end

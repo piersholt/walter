@@ -16,14 +16,14 @@ module Capabilities
 
       # Title 11 chars
       def title(gfx: LAYOUT_HEADER,
-                ike: ZERO,
+                ike: 0b0001_0000,
                 chars: genc(LENGTH_TITLE))
         padded_chars = pad_chars(chars, LENGTH_TITLE)
         primary(gfx: gfx, ike: ike, chars: padded_chars)
       end
 
       # Subtitles 20 chars
-      def subheading_a(layout: LAYOUT_HEADER,
+      def h2(layout: LAYOUT_HEADER,
                        padding: PADDING_NONE,
                        zone: INDEX_FIELD_6,
                        chars: genc(LENGTH_SUBHEADING))
@@ -31,8 +31,20 @@ module Capabilities
         secondary(layout: layout, padding: padding, zone: zone, chars: padded_chars)
       end
 
+      def h2!(chars = nil)
+        chars ? h2(chars: chars, zone: INDEX_FIELD_6 + 0b1000_0000) : h2(zone: INDEX_FIELD_6 +  + 0b1000_0000)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
+      end
+
+      def h3!(chars = nil)
+        chars ? h3(chars: chars, zone: INDEX_FIELD_7) : h3(zone: INDEX_FIELD_7)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
+      end
+
       # Subtitles 20 chars
-      def subheading_b(layout: LAYOUT_HEADER,
+      def h3(layout: LAYOUT_HEADER,
                        padding: PADDING_NONE,
                        zone: INDEX_FIELD_7,
                        chars: genc(LENGTH_SUBHEADING))
@@ -46,6 +58,24 @@ module Capabilities
              chars: genc(LENGTH_A))
         padded_chars = pad_chars(chars, LENGTH_A)
         secondary(layout: layout, padding: padding, zone: zone, chars: padded_chars)
+      end
+
+      def a1!(chars = nil)
+        chars ? a1(chars: chars, zone: INDEX_FIELD_1) : a1(zone: INDEX_FIELD_1)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
+      end
+
+      def a2!(chars = nil)
+        chars ? a2(chars: chars, zone: INDEX_FIELD_2) : a2(zone: INDEX_FIELD_2)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
+      end
+
+      def a3!(chars = nil)
+        chars ? a3(chars: chars, zone: INDEX_FIELD_3) : a3(zone: INDEX_FIELD_3)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
       end
 
       def a2(layout: LAYOUT_HEADER,
@@ -69,11 +99,23 @@ module Capabilities
         secondary(layout: layout, padding: padding, zone: zone, chars: chars)
       end
 
+      def b1!(chars = nil)
+        chars ? b1(chars: chars, zone: INDEX_FIELD_4) : b1(zone: INDEX_FIELD_4)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
+      end
+
       def b2(layout: LAYOUT_HEADER,
              padding: PADDING_NONE,
              zone: INDEX_FIELD_5,
              chars: genc(LENGTH_B))
         secondary(layout: layout, padding: padding, zone: zone, chars: chars)
+      end
+
+      def b2!(chars = nil)
+        chars ? b2(chars: chars, zone: INDEX_FIELD_5) : b2(zone: INDEX_FIELD_5)
+        # Kernel.sleep(2)
+        render(LAYOUT_HEADER)
       end
 
       def render_menu(layout:)
@@ -101,14 +143,32 @@ module Capabilities
 
       # ------------------------------- MACROS ------------------------------- #
 
-      def generate_header(layout: LAYOUT_HEADER, indices: (0x41..0x47))
-        indices.each do |index|
+      def build_header(layout, fields_with_index, title = nil)
+        FIELD_INDEXES.each_with_index do |field_index, index|
+          field = fields_with_index.fetch(index, false)
+          next unless field
+          list(m1: layout,
+               m2: ZERO,
+               m3: field_index,
+               chars: field.to_s)
+        end
+        title(gfx: layout, chars: title) if title
+        render(layout) unless title
+        true
+      end
+
+      def build_new_header(layout, fields_with_index, title = nil)
+        FIELD_NEW_INDEXES.each_with_index do |field_index, index|
+          field = fields_with_index.fetch(index, false)
+          next unless field
           secondary(layout: layout,
                     padding: PADDING_NONE,
-                    zone: index,
-                    chars: generate_a5(layout, index))
-          wait
+                    zone: field_index,
+                    chars: field.to_s)
         end
+        title(gfx: layout, chars: title) if title
+        render(layout) unless title
+        true
       end
 
       def build_menu(layout, menu_items_with_index)
@@ -118,10 +178,22 @@ module Capabilities
           list(m1: layout,
                m2: ZERO,
                m3: item_index,
-               chars: menu_item)
+               chars: menu_item.to_s)
         end
         render_menu(layout: layout)
         true
+      end
+
+      # ------------------------------- MACROS ------------------------------- #
+
+      def generate_header(layout: LAYOUT_HEADER, indices: (0x41..0x47))
+        indices.each do |index|
+          secondary(layout: layout,
+                    padding: PADDING_NONE,
+                    zone: index,
+                    chars: generate_a5(layout, index))
+          wait
+        end
       end
 
       # the layout must match

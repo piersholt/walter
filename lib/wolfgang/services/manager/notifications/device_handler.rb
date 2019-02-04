@@ -9,7 +9,7 @@ module Wolfgang
       include NotificationDelegate
       include Messaging::Constants
 
-      attr_accessor :bus
+      attr_accessor :context
 
       def logger
         LogActually.messaging
@@ -18,14 +18,26 @@ module Wolfgang
       def take_responsibility(notification)
         logger.debug(self.class) { "#take_responsibility(#{notification})" }
         case notification.name
-        when CONNECTING
-          bus.tel.bluetooth_connecting
-        when CONNECTED
-          bus.tel.bluetooth_connected
-        when DISCONNECTING
-          bus.tel.bluetooth_disconnecting
-        when DISCONNECTED
-          bus.tel.bluetooth_disconnected
+        when :device_connecting
+          logger.info(self.class) { "#{:device_connecting}" }
+          context.manager.device_connecting(notification.properties)
+          # context.bus.tel.bluetooth_connecting
+        when :device_connected
+          logger.info(self.class) { "#{:device_connected}" }
+          context.manager.device_connected(notification.properties)
+          # context.bus.tel.bluetooth_connected
+        when :device_disconnecting
+          logger.info(self.class) { "#{:device_disconnecting}" }
+          context.manager.device_disconnecting(notification.properties)
+          # context.bus.tel.bluetooth_disconnecting
+        when :device_disconnected
+          logger.info(self.class) { "#{:device_disconnected}" }
+          context.manager.device_disconnected(notification.properties)
+          # context.bus.tel.bluetooth_disconnected
+        when :new_device
+          logger.info(self.class) { "#{:new_device}" }
+          context.manager.new_device(notification.properties)
+          # context.bus.tel.bluetooth_disconnected
         else
           not_handled(notification)
         end

@@ -13,6 +13,10 @@ class Virtual
       @status = :down
     end
 
+    def inspect
+      "#<Virtual::Bus:0x00>"
+    end
+
     def online
       @status = :up
     end
