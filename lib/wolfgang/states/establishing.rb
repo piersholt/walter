@@ -8,18 +8,25 @@ module Wolfgang
       include Logger
 
       def initialize
-        logger.debug(self.class) { '#initialize' }
+        logger.debug(WOLFGANG_EST) { '#initialize' }
       end
 
       def open(___)
-        logger.debug(self.class) { '#open' }
+        logger.debug(WOLFGANG_EST) { '#open' }
         false
       end
 
-      # TODO: kill connection?
       def close(context)
-        logger.debug(self.class) { '#close' }
-        context.change_state(Offline.new)
+        logger.debug(WOLFGANG_EST) { '#close' }
+        logger.debug(WOLFGANG_EST) { 'Stop Notifications' }
+        context.notifications&.stop
+        logger.debug(WOLFGANG_EST) { 'Disable Mananger' }
+        context.manager&.disable
+        logger.debug(WOLFGANG_EST) { 'Disable Audio' }
+        context.audio&.disable
+        logger.debug(WOLFGANG_EST) { 'Disconnect Client.' }
+        Client.disconnect
+        context.offline!
       end
 
       def online!(context)

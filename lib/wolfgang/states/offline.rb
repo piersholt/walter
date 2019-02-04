@@ -8,32 +8,50 @@ module Wolfgang
       include Logger
 
       def initialize
-        logger.debug(self.class) { '#initialize' }
+        logger.debug(WOLFGANG_OFFLINE) { '#initialize' }
       end
 
       def open(context)
-        logger.debug(self.class) { '#open' }
-        Client.pi
-        Client.instance.queue_message('ping', reply_block(context))
+        logger.debug(WOLFGANG_OFFLINE) { '#open' }
+        queue_alive(context)
         context.change_state(Establishing.new)
         true
       end
 
+      def close(___)
+        logger.debug(WOLFGANG_OFFLINE) { '#open' }
+        return false
+      end
+
       private
+
+      def queue_alive(context)
+        logger.debug(WOLFGANG_OFFLINE) { '#queue_alive' }
+        # Client.instance.queue_message('ping', reply_block(context))
+        context.ping!(reply_block(context))
+        true
+      end
+
+      def alive?(context)
+        logger.debug(WOLFGANG_ONLINE) { '#alive?' }
+        # Client.instance.queue_message('ping', )
+        context.ping!(alive_block(context))
+        true
+      end
 
       def reply_block(context)
         proc do |reply, error|
           begin
             if reply
-              logger.info(self.class) { 'Online!' }
+              logger.info(WOLFGANG_OFFLINE) { 'Online!' }
               context.online!
             else
-              logger.warn(self.class) { 'Error!' }
+              logger.warn(WOLFGANG_OFFLINE) { "Error! (#{error})" }
               context.offline!
             end
           rescue StandardError => e
-            logger.error(self.class) { e }
-            e.backtrace.each { |line| logger.error(self.class) { line } }
+            logger.error(WOLFGANG_OFFLINE) { e }
+            e.backtrace.each { |line| logger.error(WOLFGANG_OFFLINE) { line } }
             context.change_state(Offline.new)
           end
         end

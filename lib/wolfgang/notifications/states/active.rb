@@ -6,12 +6,13 @@ module Wolfgang
     class Active
       include Logger
       def start(context)
-        logger.debug(self.class) { '#start' }
+        logger.debug(NOTIFICATIONS_ACTIVE) { '#start' }
         false
       end
 
       def stop(context)
-        logger.debug(self.class) { '#stop' }
+        logger.debug(NOTIFICATIONS_ACTIVE) { '#stop' }
+        Listener.instance.stop
         context.change_state(Inactive.new)
       end
     end

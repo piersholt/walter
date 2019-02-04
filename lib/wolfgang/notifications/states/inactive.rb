@@ -6,7 +6,7 @@ module Wolfgang
     class Inactive
       include Logger
       def start(notifications_context)
-        logger.debug(self.class) { '#start' }
+        logger.debug(NOTIFICATIONS_INACTIVE) { '#start' }
         setup_incoming_notifications_handlers(notifications_context)
         notifications_context.change_state(Active.new)
       rescue StandardError => e
@@ -14,7 +14,7 @@ module Wolfgang
       end
 
       def stop(notifications_context)
-        logger.debug(self.class) { '#stop' }
+        logger.debug(NOTIFICATIONS_INACTIVE) { '#stop' }
         false
       end
 

@@ -56,9 +56,8 @@ class Walter
 
     @bus =
       Virtual::Initialization
-      .new(augmented: [:rad, :gfx], emulated: [:cdc])
+      .new(augmented: %i[rad gfx], emulated: %i[cdc])
       .execute
-      # .new(augmented: [], emulated: [])
 
     @interface_handler = DataLinkHandler.new(@transmitter)
     @bus_handler = BusHandler
@@ -104,8 +103,7 @@ class Walter
 
     defaults
 
-    @wolfgang = Wolfgang::Service.new
-    @wolfgang.bus = @bus
+    Publisher.announcement(:walter)
   end
 
   def launch
@@ -138,12 +136,18 @@ class Walter
     @transmitter.on
     @demultiplexer.on
     @multiplexer.on
+    @wolfgang = Wolfgang::Service.new
+    @wolfgang.bus = @bus
     @wolfgang.open
     # ::Notifications.start(@bus)
   end
 
   def stop
     LOGGER.debug(PROC) { '#stop' }
+
+    LOGGER.info(PROC) { 'Switching off Wolfgang...' }
+    @wolfgang.close
+    LOGGER.info(PROC) { 'Wolfgang is off! 👍' }
 
     LOGGER.info(PROC) { 'Switching off Multiplexing...' }
     @demultiplexer.off

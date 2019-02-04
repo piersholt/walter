@@ -4,8 +4,7 @@ module Wolfgang
       include Logger
 
       def enable(context)
-        context.change_state(Enabled.new)
-        context.on
+        context.change_state(Enabled.new(context))
       end
 
       def on(context)

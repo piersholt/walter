@@ -11,14 +11,6 @@ module Wolfgang
       '<UserInterface>'
     end
 
-    def audio_controller
-      @audio_controller ||= Controller::AudioController.new(context)
-    end
-
-    def bluetooth_controller
-      @bluetooth_controller ||= Controller::BluetoothController.new(context)
-    end
-
     def initialize(context, root = Controller::MainMenuController, header = Controller::AudioController)
       context.manager.device_list
       context.audio.send_me_everyone
@@ -26,6 +18,14 @@ module Wolfgang
       @context = context
       @header = create_header(header)
       @root = create_menu(root)
+    end
+
+    def audio_controller
+      @audio_controller ||= Controller::AudioController.new(context)
+    end
+
+    def bluetooth_controller
+      @bluetooth_controller ||= Controller::BluetoothController.new(context)
     end
 
     def create_header(header_controller)

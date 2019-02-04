@@ -20,17 +20,17 @@ module Wolfgang
     end
 
     def start
-      logger.debug(self.class) { '#start' }
+      logger.debug(NOTIFICATIONS) { '#start' }
       @state.start(self)
     end
 
     def stop
-      logger.debug(self.class) { '#stop' }
+      logger.debug(NOTIFICATIONS) { '#stop' }
       @state.stop(self)
     end
 
     def change_state(new_state)
-      logger.info(self.class) { "state change => #{new_state.class}" }
+      logger.info(NOTIFICATIONS) { "state change => #{new_state.class}" }
       @state = new_state
     end
   end

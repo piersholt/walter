@@ -22,12 +22,16 @@ module Wolfgang
     # STATES --------------------------------------------------------
 
     def change_state(new_state)
-      logger.info(self.class) { "state change => #{new_state.class}" }
+      logger.info(AUDIO) { "state change => #{new_state.class}" }
       @state = new_state
     end
 
     def enable
       @state.enable(self)
+    end
+
+    def disable
+      @state.disable(self)
     end
 
     def on

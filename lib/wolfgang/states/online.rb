@@ -8,20 +8,42 @@ module Wolfgang
       include LogActually::ErrorOutput
       include Logger
 
+      def open(___)
+        logger.debug(WOLFGANG_ONLINE) { '#open' }
+        false
+      end
+
+      def close(context)
+        logger.debug(WOLFGANG_ONLINE) { '#close' }
+        logger.debug(WOLFGANG_ONLINE) { 'Stop Notifications' }
+        context.notifications&.stop
+        logger.debug(WOLFGANG_ONLINE) { 'Disable Mananger' }
+        context.manager&.disable
+        logger.debug(WOLFGANG_ONLINE) { 'Disable Audio' }
+        context.audio&.disable
+        logger.debug(WOLFGANG_ONLINE) { 'Disconnect Client.' }
+        Client.disconnect
+        logger.debug(WOLFGANG_ONLINE) { 'Disconnect Publisher.' }
+        Publisher.disconnect
+        # logger.debug(WOLFGANG_ONLINE) { 'Destroy context.' }
+        # Publisher.destroy
+        context.offline!
+      end
+
       def manager!(context)
-        logger.debug(self.class) { '#manager' }
+        logger.debug(WOLFGANG_ONLINE) { '#manager' }
         context.manager = create_manager(context)
         true
       end
 
       def audio!(context)
-        logger.debug(self.class) { '#audio' }
+        logger.debug(WOLFGANG_ONLINE) { '#audio' }
         context.audio = create_audio(context)
         true
       end
 
       def notifications!(context)
-        logger.debug(self.class) { '#notifications' }
+        logger.debug(WOLFGANG_ONLINE) { '#notifications' }
         context.notifications = create_notifications(context)
         true
       end
@@ -31,8 +53,9 @@ module Wolfgang
       end
 
       def alive?(context)
-        logger.debug(self.class) { '#alive?' }
-        Client.instance.queue_message('ping', alive_block(context))
+        logger.debug(WOLFGANG_ONLINE) { '#alive?' }
+        # Client.instance.queue_message('ping', )
+        context.ping!(alive_block(context))
         true
       end
 
@@ -42,17 +65,23 @@ module Wolfgang
         proc do |reply, error|
           begin
             if reply
-              logger.debug(self.class) { 'Alive!' }
+              logger.debug(WOLFGANG_ONLINE) { 'Alive!' }
 
               Kernel.sleep(30)
               context.alive?
             else
-              logger.warn(self.class) { 'Error!' }
+              logger.warn(WOLFGANG_ONLINE) { "Error! #{error}" }
               context.offline!
             end
+          rescue MessagingQueue::GoHomeNow => e
+            # logger.fatal(WOLFGANG_ONLINE) { 'Doing many, many important things!' }
+            # with_backtrace(logger, e)
+            # logger.fatal(WOLFGANG_ONLINE) { 'Okay bye now!' }
+            raise e
           rescue StandardError => e
-            logger.error(self.class) { e }
-            e.backtrace.each { |line| logger.error(self.class) { line } }
+            logger.unknown(WOLFGANG_ONLINE) { 'FYI: You\'re in Wolfgang::Online!' }
+            logger.error(WOLFGANG_ONLINE) { e }
+            e.backtrace.each { |line| logger.error(WOLFGANG_ONLINE) { line } }
             context.offline!
           end
         end
@@ -60,39 +89,31 @@ module Wolfgang
 
       def create_audio(context)
         audio = Audio.new
-        audio.on
+        audio.enable
         audio
       rescue StandardError => e
         with_backtrace(logger, e)
+        :error
       end
 
       def create_manager(context)
         manager = Manager.new
-        manager.on
+        manager.enable
         manager
       rescue StandardError => e
         with_backtrace(logger, e)
+        :error
       end
 
       def create_notifications(context)
-        logger.debug(self.class) { '#create_notifications' }
+        logger.debug(WOLFGANG_ONLINE) { '#create_notifications' }
         notifications = Notifications.new(context)
-        # logger.debug(self.class) { '#notifications.start =>' }
+        # logger.debug(WOLFGANG_ONLINE) { '#notifications.start =>' }
         notifications.start
-        # logger.debug(self.class) { '#notifications' }
+        # logger.debug(WOLFGANG_ONLINE) { '#notifications' }
         notifications
       rescue StandardError => e
         with_backtrace(logger, e)
-      end
-
-      def open(___)
-        logger.debug(self.class) { '#open' }
-        false
-      end
-
-      def close(context)
-        logger.debug(self.class) { '#close' }
-        context.change_state(Offline.new)
       end
     end
   end

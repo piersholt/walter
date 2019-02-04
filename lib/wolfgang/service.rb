@@ -5,48 +5,20 @@ module Wolfgang
   # Wolfgang Service
   class Service
     include Logger
-
-    SERVICES = [
-      { name: 'Bluetooth', action: :bluetooth_index },
-      { name: 'Audio', action: :audio_index }
-    ].freeze
+    include Messaging::API
 
     attr_accessor :commands, :notifications, :bus, :manager, :audio
 
     def initialize
       @state = Offline.new
+      Client.pi
     end
 
-    def services
-      SERVICES
-    end
+    # STATES -------------------------------------------------------------
 
     def change_state(new_state)
-      logger.info(self.class) { "state change => #{new_state.class}" }
+      logger.info(WOLFGANG) { "state change => #{new_state.class}" }
       @state = new_state
-    end
-
-    def ui(force = false)
-      case force
-      when true
-        Wolfgang::UserInterface.new(self)
-      when false
-        @ui ||= Wolfgang::UserInterface.new(self)
-      end
-    end
-
-    def open
-      logger.debug(self.class) { '#open' }
-      @state.open(self)
-    end
-
-    def close
-      logger.debug(self.class) { '#close' }
-      @state.close(self)
-    end
-
-    def alive?
-      @state.alive?(self)
     end
 
     def online!
@@ -56,6 +28,24 @@ module Wolfgang
     def offline!
       @state.offline!(self)
     end
+
+    # METHODS -------------------------------------------------------------
+
+    def open
+      logger.debug(WOLFGANG) { '#open' }
+      @state.open(self)
+    end
+
+    def close
+      logger.debug(WOLFGANG) { '#close' }
+      @state.close(self)
+    end
+
+    def alive?
+      @state.alive?(self)
+    end
+
+    # SERVICES -------------------------------------------------------------
 
     def notifications!
       @state.notifications!(self)
@@ -67,6 +57,34 @@ module Wolfgang
 
     def audio!
       @state.audio!(self)
+    end
+
+    # USER INTERFACE --------------------------------------------------------
+
+    SERVICES = [
+      { name: 'Bluetooth', action: :bluetooth_index },
+      { name: 'Audio', action: :audio_index }
+    ].freeze
+
+    def services
+      SERVICES
+    end
+
+    def ui(reset = false)
+      case reset
+      when true
+        create_ui
+      when false
+        @ui ||= create_ui
+      end
+    end
+
+    def ui!
+      ui(true)
+    end
+
+    def create_ui
+      Wolfgang::UserInterface.new(self)
     end
   end
 end
