@@ -43,8 +43,10 @@ module Telephone
 
   MID_DEFAULT = 0x01
 
-  PAGE = { 0 => 0b0110_0000, 1 => 0b0100_0100,
-           2 => 0b0101_0000, 3 => 0b0001_0100 }.freeze
+  PAGE = { 0 => 0b0110_0000,
+           1 => 0b0100_0100,
+           2 => 0b0101_0000,
+           3 => 0b0001_0100 }.freeze
   NO_PAGINATION = 0b0010_0000
   CLEAR = [].freeze
 
