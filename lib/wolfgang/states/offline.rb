@@ -23,6 +23,20 @@ module Wolfgang
         return false
       end
 
+      def online!(context)
+        context.change_state(Online.new)
+        context.manager!
+        context.audio!
+        context.notifications!
+        context.ui!
+        context.alive?
+      end
+
+      def offline!(context)
+        false
+        # context.change_state(Offline.new)
+      end
+
       private
 
       def queue_alive(context)
@@ -33,9 +47,9 @@ module Wolfgang
       end
 
       def alive?(context)
-        logger.debug(WOLFGANG_ONLINE) { '#alive?' }
+        LogActually.alive.debug(WOLFGANG_ONLINE) { '#alive?' }
         # Client.instance.queue_message('ping', )
-        context.ping!(alive_block(context))
+        context.ping!(reply_block(context))
         true
       end
 
@@ -45,8 +59,11 @@ module Wolfgang
             if reply
               logger.info(WOLFGANG_OFFLINE) { 'Online!' }
               context.online!
-            else
-              logger.warn(WOLFGANG_OFFLINE) { "Error! (#{error})" }
+            elsif error == :timeout
+              logger.warn(WOLFGANG_ONLINE) { "Timeout!" }
+              context.establishing!
+            elsif error == :down
+              logger.warn(WOLFGANG_ONLINE) { "Error!" }
               context.offline!
             end
           rescue StandardError => e

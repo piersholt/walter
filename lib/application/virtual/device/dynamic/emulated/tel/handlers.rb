@@ -32,8 +32,8 @@ module Telephone
   ANNOUNCE = 0x01
 
   # TXT-MID 0X21
-  CONTACT_DISPLAY_LIMIT = 8
-  CONTACT_PAGE_SIZE = 2
+  CONTACT_DISPLAY_LIMIT = 9
+  CONTACT_PAGE_SIZE = 1
 
   CONTACT_DELIMITER = 6
 
@@ -180,7 +180,8 @@ module Telephone
   end
 
   def generate_contact(position = 1, inverse = false)
-    contacts = CONTACTS.dup.shuffle
+    contacts = CONTACTS.dup
+    # contacts = CONTACTS.dup.shuffle
     contacts.reverse! if inverse
     contacts[position]
   end

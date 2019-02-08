@@ -52,8 +52,12 @@ module Wolfgang
         context.change_state(Offline.new)
       end
 
+      def establishing!(context)
+        context.change_state(Establishing.new)
+      end
+
       def alive?(context)
-        logger.debug(WOLFGANG_ONLINE) { '#alive?' }
+        LogActually.alive.debug(WOLFGANG_ONLINE) { '#alive?' }
         # Client.instance.queue_message('ping', )
         context.ping!(alive_block(context))
         true
@@ -65,23 +69,33 @@ module Wolfgang
         proc do |reply, error|
           begin
             if reply
-              logger.debug(WOLFGANG_ONLINE) { 'Alive!' }
+              LogActually.alive.debug(WOLFGANG_ONLINE) { 'Alive!' }
 
-              Kernel.sleep(30)
-              context.alive?
-            else
-              logger.warn(WOLFGANG_ONLINE) { "Error! #{error}" }
+              Thread.new(context) do |thread_context|
+                begin
+                  Kernel.sleep(30)
+                  thread_context.alive?
+                rescue StandardError => e
+                  LogActually.alive.error(WOLFGANG_ONLINE) { e }
+                  e.backtrace.each { |line| LogActually.alive.error(WOLFGANG_ONLINE) { line } }
+                end
+              end
+            elsif error == :timeout
+              LogActually.alive.warn(WOLFGANG_ONLINE) { "Timeout!" }
+              context.establishing!
+            elsif error == :down
+              LogActually.alive.warn(WOLFGANG_ONLINE) { "Error!" }
               context.offline!
             end
           rescue MessagingQueue::GoHomeNow => e
-            # logger.fatal(WOLFGANG_ONLINE) { 'Doing many, many important things!' }
-            # with_backtrace(logger, e)
-            # logger.fatal(WOLFGANG_ONLINE) { 'Okay bye now!' }
+            # LogActually.alive.fatal(WOLFGANG_ONLINE) { 'Doing many, many important things!' }
+            # with_backtrace(LogActually.alive., e)
+            # LogActually.alive.fatal(WOLFGANG_ONLINE) { 'Okay bye now!' }
             raise e
           rescue StandardError => e
-            logger.unknown(WOLFGANG_ONLINE) { 'FYI: You\'re in Wolfgang::Online!' }
-            logger.error(WOLFGANG_ONLINE) { e }
-            e.backtrace.each { |line| logger.error(WOLFGANG_ONLINE) { line } }
+            LogActually.alive.error(WOLFGANG_ONLINE) { 'FYI: You\'re in Wolfgang::Online!' }
+            LogActually.alive.error(WOLFGANG_ONLINE) { e }
+            e.backtrace.each { |line| LogActually.alive.error(WOLFGANG_ONLINE) { line } }
             context.offline!
           end
         end

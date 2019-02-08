@@ -8,6 +8,7 @@ class CharsParameter < BaseParameter
 
   def initialize(configuration, char_array)
     super(configuration, char_array)
+    @raw = char_array
     format_char_array
   end
 
@@ -32,6 +33,10 @@ class CharsParameter < BaseParameter
     chars.char.length
   end
 
+  def raw
+    @raw
+    chars.to_s
+  end
 
   # def append_chars(str_buffer)
   #   if !@chars.empty?

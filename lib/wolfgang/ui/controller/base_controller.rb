@@ -18,7 +18,7 @@ module Wolfgang
         end
 
         def renderer
-          @renderer ||= Virtual::Display.instance
+          @renderer ||= Vehicle::Display.instance
         end
 
         def render(view)

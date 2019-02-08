@@ -9,17 +9,20 @@ class Virtual
         include Constants
 
         DEFAULT_STATE = {
-          monitor: ON,
-          source: GFX,
-          priority: UNKNOWN,
-          audio_obc: OFF,
-          last_activity: ZERO,
-          radio_overlay: UNKNOWN,
-          radio_display: {
-            header: UNKNOWN,
-            body: UNKNOWN
-          },
-          position: UNKNOWN
+          monitor: ON
+          # source: GFX,
+          # TODO: priority this needs to be 'radio_mode:'
+          # there's no need to have radio_overlay and this..
+          # priority: UNKNOWN,
+          # fuck this off
+          # audio_obc: OFF,
+          # fuck this off
+          # last_activity: ZERO,
+          # radio_overlay: UNKNOWN,
+          # radio_display: {
+          #   header: UNKNOWN,
+          #   body: UNKNOWN
+          # },
         }.freeze
 
         def default_state
@@ -35,6 +38,7 @@ class Virtual
         end
 
         def priority?
+          LogActually.gfx.warn('AugmentedGFX') { '#priority is deprecated!' }
           state[:priority]
         end
 
@@ -51,20 +55,20 @@ class Virtual
         end
 
         def a_header?(layout)
-          header_layouts.include? layout
+          HEADERS_VALID.include?(layout)
         end
 
         def a_body?(layout)
-          body_layouts.key?(layout)
+          MENUS_VALID.key?(layout)
         end
 
-        def header_layouts
-          DATA_MODEL[:radio_display][:header]
-        end
+        # def header_layouts
+        #   DATA_MODEL[:radio_display][:header]
+        # end
 
-        def body_layouts
-          DATA_MODEL[:radio_display][:body]
-        end
+        # def body_layouts
+        #   DATA_MODEL[:radio_display][:body]
+        # end
       end
     end
   end

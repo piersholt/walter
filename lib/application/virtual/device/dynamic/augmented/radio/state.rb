@@ -23,7 +23,7 @@ class Virtual
                     :release
                   end
           changed
-          notify_observers(DATA_REQUEST, index: index, state: state)
+          notify_observers(INPUT_SELECT, index: index, state: state)
         end
       end
 

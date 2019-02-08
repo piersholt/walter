@@ -29,6 +29,12 @@ module Wolfgang
         device?(device_object.address)
       end
 
+      def update_devices(devices_enum, event = nil)
+        devices_enum.each do |a_device|
+          update_device(a_device, event)
+        end
+      end
+
       def update_device(device_attributes_hash, event = nil)
         device_object = Device.new(device_attributes_hash)
         case include?(device_object)

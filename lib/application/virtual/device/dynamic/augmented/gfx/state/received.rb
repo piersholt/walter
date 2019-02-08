@@ -8,6 +8,8 @@ class Virtual
         include Events
         include Constants
 
+        # BUTTONS -------------------------------------------------
+
         def handle_bmbt_1_button(command)
           value = command.totally_unique_variable_name
 
@@ -15,7 +17,7 @@ class Virtual
           when CONFIRM_PRESS
             # logger.debug(moi) { "|-> CONFIRM_PRESS" }
             # changed
-            # notify_observers(INPUT_CONFIRM_SELECT, source: ident, offset: value)
+            # notify_observers(INPUT_CONFIRM_PRESS, source: ident, offset: value)
           when CONFIRM_HOLD
             # logger.debug(moi) { "|-> CONFIRM_HOLD" }
             # changed
@@ -31,92 +33,147 @@ class Virtual
           value = command.totally_unique_variable_name
 
           case value
-          when LEFT_1..LEFT_8
+          when LEFT_INPUT
             logger.debug(moi) { "LEFT" }
             changed
             notify_observers(INPUT_LEFT, value: value, source: ident)
-          when RIGHT_1..RIGHT_8
+          when RIGHT_INPUT
             logger.debug(moi) { "RIGHT" }
             changed
             notify_observers(INPUT_RIGHT, value: (value - 0x80), source: ident)
           end
         end
 
+        # RENDERING -------------------------------------------------
+
         def handle_draw_23(command)
           case command.gfx.value
-          when (0x00..0x1f)
-            radio_header(:service)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_SERVICE, source: ident)
-            # notify_observers(RADIO_WRITE, header: RADIO_LAYOUT_SERVICE, source: ident)
-          when (0x20..0x3f)
-            radio_header(:weather_band)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_WEATHER_BAND, source: ident)
-          when (0x40..0x5f)
-            radio_header(:radio)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_RADIO, source: ident)
-          when (0x60..0x7f)
-            radio_header(:digital)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_DIGITAL, source: ident)
-          when (0x80..0x9f)
-            radio_header(:tape)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_TAPE, source: ident)
-          when (0xa0..0xbf)
-            radio_header(:traffic)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_TRAFFIC, source: ident)
-          when (0xc0..0xdf)
-            radio_header(:cdc)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_CDC, source: ident)
-          when (0xe0..0xff)
-            radio_header(:unknown)
-            radio_display_on
-            changed
-            notify_observers(RADIO_LAYOUT_UNKNOWN, source: ident)
+          when HEADER[:service]
+            layout = :digital
+            # radio_header(:service)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_SERVICE, source: ident)
+          when HEADER[:weather_band]
+            layout = :weather_band
+            # radio_header(:weather_band)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_WEATHER_BAND, source: ident)
+          when HEADER[:radio]
+            layout = :radio
+            # radio_header(:radio)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_RADIO, source: ident)
+          when HEADER[:digital]
+            layout = :digital
+            # radio_header(:digital)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_DIGITAL, source: ident)
+          when HEADER[:tape]
+            layout = :tape
+            # radio_header(:tape)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_TAPE, source: ident)
+          when HEADER[:traffic]
+            layout = :traffic
+            # radio_header(:traffic)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_TRAFFIC, source: ident)
+          when HEADER[:cdc]
+            layout = :cdc
+            # radio_header(:cdc)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_CDC, source: ident)
+          when HEADER[:unknown]
+            # radio_header(:unknown)
+            # radio_display_on
+            # changed
+            # notify_observers(RADIO_LAYOUT_UNKNOWN, source: ident)
+            layout = :unknown
+          else
+            layout = false
           end
+
+          return unless layout
+
+          changed
+          notify_observers(:header_write, layout: layout, index: 0, chars: command.chars.value)
         end
 
         def handle_draw_a5(command)
-          case command.layout.value
-          when 0x60
-            radio_body(:menu)
-            # radio_display_on
-          when 0x61
-            radio_body(:menu)
+          layout = command.layout.value
+          zone = command.zone.parameters[:zone].value
+          case layout
+          when MENU_BASIC
+            event = zone.zero? ? :menu_write : :menu_cache
+            layout = :basic
+          when MENU_TITLED
+            event = zone.zero? ? :menu_write : :menu_cache
+            layout = :titled
+          when HEADER_DIGITAL
+            event = zone.zero? ? :header_write : :header_cache
+            layout = :digital
+          when MENU_STATIC
+            event = zone.zero? ? :menu_write : :menu_cache
+            layout = :static
+          else
+            LogActually.gfx.warn('AugmentedGFX') { 'No 0xA5 write event...?' }
+            event = false
           end
+
+          return unless event
+
+          changed
+          notify_observers(event, layout: layout, index: zone, chars: command.chars.value, command: 0xA5)
         end
 
-        HIDE_RADIO = 0b0000_0001
-        HIDE_PANEL = 0b0000_0010
-        HIDE_SELECT = 0b0000_0100
-        HIDE_EQ = 0b0000_0100
-        HIDE_BODY = 0b0000_1100
-        HIDE_ALL = 0b0000_1110
+        def handle_draw_21(command)
+          layout = command.m1.value
+          zone = command.m3.parameters[:index].value
+          case layout
+          when MENU_BASIC
+            event = :menu_cache
+            layout = :basic
+          when MENU_TITLED
+            event = :menu_cache
+            layout = :titled
+          when HEADER_DIGITAL
+            event = :header_cache
+            layout = :digital
+          when MENU_STATIC
+            event = :menu_cache
+            layout = :static
+          else
+            LogActually.gfx.warn('AugmentedGFX') { 'No 0x21 write event...?' }
+            event = false
+          end
+
+          return unless event
+
+          changed
+          notify_observers(event, layout: layout, index: zone, chars: command.chars.value, source: ident, command: 0x21)
+        end
+
+        # MENUS -------------------------------------------------
 
         def handle_menu_rad(command)
           case command.state.value
           when HIDE_RADIO
-            priority_gfx
-            radio_display_off
+            # priority_gfx
+            # radio_display_off
           when HIDE_PANEL
-            priority_gfx
-            radio_display_off
+            # priority_gfx
+            # radio_display_off
           when HIDE_EQ
             # priority_radio
             # radio_display_on
-            radio_body(:off)
+            # radio_body(:off)
           when HIDE_SELECT
             # priority_radio
             # radio_display_on
@@ -126,9 +183,9 @@ class Virtual
             # radio_display_on
             # radio_body(:off)
           when HIDE_ALL
-            priority_gfx
-            radio_display_off
-            radio_body(:off)
+            # priority_gfx
+            # radio_display_off
+            # radio_body(:off)
           when (0b0000_0010..0b0000_1110)
             # priority_radio
             # radio_hide_select
@@ -138,10 +195,10 @@ class Virtual
 
         def handle_radio_alt(command)
           case command.mode.value
-          when (0x40..0x70)
-            radio_body(:select)
-          when (0x80..0xff)
-            radio_body(:eq)
+          when SELECT
+            # radio_body(:select)
+          when TONE
+            # radio_body(:eq)
           end
         end
       end

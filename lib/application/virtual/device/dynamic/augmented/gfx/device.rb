@@ -4,6 +4,7 @@
 class Virtual
   # Comment
   class AugmentedGFX < AugmentedDevice
+    include Capabilities::Ready
     include Capabilities::GFX
     include State
 
@@ -12,7 +13,7 @@ class Virtual
       SRC_SND, SRC_GFX,
       TEL_OPEN, GFX_STATUS, TEL_DATA, DSP_EQ,
       OBC_CONFIG, OBC_REQ,
-      PING,
+      PING, PONG,
       COUNTRY_REQ, COUNTRY_REP,
       IGNITION_REQ, IGNITION_REP
     ].freeze
@@ -49,11 +50,14 @@ class Virtual
       # logger.debug(moi) { "#handle_virtual_transmit(#{command_id})" }
 
       case command_id
-      # when PING
-      #   dependent = message.to
-      #   logger.debug(moi) { "Depends on: #{dependent}" }
-      # when PONG
-      #   logger.debug(moi) { "Ready." }
+      when PING
+        dependent = message.to
+        # logger.debug(moi) { "Depends on: #{dependent}" }
+        logger.debug(moi) { "Tx: PING (#{dependent})" }
+        evaluate_ping(message.command)
+      when PONG
+        logger.debug(moi) { "Tx: PONG" }
+        evaluate_pong(message.command)
       when MENU_GFX
         logger.debug(moi) { "Tx: Menu GFX (#{DataTools.d2h(MENU_GFX)})" }
         evaluate_menu_gfx(message.command)
@@ -63,6 +67,9 @@ class Virtual
       when SRC_SND
         # logger.debug(moi) { "Tx: Source SND (#{DataTools.d2h(SRC_SND)})" }
         # evaluate_menu_gfx(message.command)
+      when OBC_REQ
+        logger.debug(moi) { "Tx: OBC Req. (#{DataTools.d2h(OBC_REQ)})" }
+        evaluate_obc_req(message.command)
       end
     end
 
@@ -84,11 +91,14 @@ class Virtual
       when TXT_NAV
         logger.debug(moi) { "Rx: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
         handle_draw_a5(message.command)
+      when TXT_MID
+        logger.debug(moi) { "Rx: TXT_MID 0x#{DataTools.d2h(TXT_MID)}" }
+        handle_draw_21(message.command)
       when BMBT_A
-        logger.debug(moi) { "Rx: BMBT_A 0x#{DataTools.d2h(BMBT_A)}" }
+        logger.unknown(moi) { "Rx: BMBT_A 0x#{DataTools.d2h(BMBT_A)}" }
         handle_bmbt_1_button(message.command)
       when BMBT_B
-        logger.debug(moi) { "Rx: BMBT_B 0x#{DataTools.d2h(BMBT_B)}" }
+        logger.unknown(moi) { "Rx: BMBT_B 0x#{DataTools.d2h(BMBT_B)}" }
         handle_bmbt_2_button(message.command)
       end
     end

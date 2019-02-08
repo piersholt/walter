@@ -23,6 +23,10 @@ module Wolfgang
         notification
       end
 
+      def logger
+        LogActually.notify
+      end
+
       def pop_and_delegate(i)
         logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Wait" }
         serialized_object = Subscriber.recv

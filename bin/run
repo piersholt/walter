@@ -38,9 +38,11 @@ begin
   LogActually.is_all_around(:cdc)
   LogActually.cdc.w
   LogActually.is_all_around(:rad)
-  LogActually.rad.d
+  LogActually.rad.i
   LogActually.is_all_around(:gfx)
-  LogActually.gfx.d
+  LogActually.gfx.i
+  LogActually.is_all_around(:bmbt)
+  LogActually.bmbt.i
 
   # Abstraction
   LogActually.is_all_around(:display)
@@ -48,11 +50,11 @@ begin
 
   # Yabber
   LogActually.is_all_around(:messaging)
-  LogActually.messaging.d
+  LogActually.messaging.i
   LogActually.is_all_around(:client)
-  LogActually.client.d
+  LogActually.client.i
   LogActually.is_all_around(:publisher)
-  LogActually.publisher.d
+  LogActually.publisher.i
   LogActually.is_all_around(:server)
   LogActually.server.i
   LogActually.is_all_around(:subscriber)
@@ -61,7 +63,8 @@ begin
   # Wolfgang
   LogActually.is_all_around(:notify)
   LogActually.notify.i
-
+  LogActually.is_all_around(:alive)
+  LogActually.alive.i
   LogActually.is_all_around(:wolfgang)
   LogActually.wolfgang.d
 

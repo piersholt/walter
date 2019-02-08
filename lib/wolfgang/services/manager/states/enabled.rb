@@ -5,15 +5,17 @@ module Wolfgang
 
       def initialize(context)
         logger.debug(MANAGER_ENABLED) { '#initialize' }
-        # Build state
-        # context.device_list
+        context.devices?
       end
-
 
       # STATES --------------------------------------------------
 
       def disable(context)
         context.change_state(Disabled.new)
+      end
+
+      def on(context)
+        context.change_state(On.new(context))
       end
     end
   end

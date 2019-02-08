@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 module Wolfgang
+  # Comment
   class Audio
     include Logger
     include Messaging::API
+    include Observable
 
     attr_reader :state
 
@@ -9,14 +13,12 @@ module Wolfgang
       @state = Disabled.new
     end
 
-    # PROPERTIES
-
-    def target
-      @target ||= Target.new
+    def to_s
+      "Audio (#{state_string})"
     end
 
-    def player
-      @player ||= Player.new
+    def nickname
+      :audio
     end
 
     # STATES --------------------------------------------------------
@@ -24,6 +26,9 @@ module Wolfgang
     def change_state(new_state)
       logger.info(AUDIO) { "state change => #{new_state.class}" }
       @state = new_state
+      changed
+      notify_observers(@state)
+      @state
     end
 
     def enable
@@ -38,7 +43,35 @@ module Wolfgang
       @state.on(self)
     end
 
+    def state_string
+      case state
+      when On
+        'On'
+      when Enabled
+        'Enabled'
+      when Disabled
+        'Disabled'
+      else
+        state.class
+      end
+    end
+
+    # PROPERTIES ------------------------------------------------------------------------
+
+    def target
+      @target ||= Target.new
+    end
+
+    def player
+      @player ||= Player.new
+    end
+
+
     # NOTIFICATIONS (TARGET) -------------------------------------------------
+
+    def addressed_player(properties)
+      @state.addressed_player(self, properties)
+    end
 
     def player_added(properties)
       @state.player_added(self, properties)
@@ -84,6 +117,31 @@ module Wolfgang
 
     def shuffle(properties)
       @state.shuffle(self, properties)
+    end
+
+    # API
+
+    def player?
+      player!(player_callback(self))
+    end
+
+    def player_callback(context)
+      proc do |reply, error|
+        begin
+          if reply
+            logger.info(AUDIO) { "#player_callback(#{reply})" }
+            logger.info(AUDIO) { "reply => #{reply}" }
+            context.public_send(reply.name, reply.properties)
+          else
+            logger.warn(AUDIO) { "Error! (#{error})" }
+            # context.offline!
+          end
+        rescue StandardError => e
+          logger.error(AUDIO) { e }
+          e.backtrace.each { |line| logger.error(AUDIO) { line } }
+          context.change_state(Disabled.new)
+        end
+      end
     end
   end
 end

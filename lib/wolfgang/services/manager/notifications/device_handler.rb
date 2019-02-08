@@ -49,7 +49,7 @@ module Wolfgang
       end
 
       def responsibility
-        MANAGER
+        DEVICE
       end
     end
   end

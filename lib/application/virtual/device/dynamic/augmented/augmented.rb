@@ -23,3 +23,13 @@ require "#{gfx_root}/state/sent"
 require "#{gfx_root}/state/received"
 require "#{gfx_root}/state"
 require "#{gfx_root}/device"
+
+# BMBT
+bmbt_root = root + '/bmbt'
+# require "#{bmbt_root}/state/constants"
+# require "#{bmbt_root}/state/model"
+# require "#{bmbt_root}/state/chainable"
+require "#{bmbt_root}/state/sent"
+# require "#{bmbt_root}/state/received"
+require "#{bmbt_root}/state"
+require "#{bmbt_root}/device"

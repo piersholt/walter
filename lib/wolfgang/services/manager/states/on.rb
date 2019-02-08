@@ -7,8 +7,6 @@ module Wolfgang
 
       def initialize(context)
         logger.debug(MANAGER_ON) { '#initialize' }
-        # Build state
-        context.device_list
       end
 
       # STATES --------------------------------------------------
@@ -16,7 +14,6 @@ module Wolfgang
       def disable(context)
         context.change_state(Disabled.new)
       end
-
 
       # Commands ------------------------------------------------
 

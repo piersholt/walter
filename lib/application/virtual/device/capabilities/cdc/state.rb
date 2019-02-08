@@ -12,7 +12,7 @@ module Capabilities
         control: CONTROL[:stopped],
         status: STATUS[:idle],
         magazine: MAGAZINE[:ok],
-        loader: LOADER_SIX,
+        loader: LOADER_ONE,
         cd: 1,
         track: 1,
         b4: 0

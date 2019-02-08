@@ -5,33 +5,35 @@ module Wolfgang
     module Controller
       # Comment
       class AudioController < BaseController
+        NAME = 'AudioController'
         attr_reader :addressed_player
         alias player addressed_player
 
         # 'Pages' ------------------------------------------------------
 
         def index
-          logger.debug(self.class.name) { '#index' }
-          view = View::Audio::Index.new()
+          logger.debug(NAME) { '#index' }
+          view = View::Audio::Index.new
           view.add_observer(self)
           render(view)
         end
 
-        def header
-          logger.debug(self.class.name) { '#header' }
+        def now_playing
+          logger.debug(NAME) { '#now_playing' }
           view = View::Audio::NowPlaying.new(addressed_player)
-          renderer.render_new_header(view)
+          view.add_observer(self)
+          render(view)
         end
 
         # MENU ---------------------------------------------------------------
 
         # def notify
-        #   logger.debug(self.class.name) { '#notify' }
+        #   logger.debug(NAME) { '#notify' }
         #   2.times { bombs_away; Kernel.sleep(2.5) }
         # end
         #
         # def bombs_away
-        #   logger.debug(self.class.name) { '#bombs_away' }
+        #   logger.debug(NAME) { '#bombs_away' }
         #   view = View::NotificationHeader.new(
         #     [Random.rand(97..97+26).chr,
         #      Random.rand(97..97+26).chr,
@@ -47,42 +49,57 @@ module Wolfgang
 
         # Setup ------------------------------------------------------
 
-        def create(view, selected_menu_item: nil)
+        def create(view)
+          logger.debug(NAME) { "#create(#{view})" }
           case view
-          when :header
-            @addressed_player = context.audio.player
-            addressed_player.add_observer(self, :player_update)
-            true
           when :index
             @addressed_player = context.audio.player
             true
+          when :now_playing
+            @addressed_player = context.audio.player
+            addressed_player.add_observer(self, :player_update)
+            true
           else
+            logger.warn(NAME) { "Create: #{view} view not recognised." }
             false
           end
         end
 
         def destroy(view)
+          logger.debug(NAME) { "#destroy(#{view})" }
           case view
           when :index
+            # @addressed_player.delete_observer(self)
+            @addressed_player = nil
+            true
+          when :now_playing
             @addressed_player.delete_observer(self)
             @addressed_player = nil
             true
           else
-            logger.warn(self.class.name) { "Destroy: #{view} view not recognised." }
+            logger.warn(NAME) { "Destroy: #{view} view not recognised." }
             false
           end
         end
 
         # USER EVENTS ------------------------------------------------------
 
-        def update(action, selected_menu_item)
-          logger.debug(self.class.name) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
+        # selected_menu_item may just be button state for non data request
+        def update(action, selected_menu_item = nil)
+          logger.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" } if selected_menu_item
+          logger.debug(NAME) { "#update(#{action})" } unless selected_menu_item
           case action
           when :main_menu_index
             destroy(:index)
             context.ui.root.load(:index)
+          when :audio_now_playing
+            destroy(:index)
+            load(:now_playing)
+          when :audio_index
+            destroy(:now_playing)
+            load(:index)
           else
-            logger.debug(self.class.name) { "#update: #{action} not implemented." }
+            # logger.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
 
@@ -91,20 +108,10 @@ module Wolfgang
         def player_update(action, player:)
           logger.debug('AudioController') { "#player_update(#{action}, #{player})" }
           case action
-          when :track_start
-            return false if addressed_player.position <= 1500 && addressed_player.position != player.position
-            header
+          when :track_change
+            now_playing
           when :status
-            header
-          # when :repeat
-            # header
-          # when :shuffle
-            # header
-          # when :track_change
-          # when :track_end
-          # when :position
-          else
-            logger.debug(self.class.name) { "#player_update: #{action} not implemented." }
+            now_playing
           end
         end
       end

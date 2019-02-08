@@ -34,8 +34,8 @@ module Capabilities
         input(layout: l, index: 11)
       end
 
-      " 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
-      "FM☐AM☐SC☐CD☐TAPE☐   "
+      # " 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
+      # "FM☐AM☐SC☐CD☐TAPE☐   "
 
       def input(layout: 0x60, index: 11)
         user_input(source: layout, function: 0x00, action: index)

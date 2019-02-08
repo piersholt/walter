@@ -3,17 +3,24 @@
 module Wolfgang
   class UserInterface
     module View
-      # Comment
       module MainMenu
+        # Comment
         class Index < TitledMenu
+          include Logger
           NO_SERVICES = [].freeze
           NO_TITLES = [].freeze
 
-          def initialize(services)
+          def initialize(services, container)
             @services = indexed_services(services)
-            main_menu_title = BaseMenuItem.new(label: 'Main Menu')
-            @titles = indexed_titles([main_menu_title])
+
+            @titles = indexed_titles(titles(container))
             # @titles = NO_TITLES
+          end
+
+          def titles(container)
+            [BaseMenuItem.new(label: 'Wolfgang'),
+             BaseMenuItem.new(label: container.state_string)] +
+             Array.new(10) { |i| BaseMenuItem.new(label: (i+64).chr) }
           end
 
           def menu_items
@@ -27,9 +34,10 @@ module Wolfgang
             validate(services, COLUMN_ONE_MAX)
 
             services.first(COLUMN_ONE_MAX).map.with_index do |service, index|
+              # logger.debug("#{index}: #{action_service}")
               indexed_service = BaseMenuItem.new(
-                                label: service[:name],
-                                action: service[:action]
+                                label: service.to_s,
+                                action: service.nickname
                               )
               [index, indexed_service]
             end

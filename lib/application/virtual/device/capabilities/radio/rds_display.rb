@@ -171,8 +171,21 @@ module Capabilities
         true
       end
 
+      # def build_menu(layout, menu_items_with_index)
+      #   ITEM_INDEXES.each_with_index do |item_index, index|
+      #     menu_item = menu_items_with_index.fetch(index, false)
+      #     next unless menu_item
+      #     list(m1: layout,
+      #          m2: ZERO,
+      #          m3: item_index,
+      #          chars: menu_item.to_s)
+      #   end
+      #   render_menu(layout: layout)
+      #   true
+      # end
+
       def build_menu(layout, menu_items_with_index)
-        ITEM_INDEXES.each_with_index do |item_index, index|
+        LAYOUT_INDICES[layout].each_with_index do |item_index, index|
           menu_item = menu_items_with_index.fetch(index, false)
           next unless menu_item
           list(m1: layout,
@@ -183,6 +196,31 @@ module Capabilities
         render_menu(layout: layout)
         true
       end
+
+      # def build_menu(layout, menu_items_with_index)
+      #   LAYOUT_INDICES[layout].each_with_index do |item_index, index|
+      #     menu_item = menu_items_with_index.fetch(index, false)
+      #     next unless menu_item
+      #     secondary(layout: layout,
+      #          padding: ZERO,
+      #          zone: item_index,
+      #          chars: menu_item.to_s)
+      #   end
+      #   render_menu(layout: layout)
+      #   true
+      # end
+
+      # def maybe(layout, indices = FIELD_INDEXES, method = :list)
+      #   indices.each do |item_index|
+      #     public_send(method,
+      #                 m1: layout,
+      #                 m2: ZERO,
+      #                 m3: item_index,
+      #                 chars: genc(3))
+      #   end
+      #   render_menu(layout: layout)
+      #   true
+      # end
 
       # ------------------------------- MACROS ------------------------------- #
 

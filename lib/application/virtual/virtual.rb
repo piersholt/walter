@@ -2,16 +2,6 @@
 
 root = 'application/virtual'
 
-require "#{root}/events"
-
-display = "#{root}/display"
-require "#{display}/states/busy"
-require "#{display}/states/available"
-require "#{display}/states/captured"
-require "#{display}/states/overwritten"
-require "#{display}/listener"
-require "#{display}/display"
-
 device = "#{root}/device"
 require "#{device}/device"
 

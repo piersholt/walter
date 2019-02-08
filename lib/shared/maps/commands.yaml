@@ -131,23 +131,23 @@
     :short_name: PONG
     :long_name: Status Response
     :status_map:
-      0x00: 'Respond'
+      0x00: 'Reply'
       0x01: 'Announce'
       0x30: 'External Offline Respond'
       0x31: 'External Offline Reset'
-      0x40: 'Alt 0'
-      0x41: 'Alt 1'
+      0x40: 'Alt. Reply'
+      0x41: 'Alt. Announce'
   :klass: ParameterizedCommand
   :parameters:
     :status:
       :type: :map
       :dictionary:
-        0x00: 'Respond'
+        0x00: 'Reply'
         0x01: 'Announce'
         0x30: 'External Offline Respond'
         0x31: 'External Offline Reset'
-        0x40: 'Alt 0'
-        0x41: 'Alt 1'
+        0x40: 'Alt. Reply'
+        0x41: 'Alt. Announce'
   :index:
     :status: 0
   :meta:
@@ -820,6 +820,8 @@
     :notes:
       - to date it alternates between two values 0xED and 0xFF
       - it is triggered by the external lights being switched on
+      - 0xFF is off
+      - 0xED seems to be highest 'on' value
     :senders:
       - LCM
     :recipients:
@@ -1723,6 +1725,8 @@
       0x48: "[TEL] Hold"
       0x88: "[TEL] Release"
       0x07: "[Aux. Heat] Press"
+      0x47: "[Aux. Heat] Hold"
+      0x87: "[Aux. Heat] Release"
       0x34: "[Menu] Press"
       0x74: "[Menu] Hold"
       0xB4: "[Menu] Release"
@@ -2085,6 +2089,8 @@
         0x43: '(RAD) Source'
         0x60: '(RDS) Menu A'
         0x61: '(RDS) Menu B'
+        0x62: Header
+        0x63: Static
         0x83: '(TAPE) Side'
         0xc0: '(CD) Discs?'
     :m2:
@@ -2204,6 +2210,7 @@
         0x60: Menu A
         0x61: Menu B
         0x62: Header
+        0x63: Static
     :padding:
       :type: :map
       :dictionary:
@@ -2230,10 +2237,15 @@
       :type: :bit_array
       :index:
         :zone: !ruby/range
-                  begin: 3
+                  begin: 5
                   end: 7
                   excl: false
-        :menu: 1
+        :tbc: !ruby/range
+                  begin: 3
+                  end: 4
+                  excl: false
+        :block: 1
+        :flush: 2
         :flash: 0
       :parameters:
         :flash:
@@ -2242,43 +2254,62 @@
           :states:
             0: :off
             1: :on
-        :menu:
+        :block:
           :type: :switch
           :label: 'Block'
           :states:
             0: :off
             1: :on
+        :flush:
+          :type: :switch
+          :label: 'Flush'
+          :states:
+            0: :off
+            1: :on
+        :tbc:
+          :type: :integer
+          :label: 'TBC'
+          :map:
+            0x00: '?'
+            0x01: '?'
+            0x10: '?'
+            0x11: '?'
+          :dictionary:
+            0x00: '?'
+            0x01: '?'
+            0x10: '?'
+            0x11: '?'
         :zone:
           :type: :map
           :label: 'Zone'
           :map:
-            0b0_0000: :none
+            0b000: :none
 
-            0b0_0001: :a
-            0b0_0010: :b
-            0b0_0011: :c
-            0b0_0100: :d
-            0b0_0101: :e
+            0b001: :a
+            0b010: :b
+            0b011: :c
+            0b100: :d
+            0b101: :e
 
-            0b0_0110: :h2
-            0b0_0111: :h3
+            0b110: :h2
+            0b111: :h3
           :dictionary:
             0b0_0000: '0'
 
-            0b0_0001: 'A/1'
-            0b0_0010: 'B/2'
-            0b0_0011: 'C/3'
-            0b0_0100: 'D/4'
-            0b0_0101: 'E/5'
+            0b001: 'A/1'
+            0b010: 'B/2'
+            0b011: 'C/3'
+            0b100: 'D/4'
+            0b101: 'E/5'
 
-            0b0_0110: 'H2/6'
-            0b0_0111: 'H3/7'
-
-            0b0_1000: '8'
-            0b0_1001: '9'
-            0b0_1010: '10'
-            0b0_1011: '11'
-            0b0_1100: '12'
+            0b110: 'H2/6'
+            0b111: 'H3/7'
+            #
+            # 0b000: '8'
+            # 0b001: '9'
+            # 0b010: '10'
+            # 0b011: '11'
+            # 0b100: '12'
     :chars:
       :type: :chars
   :meta:

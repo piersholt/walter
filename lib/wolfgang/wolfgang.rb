@@ -26,6 +26,7 @@ audio_root = services + '/audio'
 require "#{audio_root}/models/player"
 require "#{audio_root}/models/target"
 require "#{audio_root}/notifications/controller_handler"
+require "#{audio_root}/notifications/target_handler"
 require "#{audio_root}/states/disabled"
 require "#{audio_root}/states/enabled"
 require "#{audio_root}/states/on"
@@ -55,13 +56,20 @@ require "#{ui_root}/layout/menu/menus"
 
 # require "#{ui_root}/model/bluetooth/device"
 # require "#{ui_root}/model/bluetooth/index"
+require "#{ui_root}/view/header/audio"
+
 require "#{ui_root}/view/bluetooth/device"
 require "#{ui_root}/view/bluetooth/index"
+
+require "#{ui_root}/view/audio/now_playing"
 require "#{ui_root}/view/audio/index"
+
 require "#{ui_root}/view/main_menu/index"
+
 require "#{ui_root}/controller/base_controller"
 require "#{ui_root}/controller/bluetooth_controller"
 require "#{ui_root}/controller/audio_controller"
+require "#{ui_root}/controller/header_controller"
 require "#{ui_root}/controller/main_menu_controller"
 
 require "#{ui_root}/user_interface"

@@ -9,6 +9,10 @@ module Wolfgang
           NO_SERVICES = [].freeze
           NO_OPTIONS = [].freeze
 
+          def moi
+            'Audio Index'
+          end
+
           SERVICES = [
             { name: 'Now Playing', action: :audio_now_playing },
             { name: 'Repeat', action: :audio_repeat },

@@ -26,15 +26,16 @@ module Wolfgang
       end
 
       def configure_incomining_notifications_delegates(notifications_context)
-        device_handler = DeviceHandler.instance
+        device_handler     = DeviceHandler.instance
         controller_handler = ControllerHandler.instance
+        target_handler     = TargetHandler.instance
 
         device_handler.context = notifications_context.wolfgang_context
         controller_handler.context = notifications_context.wolfgang_context
-        # device_handler.bus = context.bus
-        # controller_handler.bus = context.bus
+        target_handler.context = notifications_context.wolfgang_context
 
-        controller_handler.successor = device_handler
+        controller_handler.successor = target_handler
+        target_handler.successor = device_handler
         controller_handler
       end
     end

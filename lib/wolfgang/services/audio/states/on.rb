@@ -6,13 +6,21 @@ module Wolfgang
       def initialize(context)
         logger.debug(AUDIO_ON) { '#initialize' }
         # Build state
-        context.send_me_everyone
+        # context.send_me_everyone
       end
 
       # STATES --------------------------------------------------
 
       def disable(context)
         context.change_state(Disabled.new)
+      end
+
+      def enable(context)
+        context.change_state(Enabled.new(context))
+      end
+
+      def on(context)
+        context.change_state(On.new(context))
       end
 
       # PLAYER ------------------------------------------------
@@ -67,6 +75,12 @@ module Wolfgang
 
       # TARGET ------------------------------------------------
 
+      def addressed_player(context, properties)
+        logger.info(AUDIO_ON) { ":addressed_player => #{properties}" }
+        player_object = Player.new(properties)
+        context.player.addressed_player!(player_object)
+      end
+
       def player_added(context, properties)
         logger.info(AUDIO_ON) { ":player_added => #{properties}" }
         # target_object = Target.new(properties)
@@ -83,6 +97,7 @@ module Wolfgang
         logger.info(AUDIO_ON) { ":player_removed => #{properties}" }
         # target_object = Target.new(properties)
         context.target.player_removed(properties)
+        context.disable
       end
     end
   end

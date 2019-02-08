@@ -3,10 +3,11 @@
 module Wolfgang
   class UserInterface
     module View
-      module Audio
+      module Header
         # Comment
-        class NowPlaying < DefaultHeader
+        class Audio < DefaultHeader
           def initialize(addressed_player)
+            LogActually.wolfgang.debug('Audio') { "#initialize(#{addressed_player})" }
             super(
               [nil,
                nil,

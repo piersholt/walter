@@ -24,6 +24,9 @@ module Wolfgang
     AUDIO_ENABLED = 'Audio (Enabled)'
     AUDIO_ON = 'Audio (On)'
 
+    # AUDIO_INDEX = 'Audio INDEX'
+    # AUDIO_NP = 'Audio NP'
+
     def logger
       LogActually.wolfgang
     end

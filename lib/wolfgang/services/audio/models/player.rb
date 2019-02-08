@@ -24,16 +24,31 @@ module Wolfgang
 
       attr_reader :attributes
 
+      alias add_observer! add_observer
+
+      def add_observer(object, method = nil)
+        raise StandardError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
+        add_observer!(object, method)
+      end
+
       def initialize(attributes = {})
         @attributes = attributes
       end
 
+      def to_s
+        attributes
+      end
+
+      def inspect
+        attributes
+      end
+
       # EVENTS ------------------------------------------------------------
 
-      def everyone!(player_object)
+      def addressed_player!(player_object)
         attributes!(player_object)
         changed
-        notify_observers(:everyone, player: self)
+        notify_observers(:addressed_player, player: self)
       end
 
       def track_change!(player_object)
@@ -80,84 +95,84 @@ module Wolfgang
 
       # ATTRIBUTES ------------------------------------------------------------
 
-      def track
-        attributes[TRACK] || {}
-      end
-
       def device
-        attributes[DEVICE]
+        attributes.fetch(DEVICE, '')
       end
 
       def name
-        attributes[NAME]
+        attributes.fetch(NAME, '')
       end
 
       def type
-        attributes[TYPE]
+        attributes.fetch(TYPE, '')
       end
 
       def subtype
-        attributes[SUBTYPE]
+        attributes.fetch(SUBTYPE, '')
       end
 
       def browseable
-        attributes[BROWSEABLE]
+        attributes.fetch(BROWSEABLE, '')
       end
 
       def searchable
-        attributes[SEARCHABLE]
+        attributes.fetch(SEARCHABLE, '')
       end
 
       def playlist
-        attributes[PLAYLIST]
+        attributes.fetch(PLAYLIST, '')
       end
 
       def equalizer
-        attributes[EQUALIZER]
+        attributes.fetch(EQUALIZER, '')
       end
 
       def repeat
-        attributes[REPEAT]
+        attributes.fetch(REPEAT, '')
       end
 
       def shuffle
-        attributes[SHUFFLE]
+        attributes.fetch(SHUFFLE, '')
       end
 
       def scan
-        attributes[SCAN]
+        attributes.fetch(SCAN, '')
       end
 
       def status
-        attributes[STATUS]
-      end
-
-      def title
-        track['Title']
-      end
-
-      def artist
-        track['Artist']
-      end
-
-      def album
-        track['Album']
-      end
-
-      def number
-        track['Number']
-      end
-
-      def total
-        track['Total']
-      end
-
-      def genre
-        track['Genre']
+        attributes.fetch(STATUS, '')
       end
 
       def position
-        attributes[POSITION]
+        attributes.fetch(POSITION, '')
+      end
+
+      def track
+        attributes.fetch(TRACK, { title: nil, artist: nil, album: nil, number: nil, total: nil, genre: nil })
+      end
+
+      def title
+        track.fetch('Title', '')
+      end
+
+      def artist
+        track.fetch('Artist', '')
+      end
+
+      def album
+        track.fetch('Album', '')
+      end
+
+      def number
+        track.fetch('TrackNumber', '')
+      end
+
+      def total
+        track.fetch('NumberOfTracks', '')
+      end
+
+      def genre
+        track.fetch('Genre', '')
       end
 
       # UPDATE ------------------------------------------------------------
@@ -166,14 +181,27 @@ module Wolfgang
         changed = []
         attributes.merge!(new_object.attributes) do |key, old, new|
           changed << key
-          old.is_a?(Hash) ? squish(old, new) : new
+          # old.is_a?(Hash) ?  : new
+          if old.is_a?(Hash)
+            squish(old, new)
+          elsif old.is_a?(String) || new.is_a?(String)
+            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace, replace: 130.chr})
+          else
+            new
+          end
         end
         # changed
         # notify_observers(:updated, changed: changed, player: self)
       end
 
       def squish(old, new)
-        old.merge(new)
+        old.merge(new) do |key, old, new|
+          if new.is_a?(String)
+            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace, replace: 130.chr})
+          else
+            new
+          end
+        end
       end
     end
   end

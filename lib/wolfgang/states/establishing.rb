@@ -34,11 +34,17 @@ module Wolfgang
         context.manager!
         context.audio!
         context.notifications!
+        context.ui!
         context.alive?
       end
 
       def offline!(context)
         context.change_state(Offline.new)
+      end
+
+      def establishing!(context)
+        return false
+        context.change_state(Establishing.new)
       end
     end
   end

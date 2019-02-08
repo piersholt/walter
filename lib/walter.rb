@@ -56,7 +56,7 @@ class Walter
 
     @bus =
       Virtual::Initialization
-      .new(augmented: %i[rad gfx], emulated: %i[cdc])
+      .new(augmented: %i[rad gfx bmbt], emulated: %i[cdc])
       .execute
 
     @interface_handler = DataLinkHandler.new(@transmitter)
@@ -71,7 +71,7 @@ class Walter
     @data_logging_listener = DataLoggingListener.new
     @display_listener = DisplayListener.new
 
-    @virtual_display = Virtual::Display.instance
+    @virtual_display = Vehicle::Display.instance
     @virtual_display.bus = bus
 
     @interface.add_observer(@global_listener)

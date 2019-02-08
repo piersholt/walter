@@ -35,21 +35,21 @@ class Virtual
 
         def priority_gfx
           # return false if priority?
-          delta = { priority: :gfx }
-          state!(delta)
-          log_state(delta)
-          changed
-          notify_observers(PRIORITY_GFX, device: :gfx)
+          # delta = { priority: :gfx }
+          # state!(delta)
+          # log_state(delta)
+          # changed
+          # notify_observers(PRIORITY_GFX, device: :gfx)
           self
         end
 
         def priority_radio
           # return false unless priority?
-          delta = { priority: :rad }
-          state!(delta)
-          log_state(delta)
-          changed
-          notify_observers(PRIORITY_RADIO, device: :gfx)
+          # delta = { priority: :rad }
+          # state!(delta)
+          # log_state(delta)
+          # changed
+          # notify_observers(PRIORITY_RADIO, device: :gfx)
           self
         end
 
@@ -57,19 +57,19 @@ class Virtual
 
         def radio_display_on
           # return false if radio_overlay?
-          delta = { radio_overlay: ON }
-          state!(delta)
-          log_state(delta)
+          # delta = { radio_overlay: ON }
+          # state!(delta)
+          # log_state(delta)
           # changed
           # notify_observers(PRIORITY_RADIO, device: :gfx)
           self
         end
 
         def radio_display_off
-          return false unless radio_overlay?
-          delta = { radio_overlay: OFF }
-          state!(delta)
-          log_state(delta)
+          # return false unless radio_overlay?
+          # delta = { radio_overlay: OFF }
+          # state!(delta)
+          # log_state(delta)
           # changed
           # notify_observers(PRIORITY_GFX, device: :gfx)
           self
@@ -79,17 +79,17 @@ class Virtual
 
         def audio_obc_on
           # return false if audio_obc?
-          delta = { audio_obc: ON }
-          state!(delta)
-          log_state(delta)
+          # delta = { audio_obc: ON }
+          # state!(delta)
+          # log_state(delta)
           self
         end
 
         def audio_obc_off
           # return false unless audio_obc?
-          delta = { audio_obc: OFF }
-          state!(delta)
-          log_state(delta)
+          # delta = { audio_obc: OFF }
+          # state!(delta)
+          # log_state(delta)
           self
         end
 

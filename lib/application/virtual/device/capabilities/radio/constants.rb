@@ -30,6 +30,7 @@ module Capabilities
       INDEX_FIELD_5 = 0b0101
       INDEX_FIELD_6 = 0b0110
       INDEX_FIELD_7 = 0b0111
+
       INDEX_ITEM_0 = 0x4_0
       INDEX_ITEM_1 = 0x4_1
       INDEX_ITEM_2 = 0x4_2
@@ -40,20 +41,31 @@ module Capabilities
       INDEX_ITEM_7 = 0x4_7
       INDEX_ITEM_8 = 0x4_8
       INDEX_ITEM_9 = 0x4_9
+      INDEX_ITEM_10 = 0x4_a
 
       FLUSH = 0x20
       BLOCK = 0x40
 
+      # HEADER
       FIELD_INDEXES =
         [INDEX_FIELD_1, INDEX_FIELD_2, INDEX_FIELD_3, INDEX_FIELD_4,
          INDEX_FIELD_5, INDEX_FIELD_6, INDEX_FIELD_7].freeze
       FIELD_NEW_INDEXES =
         [INDEX_ITEM_1, INDEX_ITEM_2, INDEX_ITEM_3,
          INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6 - BLOCK].freeze
+
+      # MENU
       ITEM_INDEXES =
         [INDEX_ITEM_0 + FLUSH, INDEX_ITEM_1, INDEX_ITEM_2, INDEX_ITEM_3,
          INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6, INDEX_ITEM_7,
-         INDEX_ITEM_8, INDEX_ITEM_9].freeze
+         INDEX_ITEM_8, INDEX_ITEM_9, INDEX_ITEM_10 - BLOCK].freeze
+
+      LAYOUT_INDICES = {
+        0x60 => ITEM_INDEXES,
+        0x61 => ITEM_INDEXES,
+        0x62 => FIELD_NEW_INDEXES,
+        0x63 => [0x61, 0x42, 0x43, 0x44, 0x05]
+      }.freeze
 
     # def rii
     #   index = Random.rand(0..(ITEM_INDEXES.length - 1))
