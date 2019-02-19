@@ -60,6 +60,12 @@ class SwitchedParameter < BaseParameter
       as_warn('OFF')
     when :powered
       as_good('ON')
+    when :press
+      as_good('Press')
+    when :hold
+      as_good('Hold')
+    when :release
+      as_good('Release')
     end
   end
 

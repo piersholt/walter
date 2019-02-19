@@ -2647,59 +2647,48 @@
         0x07: Navigate Function
         0x08: Navigate Info
     :action:
-      :type: :map
-      :dictionary:
-        0x00: Index 0
-        0x01: Index 1
-        0x02: Index 2
-        0x03: Index 3
-        0x04: Index 4
-        0x05: Index 5
-        0x06: Index 6
-        0x07: Index 7
-        0x08: Index 8
-        0x09: Index 9
-
-        0x20: Index 0 (Hold)
-        0x21: Index 1 (Hold)
-        0x22: Index 2 (Hold)
-        0x23: Index 3 (Hold)
-        0x24: Index 4 (Hold)
-        0x25: Index 5 (Hold)
-        0x26: Index 6 (Hold)
-        0x27: Index 7 (Hold)
-        0x28: Index 8 (Hold)
-        0x29: Index 9 (Hold)
-
-        0x40: Index 0 (Release)
-        0x41: Index 1 (Release)
-        0x42: Index 2 (Release)
-        0x43: Index 3 (Release)
-        0x44: Index 4 (Release)
-        0x45: Index 5 (Release)
-        0x46: Index 6 (Release)
-        0x47: Index 7 (Release)
-        0x48: Index 8 (Release)
-        0x49: Index 9 (Release)
-
-        0x08: SOS 112?
-        0x0A: Info Screen
-
-        0x1E: Dial Screen
-        0x3E: Dial Screen (Hold)
-        0x5E: Dial Screen (Release)
-
-        0x1F: Directory Screen
-        0x3F: Directory Screen (Hold)
-        0x5F: Directory Screen (Release)
-
-        0x0C: Directory Back Page Start
-        0x2C: Directory Back Page Scroll
-        0x4C: Directory Back Page Stop
-
-        0x0D: Directory Forward Page Start
-        0x2D: Directory Forward Page Scroll
-        0x4D: Directory Forward Page Stop
+      :type: :bit_array
+      :index:
+        :button_id: !ruby/range
+                      begin: 3
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 1
+                        end: 2
+                        excl: false
+      :parameters:
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x00: Index 0
+            0x01: Index 1
+            0x02: Index 2
+            0x03: Index 3
+            0x04: Index 4
+            0x05: Index 5
+            0x06: Index 6
+            0x07: Index 7
+            0x08: Index 8
+            0x09: Index 9
+            0x0A: Info Screen
+            0x0B: SOS
+            0x0C: Directory Back Page Start
+            0x0D: Directory Forward Page Start
+            0x1E: Dial Screen
+            0x1F: Directory Screen
   :klass: ParameterizedCommand
   :meta:
     :digit:
