@@ -1400,7 +1400,7 @@
     :control:
       :type: :map
       :dictionary:
-        0x05: Set Mode (540)?
+        0x05: (BM53) Set Mode?
         0x06: Set Mode?
     :mode:
       :type: :map
