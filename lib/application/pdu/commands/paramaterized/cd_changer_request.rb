@@ -17,9 +17,16 @@ class Command
       0x0A => :change_track
     }.freeze
 
+    MODE_MAP = {
+      0x00 => :forward,
+      0x01 => :backwards
+    }.freeze
+
     def name
       'CD Changer Request'
     end
+
+    # CONTROL
 
     def controls
       CONTROL_MAP.vaues
@@ -69,10 +76,6 @@ class Command
       is?(:change_track)
     end
 
-    def mode?
-      !mode.value.zero?
-    end
-
     def control?
       case control.value
       when 0x00
@@ -97,6 +100,29 @@ class Command
         :change_track
       else
         raise StandardError, "Unknown control value?! #{control.value}"
+      end
+    end
+
+    # MODE
+
+
+    # def mode?
+    #   !mode.value.zero?
+    # end
+
+
+    def modes
+      MODE_MAP.vaues
+    end
+
+    def mode?
+      case mode.value
+      when 0x00
+        :forward
+      when 0x01
+        :backward
+      else
+        raise StandardError, "Unknown mode value?! #{mode.value}"
       end
     end
   end
