@@ -8,14 +8,19 @@ class Vehicle
       class Digital
         include Attributes
         attr_reader :attributes
-        LENGTH = 7
+        INDEX_START = 0
+        LENGTH = 9
 
         def initialize
-          @attributes = generate_attributes(LENGTH)
+          @attributes = generate_attributes(LENGTH, INDEX_START)
         end
 
         def title
           attributes[0]
+        end
+
+        def name
+          'Cache (Digital)'
         end
       end
     end
@@ -30,10 +35,15 @@ class Vehicle
       class Basic
         include Attributes
         attr_reader :attributes
+        INDEX_START = 0
         LENGTH = 11
 
         def initialize
-          @attributes = generate_attributes(LENGTH)
+          @attributes = generate_attributes(LENGTH, INDEX_START)
+        end
+
+        def name
+          'Cache (Basic)'
         end
       end
 
@@ -41,11 +51,29 @@ class Vehicle
       class Titled
         include Attributes
         attr_reader :attributes
+        INDEX_START = 0
         LENGTH = 11
+        TITLE_LEFT_INDEX = 9
+        TITLE_RIGHT_INDEX = 10
 
         def initialize
-          @attributes = generate_attributes(LENGTH)
+          @attributes = generate_attributes(LENGTH, INDEX_START)
         end
+
+        def name
+          'Cache (Titled)'
+        end
+
+        def title_left
+          attributes[TITLE_LEFT_INDEX]
+        end
+
+        def title_right
+          attributes[TITLE_RIGHT_INDEX]
+        end
+
+        alias tl title_left
+        alias tr title_right
       end
     end
   end
@@ -59,18 +87,15 @@ class Vehicle
       class Static
         include Attributes
         attr_reader :attributes
-        LENGTH = 5
+        INDEX_START = 0
+        LENGTH = 6
 
         def initialize
-          @attributes = generate_attributes(LENGTH)
+          @attributes = generate_attributes(LENGTH, INDEX_START)
         end
 
-        def title_1
-          attributes[8]
-        end
-
-        def title_2
-          attributes[9]
+        def name
+          'Cache (Static)'
         end
       end
     end
