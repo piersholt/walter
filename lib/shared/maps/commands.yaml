@@ -1812,6 +1812,47 @@
       0x87: Right-7
       0x88: Right-8
   :klass: Button
+0x57:
+  :id:
+    :d: 87
+    :h: '0x57'
+  :properties:
+    :short_name: IKE-BTN
+    :long_name: IKE Check Control
+  :klass: ParameterizedCommand
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :button_id: !ruby/range
+                      begin: 3
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 1
+                        end: 2
+                        excl: false
+      :parameters:
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x01: Check Control
+  :notes:
+    - only press and relea
 # ************************************************************************* #
 #                               DISPLAYS
 # ************************************************************************* #
