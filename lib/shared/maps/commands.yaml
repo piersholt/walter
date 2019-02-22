@@ -1050,6 +1050,34 @@
   :examples:
     - "IKE   	LCM   	53        --"
     - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
+0x55:
+  :id:
+    :d: 85
+    :h: '0x55'
+  :properties:
+    :short_name: USE
+    :long_name: Service Interval Usage
+  :klass: ParameterizedCommand
+  :index:
+    :mileage: !ruby/range
+                begin: 1
+                end: 2
+                excl: false
+    :consumption: !ruby/range
+                    begin: 3
+                    end: 4
+                    excl: false
+    :days: !ruby/range
+                begin: 7
+                end: 8
+                excl: false
+  :parameters:
+    :mileage:
+      :type: :integer
+    :consumption:
+      :type: :integer
+    :days:
+      :type: :integer
 # ************************************************************************* #
 #                               TEMPERATURE
 # ************************************************************************* #
@@ -3437,65 +3465,6 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
-85:
-  :id:
-    :d: 85
-    :h: '0x55'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - LCM
-    :examples:
-      - IKE 0B LCM 55 09 83 40 3F 00 00 02 3D C4
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 3D BB
-      - IKE 0B LCM 55 09 83 40 3F 00 00 02 3D C4
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 3D BB
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 57 D1
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 5B DD
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 5F D9
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 62 E4
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 6C EA
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 70 F6
-      - IKE 0B LCM 55 09 83 40 40 00 00 02 74 F2
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 74 F3
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 76 F1
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 77 F0
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 78 FF
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 7A FD
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 7F F8
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 81 06
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 82 05
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 84 03
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 85 02
-      - IKE 0B LCM 55 09 83 40 41 00 00 02 87 00
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 8B 0B
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 8E 0E
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 90 10
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 91 11
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 92 12
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 93 13
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 A2 22
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 A4 24
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 AB 2B
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 BA 3A
-      - IKE 0B LCM 55 09 84 40 41 00 00 02 BF 3F
-      - IKE 0B LCM 55 09 84 40 42 00 00 02 C5 46
-      - IKE 0B LCM 55 09 84 40 42 00 00 02 C8 4B
-      - IKE 0B LCM 55 09 84 40 42 00 00 02 C9 4A
-87:
-  :id:
-    :d: 87
-    :h: '0x57'
-  :properties:
-    :short_name: "55?"
-    :long_name: Unknown
-  :klass: BaseCommand
-  :notes:
 88:
   :id:
     :d: 88
