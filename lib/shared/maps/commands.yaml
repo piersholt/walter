@@ -3058,30 +3058,19 @@
         0x0F: Aux Timer 1
         0x10: Aux Timer 2
     :b2:
-      :type: :bit_array
-      :parameters:
-        :pm:
-          :label: 'PM'
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :hour:
-          :type: :integer
-          :label: House
-      :index:
-        :pm: 0
-        :hour: !ruby/range
-                begin: 4
-                end: 7
-                excl: false
+      :label: 'b2'
+      :type: :integer
     :b3:
-      :label: Minutes
+      :label: 'b3'
+      :type: :integer
+    :b4:
+      :label: 'b4'
       :type: :integer
   :index:
     :b1: 0
     :b2: 1
     :b3: 2
+    :b4: 3
   :meta:
     # LIMIT
     - GFX   	IKE   	OBC-SET   	09 00 21
