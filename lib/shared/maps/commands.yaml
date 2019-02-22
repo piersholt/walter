@@ -1285,6 +1285,12 @@
           :states:
             0: :off
             1: :on
+        :info:
+          :type: :switch
+          :label: Info
+          :states:
+            0: :off
+            1: :on
         :main_menu:
           :type: :switch
           :label: Main Menu
@@ -1292,6 +1298,7 @@
             0: :off
             1: :on
       :index:
+        :info: 3
         :audio_obc: 6
         :main_menu: 7
   :index:
