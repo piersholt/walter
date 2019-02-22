@@ -6,5 +6,6 @@ module Capabilities
     include Helpers
     include UserInterface
     include UserControls
+    include OBC
   end
 end
