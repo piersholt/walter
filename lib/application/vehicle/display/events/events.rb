@@ -29,7 +29,7 @@ class Vehicle
 
     DATA_SELECT = :data_select
   end
-  
+
   module Buttons
     BMBT_MENU = :bmbt_menu
     BMBT_AUX_HEAT = :bmbt_aux_heat
@@ -38,6 +38,14 @@ class Vehicle
     BMBT_PREV = :bmbt_prev
     BMBT_LEFT = :bmbt_left
     BMBT_RIGHT = :bmbt_right
+  end
+end
+
+class Vehicle
+  module Events
+    include States
+    include Commands
+    include Buttons
   end
 end
 

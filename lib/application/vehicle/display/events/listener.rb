@@ -30,15 +30,14 @@ class Vehicle
           logger.debug(NAME) { "#update(#{GFX_OBC_REQ})" }
           obc_request
         when DATA_SELECT
-          logger.unknown(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
+          logger.debug(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
           data_select(properties)
         when RADIO_BODY_CLEARED
-          logger.unknown(NAME) { RADIO_BODY_CLEARED }
+          logger.debug(NAME) { RADIO_BODY_CLEARED }
           overwritten!
         end
 
-        message = event
-        case message
+        case event
         when GFX_PING
           LogActually.alive.debug(NAME) { "#update(#{GFX_PING})" }
           ping
@@ -47,8 +46,7 @@ class Vehicle
           announce
         end
 
-        button = event
-        case button
+        case event
         when BMBT_MENU
           logger.debug(NAME) { "#update(#{BMBT_MENU})" }
           input_menu
