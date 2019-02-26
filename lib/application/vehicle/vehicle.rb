@@ -20,6 +20,7 @@ require "#{display}/events/cache_handler"
 require "#{display}/events/input_handler"
 require "#{display}/events/listener"
 
+require "#{display}/cache/value"
 require "#{display}/cache/attributes"
 require "#{display}/cache/layout_cache"
 require "#{display}/cache/cache"

@@ -30,9 +30,11 @@ class Virtual
     # @override Virtual::Device#receive_packet
 
     def handle_virtual_receive(message)
+      # logger.fatal(PROC) { "handle_virtual_receive: #{message.command.d}" }
       command_id = message.command.d
       case command_id
       when PING
+        # logger.fatal(PROC) { "Rx: Handling: PING" }
         pong
       end
     end

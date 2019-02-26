@@ -17,6 +17,10 @@ module Wolfgang
         def to_s
           label
         end
+
+        def to_c
+          label.encode(Encoding::ASCII_8BIT).bytes
+        end
       end
     end
   end

@@ -1,17 +1,7 @@
+# frozen_string_literal: false
+
 class Vehicle
-  module Events
-    GFX_ANNOUNCE = :gfx_announce
-    # GFX_READY = :gfx_pong
-    GFX_PING = :gfx_ping
-    # GFX_SILENT = :gfx_silent
-    GFX_OBC_REQ = :gfx_obc_req
-
-    GFX_MONITOR_ON  = :gfx_monitor_on
-    GFX_MONITOR_OFF = :gfx_monitor_off
-
-    # RADIO DISPLY
-
-    # @deprecated
+  module States
     PRIORITY_GFX = :gfx_priority_gfx
     PRIORITY_RADIO = :gfx_priority_radio
 
@@ -26,28 +16,36 @@ class Vehicle
 
     RADIO_BODY_CLEARED = :radio_body_cleared
 
-    # USER INPUT
-    INPUT_CONFIRM_PRESS = :input_confirm_select
-    INPUT_CONFIRM_HOLD = :input_confirm_hold
-    INPUT_CONFIRM_RELEASE = :input_confirm_release
+    GFX_MONITOR_ON  = :gfx_monitor_on
+    GFX_MONITOR_OFF = :gfx_monitor_off
+  end
 
-    INPUT_MENU = :input_menu
-    INPUT_AUX_HEAT = :input_aux_heat
-    INPUT_CONFIRM = :input_confirm
+  # Should commands that do not affect module state be relayed...?
+  module Commands
+    GFX_PING = :gfx_ping
+    GFX_ANNOUNCE = :gfx_announce
 
-    INPUT_LEFT = :input_left
-    INPUT_RIGHT = :input_right
+    GFX_OBC_REQ = :gfx_obc_req
 
-    INPUT_SELECT = :input_select
-
-    # @deprecated
-    GFX_IDLE = :gfx_priority_gfx
-    GFX_BUSY  = :gfx_priority_radio
+    DATA_SELECT = :data_select
+  end
+  
+  module Buttons
+    BMBT_MENU = :bmbt_menu
+    BMBT_AUX_HEAT = :bmbt_aux_heat
+    BMBT_CONFIRM = :bmbt_confirm
+    BMBT_NEXT = :bmbt_next
+    BMBT_PREV = :bmbt_prev
+    BMBT_LEFT = :bmbt_left
+    BMBT_RIGHT = :bmbt_right
   end
 end
 
 class Virtual
+  # Vehicle Events
   module Events
-    extend Vehicle::Events
+    include Vehicle::States
+    include Vehicle::Commands
+    include Vehicle::Buttons
   end
 end

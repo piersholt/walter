@@ -4,6 +4,8 @@ root = 'wolfgang'
 
 require 'wolfgang/_deprecated/actions'
 require 'wolfgang/_deprecated/intents'
+# require 'wolfgang/_deprecated/intent_handler'
+# require 'wolfgang/_deprecated/intent_listener'
 
 require "#{root}/logger"
 
@@ -57,6 +59,7 @@ require "#{ui_root}/layout/menu/menus"
 # require "#{ui_root}/model/bluetooth/device"
 # require "#{ui_root}/model/bluetooth/index"
 require "#{ui_root}/view/header/audio"
+require "#{ui_root}/view/header/status"
 
 require "#{ui_root}/view/bluetooth/device"
 require "#{ui_root}/view/bluetooth/index"

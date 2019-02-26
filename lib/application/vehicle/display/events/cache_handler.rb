@@ -7,27 +7,28 @@ class Vehicle
       NAME = 'CacheHandler'
 
       def header_cache(layout:, index:, chars:)
-        logger.unknown(NAME) { "#update(#{header_cache}, #{properties})" }
+        logger.debug(NAME) { "#update(:header_cache, #{layout}, #{index}, #{chars})" }
         cache.public_send(layout)
-             .attributes!(index => chars)
+             .cache!(index => chars)
       end
 
       def header_write(layout:, index:, chars:)
-        logger.unknown(NAME) { "#update(#{header_write}, #{properties})" }
+        logger.debug(NAME) { "#update(:header_write, #{layout}, #{index}, #{chars})" }
         cache.public_send(layout)
-             .attributes!(index => chars)
+             .write!(index => chars)
       end
 
       def menu_cache(layout:, index:, chars:)
-        logger.unknown(NAME) { "#update(#{header_cache}, #{properties})" }
+        logger.debug(NAME) { "#update(:header_cache, #{layout}, #{index}, #{chars})" }
         cache.public_send(layout)
-             .attributes!(index => chars)
+             .cache!(index => chars)
       end
 
+      # This will never have text, it's purely to render.
       def menu_write(layout:, index:, chars:)
-        logger.unknown(NAME) { "#update(#{menu_write}, #{properties})" }
+        logger.debug(NAME) { "#update(:menu_write, #{layout}, #{index}, #{chars})" }
         cache.public_send(layout)
-             .attributes!(index => chars)
+             .show!
       end
     end
   end

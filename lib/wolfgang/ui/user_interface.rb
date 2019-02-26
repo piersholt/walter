@@ -11,22 +11,30 @@ module Wolfgang
       '<UserInterface>'
     end
 
-    def initialize(context, root = Controller::MainMenuController, header = Controller::HeaderController)
+    def initialize(context,
+                   root = Controller::MainMenuController,
+                   header = Controller::HeaderController)
       @context = context
       @header = create_header(header)
       @root = create_menu(root)
     end
 
     def audio_controller
-      @audio_controller ||= Controller::AudioController.new(context)
+      Mutex.new.synchronize do
+        @audio_controller ||= Controller::AudioController.new(context)
+      end
     end
 
     def bluetooth_controller
-      @bluetooth_controller ||= Controller::BluetoothController.new(context)
+      Mutex.new.synchronize do
+        @bluetooth_controller ||= Controller::BluetoothController.new(context)
+      end
     end
 
     def header_controller
-      @header_controller ||= Controller::HeaderController.new(context)
+      Mutex.new.synchronize do
+        @header_controller ||= Controller::HeaderController.new(context)
+      end
     end
 
     def create_header(header_controller)

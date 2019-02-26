@@ -15,6 +15,10 @@ module Wolfgang
         context.change_state(Disabled.new)
       end
 
+      def on(context)
+        false
+      end
+
       # Commands ------------------------------------------------
 
       def connect_device(context, device_address)

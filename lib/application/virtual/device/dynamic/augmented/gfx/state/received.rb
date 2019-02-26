@@ -11,21 +11,21 @@ class Virtual
         # BUTTONS -------------------------------------------------
 
         def handle_bmbt_1_button(command)
-          value = command.totally_unique_variable_name
+          value = command.action.parameters[:totally_unique_variable_name].value
 
           case value
           when CONFIRM_PRESS
             # logger.debug(moi) { "|-> CONFIRM_PRESS" }
             # changed
-            # notify_observers(INPUT_CONFIRM_PRESS, source: ident, offset: value)
+            # notify_observers(BMBT_CONFIRM_PRESS, source: ident, offset: value)
           when CONFIRM_HOLD
             # logger.debug(moi) { "|-> CONFIRM_HOLD" }
             # changed
-            # notify_observers(INPUT_CONFIRM_HOLD, source: ident)
+            # notify_observers(BMBT_CONFIRM_HOLD, source: ident)
           when CONFIRM_RELEASE
             # logger.debug(moi) { "|-> CONFIRM_RELEASE" }
             # changed
-            # notify_observers(INPUT_CONFIRM_RELEASE, source: ident)
+            # notify_observers(BMBT_CONFIRM_RELEASE, source: ident)
           end
         end
 
@@ -34,13 +34,13 @@ class Virtual
 
           case value
           when LEFT_INPUT
-            logger.debug(moi) { "LEFT" }
-            changed
-            notify_observers(INPUT_LEFT, value: value, source: ident)
+            # logger.debug(moi) { "LEFT" }
+            # changed
+            # notify_observers(INPUT_LEFT, value: value, source: ident)
           when RIGHT_INPUT
-            logger.debug(moi) { "RIGHT" }
-            changed
-            notify_observers(INPUT_RIGHT, value: (value - 0x80), source: ident)
+            # logger.debug(moi) { "RIGHT" }
+            # changed
+            # notify_observers(INPUT_RIGHT, value: (value - 0x80), source: ident)
           end
         end
 
@@ -130,7 +130,7 @@ class Virtual
           return unless event
 
           changed
-          notify_observers(event, layout: layout, index: zone, chars: command.chars.value, command: 0xA5)
+          notify_observers(event, layout: layout, index: zone, chars: command.chars.value)
         end
 
         def handle_draw_21(command)
@@ -157,7 +157,7 @@ class Virtual
           return unless event
 
           changed
-          notify_observers(event, layout: layout, index: zone, chars: command.chars.value, source: ident, command: 0x21)
+          notify_observers(event, layout: layout, index: zone, chars: command.chars.value)
         end
 
         # MENUS -------------------------------------------------

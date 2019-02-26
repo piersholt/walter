@@ -30,6 +30,10 @@ module Capabilities
         menu_rad(arguments: { state: 0b0000_1000 })
       end
 
+      def hide_all
+        menu_rad(arguments: { state: 0b0000_1110 })
+      end
+
       def eq(band = :eq)
         case band
         when :bass
@@ -41,6 +45,12 @@ module Capabilities
         when :balance
           rad_alt(mode: 0xf0)
         when :eq
+          rad_alt(mode: 0x80)
+        when :eq2
+          rad_alt(mode: 0x80)
+        when :eq3
+          rad_alt(mode: 0x80)
+        when :eq4
           rad_alt(mode: 0x80)
         end
       end

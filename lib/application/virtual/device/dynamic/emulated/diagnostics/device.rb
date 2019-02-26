@@ -3,7 +3,7 @@
 # Comment
 class Virtual
   # Comment
-  class ManualDiagnostics < DynamicDevice
+  class ManualDiagnostics < EmulatedDevice
     # include API::Diagnostics
     include Capabilities::Diagnostics
 

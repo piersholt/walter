@@ -9,16 +9,21 @@ module Wolfgang
         attr_writer :renderer
         attr_reader :view
 
-        def logger
+        def LogActually.ui
           LogActually.wolfgang
         end
 
         def initialize(context)
+          LogActually.ui.info(name) { "#initialize (#{Thread.current})" }
           @context = context
         end
 
         def renderer
           @renderer ||= Vehicle::Display.instance
+        end
+
+        def name
+          'BaseController'
         end
 
         def render(view)

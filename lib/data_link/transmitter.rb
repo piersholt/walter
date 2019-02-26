@@ -75,8 +75,10 @@ class Transmitter
             transmit(output_buffer, frame_to_write)
           rescue TransmissionError => e
               LogActually.transmitter.error(THREAD_NAME) { e }
+              e.backtrace.each { |l| LogActually.transmitter.error(l) }
           rescue StandardError => e
               LogActually.transmitter.error(THREAD_NAME) { e }
+              e.backtrace.each { |l| LogActually.transmitter.error(l) }
           end # begin
         end # loop
       rescue StandardError => e
@@ -89,10 +91,10 @@ class Transmitter
   end
 
   def transmit(output_buffer, frame_to_write)
-    LogActually.transmitter.debug(THREAD_NAME) { "#transmit(#{output_buffer}, #{frame_to_write})" }
+    LogActually.transmitter.debug(THREAD_NAME) { "#transmit(#{output_buffer}, #{frame_to_write}) (#{Thread.current})" }
     frams_as_string = frame_to_write.as_string
     LogActually.transmitter.debug(THREAD_NAME) { "Frame as string: '#{frams_as_string}'" }
-    result = output_buffer.write(frams_as_string)
+    result = output_buffer.write_nonblock(frams_as_string)
     LogActually.transmitter.debug(THREAD_NAME) { "Transmit success => #{result}" }
     return true if result
     retransmit(output_buffer, frams_as_string)

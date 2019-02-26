@@ -18,7 +18,7 @@ module Wolfgang
         LABEL_RETURN = 'Back'
 
         def logger
-          LogActually.wolfgang
+          LogActually.ui
         end
 
         def layout
@@ -33,10 +33,18 @@ module Wolfgang
           menu_items.to_h
         end
 
+        # def indexed_chars
+        #   fields.map do |field|
+        #     index = field[0]
+        #     field_object = field[1]
+        #     [index, field_object.to_c]
+        #   end&.to_h
+        # end
+
         # Helpers
 
         def validate(objects, max)
-          logger.warn(moi) { 'Too many!' } if objects.length > max
+          LogActually.ui.warn(moi) { 'Too many!' } if objects.length > max
         end
 
         def navigation(index:, action:, label: LABEL_RETURN)
@@ -44,28 +52,31 @@ module Wolfgang
           [[index, navigation_item]]
         end
 
-        # INPUT EVENTS
+        # INPUT EVENTS ------------------------------------------------------
         # Maps data request messages (0x31), to view element
 
         def input_confirm(state: nil)
           false
         end
 
-        def select_item(index:, state:)
-          logger.debug(moi) { "#select_item(#{index}, #{state})" }
+        def input_next(state: nil)
+          false
+        end
+
+        def input_prev(state: nil)
+          false
+        end
+
+        def data_select(index:, state:)
+          LogActually.ui.debug(moi) { "#data_select(#{index}, #{state})" }
           # Non-stateful buttons for the moment
-          return false unless state == :press
+          return false unless state == :release
           # Ignore data requests for an index that doesn't exist
           return false unless menu_items_with_index.key?(index)
 
           selected_item = menu_items_with_index[index]
           changed
           notify_observers(selected_item.action, selected_item)
-        end
-
-        # Helper simulate user input
-        def select(index)
-          select_item(index: index, state: :press)
         end
       end
     end

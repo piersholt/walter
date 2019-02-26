@@ -61,7 +61,7 @@ module DataLink
             loop do
               message = packet_output_buffer.pop
               new_frame = multiplex(message)
-              LogActually.multiplexer.debug(name) { "frame_output_buffer.push(#{new_frame})" }
+              LogActually.multiplexer.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
               frame_output_buffer.push(new_frame)
             end
           rescue StandardError => e

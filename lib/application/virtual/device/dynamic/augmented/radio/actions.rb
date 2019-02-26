@@ -23,7 +23,7 @@ class Virtual
       private
 
       def action_bmbt_1_button(message)
-        value = message.command.totally_unique_variable_name
+        value = message.command.action.parameters[:totally_unique_variable_name].value
 
         # LOGGER.debug(PROC) { "#{MFL_FUNC}-#{value}" }
         case value
@@ -49,7 +49,7 @@ class Virtual
         back_hold = 0x18
         back_release = 0x28
 
-        value = message.command.totally_unique_variable_name
+        value = message.command.action.parameters[:totally_unique_variable_name].value
 
         # LOGGER.debug(PROC) { "#{MFL_FUNC}-#{value}" }
         case value

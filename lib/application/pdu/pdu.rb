@@ -43,6 +43,7 @@ require "#{paramaterized_parameter_root}/chars_parameter"
 require "#{paramaterized_root}/parameterized_command"
 
 require "#{paramaterized_root}/cd_changer_request"
+require "#{paramaterized_root}/button"
 
 require "#{paramaterized_builder_root}/bit_array_parameter_configuration"
 require "#{paramaterized_builder_root}/paramaterized_command_builder"

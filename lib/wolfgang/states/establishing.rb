@@ -42,9 +42,15 @@ module Wolfgang
         context.change_state(Offline.new)
       end
 
-      def establishing!(context)
-        return false
-        context.change_state(Establishing.new)
+      def establishing!(___)
+        false
+      end
+
+      def alive?(context)
+        LogActually.alive.debug(WOLFGANG_EST) { '#alive?' }
+        # Client.instance.queue_message('ping', )
+        context.ping!(context.reply_block(context))
+        true
       end
     end
   end

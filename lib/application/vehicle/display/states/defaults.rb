@@ -29,6 +29,14 @@ class Vehicle
         false
       end
 
+      def input_next(context, method, properties)
+        false
+      end
+
+      def input_prev(context, method, properties)
+        false
+      end
+
       def overwritten!(context)
         false
       end
@@ -37,13 +45,19 @@ class Vehicle
         false
       end
 
+      def input_overlay(context)
+        false
+      end
+
       # Default Display Rendering
 
       def render_new_header(context, view)
+        LogActually.ui.debug(self.class.name) { "DEFAULT #render_new_header" }
         case view.type
         when :default
           context.default_header = view
           context.header = view
+          context.cache.digital.overwrite!(context.header.indexed_chars)
         end
         true
       end
@@ -51,6 +65,14 @@ class Vehicle
       def render_menu(context, view)
         context.menu = view
         true
+      end
+
+      def overwritten_header!(context)
+        false
+      end
+
+      def overwritten!(context)
+        false
       end
     end
   end

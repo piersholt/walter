@@ -24,15 +24,47 @@ module Wolfgang
 
       attr_reader :attributes
 
+      LOG_NAME = 'AddressedPlayer'
+
+      def fuck_off
+        LOG_NAME
+      end
+
+      # OBSERVEABLE -----
+
       alias add_observer! add_observer
+      alias delete_observer! delete_observer
 
       def add_observer(object, method = nil)
-        raise StandardError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
+        logger.debug(fuck_off) { "#add_observer(#{object.class}:#{Kernel.format('%#.14x',(object.object_id * 2))})" }
+          raise ArgumentError, 'Duplicate!' if
+            @observer_peers&.keys&.find do |observer, method|
+              observer.class == object.class
+            end
+        # raise ArgumentError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
         add_observer!(object, method)
       end
 
+      def delete_observer(object)
+        logger.debug(fuck_off) { "#delete_observer(#{object.class}:#{Kernel.format('%#.14x',(object.object_id * 2))})" }
+        # raise ArgumentError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
+        delete_observer!(object)
+      end
+
+      def observers
+        x = instance_variable_get(:@observer_peers)
+        x.map do |observer, method|
+          klass = observer.class
+          id = Kernel.format('%#.14x',(observer.object_id * 2))
+          ["#{klass}:#{id}", method]
+        end&.to_h
+      end
+
+      # -----------
+
       def initialize(attributes = {})
         @attributes = attributes
+        # attributes!(self)
       end
 
       def to_s
@@ -148,7 +180,7 @@ module Wolfgang
       end
 
       def track
-        attributes.fetch(TRACK, { title: nil, artist: nil, album: nil, number: nil, total: nil, genre: nil })
+        attributes.fetch(TRACK, { title: '', artist: '', album: '', number: '', total: '', genre: '' })
       end
 
       def title
@@ -178,14 +210,14 @@ module Wolfgang
       # UPDATE ------------------------------------------------------------
 
       def attributes!(new_object)
-        changed = []
+        # changed = []
         attributes.merge!(new_object.attributes) do |key, old, new|
-          changed << key
+          # changed << key
           # old.is_a?(Hash) ?  : new
           if old.is_a?(Hash)
             squish(old, new)
           elsif old.is_a?(String) || new.is_a?(String)
-            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace, replace: 130.chr})
+            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, { undef: :replace })
           else
             new
           end
@@ -197,7 +229,7 @@ module Wolfgang
       def squish(old, new)
         old.merge(new) do |key, old, new|
           if new.is_a?(String)
-            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace, replace: 130.chr})
+            new.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, { undef: :replace })
           else
             new
           end

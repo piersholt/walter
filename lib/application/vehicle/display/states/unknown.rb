@@ -6,7 +6,7 @@ class Vehicle
       include Defaults
       DISPLAY_UNKNOWN = 'Disable (Unknown)'
       def ping(context)
-        LogActually.display.info(DISPLAY_UNKNOWN) { "#ping" }
+        LogActually.alive.info(DISPLAY_UNKNOWN) { "#ping" }
         context.change_state(Enabled.new)
       end
 

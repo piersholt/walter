@@ -9,6 +9,8 @@ require "#{root}/cdc/device"
 
 require "#{root}/dsp/device"
 
+require "#{root}/rad/device"
+
 require "#{root}/tel/handlers"
 require "#{root}/tel/device"
 

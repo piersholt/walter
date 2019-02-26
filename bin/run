@@ -35,8 +35,11 @@ begin
   LogActually.parameterized.i
 
   # Virtual Devices
+  LogActually.is_all_around(:api)
+  LogActually.api.i
+
   LogActually.is_all_around(:cdc)
-  LogActually.cdc.w
+  LogActually.cdc.i
   LogActually.is_all_around(:rad)
   LogActually.rad.i
   LogActually.is_all_around(:gfx)
@@ -65,6 +68,8 @@ begin
   LogActually.notify.i
   LogActually.is_all_around(:alive)
   LogActually.alive.i
+  LogActually.is_all_around(:ui)
+  LogActually.ui.i
   LogActually.is_all_around(:wolfgang)
   LogActually.wolfgang.d
 
@@ -74,13 +79,14 @@ begin
   require 'helpers/manageable_threads'
   require 'yabber/yabber'
 rescue LoadError => e
-  LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
-  $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
+  # LogActually.default.error('run') { e }
+  puts e
+  e.backtrace.each { |line| puts line }
+  $LOAD_PATH.each { |line| puts line }
   exit
 rescue StandardError => e
-  LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  puts e
+  e.backtrace.each { |line| puts line }
   exit
 end
 

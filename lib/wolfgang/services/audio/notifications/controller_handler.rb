@@ -48,12 +48,6 @@ module Wolfgang
         logger.error(PLAYER_HANDLER) { e }
         e.backtrace.each { |l| logger.error(l) }
       end
-      #
-      # def responsible?(notification)
-      #   result = notification.topic == responsibility
-      #   LOGGER.debug(self.class) { "#{notification.topic} == #{responsibility} => #{result}" }
-      #   result
-      # end
 
       def responsibility
         PLAYER

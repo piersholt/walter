@@ -18,7 +18,8 @@ module Capabilities
       def title(gfx: LAYOUT_HEADER,
                 ike: 0b0001_0000,
                 chars: genc(LENGTH_TITLE))
-        padded_chars = pad_chars(chars, LENGTH_TITLE)
+        # padded_chars = pad_chars(chars, LENGTH_TITLE)
+        padded_chars = chars
         primary(gfx: gfx, ike: ike, chars: padded_chars)
       end
 
@@ -166,7 +167,7 @@ module Capabilities
                     zone: field_index,
                     chars: field.to_s)
         end
-        title(gfx: layout, chars: title) if title
+        title(gfx: layout, chars: title.to_s) if title
         render(layout) unless title
         true
       end

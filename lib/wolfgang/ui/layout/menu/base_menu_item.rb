@@ -10,7 +10,7 @@ module Wolfgang
 
         def initialize(id: false, label:, action: DEFAULT_ACTION, properties: {})
           @id = id
-          @label = label
+          @label = encode(label)
           @action = action
           @properties = properties
         end
@@ -18,7 +18,19 @@ module Wolfgang
         def to_s
           label
         end
+
+        def to_c
+          label.bytes
+        end
+
+        def encode(label)
+          label.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace})[0,40]
+        rescue StandardError => e
+          LogActually.ui.error(self.class.name) { e }
+          e.backtrace.each { |line| LogActually.ui.error(self.class.name) { line } }
+        end
       end
+
 
       # Comment
       class CheckedItem < BaseMenuItem
@@ -31,9 +43,9 @@ module Wolfgang
           @checked = checked
         end
 
-        def checked_label(label, checked)
+        def checked_label(label, checked, checked_char = CHECKED_CHAR)
           return label unless checked
-          Kernel.format(CHECKED_MASK, label) << CHECKED_CHAR
+          Kernel.format(CHECKED_MASK, label) << checked_char
         end
       end
     end

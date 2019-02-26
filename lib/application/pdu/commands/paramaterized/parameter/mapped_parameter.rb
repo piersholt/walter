@@ -18,6 +18,19 @@ class MappedParameter < BaseParameter
     str_buffer
   end
 
+  def ugly
+    if value.nil?
+      raise ArgumentError, 'No map to get ugly :map'
+    elsif @map.nil?
+      LOGGER.warn(PROC) { "Map @map is nil!" }
+      return "\"value\""
+    elsif !@map.key?(value)
+      return "#{d2h(value, true)} not found!"
+    else
+      @map[value]
+    end
+  end
+
   def pretty
     if value.nil?
       return '--'

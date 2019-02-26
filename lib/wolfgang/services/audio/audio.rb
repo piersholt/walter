@@ -87,7 +87,9 @@ module Wolfgang
 
     # NOTIFICATIONS (PLAYER) -------------------------------------------------
 
+    # @deprecated
     def everyone(properties)
+      logger.warn(AUDIO) { '#everyone is deprecated!' }
       @state.everyone(self, properties)
     end
 
@@ -130,7 +132,7 @@ module Wolfgang
         begin
           if reply
             logger.info(AUDIO) { "#player_callback(#{reply})" }
-            logger.info(AUDIO) { "reply => #{reply}" }
+            # logger.info(AUDIO) { "reply => #{reply}" }
             context.public_send(reply.name, reply.properties)
           else
             logger.warn(AUDIO) { "Error! (#{error})" }

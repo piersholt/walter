@@ -5,7 +5,6 @@ module Wolfgang
   class Service
     # Wolfgang Service Online State
     class Online
-      include LogActually::ErrorOutput
       include Logger
 
       def open(___)
@@ -48,12 +47,20 @@ module Wolfgang
         true
       end
 
+      def ui!(context)
+        logger.debug(WOLFGANG_ONLINE) { '#ui' }
+        context.ui = create_ui(context)
+        true
+      end
+
       def offline!(context)
         context.change_state(Offline.new)
       end
 
       def establishing!(context)
         context.change_state(Establishing.new)
+        context.manager.disable
+        context.audio.disable
       end
 
       def alive?(context)
@@ -126,6 +133,14 @@ module Wolfgang
         notifications.start
         # logger.debug(WOLFGANG_ONLINE) { '#notifications' }
         notifications
+      rescue StandardError => e
+        with_backtrace(logger, e)
+      end
+
+      def create_ui(context)
+        # logger.debug(WOLFGANG_ONLINE) { '#create_notifications' }
+        LogActually.ui.debug(WOLFGANG_ONLINE) { "#create_ui (#{Thread.current})" }
+        Wolfgang::UserInterface.new(context)
       rescue StandardError => e
         with_backtrace(logger, e)
       end

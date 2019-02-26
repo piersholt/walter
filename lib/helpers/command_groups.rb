@@ -22,7 +22,11 @@ module CommandGroups
   MENUS = [MENU_GFX, MENU_RAD].freeze
 
   MID = [TXT_MID, GFX_STATUS].freeze
-  BUTTON = [MFL_VOL, MFL_FUNC, BMBT_I, BMBT_A, BMBT_B].freeze
+
+  MFL = [MFL_VOL, MFL_FUNC].freeze
+  BMBT = [BMBT_I, BMBT_A, BMBT_B].freeze
+
+  BUTTON = MFL + BMBT
 
   TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA].freeze
   CD_CHANGER = [CDC_REQ, CDC_REP].freeze

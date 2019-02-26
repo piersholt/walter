@@ -66,6 +66,10 @@ class SwitchedParameter < BaseParameter
       as_good('Hold')
     when :release
       as_good('Release')
+    when :enabled
+      as_good('Enabled')
+    when :disabled
+      as_good('Disabled')
     end
   end
 

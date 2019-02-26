@@ -10,11 +10,15 @@ module Wolfgang
         attr_reader :services, :container
 
         def index
-          logger.debug(NAME) { '#index' }
+          LogActually.ui.debug(NAME) { '#index' }
           @view = View::MainMenu::Index.new(services, container)
           view.add_observer(self)
 
           render(view)
+        end
+
+        def name
+          NAME
         end
 
         # Setup ------------------------------------------------------
@@ -30,7 +34,7 @@ module Wolfgang
             @container = context
             true
           else
-            logger.warn(NAME) { "Create: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Create: #{view} view not recognised." }
             false
           end
         end
@@ -45,7 +49,7 @@ module Wolfgang
             @container = nil
             true
           else
-            logger.warn(NAME) { "Destroy: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
             false
           end
         end
@@ -53,7 +57,7 @@ module Wolfgang
         # SYSTEM EVENTS ------------------------------------------------------
 
         def manager(action)
-          logger.debug(NAME) { "#manager(#{action})" }
+          LogActually.ui.debug(NAME) { "#manager(#{action})" }
           case action
           when Manager::On
             index
@@ -62,12 +66,12 @@ module Wolfgang
           when Manager::Disabled
             index
           else
-            logger.debug(NAME) { "#update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
 
         def audio(action)
-          logger.debug(NAME) { "#audio(#{action})" }
+          LogActually.ui.debug(NAME) { "#audio(#{action})" }
           case action
           when Audio::On
             index
@@ -76,12 +80,12 @@ module Wolfgang
           when Audio::Disabled
             index
           else
-            logger.debug(NAME) { "#update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
 
         def wolfgang(action)
-          logger.debug(NAME) { "#wolfgang(#{action})" }
+          LogActually.ui.debug(NAME) { "#wolfgang(#{action})" }
           case action
           when Service::Online
             index
@@ -90,14 +94,14 @@ module Wolfgang
           when Service::Offline
             index
           else
-            logger.debug(NAME) { "#update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
 
         # USER EVENTS ------------------------------------------------------
 
         def update(action, selected_menu_item)
-          logger.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
+          LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
           case action
           when :manager
             destroy(:index)
@@ -106,7 +110,7 @@ module Wolfgang
             destroy(:index)
             context.ui.audio_controller.load(:index)
           else
-            logger.debug(NAME) { "#update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
       end

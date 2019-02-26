@@ -9,23 +9,16 @@ class Virtual
       include Events
 
       # source: 0x60 (RDS 1) / function: 00 (--) / action: 00 (Offset 0)
-      def handle_tel_data(command)
-        # logger.error('oh hai!') { command }
-        case command.source.value
-        when (0x60..0x63)
-          index = command.action.value
-          state = case index
-                  when (0x00..0x09)
-                    :press
-                  when (0x20..0x29)
-                    :hold
-                  when (0x40..0x49)
-                    :release
-                  end
-          changed
-          notify_observers(INPUT_SELECT, index: index, state: state)
-        end
-      end
+      # def handle_tel_data(command)
+      #   # logger.error('oh hai!') { command }
+      #   case command.source.value
+      #   when (0x60..0x63)
+      #     index = command.action.parameters[:button_id].value
+      #     state = command.action.parameters[:button_state].state
+      #     changed
+      #     notify_observers(DATA_SELECT, index: index, state: state)
+      #   end
+      # end
 
       def evaluate_menu_rad(command)
         case command.state.value
@@ -100,6 +93,8 @@ class Virtual
         when (0x5a..0x5e)
           # tape
           # on
+        when 95
+          logger.info(self.class) { "Radio LED 95?" }
         else
           logger.warn(self.class) { "Unknown RAD-LED value: #{command.led.value}" }
         end
@@ -163,7 +158,7 @@ class Virtual
       # Handlers?
       def handle_bmbt_1_button(message)
         # LogActually.rad.debug('Radio') { "Handling: BMBT-1" }
-        value = message.command.totally_unique_variable_name
+        value = message.command.action.parameters[:totally_unique_variable_name].value
 
         case value
         when POWER_PRESS

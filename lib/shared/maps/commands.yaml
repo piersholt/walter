@@ -641,8 +641,81 @@
     :h: '0x15'
   :properties:
     :short_name: CNTRY
-    :long_name: Country Coding Status Resonse
-  :klass: BaseCommand
+    :long_name: Country Coding Status Response
+  :klass: ParameterizedCommand
+  :parameters:
+    :language:
+      :type: :map
+      :dictionary:
+        0: 'D'
+        1: 'GB'
+        3: 'I'
+    :b2:
+      :type: :bit_array
+      :parameters:
+        :time_format:
+          :label: Time Format.
+          :type: :map
+          :dictionary:
+            0: (24h)
+            1: (12h)
+        :temp_format:
+          :label: Temp Format.
+          :type: :map
+          :dictionary:
+            0: '(C.)'
+            1: '(F.)'
+        :date_format:
+          :label: Date Format.
+          :type: :map
+          :dictionary:
+            0: (dd.mm)
+            1: (mm/dd)
+      :index:
+        :time_format: 0
+        :temp_format: 6
+        :date_format: 7
+    :b3:
+      :type: :bit_array
+      :parameters:
+        :conflict:
+          :label: NFI!
+          :type: :map
+          :dictionary:
+            0b00: '?'
+            0b01: '?'
+            0b10: '?'
+            0b11: 'Time/Date Incompatible?'
+        :distance:
+          :label: Distance
+          :type: :map
+          :dictionary:
+            0: (km)
+            1: (miles)
+        :consumption:
+          :label: Consumption
+          :type: :map
+          :dictionary:
+            0b000: (l/100km)
+            0b101: (mpg)
+            0b111: (km/l)
+      :index:
+        :conflict: !ruby/range
+                begin: 1
+                end: 2
+                excl: false
+        :distance: 3
+        :consumption: !ruby/range
+                begin: 5
+                end: 7
+                excl: false
+    :b4:
+      :type: :integer
+  :index:
+    :language: 0
+    :b2: 1
+    :b3: 2
+    :b4: 3
 0x59:
   :id:
     :d: 89
@@ -1120,7 +1193,391 @@
   :properties:
     :short_name: DSP-EQ
     :long_name: DSP EQ. Button
-  :klass: BaseCommand
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        0x0f: On/Off
+
+        0x10: Adjust
+
+        0x28: Demo Off
+
+        0x29: Concert Hall
+        0x2a: Jazz Club
+        0x2b: Cathedral
+        0x2c: Memo 1
+        0x2d: Memo 2
+        0x2e: Memo 3
+
+        0x90: Room
+    :level:
+      :type: :map
+      :dictionary:
+        0x00: Neutral/Room Level 0
+        0x01: Room Level 1
+        0x02: Room Level 2
+        0x03: Room Level 3
+        0x04: Room Level 4
+        0x05: Room Level 5
+        0x06: Room Level 6
+        0x07: Room Level 7
+
+        0x20: Echo Level 0
+        0x21: Echo Level 1
+        0x22: Echo Level 2
+        0x23: Echo Level 3
+        0x24: Echo Level 4
+        0x25: Echo Level 5
+        0x26: Echo Level 6
+        0x27: Echo Level 7
+
+        0x01: 80hz +1
+        0x02: 80hz +2
+        0x03: 80hz +3
+        0x04: 80hz +4
+        0x05: 80hz +5
+        0x06: 80hz +6
+        0x07: 80hz +7
+        0x08: 80hz +8
+        0x09: 80hz +9
+        0x0a: 80hz +10
+        0x11: 80hz -1
+        0x12: 80hz -2
+        0x13: 80hz -3
+        0x14: 80hz -4
+        0x15: 80hz -5
+        0x16: 80hz -6
+        0x17: 80hz -7
+        0x18: 80hz -8
+        0x19: 80hz -9
+        0x1a: 80hz -10
+
+        0x21: 200hz +1
+        0x22: 200hz +2
+        0x23: 200hz +3
+        0x24: 200hz +4
+        0x25: 200hz +5
+        0x26: 200hz +6
+        0x27: 200hz +7
+        0x28: 200hz +8
+        0x29: 200hz +9
+        0x2a: 200hz +10
+        0x31: 200hz -1
+        0x32: 200hz -2
+        0x33: 200hz -3
+        0x34: 200hz -4
+        0x35: 200hz -5
+        0x36: 200hz -6
+        0x37: 200hz -7
+        0x38: 200hz -8
+        0x39: 200hz -9
+        0x3a: 200hz -10
+
+        0x41: 500hz +1
+        0x42: 500hz +2
+        0x43: 500hz +3
+        0x44: 500hz +4
+        0x45: 500hz +5
+        0x46: 500hz +6
+        0x47: 500hz +7
+        0x48: 500hz +8
+        0x49: 500hz +9
+        0x4a: 500hz +10
+        0x51: 500hz -1
+        0x52: 500hz -2
+        0x53: 500hz -3
+        0x54: 500hz -4
+        0x55: 500hz -5
+        0x56: 500hz -6
+        0x57: 500hz -7
+        0x58: 500hz -8
+        0x59: 500hz -9
+        0x5a: 500hz -10
+
+        0x61: 1khz +1
+        0x62: 1khz +2
+        0x63: 1khz +3
+        0x64: 1khz +4
+        0x65: 1khz +5
+        0x66: 1khz +6
+        0x67: 1khz +7
+        0x68: 1khz +8
+        0x69: 1khz +9
+        0x6a: 1khz +10
+        0x71: 1khz -1
+        0x72: 1khz -2
+        0x73: 1khz -3
+        0x74: 1khz -4
+        0x75: 1khz -5
+        0x76: 1khz -6
+        0x77: 1khz -7
+        0x78: 1khz -8
+        0x79: 1khz -9
+        0x7a: 1khz -10
+
+        0x81: 2khz +1
+        0x82: 2khz +2
+        0x83: 2khz +3
+        0x84: 2khz +4
+        0x85: 2khz +5
+        0x86: 2khz +6
+        0x87: 2khz +7
+        0x88: 2khz +8
+        0x89: 2khz +9
+        0x8a: 2khz +10
+        0x91: 2khz -1
+        0x92: 2khz -2
+        0x93: 2khz -3
+        0x94: 2khz -4
+        0x95: 2khz -5
+        0x96: 2khz -6
+        0x97: 2khz -7
+        0x98: 2khz -8
+        0x99: 2khz -9
+        0x9a: 2khz -10
+
+        0xa1: 5khz +1
+        0xa2: 5khz +2
+        0xa3: 5khz +3
+        0xa4: 5khz +4
+        0xa5: 5khz +5
+        0xa6: 5khz +6
+        0xa7: 5khz +7
+        0xa8: 5khz +8
+        0xa9: 5khz +9
+        0xaa: 5khz +10
+        0xb1: 5khz -1
+        0xb2: 5khz -2
+        0xb3: 5khz -3
+        0xb4: 5khz -4
+        0xb5: 5khz -5
+        0xb6: 5khz -6
+        0xb7: 5khz -7
+        0xb8: 5khz -8
+        0xb9: 5khz -9
+        0xba: 5khz -10
+
+        0xc1: 12khz +1
+        0xc2: 12khz +2
+        0xc3: 12khz +3
+        0xc4: 12khz +4
+        0xc5: 12khz +5
+        0xc6: 12khz +6
+        0xc7: 12khz +7
+        0xc8: 12khz +8
+        0xc9: 12khz +9
+        0xca: 12khz +10
+        0xd1: 12khz -1
+        0xd2: 12khz -2
+        0xd3: 12khz -3
+        0xd4: 12khz -4
+        0xd5: 12khz -5
+        0xd6: 12khz -6
+        0xd7: 12khz -7
+        0xd8: 12khz -8
+        0xd9: 12khz -9
+        0xda: 12khz -10
+  :index:
+    :mode: 0
+    :level: 1
+0x35:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: DSP
+    :long_name: DSP Reply
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        0x0f: On/Off
+
+        0x10: Adjust
+
+        0x28: Demo Off
+
+        0x29: Concert Hall
+        0x2a: Jazz Club
+        0x2b: Cathedral
+        0x2c: Memo 1
+        0x2d: Memo 2
+        0x2e: Memo 3
+
+        0x90: Room
+    :level:
+      :type: :map
+      :dictionary:
+        0x00: Neutral/Room Level 0
+        0x01: Room Level 1
+        0x02: Room Level 2
+        0x03: Room Level 3
+        0x04: Room Level 4
+        0x05: Room Level 5
+        0x06: Room Level 6
+        0x07: Room Level 7
+
+        0x20: Echo Level 0
+        0x21: Echo Level 1
+        0x22: Echo Level 2
+        0x23: Echo Level 3
+        0x24: Echo Level 4
+        0x25: Echo Level 5
+        0x26: Echo Level 6
+        0x27: Echo Level 7
+
+        0x01: 80hz +1
+        0x02: 80hz +2
+        0x03: 80hz +3
+        0x04: 80hz +4
+        0x05: 80hz +5
+        0x06: 80hz +6
+        0x07: 80hz +7
+        0x08: 80hz +8
+        0x09: 80hz +9
+        0x0a: 80hz +10
+        0x11: 80hz -1
+        0x12: 80hz -2
+        0x13: 80hz -3
+        0x14: 80hz -4
+        0x15: 80hz -5
+        0x16: 80hz -6
+        0x17: 80hz -7
+        0x18: 80hz -8
+        0x19: 80hz -9
+        0x1a: 80hz -10
+
+        0x21: 200hz +1
+        0x22: 200hz +2
+        0x23: 200hz +3
+        0x24: 200hz +4
+        0x25: 200hz +5
+        0x26: 200hz +6
+        0x27: 200hz +7
+        0x28: 200hz +8
+        0x29: 200hz +9
+        0x2a: 200hz +10
+        0x31: 200hz -1
+        0x32: 200hz -2
+        0x33: 200hz -3
+        0x34: 200hz -4
+        0x35: 200hz -5
+        0x36: 200hz -6
+        0x37: 200hz -7
+        0x38: 200hz -8
+        0x39: 200hz -9
+        0x3a: 200hz -10
+
+        0x41: 500hz +1
+        0x42: 500hz +2
+        0x43: 500hz +3
+        0x44: 500hz +4
+        0x45: 500hz +5
+        0x46: 500hz +6
+        0x47: 500hz +7
+        0x48: 500hz +8
+        0x49: 500hz +9
+        0x4a: 500hz +10
+        0x51: 500hz -1
+        0x52: 500hz -2
+        0x53: 500hz -3
+        0x54: 500hz -4
+        0x55: 500hz -5
+        0x56: 500hz -6
+        0x57: 500hz -7
+        0x58: 500hz -8
+        0x59: 500hz -9
+        0x5a: 500hz -10
+
+        0x61: 1khz +1
+        0x62: 1khz +2
+        0x63: 1khz +3
+        0x64: 1khz +4
+        0x65: 1khz +5
+        0x66: 1khz +6
+        0x67: 1khz +7
+        0x68: 1khz +8
+        0x69: 1khz +9
+        0x6a: 1khz +10
+        0x71: 1khz -1
+        0x72: 1khz -2
+        0x73: 1khz -3
+        0x74: 1khz -4
+        0x75: 1khz -5
+        0x76: 1khz -6
+        0x77: 1khz -7
+        0x78: 1khz -8
+        0x79: 1khz -9
+        0x7a: 1khz -10
+
+        0x81: 2khz +1
+        0x82: 2khz +2
+        0x83: 2khz +3
+        0x84: 2khz +4
+        0x85: 2khz +5
+        0x86: 2khz +6
+        0x87: 2khz +7
+        0x88: 2khz +8
+        0x89: 2khz +9
+        0x8a: 2khz +10
+        0x91: 2khz -1
+        0x92: 2khz -2
+        0x93: 2khz -3
+        0x94: 2khz -4
+        0x95: 2khz -5
+        0x96: 2khz -6
+        0x97: 2khz -7
+        0x98: 2khz -8
+        0x99: 2khz -9
+        0x9a: 2khz -10
+
+        0xa1: 5khz +1
+        0xa2: 5khz +2
+        0xa3: 5khz +3
+        0xa4: 5khz +4
+        0xa5: 5khz +5
+        0xa6: 5khz +6
+        0xa7: 5khz +7
+        0xa8: 5khz +8
+        0xa9: 5khz +9
+        0xaa: 5khz +10
+        0xb1: 5khz -1
+        0xb2: 5khz -2
+        0xb3: 5khz -3
+        0xb4: 5khz -4
+        0xb5: 5khz -5
+        0xb6: 5khz -6
+        0xb7: 5khz -7
+        0xb8: 5khz -8
+        0xb9: 5khz -9
+        0xba: 5khz -10
+
+        0xc1: 12khz +1
+        0xc2: 12khz +2
+        0xc3: 12khz +3
+        0xc4: 12khz +4
+        0xc5: 12khz +5
+        0xc6: 12khz +6
+        0xc7: 12khz +7
+        0xc8: 12khz +8
+        0xc9: 12khz +9
+        0xca: 12khz +10
+        0xd1: 12khz -1
+        0xd2: 12khz -2
+        0xd3: 12khz -3
+        0xd4: 12khz -4
+        0xd5: 12khz -5
+        0xd6: 12khz -6
+        0xd7: 12khz -7
+        0xd8: 12khz -8
+        0xd9: 12khz -9
+        0xda: 12khz -10
+  :index:
+    :mode: 0
+    :level: 1
 0x36:
   :id:
     :d: 54
@@ -1134,6 +1591,8 @@
     :setting:
       :type: :map
       :dictionary:
+        0xaf: dunno
+
         0x60: BASS -0
         0x62: BASS -1
         0x64: BASS -2
@@ -1150,13 +1609,13 @@
         0x7A: BASS +5
         0x7C: BASS +6
 
-        0XD0: TREBLE -0
-        0XD2: TREBLE -1
-        0XD4: TREBLE -2
-        0XD6: TREBLE -3
-        0XD8: TREBLE -4
-        0XDA: TREBLE -5
-        0XDC: TREBLE -6
+        0xD0: TREBLE -0
+        0xD2: TREBLE -1
+        0xD4: TREBLE -2
+        0xD6: TREBLE -3
+        0xD8: TREBLE -4
+        0xDA: TREBLE -5
+        0xDC: TREBLE -6
 
         0xC0: TREBLE +0
         0xC2: TREBLE +1
@@ -1200,39 +1659,39 @@
         0x9e: FADER +14
         0x9f: FADER +15
 
-        0X40: BALANCE -0
-        0X41: BALANCE -1
-        0X42: BALANCE -2
-        0X43: BALANCE -3
-        0X44: BALANCE -4
-        0X45: BALANCE -5
-        0X46: BALANCE -6
-        0X47: BALANCE -7
-        0X48: BALANCE -8
-        0X49: BALANCE -9
-        0X4a: BALANCE -10
-        0X4b: BALANCE -11
-        0X4c: BALANCE -12
-        0X4d: BALANCE -13
-        0X4e: BALANCE -14
-        0X4f: BALANCE -15
+        0x40: BALANCE -0
+        0x41: BALANCE -1
+        0x42: BALANCE -2
+        0x43: BALANCE -3
+        0x44: BALANCE -4
+        0x45: BALANCE -5
+        0x46: BALANCE -6
+        0x47: BALANCE -7
+        0x48: BALANCE -8
+        0x49: BALANCE -9
+        0x4a: BALANCE -10
+        0x4b: BALANCE -11
+        0x4c: BALANCE -12
+        0x4d: BALANCE -13
+        0x4e: BALANCE -14
+        0x4f: BALANCE -15
 
-        0X50: BALANCE +0
-        0X51: BALANCE +1
-        0X52: BALANCE +2
-        0X53: BALANCE +3
-        0X54: BALANCE +4
-        0X55: BALANCE +5
-        0X56: BALANCE +6
-        0X57: BALANCE +7
-        0X58: BALANCE +8
-        0X59: BALANCE +9
-        0X5a: BALANCE +10
-        0X5b: BALANCE +11
-        0X5c: BALANCE +12
-        0X5d: BALANCE +13
-        0X5e: BALANCE +14
-        0X5f: BALANCE +15
+        0x50: BALANCE +0
+        0x51: BALANCE +1
+        0x52: BALANCE +2
+        0x53: BALANCE +3
+        0x54: BALANCE +4
+        0x55: BALANCE +5
+        0x56: BALANCE +6
+        0x57: BALANCE +7
+        0x58: BALANCE +8
+        0x59: BALANCE +9
+        0x5a: BALANCE +10
+        0x5b: BALANCE +11
+        0x5c: BALANCE +12
+        0x5d: BALANCE +13
+        0x5e: BALANCE +14
+        0x5f: BALANCE +15
 0x37:
   :id:
     :d: 55
@@ -1250,21 +1709,22 @@
         0x50: (Select) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
         0x60: (Select) (RADIO [a] Automatic Search)
         0x70: (Select) CD Music Search
+
+        0x0_4: (Select) (BM53) (RADIO [m] Manual Staion Choice)
+        0x1_4: (Select) (BM53) (RADIO [SCAN] Station sample)
+        0x2_4: (Select) (BM53) (RADIO [II] Search sensitive)
+        0x3_4: (Select) (BM53) (RADIO [I] Search non sensitive)
+
         # Tone
         0x80: (Tone) Equalizer
+        0x84: (Tone) (BM53) (CD) Equalizer
+        0x86: (Tone) (BM53) (Radio) Equalizer
+        0x90: (Tone) (BM53) (Radio) Equalizer
+
         0xc0: (Tone) EQ. Bass
         0xd0: (Tone) EQ. Treble
         0xe0: (Tone) EQ. Fader
         0xf0: (Tone) EQ. Balance
-
-        0x86: (Tone) (BM53) (Radio) Equalizer
-        0x84: (Tone) (BM53) (CD) Equalizer
-        0x90: (Tone) (BM53) (Radio) Equalizer
-
-        0x0_4: (Tone) (BM53) (RADIO [m] Manual Staion Choice)
-        0x1_4: (Tone) (BM53) (RADIO [SCAN] Station sample)
-        0x2_4: (Tone) (BM53) (RADIO [II] Search sensitive)
-        0x3_4: (Tone) (BM53) (RADIO [I] Search non sensitive)
   :index:
     :mode: 0
 0x45:
@@ -1287,7 +1747,7 @@
             1: :on
         :info:
           :type: :switch
-          :label: Info
+          :label: Info?
           :states:
             0: :off
             1: :on
@@ -1367,20 +1827,25 @@
       # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
       :dictionary:
         0x00: "Off"
-        0x90: "Off (Reset)"
-        0xFF: "On"
-        0x48: Radio
+
         0x40: Tape Eject
         0x41: Tape Play
         0x42: Tape FFF
         0x43: Tape RWW
         0x44: Tape FF
         0x45: Tape RW
+
+        0x48: Radio
+
         0x5a: Tape 1
         0x5b: Tape 2
         0x5d: Tape Dolby B
         0x5e: Tape Dolby C
         0x5f: Tape Dolby OFF
+
+        0x90: "Off (Reset)"
+
+        0xFF: "On"
   :index:
     :led: 0
   :meta:
@@ -1394,14 +1859,14 @@
     :h: '0x4B'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: TAPE?
+    :short_name: SRC?
     :long_name: Audio Device Control
   :parameters:
     :control:
       :type: :map
       :dictionary:
-        0x05: (BM53) Set Mode?
-        0x06: Set Mode?
+        0x05: (16x9) Set Mode?
+        0x06: (4x3) Set Mode?
     :mode:
       :type: :map
       :dictionary:
@@ -1684,11 +2149,11 @@
     :long_name: Unknown
   :klass: ParameterizedCommand
   :index:
-    :unknown: 0
+    # :unknown: 0
     :button: 1
   :parameters:
-    :unknown:
-      :type: :integer
+    # :unknown:
+    #   :type: :integer
     :button:
       :type: :bit_array
       :index:
@@ -1730,7 +2195,7 @@
   :properties:
     :short_name: BMBT-BTN-1
     :long_name: BMBT Buttons
-  :klass: ParameterizedCommand
+  :klass: ButtonParameterized
   :index:
     :action: 0
   :parameters:
@@ -1776,6 +2241,33 @@
             0x07: "[Aux. Heat]"
             0x34: "[Menu]"
             0x05: "[Confirm]"
+          :map:
+            0x14: :bmbt_tape_side
+            0x24: :bmbt_tape_eject
+            0x11: :bmbt_preset_1
+            0x01: :bmbt_preset_2
+            0x12: :bmbt_preset_3
+            0x02: :bmbt_preset_4
+            0x13: :bmbt_preset_5
+            0x03: :bmbt_preset_6
+            0x23: :bmbt_mode_prev
+            0x33: :bmbt_mode_next
+            0x21: :bmbt_am
+            0x31: :bmbt_fm
+            0x22: :bmbt_dolby_b
+            0x32: :bmbt_dolby_c
+            0x10: :bmbt_prev
+            0x00: :bmbt_next
+            0x20: :bmbt_select
+            0x04: :bmbt_tone
+            0x30: :bmbt_overlay
+            0x06: :bmbt_power
+            0x32: :bmbt_tp
+            0x22: :bmbt_rds
+            0x08: :bmbt_tel
+            0x07: :bmbt_aux_heat
+            0x34: :bmbt_menu
+            0x05: :bmbt_confirm
         :button_state:
           :type: :switch
           :label: 'State:'
@@ -2775,12 +3267,17 @@
             0x05: Index 5
             0x06: Index 6
             0x07: Index 7
-            0x08: Index 8
+            0x08: Index 8/Emergency
             0x09: Index 9
             0x0A: Info Screen
             0x0B: SOS
             0x0C: Directory Back Page Start
             0x0D: Directory Forward Page Start
+
+            0x1A: Unknown 0x1A
+            0x1B: Unknown 0x1B
+            0x1C: Unknown 0x1C
+            0x1D: SMS Screen
             0x1E: Dial Screen
             0x1F: Directory Screen
   :klass: ParameterizedCommand
@@ -3053,10 +3550,14 @@
       :dictionary:
         0x01: Set Time
         0x02: Set Date
-        0x07: Distance
-        0x09: Speed Limit
-        0x0F: Aux Timer 1
-        0x10: Aux Timer 2
+
+        0x07: Set Distance
+        0x09: Set Speed Limit
+
+        0x0D: Set Code
+
+        0x0F: Set Aux Timer 1
+        0x10: Set Aux Timer 2
     :b2:
       :label: 'b2'
       :type: :integer
@@ -3173,8 +3674,10 @@
           :type: :switch
           :label: 'Memo'
           :states:
-            0: :off
-            1: :on
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
         :timer:
           # 0010 1010
           :type: :switch
@@ -3187,27 +3690,60 @@
           :type: :switch
           :label: 'Speed Limit'
           :states:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+      :index:
+        :memo:  !ruby/range
+                begin: 1
+                end: 2
+        :timer: 4
+        :limit: !ruby/range
+                begin: 5
+                end: 6
+    :unconfirmed:
+      :type: :bit_array
+      :index:
+        :code:  !ruby/range
+                          begin: 0
+                          end: 1
+        :aux_led_flash: 2
+        :aux_timer_2: 3
+        :aux_direct: 4
+        :aux_timer_1: 5
+      :parameters:
+        :aux_timer_1:
+          :type: :switch
+          :label: 'Aux Timer 1'
+          :states:
             0: :off
             1: :on
-      :index:
-        :memo: 2
-        :limit: 6
-        :timer: 4
-      :map:
-        0x00: blank
-      :dictionary:
-        # 0x00: Memo Off?
-        # 0x02: Speed Limit On
-        # 0x20: Memo On
-        0x22: Memo On
-        0x20: Speed Limit Off
-        0x02: Memo Off
-    :unconfirmed:
-      :type: :map
-      :map:
-        0x00: blank
-      :dictionary:
-        0x00: NA
+        :aux_timer_2:
+          :type: :switch
+          :label: 'Aux Timer 2'
+          :states:
+            0: :off
+            1: :on
+        :aux_direct:
+          :type: :switch
+          :label: 'Aux Direct.'
+          :states:
+            0: :off
+            1: :on
+        :aux_led_flash:
+          :type: :switch
+          :label: 'Aux LED Flash'
+          :states:
+            0: :off
+            1: :on
+        :code:
+          :type: :switch
+          :label: 'Code'
+          :states:
+            0b00: :off
+            0b01: :enabled
+            0b10: :disabled
   :index:
     :control: 0
     :unconfirmed: 1
@@ -3364,7 +3900,7 @@
 
 # ------------------------------ GENERAL FUNCTIONS ------------------------------ #
 
-12:
+0x0C:
   :id:
     :d: 12
     :h: '0x0C'
@@ -3495,8 +4031,12 @@
     :short_name: DIA-MEM-READ
     :long_name: Diagnostics Read Memory
   :klass: BaseCommand
+  # :parameters:
+  #   :data:
+  #     :type: :integer
   :meta:
     - the read memory function in INPA?
+    - used to populate BMBT service mode displays
 0x07:
   :id:
     :d: 7

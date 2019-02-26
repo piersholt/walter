@@ -6,6 +6,10 @@ module Capabilities
     module Constants
       ZERO = 0x00
 
+      LED_OFF = 0x00
+      LED_RESET = 0x90
+      LED_ON = 0xff
+
       LAYOUT_MENU_A = 0x6_0 # SIMPLE MENU
       LAYOUT_MENU_B = 0x6_1 # MENU WITH HEADER
       LAYOUT_HEADER = 0x6_2
@@ -47,18 +51,18 @@ module Capabilities
       BLOCK = 0x40
 
       # HEADER
-      FIELD_INDEXES =
-        [INDEX_FIELD_1, INDEX_FIELD_2, INDEX_FIELD_3, INDEX_FIELD_4,
-         INDEX_FIELD_5, INDEX_FIELD_6, INDEX_FIELD_7].freeze
+      # FIELD_INDEXES =
+      #   [INDEX_FIELD_1, INDEX_FIELD_2, INDEX_FIELD_3, INDEX_FIELD_4,
+      #    INDEX_FIELD_5, INDEX_FIELD_6, INDEX_FIELD_7].freeze
       FIELD_NEW_INDEXES =
         [INDEX_ITEM_1, INDEX_ITEM_2, INDEX_ITEM_3,
-         INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6 - BLOCK].freeze
+         INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6, INDEX_ITEM_7 - BLOCK].freeze
 
       # MENU
       ITEM_INDEXES =
         [INDEX_ITEM_0 + FLUSH, INDEX_ITEM_1, INDEX_ITEM_2, INDEX_ITEM_3,
          INDEX_ITEM_4, INDEX_ITEM_5, INDEX_ITEM_6, INDEX_ITEM_7,
-         INDEX_ITEM_8, INDEX_ITEM_9, INDEX_ITEM_10 - BLOCK].freeze
+         INDEX_ITEM_8, INDEX_ITEM_9, INDEX_ITEM_10].freeze
 
       LAYOUT_INDICES = {
         0x60 => ITEM_INDEXES,

@@ -11,5 +11,11 @@ module API
       LogActually.default.unknown('API::OBC') { "#{from}, #{to}, #{arguments}" }
       try(from, to, OBC_CONFIG, arguments)
     end
+
+    # 0x2A
+    def obc_ctl(from: :ike, to: :anzv, **arguments)
+      LogActually.default.unknown('API::OBC') { "#{from}, #{to}, #{arguments}" }
+      try(from, to, OBC_CTL, arguments)
+    end
   end
 end

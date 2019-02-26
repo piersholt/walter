@@ -32,8 +32,8 @@ module Telephone
   ANNOUNCE = 0x01
 
   # TXT-MID 0X21
-  CONTACT_DISPLAY_LIMIT = 9
-  CONTACT_PAGE_SIZE = 1
+  CONTACT_DISPLAY_LIMIT = 8
+  CONTACT_PAGE_SIZE = 2
 
   CONTACT_DELIMITER = 6
 
@@ -90,6 +90,7 @@ module Telephone
 
   def ready
     LOGGER.unknown(PROC) { "Telephone ready macro!" }
+    raise StandardError, 'who calls this?'
     tel_led(LED_OFF)
     tel_state(TEL_OFF)
     announce
@@ -97,6 +98,8 @@ module Telephone
     tel_state(TEL_POWERED)
     # tel_led(LED_ALL)
     bluetooth_pending
+  rescue StandardError => e
+    e.backtrace.each { |line| puts line }
   end
 
   def bluetooth_pending
@@ -263,7 +266,8 @@ module Telephone
 
   def handle_tel_open(message)
     LOGGER.unknown(PROC) { "Mock: handling telephone tel open request..." }
-    delegate_favourites
+    # delegate_favourites
+    mid(m1: DRAW_DIAL, m2: MID_DEFAULT, m3: 0x00, chars: [])
   end
 
   # Piggyback off the radio announce to annunce
@@ -271,9 +275,9 @@ module Telephone
     # LOGGER.warn('SimulatedTEL') { "handling pong: #{message.from}" }
     # LOGGER.warn('SimulatedTEL') { "message.from?(:rad) => #{message.from?(:rad)}" }
 
-    return false unless message.from?(:rad)
+    return false unless message.from?(:gfx)
     return false unless message.command.status.value == ANNOUNCE
-    LOGGER.info(PROC) { "Radio has announced. Piggybacking (sic)" }
+    LOGGER.info(PROC) { "GFX has announced. Piggybacking (sic)" }
     ready
     true
   end

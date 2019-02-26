@@ -4,7 +4,6 @@
 class Virtual
   # Comment
   class AugmentedRadio < AugmentedDevice
-    include API::RadioLED
     include State
     # include Retroactive
     include Actions
@@ -95,8 +94,8 @@ class Virtual
         logger.debug(PROC) { "Rx: Handling: MENU_GFX"  }
         handle_menu_gfx(message.command)
       when TEL_DATA
-        logger.debug(PROC) { "Rx: Handling: TEL_DATA"  }
-        handle_tel_data(message.command)
+        # logger.debug(PROC) { "Rx: Handling: TEL_DATA"  }
+        # handle_tel_data(message.command)
       end
     rescue StandardError => e
       logger.error(self.class) { e }

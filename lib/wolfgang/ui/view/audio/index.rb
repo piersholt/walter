@@ -5,28 +5,38 @@ module Wolfgang
     module View
       # Comment
       module Audio
-        class Index < BasicMenu
-          NO_SERVICES = [].freeze
+        class Index < TitledMenu
+          NO_THINGS = [].freeze
           NO_OPTIONS = [].freeze
 
           def moi
             'Audio Index'
           end
 
-          SERVICES = [
-            { name: 'Now Playing', action: :audio_now_playing },
-            { name: 'Repeat', action: :audio_repeat },
-            { name: 'Shuffle', action: :audio_shuffle }
+          THINGS = [
+            { name: 'Now Playing', action: :audio_now_playing }
           ].freeze
 
-          def initialize(services = SERVICES)
-            @services = indexed_services(services)
-            @options = indexed_options(NO_OPTIONS)
+          OPTIONS = [
+            { name: 'Play', action: :audio_play },
+            { name: 'Pause', action: :audio_pause }
+          ].freeze
+
+          def initialize(addressed_player, things = THINGS, options = OPTIONS)
+            @things = indexed_things(things)
+            @options = indexed_options(options)
+            @titles = indexed_titles(titles(addressed_player))
           end
 
           def menu_items
-            # @services + @titles
-            @services + @options + navigation_item
+            # @things + @titles
+            @things + @options + navigation_item + @titles
+          end
+
+          def titles(addressed_player)
+            player_name = addressed_player.name
+            [BaseMenuItem.new(label: 'Audio'),
+             BaseMenuItem.new(label: player_name)]
           end
 
           private
@@ -37,17 +47,14 @@ module Wolfgang
                        action: :main_menu_index)
           end
 
+          def indexed_things(things)
+            return NO_THINGS if things.length.zero?
+            validate(things, COLUMN_ONE_MAX)
 
-          def indexed_services(services)
-            return NO_SERVICES if services.length.zero?
-            validate(services, COLUMN_ONE_MAX)
-
-            services.first(COLUMN_ONE_MAX).map.with_index do |service, index|
-              indexed_service = BaseMenuItem.new(
-                                label: service[:name],
-                                action: service[:action]
-                              )
-              [index, indexed_service]
+            things.first(COLUMN_ONE_MAX).map.with_index do |thing, index|
+              indexed_thing =
+                BaseMenuItem.new(label: thing[:name], action: thing[:action])
+              [index, indexed_thing]
             end
           end
 
@@ -55,8 +62,10 @@ module Wolfgang
             return NO_OPTIONS if options.length.zero?
             validate(options, COLUMN_TWO_MAX)
 
-            options.first(COLUMN_TWO_MAX).map.with_index do |option, index|
-              [index + COLUMN_TWO_OFFSET, option]
+            options.first(COLUMN_TWO_MAX).map.with_index do |thing, index|
+              indexed_thing =
+                BaseMenuItem.new(label: thing[:name], action: thing[:action])
+              [index + COLUMN_TWO_OFFSET, indexed_thing]
             end
           end
         end

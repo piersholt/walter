@@ -34,7 +34,7 @@ class Vehicle
       @state.online!(self)
     end
 
-    # HEADER ------------------------------------------------
+    # RENDER ------------------------------------------------
 
     def render_header(view)
       @state.render_header(self, view)
@@ -48,21 +48,11 @@ class Vehicle
       @state.dismiss(self, view)
     end
 
-    # MENU ----------------------------------------------------
-
     def render_menu(view)
       @state.render_menu(self, view)
     end
 
     # EVENTS ------------------------------------------------
-
-    # def enabled
-    #   @state.enabled(self)
-    # end
-    #
-    # def disabled
-    #   @state.disabled(self)
-    # end
 
     def ping
       @state.ping(self)
@@ -81,22 +71,24 @@ class Vehicle
     end
 
     def obc_request
-      # LogActually.display.unknown(self) { '#obc_request' }
       @state.obc_request(self)
     end
 
     def input_menu
-      # LogActually.display.unknown(self) { '#input_menu' }
       @state.input_menu(self)
     end
 
     def input_aux_heat
-      LogActually.display.unknown(self) { '#input_aux_heat' }
+      # LogActually.display.unknown(self) { '#input_aux_heat' }
       @state.input_aux_heat(self)
     end
 
     def overwritten!
       @state.overwritten!(self)
+    end
+
+    def overwritten_header!
+      @state.overwritten_header!(self)
     end
 
     # Basically discard in all states but InUse/Walter

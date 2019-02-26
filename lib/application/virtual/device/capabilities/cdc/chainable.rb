@@ -64,6 +64,7 @@ module Capabilities
       end
 
       alias control_next next
+      alias control_previous previous
 
       # STATUS ----------------------------------------------------------------
 
@@ -131,6 +132,14 @@ module Capabilities
       def track(index)
         state!(track: index)
         self
+      end
+
+      def track_next
+        track(current_track + 1)
+      end
+
+      def track_previous
+        track(current_track - 1)
       end
 
       # CD --------------------------------------------------------------

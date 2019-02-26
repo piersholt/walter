@@ -7,19 +7,23 @@ module Wolfgang
       class BluetoothController < BaseController
         NAME = 'BluetoothController'
 
+        def name
+          NAME
+        end
+
         attr_reader :selected_device, :selected_devices
 
         # 'Pages' ------------------------------------------------------
 
         def index
-          logger.debug(NAME) { '#index' }
+          LogActually.ui.debug(NAME) { '#index' }
           @view = View::Bluetooth::Index.new(@selected_devices)
           view.add_observer(self)
           render(view)
         end
 
         def device(selected_device)
-          logger.debug(NAME) { "#device(#{selected_device})" }
+          LogActually.ui.debug(NAME) { "#device(#{selected_device})" }
           @view = View::Bluetooth::Device.new(selected_device)
           view.add_observer(self)
 
@@ -39,7 +43,7 @@ module Wolfgang
             @selected_device.add_observer(self, :device_update)
             true
           else
-            logger.warn(NAME) { "Create: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Create: #{view} view not recognised." }
             false
           end
         end
@@ -57,7 +61,7 @@ module Wolfgang
             @selected_device = nil
             true
           else
-            logger.warn(NAME) { "Destroy: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
             false
           end
         end
@@ -65,7 +69,7 @@ module Wolfgang
         # USER EVENTS ------------------------------------------------------
 
         def update(action, selected_menu_item)
-          logger.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
+          LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
           case action
           when :bluetooth_index
             destroy(:device)
@@ -86,14 +90,14 @@ module Wolfgang
             device_address = selected_menu_item.id
             context.manager.disconnect(device_address)
           else
-            logger.debug(NAME) { "#update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end
         end
 
         # DATA EVENTS ------------------------------------------------------
 
         def device_update(action, device:)
-          logger.debug(NAME) { "#device_update(#{action}, #{device})" }
+          LogActually.ui.debug(NAME) { "#device_update(#{action}, #{device})" }
           case action
           when :connecting
             device(device)
@@ -104,12 +108,12 @@ module Wolfgang
           when :disconnected
             device(device)
           else
-            logger.debug(NAME) { "#device_update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "#device_update: #{action} not implemented." }
           end
         end
 
         def devices_update(action, device:)
-          logger.debug(NAME) { "#devices_update(#{action}, #{device})" }
+          LogActually.ui.debug(NAME) { "#devices_update(#{action}, #{device})" }
           case action
           when :connected
             index
@@ -118,18 +122,18 @@ module Wolfgang
           when :created
             index
           else
-            logger.debug(NAME) { "devices_update: #{action} not implemented." }
+            LogActually.ui.debug(NAME) { "devices_update: #{action} not implemented." }
           end
         end
 
         # HELPERS ------------------------------------------------------------
 
         def device_from_menu_item(selected_menu_item)
-          logger.debug(NAME) { "#device_from_menu_item(#{selected_menu_item})" }
+          LogActually.ui.debug(NAME) { "#device_from_menu_item(#{selected_menu_item})" }
           device_address = selected_menu_item.id
-          logger.debug(NAME) { "Device Address: #{device_address}" }
+          LogActually.ui.debug(NAME) { "Device Address: #{device_address}" }
           result = context.manager.devices.device(device_address)
-          logger.debug(NAME) { "Device Address: #{result.alias} (#{result.address})" }
+          LogActually.ui.debug(NAME) { "Device Address: #{result.alias} (#{result.address})" }
           result
         end
       end

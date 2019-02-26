@@ -102,7 +102,7 @@ module Wolfgang
         begin
           if reply
             logger.info(MANAGER) { "#devices_callback(#{reply})" }
-            logger.info(MANAGER) { "reply => #{reply}" }
+            # logger.info(MANAGER) { "reply => #{reply}" }
             context.devices.update_devices(reply.properties)
             context.on
           else

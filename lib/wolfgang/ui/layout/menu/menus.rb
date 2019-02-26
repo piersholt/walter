@@ -27,11 +27,23 @@ module Wolfgang
         COLUMN_TWO_OFFSET = 4
 
         NAVIGATION_INDEX = 7
+
         TITLE_OFFSET = 9
         TITLE_MAX = 2
 
+        NO_TITLES = [].freeze
+
         def layout
           MENUS[:titled]
+        end
+
+        def indexed_titles(titles)
+          return NO_TITLES if titles.length.zero?
+          validate(titles, COLUMN_TWO_MAX)
+
+          titles.first(TITLE_MAX).map.with_index do |option, index|
+            [index + TITLE_OFFSET, option]
+          end
         end
       end
 

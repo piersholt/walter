@@ -22,12 +22,13 @@ class Vehicle
         context.change_state(Enabled.new)
       end
 
-      # def input_select(context)
-      #   LogActually.display.info(DISPLAY_CAPTURED) { "#input_select" }
+      # def data_select(context)
+      #   LogActually.display.info(DISPLAY_CAPTURED) { "#data_select" }
       #   context.change_state(Enabled.new)
       # end
 
       def render_new_header(context, view)
+        LogActually.display.debug(DISPLAY_CAPTURED) { "#render_new_header(context, view)" }
         case view.type
         when :default
           context.default_header = view
@@ -46,8 +47,15 @@ class Vehicle
             LogActually.display.warn(DISPLAY_CAPTURED) { 'Notify dismiss thread ending?' } unless result
           end
         end
-        context.bus.rad.build_new_header(view.layout, view.fields_with_index, view.title)
-        # context.change_state(Captured.new)
+        # dirty_fields = context.cache.digital.dirty.to_h.keys
+        # subset of fields for dynamic write
+        # context.cache.digital.cache!({ 0 => context.header.title.to_c }, false)
+        dirty_ids = context.cache.digital.dirty_ids
+        LogActually.display.debug(DISPLAY_CAPTURED) { "Get dirty field IDs => #{dirty_ids}" }
+        LogActually.display.debug(DISPLAY_CAPTURED) { "Overwrite cache with view field values..." }
+        context.cache.digital.overwrite!(context.header.indexed_chars)
+        LogActually.display.debug(DISPLAY_CAPTURED) { "Render header..." }
+        context.bus.rad.build_new_header(view.layout, view.fields_with_index(dirty_ids), view.title)
       end
 
       def dismiss(context, view)
@@ -65,9 +73,17 @@ class Vehicle
         true
       end
 
+      def overwritten_header!(context)
+        context.logger.warn(DISPLAY_CAPTURED) { "#overwritten_header!()" }
+        dirty_ids = context.cache.digital.dirty_ids
+        context.logger.warn(DISPLAY_CAPTURED) { "dirty_ids => #{dirty_ids}" }
+        context.render_new_header(context.header) unless dirty_ids.empty?
+      end
+
       def overwritten!(context)
         context.logger.warn(DISPLAY_CAPTURED) { "#overwritten!()" }
-        context.bus.rad.render(context.header.layout)
+        # context.bus.rad.render(context.header.layout)
+        # context.render_new_header(context.header)
         context.bus.rad.render(context.menu.layout)
       end
     end

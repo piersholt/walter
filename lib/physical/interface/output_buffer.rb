@@ -26,5 +26,11 @@ class Interface
       bytes_written = @stream.write(string)
       bytes_to_write == bytes_written ? true : false
     end
+
+    def write_nonblock(string)
+      bytes_to_write = string.length
+      bytes_written = @stream.write_nonblock(string)
+      bytes_to_write == bytes_written ? true : false
+    end
   end
 end

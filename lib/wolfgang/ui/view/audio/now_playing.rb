@@ -27,9 +27,17 @@ module Wolfgang
           end
 
           def input_confirm(state:)
-            logger.debug(self.class.name) { "#input_confirm(#{state})" }
-            changed
-            notify_observers(:audio_index)
+            LogActually.ui.debug(self.class.name) { "#input_confirm(#{state})" }
+            case state
+            when :press
+              nil
+            when :hold
+              # nil
+              changed
+              notify_observers(:audio_index)
+            when :release
+              nil
+            end
           end
 
           private
@@ -67,7 +75,9 @@ module Wolfgang
           end
 
           def line2(player)
-            [1, BaseMenuItem.new(label: player.title)]
+            to_write = player.title
+            to_write = to_write[0,40] if to_write.length > 40
+            [1, BaseMenuItem.new(label: to_write)]
           end
 
           def line3(player)
@@ -84,7 +94,7 @@ module Wolfgang
             # xxx =
               # Array.new(40) { |i| '|' }.join +
               # Array.new(40) { |i| '_' }.join
-            [4, BaseMenuItem.new(label: bar)]
+            [4, BaseMenuItem.new(label: '---------')]
           end
 
           MARKER = 130

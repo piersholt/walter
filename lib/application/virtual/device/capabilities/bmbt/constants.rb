@@ -35,6 +35,10 @@ module Capabilities
       RDS_PRESS = 0x22
       RDS_HOLD = 0x62
       RDS_RELEASE = 0xA2
+
+      OVERLAY_PRESS = 0x30
+      OVERLAY_HOLD = 0x70
+      OVERLAY_RELEASE = 0xB0
     end
   end
 end

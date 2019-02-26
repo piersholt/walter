@@ -11,6 +11,7 @@ module Wolfgang
     attr_reader :state
 
     attr_accessor :commands, :notifications, :bus, :manager, :audio
+    attr_writer :ui
 
     def initialize
       @state = Offline.new
@@ -72,6 +73,27 @@ module Wolfgang
       @state.alive?(self)
     end
 
+    def reply_block(context)
+      proc do |reply, error|
+        begin
+          if reply
+            logger.info(WOLFGANG_OFFLINE) { 'Online!' }
+            context.online!
+          elsif error == :timeout
+            logger.warn(WOLFGANG_ONLINE) { "Timeout!" }
+            context.establishing!
+          elsif error == :down
+            logger.warn(WOLFGANG_ONLINE) { "Error!" }
+            context.offline!
+          end
+        rescue StandardError => e
+          logger.error(WOLFGANG_OFFLINE) { e }
+          e.backtrace.each { |line| logger.error(WOLFGANG_OFFLINE) { line } }
+          context.change_state(Offline.new)
+        end
+      end
+    end
+
     # SERVICES -------------------------------------------------------------
 
     def notifications!
@@ -86,30 +108,44 @@ module Wolfgang
       @state.audio!(self)
     end
 
+    def ui!
+      @state.ui!(self)
+    end
+
+    def ui
+      Mutex.new.synchronize do
+        @ui
+      end
+    end
+
     # USER INTERFACE --------------------------------------------------------
 
     def services
       [manager, audio]
     end
 
-    def ui(reset = false)
-      logger.unknown(WOLFGANG) { '#ui' }
-      case reset
-      when true
-        create_ui
-      when false
-        @ui ||= create_ui
-      end
-    end
+    # def ui!
+    #   Mutex.new.synchronize do
+    #     LogActually.ui.debug(WOLFGANG) { "#ui (#{Thread.current})" }
+    #     @ui ||= create_ui
+    #   end
+    # end
 
-    def ui!
-      logger.unknown(WOLFGANG) { '#ui!' }
-      ui(true)
-    end
+    # alias ui ui!
 
-    def create_ui
-      logger.unknown(WOLFGANG) { '#create_ui' }
-      Wolfgang::UserInterface.new(self)
-    end
+    # def ui(reset = false)
+    #   logger.debug(WOLFGANG) { '#ui' }
+    #   case reset
+    #   when true
+    #     create_ui
+    #   when false
+    #     @ui ||= create_ui
+    #   end
+    # end
+
+    # def ui!
+    #   logger.debug(WOLFGANG) { '#ui!' }
+    #   ui(true)
+    # end
   end
 end

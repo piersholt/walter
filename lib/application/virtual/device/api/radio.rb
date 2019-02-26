@@ -8,6 +8,18 @@ module API
     include CommandAliases
     include BaseAPI
 
+    # BMBT
+
+    # 0x4A
+    def led(from: :rad, to: :bmbt, **arguments)
+      format_chars!(arguments)
+      try(from, to, RAD_LED, arguments)
+    end
+
+    def l(i)
+      led(led: i)
+    end
+
     # CD CHANGER
 
     # 0x38

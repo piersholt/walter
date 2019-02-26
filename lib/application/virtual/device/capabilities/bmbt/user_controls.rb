@@ -5,6 +5,7 @@ module Capabilities
     # Comment
     module UserControls
       include API::OnBoardMonitor
+      # include Helpers
       include Constants
 
       def power
@@ -37,6 +38,10 @@ module Capabilities
 
       def tp
         press_and_release(press: TP_PRESS, release: TP_RELEASE)
+      end
+
+      def radio_mode
+        press_and_release(press: OVERLAY_PRESS, release: OVERLAY_RELEASE)
       end
 
       private

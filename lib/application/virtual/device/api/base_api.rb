@@ -18,19 +18,20 @@ module API
 
       send_it!(from, to, command_object)
     rescue StandardError => e
-      LOGGER.error("#{self.class} StandardError: #{e}")
-      e.backtrace.each { |l| LOGGER.error(l) }
+      LogActually.api.error("#{self.class} StandardError: #{e}")
+      e.backtrace.each { |l| LogActually.api.error(l) }
       binding.pry
     end
 
     def send_it!(from, to, command)
-      LOGGER.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
+      LogActually.api.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
       message = Message.new(from, to, command)
       changed
       notify_observers(MESSAGE_SENT, message: message)
+      true
     rescue StandardError => e
-      LOGGER.error("#{self.class} StandardError: #{e}")
-      e.backtrace.each { |l| LOGGER.error(l) }
+      LogActually.api.error("#{self.class} StandardError: #{e}")
+      e.backtrace.each { |l| LogActually.api.error(l) }
       binding.pry
     end
 
@@ -45,7 +46,7 @@ module API
       command_builder.add_parameters(command_arguments)
       command_builder.result
     rescue StandardError => e
-      with_backtrace(LOGGER, e)
+      with_backtrace(LogActually.api, e)
     end
 
     def format_chars!(command_arguments, opts = { align: :center })

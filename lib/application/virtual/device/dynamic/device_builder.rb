@@ -9,13 +9,14 @@ class Virtual
       dsp: 'SimulatedDSP',
       cdc: 'EmulatedCDC',
       tel: 'SimulatedTEL',
-      rad: 'AugmentedRadio',
+      rad: 'SimulatedRadio',
       gfx: 'AugmentedGFX',
       dia: 'ManualDiagnostics',
       iris: 'EmulationDummy',
       nav_jp: 'EmulationDummy',
+      bmbt: 'AugmentedBMBT',
       nav: 'EmulationDummy',
-      bmbt: 'AugmentedBMBT'
+      tv: 'EmulationDummy'
     }.freeze
 
     attr_reader :ident

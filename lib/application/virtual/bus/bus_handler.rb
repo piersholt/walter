@@ -44,12 +44,12 @@ class BusHandler < BaseHandler
   # ------------------- MESSAGE_SENT -------------------------- #
 
   def message_sent(action, properties)
-    LOGGER.debug(name) { "#message_sent" }
+    LogActually.api.debug(name) { "#message_sent(#{action}, #{properties})" }
     message = fetch(properties, :message)
     raise RoutingError, 'Message is nil!' unless message
     add_to_output_buffer(message)
   rescue StandardError => e
-    with_backtrace(LOGGER, e)
+    with_backtrace(LogActually.api, e)
   end
 
   def add_to_output_buffer(message)
