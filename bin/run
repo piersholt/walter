@@ -15,8 +15,10 @@ begin
   # Setup load path for application (makes you realise RubyGems spoils you...)
   lib_path = File.expand_path(File.dirname(__FILE__) + '/../lib')
   ext_path = File.expand_path(File.dirname(__FILE__) + '/../ext')
+  src_path = File.expand_path(File.dirname(__FILE__) + '/../src')
   $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
   $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
+  $LOAD_PATH.unshift(src_path) unless $LOAD_PATH.include?(src_path)
 
   require 'log_actually'
   LogActually.is_all_around(:interface)
@@ -78,6 +80,8 @@ begin
 
   require 'helpers/manageable_threads'
   require 'yabber/yabber'
+
+  require 'modules'
 rescue LoadError => e
   # LogActually.default.error('run') { e }
   puts e

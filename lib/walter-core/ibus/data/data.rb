@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-pdu_root = 'application/pdu'
+data_root = 'ibus/data'
 
-commands_root = "#{pdu_root}/commands"
-parameter_root = "#{commands_root}/parameter"
+commands_root = "#{data_root}/commands"
+# parameter_root = "#{commands_root}/parameter"
 builder_root = "#{commands_root}/builder"
 
 paramaterized_root = "#{commands_root}/paramaterized"
 paramaterized_parameter_root = "#{paramaterized_root}/parameter"
 paramaterized_builder_root = "#{paramaterized_root}/builder"
 
-devices_root = "#{pdu_root}/devices"
-message_root = "#{pdu_root}/message"
+devices_root = "#{data_root}/devices"
+message_root = "#{data_root}/message"
 
 require "#{commands_root}/chars"
 

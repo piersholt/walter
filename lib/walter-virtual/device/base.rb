@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-root = 'application/virtual/device'
-
-api = "#{root}/api"
-require "#{api}/api"
-
-require "#{root}/receivable"
-
-# require "#{root}/broadcast"
-
-require "#{root}/capabilities/capabilities"
-
-require "#{root}/dynamic/dynamic"
-
 # Comment
 class Virtual
   class Device
