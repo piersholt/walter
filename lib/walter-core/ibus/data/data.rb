@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+puts "\tLoading walter-core/ibus/data"
+
 data_root = 'ibus/data'
 
 commands_root = "#{data_root}/commands"
@@ -12,6 +14,8 @@ paramaterized_builder_root = "#{paramaterized_root}/builder"
 
 devices_root = "#{data_root}/devices"
 message_root = "#{data_root}/message"
+
+puts "\tLoading walter-core/ibus/data/commands"
 
 require "#{commands_root}/chars"
 

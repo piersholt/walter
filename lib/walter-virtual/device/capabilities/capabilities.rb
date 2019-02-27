@@ -1,4 +1,8 @@
-root = 'application/virtual/device/capabilities'
+# frozen_string_literal: true
+
+puts "\tLoading walter-virtual/device/capabilities"
+
+root = 'device/capabilities'
 
 require "#{root}/helpers"
 

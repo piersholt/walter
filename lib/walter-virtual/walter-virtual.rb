@@ -1,25 +1,26 @@
 # frozen_string_literal: true
 
-device_root = '/device'
+puts 'Loading walter-virtual'
 
-require "#{device_root}/api/api"
-require "#{device_root}/capabilities/"
-require "#{device_root}/dynamic"
+puts "\tLoading walter-virtual/device"
+
+device_root = 'device'
+require "#{device_root}/events"
 require "#{device_root}/receivable"
 require "#{device_root}/base"
 
-# require "#{root}/broadcast"
+require "#{device_root}/api/api"
+require "#{device_root}/capabilities/capabilities"
+require "#{device_root}/dynamic/dynamic"
 
-require "#{root}/capabilities/capabilities"
+puts "\tLoading walter-virtual/bus"
 
-require "#{root}/dynamic/dynamic"
-
-bus_root = "#{root}/bus"
-
+bus_root = 'bus'
 require "#{bus_root}/devices"
 require "#{bus_root}/bus_handler"
 require "#{bus_root}/bus"
 require "#{bus_root}/initialization"
 require "#{bus_root}/message"
-# require "#{bus_root}/packet_handler"
 require "#{bus_root}/packet_wrapper"
+
+puts "\tDone!"

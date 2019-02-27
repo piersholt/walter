@@ -1,7 +1,7 @@
-# require 'application/virtual/stateful'
-# require 'application/virtual/alive'
-# require 'application/virtual/cd'
-# require 'application/virtual/telephone'
+# require '/stateful'
+# require '/alive'
+# require '/cd'
+# require '/telephone'
 
 class Virtual
   class EmulatedDevice < DynamicDevice

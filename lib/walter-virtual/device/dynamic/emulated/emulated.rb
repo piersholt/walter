@@ -1,4 +1,8 @@
-root = 'application/virtual/device/dynamic/emulated'
+# frozen_string_literal: true
+
+puts "\tLoading walter-virtual/device/dynamic/emulated"
+
+root = 'device/dynamic/emulated'
 
 require "#{root}/common/alive"
 

@@ -1,4 +1,8 @@
-root = 'application/virtual/device/api'
+# frozen_string_literal: true
+
+puts "\tLoading walter-virtual/device/api"
+
+root = 'device/api'
 
 require "#{root}/base_api"
 require "#{root}/alive"

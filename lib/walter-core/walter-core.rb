@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# core dependencies
+puts 'Loading walter-core'
 
 # external dependencies
 require 'serialport'
@@ -17,3 +17,7 @@ require 'data_link/datalink'
 
 require 'physical/interface'
 require 'data_link/transmitter'
+
+require 'ibus/ibus'
+
+puts "\tDone!"

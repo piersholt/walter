@@ -1,4 +1,4 @@
-# require 'application/virtual/api/base_api'
+# require '/api/base_api'
 
 # frozen_string_literal: true
 

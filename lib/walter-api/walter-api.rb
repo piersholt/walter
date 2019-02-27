@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-root = 'application/vehicle'
+puts 'Loading walter-api'
 
-# require "#{root}/events"
+puts "\tLoading walter-api/display"
 
-display = "#{root}/display"
+display_root = 'display'
+require "#{display_root}/states/defaults"
+require "#{display_root}/states/unknown"
+require "#{display_root}/states/disabled"
+require "#{display_root}/states/enabled"
+require "#{display_root}/states/busy"
+require "#{display_root}/states/available"
+require "#{display_root}/states/captured"
+require "#{display_root}/states/overwritten"
 
-require "#{display}/states/defaults"
-require "#{display}/states/unknown"
-require "#{display}/states/disabled"
-require "#{display}/states/enabled"
-require "#{display}/states/busy"
-require "#{display}/states/available"
-require "#{display}/states/captured"
-require "#{display}/states/overwritten"
+require "#{display_root}/events/cache_handler"
+require "#{display_root}/events/input_handler"
+require "#{display_root}/events/listener"
 
-require "#{display}/events/events"
-require "#{display}/events/cache_handler"
-require "#{display}/events/input_handler"
-require "#{display}/events/listener"
+require "#{display_root}/cache/value"
+require "#{display_root}/cache/attributes"
+require "#{display_root}/cache/layout_cache"
+require "#{display_root}/cache/cache"
 
-require "#{display}/cache/value"
-require "#{display}/cache/attributes"
-require "#{display}/cache/layout_cache"
-require "#{display}/cache/cache"
+require "#{display_root}/display"
 
-require "#{display}/display"
+puts "\tDone!"
