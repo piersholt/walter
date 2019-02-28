@@ -14,7 +14,7 @@ class Receiver
 
   attr_reader :input_buffer, :frame_input_buffer, :read_thread
 
-  def initialize(input_buffer, frame_synchronisation)
+  def initialize(input_buffer, frame_synchronisation = FrameSynchronisation)
     @input_buffer = input_buffer
     @frame_input_buffer = SizedQueue.new(32)
     @frame_synchronisation = frame_synchronisation
