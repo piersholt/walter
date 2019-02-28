@@ -68,12 +68,10 @@ class Walter
     @bus_handler.add_observer(@display_listener)
     @bus_handler.add_observer(@session_listener)
     @bus_handler.add_observer(@bus_handler)
-
     @bus_handler.add_observer(@global_listener)
-    # @bus.send_all(:add_observer, @display_listener)
+
     @bus.send_all(:add_observer, @bus_handler)
     @bus.send_all(:add_observer, @virtual_display)
-    # @bus.send_all(:add_observer, @session_listener)
 
     # For exit event
     add_observer(@global_listener)
