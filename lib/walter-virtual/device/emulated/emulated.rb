@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter-virtual/device/dynamic/emulated"
+puts "\tLoading walter-virtual/device/emulated"
 
-root = 'device/dynamic/emulated'
+root = 'device/emulated'
 
 require "#{root}/common/alive"
 
