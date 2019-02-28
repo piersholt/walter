@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+puts "\tLoading walter-core/helpers"
+
 require 'helpers/data_tools'
 # require 'helpers/manageable_threads'
 require 'helpers/delayable'

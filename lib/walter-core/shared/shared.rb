@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+puts "\tLoading walter-core/shared"
+
 root = 'shared'
 
 types_root = "#{root}/types"

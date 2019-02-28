@@ -1,7 +1,7 @@
-require 'physical/interface/UART'
-require 'physical/interface/file'
-require 'physical/interface/byte_buffer'
-require 'physical/interface/output_buffer'
+# require 'physical/interface/UART'
+# require 'physical/interface/file'
+# require 'physical/interface/byte_buffer'
+# require 'physical/interface/output_buffer'
 
 require 'helpers'
 

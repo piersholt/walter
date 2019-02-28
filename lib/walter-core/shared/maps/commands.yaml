@@ -334,10 +334,24 @@
           :states:
             0: :off
             1: :on
+        :coding1:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
+        :coding2:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
       :index:
         :boot: 1
         :unlock: 2
         :lock: 3
+        :coding1: 5
+        :coding2: 6
   :index:
     :b1: 0
 0x73:

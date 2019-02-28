@@ -15,7 +15,7 @@ begin
 rescue LoadError => e
   puts "#{e.class}: #{e}"
   e.backtrace.each { |line| puts "\t#{line}" }
-  puts "Load Path:"
+  puts 'Load Path:'
   $LOAD_PATH.each { |line| puts "\t#{line}" }
   exit
 rescue StandardError => e
