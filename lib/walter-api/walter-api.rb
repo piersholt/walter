@@ -14,9 +14,9 @@ require "#{display_root}/states/available"
 require "#{display_root}/states/captured"
 require "#{display_root}/states/overwritten"
 
-require "#{display_root}/events/cache_handler"
-require "#{display_root}/events/input_handler"
-require "#{display_root}/events/listener"
+require "#{display_root}/handlers/cache_handler"
+require "#{display_root}/handlers/input_handler"
+require "#{display_root}/listener"
 
 require "#{display_root}/cache/value"
 require "#{display_root}/cache/attributes"
