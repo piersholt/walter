@@ -2090,44 +2090,54 @@
   :properties:
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
-  :klass: ParameterizedCommand
+  :klass: MFLButton
   :index:
     :action: 0
   :parameters:
     :action:
       :type: :bit_array
       :index:
-        :totally_unique_variable_name: !ruby/range
+        :button_tel: 0
+        :button_rt: 1
+        :button_rad: !ruby/range
                       begin: 4
                       end: 7
                       excl: false
-        :button_tel: !ruby/range
-                        begin: 0
-                        end: 1
-                        excl: false
         :button_state: !ruby/range
                         begin: 2
                         end: 3
                         excl: false
+
       :parameters:
-        :totally_unique_variable_name:
-          :type: :map
-          :label: 'Index:'
-          :dictionary:
-            # To Radio
-            0x01: "[Next]"
-            0x08: "[Prev]"
-            0x00: '-'
         :button_tel:
           :type: :map
-          :label: 'Index:'
           :dictionary:
-            0x00: "[R/T] Radio Mode"
-            0b01: "[R/T] Tel. Mode"
-            0b10: "[Tel]"
+            0b0: '-'
+            0b1: "[Tel]"
+          :map:
+            0b0: :mfl_null
+            0b1: :mfl_tel
+        :button_rt:
+          :type: :map
+          :dictionary:
+            0x00: '-'
+            0b01: '[R/T] Mode: Telephone'
+          :map:
+            0b0: :mfl_rt_rad
+            0b1: :mfl_rt_tel
+        :button_rad:
+          :type: :map
+          :dictionary:
+            # To Radio
+            0b0001: "[Next]"
+            0b1000: "[Prev]"
+            0b0000: '-'
+          :map:
+            0b0001: :mfl_next
+            0b1000: :mfl_prev
+            0b0000: :mfl_null
         :button_state:
           :type: :switch
-          :label: 'State:'
           :states:
             0b00: :press
             0b01: :hold
@@ -2136,24 +2146,72 @@
             0b00: Press
             0b01: Hold
             0b10: Release
-
 0x32:
   :id:
     :d: 50
     :h: '0x32'
   :properties:
     :short_name: MFL-VOL
-    :long_name: Unknown
-    :state:
-      0x10: Left/Down-1
-      0x20: Left/Down-2
-      0x30: Left/Down-3
-      0x40: Left/Down-4
-      0x11: Right/Up-1
-      0x21: Right/Up-2
-      0x31: Right/Up-3
-      0x41: Right/Up-4
-  :klass: Button
+    :long_name: Multifunction Steering Wheel (Volume)
+  :klass: ParameterizedCommand
+  :index:
+    :adjustment: 0
+  :parameters:
+    :adjustment:
+      :type: :bit_array
+      :index:
+        :direction: 7
+        :magnitude: !ruby/range
+                      begin: 0
+                      end: 3
+                      excl: false
+      :parameters:
+        :direction:
+          :type: :map
+          :dictionary:
+            0: Volume Down
+            1: Volume Up
+          :map:
+            0: :mfl_vol_down
+            1: :mfl_vol_up
+        :magnitude:
+          :type: :map
+          :dictionary:
+            0: 0
+            1: 1
+            2: 2
+            3: 3
+            4: 4
+            5: 5
+            6: 6
+            7: 7
+            8: 8
+            9: 9
+            10: 10
+            11: 11
+            12: 12
+            13: 13
+            14: 14
+            15: 15
+            16: 16
+          :map:
+            0: 0
+            1: 1
+            2: 2
+            3: 3
+            4: 4
+            5: 5
+            6: 6
+            7: 7
+            8: 8
+            9: 9
+            10: 10
+            11: 11
+            12: 12
+            13: 13
+            14: 14
+            15: 15
+            16: 16
 0x47:
   :id:
     :d: 71

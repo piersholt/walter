@@ -15,6 +15,10 @@ class Command
       action.parameters[:button_state].state
     end
 
+    def state_pretty
+      action.parameters[:button_state].to_s
+    end
+
     def release?
       state == :release
     end

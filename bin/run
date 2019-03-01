@@ -21,6 +21,7 @@ begin
   $LOAD_PATH.unshift(src_path) unless $LOAD_PATH.include?(src_path)
 
   require 'log_actually'
+  # Walter-Core
   LogActually.is_all_around(:interface)
   LogActually.interface.i
   LogActually.is_all_around(:datalink)
@@ -31,12 +32,12 @@ begin
   LogActually.demultiplexer.i
   LogActually.is_all_around(:transmitter)
   LogActually.transmitter.i
-  LogActually.is_all_around(:virtual)
-  LogActually.virtual.i
   LogActually.is_all_around(:parameterized)
   LogActually.parameterized.i
 
-  # Virtual Devices
+  # Walter-Virtual
+  LogActually.is_all_around(:virtual)
+  LogActually.virtual.d
   LogActually.is_all_around(:api)
   LogActually.api.i
 
@@ -48,8 +49,10 @@ begin
   LogActually.gfx.i
   LogActually.is_all_around(:bmbt)
   LogActually.bmbt.i
+  LogActually.is_all_around(:mfl)
+  LogActually.mfl.i
 
-  # Abstraction
+  # Walter-API
   LogActually.is_all_around(:display)
   LogActually.display.d
 

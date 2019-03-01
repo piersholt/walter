@@ -31,6 +31,8 @@ class MappedParameter < BaseParameter
     end
   end
 
+  alias to_sym ugly
+
   def pretty
     if value.nil?
       return '--'

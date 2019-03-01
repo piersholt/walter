@@ -16,7 +16,8 @@ class Virtual
       nav_jp: 'EmulationDummy',
       bmbt: 'AugmentedBMBT',
       nav: 'EmulationDummy',
-      tv: 'EmulationDummy'
+      tv: 'EmulationDummy',
+      mfl: 'AugmentedMFL'
     }.freeze
 
     attr_reader :ident

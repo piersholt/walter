@@ -35,3 +35,7 @@ require "#{root}/gfx"
 require "#{root}/bmbt/constants"
 require "#{root}/bmbt/user_controls"
 require "#{root}/bmbt"
+
+require "#{root}/mfl/constants"
+require "#{root}/mfl/buttons"
+require "#{root}/mfl"

@@ -10,7 +10,7 @@ class Interface
   include ManageableThreads
   include Delayable
 
-  FILE_TYPE = { tty: 'characterSpecial', file: 'file' }.freeze
+  FILE_TYPE = { tty: 'characterSpecial', file: 'file', fifo: 'fifo' }.freeze
   FILE_TYPE_HANDLERS = { tty: Interface::UART, file: Interface::File }.freeze
   DEFAULT_PATH = '/dev/cu.SLAB_USBtoUART'.freeze
   NO_OPTIONS = {}.freeze
@@ -88,8 +88,11 @@ class Interface
     when FILE_TYPE[:file]
       LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
       FILE_TYPE_HANDLERS[:file]
+    when FILE_TYPE[:fifo]
+      LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
+      FILE_TYPE_HANDLERS[:file]
     else
-      raise IOError, "Unrecognised file type: #{File.ftype(path)}"
+      raise IOError, "Unrecognised file type: #{::File.ftype(path)}"
     end
   end
 

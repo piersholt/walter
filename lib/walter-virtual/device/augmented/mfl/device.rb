@@ -3,21 +3,22 @@
 # Comment
 class Virtual
   # Comment
-  class AugmentedBMBT < AugmentedDevice
-    include Capabilities::OnBoardMonitor
-    include Sent
-
-    PUBLISH = [BMBT_A, BMBT_B, BMBT_I].freeze
+  class AugmentedMFL < AugmentedDevice
+    include State
+    include Capabilities::MultiFunctionWheel
+    
+    PUBLISH = [MFL_VOL, MFL_FUNC].freeze
     SUBSCRIBE = [].freeze
 
-    PROC = 'AugmentedBMBT'
+    PROC = 'AugmentedMFL'
 
+    # TODO: move to superclass
     def moi
       ident.upcase
     end
 
     def logger
-      LogActually.bmbt
+      LogActually.mfl
     end
 
     def publish?(command_id)
@@ -33,13 +34,12 @@ class Virtual
       return false unless publish?(command_id)
 
       case command_id
-      when BMBT_A
-        logger.debug(moi) { "Tx: BMBT A (#{DataTools.d2h(BMBT_A)})" }
-        handle_bmbt_1_button(message.command)
-      when BMBT_B
-        # nothing
-      when BMBT_I
-        # nothing
+      when MFL_FUNC
+        logger.debug(moi) { "Tx: MFL_FUNC (#{DataTools.d2h(MFL_FUNC)})" }
+        handle_mfl_func_button(message.command)
+      when MFL_VOL
+        logger.debug(moi) { "Tx: MFL_VOL (#{DataTools.d2h(MFL_VOL)})" }
+        handle_mfl_vol_button(message.command)
       end
     end
 

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Comment
 class Receiver
-  name = 'Receiver'.freeze
+  NAME = 'Receiver'
   THREAD_NAME = 'Receiver'
 
   SYNC = 'Sync /'

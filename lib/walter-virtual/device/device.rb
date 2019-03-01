@@ -45,10 +45,20 @@ bmbt_root = augmented_root + '/bmbt'
 # require "#{bmbt_root}/state/constants"
 # require "#{bmbt_root}/state/model"
 # require "#{bmbt_root}/state/chainable"
-require "#{bmbt_root}/state/sent"
+# require "#{bmbt_root}/state/sent"
 # require "#{bmbt_root}/state/received"
-require "#{bmbt_root}/state"
+require "#{bmbt_root}/sent"
 require "#{bmbt_root}/device"
+
+# MFL
+mfl_root = augmented_root + '/mfl'
+require "#{mfl_root}/state/constants"
+require "#{mfl_root}/state/model"
+require "#{mfl_root}/state/chainable"
+require "#{mfl_root}/state/sent"
+# require "#{mfl_root}/state/received"
+require "#{mfl_root}/state"
+require "#{mfl_root}/device"
 
 puts "\tLoading walter-virtual/device/emulated"
 

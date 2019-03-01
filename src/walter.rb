@@ -35,7 +35,7 @@ class Walter
 
     @bus =
       Virtual::Initialization
-      .new(augmented: %i[gfx bmbt], emulated: %i[rad tel])
+      .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
       .execute
 
     @interface_handler = DataLinkHandler.new(@transmitter)
@@ -51,7 +51,7 @@ class Walter
     @display_listener = DisplayListener.new
 
     @virtual_display = Vehicle::Display.instance
-    @virtual_display.bus = bus
+    # @virtual_display.bus = bus
 
     @interface.add_observer(@global_listener)
     @interface.add_observer(@data_link_listener)
@@ -71,7 +71,7 @@ class Walter
     @bus_handler.add_observer(@global_listener)
 
     @bus.send_all(:add_observer, @bus_handler)
-    @bus.send_all(:add_observer, @virtual_display)
+    # @bus.send_all(:add_observer, @virtual_display)
 
     # For exit event
     add_observer(@global_listener)
@@ -114,8 +114,8 @@ class Walter
     @demultiplexer.on
     @multiplexer.on
     @wolfgang = Wolfgang::Service.new
-    @wolfgang.bus = @bus
-    @wolfgang.open
+    # @wolfgang.bus = @bus
+    # @wolfgang.open
     # ::Notifications.start(@bus)
   end
 
