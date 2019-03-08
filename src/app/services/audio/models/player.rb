@@ -6,6 +6,7 @@ module Wolfgang
     class Player
       include Logger
       include Observable
+      include Messaging::API
 
       TRACK = 'Track'
       DEVICE = 'Device'
@@ -73,6 +74,65 @@ module Wolfgang
 
       def inspect
         attributes
+      end
+
+      def power?
+        if on?
+          true
+        elsif off?
+          false
+        else
+          false
+        end
+      end
+
+      # WHATEVER ------------------------------------------------------------
+      def power
+        if on?
+          stop!
+          false
+        else
+          play!
+          true
+        end
+      end
+
+      def next_track
+        return false unless on?
+        next!
+      end
+
+      def previous
+        return false unless on?
+        previous!
+      end
+
+      def scan_forward_start
+        scan_forward_start!
+      end
+
+      def scan_forward_stop
+        scan_forward_stop!
+      end
+
+      def scan_backward_start
+        scan_backward_start!
+      end
+
+      def scan_backward_stop
+        scan_backward_stop!
+      end
+
+      def pause
+        pause!
+      end
+
+      def on?
+        %w[playing forward-seek reverse-seek].one? { |s| s == status }
+      end
+
+      def off?
+        %w[stopped paused error].one? { |s| s == status }
       end
 
       # EVENTS ------------------------------------------------------------

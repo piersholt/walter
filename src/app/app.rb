@@ -27,11 +27,21 @@ audio_root = services + '/audio'
 
 require "#{audio_root}/models/player"
 require "#{audio_root}/models/target"
+
 require "#{audio_root}/notifications/controller_handler"
 require "#{audio_root}/notifications/target_handler"
+
+require "#{audio_root}/states/defaults"
 require "#{audio_root}/states/disabled"
 require "#{audio_root}/states/enabled"
 require "#{audio_root}/states/on"
+
+require "#{audio_root}/logging"
+require "#{audio_root}/state"
+require "#{audio_root}/properties"
+require "#{audio_root}/notifications"
+require "#{audio_root}/actions"
+require "#{audio_root}/controls"
 require "#{audio_root}/audio"
 
 # Manager

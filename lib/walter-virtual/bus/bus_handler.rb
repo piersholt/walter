@@ -28,7 +28,7 @@ class BusHandler < BaseHandler
     when MESSAGE_RECEIVED
       message_received(action, properties)
     when PACKET_RECEIVED
-      packet_received(action, properties)
+      data_received(action, properties)
     when BUS_ONLINE
       bus_online
     when BUS_OFFLINE
@@ -60,7 +60,7 @@ class BusHandler < BaseHandler
 
   # ------------------- PACKET_RECEIVED -------------------------- #
 
-  def packet_received(action, properties)
+  def data_received(action, properties)
     packet = fetch(properties, :packet)
     raise RoutingError, 'Packet is nil!' unless packet
     return false unless addressable?(packet)

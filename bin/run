@@ -37,7 +37,7 @@ begin
 
   # Walter-Virtual
   LogActually.is_all_around(:virtual)
-  LogActually.virtual.d
+  LogActually.virtual.i
   LogActually.is_all_around(:api)
   LogActually.api.i
 
@@ -54,7 +54,11 @@ begin
 
   # Walter-API
   LogActually.is_all_around(:display)
-  LogActually.display.d
+  LogActually.display.w
+  LogActually.is_all_around(:controls)
+  LogActually.controls.d
+  LogActually.is_all_around(:audio)
+  LogActually.audio.d
 
   # Yabber
   LogActually.is_all_around(:messaging)

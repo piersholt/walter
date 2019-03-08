@@ -16,6 +16,12 @@ class IndexedBitArray < BitArray
     str_buffer = bits.join
     str_buffer = str_buffer.prepend('0b')
     integer = str_buffer.to_i(BASE_2)
+  # it was fog_front!
+  rescue TypeError => e
+    LOGGER.unknown(name) { e }
+    LOGGER.unknown(name) { e.cause }
+    e.backtrace.each { |l| LOGGER.unknown(l) }
+    binding.pry
   end
 
   def parameters

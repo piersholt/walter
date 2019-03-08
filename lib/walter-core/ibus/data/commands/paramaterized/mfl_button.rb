@@ -29,19 +29,28 @@ class Command
       value = value.kind_of?(Numeric) ? d2h(value, true) : value
       "#{value} (#{action.bit_array.to_s}) #{pretty} #{state_pretty}"
     end
+
+    # private
     
+    def mode?
+      case button_rt
+      when :mfl_rt_rad
+        :rad
+      when :mfl_rt_tel
+        :tel
+      end
+    end
+
     def rt?
       button_rad == :mfl_null && button_tel == :mfl_null
     end
 
-    private
-
     def tel?
-      button_rad == :mfl_null && button_rt == :mfl_null
+      button_rad == :mfl_null && button_tel != :mfl_null
     end
 
     def rad?
-      button_tel == :mfl_null && button_rt == :mfl_null
+      button_tel == :mfl_null && button_rad != :mfl_null
     end
 
     def button_rt

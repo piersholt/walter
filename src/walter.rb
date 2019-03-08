@@ -51,7 +51,11 @@ class Walter
     @display_listener = DisplayListener.new
 
     @virtual_display = Vehicle::Display.instance
-    # @virtual_display.bus = bus
+    @virtual_display.bus = bus
+    @vehicle_button = Vehicle::Controls.instance
+    @vehicle_button.bus = bus
+    @vehicle_audio = Vehicle::Audio.instance
+    @vehicle_audio.bus = bus
 
     @interface.add_observer(@global_listener)
     @interface.add_observer(@data_link_listener)
@@ -72,6 +76,16 @@ class Walter
 
     @bus.send_all(:add_observer, @bus_handler)
     # @bus.send_all(:add_observer, @virtual_display)
+
+    @vehicle_button.targets.each do |target|
+      device = @bus.public_send(target)
+      device.add_observer(@vehicle_button)
+    end
+
+    @virtual_display.targets.each do |target|
+      device = @bus.public_send(target)
+      device.add_observer(@virtual_display)
+    end
 
     # For exit event
     add_observer(@global_listener)
@@ -114,9 +128,8 @@ class Walter
     @demultiplexer.on
     @multiplexer.on
     @wolfgang = Wolfgang::Service.new
-    # @wolfgang.bus = @bus
-    # @wolfgang.open
-    # ::Notifications.start(@bus)
+    @wolfgang.bus = @bus
+    @wolfgang.open
   end
 
   def stop

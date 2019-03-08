@@ -2090,7 +2090,7 @@
   :properties:
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
-  :klass: MFLButton
+  :klass: MFLFunction
   :index:
     :action: 0
   :parameters:
@@ -2151,13 +2151,13 @@
     :d: 50
     :h: '0x32'
   :properties:
-    :short_name: MFL-VOL
+    :short_name: VOL
     :long_name: Multifunction Steering Wheel (Volume)
-  :klass: ParameterizedCommand
+  :klass: MFLVolume
   :index:
-    :adjustment: 0
+    :action: 0
   :parameters:
-    :adjustment:
+    :action:
       :type: :bit_array
       :index:
         :direction: 7

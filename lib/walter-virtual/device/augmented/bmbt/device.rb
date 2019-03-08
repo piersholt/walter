@@ -8,7 +8,7 @@ class Virtual
     include Sent
 
     PUBLISH = [BMBT_A, BMBT_B, BMBT_I].freeze
-    SUBSCRIBE = [].freeze
+    SUBSCRIBE = [RAD_LED].freeze
 
     PROC = 'AugmentedBMBT'
 
@@ -47,6 +47,37 @@ class Virtual
     def handle_virtual_receive(message)
       command_id = message.command.d
       return false unless subscribe?(command_id)
+      case command_id
+      when RAD_LED
+        handle_rad_led(message.command)
+      end
+    end
+
+    def handle_rad_led(command)
+      case command.led?
+      when :on
+        on!
+      when :radio
+        on!
+      when :tape
+        on!
+      when :reset
+        off!
+      when :off
+        off!
+      end
+    end
+
+    def on!
+      @power = true
+    end
+
+    def off!
+      @power = false
+    end
+
+    def power?
+      @power ||= false
     end
   end
 end

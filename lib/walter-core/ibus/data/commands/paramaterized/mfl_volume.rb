@@ -12,6 +12,15 @@ class Command
     def pretty
       action.parameters[:direction].pretty
     end
+    # @override
+    def magnitude
+      action.parameters[:magnitude].ugly
+    end
+
+    # @override
+    def magnitude_pretty
+      action.parameters[:magnitude].pretty
+    end
 
     # @override
     # def to_s
@@ -26,7 +35,6 @@ class Command
     #   "#{value} (#{action.bit_array.to_s}) #{pretty} #{state_pretty}"
     # end
 
-    private
 
   end
 end

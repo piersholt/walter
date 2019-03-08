@@ -2,10 +2,13 @@ module Wolfgang
   class Audio
     class Enabled
       include Logger
+      include Defaults
 
       def initialize(context)
         logger.debug(AUDIO_ENABLED) { '#initialize' }
         context.player?
+        # Vehicle::Controls.instance.add_observer(context, :buttons_update)
+        context.register_controls(Vehicle::Controls.instance)
       end
 
       # STATES --------------------------------------------------
@@ -36,42 +39,6 @@ module Wolfgang
         context.on
         context.target.player_added(properties)
         true
-      end
-
-      def player_removed(context, properties)
-        # context.disable
-        # context.target.player_removed(properties)
-        false
-      end
-
-      # PLAYER ------
-
-      def track_change(context, properties)
-        false
-      end
-
-      def track_start(context, properties)
-        false
-      end
-
-      def track_end(context, properties)
-        false
-      end
-
-      def position(context, properties)
-        false
-      end
-
-      def status(context, properties)
-        false
-      end
-
-      def repeat(context, properties)
-        false
-      end
-
-      def shuffle(context, properties)
-        false
       end
     end
   end

@@ -2,6 +2,7 @@ module Wolfgang
   class Audio
     class Disabled
       include Logger
+      include Defaults
 
       def enable(context)
         context.change_state(Enabled.new(context))
@@ -14,10 +15,6 @@ module Wolfgang
       def on(context)
         context.change_state(On.new(context))
       end
-
-      # def player(context)
-      #
-      # end
 
       # TARGET ------------------------------------------------
 

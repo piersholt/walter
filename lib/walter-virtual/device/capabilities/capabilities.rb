@@ -5,6 +5,7 @@ puts "\tLoading walter-virtual/device/capabilities"
 root = 'device/capabilities'
 
 require "#{root}/helpers"
+require "#{root}/button_helpers"
 
 require "#{root}/ready"
 

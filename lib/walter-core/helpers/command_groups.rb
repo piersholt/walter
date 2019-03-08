@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Comment
 module CommandGroups
   include CommandAliases
 

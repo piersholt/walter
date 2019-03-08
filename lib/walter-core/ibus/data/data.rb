@@ -49,6 +49,7 @@ require "#{paramaterized_root}/parameterized_command"
 require "#{paramaterized_root}/cd_changer_request"
 require "#{paramaterized_root}/button"
 require "#{paramaterized_root}/mfl_button"
+require "#{paramaterized_root}/mfl_volume"
 
 require "#{paramaterized_builder_root}/bit_array_parameter_configuration"
 require "#{paramaterized_builder_root}/paramaterized_command_builder"

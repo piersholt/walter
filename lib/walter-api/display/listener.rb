@@ -8,6 +8,7 @@ class Vehicle
       NAME = 'Display Listener'
 
       def update(event, properties = {})
+        # logger.debug(NAME) { "#update(#{event})" }
         case event
         when :header_cache
           header_cache(properties)
@@ -47,15 +48,8 @@ class Vehicle
         end
 
         case event
-        when BMBT_MENU
-          logger.debug(NAME) { "#update(#{BMBT_MENU})" }
-          input_menu
-        when BMBT_AUX_HEAT
-          logger.debug(NAME) { "#update(#{BMBT_AUX_HEAT})" }
-          input_aux_heat
-        when BMBT_CONFIRM
-          logger.debug(NAME) { "#update(#{BMBT_CONFIRM}, #{properties || nil})" }
-          input_confirm(properties)
+        when :button
+          handle_button(properties)
         end
       end
     end

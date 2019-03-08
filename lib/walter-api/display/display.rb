@@ -22,6 +22,12 @@ class Vehicle
       @state = Unknown.new
     end
 
+    # Walter Virtual
+
+    def targets
+      %i[gfx rad bmbt mfl]
+    end
+
     # STATES ---------------------------------------------
 
     def change_state(new_state)

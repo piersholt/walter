@@ -15,6 +15,15 @@ class Virtual
           logger.public_send(level, moi) { delta }
         end
 
+        def mode!(command_mode)
+          case command_mode
+          when :rad
+            mode_rad
+          when :tel
+            mode_tel
+          end
+        end
+
         def mode_rad
           delta = { mode: MODE_RAD }
           state!(delta)

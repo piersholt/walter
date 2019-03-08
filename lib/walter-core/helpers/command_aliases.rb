@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Comment
 module CommandAliases
   PING = 0x01
   PONG = 0x02

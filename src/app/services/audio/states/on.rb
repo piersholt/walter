@@ -2,11 +2,10 @@ module Wolfgang
   class Audio
     class On
       include Logger
+      include Defaults
 
       def initialize(context)
         logger.debug(AUDIO_ON) { '#initialize' }
-        # Build state
-        # context.send_me_everyone
       end
 
       # STATES --------------------------------------------------
@@ -21,6 +20,53 @@ module Wolfgang
 
       def on(context)
         context.change_state(On.new(context))
+      end
+
+      # USER CONTROL
+
+      def power(context)
+        logger.info(AUDIO_ON) { "#power()" }
+        result = context.player.power
+        if result
+          Vehicle::Audio.instance.on
+        else
+          Vehicle::Audio.instance.off
+        end
+      end
+
+      def next_track(context)
+        logger.info(AUDIO_ON) { "#next_track()" }
+        context.player.next_track
+      end
+
+      def previous(context)
+        logger.info(AUDIO_ON) { "#previous()" }
+        context.player.previous
+      end
+
+      def pause(context)
+        logger.info(AUDIO_ON) { "#pause()" }
+        context.player.pause
+      end
+
+      def scan_forward(context, toggle)
+        logger.debug(AUDIO) { "#scan_forward(#{toggle})" }
+        case toggle
+        when :on
+          context.player.scan_forward_start
+        when :off
+          context.player.scan_forward_stop
+        end
+      end
+
+      def scan_backward(context, toggle)
+        logger.debug(AUDIO) { "#scan_back(#{toggle})" }
+        case toggle
+        when :on
+          context.player.scan_backward_start
+        when :off
+          context.player.scan_backward_stop
+        end
       end
 
       # PLAYER ------------------------------------------------

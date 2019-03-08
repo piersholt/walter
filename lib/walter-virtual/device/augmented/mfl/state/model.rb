@@ -11,12 +11,14 @@ class Virtual
         include Constants
 
         DEFAULT_STATE = {
-          mode: MODE_RAD
+          mode: DEFAULT_MODE
         }.freeze
 
         def default_state
           DEFAULT_STATE.dup
         end
+
+        # Mode ---------------------------------------------
 
         def mode?
           state[:mode]
