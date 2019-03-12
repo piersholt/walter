@@ -2,10 +2,17 @@
 
 puts 'Loading walter-sdk'
 
-puts 'Loading walter-sdk/ui'
+# CONTROLS
+puts "\tLoading walter-sdk/controls"
+controls_root = 'controls'
+
+require "#{controls_root}/register"
+
+# USER INTERFACE
+puts "\tLoading walter-sdk/ui"
 ui_root = 'ui'
 
-puts 'Loading walter-sdk/ui/view'
+puts "\tLoading walter-sdk/ui/view"
 view_root = ui_root + '/view'
 
 require "#{view_root}/header/base_field"
@@ -19,7 +26,7 @@ require "#{view_root}/menu/basic_menu"
 require "#{view_root}/menu/titled_menu"
 require "#{view_root}/menu/static_menu"
 
-puts 'Loading walter-sdk/ui/controller'
+puts "\tLoading walter-sdk/ui/controller"
 controller_root = ui_root + '/controller'
 
 require "#{controller_root}/base_controller"

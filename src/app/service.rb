@@ -7,6 +7,7 @@ module Wolfgang
     include Logger
     include Observable
     include Messaging::API
+    include Controls
 
     attr_reader :state
 

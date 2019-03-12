@@ -5,11 +5,17 @@ module Wolfgang
   class Service
     # Wolfgang Service Online State
     class Online
+      include Defaults
       include Logger
 
-      def open(___)
+      def open(___ = nil)
         logger.debug(WOLFGANG_ONLINE) { '#open' }
         false
+      end
+
+      def load_ui(context)
+        # Vehicle::Display.instance.input_aux_heat
+        context.ui.load_ui
       end
 
       def close(context)
@@ -58,7 +64,7 @@ module Wolfgang
       end
 
       def establishing!(context)
-        context.change_state(Establishing.new)
+        context.change_state(Establishing.new(context))
         context.manager.disable
         context.audio.disable
       end

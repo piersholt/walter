@@ -101,7 +101,7 @@ module Wolfgang
         if play?
           pause!
           true
-        elsif pause?
+        elsif paused?
           play!
           false
         end

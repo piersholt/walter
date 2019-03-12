@@ -5,10 +5,12 @@ module Wolfgang
   class Service
     # Wolfgang Service Establishing State
     class Establishing
+      include Defaults
       include Logger
 
-      def initialize
+      def initialize(context)
         logger.debug(WOLFGANG_EST) { '#initialize' }
+        context.register_controls(Vehicle::Controls.instance)
       end
 
       def open(___)

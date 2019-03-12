@@ -9,9 +9,9 @@ module Wolfgang
         attr_writer :renderer
         attr_reader :view
 
-        def LogActually.ui
-          LogActually.wolfgang
-        end
+        # def logger
+        #   LogActually.wolfgang
+        # end
 
         def initialize(context)
           LogActually.ui.info(name) { "#initialize (#{Thread.current})" }

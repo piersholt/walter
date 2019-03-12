@@ -5,16 +5,17 @@ module Wolfgang
   class Service
     # Wolfgang Service Offline State
     class Offline
+      include Defaults
       include Logger
 
-      def initialize
+      def initialize(___ = nil)
         logger.debug(WOLFGANG_OFFLINE) { '#initialize' }
       end
 
       def open(context)
         logger.debug(WOLFGANG_OFFLINE) { '#open' }
         queue_alive(context)
-        context.change_state(Establishing.new)
+        context.change_state(Establishing.new(context))
         true
       end
 

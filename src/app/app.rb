@@ -55,8 +55,9 @@ require "#{manager_root}/states/enabled"
 require "#{manager_root}/states/on"
 require "#{manager_root}/manager"
 
-
+require "#{root}/states/defaults"
 require "#{root}/states/offline"
 require "#{root}/states/establishing"
 require "#{root}/states/online"
+require "#{root}/controls"
 require "#{root}/service"

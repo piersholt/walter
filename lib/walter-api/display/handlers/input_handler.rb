@@ -12,9 +12,9 @@ class Vehicle
         when BMBT_MENU
           logger.debug(NAME) { "#handle_button(#{BMBT_MENU})" }
           input_menu
-        when BMBT_AUX_HEAT
-          logger.debug(NAME) { "#handle_button(#{BMBT_AUX_HEAT})" }
-          input_aux_heat
+        # when BMBT_AUX_HEAT
+        #   logger.debug(NAME) { "#handle_button(#{BMBT_AUX_HEAT})" }
+        #   input_aux_heat
         when BMBT_CONFIRM
           logger.debug(NAME) { "#handle_button(#{BMBT_CONFIRM}" }
           input_confirm(state: state)

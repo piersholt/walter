@@ -48,5 +48,11 @@ module Wolfgang
       y.load
       y
     end
+
+    def load_ui
+      # Vehicle::Display.instance.input_aux_heat
+      header.load_header
+      root.load
+    end
   end
 end
