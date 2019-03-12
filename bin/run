@@ -79,6 +79,8 @@ begin
   LogActually.alive.i
   LogActually.is_all_around(:ui)
   LogActually.ui.i
+  LogActually.is_all_around(:audio_service)
+  LogActually.audio_service.d
   LogActually.is_all_around(:wolfgang)
   LogActually.wolfgang.d
 

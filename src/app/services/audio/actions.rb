@@ -11,6 +11,11 @@ module Wolfgang
         @state.power(self)
       end
 
+      def pause
+        logger.debug(AUDIO) { '#pause()' }
+        @state.pause(self)
+      end
+
       def seek_forward
         logger.debug(AUDIO) { '#seek_forward()' }
         @state.seek_forward(self)
@@ -19,11 +24,6 @@ module Wolfgang
       def seek_backward
         logger.debug(AUDIO) { '#seek_backward()' }
         @state.seek_backward(self)
-      end
-
-      def pause
-        logger.debug(AUDIO) { '#pause()' }
-        @state.pause(self)
       end
 
       def scan_forward(toggle)

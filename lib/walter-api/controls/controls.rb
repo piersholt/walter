@@ -36,17 +36,5 @@ class Vehicle
     def default_state
       { mfl: {}, bmbt: {} }
     end
-
-    # TODO: API
-    # accessor for each set of buttons, i.e. bmbt, mfl
-    # nested accessor for each button
-    # methods to:
-    #   press
-    #   hold (simulate toggle)
-    #   release
-    # macros to:
-    #   press_and_release(interval)
-    #   short_press (simulate press -> release)
-    #   long_press  (simulate press -> hold -> release)
   end
 end

@@ -4,10 +4,10 @@ module Wolfgang
   class Audio
     # Comment
     module Controls
-      include Logger
+      include Logging
       include Vehicle::Events
 
-      AUDIO_CONTROLS = {
+      CONTROL_REGISTER = {
         BMBT_POWER => Vehicle::Controls::Control::Stateless,
         BMBT_NEXT => Vehicle::Controls::Control::TwoStage,
         BMBT_PREV => Vehicle::Controls::Control::TwoStage,
@@ -16,63 +16,80 @@ module Wolfgang
         MFL_TEL => Vehicle::Controls::Control::Stateless
       }.freeze
 
-      FUNCTION_TYPE = {
-        power: Vehicle::Controls::STATELESS,
-        seek_forward: Vehicle::Controls::STATELESS,
-        seek_backward: Vehicle::Controls::STATELESS,
-        scan_forward: Vehicle::Controls::STATEFUL,
-        scan_backward: Vehicle::Controls::STATEFUL
-      }.freeze
-
       CONTROL_ROUTES = {
-        BMBT_POWER => %i[power],
-        BMBT_NEXT => %i[seek_forward scan_forward],
-        MFL_NEXT => %i[seek_forward scan_forward],
-        BMBT_PREV => %i[seek_backward scan_backward],
-        MFL_PREV => %i[seek_backward scan_backward],
-        MFL_TEL => %i[pause]
+        BMBT_POWER => { power: :stateless },
+        BMBT_NEXT => { seek_forward: :stateless,
+                       scan_forward: :stateful },
+        MFL_NEXT => { seek_forward: :stateless,
+                      scan_forward: :stateful },
+        BMBT_PREV => { seek_backward: :stateless,
+                       scan_backward: :stateful },
+        MFL_PREV => { seek_backward: :stateless,
+                      scan_backward: :stateful },
+        MFL_TEL => { pause: :stateless }
       }.freeze
-
 
       def register_controls(controls_api)
-        logger.debug(AUDIO) { '#register_controls' }
-        AUDIO_CONTROLS.each do |control, strategy|
-          logger.debug(AUDIO) { "Register Control: #{control}, #{strategy}" }
+        logger.debug(AUDIO_CONTROLS) { '#register_controls' }
+        CONTROL_REGISTER.each do |control, strategy|
+          logger.debug(AUDIO_CONTROLS) { "Register Control: #{control}, #{strategy}" }
           controls_api.register_control_listener(self, control, strategy)
         end
       end
 
-      def button?(event)
-        event == :button
+      def control_update(event, control:, state:)
+        logger.debug(AUDIO_CONTROLS) { "#control_update(#{event}, #{control}, #{state})" }
+        return false unless control_event?(event) && route?(control)
+        # logger.info(AUDIO_CONTROLS) { "#control_update(#{event})" }
+
+        route(control).each do |function, type|
+          next unless control_applicable?(type, state)
+          logger.debug(AUDIO_CONTROLS) { "routing control #{control} to #{function}..." }
+          return public_send(function) if stateless?(state)
+          public_send(function, state)
+        end
       end
 
-      def buttons_update(event, button:, state:)
-        logger.debug(AUDIO) { "#buttons_update(#{event}, #{button}, #{state})" }
-        return false unless button?(event)
-        # return false unless state == :run
-        logger.info(AUDIO) { "#buttons_update(#{event})" }
+      def control_event?(event)
+        result = event == :button
+        logger.debug(AUDIO_CONTROLS) { "#control_event?(#{event}) => #{result}" }
+        result
+      end
 
-        CONTROL_ROUTES[button].each do |function|
-          FUNCTION_TYPE[function]
-        end
+      def route?(control)
+        result = CONTROL_ROUTES.key?(control)
+        logger.debug(AUDIO_CONTROLS) { "#route?(#{control}) => #{result}" }
+        result
+      end
 
-        case button
-        when BMBT_POWER
-          power
-        when BMBT_NEXT
-          return scan_forward(state) unless state == :run
-          seek_forward
-        when MFL_NEXT
-          return scan_forward(state) unless state == :run
-          seek_forward
-        when BMBT_PREV
-          return scan_backward(state) unless state == :run
-          seek_backward
-        when MFL_PREV
-          return scan_backward(state) unless state == :run
-          seek_backward
-        when MFL_TEL
-          pause
+      def route(control)
+        result = CONTROL_ROUTES[control]
+        logger.debug(AUDIO_CONTROLS) { "#route(#{control}) => #{result}" }
+        result
+      end
+
+      def stateful?(state)
+        result = %i[on off].one? { |s| s == state }
+        logger.debug(AUDIO_CONTROLS) { "#stateful?(#{state}) => #{result}" }
+        result
+      end
+
+      def stateless?(state)
+        result = %i[run].one? { |s| s == state }
+        logger.debug(AUDIO_CONTROLS) { "#stateless?(#{state}) => #{result}" }
+        result
+      end
+
+      def control_applicable?(type, state)
+        if stateful?(state) && type == :stateful
+          logger.debug(AUDIO_CONTROLS) { "#control_applicable?(#{type}, #{state}) => true" }
+          true
+        elsif stateless?(state) && type == :stateless
+          logger.debug(AUDIO_CONTROLS) { "#control_applicable?(#{type}, #{state}) => true" }
+          true
+        else
+          logger.debug(AUDIO_CONTROLS) { "#control_applicable?(#{type}, #{state}) => false" }
+          false
         end
       end
     end

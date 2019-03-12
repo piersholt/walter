@@ -6,15 +6,17 @@ class Vehicle
     class Control
       include Observable
 
-
       attr_reader :id, :state, :strategy
 
-      def initialize(id, strategy = Stateless)
+      DEFAULT_STRATEGY = TwoStage
+
+      def initialize(id, strategy = DEFAULT_STRATEGY)
         @id = id
         @strategy = strategy.new(name)
       end
 
       alias button id
+      alias control id
 
       def update(state)
         logger.debug(name) { "#update(#{state})" }

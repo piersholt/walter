@@ -21,6 +21,7 @@ module Wolfgang
     MANAGER_ON = 'Mananger (On)'
 
     AUDIO = 'Audio'
+    AUDIO_CONTROLS = 'Audio Controls'
     AUDIO_ENABLED = 'Audio (Enabled)'
     AUDIO_ON = 'Audio (On)'
 

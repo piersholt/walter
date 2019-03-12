@@ -19,5 +19,7 @@ class Interface
     def write(args = nil)
       raise TransmissionError, 'Device is log file. Cannot write to bus.'
     end
+
+    alias write_nonblock write
   end
 end

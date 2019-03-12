@@ -210,6 +210,7 @@ class BusHandler < BaseHandler
     LOGGER.warn(name) { 'Bus Offline! Disabling virtual bus.' }
     @bus.offline
     @bus.simulated.send_all(:disable)
+    @bus.augmented.send_all(:disable)
   end
 
   # ------------------- initialize -------------------------- #

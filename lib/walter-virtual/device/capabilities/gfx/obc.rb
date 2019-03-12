@@ -14,21 +14,22 @@ module Capabilities
           hour = hour - 12
           hour = hour + 0b1000_0000
         end
-        obc_config(b1: SET_TIME, b2: hour, b3: minute, b4: 0)
+        obc_config(b1: SET_TIME, b2: hour, b3: minute, b4: NO_ARG)
       end
+
+      alias time! set_time
 
       def set_date(day = Time.now.day, month = Time.now.month, year = Time.now.year)
         return false unless valid_date?(day, month, year)
         obc_config(b1: SET_DATE, b2: day, b3: month, b4: year)
       end
 
-      alias time! set_time
       alias date! set_date
 
       # gfx	ike	OBC-CONFIG	b1: 0x07 (Distance) / b2: 00 (b2: "0") / b3: 0x07 (b3: "7") / b4:  (b4: "")
       def set_distance(distance)
         return false unless valid_distance?(distance)
-        obc_config(b1: SET_DISTANCE, b2: 0, b3: distance, b4: 0)
+        obc_config(b1: SET_DISTANCE, b2: NO_ARG, b3: distance, b4: NO_ARG)
       end
 
       def set_code(four_digit_integer)
@@ -36,7 +37,7 @@ module Capabilities
         hex_string = Kernel.format("%0.4x", four_digit_integer)
         b2 = hex_string[0,2].hex
         b3 = hex_string[2,2].hex
-        obc_config(b1: SET_CODE, b2: b2 , b3: b3, b4: 0)
+        obc_config(b1: SET_CODE, b2: b2 , b3: b3, b4: NO_ARG)
       end
 
       def set_something(property, x = 5, y = 5, z = 5)

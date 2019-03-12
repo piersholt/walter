@@ -1,10 +1,13 @@
+# frozen_string_literal: false
+
 module Wolfgang
   class Audio
+    # Comment
     class On
       include Logger
       include Defaults
 
-      def initialize(context)
+      def initialize(___)
         logger.debug(AUDIO_ON) { '#initialize' }
       end
 
@@ -25,28 +28,30 @@ module Wolfgang
       # USER CONTROL
 
       def power(context)
-        logger.info(AUDIO_ON) { "#power()" }
         result = context.player.power
+        logger.info(AUDIO_ON) { "#power() => #{result}" }
         if result
           Vehicle::Audio.instance.on
         else
           Vehicle::Audio.instance.off
         end
-      end
-
-      def next_track(context)
-        logger.info(AUDIO_ON) { "#next_track()" }
-        context.player.next_track
-      end
-
-      def previous(context)
-        logger.info(AUDIO_ON) { "#previous()" }
-        context.player.previous
+        result
       end
 
       def pause(context)
-        logger.info(AUDIO_ON) { "#pause()" }
-        context.player.pause
+        result = context.player.pause
+        logger.info(AUDIO_ON) { "#pause() => #{result}" }
+        result
+      end
+
+      def seek_forward(context)
+        logger.info(AUDIO_ON) { "#seek_forward()" }
+        context.player.seek_forward
+      end
+
+      def seek_backward(context)
+        logger.info(AUDIO_ON) { "#seek_backward()" }
+        context.player.seek_backward
       end
 
       def scan_forward(context, toggle)

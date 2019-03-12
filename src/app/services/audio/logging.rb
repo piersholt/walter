@@ -27,9 +27,9 @@ module Wolfgang
         end
       end
 
-      # def logger
-      #   LogActually.wolfgang
-      # end
+      def logger
+        LogActually.audio_service
+      end
     end
   end
 end

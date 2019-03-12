@@ -9,6 +9,7 @@ module Wolfgang
     include Properties
     include State
     include Notifications
+    include Controls
     include Actions
 
     include Messaging::API

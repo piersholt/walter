@@ -97,12 +97,22 @@ module Wolfgang
         end
       end
 
-      def next_track
+      def pause
+        if play?
+          pause!
+          true
+        elsif pause?
+          play!
+          false
+        end
+      end
+
+      def seek_forward
         return false unless on?
         next!
       end
 
-      def previous
+      def seek_backward
         return false unless on?
         previous!
       end
@@ -123,16 +133,18 @@ module Wolfgang
         scan_backward_stop!
       end
 
-      def pause
-        pause!
-      end
-
       def on?
         %w[playing forward-seek reverse-seek].one? { |s| s == status }
       end
 
+      alias play? on?
+
       def off?
         %w[stopped paused error].one? { |s| s == status }
+      end
+
+      def paused?
+        %w[stopped paused].one? { |s| s == status }
       end
 
       # EVENTS ------------------------------------------------------------

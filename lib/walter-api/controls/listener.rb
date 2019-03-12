@@ -19,7 +19,7 @@ class Vehicle
 
       def handle_button(button:, state:, source:)
         return false unless listeners?
-        return false unless control?(button)
+        return false unless registered_control?(button)
         control = control_state[button]
         logger.debug(NAME) { "#control => #{control}" }
         control.update(state)
@@ -32,16 +32,16 @@ class Vehicle
       # Stateless:
       # Stateful:
       # Dynamic:
-      def register_control_listener(observer, control_id, strategy = Control::Stateless, function = :buttons_update)
+      def register_control_listener(observer, control_id, strategy = Control::Stateless, function = :control_update)
         logger.debug(NAME) { "#register_control_listener(#{control_id}, #{strategy})" }
         new_control = Control.new(control_id, strategy)
         new_control.add_observer(observer, function)
         state!(control_id => new_control)
       end
 
-      def control?(control_id)
+      def registered_control?(control_id)
         result = state.key?(control_id)
-        logger.debug(NAME) { "#control?(#{control_id}) => #{result}" }
+        logger.debug(NAME) { "#registered_control?(#{control_id}) => #{result}" }
         result
       end
 

@@ -19,14 +19,17 @@ class Vehicle
         end
       end
 
-      # Comment
+      # Stateless controls will only notify on the press event. This is best
+      # for when the assigned function has no state which can make no use of
+      # the hold or release events. While the interval to the release event
+      # is largely imperceptible, there's no point in incurring it.
       class Stateless < Strategy
         def notify(context)
-          logger.debug(name) { "#notify(context)" }
+          logger.debug(name) { '#notify(context)' }
           return false unless context.press?
           context.changed
           context.notify_observers(:button,
-                                   button: context.button,
+                                   control: context.button,
                                    state: :run)
         end
 
@@ -39,14 +42,16 @@ class Vehicle
         end
       end
 
-      # Comment
+      # Stateful controls will notify on the press and release events, which
+      # suits stateful functions. Example: fast-forward track. Stateful
+      # controls make no use of the hold event.
       class Stateful < Strategy
         def notify(context)
-          logger.debug(name) { "#notify(context)" }
+          logger.debug(name) { '#notify(context)' }
           return false if context.hold?
           context.changed
           context.notify_observers(:button,
-                                   button: context.button,
+                                   control: context.button,
                                    state: toggle_state(context))
         end
 
@@ -68,10 +73,12 @@ class Vehicle
         end
       end
 
-      # Comment
+      # A two stage control is best used when a control serves multiple
+      # functions. Example: next track on press, and fast-forward track on
+      # hold.
       class TwoStage < Strategy
         def notify(context)
-          logger.debug(name) { "#notify(context)" }
+          logger.debug(name) { '#notify(context)' }
           return false if context.press?
           if context.hold?
             on!
@@ -83,7 +90,7 @@ class Vehicle
 
           context.changed
           context.notify_observers(:button,
-                                   button: context.button,
+                                   control: context.button,
                                    state: notify_state)
         end
 
