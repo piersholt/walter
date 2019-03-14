@@ -2,8 +2,8 @@
 
 root = 'app'
 
-require 'app/_deprecated/actions'
-require 'app/_deprecated/intents'
+# require 'app/_deprecated/actions'
+# require 'app/_deprecated/intents'
 # require 'app/_deprecated/intent_handler'
 # require 'app/_deprecated/intent_listener'
 
