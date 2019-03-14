@@ -3,6 +3,10 @@ module Wolfgang
     module Defaults
       # User Control
 
+      def overlay(context)
+        false
+      end
+
       def power(context)
         false
       end

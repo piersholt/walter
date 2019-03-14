@@ -4,8 +4,8 @@ module Wolfgang
   class UserInterface
     module Controller
       # Comment
-      class MainMenuController < BaseController
-        NAME = 'MainMenuController'
+      class DebugController < BaseController
+        NAME = 'DebugController'
 
         attr_reader :services, :container
 
@@ -39,8 +39,8 @@ module Wolfgang
           end
         end
 
-        def destroy(view)
-          case view
+        def destroy
+          case loaded_view
           when :index
             context.manager.delete_observer(self)
             context.audio.delete_observer(self)
@@ -104,11 +104,13 @@ module Wolfgang
           LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
           case action
           when :manager
-            destroy(:index)
-            context.ui.bluetooth_controller.load(:index)
+            # destroy(:index)
+            # context.ui.bluetooth_controller.load(:index)
+            ui_context.launch(:bluetooth, :index)
           when :audio
-            destroy(:index)
-            context.ui.audio_controller.load(:index)
+            # destroy(:index)
+            # context.ui.audio_controller.load(:index)
+            ui_context.launch(:audio, :index)
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end

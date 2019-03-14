@@ -23,7 +23,7 @@ module Wolfgang
           LogActually.ui.unknown(NAME) { '#header' }
           view = View::Header::Status.new
           # view = View::Header::S.new(addressed_player)
-          renderer.render_new_header(view)
+          render_header(view)
         end
 
         # Setup ------------------------------------------------------

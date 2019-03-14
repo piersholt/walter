@@ -25,6 +25,7 @@ class Vehicle
 
       def render_menu(context, view)
         LogActually.display.debug(DISPLAY_ENABLED) { "#render_menu" }
+        context.render_new_header(context.header)
         context.menu = view
         context.bus.rad.build_menu(view.layout, view.menu_items_with_index)
         context.change_state(Captured.new)

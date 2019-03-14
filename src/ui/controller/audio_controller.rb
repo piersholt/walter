@@ -71,9 +71,9 @@ module Wolfgang
           end
         end
 
-        def destroy(view)
-          LogActually.ui.debug(NAME) { "#destroy(#{view})" }
-          case view
+        def destroy
+          LogActually.ui.debug(NAME) { "#destroy(#{loaded_view})" }
+          case loaded_view
           when :index
             @addressed_player.delete_observer(self)
             @addressed_player = nil
@@ -83,7 +83,7 @@ module Wolfgang
             @addressed_player = nil
             true
           else
-            LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
             false
           end
         end
@@ -96,14 +96,17 @@ module Wolfgang
           LogActually.ui.debug(NAME) { "#update(#{action})" } unless selected_menu_item
           case action
           when :main_menu_index
-            destroy(:index)
-            context.ui.root.load(:index)
+            # destroy(:index)
+            # context.ui.root.load(:index)
+            ui_context.launch(:debug, :index)
           when :audio_now_playing
-            destroy(:index)
-            load(:now_playing)
+            # destroy(:index)
+            # load(:now_playing)
+            ui_context.launch(:audio, :now_playing)
           when :audio_index
-            destroy(:now_playing)
-            load(:index)
+            # destroy(:now_playing)
+            # load(:index)
+            ui_context.launch(:audio, :index)
           when :audio_play
             context.audio.play!
           when :audio_pause

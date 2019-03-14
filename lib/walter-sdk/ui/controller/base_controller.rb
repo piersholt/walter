@@ -5,39 +5,44 @@ module Wolfgang
     module Controller
       # Comment
       class BaseController
-        attr_accessor :context
-        attr_writer :renderer
-        attr_reader :view
+        attr_accessor :application_context, :ui_context
+        alias context application_context
+        attr_reader :view, :loaded_view
 
         # def logger
         #   LogActually.wolfgang
         # end
 
-        def initialize(context)
+        def initialize(ui_context, application_context)
           LogActually.ui.info(name) { "#initialize (#{Thread.current})" }
-          @context = context
-        end
-
-        def renderer
-          @renderer ||= Vehicle::Display.instance
+          @ui_context = ui_context
+          @application_context = application_context
         end
 
         def name
           'BaseController'
         end
 
+        def load(action = :index, args = nil)
+          @loaded_view = action
+          args ? create(action, *args) : create(action)
+          public_send(action)
+        end
+
+        def create(*args)
+          raise("#create must be implemented by controllers. #{args}")
+        end
+
+        def destroy(*args)
+          raise("#create must be implemented by controllers. #{args}")
+        end
+
         def render(view)
-          renderer.render_menu(view)
+          ui_context.render(view)
         end
 
-        def load(action = :index)
-          create(action)
-          public_send(action)
-        end
-
-        def load_header(action = :header)
-          create(action)
-          public_send(action)
+        def render_header(view)
+          ui_context.render_header(view)
         end
       end
     end

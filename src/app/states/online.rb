@@ -13,11 +13,6 @@ module Wolfgang
         false
       end
 
-      def load_ui(context)
-        # Vehicle::Display.instance.input_aux_heat
-        context.ui.load_ui
-      end
-
       def close(context)
         logger.debug(WOLFGANG_ONLINE) { '#close' }
         logger.debug(WOLFGANG_ONLINE) { 'Stop Notifications' }
@@ -146,7 +141,7 @@ module Wolfgang
       def create_ui(context)
         # logger.debug(WOLFGANG_ONLINE) { '#create_notifications' }
         LogActually.ui.debug(WOLFGANG_ONLINE) { "#create_ui (#{Thread.current})" }
-        Wolfgang::UserInterface.new(context)
+        Wolfgang::UserInterface::ApplicationUI.new(context)
       rescue StandardError => e
         with_backtrace(logger, e)
       end

@@ -6,6 +6,11 @@ module Wolfgang
     module Actions
       include Logger
 
+      def overlay
+        logger.debug(AUDIO) { '#overlay()' }
+        @state.overlay(self)
+      end
+
       def power
         logger.debug(AUDIO) { '#power()' }
         @state.power(self)

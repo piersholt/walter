@@ -3052,6 +3052,7 @@
                 excl: false
     :parameters:
       :gfx:
+        :meta: this does not seem to work for >= MK2
         :type: :map
         :dictionary:
           0x91: Signal Strength
@@ -3082,8 +3083,8 @@
     :d: 34
     :h: '0x22'
   :properties:
-    :short_name: GFX-STATUS
-    :long_name: Unknown
+    :short_name: GFX-CACHE
+    :long_name: GTX Cache
   :klass: ParameterizedCommand
   :parameters:
     :status:

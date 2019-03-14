@@ -30,10 +30,10 @@ require "#{ui_root}/view/audio/index"
 require "#{ui_root}/view/main_menu/index"
 
 # require "#{ui_root}/controller/base_controller"
+require "#{ui_root}/controller/header_controller"
 require "#{ui_root}/controller/bluetooth_controller"
 require "#{ui_root}/controller/audio_controller"
-require "#{ui_root}/controller/header_controller"
-require "#{ui_root}/controller/main_menu_controller"
+require "#{ui_root}/controller/debug_controller"
 
 require "#{ui_root}/user_interface"
 

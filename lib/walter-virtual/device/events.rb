@@ -34,10 +34,11 @@ class Vehicle
     BMBT_LEFT = :bmbt_left
     BMBT_RIGHT = :bmbt_right
     BMBT_CONFIRM = :bmbt_confirm
-
     BMBT_MENU = :bmbt_menu
+
     BMBT_AUX_HEAT = :bmbt_aux_heat
 
+    BMBT_OVERLAY = :bmbt_overlay
     BMBT_POWER = :bmbt_power
     BMBT_NEXT = :bmbt_next
     BMBT_PREV = :bmbt_prev

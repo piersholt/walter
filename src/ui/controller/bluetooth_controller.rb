@@ -22,7 +22,7 @@ module Wolfgang
           render(view)
         end
 
-        def device(selected_device)
+        def device(selected_device = @selected_device)
           LogActually.ui.debug(NAME) { "#device(#{selected_device})" }
           @view = View::Bluetooth::Device.new(selected_device)
           view.add_observer(self)
@@ -32,14 +32,17 @@ module Wolfgang
 
         # Setup ------------------------------------------------------
 
-        def create(view, selected_menu_item: nil)
+        def create(view, preloaded_device = nil)
           case view
           when :index
+            LogActually.ui.debug(NAME) { "#create(#{view})" }
             @selected_devices = context.manager.devices
             @selected_devices.add_observer(self, :devices_update)
             true
           when :device
-            @selected_device = device_from_menu_item(selected_menu_item)
+            LogActually.ui.debug(NAME) { "#create(#{view}, #{preloaded_device})" }
+            # @selected_device = device_from_menu_item(selected_menu_item)
+            @selected_device = preloaded_device
             @selected_device.add_observer(self, :device_update)
             true
           else
@@ -48,8 +51,8 @@ module Wolfgang
           end
         end
 
-        def destroy(view)
-          case view
+        def destroy
+          case loaded_view
           when :index
             return false unless @selected_devices
             @selected_devices.delete_observer(self)
@@ -61,7 +64,7 @@ module Wolfgang
             @selected_device = nil
             true
           else
-            LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
+            LogActually.ui.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
             false
           end
         end
@@ -72,17 +75,21 @@ module Wolfgang
           LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
           case action
           when :bluetooth_index
-            destroy(:device)
-            create(:index)
-            index
+            # destroy(:device)
+            # create(:index)
+            # index
+            ui_context.launch(:bluetooth, :index)
           when :bluetooth_device
-            destroy(:index)
-            create(:device, selected_menu_item: selected_menu_item)
-            device(@selected_device)
+            # destroy(:index)
+            # create(:device, selected_menu_item: selected_menu_item)
+            selected_device = device_from_menu_item(selected_menu_item)
+            ui_context.launch(:bluetooth, :device, selected_device)
+            # device(@selected_device)
           when :main_menu_index
-            destroy(:index)
-            destroy(:device)
-            context.ui.root.load(:index)
+            # destroy(:index)
+            # destroy(:device)
+            # context.ui.root.load(:index)
+            ui_context.launch(:debug, :index)
           when :bluetooth_connect
             device_address = selected_menu_item.id
             context.manager.connect(device_address)
