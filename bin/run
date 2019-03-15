@@ -25,15 +25,13 @@ begin
   end
 
   require 'log_actually'
+  require 'yabber'
 
   setup_path('lib')
   setup_path('src')
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
-
-  require 'helpers/manageable_threads'
-  require 'yabber/yabber'
 
   require 'modules'
 rescue LoadError => e
