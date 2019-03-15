@@ -27,7 +27,7 @@ require "#{display_root}/display"
 
 puts "\tLoading walter-api/button"
 
-controls_root = 'controls'
+# controls_root = 'controls'
 # require "#{controls_root}/states/defaults"
 # require "#{controls_root}/states/unknown"
 # require "#{controls_root}/states/disabled"
@@ -39,11 +39,11 @@ controls_root = 'controls'
 
 # require "#{controls_root}/handlers/cache_handler"
 # require "#{controls_root}/handlers/input_handler"
-require "#{controls_root}/listener"
+require_relative 'controls/listener'
 
-require "#{controls_root}/strategy"
-require "#{controls_root}/control"
-require "#{controls_root}/controls"
+require_relative 'controls/strategy'
+require_relative 'controls/control'
+require_relative 'controls/controls'
 
 puts "\tLoading walter-api/audio"
 

@@ -4,7 +4,7 @@ module API
   # API for telephone related commands
   module Telephone
     include BaseAPI
-    include CommandAliases
+    include Command::Aliases
 
     def led(from: :tel, to: :anzv, **arguments)
       try(from, to, 0x2b, arguments)

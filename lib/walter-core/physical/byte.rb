@@ -1,4 +1,4 @@
-require 'helpers'
+# 
 
 class Byte
   include DataTools

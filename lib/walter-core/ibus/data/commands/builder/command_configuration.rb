@@ -1,4 +1,4 @@
-require 'helpers'
+
 # require 'application/commands/builder/parameter_configuration'
 # require 'application/commands/builder/bit_array_parameter_configuration'
 # require 'application/commands/builder/base_command_builder'

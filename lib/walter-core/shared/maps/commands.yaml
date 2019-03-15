@@ -21,7 +21,7 @@
   :properties:
     :verbose: true
     :short_name: LATLONG
-    :long_name: Unknown?
+    :long_name: GPS Coordinates
   :klass: BaseCommand
   :index:
     :signal: 0
@@ -106,7 +106,7 @@
     :d: 175
     :h: '0xAF'
   :properties:
-    :short_name: af-SES?
+    :short_name: AF-SES?
     :long_name: Unknown
   :klass: BaseCommand
 

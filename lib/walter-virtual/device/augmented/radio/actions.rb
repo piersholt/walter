@@ -6,8 +6,8 @@ class Virtual
   class AugmentedRadio < AugmentedDevice
     # User Input to be published
     module Actions
-      include CommandAliases
-      include CommandGroups
+      include Command::Aliases
+      include Command::Aliases
       # include ::Actions
       include Messaging::Constants
       include Messaging::API

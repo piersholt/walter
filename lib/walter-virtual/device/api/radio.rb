@@ -5,7 +5,7 @@
 module API
   # API for command related to keys
   module Radio
-    include CommandAliases
+    include Command::Aliases
     include BaseAPI
 
     # BMBT

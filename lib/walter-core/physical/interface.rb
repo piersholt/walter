@@ -3,7 +3,7 @@
 # require 'physical/interface/byte_buffer'
 # require 'physical/interface/output_buffer'
 
-require 'helpers'
+
 
 class Interface
   include Observable

@@ -5,7 +5,9 @@ puts 'Loading walter-core'
 puts "\tLoading walter-core/serialport"
 require 'serialport'
 
-require 'helpers'
+require_relative 'constants/constants'
+require_relative 'helpers/helpers'
+require_relative 'mixins/mixins'
 require 'shared/shared'
 require 'physical/physical'
 require 'data_link/datalink'

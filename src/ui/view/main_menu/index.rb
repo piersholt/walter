@@ -6,7 +6,7 @@ module Wolfgang
       module MainMenu
         # Comment
         class Index < TitledMenu
-          include Logger
+          include Constants
           NO_SERVICES = [].freeze
 
           def initialize(services, container)

@@ -3,7 +3,7 @@
 # Comment
 class Virtual
   class DynamicDevice < Device
-    include CommandAliases
+    include Command::Aliases
 
     DEFAULT_STATUS = :up
 

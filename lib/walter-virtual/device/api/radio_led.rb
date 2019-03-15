@@ -4,7 +4,7 @@
 
 module API
   module RadioLED
-    include CommandAliases
+    include Command::Aliases
     include BaseAPI
 
     # 0x4A / Radio LED

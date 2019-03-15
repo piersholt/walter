@@ -28,7 +28,7 @@ class Virtual
       # return super if command_id == PING
       LOGGER.unknown(PROC) { "Handle? #{message.from} -> #{message.command.h}" }
 
-      if CommandGroups::DIAGNOSTICS.include?(command_id)
+      if Aliases::Groups::DIAGNOSTICS.include?(command_id)
         LOGGER.unknown(PROC) { "Diagnostic reply! #{message.command.h}" }
       end
 

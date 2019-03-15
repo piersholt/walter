@@ -3,7 +3,7 @@
 module API
   # Comment
   module OBC
-    include CommandAliases
+    include Command::Aliases
     include BaseAPI
 
     # 0x40

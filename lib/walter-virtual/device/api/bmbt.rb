@@ -5,7 +5,7 @@
 module API
   # API for command related to keys
   module OnBoardMonitor
-    include CommandAliases
+    include Command::Aliases
     include BaseAPI
 
     def button(from: :bmbt, to:, arguments:)

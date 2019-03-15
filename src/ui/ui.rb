@@ -35,7 +35,7 @@ require "#{ui_root}/controller/bluetooth_controller"
 require "#{ui_root}/controller/audio_controller"
 require "#{ui_root}/controller/debug_controller"
 
-require "#{ui_root}/user_interface"
+# require "#{ui_root}/user_interface"
 
 # SERVICE
 # service_root = root + '/service'

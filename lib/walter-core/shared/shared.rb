@@ -30,4 +30,21 @@ require "#{maps_root}/map"
 
 require "#{root}/global_listener"
 
-require "#{root}/analyze"
+# Comment
+module Shared
+  def session_listener
+    @session_listener ||= SessionListener.new
+  end
+
+  def data_logging_listener
+    @data_logging_listener ||= DataLoggingListener.new
+  end
+
+  def display_listener
+    @display_listener ||= DisplayListener.new
+  end
+
+  def global_listener
+    @global_listener ||= GlobalListener.new({})
+  end
+end

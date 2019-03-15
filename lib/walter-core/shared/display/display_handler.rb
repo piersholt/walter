@@ -1,7 +1,7 @@
 require 'singleton'
 
 class DisplayHandler < BaseHandler
-  include CommandGroups
+  include Command::Aliases
   include Singleton
 
   name = 'DisplayHandler'.freeze

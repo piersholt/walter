@@ -3,7 +3,7 @@
 module API
   # Comment
   module GFX
-    include CommandAliases
+    include Command::Aliases
     include BaseAPI
 
     # MENU/USER INTERFACE

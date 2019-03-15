@@ -1,100 +1,47 @@
 # frozen_string_literal: true
 
-require 'app/app'
-require 'ui/ui'
+require_relative 'services/services'
+puts "\tLoading ui"
+require_relative 'ui/ui'
+
 
 # Container
 class Walter
   include Observable
-  include WalterTools
+  include DebugTools
   include ManageableThreads
   include Analyze
+  include Shared
 
   attr_reader :bus, :wolfgang
   alias w wolfgang
 
-  PROC = 'Walter'.freeze
-
-  def handlers
-    @handlers ||= {}
-  end
+  PROC = 'Walter'
 
   def initialize
-    # TODO: better argument handling to support multiple log files
-    @interface   = Interface.new(ARGV.shift)
-
-    @receiver    = Receiver.new(@interface.input_buffer)
-    @transmitter = Transmitter.new(@interface.output_buffer)
-
-    @demultiplexer =
-      DataLink::LogicalLinkLayer::Demultiplexer
-      .new(@receiver.frame_input_buffer)
-    @multiplexer =
-      DataLink::LogicalLinkLayer::Multiplexer
-      .new(@transmitter.frame_output_buffer)
-
-    @bus =
-      Virtual::Initialization
-      .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
-      .execute
-
-    @interface_handler = DataLinkHandler.new(@transmitter)
-    @bus_handler = BusHandler
-                   .new(bus: @bus,
-                        packet_output_buffer:
-                          @multiplexer.packet_output_buffer)
-
-    @global_listener = GlobalListener.new(handlers)
-    @data_link_listener = DataLinkListener.new(@interface_handler)
-    @session_listener = SessionListener.new
-    @data_logging_listener = DataLoggingListener.new
-    @display_listener = DisplayListener.new
-
-    @virtual_display = Vehicle::Display.instance
-    @virtual_display.bus = bus
-    @vehicle_button = Vehicle::Controls.instance
-    @vehicle_button.bus = bus
-    @vehicle_audio = Vehicle::Audio.instance
-    @vehicle_audio.bus = bus
-
-    @interface.add_observer(@global_listener)
-    @interface.add_observer(@data_link_listener)
-    @interface.add_observer(@data_logging_listener)
-    @interface.add_observer(@session_listener)
-    @interface.add_observer(@bus_handler)
-
-    @receiver.add_observer(@global_listener)
-    @receiver.add_observer(@data_logging_listener)
-    @receiver.add_observer(@session_listener)
-
-    @demultiplexer.add_observer(@bus_handler)
-
-    @bus_handler.add_observer(@display_listener)
-    @bus_handler.add_observer(@session_listener)
-    @bus_handler.add_observer(@bus_handler)
-    @bus_handler.add_observer(@global_listener)
-
-    @bus.send_all(:add_observer, @bus_handler)
-    # @bus.send_all(:add_observer, @virtual_display)
-
-    @vehicle_button.targets.each do |target|
-      device = @bus.public_send(target)
-      device.add_observer(@vehicle_button)
-    end
-
-    @virtual_display.targets.each do |target|
-      device = @bus.public_send(target)
-      device.add_observer(@virtual_display)
-    end
+    setup_core
+    context = setup_virtual(interface: @interface,
+                            multiplexer: @multiplexer,
+                            demultiplexer: @demultiplexer)
+    setup_api(context)
+    setup_plugin
 
     # For exit event
-    add_observer(@global_listener)
-    add_observer(@data_logging_listener)
-    add_observer(@display_listener)
+    add_observer(global_listener)
+    add_observer(data_logging_listener)
+    add_observer(display_listener)
 
-    defaults
+    apply_debug_defaults
 
     Publisher.announcement(:walter)
+
+    # @wolfgang = Wolfgang::Service.new
+    # @wolfgang.bus = @bus
+  end
+
+  def setup_plugin
+    @wolfgang = Wolfgang::Service.new
+    # @wolfgang.bus = context
   end
 
   def launch
@@ -127,8 +74,7 @@ class Walter
     @transmitter.on
     @demultiplexer.on
     @multiplexer.on
-    @wolfgang = Wolfgang::Service.new
-    @wolfgang.bus = @bus
+
     @wolfgang.open
   end
 
@@ -183,5 +129,77 @@ class Walter
 
     LOGGER.info(PROC) { "See you anon ✌️" }
     return -1
+  end
+
+  def setup_core
+    # TODO: better argument handling to support multiple log files
+    @interface   = Interface.new(ARGV.shift)
+
+    @receiver    = Receiver.new(@interface.input_buffer)
+    @transmitter = Transmitter.new(@interface.output_buffer)
+
+    @demultiplexer =
+      DataLink::LogicalLinkLayer::Demultiplexer
+      .new(@receiver.frame_input_buffer)
+    @multiplexer =
+      DataLink::LogicalLinkLayer::Multiplexer
+      .new(@transmitter.frame_output_buffer)
+
+    interface_handler = DataLinkHandler.new(@transmitter)
+    @data_link_listener = DataLinkListener.new(interface_handler)
+
+    @interface.add_observer(global_listener)
+    @interface.add_observer(@data_link_listener)
+    @interface.add_observer(data_logging_listener)
+    @interface.add_observer(session_listener)
+
+    @receiver.add_observer(global_listener)
+    @receiver.add_observer(data_logging_listener)
+    @receiver.add_observer(session_listener)
+  end
+
+  def setup_virtual(interface:, multiplexer:, demultiplexer:)
+    bus =
+      Virtual::Initialization
+      .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
+      .execute
+
+    bus_handler = BusHandler
+                   .new(bus: bus,
+                        packet_output_buffer:
+                          multiplexer.packet_output_buffer)
+
+    interface.add_observer(bus_handler)
+    demultiplexer.add_observer(bus_handler)
+
+    bus_handler.add_observer(global_listener)
+    bus_handler.add_observer(display_listener)
+    bus_handler.add_observer(session_listener)
+    bus_handler.add_observer(bus_handler)
+
+    bus.send_all(:add_observer, bus_handler)
+    # bus.send_all(:add_observer, vehicle_display)
+    bus
+  end
+
+  def setup_api(context)
+    # Walter API
+    vehicle_display = Vehicle::Display.instance
+    vehicle_button = Vehicle::Controls.instance
+    vehicle_audio = Vehicle::Audio.instance
+
+    vehicle_display.bus = context
+    vehicle_button.bus = context
+    vehicle_audio.bus = context
+
+    vehicle_button.targets.each do |target|
+      device = context.public_send(target)
+      device.add_observer(vehicle_button)
+    end
+
+    vehicle_display.targets.each do |target|
+      device = context.public_send(target)
+      device.add_observer(vehicle_display)
+    end
   end
 end
