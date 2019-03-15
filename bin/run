@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# frozen_string_literal: false
+
 # *************************************************************************** #
 #                                  LOAD PATHS                                 #
 # *************************************************************************** #
@@ -13,12 +15,14 @@ begin
   require 'observer'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
-  lib_path = File.expand_path(File.dirname(__FILE__) + '/../lib')
-  ext_path = File.expand_path(File.dirname(__FILE__) + '/../ext')
-  src_path = File.expand_path(File.dirname(__FILE__) + '/../src')
-  $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
-  $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
-  $LOAD_PATH.unshift(src_path) unless $LOAD_PATH.include?(src_path)
+  def setup_path(dir)
+    load_path = File.expand_path(File.dirname(__FILE__) + "/../#{dir}")
+    $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
+  rescue StandardError => e
+    puts e
+    e.backtrace.each { |line| puts line }
+    exit
+  end
 
   require 'log_actually'
   # Walter-Core
@@ -83,6 +87,8 @@ begin
   LogActually.audio_service.d
   LogActually.is_all_around(:wolfgang)
   LogActually.wolfgang.d
+  setup_path('lib')
+  setup_path('src')
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
