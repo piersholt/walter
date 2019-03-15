@@ -2,6 +2,14 @@
 
 puts 'Loading walter-api'
 
+# Walter-API
+LogActually.is_all_around(:display)
+LogActually.display.w
+LogActually.is_all_around(:controls)
+LogActually.controls.d
+LogActually.is_all_around(:audio)
+LogActually.audio.d
+
 puts "\tLoading walter-api/display"
 
 display_root = 'display'

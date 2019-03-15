@@ -2,6 +2,20 @@
 
 puts 'Loading walter-core'
 
+# Walter-Core
+LogActually.is_all_around(:interface)
+LogActually.interface.i
+LogActually.is_all_around(:datalink)
+LogActually.datalink.i
+LogActually.is_all_around(:multiplexer)
+LogActually.multiplexer.i
+LogActually.is_all_around(:demultiplexer)
+LogActually.demultiplexer.i
+LogActually.is_all_around(:transmitter)
+LogActually.transmitter.i
+LogActually.is_all_around(:parameterized)
+LogActually.parameterized.i
+
 puts "\tLoading walter-core/serialport"
 require 'serialport'
 
