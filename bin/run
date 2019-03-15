@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# frozen_string_literal: false
+
 # *************************************************************************** #
 #                                  LOAD PATHS                                 #
 # *************************************************************************** #
@@ -13,56 +15,34 @@ begin
   require 'observer'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
-  lib_path = File.expand_path(File.dirname(__FILE__) + '/../lib')
-  ext_path = File.expand_path(File.dirname(__FILE__) + '/../ext')
-  $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
-  $LOAD_PATH.unshift(ext_path) unless $LOAD_PATH.include?(ext_path)
+  def setup_path(dir)
+    load_path = File.expand_path(File.dirname(__FILE__) + "/../#{dir}")
+    $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
+  rescue StandardError => e
+    puts e
+    e.backtrace.each { |line| puts line }
+    exit
+  end
 
   require 'log_actually'
-  LogActually.is_all_around(:interface)
-  LogActually.interface.i
-  LogActually.is_all_around(:datalink)
-  LogActually.datalink.i
-  LogActually.is_all_around(:multiplexer)
-  LogActually.multiplexer.i
-  LogActually.is_all_around(:demultiplexer)
-  LogActually.demultiplexer.i
-  LogActually.is_all_around(:transmitter)
-  LogActually.transmitter.i
-  LogActually.is_all_around(:virtual)
-  LogActually.virtual.i
-  LogActually.is_all_around(:parameterized)
-  LogActually.parameterized.i
+  require 'yabber'
 
-  LogActually.is_all_around(:cdc)
-  LogActually.cdc.w
-
-  LogActually.is_all_around(:rad)
-  LogActually.rad.i
-  LogActually.is_all_around(:gfx)
-  LogActually.gfx.d
-  LogActually.is_all_around(:display)
-  LogActually.display.d
-
-  LogActually.is_all_around(:messaging)
-  LogActually.messaging.i
-
-  LogActually.is_all_around(:wolfgang)
-  LogActually.wolfgang.i
+  setup_path('lib')
+  setup_path('src')
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
-  require 'helpers/manageable_threads'
-  require 'yabber/yabber'
+  require 'modules'
 rescue LoadError => e
-  LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
-  $LOAD_PATH.each { |line| LOGGER.info('run') { line } }
+  # LogActually.default.error('run') { e }
+  puts e
+  e.backtrace.each { |line| puts line }
+  $LOAD_PATH.each { |line| puts line }
   exit
 rescue StandardError => e
-  LOGGER.error('run') { e }
-  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  puts e
+  e.backtrace.each { |line| puts line }
   exit
 end
 

@@ -1,0 +1,4400 @@
+---
+:default:
+    :id:
+      :d: nil
+      :h: nil
+    :properties:
+      :short_name: NEW
+      :long_name: Unknown
+      :verbose: true
+    :klass: BaseCommand
+
+
+# ************************************************************************* #
+#                                 NAVIGATION
+# ************************************************************************* #
+
+0xA2:
+  :id:
+    :d: 162
+    :h: '0xA2'
+  :properties:
+    :verbose: true
+    :short_name: LATLONG
+    :long_name: GPS Coordinates
+  :klass: BaseCommand
+  :index:
+    :signal: 0
+    :latitude_hours: !ruby/range
+                      begin: 1
+                      end: 2
+    :latitude_minutes: 3
+    :latitude_seconds: 4
+    :altitude: 12
+    :hour: 14
+    :minute: 15
+    :second: 16
+  :parameters:
+    :signal:
+      :type: :map
+      :map:
+        0x00: disconnected
+        0x01: connected
+      :dictionary:
+        0x00: 'No Signal'
+        0x01: 'Signal'
+    :latitude_hours:
+      :type: :integer
+    :latitude_minutes:
+      :type: :integer
+    :latitude_seconds:
+      :type: :integer
+    :altitude:
+      :type: :integer
+    :hour:
+      :type: :integer
+    :minute:
+      :type: :integer
+    :second:
+      :type: :integer
+  :schemas:
+    - :dia
+  :dia:
+    :klass: BaseCommand
+    :properties:
+      :short_name: EWS-END
+      :long_name: Diagnostics Control
+
+0xA4:
+  :id:
+    :d: 164
+    :h: '0xA4'
+  :properties:
+    :short_name: ADDR
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xA7:
+  :id:
+    :d: 167
+    :h: '0xA7'
+  :properties:
+    :short_name: A7-SRC-GFX
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xA9:
+  :id:
+    :d: 169
+    :h: '0xA9'
+  :properties:
+    :short_name: NAV-A9
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xAB:
+  :id:
+    :d: 171
+    :h: '0xAB'
+  :properties:
+    :short_name: AB-UI?
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0xAF:
+  :id:
+    :d: 175
+    :h: '0xAF'
+  :properties:
+    :short_name: AF-SES?
+    :long_name: Unknown
+  :klass: BaseCommand
+
+# ************************************************************************* #
+#                             BUS DEVICE STATUS
+# ************************************************************************* #
+0x01:
+  :id:
+    :h: '0x01'
+    :d: 1
+    :b: 1
+  :properties:
+    :short_name: PING
+    :long_name: Status Request
+    :verbose: false
+  :klass: BaseCommand
+0x02:
+  :id:
+    :h: '0x02'
+    :d: 2
+  :properties:
+    :short_name: PONG
+    :long_name: Status Response
+    :status_map:
+      0x00: 'Reply'
+      0x01: 'Announce'
+      0x30: 'External Offline Respond'
+      0x31: 'External Offline Reset'
+      0x40: 'Alt. Reply'
+      0x41: 'Alt. Announce'
+  :klass: ParameterizedCommand
+  :parameters:
+    :status:
+      :type: :map
+      :dictionary:
+        0x00: 'Reply'
+        0x01: 'Announce'
+        0x30: 'External Offline Respond'
+        0x31: 'External Offline Reset'
+        0x40: 'Alt. Reply'
+        0x41: 'Alt. Announce'
+  :index:
+    :status: 0
+  :meta:
+    :desc: ''
+    :recipients:
+      0xFF: GLO-H
+      0xBF: GLO-L
+    :audience:
+      0x80: IKE
+      0x3B: GFX
+    :notes:
+      - after reset (KL15) devices will announce (0x01):
+        - 13:53:15 [INFO ] RAD	GLO-H	PONG	Announce
+        - 13:53:16 [INFO ] TEL	GLO-H	PONG	Announce
+        - 13:53:16 [INFO ] BMBT	GLO-L	PONG	Announce
+      - PONG is always broadcast, not addressed to a single module:
+        - "`MessageHandler.i.command(2).recipients => [FF, BF]`"
+        - 13:53:25 [INFO ] BMBT	RAD      PING	--
+        - 13:53:25 [INFO ] RAD	GLO-H	   PONG	Respond
+        - 14:01:06 [INFO ] GFX	IKE      PING	--
+        - 14:01:06 [INFO ] IKE	GLO-L    PONG	Respond
+      - RAD looks for accessories:
+        - 13:53:17 [INFO ] RAD	DSP	PING	--
+      - BMBT looks for accessories (note ACK to GLO-H):
+        - 13:53:25 [INFO ] BMBT	RAD	  PING	--
+        - 13:53:25 [INFO ] RAD	GLO-H	PONG	Respond
+      - BMBT will continue to PING all devices every 10 seconds:
+      - GFX only awake on KL30 (makes sense given screen is off at KL15)
+      - GFX looks for IKE?:
+        - 14:01:06 [INFO ] GFX	IKE	PING	--
+      - GFX looks for accessories (akin to RAD):
+        - DSP:
+          - 14:01:06 [INFO ] GFX	DSP	PING	--
+        - TEL:
+          - 14:01:06 [INFO ] GFX	TEL	PING	--
+          - 14:01:06 [INFO ] TEL	GLO-H	PONG	Respond
+      - Retry for no PONG:
+        - 14:01:06 [INFO ] GFX	DSP	PING	--
+        - 14:01:17 [INFO ] GFX	DSP	PING	--
+      - KBUS:
+        - PDC announces on KL30:
+          - 14:01:07 [INFO ] PDC	GLO-L	PONG	Announce
+        - GM doesn't seem to respond to a PING? (KL15):
+          - 13:56:36 [INFO ] GM3	GLO-L	PONG	Respond
+          - 14:00:04 [INFO ] GM3	GLO-L	PONG	Respond
+      - '0x40 and 0x41':
+        - GFX is the only device to use these variants
+        - it's always sent to GLO-L
+        - the lowest bit useage is consistent with 0x00/0x01:
+          - KL30:
+            - GM3   GLO-L PONG 00 (KBUS)
+            - BMBT  GLO-L PONG 01 (reset)
+            - TV    GLO-H PONG 01 (reset)
+            - GFX   GLO-L PONG 41 (reset)
+            - RAD   GLO-H PONG 01 (reset)
+            - TEL   GLO-H PONG 01 (reset)
+            - BMBT  GLO-L PONG 01 (reset)
+            - CCM   GLO-L PONG 00
+            - GFX   GLO-L PONG 40
+            - IKE   GLO-L PONG 00
+            - TEL   GLO-H PONG 00
+            - PDC   GLO-L PONG 01 (KBUS)
+            - RAD   GLO-H PONG 00
+          - 'Normal operation':
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - GM3 GLO-L PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - RAD GLO-H PONG 00,
+            - GFX GLO-L PONG 40,
+    :examples:
+      - BMBT  RAD	  PING	--
+      - RAD	  GLO-H	PONG	Respond
+0x03:
+  :id:
+    :d: 3
+    :h: '0x03'
+  :properties:
+    :short_name: B-PING
+    :long_name: BUS Status Request
+  :klass: BaseCommand
+  :meta:
+    - only a single message
+    - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
+# ************************************************************************* #
+#                               IGNITION
+# ************************************************************************* #
+0x10:
+  :id:
+    :d: 16
+    :h: '0x10'
+  :properties:
+    :short_name: IGN-REQ
+    :long_name: Ignition Status Request
+  :klass: BaseCommand
+0x11:
+  :id:
+    :d: 17
+    :h: '0x11'
+  :properties:
+    :short_name: IGN
+    :long_name: Ignition Status Response
+  :klass: ParameterizedCommand
+  :parameters:
+    :position:
+      :type: :bit_array
+      :parameters:
+        :KLR:
+          :label: KL R (Pos. I)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :KL15:
+          :label: KL 15 (Pos. II)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :KL50:
+          :label: KL 50 (Start)
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+      :index:
+        :KL50: 5
+        :KL15: 6
+        :KLR: 7
+  :index:
+    :position: 0
+  :meta:
+    :ignition:
+      # KL 0 = OFF (ignition off position)
+      # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
+      # KL 15 = ignition position 2 ("accessory" - all electronics & modules re powered)
+      # KL 50 = ignition start position
+      # KL 30 = ignition position 3 (where the ignition defauts after starting the engine)
+      0b0: Off (Position I)
+      0b1: KLR
+      0b11: KL15 (Position II)
+      0b111: KL50
+  :meta:
+    :senders:
+      - IKE
+    :examples:
+      - 0b00000000
+      - 0b00000011
+      - 0b00000111
+# ************************************************************************* #
+#                               KEY/REMOTE
+# ************************************************************************* #
+0x72:
+  :id:
+    :d: 114
+    :h: '0x72'
+  :properties:
+    :short_name: REMOTE
+    :long_name: Remote Central Locking
+  :klass: ParameterizedCommand
+  :parameters:
+    :b1:
+      :type: :bit_array
+      :parameters:
+        :boot:
+          :type: :switch
+          :label: Boot Unlock
+          :states:
+            0: :off
+            1: :on
+        :unlock:
+          :type: :switch
+          :label: Remote Unlock
+          :states:
+            0: :off
+            1: :on
+        :lock:
+          :type: :switch
+          :label: Remote Lock
+          :states:
+            0: :off
+            1: :on
+        :coding1:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
+        :coding2:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
+      :index:
+        :boot: 1
+        :unlock: 2
+        :lock: 3
+        :coding1: 5
+        :coding2: 6
+  :index:
+    :b1: 0
+0x73:
+  :id:
+    :d: 115
+    :h: '0x73'
+  :properties:
+    :short_name: KEY-REQ
+    :long_name: Key Status Request
+  :klass: BaseCommand
+0x74:
+  :properties:
+    :short_name: KEY
+    :long_name: Key Status
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: unrecognised
+        0x04: valid
+        0x01: unauthenticated
+        0x05: authenticated
+      :dictionary:
+        0x00: No Longer Recognised
+        0x04: Valid and/or Enabled
+        0x01: Unauthenticated (Immobilizer Renabled)
+        0x05: Authenticated (Immobilizer Disabled)
+        0x0C: When old key was unhappy in INPA
+        0x08: When old key was unhappy in INPA
+    :key:
+      :type: :map
+      :map:
+        0x00: key_1
+        0x01: key_2
+        0x02: key_3
+        0x03: key_4
+        0x04: key_5
+        0xFF: "off"
+      :dictionary:
+        0x00: Key 1
+        0x01: Key 2
+        0x02: Key 3
+        0x03: Key 4
+        0x04: Key 5
+        0xFF: Ignition Ring Off?
+  :index:
+    :status: 0
+    :key: 1
+  :klass: Key
+  :meta:
+    :senders:
+      - EWS
+    :notes:
+      - 0x05 goes to 0x01
+      - 0x04 goes to 0x00
+      - i assume there's a different state if the key is IDENTIFIED but DISABLED?
+# ************************************************************************* #
+#                                 MEMORY?
+# ************************************************************************* #
+0x78:
+  :id:
+    :d: 120
+    :h: '0x78'
+  :properties:
+    :short_name: MEM-LOAD
+    :long_name: Memory
+  :klass: ParameterizedCommand
+  :index:
+    :status: 0
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: complete
+        0x01: preset_1
+        0x02: preset_2
+        0x03: preset_3
+      :dictionary:
+        0x00: Complete
+        0x01: Preset 1
+        0x02: Preset 2
+        0x03: Preset 2
+  :meta:
+    :notes:
+      - 504 messages sent to date
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	01
+      - GM3   	GLO-L 	78       	02
+      - GM3   	GLO-L 	78       	04
+      - GM3   	GLO-L 	78       	04
+      - this was being sent after DIA request memory preset
+      - argument seemingly correlated with preset number/ID
+# ************************************************************************* #
+#                               IKE SENSORS
+# ************************************************************************* #
+0x12:
+  :id:
+    :d: 18
+    :h: '0x12'
+  :properties:
+    :short_name: SEN-REQ
+    :long_name: IKE Sensor Status REQ
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - CCM
+    :recipients:
+      - IKE
+0x13:
+  :id:
+    :d: 19
+    :h: '0x13'
+  :properties:
+    :short_name: SEN
+    :long_name: IKE Sensors
+  :klass: IKESensors
+  :parameters:
+    :bit_array_1:
+      :type: :bit_array
+      :parameters:
+        :transmission:
+          :type: :switch
+          :label: 'Transmission Program'
+          :states:
+            0: :ok
+            1: :fault
+        :brakes:
+          :type: :switch
+          :label: 'Brake Pads'
+          :states:
+            0: :ok
+            1: :fault
+        :oil:
+          :type: :switch
+          :label: 'Oil Pressure'
+          :states:
+            0: :ok
+            1: :fault
+        :handbrake:
+          :type: :switch
+          :label: 'Handbrake'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :transmission: 3
+        :brakes: 5
+        :oil: 6
+        :handbrake: 7
+    :bit_array_2:
+      :type: :bit_array
+      :parameters:
+        :gear:
+          :type: :map
+          :label: Selected Gear
+          :map:
+            0b0000: gear_na
+            0b1011: gear_p
+            0b0001: gear_r
+            0b0111: gear_n
+            0b1000: gear_d
+            0b0010: gear_1
+            0b0110: gear_2
+            0b1101: gear_3
+            0b1100: gear_4
+            0b1110: gear_5
+          :dictionary:
+            0b0000: No Gear
+            0b1011: Park
+            0b0001: Reverse
+            0b0111: Neutral
+            0b1000: Drive
+            0b0010: First
+            0b0110: Second
+            0b1101: Third
+            0b1100: Fourth
+            0b1110: Fifth
+        :door:
+          :type: :switch
+          :label: 'Door Open'
+          :states:
+            0: :ok
+            1: :fault
+        :ignition:
+          :type: :switch
+          :label: 'Ignition'
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :gear: !ruby/range
+                  begin: 0
+                  end: 3
+                  excl: false
+        :door: 6
+        :ignition: 7
+    :bit_array_3:
+      :type: :bit_array
+      :parameters:
+        :unknown:
+          :type: :integer
+          :map:
+            0x00: unknown
+          :dictionary:
+            0x00: Unknown
+      :index:
+          :unknown: !ruby/range
+                    begin: 0
+                    end: 7
+                    excl: false
+  :index:
+    :bit_array_1: 0
+    :bit_array_2: 1
+    :bit_array_3: 2
+  :meta:
+    :notes:
+      - the IKE has a number of various inputs (via analogue signals, or CAN
+        depending on model year).
+      - the sensor status is reported via IBUS for the use by the CCM
+      - warnings:
+        - parking brake
+        - fasten seat belt
+        - engine oil level
+        - engine oil pressure
+        - low coolant level
+        - low washer fluid
+        - brake pads
+        - brake fluid
+        - remote key battery voltage
+      - other warnings are determined with data from other IBUS messages
+      - warnings:
+        - key in ignition
+        - lights on
+        - door open
+        - trunk open
+      - noted on comm.se:
+        - handbrake on
+        - oil pressure low
+        - brake pads worn
+        - transmission emergency program gearbox not in P
+        - motor running
+        - vehicle driving
+        - reverse not plausible
+        - Gear R
+        - Gear 1
+        - Gear 2
+        - Gear D
+        - alarm horn on
+        - immobiliser on
+        - Aux heating on
+        - Aux ventillation on
+        - Temp deg F
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L
+    :usage:
+      :byte1:
+        # - 0x00: 1215
+        - 0x01: 157
+        - 0x02: 56
+        - 0x03: 65
+      :byte2:
+        # - 0x00: 127
+        - 0x11: 152
+        - 0x13: 10
+        - 0x21: 53
+        - 0x23: 94
+
+        - 0x41: 44
+        - 0x43: 147
+
+        - 0x71: 77
+
+        - 0x81: 275
+        - 0x83: 208
+
+        - 0xB0: 89
+        - 0xB1: 141
+
+        - 0xC3: 4
+
+        - 0xD1: 7
+        - 0xD3: 65
+      :byte3:
+        # - 0x00: 1493
+0x14:
+  :id:
+    :d: 20
+    :h: '0x14'
+  :properties:
+    :short_name: CNTRY-REQ
+    :long_name: Country Coding Status Request
+  :klass: BaseCommand
+0x15:
+  :id:
+    :d: 21
+    :h: '0x15'
+  :properties:
+    :short_name: CNTRY
+    :long_name: Country Coding Status Response
+  :klass: ParameterizedCommand
+  :parameters:
+    :language:
+      :type: :map
+      :dictionary:
+        0: 'D'
+        1: 'GB'
+        3: 'I'
+    :b2:
+      :type: :bit_array
+      :parameters:
+        :time_format:
+          :label: Time Format.
+          :type: :map
+          :dictionary:
+            0: (24h)
+            1: (12h)
+        :temp_format:
+          :label: Temp Format.
+          :type: :map
+          :dictionary:
+            0: '(C.)'
+            1: '(F.)'
+        :date_format:
+          :label: Date Format.
+          :type: :map
+          :dictionary:
+            0: (dd.mm)
+            1: (mm/dd)
+      :index:
+        :time_format: 0
+        :temp_format: 6
+        :date_format: 7
+    :b3:
+      :type: :bit_array
+      :parameters:
+        :conflict:
+          :label: NFI!
+          :type: :map
+          :dictionary:
+            0b00: '?'
+            0b01: '?'
+            0b10: '?'
+            0b11: 'Time/Date Incompatible?'
+        :distance:
+          :label: Distance
+          :type: :map
+          :dictionary:
+            0: (km)
+            1: (miles)
+        :consumption:
+          :label: Consumption
+          :type: :map
+          :dictionary:
+            0b000: (l/100km)
+            0b101: (mpg)
+            0b111: (km/l)
+      :index:
+        :conflict: !ruby/range
+                begin: 1
+                end: 2
+                excl: false
+        :distance: 3
+        :consumption: !ruby/range
+                begin: 5
+                end: 7
+                excl: false
+    :b4:
+      :type: :integer
+  :index:
+    :language: 0
+    :b2: 1
+    :b3: 2
+    :b4: 3
+0x59:
+  :id:
+    :d: 89
+    :h: '0x59'
+  :properties:
+    :short_name: LIGHT-SEN
+    :long_name: Luminosity Reading?
+  :klass: ParameterizedCommand
+  :parameters:
+    :lum:
+      :type: :integer
+    :tbc:
+      :type: :integer
+  :index:
+    :lum: 0
+    :tbc: 1
+# ************************************************************************* #
+#                               VEHICLE STATUS
+# ************************************************************************* #
+0x16:
+  :id:
+    :d: 22
+    :h: '0x16'
+  :properties:
+    :short_name: ODO-REQ
+    :long_name: Odometer Request
+  :klass: BaseCommand
+0x17:
+  :id:
+    :d: 23
+    :h: '0x17'
+  :properties:
+    :short_name: ODO
+    :long_name: Odometer Response
+  :klass: BaseCommand
+  :meta:
+      :senders:
+        - IKE
+0x18:
+  :id:
+    :d: 24
+    :h: '0x18'
+  :properties:
+    :short_name: SPD
+    :long_name: Speed & RPM
+  :parameters:
+    :speed:
+      :type: :integer
+    :rpm:
+      :type: :integer
+  :index:
+    :speed: 0
+    :rpm: 1
+  :klass: Speed
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L (0xBF)
+0x5A:
+  :id:
+    :d: 90
+    :h: '0x5A'
+  :properties:
+    :short_name: LAMP-REQ
+    :long_name: Lamp Status Request
+  :klass: BaseCommand
+0x5B:
+  :id:
+    :d: 91
+    :h: '0x5B'
+  :properties:
+    :short_name: LAMP
+    :long_name: Lamp Status
+  :klass: Lamp
+  :index:
+    :byte1: 0
+  :parameters:
+    :byte1:
+      :type: :bit_array
+      :parameters:
+        :rapid:
+          :label: Rapid.
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :indicate_right:
+          :label: RIGHT
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :indicate_left:
+          :label: LEFT
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :fog_rear:
+          :label: FOG REAR
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :fog_front:
+          :label: FOG FRONT
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :beam_high:
+          :label: HIGH
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :beam_low:
+          :label: LOW
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :parking:
+          :label: Parking
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :rapid: 0
+        :indicate_right: 1
+        :indicate_left: 2
+        :fog_rear: 3
+        :fog_front: 4
+        :beam_high: 5
+        :beam_low: 6
+        :parking: 7
+    # :byte2:
+    #   # :type: :bit_array
+    #   :bits:
+    #     1: right indicator glove out
+    #     2: left indicator glove out
+    # :byte3:
+    #   # :type: :bit_array
+    #   :bits:
+    #     5: indicating/hazards
+    #     6: brake light out, i think this drives CCM
+    # :byte4:
+    #   # :type: :bit_array
+    #   :bits:
+    #     1: rear fog switched on (stays on regardless of lights)
+    #     6: left break glove out (not hatch)
+    #     7: right break globe out (not hatch)
+  :meta:
+    :notes:
+      - lamp drives the night mode on BMBT
+      - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
+      - but i can't get the CCM to fire warning
+
+0x5C:
+  :id:
+    :d: 92
+    :h: '0x5C'
+  :properties:
+    :short_name: CLSTR
+    :long_name: Cluster Backlight
+  :klass: ParameterizedCommand
+  :index:
+    :light: 0
+  :parameters:
+    :light:
+      :type: :integer
+  :meta:
+    :notes:
+      - to date it alternates between two values 0xED and 0xFF
+      - it is triggered by the external lights being switched on
+      - 0xFF is off
+      - 0xED seems to be highest 'on' value
+    :senders:
+      - LCM
+    :recipients:
+      - GLO-L
+0x5D:
+  :id:
+    :d: 93
+    :h: '0x5D'
+  :properties:
+    :short_name: CLSTR-REQ?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - always from IKE 0x80 to LCM 0xD0
+      - seems to preceed 0x5C
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+      - IKE 03 LCM  5D 0E
+      - LCM 05 BF   5C FF 00 C9
+0x79:
+  :id:
+    :d: 121
+    :h: '0x79'
+  :properties:
+    :short_name: DOOR-REQ
+    :long_name: Door/Flag Request Status
+  :klass: BaseCommand
+0x7A:
+  :id:
+    :d: 122
+    :h: '0x7A'
+  :properties:
+    :short_name: DOOR
+    :long_name: Door/Flap Status
+  :klass: ParameterizedCommand
+  :parameters:
+    :byte1:
+      :type: :bit_array
+      :parameters:
+        :lamp_interior:
+          :type: :switch
+          :label: 'Interior Lights'
+          :states:
+            0: :off
+            1: :on
+        :locked:
+          :type: :switch
+          :label: 'Central Lock.'
+          :states:
+            0: :off
+            1: :on
+        :hood:
+          :type: :switch
+          :label: 'Hood?'
+          :states:
+            0: :closed
+            1: :open
+        :door_left:
+          :type: :switch
+          :label: 'Door Rear Left'
+          :states:
+            0: :closed
+            1: :open
+        :door_right:
+          :type: :switch
+          :label: 'Door Rear Right'
+          :states:
+            0: :closed
+            1: :open
+        :door_pass:
+            :type: :switch
+            :label: 'Door Passenger'
+            :states:
+              0: :closed
+              1: :open
+        :door_driver:
+          :type: :switch
+          :label: 'Door Driver'
+          :states:
+            0: :closed
+            1: :open
+      :index:
+        :lamp_interior: 1
+        :locked: 2
+        :hood: 3
+        :door_left: 4
+        :door_right: 5
+        :door_pass: 6
+        :door_driver: 7
+    :byte2:
+      :type: :bit_array
+      :parameters:
+        :release:
+          :type: :switch
+          :label: 'Boot Release'
+          :states:
+            0: :off
+            1: :on
+        :hatch:
+          :type: :switch
+          :label: 'Hatch'
+          :states:
+            0: :closed
+            1: :open
+        :sunroof:
+          :type: :switch
+          :label: 'Sunroof'
+          :states:
+            0: :closed
+            1: :open
+        :window_left:
+          :type: :switch
+          :label: 'Window Rear Left'
+          :states:
+            0: :closed
+            1: :open
+        :window_right:
+          :type: :switch
+          :label: 'Window Rear Right'
+          :states:
+            0: :closed
+            1: :open
+        :window_pass:
+            :type: :switch
+            :label: 'Window Passenger'
+            :states:
+              0: :closed
+              1: :open
+        :window_driver:
+          :type: :switch
+          :label: 'Window Driver'
+          :states:
+            0: :closed
+            1: :open
+      :index:
+        :release: 0
+        :hatch: 2
+        :sunroof: 3
+        :window_left: 4
+        :window_right: 5
+        :window_pass: 6
+        :window_driver: 7
+  :index:
+    :byte1: 0
+    :byte2: 1
+  :meta:
+    :senders:
+      - GM3
+    :recipients:
+      - GLO-L
+0x53:
+  :id:
+    :d: 83
+    :h: '0x53'
+  :properties:
+    :short_name: VEH-REQ
+    :long_name: Vehicle Status Request
+  :klass: BaseCommand
+0x54:
+  :id:
+    :d: 84
+    :h: '0x54'
+  :properties:
+    :short_name: VEH
+    :long_name: Vehicle Status
+  :schemas:
+    - :dia
+  :parameters:
+    :vin:
+      :type: :chars
+    :mileage:
+      :type: :integer
+    :consumption:
+      :type: :integer
+    :service:
+      :type: :integer
+  :index:
+      :vin: !ruby/range
+              begin: 1
+              end: 5
+              excl: false
+      :mileage: !ruby/range
+                  begin: 6
+                  end: 7
+                  excl: false
+      :consumption: !ruby/range
+                      begin: 8
+                      end: 9
+                      excl: false
+      :service: !ruby/range
+                  begin: 12
+                  end: 13
+                  excl: false
+  :klass: BaseCommand
+  :dia:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: VEH*
+      :long_name: Diagnostics Control
+    :parameters:
+      :b1:
+        :type: :map
+        :dictionary:
+          0x05: Seat Memory
+      :b2:
+        :type: :map
+        :dictionary:
+          0x04: Angle Up
+          0x05: Angle Down
+      :b3:
+        :label: Unknown
+        :type: :integer
+    :index:
+      :b1: 0
+      :b2: 1
+      :b3: 2
+  :examples:
+    - "IKE   	LCM   	53        --"
+    - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
+0x55:
+  :id:
+    :d: 85
+    :h: '0x55'
+  :properties:
+    :short_name: USE
+    :long_name: Service Interval Usage
+  :klass: ParameterizedCommand
+  :index:
+    :mileage: !ruby/range
+                begin: 1
+                end: 2
+                excl: false
+    :consumption: !ruby/range
+                    begin: 3
+                    end: 4
+                    excl: false
+    :days: !ruby/range
+                begin: 7
+                end: 8
+                excl: false
+  :parameters:
+    :mileage:
+      :type: :integer
+    :consumption:
+      :type: :integer
+    :days:
+      :type: :integer
+# ************************************************************************* #
+#                               TEMPERATURE
+# ************************************************************************* #
+0x1D:
+  :id:
+    :d: 29
+    :h: '0x1D'
+  :properties:
+    :short_name: TEMP-REQ
+    :long_name: Temperature Request
+  :klass: BaseCommand
+0x19:
+  :id:
+    :d: 25
+    :h: '0x19'
+  :properties:
+    :short_name: TEMP
+    :long_name: Temperature
+  :klass: Temperature
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L
+0x1F:
+  :id:
+    :d: 31
+    :h: '0x1F'
+  :properties:
+    :short_name: UTC
+    :long_name: UTC time and date
+  :klass: BaseCommand
+# ************************************************************************* #
+#                               RADIO
+# ************************************************************************* #
+0x34:
+  :id:
+    :d: 52
+    :h: '0x34'
+  :properties:
+    :short_name: DSP-EQ
+    :long_name: DSP EQ. Button
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        0x0f: On/Off
+
+        0x10: Adjust
+
+        0x28: Demo Off
+
+        0x29: Concert Hall
+        0x2a: Jazz Club
+        0x2b: Cathedral
+        0x2c: Memo 1
+        0x2d: Memo 2
+        0x2e: Memo 3
+
+        0x90: Room
+    :level:
+      :type: :map
+      :dictionary:
+        0x00: Neutral/Room Level 0
+        0x01: Room Level 1
+        0x02: Room Level 2
+        0x03: Room Level 3
+        0x04: Room Level 4
+        0x05: Room Level 5
+        0x06: Room Level 6
+        0x07: Room Level 7
+
+        0x20: Echo Level 0
+        0x21: Echo Level 1
+        0x22: Echo Level 2
+        0x23: Echo Level 3
+        0x24: Echo Level 4
+        0x25: Echo Level 5
+        0x26: Echo Level 6
+        0x27: Echo Level 7
+
+        0x01: 80hz +1
+        0x02: 80hz +2
+        0x03: 80hz +3
+        0x04: 80hz +4
+        0x05: 80hz +5
+        0x06: 80hz +6
+        0x07: 80hz +7
+        0x08: 80hz +8
+        0x09: 80hz +9
+        0x0a: 80hz +10
+        0x11: 80hz -1
+        0x12: 80hz -2
+        0x13: 80hz -3
+        0x14: 80hz -4
+        0x15: 80hz -5
+        0x16: 80hz -6
+        0x17: 80hz -7
+        0x18: 80hz -8
+        0x19: 80hz -9
+        0x1a: 80hz -10
+
+        0x21: 200hz +1
+        0x22: 200hz +2
+        0x23: 200hz +3
+        0x24: 200hz +4
+        0x25: 200hz +5
+        0x26: 200hz +6
+        0x27: 200hz +7
+        0x28: 200hz +8
+        0x29: 200hz +9
+        0x2a: 200hz +10
+        0x31: 200hz -1
+        0x32: 200hz -2
+        0x33: 200hz -3
+        0x34: 200hz -4
+        0x35: 200hz -5
+        0x36: 200hz -6
+        0x37: 200hz -7
+        0x38: 200hz -8
+        0x39: 200hz -9
+        0x3a: 200hz -10
+
+        0x41: 500hz +1
+        0x42: 500hz +2
+        0x43: 500hz +3
+        0x44: 500hz +4
+        0x45: 500hz +5
+        0x46: 500hz +6
+        0x47: 500hz +7
+        0x48: 500hz +8
+        0x49: 500hz +9
+        0x4a: 500hz +10
+        0x51: 500hz -1
+        0x52: 500hz -2
+        0x53: 500hz -3
+        0x54: 500hz -4
+        0x55: 500hz -5
+        0x56: 500hz -6
+        0x57: 500hz -7
+        0x58: 500hz -8
+        0x59: 500hz -9
+        0x5a: 500hz -10
+
+        0x61: 1khz +1
+        0x62: 1khz +2
+        0x63: 1khz +3
+        0x64: 1khz +4
+        0x65: 1khz +5
+        0x66: 1khz +6
+        0x67: 1khz +7
+        0x68: 1khz +8
+        0x69: 1khz +9
+        0x6a: 1khz +10
+        0x71: 1khz -1
+        0x72: 1khz -2
+        0x73: 1khz -3
+        0x74: 1khz -4
+        0x75: 1khz -5
+        0x76: 1khz -6
+        0x77: 1khz -7
+        0x78: 1khz -8
+        0x79: 1khz -9
+        0x7a: 1khz -10
+
+        0x81: 2khz +1
+        0x82: 2khz +2
+        0x83: 2khz +3
+        0x84: 2khz +4
+        0x85: 2khz +5
+        0x86: 2khz +6
+        0x87: 2khz +7
+        0x88: 2khz +8
+        0x89: 2khz +9
+        0x8a: 2khz +10
+        0x91: 2khz -1
+        0x92: 2khz -2
+        0x93: 2khz -3
+        0x94: 2khz -4
+        0x95: 2khz -5
+        0x96: 2khz -6
+        0x97: 2khz -7
+        0x98: 2khz -8
+        0x99: 2khz -9
+        0x9a: 2khz -10
+
+        0xa1: 5khz +1
+        0xa2: 5khz +2
+        0xa3: 5khz +3
+        0xa4: 5khz +4
+        0xa5: 5khz +5
+        0xa6: 5khz +6
+        0xa7: 5khz +7
+        0xa8: 5khz +8
+        0xa9: 5khz +9
+        0xaa: 5khz +10
+        0xb1: 5khz -1
+        0xb2: 5khz -2
+        0xb3: 5khz -3
+        0xb4: 5khz -4
+        0xb5: 5khz -5
+        0xb6: 5khz -6
+        0xb7: 5khz -7
+        0xb8: 5khz -8
+        0xb9: 5khz -9
+        0xba: 5khz -10
+
+        0xc1: 12khz +1
+        0xc2: 12khz +2
+        0xc3: 12khz +3
+        0xc4: 12khz +4
+        0xc5: 12khz +5
+        0xc6: 12khz +6
+        0xc7: 12khz +7
+        0xc8: 12khz +8
+        0xc9: 12khz +9
+        0xca: 12khz +10
+        0xd1: 12khz -1
+        0xd2: 12khz -2
+        0xd3: 12khz -3
+        0xd4: 12khz -4
+        0xd5: 12khz -5
+        0xd6: 12khz -6
+        0xd7: 12khz -7
+        0xd8: 12khz -8
+        0xd9: 12khz -9
+        0xda: 12khz -10
+  :index:
+    :mode: 0
+    :level: 1
+0x35:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: DSP
+    :long_name: DSP Reply
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        0x0f: On/Off
+
+        0x10: Adjust
+
+        0x28: Demo Off
+
+        0x29: Concert Hall
+        0x2a: Jazz Club
+        0x2b: Cathedral
+        0x2c: Memo 1
+        0x2d: Memo 2
+        0x2e: Memo 3
+
+        0x90: Room
+    :level:
+      :type: :map
+      :dictionary:
+        0x00: Neutral/Room Level 0
+        0x01: Room Level 1
+        0x02: Room Level 2
+        0x03: Room Level 3
+        0x04: Room Level 4
+        0x05: Room Level 5
+        0x06: Room Level 6
+        0x07: Room Level 7
+
+        0x20: Echo Level 0
+        0x21: Echo Level 1
+        0x22: Echo Level 2
+        0x23: Echo Level 3
+        0x24: Echo Level 4
+        0x25: Echo Level 5
+        0x26: Echo Level 6
+        0x27: Echo Level 7
+
+        0x01: 80hz +1
+        0x02: 80hz +2
+        0x03: 80hz +3
+        0x04: 80hz +4
+        0x05: 80hz +5
+        0x06: 80hz +6
+        0x07: 80hz +7
+        0x08: 80hz +8
+        0x09: 80hz +9
+        0x0a: 80hz +10
+        0x11: 80hz -1
+        0x12: 80hz -2
+        0x13: 80hz -3
+        0x14: 80hz -4
+        0x15: 80hz -5
+        0x16: 80hz -6
+        0x17: 80hz -7
+        0x18: 80hz -8
+        0x19: 80hz -9
+        0x1a: 80hz -10
+
+        0x21: 200hz +1
+        0x22: 200hz +2
+        0x23: 200hz +3
+        0x24: 200hz +4
+        0x25: 200hz +5
+        0x26: 200hz +6
+        0x27: 200hz +7
+        0x28: 200hz +8
+        0x29: 200hz +9
+        0x2a: 200hz +10
+        0x31: 200hz -1
+        0x32: 200hz -2
+        0x33: 200hz -3
+        0x34: 200hz -4
+        0x35: 200hz -5
+        0x36: 200hz -6
+        0x37: 200hz -7
+        0x38: 200hz -8
+        0x39: 200hz -9
+        0x3a: 200hz -10
+
+        0x41: 500hz +1
+        0x42: 500hz +2
+        0x43: 500hz +3
+        0x44: 500hz +4
+        0x45: 500hz +5
+        0x46: 500hz +6
+        0x47: 500hz +7
+        0x48: 500hz +8
+        0x49: 500hz +9
+        0x4a: 500hz +10
+        0x51: 500hz -1
+        0x52: 500hz -2
+        0x53: 500hz -3
+        0x54: 500hz -4
+        0x55: 500hz -5
+        0x56: 500hz -6
+        0x57: 500hz -7
+        0x58: 500hz -8
+        0x59: 500hz -9
+        0x5a: 500hz -10
+
+        0x61: 1khz +1
+        0x62: 1khz +2
+        0x63: 1khz +3
+        0x64: 1khz +4
+        0x65: 1khz +5
+        0x66: 1khz +6
+        0x67: 1khz +7
+        0x68: 1khz +8
+        0x69: 1khz +9
+        0x6a: 1khz +10
+        0x71: 1khz -1
+        0x72: 1khz -2
+        0x73: 1khz -3
+        0x74: 1khz -4
+        0x75: 1khz -5
+        0x76: 1khz -6
+        0x77: 1khz -7
+        0x78: 1khz -8
+        0x79: 1khz -9
+        0x7a: 1khz -10
+
+        0x81: 2khz +1
+        0x82: 2khz +2
+        0x83: 2khz +3
+        0x84: 2khz +4
+        0x85: 2khz +5
+        0x86: 2khz +6
+        0x87: 2khz +7
+        0x88: 2khz +8
+        0x89: 2khz +9
+        0x8a: 2khz +10
+        0x91: 2khz -1
+        0x92: 2khz -2
+        0x93: 2khz -3
+        0x94: 2khz -4
+        0x95: 2khz -5
+        0x96: 2khz -6
+        0x97: 2khz -7
+        0x98: 2khz -8
+        0x99: 2khz -9
+        0x9a: 2khz -10
+
+        0xa1: 5khz +1
+        0xa2: 5khz +2
+        0xa3: 5khz +3
+        0xa4: 5khz +4
+        0xa5: 5khz +5
+        0xa6: 5khz +6
+        0xa7: 5khz +7
+        0xa8: 5khz +8
+        0xa9: 5khz +9
+        0xaa: 5khz +10
+        0xb1: 5khz -1
+        0xb2: 5khz -2
+        0xb3: 5khz -3
+        0xb4: 5khz -4
+        0xb5: 5khz -5
+        0xb6: 5khz -6
+        0xb7: 5khz -7
+        0xb8: 5khz -8
+        0xb9: 5khz -9
+        0xba: 5khz -10
+
+        0xc1: 12khz +1
+        0xc2: 12khz +2
+        0xc3: 12khz +3
+        0xc4: 12khz +4
+        0xc5: 12khz +5
+        0xc6: 12khz +6
+        0xc7: 12khz +7
+        0xc8: 12khz +8
+        0xc9: 12khz +9
+        0xca: 12khz +10
+        0xd1: 12khz -1
+        0xd2: 12khz -2
+        0xd3: 12khz -3
+        0xd4: 12khz -4
+        0xd5: 12khz -5
+        0xd6: 12khz -6
+        0xd7: 12khz -7
+        0xd8: 12khz -8
+        0xd9: 12khz -9
+        0xda: 12khz -10
+  :index:
+    :mode: 0
+    :level: 1
+0x36:
+  :id:
+    :d: 54
+    :h: '0x36'
+  :properties:
+    :short_name: RAD-EQ
+    :long_name: Radio EQ Control
+  :klass: BaseCommand
+  # TODO: this should be a bit array
+  :parameters:
+    :setting:
+      :type: :map
+      :dictionary:
+        0xaf: dunno
+
+        0x60: BASS -0
+        0x62: BASS -1
+        0x64: BASS -2
+        0x66: BASS -3
+        0x68: BASS -4
+        0x6A: BASS -5
+        0x6C: BASS -6
+
+        0x70: BASS +0
+        0x72: BASS +1
+        0x74: BASS +2
+        0x76: BASS +3
+        0x78: BASS +4
+        0x7A: BASS +5
+        0x7C: BASS +6
+
+        0xD0: TREBLE -0
+        0xD2: TREBLE -1
+        0xD4: TREBLE -2
+        0xD6: TREBLE -3
+        0xD8: TREBLE -4
+        0xDA: TREBLE -5
+        0xDC: TREBLE -6
+
+        0xC0: TREBLE +0
+        0xC2: TREBLE +1
+        0xC4: TREBLE +2
+        0xC6: TREBLE +3
+        0xC8: TREBLE +4
+        0xCA: TREBLE +5
+        0xCC: TREBLE +6
+
+        0x80: FADER -0
+        0x81: FADER -1
+        0x82: FADER -2
+        0x83: FADER -3
+        0x84: FADER -4
+        0x85: FADER -5
+        0x86: FADER -6
+        0x87: FADER -7
+        0x88: FADER -8
+        0x89: FADER -9
+        0x8a: FADER -10
+        0x8b: FADER -11
+        0x8c: FADER -12
+        0x8d: FADER -13
+        0x8e: FADER -14
+        0x8f: FADER -15
+
+        0x90: FADER +0
+        0x91: FADER +1
+        0x92: FADER +2
+        0x93: FADER +3
+        0x94: FADER +4
+        0x95: FADER +5
+        0x96: FADER +6
+        0x97: FADER +7
+        0x98: FADER +8
+        0x99: FADER +9
+        0x9a: FADER +10
+        0x9b: FADER +11
+        0x9c: FADER +12
+        0x9d: FADER +13
+        0x9e: FADER +14
+        0x9f: FADER +15
+
+        0x40: BALANCE -0
+        0x41: BALANCE -1
+        0x42: BALANCE -2
+        0x43: BALANCE -3
+        0x44: BALANCE -4
+        0x45: BALANCE -5
+        0x46: BALANCE -6
+        0x47: BALANCE -7
+        0x48: BALANCE -8
+        0x49: BALANCE -9
+        0x4a: BALANCE -10
+        0x4b: BALANCE -11
+        0x4c: BALANCE -12
+        0x4d: BALANCE -13
+        0x4e: BALANCE -14
+        0x4f: BALANCE -15
+
+        0x50: BALANCE +0
+        0x51: BALANCE +1
+        0x52: BALANCE +2
+        0x53: BALANCE +3
+        0x54: BALANCE +4
+        0x55: BALANCE +5
+        0x56: BALANCE +6
+        0x57: BALANCE +7
+        0x58: BALANCE +8
+        0x59: BALANCE +9
+        0x5a: BALANCE +10
+        0x5b: BALANCE +11
+        0x5c: BALANCE +12
+        0x5d: BALANCE +13
+        0x5e: BALANCE +14
+        0x5f: BALANCE +15
+0x37:
+  :id:
+    :d: 55
+    :h: '0x37'
+  :properties:
+    :short_name: RAD-ALT
+    :long_name: Radio Alternative Function
+  :klass: ParameterizedCommand
+  :parameters:
+    :mode:
+      :type: :map
+      :dictionary:
+        # Selection
+        0x40: (Select) (RADIO [m] Manual Staion Choice) (TAPE fast forward/reverse)
+        0x50: (Select) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
+        0x60: (Select) (RADIO [a] Automatic Search)
+        0x70: (Select) CD Music Search
+
+        0x0_4: (Select) (BM53) (RADIO [m] Manual Staion Choice)
+        0x1_4: (Select) (BM53) (RADIO [SCAN] Station sample)
+        0x2_4: (Select) (BM53) (RADIO [II] Search sensitive)
+        0x3_4: (Select) (BM53) (RADIO [I] Search non sensitive)
+
+        # Tone
+        0x80: (Tone) Equalizer
+        0x84: (Tone) (BM53) (CD) Equalizer
+        0x86: (Tone) (BM53) (Radio) Equalizer
+        0x90: (Tone) (BM53) (Radio) Equalizer
+
+        0xc0: (Tone) EQ. Bass
+        0xd0: (Tone) EQ. Treble
+        0xe0: (Tone) EQ. Fader
+        0xf0: (Tone) EQ. Balance
+  :index:
+    :mode: 0
+0x45:
+  :id:
+    :d: 69
+    :h: '0x45'
+  :properties:
+    :short_name: MENU-GFX
+    :long_name: Radio to resume?
+  :klass: ParameterizedCommand
+  :parameters:
+    :config:
+      :type: :bit_array
+      :parameters:
+        :audio_obc:
+          :type: :switch
+          :label: Audio+OBC
+          :states:
+            0: :off
+            1: :on
+        :info:
+          :type: :switch
+          :label: Info?
+          :states:
+            0: :off
+            1: :on
+        :main_menu:
+          :type: :switch
+          :label: Main Menu
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :info: 3
+        :audio_obc: 6
+        :main_menu: 7
+  :index:
+    :config: 0
+  :meta:
+    - the source of this is GFX module
+    - seemingly to tell the radio when and what to render
+    - used when audio disply is requested/falls back to
+    - used when switching back from TV?
+0x46:
+  :id:
+    :d: 70
+    :h: '0x46'
+  :properties:
+    :short_name: MENU-RAD
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :parameters:
+    :state:
+      :type: :bit_array
+      :parameters:
+        :hide_alt:
+          :type: :switch
+          :label: Hide Select?
+          :states:
+            0: :off
+            1: :on
+        :hide_eq:
+          :type: :switch
+          :label: Hide EQ?
+          :states:
+            0: :off
+            1: :on
+        :hide_panel:
+          :type: :switch
+          :label: Hide Panel
+          :states:
+            0: :off
+            1: :on
+        :main_menu:
+          :type: :switch
+          :label: Main Menu
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :hide_eq: 4
+        :hide_alt: 5
+        :hide_panel: 6
+        :main_menu: 7
+  :index:
+    :state: 0
+  :meta:
+    - 01: confirm switch?
+0x4A:
+  :id:
+    :d: 74
+    :h: '0x4A'
+  :properties:
+    :short_name: RAD-LED
+    :long_name: Radio LED
+  :klass: RadioLED
+  :parameters:
+    :led:
+      :type: :map
+      # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
+      :dictionary:
+        0x00: "Off"
+
+        0x40: Tape Eject
+        0x41: Tape Play
+        0x42: Tape FFF
+        0x43: Tape RWW
+        0x44: Tape FF
+        0x45: Tape RW
+
+        0x48: Radio
+
+        0x5a: Tape 1
+        0x5b: Tape 2
+        0x5d: Tape Dolby B
+        0x5e: Tape Dolby C
+        0x5f: Tape Dolby OFF
+
+        0x90: "Off (Reset)"
+
+        0xFF: "On"
+  :index:
+    :led: 0
+  :meta:
+    :senders:
+      - RAD
+    :recipients:
+      - BMBT
+0x4B:
+  :id:
+    :d: 75
+    :h: '0x4B'
+  :klass: ParameterizedCommand
+  :properties:
+    :short_name: SRC?
+    :long_name: Audio Device Control
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x05: (16x9) Set Mode?
+        0x06: (4x3) Set Mode?
+    :mode:
+      :type: :map
+      :dictionary:
+        0xE1: Unmute/Telephone Non-Priority (Handset)
+        0xE2: Mute/Telephone Priority (Handsfree)
+
+        0x30: Radio
+
+        0x12: Tape / (1/A) ▶︎
+        0x11: Tape / (2/B) ▶︎
+        0x51: Tape / ▷▷
+        0x42: Tape / ▷▷▷
+        0x61: Tape / ◁◁
+        0x41: Tape / ◁◁◁
+
+        0x81: Tape / Dolby Off
+        0x82: Tape / Dolby C
+        0x84: Tape / Dolby B
+
+        0xF0: ERROR!
+  :index:
+    :control: 0
+    :mode: 1
+0x4E:
+  :id:
+    :d: 78
+    :h: '0x4E'
+  :properties:
+    :short_name: SRC-SND
+    :long_name: Select external audio input for tv?
+  :klass: ParameterizedCommand
+  :index:
+    :source: 0
+    :b2: 1
+  :parameters:
+    :source:
+      :type: :map
+      :dictionary:
+        0b0000_0000: Radio
+        0b0000_0001: TV
+    :b2:
+      :type: :integer
+  :meta:
+    - 01 00: select TV
+    - 00 00: go back to radio
+    - 1500 messages to date 24 December 2018
+    - from 0x3B GFX (exclusive)
+    - to 0x68 RAD (exclusive)
+    - argument 1 0x00 or 0x01
+    - argument 2 always 0x00
+    - 00 = 1496
+    - 01 = 19
+
+0xd4:
+  :id:
+    :d: 212
+    :h: '0xd4'
+  :properties:
+    :short_name: RDS?
+    :long_name: Channel list?
+  :klass: BaseCommand
+
+# ************************************************************************* #
+#                               NAV/TV?
+# ************************************************************************* #
+0x4F:
+  :id:
+    :d: 79
+    :h: '0x4F'
+  :properties:
+    :short_name: SRC-GFX
+    :long_name: Display Output
+  :parameters:
+    :action:
+      :type: :map
+      :map:
+        0x00: DISPLAY_OFF
+        0x10: DISPLAY_ON
+        0x01: TV
+        0x02: MENU
+      :dictionary:
+        # Sent to BMBT
+        0x00: BMBT Display Off
+        0x10: BMBT Display On
+        # Sent to NAV-JP
+        0x01: TV On- disable nav?
+        0x02: TV off- resume nav?
+    :nav:
+      :type: :map
+      :map:
+        0x00: nav
+      :dictionary:
+        0x00: unknown
+  :index:
+    :action: 0
+    :nav: 1
+  :klass: ParameterizedCommand
+  :meta:
+    :senders:
+      - GFX (0x3B)
+    :recipients:
+      :nav_jp:
+        - 01    (TV ON)
+        - 02 00 (TV OFF)
+      :bmbt:
+        - 00 (Monitor Off)
+        - 10 (Monitor On)
+# ************************************************************************* #
+#                           CHECK CONTROL MODULE
+# ************************************************************************* #
+0x51:
+  :id:
+    :d: 81
+    :h: '0x51'
+  :properties:
+    :short_name: CCM-END
+    :long_name: Ignition off CCM update?
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: NO_WARNINGS
+      :dictionary:
+        0x00: No Warnings
+  :index:
+    :status: 0
+  :klass: BaseCommand
+  :notes:
+    - only ever from CCM
+    - followed by 0x52 from
+0x52:
+  :id:
+    :d: 82
+    :h: '0x52'
+  :properties:
+    :short_name: CCM-?
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :index:
+    :b1: 0
+    :b2: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :parameters:
+    :b1:
+      :type: :integer
+    :b2:
+      :type: :integer
+  :chars:
+      :type: :chars
+  :meta:
+    :notes:
+      - every 0x52 command to date
+      - always from IKE 0x80 to CCM 0x30?
+      - "   RANGE  50 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  41 KM     "
+      - "   RANGE  40 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "      CODE ----     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+
+# ************************************************************************* #
+#                               BUTTONS
+# ************************************************************************* #
+0x3B:
+  :id:
+    :d: 59
+    :h: '0x3B'
+  :properties:
+    :short_name: MFL-FUNC
+    :long_name: Multifunction Steering Wheel (Controls)
+  :klass: MFLFunction
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :button_tel: 0
+        :button_rt: 1
+        :button_rad: !ruby/range
+                      begin: 4
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 2
+                        end: 3
+                        excl: false
+
+      :parameters:
+        :button_tel:
+          :type: :map
+          :dictionary:
+            0b0: '-'
+            0b1: "[Tel]"
+          :map:
+            0b0: :mfl_null
+            0b1: :mfl_tel
+        :button_rt:
+          :type: :map
+          :dictionary:
+            0x00: '-'
+            0b01: '[R/T] Mode: Telephone'
+          :map:
+            0b0: :mfl_rt_rad
+            0b1: :mfl_rt_tel
+        :button_rad:
+          :type: :map
+          :dictionary:
+            # To Radio
+            0b0001: "[Next]"
+            0b1000: "[Prev]"
+            0b0000: '-'
+          :map:
+            0b0001: :mfl_next
+            0b1000: :mfl_prev
+            0b0000: :mfl_null
+        :button_state:
+          :type: :switch
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+0x32:
+  :id:
+    :d: 50
+    :h: '0x32'
+  :properties:
+    :short_name: VOL
+    :long_name: Multifunction Steering Wheel (Volume)
+  :klass: MFLVolume
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :direction: 7
+        :magnitude: !ruby/range
+                      begin: 0
+                      end: 3
+                      excl: false
+      :parameters:
+        :direction:
+          :type: :map
+          :dictionary:
+            0: Volume Down
+            1: Volume Up
+          :map:
+            0: :mfl_vol_down
+            1: :mfl_vol_up
+        :magnitude:
+          :type: :map
+          :dictionary:
+            0: 0
+            1: 1
+            2: 2
+            3: 3
+            4: 4
+            5: 5
+            6: 6
+            7: 7
+            8: 8
+            9: 9
+            10: 10
+            11: 11
+            12: 12
+            13: 13
+            14: 14
+            15: 15
+            16: 16
+          :map:
+            0: 0
+            1: 1
+            2: 2
+            3: 3
+            4: 4
+            5: 5
+            6: 6
+            7: 7
+            8: 8
+            9: 9
+            10: 10
+            11: 11
+            12: 12
+            13: 13
+            14: 14
+            15: 15
+            16: 16
+0x47:
+  :id:
+    :d: 71
+    :h: '0x47'
+  :properties:
+    :short_name: BMBT-INFO
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :index:
+    # :unknown: 0
+    :button: 1
+  :parameters:
+    # :unknown:
+    #   :type: :integer
+    :button:
+      :type: :bit_array
+      :index:
+        :totally_unique_variable_name: !ruby/range
+                      begin: 2
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 0
+                        end: 1
+                        excl: false
+      :parameters:
+        :totally_unique_variable_name:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x0_f: "[Select]"
+            0x3_8: "[Info]"
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+  :notes:
+    - six messages in total since started logs
+    - 3 of each
+    - F0 05 FF 47 00 38 75
+    - F0 05 FF 47 00 B8 F5
+0x48:
+  :id:
+    :d: 72
+    :h: '0x48'
+  :properties:
+    :short_name: BMBT-BTN-1
+    :long_name: BMBT Buttons
+  :klass: ButtonParameterized
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :totally_unique_variable_name: !ruby/range
+                      begin: 2
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 0
+                        end: 1
+                        excl: false
+      :parameters:
+        :totally_unique_variable_name:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x14: "[Tape Side]"
+            0x24: "[Tape Eject]"
+            0x11: "[1]"
+            0x01: "[2]"
+            0x12: "[3]"
+            0x02: "[4]"
+            0x13: "[5]"
+            0x03: "[6]"
+            0x23: "[Mode Prev]"
+            0x33: "[Mode Next]"
+            0x21: "[AM]"
+            0x31: "[FM]"
+            0x22: "[B]"
+            0x32: "[C]"
+            0x10: "[Prev]"
+            0x00: "[Next]"
+            0x20: "[Select]"
+            0x04: "[Tone]"
+            0x30: "[Overlay]"
+            0x06: "[Power]"
+            0x32: '[TP]'
+            0x22: '[RDS]'
+            0x08: "[TEL]"
+            0x07: "[Aux. Heat]"
+            0x34: "[Menu]"
+            0x05: "[Confirm]"
+          :map:
+            0x14: :bmbt_tape_side
+            0x24: :bmbt_tape_eject
+            0x11: :bmbt_preset_1
+            0x01: :bmbt_preset_2
+            0x12: :bmbt_preset_3
+            0x02: :bmbt_preset_4
+            0x13: :bmbt_preset_5
+            0x03: :bmbt_preset_6
+            0x23: :bmbt_mode_prev
+            0x33: :bmbt_mode_next
+            0x21: :bmbt_am
+            0x31: :bmbt_fm
+            0x22: :bmbt_dolby_b
+            0x32: :bmbt_dolby_c
+            0x10: :bmbt_prev
+            0x00: :bmbt_next
+            0x20: :bmbt_select
+            0x04: :bmbt_tone
+            0x30: :bmbt_overlay
+            0x06: :bmbt_power
+            0x32: :bmbt_tp
+            0x22: :bmbt_rds
+            0x08: :bmbt_tel
+            0x07: :bmbt_aux_heat
+            0x34: :bmbt_menu
+            0x05: :bmbt_confirm
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+0x49:
+  :id:
+    :d: 73
+    :h: '0x49'
+  :properties:
+    :short_name: BMBT-BTN-2
+    :long_name: BMBT Buttons
+    :state:
+      0x01: Left-1
+      0x02: Left-2
+      0x03: Left-3
+      0x04: Left-4
+      0x05: Left-5
+      0x06: Left-6
+      0x07: Left-7
+      0x08: Left-8
+      0x81: Right-1
+      0x82: Right-2
+      0x83: Right-3
+      0x84: Right-4
+      0x85: Right-5
+      0x86: Right-6
+      0x87: Right-7
+      0x88: Right-8
+  :klass: Button
+0x57:
+  :id:
+    :d: 87
+    :h: '0x57'
+  :properties:
+    :short_name: IKE-BTN
+    :long_name: IKE Check Control
+  :klass: ParameterizedCommand
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :button_id: !ruby/range
+                      begin: 3
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 1
+                        end: 2
+                        excl: false
+      :parameters:
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x01: Check Control
+  :notes:
+    - only press and relea
+# ************************************************************************* #
+#                               DISPLAYS
+# ************************************************************************* #
+0x23:
+  :id:
+    :d: 35
+    :h: '0x23'
+  :properties:
+    :short_name: TXT-23
+    :long_name: Update Text Display (BMBT, IKE)
+  :klass: MediaDisplay
+  :schemas:
+    - :tel
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        # Service Mode
+        0x0_2: (Service) Serial Number
+        0x0_3: (Service) Software Version
+        0x0_4: (Service) GAL
+        0x0_5: (Service) F & Q?
+        0x0_6: (Service) DSP
+        0x0_7: (Service) Seek Level
+        0x0_8: (Service) TP Volume
+        0x0_9: (Service) AF
+        0x0_a: (Service) Region
+
+        0x1_2: (Service) Serial Number
+        0x1_3: (Service) Software Version
+        0x1_4: (Service) GAL
+        0x1_5: (Service) F & Q?
+        0x1_6: (Service) DSP
+        0x1_7: (Service) Seek Level
+        0x1_8: (Service) TP Volume
+
+        # Weather Band
+        0x2_0: (Weather Band) No Station
+        0x2_1: (Weather Band) WB CH 1
+        0x2_2: (Weather Band) WB CH 2
+        0x2_3: (Weather Band) WB CH 3
+        0x2_4: (Weather Band) WB CH 4
+        0x2_5: (Weather Band) WB CH 5
+        0x2_6: (Weather Band) WB CH 6
+        0x2_7: (Weather Band) WB CH 7
+        0x2_8: (Weather Band) WB
+
+        0x3_0: (Weather Band) No Station
+        0x3_1: (Weather Band) WB CH 1
+        0x3_2: (Weather Band) WB CH 2
+        0x3_3: (Weather Band) WB CH 3
+        0x3_4: (Weather Band) WB CH 4
+        0x3_5: (Weather Band) WB CH 5
+        0x3_6: (Weather Band) WB CH 6
+        0x3_7: (Weather Band) WB CH 7
+        0x3_8: (Weather Band) WB
+
+        # Radio
+        0x4_0: (Radio) Set Station
+        0x4_1: (Radio) m    # Mode: Manual
+        0x4_2: (Radio) SCAN # Mode: SCAN
+        0x4_3: (Radio) II   # Mode: Search (Sensitive)
+        0x4_4: (Radio) I    # Mode: Search (Non Sensitive)
+        0x4_5: (Radio) --
+        0x4_6: (Radio) T    # Traffic Reports
+        0x4_7: (Radio) TP   # Traffic Program
+        0x4_8: (Radio) T (upper right?)
+        0x4_9: (Radio) m + T
+        0x4_a: (Radio) Scan + T
+        0x4_b: (Radio) II + T
+        0x4_c: (Radio) I? + T
+        0x4_d: (Radio) T
+        0x4_e: (Radio) T + T
+        0x4_f: (Radio) TP + T
+
+        0x5_0: (Radio) Stereo
+        0x5_1: (Radio) m
+        0x5_2: (Radio) SCAN
+        0x5_3: (Radio) II
+        0x5_4: (Radio) I
+        0x5_5: (Radio) --
+        0x5_6: (Radio) T
+        0x5_7: (Radio) TP
+        0x5_8: (Radio) T (upper right)
+        0x5_9: (Radio) m + T
+        0x5_a: (Radio) Scan + T
+        0x5_b: (Radio) II + T
+        0x5_c: (Radio) I? + T
+        0x5_d: (Radio) T
+        0x5_e: (Radio) T + T
+        0x5_f: (Radio) TP + T
+
+        # 0x60 to 0x7F are 'nav' screens
+        # so far... only 0x62 sets anything
+        0x6_0: (RDS)
+        0x6_1: (RDS)
+        0x6_2: (RDS)
+
+        # Tape
+        0x8_0: Tape Error
+        0x8_1: --
+        0x8_2: Tape (1) ▶︎
+        0x8_3: Tape (1) ▷▷▷
+        0x8_4: Tape (1) ◁◁◁
+        0x8_6: Tape (1) ▷▷
+        0x8_7: Tape (1) ◁◁
+        0x8_8: Tape Clean
+        0x8_9: Tape (A) <<>>
+        0x8_a: Tape (A)
+        0x8_b: --
+        0x8_c: --
+        0x8_d: --
+        0x8_e: --
+        0x8_f: --
+
+        0x9_0: Tape Error
+        0x9_1: --
+        0x9_2: Tape (2) ▶︎
+        0x9_3: Tape (2) ▷▷▷
+        0x9_4: Tape (2) ◁◁◁
+        0x9_6: Tape (2) ▷▷
+        0x9_7: Tape (2) ◁◁
+        0x9_8: Tape Clean
+        0x9_9: Tape (B) <<>>
+        0x9_a: Tape (B)
+        0x9_b: --
+        0x9_c: --
+        0x9_d: --
+        0x9_e: --
+        0x9_f: --
+
+        # RDS: TP?
+        # On a Euro car, the button you have labelled as TRAFFIC becomes
+        # RDS TP (only the labelling on the button changes)
+        0xa_0: (Traffic) No Station
+        0xa_1: (Traffic) Traffic 1
+        0xa_2: (Traffic) Traffic 2
+        0xa_3: --
+        0xa_4: (Traffic) No Station
+        0xa_5: (Traffic) Traffic 1
+        0xa_6: (Traffic) Traffic 2
+        0xa_7: --
+        0xa_8: (Traffic) No Station
+        0xa_9: (Traffic) Traffic 1
+        0xa_a: (Traffic) Traffic 2
+        0xa_b: --
+        0xa_c: --
+        0xa_d: --
+        0xa_e: --
+        0xa_f: --
+
+        0xb_0: Untested
+        0xb_1: Untested
+        0xb_2: Untested
+        0xb_3: Untested
+        0xb_4: Untested
+        0xb_5: Untested
+        0xb_6: Untested
+        0xb_7: Untested
+        0xb_8: Untested
+        0xb_9: Untested
+        0xb_a: Untested
+        0xb_b: Untested
+        0xb_c: Untested
+        0xb_d: Untested
+        0xb_e: Untested
+        0xb_f: Untested
+
+        # all the way through to C0, then
+        # C0..DF: display text
+
+        # E0..EF: nothing
+        # 0x41: IKE Set (540)
+        # 0x62: Section Update? (540)
+
+        # To have the 'Track' layout applied, the below format must be used
+        # otherwise the zone defaults to 11 characters without a layout.
+        # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
+        0xc_0: --
+        0xc_1: (CD) No Magazine!
+        0xc_2: (CD) No Disc!
+        0xc_3: --
+        0xc_4: (CD) [< >] Disc/Track
+        0xc_5: (CD) >>
+        0xc_6: (CD) <<R
+        0xc_7: (CD) [SCAN]
+        0xc_8: (CD) [RANDOM]
+        0xc_9: --
+        0xc_a: (CD) [<< >>] Fast Forward/Reverse
+        0xc_b: (CD) Empty Casette Track Change?
+        0xc_c: --
+        0xc_d: --
+        0xc_e: --
+        0xc_f: --
+    :ike:
+      :type: :bit_array
+      :parameters:
+        :set:
+          :label: IKE Display
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :update:
+          :label: Update Only
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :set: 2
+        :update: 3
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :tel:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: TXT-23*
+      :long_name: Update Text Display (BMBT, IKE)
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          # 0x80 IKE and 0xE7 ANVZ
+          0x0_1: 'MID HFS On [▷ ◁]'
+          # 0xE7 ANZV
+          0x0_2: 'Header HFS [🔊]'
+          # 0x80 IKE
+          # always used to clear, or write 'INSERT CARD!'
+          0x4_0: End Call Clear?
+          # this is always no text
+          0x4_1: Clear Contact
+          0x4_2: Contact/Call
+          0x4_3: Show Contact Number
+
+          0x0_0: '[Layout] [Header] Telephone Screen Set'
+          0x0_5: '[Layout] [Pin-Code] Screen'
+          0x9_1: '[Layout] [Info] Screen'
+
+          0x5_2: '[Header] [Directory] Header Set'
+          0x5_3: '[Header] [Directory] Header Overwrite'
+
+          0x6_1: '[Header] [Dial] Header Overwrite'
+          0x6_3: '[Header] [Dial] Header Overwrite 2'
+
+          0x8_1: '[Header] [Top 8] Set'
+          0x8_2: '[Header] [Top 8] Overwrite'
+
+          0xc_0: '[Header] [SOS] Set?'
+          # Doesn't seem to work?
+          0x8_0: Default Header Overwrite
+      :ike:
+        :type: :map
+        :dictionary:
+          0x0_0: --
+          0x2_0: Set IKE
+          0x3_0: Update IKE
+      :chars:
+        :type: :chars
+  :meta:
+    :desc: used to updated display with media informtion upon change. Text displayed
+      is based upon the media mode (radio, tape, CDC).
+    :recipients:
+      0xFF: GLO-H
+      0x80: IKE
+      0x3B: GFX
+    :notes:
+      - How you change the radio station affects what messages are sent
+      - Changing via MFL will send to GLO-H as the message is consumed by
+        multiple devices (GFX and HUD set)
+      - Changing via BMBT will only send to GFX as the IKE display is not
+        updated.
+      - When the change is made via BMBT the message will still contain the
+        sub command for the IKE but it will always be 0x20
+      - The text sub command contains control characters of 0x04, 0x03 etc,
+        but I'm not sure what their purpose is yet.
+      - i know the GFX has multiple zones and it might denote the substrings
+        intended for each screen element
+    :examples:
+      - MFL (Next/Previous)
+      - display radio freuqnecy (with CLEAR display text being displayed)
+        - RAD	GLO-H	23	40 20	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio freuqnecy (with EXISITING text being displayed)
+        - RAD	GLO-H	23	40 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio frequency updaed \'ST\'
+        - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - clear IKE display
+      - RAD	IKE	  23	50 20
+0x21:
+  :id:
+    :d: 33
+    :h: '0x21'
+  :schemas:
+    - :tel
+  :properties:
+    :short_name: TXT-21
+    :long_name: MID Display
+    :verbose: false
+  :klass: ParameterizedCommand
+  :index:
+    :m1: 0
+    :m2: 1
+    :m3: 2
+    :chars: !ruby/range
+            begin: 3
+            end: -1
+            excl: false
+  :parameters:
+    :m1:
+      :type: :map
+      :dictionary:
+        # notice how these match 0x23 layout parameter?
+        0x41: '(RAD) Presets'
+        0x43: '(RAD) Source'
+        0x60: '(RDS) Menu A'
+        0x61: '(RDS) Menu B'
+        0x62: Header
+        0x63: Static
+        0x83: '(TAPE) Side'
+        0xc0: '(CD) Discs?'
+    :m2:
+      :type: :integer
+    :m3:
+      :type: :bit_array
+      :parameters:
+        # no GFX-STATUS using this using MK1 GFX
+        :block:
+          :type: :switch
+          :label: Block
+          :states:
+            0: :off
+            1: :on
+        :flush:
+          :type: :switch
+          :label: Flush
+          :states:
+            0: :off
+            1: :on
+        :index:
+          :type: :integer
+      :index:
+        :block: 1
+        :flush: 2
+        :index:  !ruby/range
+                  begin: 3
+                  end: 7
+                  excl: false
+    :chars:
+      :type: :chars
+  :tel:
+    :id:
+      :d: 33
+      :h: '0x21'
+    :properties:
+      :short_name: TEL-21
+      :long_name: MID Display
+      :verbose: false
+    :klass: ParameterizedCommand
+    :index:
+      :m1: 0
+      :m2: 1
+      :m3: 2
+      :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+    :parameters:
+      :m1:
+        :type: :map
+        :dictionary:
+          0x42: '[TEL] Rotary'
+          0x43: '[TEL] Directory'
+          0x80: '[TEL] Top 8'
+      :m2:
+        :type: :integer
+      :m3:
+        :type: :bit_array
+        :parameters:
+          :block:
+            :type: :switch
+            :label: Blocking?
+            :states:
+              0: :off
+              1: :on
+          :column_1:
+            :type: :switch
+            :label: Column 1
+            :states:
+              0: :off
+              1: :on
+          :column_2:
+            :type: :switch
+            :label: Column 2
+            :states:
+              0: :off
+              1: :on
+          :row_2:
+            :type: :switch
+            :label: Row 2
+            :states:
+              0: :off
+              1: :on
+        :index:
+          :block: 1
+          :column_1: 2
+          :column_2: 3
+          :row_2: 5
+      :chars:
+        :type: :chars
+  :meta:
+    :notes: always RAD to GFX
+    :parameters:
+      - 0x41: select station present number (1-6)? another row?
+      - 0x43: MID display? another row?
+0xA5:
+  :id:
+    :d: 165
+    :h: '0xA5'
+  :properties:
+    :short_name: TXT-A5
+    :long_name: Unknown
+  :klass: ParameterizedCommand
+  :index:
+    :layout: 0
+    :padding: 1
+    :zone: 2
+    :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+  :parameters:
+    :layout:
+      :type: :map
+      :dictionary:
+        0x60: Menu A
+        0x61: Menu B
+        0x62: Header
+        0x63: Static
+    :padding:
+      :type: :map
+      :dictionary:
+        0: Do nothing?
+        1: No Padding
+        2: Pad 1
+        3: Pad 2
+        4: Pad 3
+        5: Pad 4
+        6: Pad 5
+        7: Pad 6
+        8: Pad 7
+        9: Pad 8
+        10: Pad 9
+        11: Pad 10
+        12: Pad 11
+        13: Pad 12
+        14: Pad 13
+        15: Pad 14
+        16: Pad 15
+        17: Pad 16
+        18: Pad 17
+    :zone:
+      :type: :bit_array
+      :index:
+        :zone: !ruby/range
+                  begin: 5
+                  end: 7
+                  excl: false
+        :tbc: !ruby/range
+                  begin: 3
+                  end: 4
+                  excl: false
+        :block: 1
+        :flush: 2
+        :flash: 0
+      :parameters:
+        :flash:
+          :type: :switch
+          :label: 'Flash'
+          :states:
+            0: :off
+            1: :on
+        :block:
+          :type: :switch
+          :label: 'Block'
+          :states:
+            0: :off
+            1: :on
+        :flush:
+          :type: :switch
+          :label: 'Flush'
+          :states:
+            0: :off
+            1: :on
+        :tbc:
+          :type: :integer
+          :label: 'TBC'
+          :map:
+            0x00: '?'
+            0x01: '?'
+            0x10: '?'
+            0x11: '?'
+          :dictionary:
+            0x00: '?'
+            0x01: '?'
+            0x10: '?'
+            0x11: '?'
+        :zone:
+          :type: :map
+          :label: 'Zone'
+          :map:
+            0b000: :none
+
+            0b001: :a
+            0b010: :b
+            0b011: :c
+            0b100: :d
+            0b101: :e
+
+            0b110: :h2
+            0b111: :h3
+          :dictionary:
+            0b0_0000: '0'
+
+            0b001: 'A/1'
+            0b010: 'B/2'
+            0b011: 'C/3'
+            0b100: 'D/4'
+            0b101: 'E/5'
+
+            0b110: 'H2/6'
+            0b111: 'H3/7'
+            #
+            # 0b000: '8'
+            # 0b001: '9'
+            # 0b010: '10'
+            # 0b011: '11'
+            # 0b100: '12'
+    :chars:
+      :type: :chars
+  :meta:
+    :notes:
+      - 540 RAD sending this to GFX
+      - command 0x23 with gfx argument of 0x60..0x7f must be used to change display layout to 'nav'
+    :examples:
+      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
+      - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
+      - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
+      - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
+      - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
+      - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
+      - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
+0x24:
+  :id:
+    :d: 36
+    :h: '0x24'
+  :properties:
+    :short_name: TXT-24
+    :long_name: OBC Display (IKE, GFX)
+    :verbose: false
+  :klass: ParameterizedCommand
+  :schemas:
+    - :tel
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo
+        0x0d: Memo
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :ike:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Set
+        0x30: Update
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  # 0x24 Alternative Schemas
+  :tel:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: TXT-24*
+      :long_name: Update Info
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :meta: this does not seem to work for >= MK2
+        :type: :map
+        :dictionary:
+          0x91: Signal Strength
+          0x93: Call cost current
+          0x94: Call cost total
+          0x96: Call Time minutes
+          0x97: Call time seconds
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+      :chars:
+        :type: :chars
+        # 0xB2 = 7 bars
+        # 0xB3 = 6 bars
+        # 0xB4 = 5 bars
+        # 0xB5 = 4 bars
+        # 0xB6 = 3 bars
+        # 0xB7 = 2 bars
+        # 0x5F = 1 bar
+        # 0xB8 = 0 bars
+  :meta:
+    :examples:
+      - RAD GLO-H TXT-1 Radio HUD "102.1   "
+      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
+0x22:
+  :id:
+    :d: 34
+    :h: '0x22'
+  :properties:
+    :short_name: GFX-CACHE
+    :long_name: GTX Cache
+  :klass: ParameterizedCommand
+  :parameters:
+    :status:
+      :type: :map
+      :dictionary:
+        0x00: Available/Cleared
+        0x01: Loading Complete?
+        0x02: Telephone Home Loaded
+        0x03: Done?
+        0x10: Unknown
+        # Seeing this in respond to 0x21 MID type commands to MK1 GFX
+        0x0b: Menu Dead!?
+        0x34: Overwrite?!
+  :index:
+    :status: 0
+  :meta:
+    :notes:
+      - I _think_ this is.... cache/buffered count....?
+      - 00: Dial Function
+      - 01 FF: Radio On?
+      - [0, 1, 2, 3, 4, 7, 16]
+      - 0x00: Available always after screen has been cleared
+      - 0x01: Done? (always preceded by 0x21 and 0x23 AND which is when loading a screen)
+      - 0x02: (only preceded by 0x21) when... manually navigating to a screen
+      - 0x03: Done?
+      - 0x07: unknown?
+      - 0x10: Unrecognised command?
+
+# ************************************************************************* #
+#                             CLUSTER HUD
+# ************************************************************************* #
+0x1A:
+  :id:
+    :d: 26
+    :h: '0x1A'
+  :properties:
+    :short_name: CCM-ALRT
+    :long_name: CCM Cluster Warning
+    :verbose: false
+  :parameters:
+    :mode:
+      :type: :map
+      :map:
+        0x30: clear
+        0x35: request
+        0x36: persist
+        0x37: alert
+      :dictionary:
+        0x30: Clear
+        0x35: Request Fault
+        0x36: Persist Indicators
+        0x37: Alert
+    :control:
+      :type: :map
+      :map:
+        0x00: none
+        0x01: on_off
+        0x03: blink_off
+        0x05: off_single
+        0x0F: on_single
+        0x09: blink_single
+      :dictionary:
+        0x00: "No Indicator/Gong"
+
+        0x01: "Chev: On     / Audio: Off"
+        0x03: "Chev: Blink  / Audio: Off"
+
+        0x04: "Chev: Off    / Audio: Single"
+        0x05: "Chec: On     / Audio: Single"
+        0x07: "Chev: Blink  / Audio: Single"
+
+        0xO8: "Chev: Off    / Audio: Constant"
+        0xO9: "Chev: On     / Audio: Constant"
+        0xOB: "Chev: Blink  / Audio: Constant"
+
+        0x0C: "Chev: Off    / Audio: Double"
+        0x0D: "Chev: On     / Audio: Double"
+        0x0F: "Chev: Blink  / Audio: Double"
+
+        0x10: 'something else must be duplicate?'
+    :chars:
+      :type: :chars
+  :index:
+    :mode: 0
+    :control: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false"
+
+  :klass: CCMDisplay
+  :meta:
+    :notes:
+      - at ignition off, 0x13 reports 0x00 00 00
+      -  0x1a always follows 30 00	"                    "
+      -  this is the only time it has a blank string
+      - IKE   	GLO-L 	IKE-SEN-ACK	01 B0 00]
+      - IKE   	GLO-L 	IGN       	Ignition: Off (Position I)
+      - IKE   	GLO-L 	IKE-SEN-ACK	00 00 00]
+      - IHK   	NAV-EU	???       	00]
+      - CCM   	GLO-L 	CCM?      	00]
+      - CCM   	IKE   	CCM-ALRT  	30 00	"                   "
+    :examples:
+      - Constantly see this >
+      - 1A 30 00
+      - 1B 00
+      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+      - 1B 00
+      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
+      - 1B 00
+
+      - 37 0F	"     LIGHTS ON      "
+      - 36 03	""
+
+      - 37 05	"CHECK LOWBEAM LIGHTS"
+      - 35 01	""
+0x1B:
+  :id:
+    :d: 27
+    :h: '0x1B'
+  :properties:
+    :short_name: HUD-STATUS
+    :long_name: IKE Text Status?
+  :klass: ParameterizedCommand
+  :parameters:
+    :hud_status:
+      :type: :map
+      :dictionary:
+        0x00: Set
+        0x01: Busy
+        0x02: Cleared
+  :index:
+    :hud_status: 0
+  :schemas:
+    - 0x3F
+  0x3F:
+    :id:
+      :d: 27
+      :h: '0x1B'
+    :properties:
+      :short_name: DIA-PDC
+      :long_name: Test PDC Sensors
+    :klass: BaseCommand
+  :meta:
+    :examples:
+      - TEL   	IKE   	23        40 20,
+      - IKE   	TEL   	1B        02,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        35 00 20 20 43 48 45 43 4B 20 43 4F 4E 54 52 4F 4C 20 4F 4B 20 20,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00,
+      - IKE   	CCM   	1B        00,
+      - CCM   	IKE   	1A        30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20,
+      - IKE   	CCM   	1B        00,
+      - the IKE requests something from radio?
+      - IKE   	RAD   	CCM-STATUS	02
+      - RAD   	IKE   	TXT-MEDIA 	64 (Radio Set Station) | 32 (Set IKE) 	""
+      - IKE   	RAD   	CCM-STATUS	02
+    :recipients:
+      0x30: CCM
+      0x68: RAD
+      0xC8: TEL
+
+# ************************************************************************* #
+#                               TELEPHONE
+# ************************************************************************* #
+0x20:
+  :id:
+    :d: 32
+    :h: '0x20'
+  :properties:
+    :short_name: TEL-OPEN
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :examples:
+      - from GFX 02 0C
+
+0x31:
+  :id:
+    :d: 49
+    :h: '0x31'
+  :properties:
+    :short_name: DATA
+    :long_name: Unknown
+  :index:
+    :source: 0
+    :function: 1
+    :action: 2
+  :parameters:
+    :source:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Info
+        0x42: Dial
+        0x43: Directory
+        0x80: Top 8
+        0x60: RDS 1
+        0x61: RDS 2
+    :function:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x01: Select Contact
+          # 0x00: Contact 1
+          # 0x02: Contact 2
+          # 0x04: Contact 3
+        0x02: Select Digit
+          # 0x00: (0)
+          # 0x07: (7)
+          # 0x08: (8)
+          # 0x09: (9)
+          # 0x0A: DEL
+          # 0x1A: "*"
+          # 0x1B: "#"
+        0x05: SOS
+        0x07: Navigate Function
+        0x08: Navigate Info
+    :action:
+      :type: :bit_array
+      :index:
+        :button_id: !ruby/range
+                      begin: 3
+                      end: 7
+                      excl: false
+        :button_state: !ruby/range
+                        begin: 1
+                        end: 2
+                        excl: false
+      :parameters:
+        :button_state:
+          :type: :switch
+          :label: 'State:'
+          :states:
+            0b00: :press
+            0b01: :hold
+            0b10: :release
+          :dictionary:
+            0b00: Press
+            0b01: Hold
+            0b10: Release
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x00: Index 0
+            0x01: Index 1
+            0x02: Index 2
+            0x03: Index 3
+            0x04: Index 4
+            0x05: Index 5
+            0x06: Index 6
+            0x07: Index 7
+            0x08: Index 8/Emergency
+            0x09: Index 9
+            0x0A: Info Screen
+            0x0B: SOS
+            0x0C: Directory Back Page Start
+            0x0D: Directory Forward Page Start
+
+            0x1A: Unknown 0x1A
+            0x1B: Unknown 0x1B
+            0x1C: Unknown 0x1C
+            0x1D: SMS Screen
+            0x1E: Dial Screen
+            0x1F: Directory Screen
+  :klass: ParameterizedCommand
+  :meta:
+    :digit:
+      :type: :map
+      :dictionary:
+        0x00: (0)
+        0x01: (1)
+        0x02: (2)
+        0x03: (3)
+        0x04: (4)
+        0x05: (5)
+        0x06: (6)
+        0x07: (7)
+        0x08: (8)
+        0x09: (9)
+        0x0A: DEL
+        0x1A: "*"
+        0x1B: "#"
+    :contact:
+      :type: :bit_array
+      :parameters:
+        :index:
+          :column: 3
+          :row:  !ruby/range
+                  begin: 5
+                  end: 7
+                  excl: false
+        :column:
+          :type: :map
+          :dictionary:
+            0: Column 1
+            1: Column 2
+        :row:
+          :type: :map
+          :dictionary:
+            0x00: Row 1
+            0x02: Row 2
+            0x04: Row 3
+            0x06: Row 4
+    :commands:
+      - 00 00 0D Directory Forward Page Start
+      - 00 00 2D Directory Forward Page Scroll
+      - 00 00 4D Directory Forward Page Stop
+      - 00 00 0C Directory Back Page Start
+      - 00 00 2C Directory Back Page Start
+      - 00 00 4C Directory Back Page Start
+
+      # TOP 8 (MAIN SCREEN) ---------------------------------------------------
+
+      # Navigation
+      - 80 07 1F Directory
+      - 80 07 1E Dial
+      - 80 08 0A Info
+
+      # Function
+      - 80 01 00 Select Top 8 Contact 1
+      - 80 01 02 Select Top 8 Contact 2
+
+      # INFO ------------------------------------------------------------------
+
+      # Navigation
+      - 20 07 1F Directory Index (from Info)
+      - 20 07 1E Dial (from Info)
+
+      # DIAL ------------------------------------------------------------------
+
+      # Navigation
+      - 42 08 0A Info (from Dial)
+      - 42 07 1F Directory Index (from Dial)
+
+      # DIRECTORY -------------------------------------------------------------
+
+      # Navigation
+      - 43 07 1E Dial (from Directory)
+      - 43 08 0A Info (from Directory)
+
+      # Function
+      - 43 01 00 Select Directory Contact 1
+      - 43 01 02 Select Directory Contact 2
+      - 43 01 04 Select Directory Contact 3
+
+
+    :examples:
+      - 17:43:00 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
+      - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
+      - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
+      - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
+0x2C:
+  :id:
+    :d: 44
+    :h: '0x2C'
+  :properties:
+    :short_name: TEL-STATE
+    :long_name: Unknown
+  :parameters:
+    :status:
+      :type: :bit_array
+      :index:
+        :active: 2
+        :power: 3
+        :display: 4
+        :incoming: 5
+        :menu: 6
+        :hfs: 7
+      :parameters:
+        :active:
+          :label: In Use
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :power:
+          :label: Telephone
+          :type: :switch
+          :states:
+            0: :unpowered
+            1: :powered
+        :display:
+          :label: Display?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :incoming:
+          :label: Incoming Call
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :menu:
+          :label: Menu?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :hfs:
+          :label: Handsfree
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+  :index:
+    :status: 0
+  :klass: ParameterizedCommand
+  :meta:
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+0x2b:
+  :id:
+    :d: 43
+    :h: '0x2b'
+  :klass: ParameterizedCommand
+  :parameters:
+    :leds:
+      :type: :bit_array
+      :parameters:
+        :red:
+          :label: Red
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :red_blink:
+          :label: Red Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow:
+          :label: Yellow
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow_blink:
+          :label: Yellow Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green:
+          :label: Green
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green_blink:
+          :label: Green Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :red: 7
+        :red_blink: 6
+        :yellow: 5
+        :yellow_blink: 4
+        :green: 3
+        :green_blink: 2
+  :index:
+    :leds: 0
+  :properties:
+    :short_name: TEL-LED
+    :long_name: Telephone LEDs on BMBT
+    :state:
+      0: [0, 0, 0]
+      1: [0, 1, 0]
+      2: [0, 2, 0]
+      3: [0, 2, 0]
+      4: [1, 0, 0]
+      5: [1, 1, 0]
+      6: [1, 2, 0]
+      8: [2, 0, 0]
+      9: [2, 1, 0]
+      10: [0, 0, 1]
+      11: [0, 1, 1]
+      12: [0, 2, 1]
+      14: [2, 2, 0]
+      15: [2, 2, 0]
+      16: [0, 0, 1]
+      17: [0, 1, 1]
+      18: [0, 2, 1]
+      19: [0, 2, 1]
+      20: [1, 0, 1]
+      21: [1, 1, 1]
+      22: [1, 2, 1]
+      23: [1, 2, 1]
+      24: [2, 0, 1]
+      25: [2, 1, 1]
+    :index_map:
+      0: :yellow
+      1: :red
+      2: :green
+    :index_to_colour_map:
+      :yellow:  93
+      :red:     91
+      :green:   92
+    :value_map:
+      0: :off
+      1: :on
+      2: :blink
+    :value_to_type_map:
+      :off:   2
+      :on:    0
+      :blink: 5
+  :meta:
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+
+# ************************************************************************* #
+#                         ON BOARD COMPUTER (OBC)
+# ************************************************************************* #
+0x40:
+  :id:
+    :d: 64
+    :h: '0x40'
+  :properties:
+    :short_name: OBC-CONFIG
+    :long_name: Set OBC Data
+  :klass: ParameterizedCommand
+  :parameters:
+    :b1:
+      :type: :map
+      :dictionary:
+        0x01: Set Time
+        0x02: Set Date
+
+        0x07: Set Distance
+        0x09: Set Speed Limit
+
+        0x0D: Set Code
+
+        0x0F: Set Aux Timer 1
+        0x10: Set Aux Timer 2
+    :b2:
+      :label: 'b2'
+      :type: :integer
+    :b3:
+      :label: 'b3'
+      :type: :integer
+    :b4:
+      :label: 'b4'
+      :type: :integer
+  :index:
+    :b1: 0
+    :b2: 1
+    :b3: 2
+    :b4: 3
+  :meta:
+    # LIMIT
+    - GFX   	IKE   	OBC-SET   	09 00 21
+    - IKE   	ANZV  	OBC-CTL    	02 00
+    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 33 KM/H"
+
+    - GFX   	IKE   	OBC-SET   	09 00 36
+    - IKE   	ANZV  	OBC-CTL    	02 00
+    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 54 KM/H"
+
+    # DISTANCE
+    - GFX   	IKE   	OBC-SET   	07 00 30
+    - IKE   	ANZV  	OBC       	Distance  	"  48 KM "
+    - IKE   	ANZV  	TXT-INFO   	Arrival   	"--:--  "
+
+    # AUX TIMER
+    - GFX   	IKE   	OBC-REQ   	0F 0C 06
+    - IKE   	ANZV  	TXT-INFO   	Aux. Timer 1   	"--:--  "
+    - GFX   	IKE   	OBC-REQ   	10 03 00
+    - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
+    - 11AM = d2b(0x8B, true, true) => "0b10001011"
+    - 11PM = d2b(0x0b, true, true) => "0b00001011"
+0x41:
+  :id:
+    :d: 65
+    :h: '0x41'
+  :klass: ParameterizedCommand
+  :properties:
+    :short_name: OBC-REQ
+    :long_name: OBC Data Request
+  :parameters:
+    :field:
+      :type: :map
+      :map:
+        0x00: disabled
+      :dictionary:
+        0x01: Time
+        0x02: Date
+        0x03: Outside Temp.
+        0x04: Econ. 1
+        0x05: Econ. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Speed Limit
+        0x0a: Avg. Speed
+        0x0c: Memo 1
+        0x0d: Memo 2
+        0x0e: Stopwatch
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x16: Emergency Disarm
+        0x1a: Interim Time
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+        0x40: Radio HUD
+    :control:
+      :type: :map
+      :map:
+        0x00: empty
+      :dictionary:
+        0x01: Alt. (Interum?)
+        0x10: Reset/Recalculate
+        0x02: "0x02"
+        0x03: "0x03"
+        0x04: Switch On
+        0x08: Switch Off
+        0x20: Set As Current Speed
+  :index:
+    :field: 0
+    :control: 1
+  :meta:
+    :notes:
+      - two bytes. first byte corresponds to same code as obc
+      - GFX IKE   41    08 01
+      - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
+      - GFX IKE   41    04 01
+      - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
+    :recipients:
+      - IKE: IKE houses on board computer
+0x2A:
+  :id:
+    :d: 42
+    :h: '0x2A'
+  :klass: ParameterizedCommand
+  :properties:
+    :short_name: OBC-CTL
+    :long_name: IKE to ANZV OBC Control (Relays command send to IKE)
+  :parameters:
+    :control:
+      :type: :bit_array
+      :parameters:
+        :memo:
+          # 0010 0000
+          :type: :switch
+          :label: 'Memo'
+          :states:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+        :timer:
+          # 0010 1010
+          :type: :switch
+          :label: 'Timer'
+          :states:
+            0: :off
+            1: :on
+        :limit:
+          # 0000 0010
+          :type: :switch
+          :label: 'Speed Limit'
+          :states:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+      :index:
+        :memo:  !ruby/range
+                begin: 1
+                end: 2
+        :timer: 4
+        :limit: !ruby/range
+                begin: 5
+                end: 6
+    :unconfirmed:
+      :type: :bit_array
+      :index:
+        :code:  !ruby/range
+                          begin: 0
+                          end: 1
+        :aux_led_flash: 2
+        :aux_timer_2: 3
+        :aux_direct: 4
+        :aux_timer_1: 5
+      :parameters:
+        :aux_timer_1:
+          :type: :switch
+          :label: 'Aux Timer 1'
+          :states:
+            0: :off
+            1: :on
+        :aux_timer_2:
+          :type: :switch
+          :label: 'Aux Timer 2'
+          :states:
+            0: :off
+            1: :on
+        :aux_direct:
+          :type: :switch
+          :label: 'Aux Direct.'
+          :states:
+            0: :off
+            1: :on
+        :aux_led_flash:
+          :type: :switch
+          :label: 'Aux LED Flash'
+          :states:
+            0: :off
+            1: :on
+        :code:
+          :type: :switch
+          :label: 'Code'
+          :states:
+            0b00: :off
+            0b01: :enabled
+            0b10: :disabled
+  :index:
+    :control: 0
+    :unconfirmed: 1
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - ANZV
+    :length:
+      - always 2 bytes
+      - first byte 0x00 or 0x0B
+      - second byte 0x00
+      - memo on 20 00
+      - memo off 00 00
+# ************************************************************************* #
+#                                 CLIMATE?
+# ************************************************************************* #
+0x87:
+  :id:
+    :d: 135
+    :h: '0x87'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - send by :nav_eu???? to IKHA
+0x86:
+  :id:
+    :d: 134
+    :h: '0x86'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - reply from IHKA to nav_eu
+      - it's not addressed to global? very specific?
+
+# ************************************************************************* #
+#                          DIAGNOSTICS/INPA
+# ************************************************************************* #
+
+# ------------------------------ INPA COMMANDS ------------------------------ #
+
+0:
+  :id:
+    :h: '0x00'
+    :d: 0
+    :b: 0
+  :properties:
+    :short_name: DIA-HELLO
+    :long_name: Module General Information (and Ping)
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - DIA
+      - GM (0x00)
+    :recipients:
+      - GM3   (0x00): '?'
+      - TEL	  (0xC8):	1
+      - BMBT	(0xF0):	126
+      - LCM	  (0xD0):	208
+      - MFL	  (0x50):	25
+      - GFX	  (0x3B):	82
+      - TV	  (0xED):	121
+      - 0xE0	(0xE0):	9
+      - RAD	  (0x68):	272
+      - PDC	  (0x60):	63
+      - 0x9A	(0x9A):	3
+
+0x63:
+  :id:
+    :d: 99
+    :h: '0x63'
+  :properties:
+    :short_name: DIA-IDENT?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+# ------------------------------ ERRORS ------------------------------ #
+4:
+  :id:
+    :d: 4
+    :h: '0x04'
+  :properties:
+    :short_name: DIA-ERR-READ
+    :long_name: BUS Status Reponse
+  :klass: BaseCommand
+  :meta:
+  :notes:
+    - send when reading error memory
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+      - this had no errors
+      - see screenshot
+    - if i hit F1/READ in this screen, the same is sent again
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+  :recipients:
+    - GFX    	01
+    - TV     	01
+    - RAD    	01
+    - RAD    	01
+
+5:
+  :id:
+    :d: 5
+    :h: '0x05'
+  :properties:
+    :short_name: DIA-ERR-DEL
+    :long_name: Diagnostics Clear Error Memeory?
+  :klass: BaseCommand
+  :meta:
+    - when radio clear error memory selected
+    - :example:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
+    - another selection
+    - example1:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
+
+# ------------------------------ ? ------------------------------ #
+
+8:
+  :id:
+    :d: 8
+    :h: '0x08'
+  :properties:
+    :short_name: DIA-COD-READ
+    :long_name: Diagnostics READ Coding Data Universal
+  :klass: BaseCommand
+
+11:
+  :id:
+    :d: 11
+    :h: '0x0B'
+  :properties:
+    :short_name: DIA-STATUS
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :notes:
+      - radio got an error after this
+      - :example:
+        - DIA     RAD     0B              --
+        - RAD     DIA     DIA-D           30 00 30 30 30 30 30 30 00 00
+      - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
+      - another error and the next field was STATUS AUX ADAPTER
+
+# ------------------------------ GENERAL FUNCTIONS ------------------------------ #
+
+0x0C:
+  :id:
+    :d: 12
+    :h: '0x0C'
+  :properties:
+    :short_name: DIA-VEH-CTRL
+    :long_name: Vehicle Control
+    :verbose: true
+  :klass: BaseCommand
+  # :parameters:
+  #   :action:
+  #     :type: :map
+  #     :dictionary:
+  #       0x07: Seek Up
+  #       0x08: Seek Down
+  #       0x09: Activate Audio Button?
+  #       0x0B: Radio Off
+  #       0x0C: Radio On
+  # :index:
+  #   :action: 0
+  :meta:
+    :notes:
+
+# ------------------------------ SPECIFIC FUNCTIONS ------------------------------ #
+
+48:
+  :id:
+    :d: 48
+    :h: '0x30'
+  :properties:
+    :short_name: SLF_CHK
+    :long_name: Unknown
+  :klass: BaseCommand
+
+63:
+  :id:
+    :d: 63
+    :h: '0x3F'
+  :properties:
+    :short_name: EHC-DIG
+    :long_name: Unknown
+  :klass: BaseCommand
+
+0x60:
+  :id:
+    :d: 96
+    :h: '0x60'
+  :properties:
+    :short_name: EWS-ISN?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+0x6B:
+  :id:
+    :d: 107
+    :h: '0x6B'
+  :properties:
+    :short_name: EWS-INT
+    :long_name: EWS Internal State
+  :klass: BaseCommand
+
+0x69:
+  :id:
+    :d: 105
+    :h: '0x69'
+  :properties:
+    :short_name: EWS-COD?
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+
+0x65:
+  :id:
+    :d: 101
+    :h: '0x65'
+  :properties:
+    :short_name: EWS-KEY
+    :long_name: Diagnostics?
+  :klass: BaseCommand
+
+0x9c:
+  :id:
+    :d: 156
+    :h: '0x9C'
+  :properties:
+    :short_name: DIA-TRANS
+    :long_name: Diagnostics Transport Mode?
+  :klass: BaseCommand
+  :parameters:
+    :mode:
+      :type: :switch
+      :states:
+        0x02: :on
+        0x00: :off
+  :index:
+    :mode: 0
+  :meta:
+    - also send to LCM?
+    - DIA	LCM	9C 00
+    - DIA	LCM	9C 00
+
+0x9F:
+  :id:
+    :d: 159
+    :h: '0x9F'
+  :properties:
+    :short_name: EWS-X?
+    :long_name: Unknown?
+  :klass: BaseCommand
+
+# ************************************************************************* #
+#                               MODULE RESPONSES
+# ************************************************************************* #
+
+0xA0:
+  :id:
+    :d: 160
+  :properties:
+    :short_name: DIA-DATA
+    :long_name: Diagnostics Data
+  :klass: BaseCommand
+
+# ************************************************************************* #
+#                                  NOT SEEN YET
+# ************************************************************************* #
+0x06:
+  :id:
+    :d: 6
+    :h: '0x06'
+  :properties:
+    :short_name: DIA-MEM-READ
+    :long_name: Diagnostics Read Memory
+  :klass: BaseCommand
+  # :parameters:
+  #   :data:
+  #     :type: :integer
+  :meta:
+    - the read memory function in INPA?
+    - used to populate BMBT service mode displays
+0x07:
+  :id:
+    :d: 7
+    :h: '0x07'
+  :properties:
+    :short_name: DIA-MEM-WRITE
+    :long_name: Diagnostics Write Memory
+  :klass: BaseCommand
+  :meta:
+    - if above is correct, then presumably the write...
+0x09:
+  :id:
+    :d: 9
+    :h: '0x09'
+  :properties:
+    :short_name: DIACOD-WRITE
+    :long_name: Diagnostics WRITE Coding Data
+  :klass: BaseCommand
+
+
+# ************************************************************************* #
+#                             SEEN BUT UNCONFIRMED!
+# ************************************************************************* #
+88:
+  :id:
+    :d: 88
+    :h: '0x58'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+53:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+53:
+  :id:
+    :d: 53
+    :h: '0x35'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+51:
+  :id:
+    :d: 51
+    :h: '0x33'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+131:
+  :id:
+    :d: 131
+    :h: '0x83'
+  :properties:
+    :short_name: IHK-?
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - IHK
+125:
+  :id:
+    :d: 125
+    :h: '0x7D'
+  :properties:
+    :short_name: GM3-?
+    :long_name: Unknown
+  :klass: BaseCommand
+0x38:
+  :id:
+    :d: 56
+    :h: '0x38'
+  :properties:
+    :short_name: CDC-REQ
+    :long_name: CD Status Request
+  :klass: CDChangerRequest
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: Status!
+        0x01: Stop!
+        0x02: Resume!?
+        0x03: Play!
+        0x04: Scan! (RWD/FFD)
+        0x05: Seek! (Previous/Next)
+        0x06: Change Disc!
+        0x07: Scan Mode!
+        0x08: Random Mode!
+        0x0A: Change Track!
+    :mode:
+      :type: :integer
+  :index:
+    :control: 0
+    :mode: 1
+
+0x39:
+  :id:
+    :d: 57
+    :h: '0x39'
+  :properties:
+    :short_name: CDC
+    :long_name: CDC Status
+  :klass: ParameterizedCommand
+  :index:
+    :control: 0
+    :status: 1
+    :magazine: 2
+    :loader: 3
+    :b4: 4
+    :cd: 5
+    :track: 6
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: Stopped
+        0x01: (BM53) Ready?
+        0x02: Playing
+        0x03: FFW
+        0x04: RWD
+        0x05: Next Track
+        0x06: Previous Track
+        0x07: Pending
+        0x08: CDs Ready
+        0x09: CD Check
+        0x0a: Eject!
+      :notes:
+        - when CD play is first requested, CDC sends back 0x00
+        - it's not until it responds with 0x02 that the audio is routed
+    :status:
+      :type: :map
+      :label: Playing
+      :dictionary:
+        0x02: Stopped
+        0x09: Playing
+        0x82: (BM53) Stopped
+        0x89: (BM53) Playing
+        0x8c: (BM53) Ready?
+    :magazine:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x08: Slot Empty!
+    :loader:
+      :type: :bit_array
+      :parameters:
+        :cd1:
+          :type: :switch
+          :label: CD6
+          :states:
+            0: :off
+            1: :on
+        :cd2:
+          :type: :switch
+          :label: CD5
+          :states:
+            0: :off
+            1: :on
+        :cd3:
+          :type: :switch
+          :label: CD4
+          :states:
+            0: :off
+            1: :on
+        :cd4:
+          :type: :switch
+          :label: CD3
+          :states:
+            0: :off
+            1: :on
+        :cd5:
+          :type: :switch
+          :label: CD2
+          :states:
+            0: :off
+            1: :on
+        :cd6:
+          :type: :switch
+          :label: CD1
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :cd1: 2
+        :cd2: 3
+        :cd3: 4
+        :cd4: 5
+        :cd5: 6
+        :cd6: 7
+    :b4:
+      :type: :integer
+    :cd:
+      :type: :integer
+    :track:
+      :type: :integer
+66:
+  :id:
+    :d: 66
+    :h: '0x42'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+67:
+  :id:
+    :d: 67
+    :h: '0x43'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+68:
+  :id:
+    :d: 68
+    :h: '0x44'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+97:
+  :id:
+    :d: 97
+    :h: '0x61'
+  :properties:
+    :short_name: EHC-STAT?
+    :long_name: Unknown
+  :klass: BaseCommand
+0x70:
+  :id:
+    :h: '0x70'
+    :d: 112
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+
+118:
+  :id:
+    :d: 118
+    :h: '0x76'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      - LCM
+  :notes:
+    - GM can sent 0x76 to control lights..?
+0x82:
+    :properties:
+      :short_name: "???"
+      :long_name: Unknown
+    :klass: BaseCommand
+191:
+  :id:
+    :d: 191
+    :h: '0xBF'
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: BaseCommand
+  :meta:
+    :senders:
+      0xD0: LCM
+    :recipients:
+      0x04: Unknown!
+    :notes:
+      - i've only seen it sent from LCM and exclusively to 0x04 which I haven't identified
+      - it looks to be binary data but a 20 character string is included in the message (a_message.overlay(20, 90))
+      - +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 90  | 91  | 92  | 93  | 94  | 95  | 96  | 97  | 98  | 99  | 100 | 101 | 102 | 103 | 104 | 105 | 106 | 107 | 108 | 109 |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG | ARG |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 20  | 20  | 20  | 52  | 41  | 4E  | 47  | 45  | 20  | 20  | 32  | 37  | 20  | 4B  | 4D  | 20  | 20  | 20  | 20  | 20  |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        | 32  | 32  | 32  | 82  | 65  | 78  | 71  | 69  | 32  | 32  | 50  | 55  | 32  | 75  | 77  | 32  | 32  | 32  | 32  | 32  |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+        |     |     |     |  R  |  A  |  N  |  G  |  E  |     |     |  2  |  7  |     |  K  |  M  |     |     |     |     |     |
+        +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
