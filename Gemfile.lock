@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:piersholt/log_actually.git
+  revision: e73172dfc7cad2e11dda2885f03eed2c9e0f67d1
+  branch: master
+  specs:
+    log_actually (1.0.0.beta1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,6 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  log_actually!
   pry-byebug
   rbczmq
   rspec

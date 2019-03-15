@@ -11,3 +11,4 @@ gem 'serialport'
 gem 'awesome_print'
 
 gem 'rbczmq'
+gem 'log_actually', git: 'git@github.com:piersholt/log_actually.git', branch: 'master'
