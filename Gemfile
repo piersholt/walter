@@ -12,3 +12,4 @@ gem 'rspec'
 gem 'serialport'
 
 gem 'log_actually', git: 'git@github.com:piersholt/log_actually.git', branch: 'master'
+gem 'yabber', git: 'git@github.com:piersholt/yabber.git', branch: 'master'
