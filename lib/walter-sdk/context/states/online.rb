@@ -148,6 +148,7 @@ module Wolfgang
           audio:  Wolfgang::UserInterface::Controller::AudioController,
           bluetooth:  Wolfgang::UserInterface::Controller::BluetoothController
         )
+        new_context
       rescue StandardError => e
         with_backtrace(logger, e)
       end

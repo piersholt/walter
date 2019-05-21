@@ -12,8 +12,7 @@ module Wolfgang
 
     attr_reader :state
 
-    attr_accessor :commands, :notifications, :manager, :audio
-    attr_writer :ui
+    attr_accessor :commands, :notifications, :manager, :audio, :ui
 
     def initialize
       @state = Offline.new
