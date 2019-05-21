@@ -138,7 +138,7 @@ class Interface
             #   1. PendingData
             #   2. NoData
             changed
-            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, byte_basic: byte_basic, pos: stream.pos)
+            notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, byte_basic: byte_basic)
 
             input_buffer.push(byte_basic)
           rescue EncodingError => e
