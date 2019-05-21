@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:piersholt/walter-shared.git
+  remote: https://github.com/piersholt/walter-shared.git
   revision: 1aaaca607fd9ddcb615a4d00d888a1755d479d9e
   branch: master
   specs:

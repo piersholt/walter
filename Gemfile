@@ -11,5 +11,5 @@ gem 'rbczmq'
 gem 'rspec'
 gem 'serialport'
 
-gem 'walter-shared', git: 'git@github.com:piersholt/walter-shared.git',
+gem 'walter-shared', git: 'https://github.com/piersholt/walter-shared.git',
                      branch: 'master'
