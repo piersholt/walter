@@ -1,18 +1,9 @@
 GIT
-  remote: git@github.com:piersholt/log_actually.git
-  revision: e73172dfc7cad2e11dda2885f03eed2c9e0f67d1
+  remote: git@github.com:piersholt/walter-shared.git
+  revision: 1aaaca607fd9ddcb615a4d00d888a1755d479d9e
   branch: master
   specs:
-    log_actually (1.0.0.beta1)
-
-GIT
-  remote: git@github.com:piersholt/yabber.git
-  revision: 9e8cdc74a03ec2953e263ec456a5f1ea6f7ab00c
-  branch: master
-  specs:
-    yabber (1.0.0.beta1)
-      log_actually (~> 1.0.0.beta1)
-      rbczmq (= 1.7.9)
+    walter-shared (1.0.0.beta1)
 
 GEM
   remote: https://rubygems.org/
@@ -49,12 +40,11 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  log_actually!
   pry-byebug
   rbczmq
   rspec
   serialport
-  yabber!
+  walter-shared!
 
 RUBY VERSION
    ruby 2.4.0p0

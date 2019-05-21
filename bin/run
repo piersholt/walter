@@ -12,6 +12,9 @@ begin
 
   require 'pry-byebug'
 
+  require 'walter/shared/log_actually'
+  require 'walter/shared/yabber'
+
   require 'observer'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
@@ -23,9 +26,6 @@ begin
     e.backtrace.each { |line| puts line }
     exit
   end
-
-  require 'log_actually'
-  require 'yabber'
 
   setup_path('lib')
   setup_path('src')
