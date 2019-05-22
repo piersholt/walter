@@ -13,6 +13,12 @@ class Virtual
         notify_of_button(command)
       end
 
+      # 0x32
+      def handle_mfl_vol_button(command)
+        logger.debug(moi) { "MFL VOL -> #{command.pretty}" }
+        notify_of_button(command)
+      end
+
       private
 
       def notify_of_button(command)

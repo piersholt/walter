@@ -2,6 +2,10 @@ module Wolfgang
   class Audio
     module Defaults
       # User Control
+      
+      def volume(context)
+        false
+      end
 
       def overlay(context)
         false

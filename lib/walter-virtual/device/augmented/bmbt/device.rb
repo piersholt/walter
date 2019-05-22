@@ -7,7 +7,7 @@ class Virtual
     include Capabilities::OnBoardMonitor
     include Sent
 
-    PUBLISH = [BMBT_A, BMBT_B, BMBT_I].freeze
+    PUBLISH = [BMBT_A, BMBT_B, BMBT_I, MFL_VOL].freeze
     SUBSCRIBE = [RAD_LED].freeze
 
     PROC = 'AugmentedBMBT'
@@ -40,6 +40,9 @@ class Virtual
         # nothing
       when BMBT_I
         # nothing
+      when MFL_VOL
+        logger.debug(moi) { "Tx: MFL_VOL (#{DataTools.d2h(MFL_VOL)})" }
+        handle_mfl_vol_button(message.command)
       end
     end
 

@@ -22,6 +22,10 @@ class Command
       action.parameters[:magnitude].pretty
     end
 
+    def state
+      :press
+    end
+
     # @override
     # def to_s
     #   str_buffer = "#{sn}\t"

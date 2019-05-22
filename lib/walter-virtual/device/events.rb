@@ -42,6 +42,8 @@ class Vehicle
     BMBT_POWER = :bmbt_power
     BMBT_NEXT = :bmbt_next
     BMBT_PREV = :bmbt_prev
+    BMBT_VOL_DOWN = :bmbt_vol_down
+    BMBT_VOL_UP   = :bmbt_vol_up
 
     MFL_NEXT     = :mfl_next
     MFL_PREV     = :mfl_prev

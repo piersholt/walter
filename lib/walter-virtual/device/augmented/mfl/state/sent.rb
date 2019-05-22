@@ -17,8 +17,7 @@ class Virtual
         # 0x32
         def handle_mfl_vol_button(command)
           logger.debug(moi) { "MFL_VOL -> #{command.pretty}" }
-          changed
-          notify_observers(:button, button: command.button, state: :mfl_null, source: :mfl)
+          notify_of_button(command)
         end
 
         private

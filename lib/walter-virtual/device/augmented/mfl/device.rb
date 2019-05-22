@@ -6,8 +6,8 @@ class Virtual
   class AugmentedMFL < AugmentedDevice
     include State
     include Capabilities::MultiFunctionWheel
-    
-    PUBLISH = [MFL_VOL, MFL_FUNC].freeze
+
+    PUBLISH = [MFL_VOL, MFL_FUNC, MFL_VOL].freeze
     SUBSCRIBE = [].freeze
 
     PROC = 'AugmentedMFL'

@@ -2147,11 +2147,13 @@
             0b01: Hold
             0b10: Release
 0x32:
+  :schemas:
+    - :bmbt
   :id:
     :d: 50
     :h: '0x32'
   :properties:
-    :short_name: VOL
+    :short_name: MLF-VOL
     :long_name: Multifunction Steering Wheel (Volume)
   :klass: MFLVolume
   :index:
@@ -2212,6 +2214,39 @@
             14: 14
             15: 15
             16: 16
+  :meta:
+    :notes:
+      - 16x9 display issues a different volume command
+  :bmbt:
+    :id:
+      :d: 50
+      :h: '0x32'
+    :properties:
+      :short_name: BMBT-VOL*
+      :long_name: BMBT Volume Control
+    :klass: MFLVolume
+    :index:
+      :action: 0
+    :parameters:
+      :action:
+        :type: :bit_array
+        :index:
+          :direction: 7
+          :magnitude: !ruby/range
+                        begin: 0
+                        end: 3
+                        excl: false
+        :parameters:
+          :direction:
+            :type: :map
+            :dictionary:
+              0: Volume Down
+              1: Volume Up
+            :map:
+              0: :bmbt_vol_down
+              1: :bmbt_vol_up
+          :magnitude:
+            :type: :integer
 0x47:
   :id:
     :d: 71

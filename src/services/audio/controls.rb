@@ -16,7 +16,11 @@ module Wolfgang
         BMBT_PREV => TWO_STAGE_CONTROL,
         MFL_NEXT => TWO_STAGE_CONTROL,
         MFL_PREV => TWO_STAGE_CONTROL,
-        MFL_TEL => STATELESS_CONTROL
+        MFL_TEL => STATELESS_CONTROL,
+        MFL_VOL_UP => STATELESS_CONTROL,
+        MFL_VOL_DOWN => STATELESS_CONTROL,
+        BMBT_VOL_UP => STATELESS_CONTROL,
+        BMBT_VOL_DOWN => STATELESS_CONTROL
       }.freeze
 
       CONTROL_ROUTES = {
@@ -30,7 +34,11 @@ module Wolfgang
                        scan_backward: STATEFUL },
         MFL_PREV => { seek_backward: STATELESS,
                       scan_backward: STATEFUL },
-        MFL_TEL => { pause: STATELESS }
+        MFL_TEL => { pause: STATELESS },
+        MFL_VOL_UP => { volume: STATELESS },
+        MFL_VOL_DOWN => { volume: STATELESS },
+        BMBT_VOL_UP => { volume: STATELESS },
+        BMBT_VOL_DOWN => { volume: STATELESS }
       }.freeze
     end
   end
