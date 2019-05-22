@@ -27,8 +27,23 @@ begin
     exit
   end
 
+  LOG_PATH = 'log'.freeze
+  LOG_BIN_PATH = LOG_PATH + '/bin'
+  LOG_FRAME_PATH = LOG_PATH + '/frame'
+
+  def dir_check
+    setup_log_path unless File.exist?(LOG_PATH)
+  end
+
+  def setup_log_path
+    FileUtils.mkdir_p(LOG_BIN_PATH, verbose: true)
+    FileUtils.mkdir_p(LOG_FRAME_PATH, verbose: true)
+  end
+
   setup_path('lib')
   setup_path('src')
+
+  dir_check
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
