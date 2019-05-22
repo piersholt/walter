@@ -182,4 +182,24 @@ module DebugTools
     t.thread_variable_set(:sleep_enabled, true)
     # puts "[#{t[:name]}] :sleep_enabled => #{sleepy?}"
   end
+
+  # Yabber
+
+  LOG_LEVEL_MAP = {
+    d: :debug,
+    i: :info,
+    w: :warn,
+    e: :error
+  }.freeze
+
+  YABBER_LOGS = %i[messaging client publisher server subscriber].freeze
+
+  def yap(level = :w)
+    return false unless LOG_LEVEL_MAP.key?(level)
+    YABBER_LOGS.each do |log|
+      LOGGER.info('DebugTools') { "#{log} to #{LOG_LEVEL_MAP[level].upcase}" }
+      LogActually.public_send(log)&.public_send(level)
+    end
+    true
+  end
 end
