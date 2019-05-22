@@ -16,7 +16,7 @@ module Wolfgang
 
     def initialize
       @state = Offline.new
-      Client.pi
+      Client.wolfgang
     end
 
     # STATES -------------------------------------------------------------

@@ -33,7 +33,7 @@ class Walter
 
     apply_debug_defaults
 
-    Publisher.announcement(:walter)
+    Publisher.walter
 
     # @wolfgang = Wolfgang::Service.new
     # @wolfgang.bus = @bus
