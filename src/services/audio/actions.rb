@@ -6,9 +6,14 @@ module Wolfgang
     module Actions
       include Constants
 
-      def volume
-        logger.debug(AUDIO) { '#volume()' }
-        @state.volume(self)
+      def volume_up
+        logger.debug(AUDIO) { '#volume_up()' }
+        @state.volume_up(self)
+      end
+
+      def volume_down
+        logger.debug(AUDIO) { '#volume_down()' }
+        @state.volume_down(self)
       end
 
       def overlay

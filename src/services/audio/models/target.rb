@@ -6,6 +6,7 @@ module Wolfgang
     class Target
       include Constants
       include Observable
+      include Messaging::API
 
       PLAYER = 'Player'
       CONNECTED = 'Connected'
@@ -36,6 +37,16 @@ module Wolfgang
 
       def player_removed(new_player)
         attributes[PLAYER] = new_player
+      end
+
+      # METHODS ---------------------------------------------------------------
+
+      def volume_up
+        volume_up!
+      end
+
+      def volume_down
+        volume_down!
       end
 
       # UPDATE ------------------------------------------------------------

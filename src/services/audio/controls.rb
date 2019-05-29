@@ -35,10 +35,10 @@ module Wolfgang
         MFL_PREV => { seek_backward: STATELESS,
                       scan_backward: STATEFUL },
         MFL_TEL => { pause: STATELESS },
-        MFL_VOL_UP => { volume: STATELESS },
-        MFL_VOL_DOWN => { volume: STATELESS },
-        BMBT_VOL_UP => { volume: STATELESS },
-        BMBT_VOL_DOWN => { volume: STATELESS }
+        MFL_VOL_UP => { volume_up: STATELESS },
+        MFL_VOL_DOWN => { volume_down: STATELESS },
+        BMBT_VOL_UP => { volume_up: STATELESS },
+        BMBT_VOL_DOWN => { volume_down: STATELESS }
       }.freeze
     end
   end

@@ -2,8 +2,12 @@ module Wolfgang
   class Audio
     module Defaults
       # User Control
-      
-      def volume(context)
+
+      def volume_up(context)
+        false
+      end
+
+      def volume_down(context)
         false
       end
 

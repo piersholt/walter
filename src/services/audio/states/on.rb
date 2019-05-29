@@ -27,6 +27,14 @@ module Wolfgang
 
       # USER CONTROL
 
+      def volume_up(context)
+        context.target.volume_up
+      end
+
+      def volume_down(context)
+        context.target.volume_down
+      end
+
       def power(context)
         result = context.player.power
         logger.info(AUDIO_ON) { "#power() => #{result}" }
