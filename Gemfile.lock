@@ -1,9 +1,10 @@
 GIT
   remote: https://github.com/piersholt/walter-shared.git
-  revision: 5d8a16bfdcd9a055e1bec84c429d68a85efe66cc
+  revision: f727b679c4aadc9ab17448739f890a3f702cfb0c
   branch: master
   specs:
-    walter-shared (1.0.0.beta1)
+    walter-shared (1.0.1)
+      rbczmq (~> 1.7)
 
 GEM
   remote: https://rubygems.org/
@@ -63,7 +64,6 @@ DEPENDENCIES
   capistrano
   capistrano-rbenv
   pry-byebug
-  rbczmq
   rspec
   serialport
   walter-shared!

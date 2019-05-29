@@ -7,7 +7,6 @@ ruby '2.4.0'
 # gem 'pry'
 gem 'awesome_print'
 gem 'pry-byebug'
-gem 'rbczmq'
 gem 'rspec'
 gem 'serialport'
 
