@@ -8,6 +8,14 @@ module Wolfgang
       include Defaults
       include Constants
 
+      def initialize(context)
+        context.manager!
+        context.audio!
+        context.notifications!
+        context.ui!
+        context.alive?
+      end
+
       def open(___ = nil)
         logger.debug(WOLFGANG_ONLINE) { '#open' }
         false
