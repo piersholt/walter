@@ -40,7 +40,7 @@ class Walter
   end
 
   def setup_plugin
-    @wolfgang = Wolfgang::Service.new
+    @wolfgang = Wolfgang::ApplicationContext.new
     # @wolfgang.bus = context
   end
 

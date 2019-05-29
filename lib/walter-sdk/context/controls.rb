@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wolfgang
-  class Service
+  class ApplicationContext
     # Comment
     module Controls
       include Constants

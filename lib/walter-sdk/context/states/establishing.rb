@@ -2,7 +2,7 @@
 
 # Top level namespace
 module Wolfgang
-  class Service
+  class ApplicationContext
     # Wolfgang Service Establishing State
     class Establishing
       include Defaults

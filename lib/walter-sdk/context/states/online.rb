@@ -2,7 +2,7 @@
 
 # Top level namespace
 module Wolfgang
-  class Service
+  class ApplicationContext
     # Wolfgang Service Online State
     class Online
       include Defaults

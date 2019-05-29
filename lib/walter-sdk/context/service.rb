@@ -3,7 +3,7 @@
 # Top level namespace
 module Wolfgang
   # Wolfgang Service
-  class Service
+  class ApplicationContext
     include Logging
     include Constants
     include Observable

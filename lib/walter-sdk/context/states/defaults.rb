@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wolfgang
-  class Service
+  class ApplicationContext
     # Thingo
     module Defaults
       # User Control
