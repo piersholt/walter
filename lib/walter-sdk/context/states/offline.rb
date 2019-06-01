@@ -25,7 +25,12 @@ module Wolfgang
       end
 
       def online!(context)
-        context.change_state(Online.new(context))
+        context.change_state(Online.new)
+        context.manager!
+        context.audio!
+        context.notifications!
+        context.ui!
+        context.alive?
       end
 
       def offline!(context)
