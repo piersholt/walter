@@ -24,7 +24,7 @@ class Walter
                             multiplexer: @multiplexer,
                             demultiplexer: @demultiplexer)
     setup_api(context)
-    setup_plugin
+    setup_sdk
 
     # For exit event
     add_observer(global_listener)
@@ -34,14 +34,6 @@ class Walter
     apply_debug_defaults
 
     Publisher.walter
-
-    # @wolfgang = Wolfgang::Service.new
-    # @wolfgang.bus = @bus
-  end
-
-  def setup_plugin
-    @wolfgang = Wolfgang::ApplicationContext.new
-    # @wolfgang.bus = context
   end
 
   def launch
@@ -201,5 +193,9 @@ class Walter
       device = context.public_send(target)
       device.add_observer(vehicle_display)
     end
+  end
+
+  def setup_sdk
+    @wolfgang = Wolfgang::ApplicationContext.new
   end
 end

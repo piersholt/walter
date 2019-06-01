@@ -30,17 +30,7 @@ module Wolfgang
         context.offline!
       end
 
-      def manager!(context)
-        logger.debug(WOLFGANG_ONLINE) { '#manager' }
-        context.manager = create_manager(context)
-        true
-      end
-
-      def audio!(context)
-        logger.debug(WOLFGANG_ONLINE) { '#audio' }
-        context.audio = create_audio(context)
-        true
-      end
+      # APPLICATION CONTEXT -----------------------------------------------------
 
       def notifications!(context)
         logger.debug(WOLFGANG_ONLINE) { '#notifications' }
@@ -53,6 +43,22 @@ module Wolfgang
         context.ui = create_ui(context)
         true
       end
+
+      # SERVICES --------------------------------------------------------------
+
+      def manager!(context)
+        logger.debug(WOLFGANG_ONLINE) { '#manager' }
+        context.manager = create_manager(context)
+        true
+      end
+
+      def audio!(context)
+        logger.debug(WOLFGANG_ONLINE) { '#audio' }
+        context.audio = create_audio(context)
+        true
+      end
+
+      # STATES ----------------------------------------------------------------
 
       def offline!(context)
         context.change_state(Offline.new)
