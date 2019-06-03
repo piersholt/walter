@@ -87,11 +87,11 @@ module Wolfgang
         def wolfgang(action)
           LogActually.ui.debug(NAME) { "#wolfgang(#{action})" }
           case action
-          when Service::Online
+          when ApplicationContext::Online
             index
-          when Service::Establishing
+          when ApplicationContext::Establishing
             index
-          when Service::Offline
+          when ApplicationContext::Offline
             index
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
