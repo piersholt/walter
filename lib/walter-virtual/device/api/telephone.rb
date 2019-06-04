@@ -6,12 +6,14 @@ module API
     include BaseAPI
     include Command::Aliases
 
+    # 0x2b
     def led(from: :tel, to: :anzv, **arguments)
-      try(from, to, 0x2b, arguments)
+      try(from, to, TEL_LED, arguments)
     end
 
+    # 0x2c
     def status(from: :tel, to: :anzv, **arguments)
-      try(from, to, 0x2c, arguments)
+      try(from, to, TEL_STATE, arguments)
     end
 
     # 0x21
@@ -30,8 +32,8 @@ module API
     end
 
     # 0x24
-    def hud(from: :rad, to: :glo_h, **arguments)
-      # format_chars!(arguments)
+    def hud(from: :tel, to: :gfx, **arguments)
+      format_chars!(arguments)
       try(from, to, TXT_HUD, arguments)
     end
   end

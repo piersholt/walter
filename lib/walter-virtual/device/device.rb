@@ -14,6 +14,8 @@ require "#{device_root}/capabilities/capabilities"
 require "#{device_root}/device_builder"
 require "#{device_root}/dynamic"
 
+# AUGMENTED -------------------------------------------------------------------
+
 puts "\tLoading walter-virtual/device/augmented"
 
 augmented_root = 'device/augmented'
@@ -62,6 +64,8 @@ require "#{mfl_root}/state/sent"
 require "#{mfl_root}/state"
 require "#{mfl_root}/device"
 
+# EMULATED --------------------------------------------------------------------
+
 puts "\tLoading walter-virtual/device/emulated"
 
 emualted_root = 'device/emulated'
@@ -77,8 +81,13 @@ require "#{emualted_root}/dsp/device"
 
 require "#{emualted_root}/rad/device"
 
-require "#{emualted_root}/tel/handlers"
-require "#{emualted_root}/tel/device"
+# Telephone
+tel_root = emualted_root + '/tel'
+require "#{tel_root}/constants"
+require "#{tel_root}/state/model"
+require "#{tel_root}/received"
+require "#{tel_root}/handlers"
+require "#{tel_root}/device"
 
 require "#{emualted_root}/diagnostics/device"
 

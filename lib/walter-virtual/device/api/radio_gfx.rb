@@ -4,6 +4,8 @@ module API
   module RadioGFX
     include BaseAPI
 
+    # @DEPRECATED
+
     COMMAND_ID = 0x46
     TO_DEFAULT = Devices::RAD
     FROM_DEFAULT = Devices::GFX

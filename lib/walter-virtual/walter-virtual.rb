@@ -18,6 +18,8 @@ LogActually.is_all_around(:bmbt)
 LogActually.bmbt.i
 LogActually.is_all_around(:mfl)
 LogActually.mfl.i
+LogActually.is_all_around(:tel)
+LogActually.tel.i
 
 require 'device/device'
 

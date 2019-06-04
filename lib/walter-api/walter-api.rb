@@ -9,6 +9,8 @@ LogActually.is_all_around(:controls)
 LogActually.controls.d
 LogActually.is_all_around(:audio)
 LogActually.audio.d
+LogActually.is_all_around(:tel)
+LogActually.tel.d
 
 puts "\tLoading walter-api/display"
 
