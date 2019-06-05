@@ -23,27 +23,27 @@ module Wolfgang
 
       def load_debug
         logger.debug(AUDIO) { '#load_debug()' }
-        ui.launch(:debug, :index)
+        @state.load_debug(self)
       end
 
       def load_nodes
         logger.debug(AUDIO) { '#load_nodes()' }
-        ui.launch(:nodes, :index)
+        @state.load_debug(self)
       end
 
       def load_services
         logger.debug(AUDIO) { '#load_services()' }
-        ui.launch(:services, :index)
+        @state.load_debug(self)
       end
 
       def load_bluetooth(*args)
         logger.debug(AUDIO) { "#load_bluetooth(#{args})" }
-        ui.launch(:bluetooth, :index)
+        @state.load_debug(self, args)
       end
 
       def load_audio
         logger.debug(AUDIO) { '#load_audio()' }
-        ui.launch(:audio, :now_playing)
+        @state.load_debug(self)
       end
     end
   end

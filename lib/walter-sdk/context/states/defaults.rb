@@ -41,6 +41,26 @@ module Wolfgang
       def ui!(___)
         false
       end
+
+      def load_debug(___, ___ = nil)
+        false
+      end
+
+      def load_nodes(___)
+        false
+      end
+
+      def load_services(___)
+        false
+      end
+
+      def load_bluetooth(___, *)
+        false
+      end
+
+      def load_audio(___)
+        false
+      end
     end
   end
 end

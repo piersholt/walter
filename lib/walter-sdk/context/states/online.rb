@@ -49,6 +49,29 @@ module Wolfgang
         true
       end
 
+      # UI --------------------------------------------------------------
+
+      def load_debug(context)
+        context.ui.launch(:debug, :index)
+      end
+
+      def load_nodes(context)
+        context.ui.launch(:nodes, :index)
+      end
+
+      def load_services(context)
+        context.ui.launch(:services, :index)
+      end
+
+      def load_bluetooth(context, *)
+        context.ui.launch(:bluetooth, :index)
+      end
+
+      def load_audio(context)
+        context.ui.launch(:audio, :now_playing)
+      end
+
+
       # SERVICES --------------------------------------------------------------
 
       def manager!(context)
