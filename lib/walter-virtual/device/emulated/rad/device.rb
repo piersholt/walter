@@ -2,11 +2,12 @@
 
 # Comment
 class Virtual
+  # Comment
   class SimulatedRadio < EmulatedDevice
     include Capabilities::Radio
 
-    PROC = 'SimulatedRadio'.freeze
-    SUBSCRIBE = [PING, MFL_VOL, MFL_FUNC, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, CDC_REP, TEL_DATA].freeze
+    PROC = 'SimulatedRadio'
+    SUBSCRIBE = [PING, MENU_GFX].freeze
 
     def logger
       LogActually.rad
@@ -17,21 +18,9 @@ class Virtual
     end
 
     def handle_virtual_receive(message)
-      # logger.fatal(PROC) { "handle_virtual_receive: #{message.command.d}" }
       command_id = message.command.d
       return false unless subscribe?(command_id)
       case command_id
-      when MFL_FUNC
-        # logger.debug(PROC) { "Rx: Handling: MFL-FUNC" }
-        false
-      when MFL_VOL
-        # logger.debug(PROC) { "Rx: Handling: MFL-FUNC" }
-        false
-      when BMBT_A
-        # logger.debug(PROC) { "Rx: Handling: BMBT-1" }
-        false
-      when BMBT_B
-        false
       when MENU_GFX
         logger.debug(PROC) { 'Rx: Handling: MENU_GFX' }
         handle_menu_gfx(message.command)
