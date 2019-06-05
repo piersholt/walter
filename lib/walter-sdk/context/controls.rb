@@ -11,12 +11,14 @@ module Wolfgang
 
       CONTROL_REGISTER = {
         BMBT_AUX_HEAT => STATELESS_CONTROL,
-        BMBT_OVERLAY => STATELESS_CONTROL
+        BMBT_OVERLAY => STATELESS_CONTROL,
+        BMBT_TEL => STATEFUL_CONTROL
       }.freeze
 
       CONTROL_ROUTES = {
         BMBT_AUX_HEAT => { load_debug: :stateless },
-        BMBT_OVERLAY => { load_audio: :stateless }
+        BMBT_OVERLAY => { load_audio: :stateless },
+        BMBT_TEL => { load_bluetooth: STATEFUL }
       }.freeze
 
       def load_debug
@@ -32,6 +34,11 @@ module Wolfgang
       def load_services
         logger.debug(AUDIO) { '#load_services()' }
         ui.launch(:services, :index)
+      end
+
+      def load_bluetooth(*args)
+        logger.debug(AUDIO) { "#load_bluetooth(#{args})" }
+        ui.launch(:bluetooth, :index)
       end
 
       def load_audio

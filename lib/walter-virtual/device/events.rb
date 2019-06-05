@@ -38,6 +38,8 @@ class Vehicle
 
     BMBT_AUX_HEAT = :bmbt_aux_heat
 
+    BMBT_TEL = :bmbt_tel
+
     BMBT_OVERLAY = :bmbt_overlay
     BMBT_POWER = :bmbt_power
     BMBT_NEXT = :bmbt_next
@@ -55,7 +57,7 @@ class Vehicle
     MFL_RT_TEL   = :mfl_rt_tel
 
     BMBT_PLAYBACK = [BMBT_POWER, BMBT_NEXT, BMBT_PREV].freeze
-    BMBT_ALL = [BMBT_MENU, BMBT_AUX_HEAT, BMBT_CONFIRM, BMBT_NEXT, BMBT_PREV, BMBT_LEFT, BMBT_RIGHT].freeze
+    BMBT_ALL = [BMBT_TEL, BMBT_MENU, BMBT_AUX_HEAT, BMBT_CONFIRM, BMBT_NEXT, BMBT_PREV, BMBT_LEFT, BMBT_RIGHT].freeze
 
     MFL_PLAYBACK = [MFL_NEXT, MFL_PREV, MFL_VOL_DOWN, MFL_VOL_UP].freeze
     MFL_ALL = [MFL_NEXT, MFL_PREV, MFL_VOL_DOWN, MFL_VOL_UP, MFL_TEL, MFL_RT_RAD, MFL_RT_TEL].freeze
