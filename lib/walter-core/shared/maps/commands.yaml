@@ -1753,9 +1753,15 @@
     :config:
       :type: :bit_array
       :parameters:
+        :unknown:
+          :type: :switch
+          :label: Unknown BM53?
+          :states:
+            0: :off
+            1: :on
         :audio_obc:
           :type: :switch
-          :label: Audio+OBC
+          :label: Audio+OBC (BM23)
           :states:
             0: :off
             1: :on
@@ -1772,6 +1778,7 @@
             0: :off
             1: :on
       :index:
+        :unknown: 0
         :info: 3
         :audio_obc: 6
         :main_menu: 7

@@ -6,9 +6,11 @@ module Capabilities
     module UserInterface
       include API::Radio
 
-      def main
+      def acknowledge_menu
         menu_rad(arguments: { state: 0b0000_0001 })
       end
+
+      alias main acknowledge_menu
 
       def menu_rad!(option = 0b0000_1110)
         menu_rad(arguments: { state: option })
