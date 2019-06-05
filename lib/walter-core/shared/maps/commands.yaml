@@ -1864,6 +1864,8 @@
         0x5e: Tape Dolby C
         0x5f: Tape Dolby OFF
 
+        0x80: Unknown Mode
+
         0x90: "Off (Reset)"
 
         0xFF: "On"
