@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/piersholt/walter-shared.git
-  revision: f727b679c4aadc9ab17448739f890a3f702cfb0c
+  revision: eb95febe99689c3f2f0739dc02aeca855e31014e
   branch: master
   specs:
-    walter-shared (1.0.1)
+    walter-shared (1.0.2)
       rbczmq (~> 1.7)
 
 GEM
