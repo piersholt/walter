@@ -22,11 +22,13 @@ module Wolfgang
 
       def device_connected(context, properties)
         logger.info(MANAGER_ENABLED) { ":device_connected => #{properties['Name']}" }
+        Vehicle::Telephone.instance.connected
         context.devices.update_device(properties, :connected)
       end
 
       def device_disconnected(context, properties)
         logger.info(MANAGER_ENABLED) { ":device_disconnected => #{properties['Name']}" }
+        Vehicle::Telephone.instance.disconnected
         context.devices.update_device(properties, :disconnected)
       end
     end
