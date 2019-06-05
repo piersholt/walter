@@ -9,6 +9,7 @@ module Wolfgang
     include Observable
     include Messaging::API
     include Controls
+    include Nodes
 
     attr_reader :state
 
@@ -17,7 +18,7 @@ module Wolfgang
 
     def initialize
       @state = Offline.new
-      Client.wolfgang
+      Client.wolfgang.pi
     end
 
     # STATES -------------------------------------------------------------
@@ -38,25 +39,14 @@ module Wolfgang
       @state.offline!(self)
     end
 
-    def establishing!
-      @state.establishing!(self)
-    end
-
     # METHODS -------------------------------------------------------------
-
-    def open
-      logger.debug(WOLFGANG) { '#open' }
-      @state.open(self)
-    end
-
-    def close
-      logger.debug(WOLFGANG) { '#close' }
-      @state.close(self)
-    end
 
     def alive?
       @state.alive?(self)
     end
+
+    alias open online!
+    alias close offline!
 
     def reply_block(context)
       proc do |reply, error|
@@ -81,6 +71,12 @@ module Wolfgang
 
     # APPLICATION CONTEXT -----------------------------------------------------
 
+    def ui
+      semaphore.synchronize do
+        @ui
+      end
+    end
+
     def notifications!
       @state.notifications!(self)
     end
@@ -89,13 +85,7 @@ module Wolfgang
       @state.ui!(self)
     end
 
-    def ui
-      Mutex.new.synchronize do
-        @ui
-      end
-    end
-
-    # SERVICES
+    # SERVICES ----------------------------------------------------------------
 
     def manager!
       @state.manager!(self)
@@ -107,6 +97,12 @@ module Wolfgang
 
     def services
       [manager, audio]
+    end
+
+    private
+
+    def semaphore
+      @semaphore ||= Mutex.new
     end
   end
 end

@@ -33,10 +33,13 @@ module Wolfgang
 
       def online!(context)
         context.change_state(Online.new)
-        context.manager!
-        context.audio!
+        # context.manager!
+        context.manager.enable
+        # context.audio!
+        # context.audio.
+
         context.notifications!
-        context.ui!
+        # context.ui!
         context.alive?
       end
 
@@ -46,6 +49,24 @@ module Wolfgang
 
       def establishing!(___)
         false
+      end
+
+      def ui!(context)
+        logger.debug(WOLFGANG_EST) { '#ui' }
+        context.ui = context.create_ui(context)
+        true
+      end
+
+      def manager!(context)
+        logger.debug(WOLFGANG_EST) { '#manager' }
+        context.manager = context.create_manager(context)
+        true
+      end
+
+      def audio!(context)
+        logger.debug(WOLFGANG_EST) { '#audio' }
+        context.audio = context.create_audio(context)
+        true
       end
 
       def alive?(context)

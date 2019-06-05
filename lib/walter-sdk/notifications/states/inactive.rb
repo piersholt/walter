@@ -23,20 +23,27 @@ module Wolfgang
         notification_listener = Listener.instance
         notification_listener.declare_primary_delegate(primary)
         notification_listener.listen
+      rescue StandardError => e
+        with_backtrace(logger, e)
       end
 
       def configure_incomining_notifications_delegates(notifications_context)
         device_handler     = DeviceHandler.instance
         controller_handler = ControllerHandler.instance
         target_handler     = TargetHandler.instance
+        debug_handler     = DebugHandler.instance
 
         device_handler.context = notifications_context.wolfgang_context
         controller_handler.context = notifications_context.wolfgang_context
         target_handler.context = notifications_context.wolfgang_context
+        debug_handler.context = notifications_context.wolfgang_context
 
         controller_handler.successor = target_handler
         target_handler.successor = device_handler
+        device_handler.successor = debug_handler
         controller_handler
+      rescue StandardError => e
+        with_backtrace(logger, e)
       end
     end
   end

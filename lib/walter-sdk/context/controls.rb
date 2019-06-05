@@ -21,14 +21,21 @@ module Wolfgang
 
       def load_debug
         logger.debug(AUDIO) { '#load_debug()' }
-        # @state.load_debug(self)
-        # ui.load_debug
         ui.launch(:debug, :index)
+      end
+
+      def load_nodes
+        logger.debug(AUDIO) { '#load_nodes()' }
+        ui.launch(:nodes, :index)
+      end
+
+      def load_services
+        logger.debug(AUDIO) { '#load_services()' }
+        ui.launch(:services, :index)
       end
 
       def load_audio
         logger.debug(AUDIO) { '#load_audio()' }
-        # ui.load_audio
         ui.launch(:audio, :now_playing)
       end
     end

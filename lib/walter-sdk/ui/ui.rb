@@ -22,6 +22,8 @@ require_relative 'view/menu/static_menu'
 # Application Context
 require_relative 'view/header/status'
 require_relative 'view/debug/index'
+require_relative 'view/nodes/index'
+require_relative 'view/services/index'
 
 # Controllers
 puts "\tLoading walter-sdk/ui/controller"
@@ -32,6 +34,8 @@ require_relative 'controller/base_controller'
 # Application Context
 require_relative 'controller/header_controller'
 require_relative 'controller/debug_controller'
+require_relative 'controller/nodes_controller'
+require_relative 'controller/services_controller'
 
 # Context
 puts "\tLoading walter-sdk/ui/controller"

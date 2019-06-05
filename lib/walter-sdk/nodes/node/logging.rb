@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 module Wolfgang
-  class ApplicationContext
+  class Node
     # Comment
     module Logging
       include Constants
 
-      def self.included(mod)
-        puts "#{mod} is including #{self.name}"
-      end
+      attr_reader :nickname
+
+      # def self.included(mod)
+      #   puts "#{mod} is including #{self.name}"
+      # end
 
       def to_s
-        "Service (#{state_string})"
-      end
-
-      def nickname
-        :wolfgang
+        "#{nickname} (#{state_string})"
       end
 
       def state_string
@@ -32,8 +30,8 @@ module Wolfgang
       end
 
       def logger
-        # LogActually.wolfgang.unknown(NODE) { '#logger' }
-        LogActually.wolfgang
+        # LogActually.node.unknown(NODE) { '#logger' }
+        LogActually.node
       end
     end
   end

@@ -19,14 +19,14 @@ module Wolfgang
       # TARGET ------------------------------------------------
 
       def player_added(context, properties)
-        logger.info(AUDIO_ENABLED) { ":player_added => #{properties}" }
-        context.on
+        logger.info(AUDIO_DISABLED) { ":player_added => #{properties}" }
+        context.enable
         context.player_added(properties)
       end
 
       def player_removed(context, properties)
-        logger.info(AUDIO_ENABLED) { ":player_removed => #{properties}" }
-        context.disable
+        logger.info(AUDIO_DISABLED) { ":player_removed => #{properties}" }
+        # context.disable
         context.player_removed(properties)
       end
     end

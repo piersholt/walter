@@ -20,6 +20,9 @@ module Wolfgang
       def take_responsibility(notification)
         logger.debug(DEVICE_HANDLER) { "#take_responsibility(#{notification})" }
         case notification.name
+        when :announce
+          logger.info(DEVICE_HANDLER) { "#{:announcement}" }
+          context.manager.enable
         when :device_connecting
           logger.info(DEVICE_HANDLER) { "#{:device_connecting}" }
           context.manager.device_connecting(notification.properties)

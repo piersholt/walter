@@ -4,14 +4,14 @@ module Wolfgang
   class UserInterface
     module Controller
       # Comment
-      class DebugController < BaseController
-        NAME = 'DebugController'
+      class NodesController < BaseController
+        NAME = 'NodesController'
 
-        attr_reader :container
+        attr_reader :nodes
 
         def index
           LogActually.ui.debug(NAME) { '#index' }
-          @view = View::MainMenu::Index.new
+          @view = View::Nodes::Index.new(nodes)
           view.add_observer(self)
 
           render(view)
@@ -26,8 +26,13 @@ module Wolfgang
         def create(view, selected_menu_item: nil)
           case view
           when :index
-            application_context.add_observer(self, application_context.nickname)
-            @container = application_context
+            application_context.nodes.each do |_, node|
+              node.add_observer(self, node.nickname)
+            end
+            @nodes = application_context.nodes.values
+
+            # application_context.add_observer(self, application_context.nickname)
+            # @container = application_context
             true
           else
             LogActually.ui.warn(NAME) { "Create: #{view} view not recognised." }
@@ -38,8 +43,10 @@ module Wolfgang
         def destroy
           case loaded_view
           when :index
-            application_context.delete_observer(self)
-            @container = nil
+            # application_context.manager.delete_observer(self)
+            # application_context.audio.delete_observer(self)
+            @nodes = nil
+            # @container = nil
             true
           else
             LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
@@ -68,14 +75,19 @@ module Wolfgang
         def update(action, selected_menu_item)
           LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
           case action
-          when :nodes
+          when :manager
             # destroy(:index)
             # application_context.ui.bluetooth_controller.load(:index)
-            ui_context.launch(:nodes, :index)
-          when :services
+            ui_context.launch(:bluetooth, :index)
+          when :audio
             # destroy(:index)
             # application_context.ui.audio_controller.load(:index)
-            ui_context.launch(:services, :index)
+            ui_context.launch(:audio, :index)
+          when :debug_index
+            # destroy(:index)
+            # destroy(:device)
+            # context.ui.root.load(:index)
+            ui_context.launch(:debug, :index)
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end

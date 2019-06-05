@@ -30,7 +30,9 @@ module Wolfgang
       def pop_and_delegate(i)
         logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Wait" }
         serialized_object = Subscriber.recv
+        logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Received: #{serialized_object}" }
         notification = deserialize(serialized_object)
+        logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Deserialzed: #{notification}" }
         delegate(notification)
       rescue IfYouWantSomethingDone
         logger.debug(NOTIFICATIONS_LISTENER) { "Chain did not handle! (#{notification})" }
@@ -56,11 +58,11 @@ module Wolfgang
         @listener_thread =
           Thread.new do
             Thread.current[:name] = 'NotificationsListener'
-            Subscriber.wolfgang
+            Subscriber.wolfgang.pi.go!
             begin
-              logger.debug('CommandListener') { 'Thread listen start!' }
+              logger.debug(NOTIFICATIONS_LISTENER) { 'Thread listen start!' }
               listen_loop
-              logger.debug('CommandListener') { 'Thread listen end!' }
+              logger.debug(NOTIFICATIONS_LISTENER) { 'Thread listen end!' }
             rescue StandardError => e
               logger.error(NOTIFICATIONS_LISTENER) { e }
               e.backtrace.each do |line|

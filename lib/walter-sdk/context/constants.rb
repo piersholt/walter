@@ -11,6 +11,8 @@ module Wolfgang
     WOLFGANG_EST = 'Wolfgang (Est.)'
     WOLFGANG_ONLINE = 'Wolfgang (Online)'
 
+    PING_INTERVAL = 30
+
     # MANAGER = 'Mananger'
     # MANAGER_ENABLED = 'Mananger (Enabled)'
     # MANAGER_ON = 'Mananger (On)'

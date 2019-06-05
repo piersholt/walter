@@ -8,6 +8,7 @@ module Wolfgang
 
     AUDIO = 'Audio'
     AUDIO_CONTROLS = 'Audio Controls'
+    AUDIO_DISABLED = 'Audio (Disabled)'
     AUDIO_ENABLED = 'Audio (Enabled)'
     AUDIO_ON = 'Audio (On)'
 

@@ -13,12 +13,15 @@ LogActually.is_all_around(:audio_service)
 LogActually.audio_service.d
 LogActually.is_all_around(:manager_service)
 LogActually.manager_service.d
+LogActually.is_all_around(:node)
+LogActually.node.d
 LogActually.is_all_around(:wolfgang)
 LogActually.wolfgang.d
 
 require_relative 'controls/controls'
 require_relative 'ui/ui'
 require_relative 'notifications/notifications'
+require_relative 'nodes/nodes'
 require_relative 'context/context'
 
 puts "\tDone!"

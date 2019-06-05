@@ -6,7 +6,39 @@ module Wolfgang
     module Defaults
       # User Control
 
-      def load_ui(context)
+      def load_ui(___)
+        false
+      end
+
+      def offline!(___)
+        false
+      end
+
+      def establishing!(___)
+        false
+      end
+
+      def open(___)
+        false
+      end
+
+      def close(___)
+        false
+      end
+
+      def manager!(___)
+        false
+      end
+
+      def audio!(___)
+        false
+      end
+
+      def notifications!(___)
+        false
+      end
+
+      def ui!(___)
         false
       end
     end
