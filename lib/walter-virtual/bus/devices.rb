@@ -54,6 +54,8 @@ class Virtual
       Devices.new(simulated_devices)
     end
 
+    alias emulated simulated
+
     def broadcast
       broadcast_devices = @devices.find_all  {|d| d.type == :broadcast }
       Devices.new(broadcast_devices)

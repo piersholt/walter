@@ -6,9 +6,9 @@ module Wolfgang
     module Logging
       include Constants
 
-      def self.included(mod)
-        puts "#{mod} is including #{self.name}"
-      end
+      # def self.included(mod)
+      #   puts "#{mod} is including #{self.name}"
+      # end
 
       def to_s
         "Service (#{state_string})"

@@ -199,7 +199,7 @@ class BusHandler < BaseHandler
   # ------------------- BUS_ONLINE -------------------------- #
 
   def bus_online
-    LOGGER.info(name) { 'Bus Offline! Disabling virtual bus.' }
+    LOGGER.warn(name) { 'Bus Offline! Enabling virtual bus.' }
     @bus.online
     @bus.simulated.send_all(:enable)
   end

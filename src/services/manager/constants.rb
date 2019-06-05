@@ -5,8 +5,10 @@ module Wolfgang
   # Default Wolfgang logger
   module Constants
     include LogActually::ErrorOutput
-    
+
     MANAGER = 'Mananger'
+    MANAGER_CONTROLS = 'Mananger Controls'
+    MANAGER_DISABLED = 'Mananger (Disabled)'
     MANAGER_ENABLED = 'Mananger (Enabled)'
     MANAGER_ON = 'Mananger (On)'
 

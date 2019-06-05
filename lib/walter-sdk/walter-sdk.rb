@@ -4,19 +4,20 @@ puts 'Loading walter-sdk'
 
 # Walter SDK
 LogActually.is_all_around(:notify)
-LogActually.notify.i
 LogActually.is_all_around(:alive)
-LogActually.alive.i
 LogActually.is_all_around(:ui)
-LogActually.ui.d
 LogActually.is_all_around(:audio_service)
-LogActually.audio_service.d
 LogActually.is_all_around(:manager_service)
-LogActually.manager_service.d
 LogActually.is_all_around(:node)
-LogActually.node.d
 LogActually.is_all_around(:wolfgang)
-LogActually.wolfgang.d
+
+LogActually.notify.i
+LogActually.alive.i
+LogActually.ui.i
+LogActually.audio_service.i
+LogActually.manager_service.d
+LogActually.node.i
+LogActually.wolfgang.i
 
 require_relative 'controls/controls'
 require_relative 'ui/ui'

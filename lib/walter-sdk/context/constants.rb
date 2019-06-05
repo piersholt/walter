@@ -2,7 +2,7 @@
 
 # Top level namespace
 module Wolfgang
-  # Default Wolfgang logger
+  # Comment
   module Constants
     include LogActually::ErrorOutput
 

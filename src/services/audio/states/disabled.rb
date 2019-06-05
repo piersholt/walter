@@ -23,12 +23,6 @@ module Wolfgang
         context.enable
         context.player_added(properties)
       end
-
-      def player_removed(context, properties)
-        logger.info(AUDIO_DISABLED) { ":player_removed => #{properties}" }
-        # context.disable
-        context.player_removed(properties)
-      end
     end
   end
 end

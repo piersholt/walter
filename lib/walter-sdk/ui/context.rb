@@ -23,7 +23,7 @@ module Wolfgang
       end
 
       def register_service_controller(name, klass)
-        puts "#register_service_controller(#{name}, #{klass})"
+        LogActually.ui.debug('UIContext') { "#register_service_controller(#{name}, #{klass})" }
         service_controllers[name] = klass
       end
 

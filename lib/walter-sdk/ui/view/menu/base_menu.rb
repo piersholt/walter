@@ -53,8 +53,8 @@ module Wolfgang
         end
 
         # INPUT EVENTS ------------------------------------------------------
-        # Maps data request messages (0x31), to view element
 
+        # input: denotes button (not data) event
         def input_confirm(state: nil)
           false
         end
@@ -67,6 +67,7 @@ module Wolfgang
           false
         end
 
+        # Maps data request messages (0x31), to view element
         def data_select(index:, state:)
           LogActually.ui.debug(moi) { "#data_select(#{index}, #{state})" }
           # Non-stateful buttons for the moment
