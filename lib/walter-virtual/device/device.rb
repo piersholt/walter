@@ -85,6 +85,8 @@ require "#{emualted_root}/rad/device"
 tel_root = emualted_root + '/tel'
 require "#{tel_root}/constants"
 require "#{tel_root}/state/model"
+require "#{tel_root}/state/chainable"
+require "#{tel_root}/state"
 require "#{tel_root}/received"
 require "#{tel_root}/handlers"
 require "#{tel_root}/device"

@@ -6,11 +6,11 @@ puts 'Loading walter-api'
 LogActually.is_all_around(:display)
 LogActually.display.w
 LogActually.is_all_around(:controls)
-LogActually.controls.d
+LogActually.controls.i
 LogActually.is_all_around(:audio)
-LogActually.audio.d
+LogActually.audio.i
 LogActually.is_all_around(:tel)
-LogActually.tel.d
+LogActually.tel.i
 
 puts "\tLoading walter-api/display"
 
@@ -35,7 +35,7 @@ require "#{display_root}/cache/cache"
 
 require "#{display_root}/display"
 
-puts "\tLoading walter-api/button"
+puts "\tLoading walter-api/controls"
 
 # controls_root = 'controls'
 # require "#{controls_root}/states/defaults"
@@ -72,5 +72,23 @@ audio_root = 'audio'
 # require "#{audio_root}/listener"
 
 require "#{audio_root}/audio"
+
+puts "\tLoading walter-api/telephone"
+
+telephone_root = 'telephone'
+# require "#{audio_root}/states/defaults"
+# require "#{audio_root}/states/unknown"
+# require "#{audio_root}/states/disabled"
+# require "#{audio_root}/states/enabled"
+# require "#{audio_root}/states/busy"
+# require "#{audio_root}/states/available"
+# require "#{audio_root}/states/captured"
+# require "#{audio_root}/states/overwritten"
+
+# require "#{audio_root}/handlers/cache_handler"
+# require "#{audio_root}/handlers/input_handler"
+# require "#{audio_root}/listener"
+
+require "#{telephone_root}/telephone"
 
 puts "\tDone!"

@@ -72,6 +72,13 @@ module Capabilities
 
       STRENGTH = [0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0x5F, 0xB8].freeze
 
+      # -----------------------------------------------------------------------
+      # STATE
+      # -----------------------------------------------------------------------
+
+      STATE_STATUS = :status
+      STATE_LEDS = :leds
+
       # STATUS ----------------------------------------------------------------
 
       ON = 1
@@ -103,6 +110,10 @@ module Capabilities
       LED_ON = :on
       LED_BLINK = :blink
       LED_STATES = [LED_OFF, LED_ON, LED_BLINK].freeze
+
+      LED_OFF_BITS = 0b00
+      LED_ON_BITS = 0b01
+      LED_BLINK_BITS = 0b11
 
       RED_SHIFT = 0
       YELLOW_SHIFT = 2

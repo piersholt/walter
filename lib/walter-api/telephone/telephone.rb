@@ -16,21 +16,45 @@ class Vehicle
       'Telephone'
     end
 
-    def on
-      bus.rad.led_on
+    # Yellow
+    #   reflects state of the connect/disconnect operation
+    #   on/steady: service has called remote operateion
+    #   blink: remote operation acknowledged
+    # Red
+    #   connect/disconnect modifier
+    #   contextualises connection operation as disconnection
+
+    # yellow
+    # attempt to begin connection operation
+    def connect
+      bus.tel.red(:off).yellow(:on).green(:blink).leds!
     end
 
-    def off
-      bus.rad.led_off
+    # yellow blink
+    # acknowledged operation via bluetooth service callback
+    def connecting
+      bus.tel.yellow(:blink).green(:blink).leds!
     end
 
-    def power
-      case bus.bmbt.power?
-      when false
-        bus.rad.led_on
-      when true
-        bus.rad.led_off
-      end
+    # green
+    def connected
+      bus.tel.red(:off).yellow(:off).green(:on).leds!
+    end
+
+    # red
+    # attempt to begin disconnection operation
+    def disconnect
+      bus.tel.yellow(:on).red(:blink).green(:off).leds!
+    end
+
+    # red blink
+    # acknowledged operation via bluetooth service callback
+    def disconnecting
+      bus.tel.yellow(:blink).red(:blink).green(:off).leds!
+    end
+
+    def disconnected
+      bus.tel.yellow(:off).green(:off).red(:on).leds!
     end
   end
 end

@@ -151,7 +151,7 @@ class Walter
   end
 
   def setup_virtual(interface:, multiplexer:, demultiplexer:)
-    bus =
+    @bus =
       Virtual::Initialization
       .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
       .execute
@@ -179,10 +179,12 @@ class Walter
     vehicle_display = Vehicle::Display.instance
     vehicle_button = Vehicle::Controls.instance
     vehicle_audio = Vehicle::Audio.instance
+    vehicle_telephone = Vehicle::Telephone.instance
 
     vehicle_display.bus = context
     vehicle_button.bus = context
     vehicle_audio.bus = context
+    vehicle_telephone.bus = context
 
     vehicle_button.targets.each do |target|
       device = context.public_send(target)

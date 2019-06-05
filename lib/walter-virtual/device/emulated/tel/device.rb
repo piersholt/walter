@@ -6,7 +6,7 @@ class Virtual
     include Capabilities::Telephone
     include Deprecated
     # include Constants
-    include State::Model
+    include State
     include Received
 
     PROC = 'SimulatedTEL'
