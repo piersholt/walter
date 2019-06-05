@@ -28,22 +28,22 @@ module Wolfgang
 
       def load_nodes
         logger.debug(AUDIO) { '#load_nodes()' }
-        @state.load_debug(self)
+        @state.load_nodes(self)
       end
 
       def load_services
         logger.debug(AUDIO) { '#load_services()' }
-        @state.load_debug(self)
+        @state.load_services(self)
       end
 
       def load_bluetooth(*args)
         logger.debug(AUDIO) { "#load_bluetooth(#{args})" }
-        @state.load_debug(self, args)
+        @state.load_bluetooth(self, args)
       end
 
       def load_audio
         logger.debug(AUDIO) { '#load_audio()' }
-        @state.load_debug(self)
+        @state.load_audio(self)
       end
     end
   end
