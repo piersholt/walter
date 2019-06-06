@@ -3127,20 +3127,11 @@
     :h: '0x22'
   :properties:
     :short_name: GFX-CACHE
-    :long_name: GTX Cache
+    :long_name: GFX Cache
   :klass: ParameterizedCommand
   :parameters:
     :status:
-      :type: :map
-      :dictionary:
-        0x00: Available/Cleared
-        0x01: Loading Complete?
-        0x02: Telephone Home Loaded
-        0x03: Done?
-        0x10: Unknown
-        # Seeing this in respond to 0x21 MID type commands to MK1 GFX
-        0x0b: Menu Dead!?
-        0x34: Overwrite?!
+      :type: :integer
   :index:
     :status: 0
   :meta:
