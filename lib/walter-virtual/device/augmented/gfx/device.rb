@@ -83,6 +83,7 @@ class Virtual
       case command_id
       when TXT_GFX
         logger.debug(moi) { "Rx: TXT_GFX 0x#{DataTools.d2h(TXT_GFX)}" }
+        return false unless message.from == :rad
         handle_draw_23(message.command)
       when MENU_RAD
         logger.debug(moi) { "Rx: MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
@@ -92,10 +93,11 @@ class Virtual
         handle_radio_alt(message.command)
       when TXT_NAV
         logger.debug(moi) { "Rx: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
+        return false unless message.from == :rad
         handle_draw_a5(message.command)
       when TXT_MID
         logger.debug(moi) { "Rx: TXT_MID 0x#{DataTools.d2h(TXT_MID)}" }
-        return false if message.from == :tel
+        return false unless message.from == :rad
         handle_draw_21(message.command)
       when BMBT_A
         logger.debug(moi) { "Rx: BMBT_A 0x#{DataTools.d2h(BMBT_A)}" }
