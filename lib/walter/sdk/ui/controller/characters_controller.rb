@@ -4,14 +4,14 @@ module Wolfgang
   class UserInterface
     module Controller
       # Comment
-      class DebugController < BaseController
-        NAME = 'DebugController'
+      class CharactersController < BaseController
+        NAME = 'CharactersController'
 
-        attr_reader :container
+        DEFAULT_OFFSET = 32
 
         def index
           LogActually.ui.debug(NAME) { '#index' }
-          @view = View::MainMenu::Index.new
+          @view = View::Characters::Index.new(@offset)
           view.add_observer(self)
 
           render(view)
@@ -23,11 +23,12 @@ module Wolfgang
 
         # Setup ------------------------------------------------------
 
-        def create(view, selected_menu_item: nil)
+        def create(view, offset = DEFAULT_OFFSET)
+          LogActually.ui.warn(NAME) { "#create(#{view})" }
           case view
           when :index
-            application_context.add_observer(self, application_context.nickname)
-            @container = application_context
+            LogActually.ui.warn(NAME) { "@offset => #{offset}" }
+            @offset = offset
             true
           else
             LogActually.ui.warn(NAME) { "Create: #{view} view not recognised." }
@@ -38,8 +39,6 @@ module Wolfgang
         def destroy
           case loaded_view
           when :index
-            application_context.delete_observer(self)
-            @container = nil
             true
           else
             LogActually.ui.warn(NAME) { "Destroy: #{view} view not recognised." }
@@ -49,37 +48,21 @@ module Wolfgang
 
         # SYSTEM EVENTS ------------------------------------------------------
 
-        def wolfgang(action)
-          LogActually.ui.debug(NAME) { "#wolfgang(#{action})" }
-          case action
-          when ApplicationContext::Online
-            index
-          when ApplicationContext::Establishing
-            index
-          when ApplicationContext::Offline
-            index
-          else
-            LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
-          end
-        end
-
         # USER EVENTS ------------------------------------------------------
 
         def update(action, selected_menu_item)
-          LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
+          LogActually.ui.debug(NAME) { "#update(#{action}, #{selected_menu_item.class})" }
           case action
-          when :nodes
+          when :page_next
+            LogActually.ui.debug(NAME) { "selected_menu_item.properties => #{selected_menu_item.properties}" }
             # destroy(:index)
             # application_context.ui.bluetooth_controller.load(:index)
-            ui_context.launch(:nodes, :index)
-          when :services
+            selected_menu_item
+            ui_context.launch(:characters, :index, selected_menu_item.properties[:offset] + 8)
+          when :page_previous
             # destroy(:index)
             # application_context.ui.audio_controller.load(:index)
-            ui_context.launch(:services, :index)
-          when :characters
-            # destroy(:index)
-            # application_context.ui.audio_controller.load(:index)
-            ui_context.launch(:characters, :index)
+            ui_context.launch(:characters, :index, 32)
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
           end

@@ -25,6 +25,7 @@ require_relative 'view/header/status'
 require_relative 'view/debug/index'
 require_relative 'view/nodes/index'
 require_relative 'view/services/index'
+require_relative 'view/characters/index'
 
 # Controllers
 puts "\tLoading walter/sdk/ui/controller"
@@ -37,6 +38,7 @@ require_relative 'controller/header_controller'
 require_relative 'controller/debug_controller'
 require_relative 'controller/nodes_controller'
 require_relative 'controller/services_controller'
+require_relative 'controller/characters_controller'
 
 # Context
 puts "\tLoading walter/sdk/ui/controller"

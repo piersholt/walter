@@ -103,7 +103,8 @@ module Wolfgang
           header:  Wolfgang::UserInterface::Controller::HeaderController,
           debug:  Wolfgang::UserInterface::Controller::DebugController,
           nodes:  Wolfgang::UserInterface::Controller::NodesController,
-          services:  Wolfgang::UserInterface::Controller::ServicesController
+          services:  Wolfgang::UserInterface::Controller::ServicesController,
+          characters:  Wolfgang::UserInterface::Controller::CharactersController
         )
       rescue StandardError => e
         with_backtrace(logger, e)

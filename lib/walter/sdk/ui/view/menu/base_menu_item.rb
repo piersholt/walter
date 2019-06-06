@@ -6,7 +6,7 @@ module Wolfgang
       # Comment
       class BaseMenuItem
         DEFAULT_ACTION = :no_action
-        attr_reader :id, :label, :action, :arguments
+        attr_reader :id, :label, :action, :properties
 
         def initialize(id: false, label:, action: DEFAULT_ACTION, properties: {})
           @id = id
@@ -24,7 +24,15 @@ module Wolfgang
         end
 
         def encode(label)
-          label.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace})[0,40]
+          # Yeah, so sue me...
+          case label.encoding
+          when Encoding::ASCII_8BIT
+            label[0,40]
+          when Encoding::UTF_8
+            label.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, {undef: :replace})[0,40]
+          else
+            label[0,40]
+          end
         rescue StandardError => e
           LogActually.ui.error(self.class.name) { e }
           e.backtrace.each { |line| LogActually.ui.error(self.class.name) { line } }

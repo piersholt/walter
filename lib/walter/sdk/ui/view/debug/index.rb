@@ -27,11 +27,11 @@ module Wolfgang
           def indexed_options
             # return NO_SERVICES if options.length.zero?
             # validate(options, COLUMN_ONE_MAX)
-            options = ['nodes', 'services']
+            options = %w[Nodes Services Characters]
 
             options.first(COLUMN_ONE_MAX).map.with_index do |option, index|
               indexed_option =
-                BaseMenuItem.new(label: option, action: option.to_sym)
+                BaseMenuItem.new(label: option, action: option.downcase.to_sym)
               [index, indexed_option]
             end
           end

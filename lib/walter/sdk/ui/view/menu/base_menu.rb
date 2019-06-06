@@ -47,8 +47,8 @@ module Wolfgang
           LogActually.ui.warn(moi) { 'Too many!' } if objects.length > max
         end
 
-        def navigation(index:, action:, label: LABEL_RETURN)
-          navigation_item = View::BaseMenuItem.new(id: :navigation, label: label, action: action)
+        def navigation(index:, action:, label: LABEL_RETURN, properties: {})
+          navigation_item = View::BaseMenuItem.new(id: :navigation, label: label, action: action, properties: properties)
           [[index, navigation_item]]
         end
 
