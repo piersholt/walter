@@ -5,7 +5,6 @@ class Virtual
   class SimulatedTEL < EmulatedDevice
     include Capabilities::Telephone
     include Deprecated
-    # include Constants
     include State
     include Received
 
