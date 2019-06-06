@@ -10,6 +10,10 @@ module Wolfgang
         false
       end
 
+      def online!(___)
+        false
+      end
+
       def offline!(___)
         false
       end
@@ -59,6 +63,10 @@ module Wolfgang
       end
 
       def load_audio(___)
+        false
+      end
+
+      def alive?(___)
         false
       end
     end

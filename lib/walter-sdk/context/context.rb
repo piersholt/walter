@@ -10,7 +10,7 @@ require_relative 'notifications/debug_handler'
 
 require_relative 'states/defaults'
 require_relative 'states/offline'
-require_relative 'states/establishing'
+# require_relative 'states/establishing'
 require_relative 'states/online'
 
 require_relative 'controls'

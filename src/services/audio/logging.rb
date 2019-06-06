@@ -17,9 +17,9 @@ module Wolfgang
       def state_string
         case state
         when On
-          'On'
+          'Available'
         when Enabled
-          'Enabled'
+          'Pending'
         when Disabled
           'Disabled'
         else

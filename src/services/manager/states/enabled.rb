@@ -2,9 +2,11 @@ module Wolfgang
   class Manager
     class Enabled
       include Constants
+      include Defaults
 
       def initialize(context)
         logger.debug(MANAGER_ENABLED) { '#initialize' }
+        # Note: this is a request
         context.devices?
       end
 

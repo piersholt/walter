@@ -6,6 +6,7 @@ module Wolfgang
 
       def initialize(context)
         logger.debug(AUDIO_ENABLED) { '#initialize' }
+        # Note: this is a request
         context.player?
         # Vehicle::Controls.instance.add_observer(context, :buttons_update)
         context.register_controls(Vehicle::Controls.instance)

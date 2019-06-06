@@ -14,7 +14,7 @@ module Wolfgang
       TARGET_HANDLER = 'Target'
 
       def logger
-        LogActually.notify
+        LogActually.audio_service
       end
 
       def take_responsibility(notification)

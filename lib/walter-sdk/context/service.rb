@@ -48,27 +48,6 @@ module Wolfgang
     alias open online!
     alias close offline!
 
-    def reply_block(context)
-      proc do |reply, error|
-        begin
-          if reply
-            logger.info(WOLFGANG_OFFLINE) { 'Online!' }
-            context.online!
-          elsif error == :timeout
-            logger.warn(WOLFGANG_ONLINE) { 'Timeout!' }
-            context.establishing!
-          elsif error == :down
-            logger.warn(WOLFGANG_ONLINE) { 'Error!' }
-            context.offline!
-          end
-        rescue StandardError => e
-          logger.error(WOLFGANG_OFFLINE) { e }
-          e.backtrace.each { |line| logger.error(WOLFGANG_OFFLINE) { line } }
-          context.change_state(Offline.new)
-        end
-      end
-    end
-
     # APPLICATION CONTEXT -----------------------------------------------------
 
     def ui

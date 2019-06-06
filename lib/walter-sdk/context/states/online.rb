@@ -51,6 +51,8 @@ module Wolfgang
 
       # UI --------------------------------------------------------------
 
+      # Application Context
+
       def load_debug(context)
         context.ui.launch(:debug, :index)
       end
@@ -63,6 +65,8 @@ module Wolfgang
         context.ui.launch(:services, :index)
       end
 
+      # Services
+
       def load_bluetooth(context, *)
         context.ui.launch(:bluetooth, :index)
       end
@@ -70,7 +74,6 @@ module Wolfgang
       def load_audio(context)
         context.ui.launch(:audio, :now_playing)
       end
-
 
       # SERVICES --------------------------------------------------------------
 
@@ -132,7 +135,7 @@ module Wolfgang
 
       def create_audio
         audio = Audio.new
-        # audio.disable
+        audio.enable
         audio
       rescue StandardError => e
         with_backtrace(logger, e)
@@ -141,7 +144,7 @@ module Wolfgang
 
       def create_manager
         manager = Manager.new
-        # manager.enable
+        manager.enable
         manager
       rescue StandardError => e
         with_backtrace(logger, e)

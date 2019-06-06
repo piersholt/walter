@@ -21,9 +21,8 @@ module Wolfgang
         logger.debug(NODE_HANDLER) { "#take_responsibility(#{notification})" }
         case notification.name
         when :announcement
-          logger.info(NODE_HANDLER) { "#{:announcement}" }
-          # context.manager.device_connecting(notification.properties)
-          context.announcement(notification.node)
+          logger.warn(NODE_HANDLER) { "Node accouncements are disabled!" }
+          # context.announcement(notification.node)
         else
           not_handled(notification)
         end

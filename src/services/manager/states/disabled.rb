@@ -2,6 +2,7 @@ module Wolfgang
   class Manager
     class Disabled
       include Constants
+      include Defaults
 
       def enable(context)
         context.change_state(Enabled.new(context))

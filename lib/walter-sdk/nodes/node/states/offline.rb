@@ -27,12 +27,6 @@ module Wolfgang
         context.alive?
       end
 
-      def alive?(context)
-        logger.debug(NODE_OFFLINE) { '#alive?' }
-        context.ping!(context.ping_callback)
-        true
-      end
-
       def ping_callback(context)
         proc do |reply, error|
           begin
