@@ -14,6 +14,7 @@ require_relative 'view/header/default_header'
 require_relative 'view/header/notification_header'
 
 require_relative 'view/menu/base_menu_item'
+require_relative 'view/menu/checked_item'
 require_relative 'view/menu/base_menu'
 require_relative 'view/menu/basic_menu'
 require_relative 'view/menu/titled_menu'
