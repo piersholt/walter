@@ -11,12 +11,7 @@ module Wolfgang
       def online!(context)
         logger.debug(WOLFGANG_OFFLINE) { '#online' }
         context.change_state(Online.new)
-
-        # Services
-        context.manager!
-        context.audio!
-
-        # Application Context
+        
         context.notifications!
         context.ui!
         context.register_controls(Vehicle::Controls.instance)

@@ -13,7 +13,7 @@ module Wolfgang
 
     attr_reader :state
 
-    attr_accessor :commands, :notifications, :manager, :audio
+    attr_accessor :commands, :notifications
     attr_writer :ui
 
     def initialize
@@ -66,16 +66,22 @@ module Wolfgang
 
     # SERVICES ----------------------------------------------------------------
 
-    def manager!
-      @state.manager!(self)
-    end
-
-    def audio!
-      @state.audio!(self)
+    def inst_var(name)
+      name_string = name.id2name
+      '@'.dup.concat(name_string).to_sym
     end
 
     def services
-      [manager, audio]
+      @services ||= []
+    end
+
+    def register_service(service_name, service_object)
+      add_observer(service_object, :state_change)
+      instance_variable_set(inst_var(service_name), service_object)
+      services << service_object
+      self.class.class_eval do
+        attr_reader service_name
+      end
     end
 
     private

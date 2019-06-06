@@ -20,12 +20,6 @@ module Wolfgang
         logger.debug(WOLFGANG_ONLINE) { 'Stop Notifications' }
         context.notifications&.stop
 
-        # Services
-        logger.debug(WOLFGANG_ONLINE) { 'Disable Mananger' }
-        context.manager&.disable
-        logger.debug(WOLFGANG_ONLINE) { 'Disable Audio' }
-        context.audio&.disable
-
         # logger.debug(WOLFGANG_ONLINE) { 'Disconnect Client.' }
         # Client.disconnect
         # logger.debug(WOLFGANG_ONLINE) { 'Disconnect Publisher.' }
@@ -75,20 +69,6 @@ module Wolfgang
         context.ui.launch(:audio, :now_playing)
       end
 
-      # SERVICES --------------------------------------------------------------
-
-      def manager!(context)
-        logger.debug(WOLFGANG_ONLINE) { '#manager' }
-        context.manager = create_manager
-        true
-      end
-
-      def audio!(context)
-        logger.debug(WOLFGANG_ONLINE) { '#audio' }
-        context.audio = create_audio
-        true
-      end
-
       private
 
       # APPLICATION CONTEXT ---------------------------------------------------
@@ -108,6 +88,8 @@ module Wolfgang
         LogActually.ui.debug(WOLFGANG) { "#create_ui (#{Thread.current})" }
         ui_context = Wolfgang::UserInterface::Context.new(context)
         register_service_controllers(ui_context)
+        context.changed
+        context.notify_observers(ui_context)
         ui_context
       rescue StandardError => e
         with_backtrace(logger, e)
@@ -123,32 +105,8 @@ module Wolfgang
           nodes:  Wolfgang::UserInterface::Controller::NodesController,
           services:  Wolfgang::UserInterface::Controller::ServicesController
         )
-        ui_context.register_service_controllers(
-          audio:  Wolfgang::UserInterface::Controller::AudioController,
-          bluetooth:  Wolfgang::UserInterface::Controller::BluetoothController
-        )
       rescue StandardError => e
         with_backtrace(logger, e)
-      end
-
-      # SERVICES --------------------------------------------------------------
-
-      def create_audio
-        audio = Audio.new
-        audio.enable
-        audio
-      rescue StandardError => e
-        with_backtrace(logger, e)
-        :error
-      end
-
-      def create_manager
-        manager = Manager.new
-        manager.enable
-        manager
-      rescue StandardError => e
-        with_backtrace(logger, e)
-        :error
       end
     end
   end

@@ -10,6 +10,24 @@ module Wolfgang
       @state = Disabled.new
     end
 
+    # Application Context State Change ----------------------------------------
+
+    def state_change(new_state)
+      logger.unknown(MANAGER) { "ApplicationContext => #{new_state.class}" }
+      case new_state
+      when Wolfgang::ApplicationContext::Online
+        logger.debug(MANAGER) { 'Enable Manager' }
+        enable
+      when Wolfgang::ApplicationContext::Offline
+        logger.debug(MANAGER) { 'Disable Mananger' }
+        disable
+      when Wolfgang::UserInterface::Context
+        new_state.register_service_controllers(
+          bluetooth: Wolfgang::UserInterface::Controller::BluetoothController
+        )
+      end
+    end
+
     # States ------------------------------------------------------------
 
     def change_state(new_state)
