@@ -38,16 +38,34 @@ module Capabilities
 
       MID_DEFAULT = 0x01
 
-      # TODO: test offsets
-      PAGE = { 0 => 0b0010_0000,
-               1 => 0b0000_0100,
-               2 => 0b0001_0000,
-               3 => 0b0001_0100 }.freeze
+      # Contacts Cell Indexing
+      # - block must be set or each draw begins at cell 0
+      # - delimiter in chars in only requirement for indexing.
+      #   the additional bits seen on 4:3 display can be ommitted.
+      # - i have attempted various combinations of bits (akin to radio)
+      #   but the delimiter is seemingly the only way to index contacts
+      # - the delimiters can be used as an offset.
+      #   prefixing a contact with 2 delimiters will leave a cell blank
+      # - the delimiter offset is relative to the previous contact
+      #   not an absolute reference
+      # - multiple contacts can be placed in a single message up to a limit
+      # - unlike radio, a write (0x21) without block will render cache.
+      #   each write will reset the indexing to zero, so all data intended
+      #   to be rendered, must be done together.
+      # - note, removing the initial flush, and offsetting contacts allows
+      #   targetted cell updates.
+      # - control character 13 seems to ignore everthing after it until
+      #   next valid delimiter?
+      PAGE = { 0 => 0b0100_0000,
+               1 => 0b0100_0000,
+               2 => 0b0100_0000,
+               3 => 0b0000_0000 }.freeze
 
       # PAGE = { 0 => 0b0110_0000,
       #          1 => 0b0100_0100,
       #          2 => 0b0101_0000,
       #          3 => 0b0001_0100 }.freeze
+
       NO_PAGINATION = 0b0010_0000
       CLEAR = [].freeze
 

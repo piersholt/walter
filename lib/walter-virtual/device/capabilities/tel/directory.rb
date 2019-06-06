@@ -125,7 +125,7 @@ module Capabilities
             i = (group_index * contacts_per_group) + contact_index
             contacts = generate_contact(i, inversed)
             char_array = contacts.bytes
-            char_array.insert(0, CONTACT_DELIMITER)
+            char_array.insert(-1, CONTACT_DELIMITER)
           end
 
           full_char_array.flatten
