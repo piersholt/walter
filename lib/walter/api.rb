@@ -50,8 +50,11 @@ puts "\tLoading walter/api/controls"
 # require "#{controls_root}/handlers/cache_handler"
 # require "#{controls_root}/handlers/input_handler"
 require_relative 'api/controls/listener'
+require_relative 'api/controls/control/base'
+require_relative 'api/controls/control/stateless'
+require_relative 'api/controls/control/stateful'
+require_relative 'api/controls/control/two_stage'
 
-require_relative 'api/controls/strategy'
 require_relative 'api/controls/control'
 require_relative 'api/controls/controls'
 
