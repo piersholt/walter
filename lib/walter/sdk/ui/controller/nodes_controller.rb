@@ -61,8 +61,6 @@ module Wolfgang
           case action
           when ApplicationContext::Online
             index
-          when ApplicationContext::Establishing
-            index
           when ApplicationContext::Offline
             index
           else
