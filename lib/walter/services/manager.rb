@@ -15,4 +15,9 @@ require_relative 'manager/states/disabled'
 require_relative 'manager/states/enabled'
 require_relative 'manager/states/on'
 
+require_relative 'manager/state'
+require_relative 'manager/notifications'
+require_relative 'manager/actions'
+require_relative 'manager/requests'
+
 require_relative 'manager/service'
