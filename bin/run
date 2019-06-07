@@ -12,9 +12,6 @@ begin
 
   require 'pry-byebug'
 
-  require 'walter/shared/log_actually'
-  require 'walter/shared/yabber'
-
   require 'observer'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
@@ -45,10 +42,12 @@ begin
 
   dir_check
 
+  require 'walter'
+
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
-  require 'walter'
+
 rescue LoadError => e
   # LogActually.default.error('run') { e }
   puts e

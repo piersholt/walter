@@ -1,16 +1,22 @@
 # frozen_string_literal: true
 
 begin
-  core_path = File.expand_path(File.dirname(__FILE__) + '/walter/core')
-  virtual_path = File.expand_path(File.dirname(__FILE__) + '/walter/virtual')
-  api_path = File.expand_path(File.dirname(__FILE__) + '/walter/api')
-  sdk_path = File.expand_path(File.dirname(__FILE__) + '/walter/sdk')
+  def add_load_path(dir)
+    load_path = File.expand_path(File.dirname(__FILE__) + "/walter/#{dir}")
+    $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
+  rescue StandardError => e
+    puts e
+    e.backtrace.each { |line| puts line }
+    exit
+  end
 
-  $LOAD_PATH.unshift(core_path) unless $LOAD_PATH.include?(core_path)
-  $LOAD_PATH.unshift(virtual_path) unless $LOAD_PATH.include?(virtual_path)
-  $LOAD_PATH.unshift(api_path) unless $LOAD_PATH.include?(api_path)
-  $LOAD_PATH.unshift(sdk_path) unless $LOAD_PATH.include?(sdk_path)
+  add_load_path('shared')
+  add_load_path('core')
+  add_load_path('virtual')
+  add_load_path('api')
+  add_load_path('sdk')
 
+  require 'walter/shared'
   require 'walter/core'
   require 'walter/virtual'
   require 'walter/api'

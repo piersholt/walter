@@ -1,0 +1,109 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'rubygems'
+require 'bundler/setup'
+
+require 'pry-byebug'
+
+require 'optparse'
+
+# *************************************************************************** #
+#                                  LOAD PATHS                                 #
+# *************************************************************************** #
+
+def setup_path(dir)
+  load_path = File.expand_path(File.dirname(__FILE__) + "/../#{dir}")
+  $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
+rescue StandardError => e
+  puts e
+  e.backtrace.each { |line| puts line }
+  exit
+end
+
+begin
+  setup_path('lib')
+  require 'walter/shared'
+rescue LoadError => e
+  puts 'Dependencies load error!'
+  puts e
+  e.backtrace.each { |line| puts line }
+  exit
+rescue StandardError => e
+  puts 'Dependencies standard error?'
+  puts e
+  e.backtrace.each { |line| puts line }
+  exit
+end
+
+
+
+LOGGER = LogActually.is_all_around(:default)
+LOGGER.i
+
+# *************************************************************************** #
+#                              CLI OPTIONS                                    #
+# *************************************************************************** #
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: listen -h zeromq.local -p 5555'
+  opts.on('-p PORT', 'Publisher PORT') do |p|
+    options[:port] = p
+  end
+
+  opts.on('-h HOST', 'Publisher HOST') do |h|
+    options[:host] = h
+  end
+end.parse!
+
+options = options.map do |k, v|
+  [k.to_sym, v]
+end.to_h
+
+# *************************************************************************** #
+#                                    RUN                                      #
+# *************************************************************************** #
+
+LOGGER.info('bin') { 'Start setting up Subscriber...' }
+
+begin
+  LOGGER.info('bin') { 'Start' }
+  include Printable
+  messages = []
+
+  @thread = Thread.new(messages) do |messages|
+    begin
+      Subscriber.params(options)
+      i = 0
+      loop do
+        message = Subscriber.recv
+        # puts Time.now.strftime("%T")
+        # puts message.class
+        deserialzed_object = Messaging::Serialized.new(message).parse
+        # puts deserialzed_object
+        messages << { index: i, timestamp: Time.now.strftime("%T"), message: deserialzed_object}
+        header if i.zero?
+        draw_message(messages.last)
+        # LOGGER.warn('Thread') { 'ending?' }
+        i+=1
+      end
+    rescue StandardError => e
+      LOGGER.error('Thread') { e }
+    end
+  end
+  # puts @thread
+  @thread.join
+  puts 'what?'
+rescue StandardError => e
+  LOGGER.error('bin') { 'Dependencies standard error?' }
+  LOGGER.error('bin') { e }
+  e.backtrace.each { |line| LOGGER.error('bin') { line } }
+rescue SignalException
+  Signal.trap(0, proc { puts "Terminating: #{$$}" })
+end
+
+LOGGER.info('bin') { 'Goodbyte!' }
+
+exit

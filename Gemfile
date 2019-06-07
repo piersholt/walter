@@ -13,5 +13,5 @@ gem 'serialport'
 gem 'capistrano'
 gem 'capistrano-rbenv'
 
-gem 'walter-shared', git: 'https://github.com/piersholt/walter-shared.git',
-                     branch: 'master'
+# gem 'walter-shared', git: 'https://github.com/piersholt/walter-shared.git', branch: 'master'
+gem 'rbczmq'
