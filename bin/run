@@ -38,17 +38,16 @@ begin
   end
 
   setup_path('lib')
-  setup_path('src')
+  setup_path('lib/walter')
 
   dir_check
 
   require 'wilhelm/tools'
   require 'wilhelm'
+  require 'walter'
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
-
-
 rescue LoadError => e
   # LogActually.default.error('run') { e }
   puts e
@@ -70,7 +69,6 @@ PROC = 'Walter'.freeze
 LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
-  require 'walter'
   app = Walter.new
   app.launch
 rescue Interrupt

@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'services/services'
-puts "\tLoading ui"
-require_relative 'ui/ui'
-
-
-# Container
+# Application Container
 class Walter
   include Observable
   include DebugTools
