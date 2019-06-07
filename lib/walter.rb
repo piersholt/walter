@@ -10,13 +10,11 @@ begin
     exit
   end
 
-  add_load_path('shared')
   add_load_path('core')
   add_load_path('virtual')
   add_load_path('api')
   add_load_path('sdk')
 
-  require 'walter/shared'
   require 'walter/core'
   require 'walter/virtual'
   require 'walter/api'

@@ -42,6 +42,8 @@ begin
 
   dir_check
 
+  require 'walter/shared'
+
   require 'walter'
 
   LOGGER = LogActually.is_all_around(:default)
