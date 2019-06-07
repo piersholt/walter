@@ -57,6 +57,7 @@ puts "\tLoading walter/api/telephone"
 
 telephone_root = 'telephone'
 
+require "#{telephone_root}/led"
 require "#{telephone_root}/telephone"
 
 puts "\tDone!"
