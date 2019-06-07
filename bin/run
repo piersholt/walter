@@ -44,7 +44,7 @@ begin
 
   require 'walter/shared'
 
-  require 'walter'
+  require 'wilhelm'
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
@@ -71,7 +71,7 @@ PROC = 'Walter'.freeze
 LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
-  require 'walter2'
+  require 'walter'
   app = Walter.new
   app.launch
 rescue Interrupt

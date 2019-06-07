@@ -2,7 +2,7 @@
 
 begin
   def add_load_path(dir)
-    load_path = File.expand_path(File.dirname(__FILE__) + "/walter/#{dir}")
+    load_path = File.expand_path(File.dirname(__FILE__) + "/wilhelm/#{dir}")
     $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
   rescue StandardError => e
     puts e
@@ -15,10 +15,10 @@ begin
   add_load_path('api')
   add_load_path('sdk')
 
-  require 'walter/core'
-  require 'walter/virtual'
-  require 'walter/api'
-  require 'walter/sdk'
+  require 'wilhelm/core'
+  require 'wilhelm/virtual'
+  require 'wilhelm/api'
+  require 'wilhelm/sdk'
 rescue LoadError => e
   puts "#{e.class}: #{e}"
   e.backtrace.each { |line| puts "\t#{line}" }
