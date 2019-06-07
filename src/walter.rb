@@ -200,13 +200,13 @@ class Walter
   def setup_sdk
     @wolfgang = Wolfgang::ApplicationContext.new
 
-    @manager = Wolfgang::Manager.new
-    @audio = Wolfgang::Audio.new
+    manager = Wolfgang::Manager.new
+    audio = Wolfgang::Audio.new
 
-    @manager.disable
-    @audio.disable
+    manager.disable
+    audio.disable
 
-    @wolfgang.register_service(:manager, @manager)
-    @wolfgang.register_service(:audio, @audio)
+    @wolfgang.register_service(:manager, manager)
+    @wolfgang.register_service(:audio, audio)
   end
 end
