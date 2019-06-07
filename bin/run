@@ -48,7 +48,7 @@ begin
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 
-  require 'modules'
+  require 'walter'
 rescue LoadError => e
   # LogActually.default.error('run') { e }
   puts e
@@ -70,7 +70,7 @@ PROC = 'Walter'.freeze
 LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
-  require 'walter'
+  require 'walter2'
   app = Walter.new
   app.launch
 rescue Interrupt

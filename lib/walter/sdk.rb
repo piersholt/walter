@@ -19,10 +19,10 @@ LogActually.manager_service.d
 LogActually.node.i
 LogActually.wolfgang.i
 
-require_relative 'sdk/controls/controls'
-require_relative 'sdk/ui/ui'
-require_relative 'sdk/notifications/notifications'
-require_relative 'sdk/nodes/nodes'
-require_relative 'sdk/context/context'
+require_relative 'sdk/controls'
+require_relative 'sdk/ui'
+require_relative 'sdk/notifications'
+require_relative 'sdk/nodes'
+require_relative 'sdk/context'
 
 puts "\tDone!"

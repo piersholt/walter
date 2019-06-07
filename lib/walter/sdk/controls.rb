@@ -6,6 +6,6 @@ puts "\tLoading walter/sdk/controls"
 # puts File.expand_path('register')
 print "\tLoading walter/sdk/controls/register"
 # binding.pry
-result = require_relative './register.rb'
+result = require_relative 'controls/register'
 print ' => '
 puts result ? 'Success' : 'Error'
