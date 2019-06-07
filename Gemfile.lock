@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/piersholt/walter-shared.git
-  revision: eb95febe99689c3f2f0739dc02aeca855e31014e
+  remote: https://github.com/piersholt/wilhelm-tools.git
+  revision: 9dca07b3d3e8cb603c8f1d4b80b9b34e34dd7047
   branch: master
   specs:
-    walter-shared (1.0.2)
+    wilhelm-tools (1.0.0)
       rbczmq (~> 1.7)
 
 GEM
@@ -66,7 +66,7 @@ DEPENDENCIES
   pry-byebug
   rspec
   serialport
-  walter-shared!
+  wilhelm-tools!
 
 RUBY VERSION
    ruby 2.4.0p0

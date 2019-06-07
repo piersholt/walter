@@ -42,8 +42,7 @@ begin
 
   dir_check
 
-  require 'walter/shared'
-
+  require 'wilhelm/tools'
   require 'wilhelm'
 
   LOGGER = LogActually.is_all_around(:default)
