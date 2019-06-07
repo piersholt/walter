@@ -34,13 +34,4 @@ class Virtual
       "<:#{@ident}>"
     end
   end
-
-  # Comment
-  class BroadcastDevice < Device
-    PROC = 'BroadcastDevice'
-
-    def type
-      :broadcast
-    end
-  end
 end

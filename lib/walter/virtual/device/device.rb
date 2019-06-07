@@ -6,6 +6,7 @@ device_root = 'device'
 require "#{device_root}/events"
 require "#{device_root}/receivable"
 require "#{device_root}/base"
+require "#{device_root}/broadcast"
 
 puts "\tLoading walter/virtual/device/dynamic"
 
