@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/sdk/notifications"
+puts "\tLoading wilhelm/sdk/notifications"
 
 require_relative 'notifications/constants'
 require_relative 'notifications/states/inactive'

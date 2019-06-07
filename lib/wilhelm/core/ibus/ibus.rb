@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/core/ibus"
+puts "\tLoading wilhelm/core/ibus"
 
 root = 'ibus'
 

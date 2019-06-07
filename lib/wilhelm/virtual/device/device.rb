@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/virtual/device"
+puts "\tLoading wilhelm/virtual/device"
 
 device_root = 'device'
 require "#{device_root}/events"
@@ -8,7 +8,7 @@ require "#{device_root}/receivable"
 require "#{device_root}/base"
 require "#{device_root}/broadcast"
 
-puts "\tLoading walter/virtual/device/dynamic"
+puts "\tLoading wilhelm/virtual/device/dynamic"
 
 require "#{device_root}/api/api"
 require "#{device_root}/capabilities/capabilities"
@@ -17,7 +17,7 @@ require "#{device_root}/dynamic"
 
 # AUGMENTED -------------------------------------------------------------------
 
-puts "\tLoading walter/virtual/device/augmented"
+puts "\tLoading wilhelm/virtual/device/augmented"
 
 augmented_root = 'device/augmented'
 
@@ -67,7 +67,7 @@ require "#{mfl_root}/device"
 
 # EMULATED --------------------------------------------------------------------
 
-puts "\tLoading walter/virtual/device/emulated"
+puts "\tLoading wilhelm/virtual/device/emulated"
 
 emualted_root = 'device/emulated'
 
@@ -95,4 +95,4 @@ require "#{emualted_root}/diagnostics/device"
 
 require "#{emualted_root}/dummy/device"
 
-puts "\tLoading walter/virtual/bus"
+puts "\tLoading wilhelm/virtual/bus"

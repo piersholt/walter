@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/sdk/context"
+puts "\tLoading wilhelm/sdk/context"
 
 require_relative 'context/constants'
 require_relative 'context/logging'

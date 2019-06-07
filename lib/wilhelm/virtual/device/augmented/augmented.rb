@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# puts "\tLoading walter/virtual/device/augmented"
+# puts "\tLoading wilhelm/virtual/device/augmented"
 #
 # root = 'device/augmented'
 #

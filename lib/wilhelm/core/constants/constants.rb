@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-puts "\tLoading walter/core/constants"
+puts "\tLoading wilhelm/core/constants"
 
 require_relative 'commands/aliases'
 require_relative 'commands/groups'

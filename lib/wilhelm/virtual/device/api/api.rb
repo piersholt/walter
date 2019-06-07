@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/virtual/device/api"
+puts "\tLoading wilhelm/virtual/device/api"
 
 root = 'device/api'
 

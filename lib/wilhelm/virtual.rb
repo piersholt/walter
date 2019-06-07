@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts 'Loading walter/virtual'
+puts 'Loading wilhelm/virtual'
 
 # Walter-Virtual
 LogActually.is_all_around(:virtual)

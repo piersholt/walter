@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts 'Loading walter/core'
+puts 'Loading wilhelm/core'
 
 # Walter-Core
 LogActually.is_all_around(:interface)
@@ -16,7 +16,7 @@ LogActually.transmitter.i
 LogActually.is_all_around(:parameterized)
 LogActually.parameterized.i
 
-puts "\tLoading walter/core/serialport"
+puts "\tLoading wilhelm/core/serialport"
 require 'serialport'
 
 require_relative 'core/constants/constants'

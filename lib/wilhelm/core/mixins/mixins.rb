@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/core/mixins"
+puts "\tLoading wilhelm/core/mixins"
 
 require_relative 'delayable'
 require_relative 'stateful'

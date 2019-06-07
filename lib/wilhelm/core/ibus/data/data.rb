@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/core/ibus/data"
+puts "\tLoading wilhelm/core/ibus/data"
 
 data_root = 'ibus/data'
 
@@ -15,7 +15,7 @@ paramaterized_builder_root = "#{paramaterized_root}/builder"
 devices_root = "#{data_root}/devices"
 message_root = "#{data_root}/message"
 
-puts "\tLoading walter/core/ibus/data/commands"
+puts "\tLoading wilhelm/core/ibus/data/commands"
 
 require "#{commands_root}/chars"
 

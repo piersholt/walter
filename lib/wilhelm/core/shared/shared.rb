@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/core/shared"
+puts "\tLoading wilhelm/core/shared"
 
 root = 'shared'
 

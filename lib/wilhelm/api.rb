@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts 'Loading walter/api'
+puts 'Loading wilhelm/api'
 
 # Walter-API
 LogActually.is_all_around(:display)
@@ -13,7 +13,7 @@ LogActually.controls.i
 LogActually.audio.i
 LogActually.tel.i
 
-puts "\tLoading walter/api/display"
+puts "\tLoading wilhelm/api/display"
 
 display_root = 'display'
 require "#{display_root}/states/defaults"
@@ -36,7 +36,7 @@ require "#{display_root}/cache/cache"
 
 require "#{display_root}/display"
 
-puts "\tLoading walter/api/controls"
+puts "\tLoading wilhelm/api/controls"
 
 require_relative 'api/controls/listener'
 require_relative 'api/controls/control/base'
@@ -47,14 +47,14 @@ require_relative 'api/controls/control/two_stage'
 require_relative 'api/controls/control'
 require_relative 'api/controls/controls'
 
-puts "\tLoading walter/api/audio"
+puts "\tLoading wilhelm/api/audio"
 
 audio_root = 'audio'
 
 require "#{audio_root}/led"
 require "#{audio_root}/audio"
 
-puts "\tLoading walter/api/telephone"
+puts "\tLoading wilhelm/api/telephone"
 
 telephone_root = 'telephone'
 

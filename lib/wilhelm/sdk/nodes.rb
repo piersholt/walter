@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/sdk/nodes"
+puts "\tLoading wilhelm/sdk/nodes"
 
-puts "\tLoading walter/sdk/nodes/node"
+puts "\tLoading wilhelm/sdk/nodes/node"
 
 require_relative 'nodes/node/constants'
 require_relative 'nodes/node/logging'

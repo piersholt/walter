@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/core/helpers"
+puts "\tLoading wilhelm/core/helpers"
 
 # require_relative 'delayable'
 # require_relative 'stateful'

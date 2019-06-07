@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-puts "\tLoading walter/sdk/ui"
+puts "\tLoading wilhelm/sdk/ui"
 
 require_relative 'ui/constants'
 
 # Views
-puts "\tLoading walter/sdk/ui/view"
+puts "\tLoading wilhelm/sdk/ui/view"
 
 # Base
 require_relative 'ui/view/header/base_field'
@@ -28,7 +28,7 @@ require_relative 'ui/view/services/index'
 require_relative 'ui/view/characters/index'
 
 # Controllers
-puts "\tLoading walter/sdk/ui/controller"
+puts "\tLoading wilhelm/sdk/ui/controller"
 
 # Base
 require_relative 'ui/controller/base_controller'
@@ -41,6 +41,6 @@ require_relative 'ui/controller/services_controller'
 require_relative 'ui/controller/characters_controller'
 
 # Context
-puts "\tLoading walter/sdk/ui/controller"
+puts "\tLoading wilhelm/sdk/ui/controller"
 
 require_relative 'ui/context'

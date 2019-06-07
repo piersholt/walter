@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts 'Loading walter/sdk'
+puts 'Loading wilhelm/sdk'
 
 # Walter SDK
 LogActually.is_all_around(:notify)
