@@ -1,4 +1,4 @@
-module Wolfgang
+class Walter
   class Manager
     # Unimplemented methods fallback for states
     module Defaults

@@ -28,20 +28,22 @@ module Wolfgang
       end
 
       def configure_incomining_notifications_delegates(notifications_context)
-        device_handler     = DeviceHandler.instance
-        controller_handler = ControllerHandler.instance
-        target_handler     = TargetHandler.instance
         debug_handler     = DebugHandler.instance
-
-        device_handler.context = notifications_context.wolfgang_context
-        controller_handler.context = notifications_context.wolfgang_context
-        target_handler.context = notifications_context.wolfgang_context
         debug_handler.context = notifications_context.wolfgang_context
 
-        controller_handler.successor = target_handler
-        target_handler.successor = device_handler
-        device_handler.successor = debug_handler
-        controller_handler
+        notifications_context
+          .registered_handlers
+          .inject(debug_handler) do |memo, object|
+            memo.successor = object
+            object
+          end
+
+        notifications_context.registered_handlers.clear
+
+        # controller_handler.successor = target_handler
+        # target_handler.successor = device_handler
+        # device_handler.successor = debug_handler
+        debug_handler
       rescue StandardError => e
         with_backtrace(logger, e)
       end

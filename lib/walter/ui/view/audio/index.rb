@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Wolfgang
+class Walter
   class UserInterface
     module View
       # Comment
       module Audio
-        class Index < TitledMenu
+        class Index < TITLED_MENU
           NO_THINGS = [].freeze
           NO_OPTIONS = [].freeze
 

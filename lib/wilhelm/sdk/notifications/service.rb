@@ -33,5 +33,16 @@ module Wolfgang
       logger.info(NOTIFICATIONS) { "state change => #{new_state.class}" }
       @state = new_state
     end
+
+    def registered_handlers
+      @registered_handlers ||= []
+    end
+
+    def register_handlers(*handlers)
+      logger.info(NOTIFICATIONS) { "#register_handlers(#{handlers})" }
+      handlers.each do |handler|
+        registered_handlers << handler
+      end
+    end
   end
 end

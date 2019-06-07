@@ -1,4 +1,7 @@
-module Wolfgang
+# frozen_string_literal: true
+
+# Comment
+class Walter
   class Manager
     include Logging
     include Messaging::API
@@ -23,8 +26,13 @@ module Wolfgang
         disable
       when Wolfgang::UserInterface::Context
         new_state.register_service_controllers(
-          bluetooth: Wolfgang::UserInterface::Controller::BluetoothController
+          bluetooth: Walter::UserInterface::Controller::BluetoothController
         )
+      when Wolfgang::Notifications
+        device_handler = Walter::Manager::Notifications::DeviceHandler.instance
+        device_handler.manager = self
+
+        new_state.register_handlers(device_handler)
       end
     end
 

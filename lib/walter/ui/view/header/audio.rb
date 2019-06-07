@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Wolfgang
+class Walter
   class UserInterface
     module View
       module Header
         # Comment
-        class Audio < DefaultHeader
+        class Audio < DEFAULT_HEADER
           def initialize(addressed_player)
             LogActually.wolfgang.debug('Audio') { "#initialize(#{addressed_player})" }
             super(

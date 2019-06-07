@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Wolfgang
+class Walter
   class UserInterface
     module View
-      # Comment
       module Bluetooth
-        class Index < BasicMenu
+        # Comment
+        class Index < BASIC_MENU
           NO_DEVICES = [].freeze
           NO_OPTIONS = [].freeze
 

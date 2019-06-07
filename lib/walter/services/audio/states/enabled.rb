@@ -1,4 +1,4 @@
-module Wolfgang
+class Walter
   class Audio
     class Enabled
       include Constants

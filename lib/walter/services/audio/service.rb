@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Wolfgang
+class Walter
   # Comment
   class Audio
     include Observable
@@ -33,8 +33,15 @@ module Wolfgang
         disable
       when Wolfgang::UserInterface::Context
         new_state.register_service_controllers(
-          audio: Wolfgang::UserInterface::Controller::AudioController
+          audio: Walter::UserInterface::Controller::AudioController
         )
+      when Wolfgang::Notifications
+        target_handler = Walter::Audio::Notifications::TargetHandler.instance
+        controller_handler = Walter::Audio::Notifications::ControllerHandler.instance
+        target_handler.audio = self
+        controller_handler.audio = self
+
+        new_state.register_handlers(target_handler, controller_handler)
       end
     end
   end

@@ -1,10 +1,10 @@
 # frozen_string_literal: false
 
-module Wolfgang
+class Walter
   class UserInterface
     module Controller
       # Comment
-      class AudioController < BaseController
+      class AudioController < BASE_CONTROLLER
         NAME = 'AudioController'
 
         attr_reader :addressed_player

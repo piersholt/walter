@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Wolfgang
+class Walter
   class Audio
     # Comment
     class Player

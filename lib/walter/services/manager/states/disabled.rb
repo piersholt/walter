@@ -1,4 +1,4 @@
-module Wolfgang
+class Walter
   class Manager
     class Disabled
       include Constants

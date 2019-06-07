@@ -76,6 +76,8 @@ module Wolfgang
       def create_notifications(context)
         logger.debug(WOLFGANG_ONLINE) { '#create_notifications' }
         notifications = Notifications.new(context)
+        context.changed
+        context.notify_observers(notifications)
         # logger.debug(WOLFGANG_ONLINE) { '#notifications.start =>' }
         notifications.start
         # logger.debug(WOLFGANG_ONLINE) { '#notifications' }

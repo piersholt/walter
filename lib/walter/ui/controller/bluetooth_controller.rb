@@ -1,10 +1,12 @@
 # frozen_string_literal: false
 
-module Wolfgang
+# Wolfgang::UserInterface::Controller::BaseController
+
+class Walter
   class UserInterface
     module Controller
       # Comment
-      class BluetoothController < BaseController
+      class BluetoothController < BASE_CONTROLLER
         NAME = 'BluetoothController'
 
         def name
