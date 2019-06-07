@@ -10,6 +10,8 @@ class Vehicle
     include Singleton
     include Observable
 
+    include LED
+
     attr_accessor :bus
 
     def logger
@@ -18,23 +20,6 @@ class Vehicle
 
     def to_s
       'Audio'
-    end
-
-    def on
-      bus.rad.led_on
-    end
-
-    def off
-      bus.rad.led_off
-    end
-
-    def power
-      case bus.bmbt.power?
-      when false
-        bus.rad.led_on
-      when true
-        bus.rad.led_off
-      end
     end
 
     # def targets

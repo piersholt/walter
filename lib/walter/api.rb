@@ -51,6 +51,7 @@ puts "\tLoading walter/api/audio"
 
 audio_root = 'audio'
 
+require "#{audio_root}/led"
 require "#{audio_root}/audio"
 
 puts "\tLoading walter/api/telephone"
