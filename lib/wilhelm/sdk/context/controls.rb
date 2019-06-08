@@ -22,27 +22,27 @@ module Wolfgang
       }.freeze
 
       def load_debug
-        logger.debug(AUDIO) { '#load_debug()' }
+        logger.debug(LOGGER_NAME) { '#load_debug()' }
         @state.load_debug(self)
       end
 
       def load_nodes
-        logger.debug(AUDIO) { '#load_nodes()' }
+        logger.debug(LOGGER_NAME) { '#load_nodes()' }
         @state.load_nodes(self)
       end
 
       def load_services
-        logger.debug(AUDIO) { '#load_services()' }
+        logger.debug(LOGGER_NAME) { '#load_services()' }
         @state.load_services(self)
       end
 
       def load_bluetooth(*args)
-        logger.debug(AUDIO) { "#load_bluetooth(#{args})" }
+        logger.debug(LOGGER_NAME) { "#load_bluetooth(#{args})" }
         @state.load_bluetooth(self, args)
       end
 
       def load_audio
-        logger.debug(AUDIO) { '#load_audio()' }
+        logger.debug(LOGGER_NAME) { '#load_audio()' }
         @state.load_audio(self)
       end
     end
