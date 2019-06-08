@@ -50,10 +50,12 @@ module Wolfgang
       alias render render_menu
 
       def launch(feature, action, args = nil)
-        unless header
-          # header.destroy if header
+        LogActually.ui.debug('UIContext') { "#launch(#{feature}, #{action}, #{args})" }
+        if feature == :header || !header
+          header&.destroy
           header_controller = service_controllers[:header]
           @header = header_controller.new(self, application_context)
+          return @header.load(:header, args) if args
           @header.load(:header)
         end
 
@@ -62,6 +64,12 @@ module Wolfgang
         @service = service_klass.new(self, application_context) unless service.class === service_klass
         return service.load(action, args) if args
         service.load(action)
+      rescue StandardError => e
+        LogActually.ui.error(self.class.name) { e }
+        e.backtrace.each { |line| LogActually.ui.error(self.class.name) { line } }
+        LogActually.ui.error(self.class.name) { 'binding.pry start' }
+        binding.pry
+        LogActually.ui.error(self.class.name) { 'binding.pry end' }
       end
     end
   end

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Wolfgang
   class UserInterface
@@ -6,17 +6,23 @@ module Wolfgang
       module Header
         # Comment
         class Status < DefaultHeader
-          def initialize(*args)
-            LogActually.wolfgang.debug(moi) { "#initialize(#{args})" }
+          def initialize(status_model)
+            LogActually.ui.unknown(moi) { "#initialize(#{status_model})" }
             super(
               ['A',
                'B',
                'C',
                'D',
                'E',
-               'F 0123456789abcedef',
-               'G 0123456789abcedef'],
+               'F ' + status_model.field(5),
+               'G ' + status_model.field(6)],
                'Wilhelm')
+          rescue StandardError => e
+             LogActually.ui.error(self.class.name) { e }
+             e.backtrace.each { |line| LogActually.ui.error(self.class.name) { line } }
+             LogActually.ui.error(self.class.name) { 'binding.pry start' }
+             binding.pry
+             LogActually.ui.error(self.class.name) { 'binding.pry end' }
           end
 
           def moi

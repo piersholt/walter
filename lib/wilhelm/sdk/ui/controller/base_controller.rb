@@ -25,7 +25,7 @@ module Wolfgang
 
         def load(action = :index, args = nil)
           @loaded_view = action
-          args ? create(action, *args) : create(action)
+          args ? create(action, args) : create(action)
           public_send(action)
         end
 
