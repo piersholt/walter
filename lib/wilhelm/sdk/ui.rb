@@ -7,8 +7,9 @@ require_relative 'ui/constants'
 # Models
 puts "\tLoading wilhelm/sdk/ui/model"
 
-require_relative 'ui/model/base_list'
+require_relative 'ui/model/list'
 require_relative 'ui/model/header/status'
+require_relative 'ui/model/characters/list'
 
 # Views
 puts "\tLoading wilhelm/sdk/ui/view"
