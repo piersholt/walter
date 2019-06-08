@@ -54,7 +54,7 @@ class Walter
           #
           #   PLAYER_PROPERTIES.first(COLUMN_ONE_MAX).map.with_index do |attribute, index|
           #     attribute_value = player.public_send(attribute)
-          #     thingo = BaseMenuItem.new(label: attribute_value)
+          #     thingo = BASE_MENU_ITEM.new(label: attribute_value)
           #     [index, thingo]
           #   end
           # end
@@ -71,30 +71,30 @@ class Walter
           end
 
           def line1(player)
-            [0, BaseMenuItem.new(label: player.artist)]
+            [0, BASE_MENU_ITEM.new(label: player.artist)]
           end
 
           def line2(player)
             to_write = player.title
             to_write = to_write[0,40] if to_write.length > 40
-            [1, BaseMenuItem.new(label: to_write)]
+            [1, BASE_MENU_ITEM.new(label: to_write)]
           end
 
           def line3(player)
-            [2, BaseMenuItem.new(label: player.album)]
+            [2, BASE_MENU_ITEM.new(label: player.album)]
           end
 
           def line4(player)
              xxx = "#{player.number} of #{player.total}"
-            [3, BaseMenuItem.new(label: xxx)]
+            [3, BASE_MENU_ITEM.new(label: xxx)]
           end
 
           def line5(player)
-            # [4, BaseMenuItem.new(label: player.name)]
+            # [4, BASE_MENU_ITEM.new(label: player.name)]
             # xxx =
               # Array.new(40) { |i| '|' }.join +
               # Array.new(40) { |i| '_' }.join
-            [4, BaseMenuItem.new(label: '---------')]
+            [4, BASE_MENU_ITEM.new(label: '---------')]
           end
 
           MARKER = 130

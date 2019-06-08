@@ -35,8 +35,8 @@ class Walter
 
           def titles(addressed_player)
             player_name = addressed_player.name
-            [BaseMenuItem.new(label: 'Audio'),
-             BaseMenuItem.new(label: player_name)]
+            [BASE_MENU_ITEM.new(label: 'Audio'),
+             BASE_MENU_ITEM.new(label: player_name)]
           end
 
           private
@@ -53,7 +53,7 @@ class Walter
 
             things.first(COLUMN_ONE_MAX).map.with_index do |thing, index|
               indexed_thing =
-                BaseMenuItem.new(label: thing[:name], action: thing[:action])
+                BASE_MENU_ITEM.new(label: thing[:name], action: thing[:action])
               [index, indexed_thing]
             end
           end
@@ -64,7 +64,7 @@ class Walter
 
             options.first(COLUMN_TWO_MAX).map.with_index do |thing, index|
               indexed_thing =
-                BaseMenuItem.new(label: thing[:name], action: thing[:action])
+                BASE_MENU_ITEM.new(label: thing[:name], action: thing[:action])
               [index + COLUMN_TWO_OFFSET, indexed_thing]
             end
           end

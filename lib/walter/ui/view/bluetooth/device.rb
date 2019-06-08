@@ -6,6 +6,8 @@ class Walter
       module Bluetooth
         # Comment
         class Device < BASIC_MENU
+          include Constants
+
           NO_VALUES = [].freeze
           NO_OPTIONS = [].freeze
 
@@ -34,7 +36,7 @@ class Walter
 
             VALUES.first(COLUMN_ONE_MAX).map.with_index do |property, index|
               property_value = device.public_send(property)
-              thingo = BaseMenuItem.new(label: property_value)
+              thingo = BASE_MENU_ITEM.new(label: property_value)
               [index, thingo]
             end
           end
@@ -60,19 +62,19 @@ class Walter
           end
 
           def connect(id)
-            BaseMenuItem.new(id: id,
+            BASE_MENU_ITEM.new(id: id,
                              label: 'Connect',
                              action: :bluetooth_connect)
           end
 
           def disconnect(id)
-            BaseMenuItem.new(id: id,
+            BASE_MENU_ITEM.new(id: id,
                              label: 'Disconnect',
                              action: :bluetooth_disconnect)
           end
 
           def pending(id)
-            BaseMenuItem.new(id: id,
+            BASE_MENU_ITEM.new(id: id,
                              label: 'Please Wait...')
           end
 

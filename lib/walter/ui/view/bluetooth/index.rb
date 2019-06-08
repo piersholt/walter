@@ -6,6 +6,8 @@ class Walter
       module Bluetooth
         # Comment
         class Index < BASIC_MENU
+          include Constants
+
           NO_DEVICES = [].freeze
           NO_OPTIONS = [].freeze
 
@@ -32,7 +34,7 @@ class Walter
             validate(devices, COLUMN_ONE_MAX)
 
             devices.first(COLUMN_ONE_MAX).map.with_index do |device, index|
-              indexed_device = CheckedItem.new(
+              indexed_device = CHECKED_ITEM.new(
                                 id: device.address,
                                 checked: device.connected?,
                                 label: device.name,
