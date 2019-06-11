@@ -59,11 +59,11 @@ module Wilhelm
         def manager(action)
           LogActually.ui.debug(NAME) { "#manager(#{action})" }
           case action
-          when Manager::On
+          when Walter::Manager::On
             index
-          when Manager::Enabled
+          when Walter::Manager::Enabled
             index
-          when Manager::Disabled
+          when Walter::Manager::Disabled
             index
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
@@ -73,11 +73,11 @@ module Wilhelm
         def audio(action)
           LogActually.ui.debug(NAME) { "#audio(#{action})" }
           case action
-          when Audio::On
+          when Walter::Audio::On
             index
-          when Audio::Enabled
+          when Walter::Audio::Enabled
             index
-          when Audio::Disabled
+          when Walter::Audio::Disabled
             index
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
