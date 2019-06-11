@@ -14,6 +14,8 @@ begin
   require 'figaro'
 
   require 'observer'
+  require 'optparse'
+  require 'ostruct'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
   def setup_path(dir)
@@ -24,6 +26,26 @@ begin
     e.backtrace.each { |line| puts line }
     exit
   end
+
+# *************************************************************************** #
+#                              CLI OPTIONS                                    #
+# *************************************************************************** #
+
+  options = OpenStruct.new
+  options.environment = 'development'
+  options.debug = true
+
+  OptionParser.new do |opts|
+    opts.banner = 'Usage: run -e development -d'
+
+    opts.on('-e ENVIRONMENT', '--envrionment= ENVIRONMENT', 'Runtime environment') do |e|
+      options.environment = e
+    end
+
+    opts.on('-d', '--debug', 'Run in debug mode') do |d|
+      options.debug = d
+    end
+  end.parse!
 
   LOG_PATH = 'log'.freeze
   LOG_BIN_PATH = LOG_PATH + '/bin'
@@ -43,7 +65,7 @@ begin
 
   dir_check
 
-  Figaro::Application.new(path: './config/application.yml', environment: 'development')&.load
+  Figaro::Application.new(path: './config/application.yml', environment: options[:environment])&.load
   Figaro.require_keys(%w[publisher_host publisher_port subscriber_host subscriber_port client_host client_port])
 
   require 'wilhelm/tools'
