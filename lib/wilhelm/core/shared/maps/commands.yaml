@@ -2945,8 +2945,8 @@
                   begin: 3
                   end: 4
                   excl: false
-        :block: 1
         :flush: 2
+        :block: 1
         :flash: 0
       :parameters:
         :flash:
