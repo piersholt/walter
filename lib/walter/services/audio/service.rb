@@ -21,7 +21,7 @@ class Walter
     # Application Context State Change ----------------------------------------
 
     def state_change(new_state)
-      logger.unknown(AUDIO) { "ApplicationContext => #{new_state.class}" }
+      logger.debug(AUDIO) { "ApplicationContext => #{new_state.class}" }
       case new_state
       when Wolfgang::ApplicationContext::Online
         logger.info(AUDIO) { 'Enable Audio' }

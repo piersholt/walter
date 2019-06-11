@@ -20,7 +20,7 @@ class Walter
     # Application Context State Change ----------------------------------------
 
     def state_change(new_state)
-      logger.unknown(MANAGER) { "ApplicationContext => #{new_state.class}" }
+      logger.debug(MANAGER) { "ApplicationContext => #{new_state.class}" }
       case new_state
       when Wolfgang::ApplicationContext::Online
         logger.debug(MANAGER) { 'Enable Manager' }

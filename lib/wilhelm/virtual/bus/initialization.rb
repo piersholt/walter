@@ -35,12 +35,12 @@ class Virtual
 
     def create_device(device_ident)
       if @emulated.include?(device_ident)
-        LogActually.virtual.info(PROC) { "Create Emulated #{device_ident}" }
+        LogActually.virtual.debug(PROC) { "Create Emulated #{device_ident}" }
         DynamicDevice.builder
                      .target(device_ident)
                      .result
       elsif @augmented.include?(device_ident)
-        LogActually.virtual.info(PROC) { "Create Augmented #{device_ident}" }
+        LogActually.virtual.debug(PROC) { "Create Augmented #{device_ident}" }
         augmented_device =
           DynamicDevice.builder
                        .target(device_ident)
