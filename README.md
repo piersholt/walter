@@ -32,8 +32,8 @@ I'm still in the throws of tinkering with the bus, and software currently reflec
 
 22 December 2018
 
-- Streaming audio via Bluetooth has been implemented in semi-reasonable form. The heavy lifting is been done by Bluez which has support for the A2DP and AVRCP profiles out of the box via PulseAudio, and offers an API over the D-BUS. A second project- Wolfgang, makes the Bluez D-BUS API a little friendlier and emulates an car kit for the purposes of acting as broker for the vehicle.
-- Wolfgang communicates with this library via ZeroMQ using a common message standard.
+- Streaming audio via Bluetooth has been implemented in semi-reasonable form. The heavy lifting is been done by Bluez which has support for the A2DP and AVRCP profiles out of the box via PulseAudio, and offers an API over the D-BUS. A second project- Wilhelm, makes the Bluez D-BUS API a little friendlier and emulates an car kit for the purposes of acting as broker for the vehicle.
+- Wilhelm communicates with this library via ZeroMQ using a common message standard.
 
 17 October 2018
 

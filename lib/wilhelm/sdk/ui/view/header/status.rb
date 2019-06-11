@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Wolfgang
+module Wilhelm
   class UserInterface
     module View
       module Header

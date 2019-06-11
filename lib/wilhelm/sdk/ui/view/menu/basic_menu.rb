@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Wolfgang
+module Wilhelm
   class UserInterface
     module View
       # Comment

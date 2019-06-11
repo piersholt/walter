@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
-  # Default Wolfgang logger
+module Wilhelm
+  # Default Wilhelm logger
   module Constants
     include LogActually::ErrorOutput
 

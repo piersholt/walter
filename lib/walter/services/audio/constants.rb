@@ -2,7 +2,7 @@
 
 # Top level namespace
 class Walter
-  # Default Wolfgang logger
+  # Default Wilhelm logger
   module Constants
     include LogActually::ErrorOutput
 

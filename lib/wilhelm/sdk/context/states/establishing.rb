@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
+module Wilhelm
   class ApplicationContext
-    # Wolfgang Service Establishing State
+    # Wilhelm Service Establishing State
     class Establishing
       include Defaults
       include Constants
 
       def initialize(context)
-        logger.debug(WOLFGANG_EST) { '#initialize' }
+        logger.debug(WILHELM_EST) { '#initialize' }
         context.register_controls(Vehicle::Controls.instance)
       end
 
       def close(context)
-        logger.debug(WOLFGANG_EST) { '#close' }
-        logger.debug(WOLFGANG_EST) { 'Stop Notifications' }
+        logger.debug(WILHELM_EST) { '#close' }
+        logger.debug(WILHELM_EST) { 'Stop Notifications' }
         context.notifications&.stop
 
-        logger.debug(WOLFGANG_EST) { 'Disable Mananger' }
+        logger.debug(WILHELM_EST) { 'Disable Mananger' }
         context.manager&.disable
-        logger.debug(WOLFGANG_EST) { 'Disable Audio' }
+        logger.debug(WILHELM_EST) { 'Disable Audio' }
         context.audio&.disable
 
-        logger.debug(WOLFGANG_EST) { 'Disconnect Client.' }
+        logger.debug(WILHELM_EST) { 'Disconnect Client.' }
         # Client.disconnect
         context.offline!
       end
@@ -41,7 +41,7 @@ module Wolfgang
       # Application Context
 
       def ui!(context)
-        logger.debug(WOLFGANG_EST) { '#ui' }
+        logger.debug(WILHELM_EST) { '#ui' }
         context.ui = context.create_ui(context)
         true
       end
@@ -49,13 +49,13 @@ module Wolfgang
       # Services
 
       # def manager!(context)
-      #   logger.debug(WOLFGANG_EST) { '#manager' }
+      #   logger.debug(WILHELM_EST) { '#manager' }
       #   context.manager = context.create_manager(context)
       #   true
       # end
       #
       # def audio!(context)
-      #   logger.debug(WOLFGANG_EST) { '#audio' }
+      #   logger.debug(WILHELM_EST) { '#audio' }
       #   context.audio = context.create_audio(context)
       #   true
       # end

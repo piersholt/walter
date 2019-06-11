@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Wolfgang
+module Wilhelm
   class ApplicationContext
     # Comment
     module Nodes

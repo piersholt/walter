@@ -72,9 +72,9 @@ class Walter
   def stop
     LOGGER.debug(PROC) { '#stop' }
 
-    LOGGER.info(PROC) { 'Switching off Wolfgang...' }
+    LOGGER.info(PROC) { 'Switching off Wilhelm...' }
     @wolfgang.close
-    LOGGER.info(PROC) { 'Wolfgang is off! 👍' }
+    LOGGER.info(PROC) { 'Wilhelm is off! 👍' }
 
     LOGGER.info(PROC) { 'Switching off Multiplexing...' }
     @demultiplexer.off
@@ -197,7 +197,7 @@ class Walter
   end
 
   def setup_sdk
-    @wolfgang = Wolfgang::ApplicationContext.new
+    @wolfgang = Wilhelm::ApplicationContext.new
 
     manager = Walter::Manager.new
     audio = Walter::Audio.new

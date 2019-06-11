@@ -23,18 +23,18 @@ class Walter
     def state_change(new_state)
       logger.debug(AUDIO) { "ApplicationContext => #{new_state.class}" }
       case new_state
-      when Wolfgang::ApplicationContext::Online
+      when Wilhelm::ApplicationContext::Online
         logger.info(AUDIO) { 'Enable Audio' }
         enable
-      when Wolfgang::ApplicationContext::Offline
+      when Wilhelm::ApplicationContext::Offline
         logger.info(AUDIO) { 'Disable Audio' }
         disable
-      when Wolfgang::UserInterface::Context
+      when Wilhelm::UserInterface::Context
         new_state
           .register_service_controllers(
             audio: Walter::UserInterface::Controller::AudioController
           )
-      when Wolfgang::Notifications
+      when Wilhelm::Notifications
         target_handler = Walter::Audio::Notifications::TargetHandler.instance
         controller_handler = Walter::Audio::Notifications::ControllerHandler.instance
         target_handler.audio = self

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
+module Wilhelm
   # Comment
   module Constants
     include LogActually::ErrorOutput
 
-    WOLFGANG = 'Wolfgang'
-    WOLFGANG_OFFLINE = 'Wolfgang (Offline)'
-    WOLFGANG_EST = 'Wolfgang (Est.)'
-    WOLFGANG_ONLINE = 'Wolfgang (Online)'
+    WILHELM = 'Wilhelm'
+    WILHELM_OFFLINE = 'Wilhelm (Offline)'
+    WILHELM_EST = 'Wilhelm (Est.)'
+    WILHELM_ONLINE = 'Wilhelm (Online)'
 
     PING_INTERVAL = 30
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
-  # Wolfgang Service
+module Wilhelm
+  # Wilhelm Service
   class ApplicationContext
     include Logging
     include Constants
@@ -21,14 +21,14 @@ module Wolfgang
       connection_options =
         { port: ENV['client_port'],
           host: ENV['client_host'] }
-      logger.warn(WOLFGANG) { "Client connection options: #{connection_options}" }
+      logger.warn(WILHELM) { "Client connection options: #{connection_options}" }
       Client.params(connection_options)
     end
 
     # STATES -------------------------------------------------------------
 
     def change_state(new_state)
-      logger.info(WOLFGANG) { "state change => #{new_state.class}" }
+      logger.info(WILHELM) { "state change => #{new_state.class}" }
       @state = new_state
       changed
       notify_observers(state)

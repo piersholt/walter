@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-module Wolfgang
+module Wilhelm
   class Notifications
     # Comment
     class Listener

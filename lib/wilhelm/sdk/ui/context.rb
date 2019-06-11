@@ -1,4 +1,4 @@
-module Wolfgang
+module Wilhelm
   class UserInterface
     class Context
       attr_accessor :application_context, :header, :service

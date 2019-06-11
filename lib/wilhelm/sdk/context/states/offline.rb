@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
+module Wilhelm
   class ApplicationContext
-    # Wolfgang Service Offline State
+    # Wilhelm Service Offline State
     class Offline
       include Defaults
       include Constants
 
       def online!(context)
-        logger.debug(WOLFGANG_OFFLINE) { '#online' }
+        logger.debug(WILHELM_OFFLINE) { '#online' }
         context.change_state(Online.new)
         
         context.notifications!

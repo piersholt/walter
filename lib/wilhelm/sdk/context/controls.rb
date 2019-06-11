@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Wolfgang
+module Wilhelm
   class ApplicationContext
     # Comment
     module Controls
       include Constants
       include SDK::Controls::Register
 
-      LOGGER_NAME = WOLFGANG
+      LOGGER_NAME = WILHELM
 
       CONTROL_REGISTER = {
         BMBT_AUX_HEAT => STATELESS_CONTROL,

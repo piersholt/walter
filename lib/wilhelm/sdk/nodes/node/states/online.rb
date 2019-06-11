@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
+module Wilhelm
   class Node
-    # Wolfgang Service Online State
+    # Wilhelm Service Online State
     class Online
       include Defaults
       include Constants

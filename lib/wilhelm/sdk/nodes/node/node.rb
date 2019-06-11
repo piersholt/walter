@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wolfgang
+module Wilhelm
   # Comment
   class Node
     include Logging
