@@ -31,6 +31,13 @@ module Wilhelm
             notify_observers(:device_name, self)
           end
 
+          def devices_removed(devices_object)
+            return false if devices_object.name.nil? || devices_object.name.empty?
+            self.device_name = default(:device_name)
+            changed
+            notify_observers(:device_name, self)
+          end
+
           def player(player_object)
             return false if player_object.name.nil? || player_object.name.empty?
             self.player_name = player_object.name
@@ -44,7 +51,7 @@ module Wilhelm
             when :connected
               devices(device)
             when :disconnected
-              devices(device)
+              devices_removed(device)
             when :created
               devices(device)
             else
