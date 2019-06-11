@@ -3,7 +3,7 @@
 module Wolfgang
   class UserInterface
     module View
-      module MainMenu
+      module Debug
         # Comment
         class Index < TitledMenu
           include Constants

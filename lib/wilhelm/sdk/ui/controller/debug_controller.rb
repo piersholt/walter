@@ -11,7 +11,7 @@ module Wolfgang
 
         def index
           LogActually.ui.debug(NAME) { '#index' }
-          @view = View::MainMenu::Index.new
+          @view = View::Debug::Index.new
           view.add_observer(self)
 
           render(view)
