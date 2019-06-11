@@ -6,7 +6,7 @@ class SessionHandler < BaseHandler
 
   METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 
-  attr_reader :messages, :stats, :frames
+  attr_reader :messages, :frames
   attr_writer :transmission_sequence
 
   def self.i
@@ -20,11 +20,10 @@ class SessionHandler < BaseHandler
   def initialize
     @messages = Messages.new
     @frames = []
-    # @frames = PBus::Frames.new
   end
 
   def inspect
-    str_buffer = "<SessionHandler>"
+    "<SessionHandler frames:#{stats[:frame]&.length} messages: #{stats[:message]&.length}>"
   end
 
   def add_byte(byte_basic)

@@ -3,8 +3,6 @@
 # require 'physical/interface/byte_buffer'
 # require 'physical/interface/output_buffer'
 
-
-
 class Interface
   include Observable
   include ManageableThreads
