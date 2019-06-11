@@ -14,6 +14,9 @@ puts "\tLoading wilhelm/core/data_link/frame"
 require "#{root}/frame/frame"
 require "#{root}/frame/frame_synchronisation"
 
+puts "\tLoading wilhelm/core/data_link/fbzv"
+require "#{root}/fbzv/frame_synchronisation"
+
 puts "\tLoading wilhelm/core/data_link/transceiver"
 require "#{root}/receiver"
 require "#{root}/transmitter"

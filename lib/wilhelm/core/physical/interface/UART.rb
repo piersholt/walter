@@ -17,6 +17,15 @@ class Interface
       { 'modem_params='.to_sym => DEFAULT_TTY_CONFIGURATION,
         'flow_control='.to_sym => SerialPort::HARD }.freeze
 
+    FBVZ_CONFIGURATION =
+      { 'baud' => 1800,
+        'data_bits' => 8,
+        'stop_bits' => 1,
+        'parity' => SerialPort::EVEN }.freeze
+    FBVZ_TTY_OPTIONS =
+      { 'modem_params='.to_sym => FBVZ_CONFIGURATION,
+        'flow_control='.to_sym => SerialPort::HARD }.freeze
+
     # delegate_serial_port_methods
     SerialPort.public_instance_methods(false).each do |method|
       LogActually.interface.debug('Device') { "Delegating: #{method} to SerialPort" }

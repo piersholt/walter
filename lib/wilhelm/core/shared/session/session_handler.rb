@@ -7,6 +7,7 @@ class SessionHandler < BaseHandler
   METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
 
   attr_reader :messages, :stats, :frames
+  attr_writer :transmission_sequence
 
   def self.i
     instance
@@ -26,6 +27,11 @@ class SessionHandler < BaseHandler
     str_buffer = "<SessionHandler>"
   end
 
+  def add_byte(byte_basic)
+    # print byte_basic
+    bytes[transmission_sequence] << byte_basic
+  end
+
   def add_message(message)
     @messages << message
   end
@@ -38,6 +44,7 @@ class SessionHandler < BaseHandler
     LOGGER.debug(name) { "\t#update(#{action}, #{properties})" }
     case action
     when BYTE_RECEIVED
+      # add_byte(properties[:byte_basic])
       update_stats(action)
     when FRAME_FAILED
       update_stats(action)
@@ -54,6 +61,21 @@ class SessionHandler < BaseHandler
     @stats ||= METRICS.map do |metric|
       [metric, 0]
     end.to_h
+  end
+
+  # FBZV
+
+  def bytes
+    @bytes ||= {}
+  end
+
+  def increment
+    self.transmission_sequence = transmission_sequence + 1
+    bytes[transmission_sequence] = []
+  end
+
+  def transmission_sequence
+    @transmission_sequence ||= 0
   end
 
   private
