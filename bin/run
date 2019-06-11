@@ -11,6 +11,7 @@ begin
   require 'bundler/setup'
 
   require 'pry-byebug'
+  require 'figaro'
 
   require 'observer'
 
@@ -41,6 +42,9 @@ begin
   setup_path('lib/walter')
 
   dir_check
+
+  Figaro::Application.new(path: './config/application.yml', environment: 'development')&.load
+  Figaro.require_keys(%w[publisher_host publisher_port subscriber_host subscriber_port client_host client_port])
 
   require 'wilhelm/tools'
   require 'wilhelm'

@@ -10,6 +10,8 @@ gem 'pry-byebug'
 gem 'rspec'
 gem 'serialport'
 
+gem 'figaro'
+
 gem 'capistrano'
 gem 'capistrano-rbenv'
 

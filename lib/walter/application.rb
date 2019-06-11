@@ -28,7 +28,11 @@ class Walter
 
     apply_debug_defaults
 
-    Publisher.walter
+    connection_options =
+      { port: ENV['publisher_port'],
+        host: ENV['publisher_host'] }
+    LOGGER.warn(PROC) { "Publisher connection options: #{connection_options}" }
+    Publisher.params(connection_options)
   end
 
   def launch

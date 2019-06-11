@@ -58,7 +58,11 @@ module Wolfgang
         @listener_thread =
           Thread.new do
             Thread.current[:name] = 'NotificationsListener'
-            Subscriber.wolfgang.pi.go!
+            connection_options =
+              { port: ENV['subscriber_port'],
+                host: ENV['subscriber_host'] }
+            logger.warn(NOTIFICATIONS_LISTENER) { "Subscriber connection options: #{connection_options}" }
+            Subscriber.params(connection_options)
             begin
               logger.debug(NOTIFICATIONS_LISTENER) { 'Thread listen start!' }
               listen_loop
