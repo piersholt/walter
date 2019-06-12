@@ -14,8 +14,8 @@ module Wilhelm
                'C',
                'D',
                'E',
-               'F ' + status_model.field(5),
-               'G ' + status_model.field(6)],
+               status_model.field(5),
+               status_model.field(6)],
                'Wilhelm')
           rescue StandardError => e
              LogActually.ui.error(self.class.name) { e }
