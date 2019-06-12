@@ -6,19 +6,21 @@ module Wilhelm
       module Characters
         # Comment
         class List < List
-          def initialize
+          def initialize(index = 0, page_size = 8)
             list_items = Array.new(256) do |i|
-              { index: Kernel.format('%3.3d', i), ordinal: i }
+              { index: Kernel.format('%3.3d', i), ordinal: i, hex: Kernel.format('%#2.2x', i) }
             end
-            super(list_items)
+            super(list_items, index: index, page_size: page_size)
           end
 
           def forward
-            shift(index + 10)
+            # LogActually.ui.unknown(self.class.name) { "#forward" }
+            shift(page_size)
           end
 
           def backward
-            shift(index - 10)
+            # LogActually.ui.unknown(self.class.name) { "#backward" }
+            shift(-page_size)
           end
         end
       end

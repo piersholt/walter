@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Wilhelm
   class UserInterface
@@ -6,38 +6,30 @@ module Wilhelm
       module Characters
         # Comment
         class Index < BasicMenu
-
-          def initialize(offset)
-            @offset = offset
-            @characters = indexed_characters(offset)
+          def initialize(characters_model)
+            @characters = parse_model(characters_model)
           end
 
           def menu_items
-            @characters + navigation_next + navigation_previous
+            @characters + navigation_previous + navigation_next
           end
 
           private
 
+          def navigation_previous
+            navigation(index: 8, label: 171.chr, action: :page_previous)
+          end
+
           def navigation_next
             navigation(index: 9,
-                       label: '>>',
-                       action: :page_next,
-                       properties: { offset: @offset + 8 })
+                       label: 187.chr,
+                       action: :page_next)
           end
 
-          def navigation_previous
-            navigation(index: 8,
-                       label: '<<',
-                       action: :page_previous,
-                       properties: { offset: @offset - 8 })
-          end
-
-          def indexed_characters(offset)
-            (0..7).map do |index|
-              byte = index + offset
-              byte_label = Kernel.format('%3d', byte)
-              character_item = "#{byte_label}: #{byte.chr}"
-              [index, BaseMenuItem.new(label: character_item)]
+          def parse_model(characters_model)
+            characters_model.page.map.with_index do |character, index|
+              label_buffer = character[:index] + ': ' + '[' + character[:ordinal].chr + ']'
+              [index, BaseMenuItem.new(label: label_buffer)]
             end
           end
         end
