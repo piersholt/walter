@@ -1,5 +1,6 @@
-require 'forwardable'
+# frozen_string_literal: false
 
+# Comment
 class Interface
   # The binary stream stored as a local file for offline processing
   class File

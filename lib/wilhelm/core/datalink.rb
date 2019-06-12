@@ -3,9 +3,12 @@
 puts "\tLoading wilhelm/core/data_link"
 
 puts "\tLoading wilhelm/core/data_link/frame"
+require_relative 'data_link/frame/frame_header'
+require_relative 'data_link/frame/frame_tail'
 require_relative 'data_link/frame/frame'
 require_relative 'data_link/frame/frame_synchronisation'
 require_relative 'data_link/frame/indexed_arguments'
+require_relative 'data_link/frame/arguments_builder'
 require_relative 'data_link/frame/frame_builder'
 
 puts "\tLoading wilhelm/core/data_link/fbzv"

@@ -1,6 +1,6 @@
-require 'forwardable'
-require 'serialport'
+# frozen_string_literal: false
 
+# Comment
 class Interface
   # There's two elements that differentiate this from a log file
   # 1. TTY Device which will be any serial binary data stream

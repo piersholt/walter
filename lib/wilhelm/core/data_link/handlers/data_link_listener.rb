@@ -2,8 +2,6 @@
 
 # Comment
 class DataLinkListener < BaseListener
-  # name = self.class.name
-
   def initialize(interface_handler)
     @interface_handler = interface_handler
   end

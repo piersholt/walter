@@ -1,5 +1,6 @@
+# frozen_string_literal: false
 
-
+# Comment
 class Interface
   # An extension of a Queue to support multi shifts, and unshifting
   # NOTE this should not handle unshift.... argh.. well.. unshift is framer behaviour..

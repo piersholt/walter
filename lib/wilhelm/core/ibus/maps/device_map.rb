@@ -1,8 +1,6 @@
-# require 'maps/map'
-# require 'application/devices/base_device'
+# frozen_string_literal: false
 
-require 'singleton'
-
+# Comment
 class DeviceMap < BaseMap
   DEVICES_MAP_NAME = 'devices'.freeze
   DEFAULT_NAMESPACE = 'Devices'

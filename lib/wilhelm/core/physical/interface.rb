@@ -1,8 +1,6 @@
-# require 'physical/interface/UART'
-# require 'physical/interface/file'
-# require 'physical/interface/byte_buffer'
-# require 'physical/interface/output_buffer'
+# frozen_string_literal: false
 
+# Comment
 class Interface
   include Observable
   include ManageableThreads

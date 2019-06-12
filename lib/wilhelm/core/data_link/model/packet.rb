@@ -1,4 +1,6 @@
+# frozen_string_literal: false
 
+# Comment
 class Packet
   attr_reader :from, :to, :data
 

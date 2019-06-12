@@ -1,10 +1,10 @@
-# require 'physical/bytes'
-require 'data_link/frame/frame_header'
-require 'data_link/frame/frame_tail'
+# frozen_string_literal: false
 
+# Comment
 class ChecksumError < StandardError
 end
 
+# Comment
 class Frame < Bytes
   PROG_NAME = 'Frame'.freeze
   HEADER_LENGTH = 2
@@ -17,11 +17,6 @@ class Frame < Bytes
   FrameTail.instance_methods(false).each do |tail_method|
     def_delegator :tail, tail_method
   end
-
-
-  # TODO: forward header and tail instance methods to avoid cailling frame.header or frame.tail
-
-  attr_reader :header, :tail
 
   # ************************************************************************* #
   #                                  OBJECT

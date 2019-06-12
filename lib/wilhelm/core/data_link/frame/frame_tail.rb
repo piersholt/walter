@@ -1,8 +1,9 @@
-# require 'physical/bytes'
+# frozen_string_literal: false
 
-class TailValidationError < StandardError
-end
+# Comment
+class TailValidationError < StandardError; end
 
+# Comment
 class FrameTail < Bytes
   VALID_SIZE = (3..255)
 

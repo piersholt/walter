@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Comment
 class ArgumentsBuilder
   def initialize(command, index)
     @command = command

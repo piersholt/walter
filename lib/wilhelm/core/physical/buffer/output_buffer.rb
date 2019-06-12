@@ -1,20 +1,6 @@
-# it can't be asyncronous...
-# it needs to be blocked
+# frozen_string_literal: false
 
-# there's also the issue of the device needing to know if something worked...
-# it's not the transitters responsibioity to retry...
-
-# can... i just keep it really dumb for now?
-# basically just pull out the code that was implemented by interface
-
-# argh, hang on i can't have a thread... as.. it's the transmitter thread that
-
-# it's fundamentally an IO abstraction
-# the fact that read needs a thread is it's own business
-# where i'm getting confused is... the intput buffer doesn't populate itself...
-# maybe this doesn't either... but can i make it blocking?
-# can it give it to a thread, be locked until it returns?
-# fucking hell, i'm moving Transmitter farther and farther away from IO
+# Comment
 class Interface
   class OutputBuffer
     def initialize(stream)

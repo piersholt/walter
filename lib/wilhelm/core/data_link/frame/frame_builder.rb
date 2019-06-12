@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'data_link/frame/frame'
-require 'data_link/frame/arguments_builder'
-
 # Class documentation
 class FrameBuilder
   REQUIRED_FIELDS = %i[from to command arguments].freeze

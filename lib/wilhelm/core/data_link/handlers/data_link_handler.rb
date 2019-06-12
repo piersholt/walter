@@ -1,6 +1,6 @@
-require 'singleton'
-# require 'application/messages'
+# frozen_string_literal: false
 
+# Comment
 class DataLinkHandler < BaseHandler
   def initialize(transitter)
     @transmitter = transitter

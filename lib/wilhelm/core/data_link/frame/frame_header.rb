@@ -1,11 +1,12 @@
-# require 'physical/bytes'
+# frozen_string_literal: false
 
-class HeaderValidationError  < StandardError
-end
+# Comment
+class HeaderValidationError < StandardError; end
 
-class HeaderImplausibleError  < StandardError
-end
+# Comment
+class HeaderImplausibleError < StandardError; end
 
+# Comment
 class FrameHeader < Bytes
   VALID_SIZE = (2..2)
 

@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Comment
 class IndexedArguments < Bytes
   def initialize(bytes, index)
     super(bytes)
@@ -18,7 +21,6 @@ class IndexedArguments < Bytes
   end
 
   def inspect
-
     to_s
   end
 end

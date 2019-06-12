@@ -2,6 +2,9 @@
 
 # Comment
 class Receiver
+  include Observable
+  include ManageableThreads
+
   NAME = 'Receiver'
   THREAD_NAME = 'Receiver'
 
@@ -11,9 +14,6 @@ class Receiver
   SYNC_VALIDATION = 'Validate /'
   SYNC_ERROR = 'Error /'
   SYNC_SHIFT = 'Unshift! /'
-
-  include Observable
-  include ManageableThreads
 
   attr_reader :input_buffer, :frame_input_buffer, :read_thread
 

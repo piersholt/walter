@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 # A collection class for Byte
 class Bytes
   extend Forwardable

@@ -1,5 +1,6 @@
-# 
+# frozen_string_literal: false
 
+# Comment 
 class Byte
   include DataTools
 

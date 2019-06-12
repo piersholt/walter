@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Comment
 class FrameSynchronisation
   attr_reader :buffer, :frame
 
