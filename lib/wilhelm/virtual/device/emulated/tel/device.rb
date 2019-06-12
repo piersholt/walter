@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Virtual
+class Wilhelm::Virtual
   # Comment
   class SimulatedTEL < EmulatedDevice
     include Capabilities::Telephone

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   # Comment
   module Diagnostics
     include Helpers
-    include API::Diagnostics
+    include Wilhelm::Virtual::API::Diagnostics
     include Windows
     include Seats
     include Lighting

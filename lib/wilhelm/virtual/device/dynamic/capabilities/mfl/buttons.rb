@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module MultiFunctionWheel
     # Comment
     module Buttons
-      include API::MultiFunctionWheel
+      include Wilhelm::Virtual::API::MultiFunctionWheel
       include ButtonHelpers
       include Constants
 

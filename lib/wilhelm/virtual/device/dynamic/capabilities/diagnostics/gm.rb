@@ -1,4 +1,4 @@
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Diagnostics
     module CentralLocking
       HATCH_OPEN     = '00 0A 01'

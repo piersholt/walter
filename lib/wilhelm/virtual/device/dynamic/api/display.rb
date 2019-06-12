@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module API
+module Wilhelm::Virtual::API
   # Comment
   module Display
     include BaseAPI

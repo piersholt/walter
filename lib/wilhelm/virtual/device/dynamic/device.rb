@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-class Virtual
+class Wilhelm::Virtual
   class DynamicDevice < Device
     include Command::Aliases
 

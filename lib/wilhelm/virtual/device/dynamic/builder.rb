@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Virtual
+class Wilhelm::Virtual
   # Comment
   class DynamicDeviceBuilder
     include ModuleTools
@@ -36,7 +36,7 @@ class Virtual
     def result
       raise StandardError, "no ident set!" unless @ident
       klass_constant = CLASS_MAP[ident]
-      klass_constant = prepend_namespace('Virtual', klass_constant)
+      klass_constant = prepend_namespace('Wilhelm::Virtual', klass_constant)
       klass = get_class(klass_constant)
       klass.new(ident)
     end

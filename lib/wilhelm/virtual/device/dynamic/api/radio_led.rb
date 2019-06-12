@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-module API
+module Wilhelm::Virtual::API
   module RadioLED
     include Command::Aliases
     include BaseAPI

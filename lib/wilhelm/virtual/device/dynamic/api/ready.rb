@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module API
+module Wilhelm::Virtual::API
   # API for command related to keys
-  module Ready
+  module Readiness
     include BaseAPI
 
     def p1ng(from: me, to:)

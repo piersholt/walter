@@ -3,7 +3,7 @@
 # require '/cd'
 # require '/telephone'
 
-class Virtual
+class Wilhelm::Virtual
   class EmulatedDevice < DynamicDevice
     include Capabilities::Ready
 

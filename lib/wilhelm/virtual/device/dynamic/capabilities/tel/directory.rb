@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Telephone
     # BMBT Interface Control
     module Directory
-      include API::Telephone
+      include Wilhelm::Virtual::API::Telephone
       include Constants
 
       def directory_page(contact_group, i)

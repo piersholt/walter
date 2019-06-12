@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Radio
     # BMBT Interface Control
     module UserInterface
-      include API::Radio
+      include Wilhelm::Virtual::API::Radio
 
       def acknowledge_menu
         menu_rad(arguments: { state: 0b0000_0001 })

@@ -1,5 +1,6 @@
-module Alive
-  include API::Alive
+
+module Wilhelm::Virtual::Alive
+  include Wilhelm::Virtual::API::Alive
 
   # Think about device state and need to announce etc....
   # Some devices will only be ignition position II, some I...

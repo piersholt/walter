@@ -10,7 +10,7 @@
 #     - :ping
 #     - :led
 
-module API
+module Wilhelm::Virtual::API
   module LED
     include Observable
     include Event

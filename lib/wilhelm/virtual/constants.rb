@@ -6,7 +6,7 @@ require_relative 'constants/states'
 require_relative 'constants/commands'
 require_relative 'constants/buttons'
 
-class Virtual
+class Wilhelm::Virtual
   # TODO: rename to constants
   module Events
     include Constants::States

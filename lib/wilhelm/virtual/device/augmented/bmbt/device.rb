@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-class Virtual
+class Wilhelm::Virtual
   # Comment
   class AugmentedBMBT < AugmentedDevice
     include Capabilities::OnBoardMonitor

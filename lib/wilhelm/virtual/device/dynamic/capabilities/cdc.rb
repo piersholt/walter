@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   # Comment
   module CDChanger
-    include API::CDChanger
+    include Wilhelm::Virtual::API::CDChanger
     include Helpers
     include State
 

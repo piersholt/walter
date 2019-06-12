@@ -1,5 +1,5 @@
 
-class Virtual
+class Wilhelm::Virtual
   class Initialization
     PROC = 'Initialization'
     def initialize(emulated: [], augmented: [])

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module CDChanger
     module Constants
       SCAN_THRESHOLD_SECONDS = 3

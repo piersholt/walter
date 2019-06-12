@@ -81,7 +81,7 @@ class Wilhelm::API
   end
 end
 
-class Virtual
+class Wilhelm::Virtual
   # Wilhelm::API Events
   module Events
     include Wilhelm::API::States

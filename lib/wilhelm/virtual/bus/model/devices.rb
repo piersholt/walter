@@ -1,4 +1,4 @@
-class Virtual
+class Wilhelm::Virtual
   class Devices
     extend Forwardable
 

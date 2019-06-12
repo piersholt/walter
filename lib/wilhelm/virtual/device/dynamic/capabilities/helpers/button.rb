@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module ButtonHelpers
     def wait(wait_time = 0.01)
       Kernel.sleep(wait_time)

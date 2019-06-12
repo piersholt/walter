@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module OnBoardMonitor
     # Comment
     module UserControls
-      include API::OnBoardMonitor
+      include Wilhelm::Virtual::API::OnBoardMonitor
       # include Helpers
       include Constants
 

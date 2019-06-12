@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module API
+module Wilhelm::Virtual::API
   # API for command related to keys
   module CDChanger
     include Command::Aliases

@@ -1,4 +1,4 @@
-class Virtual
+class Wilhelm::Virtual
   class Device
     module Receivable
       include Event

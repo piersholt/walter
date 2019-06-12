@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module GFX
     # Comment
     module Constants

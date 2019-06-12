@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Helpers
     # @deprecated alias
     def integers(*arguments)

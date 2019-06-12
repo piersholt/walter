@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Radio
     # CD Changer Reqests
     module CDChangerControl
-      include API::Radio
+      include Wilhelm::Virtual::API::Radio
 
       # 0x00: Status!
       # 0x01: Stop!

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Radio
     # RDS Display
     module RDSDisplay
-      include API::Radio
+      include Wilhelm::Virtual::API::Radio
       include Constants
       include DataTools
 

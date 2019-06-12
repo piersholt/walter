@@ -1,9 +1,9 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module GFX
     module UserInterface
-      include API::GFX
+      include Wilhelm::Virtual::API::GFX
 
       # Shortcuts
       def main

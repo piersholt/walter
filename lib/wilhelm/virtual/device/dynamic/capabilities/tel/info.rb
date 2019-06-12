@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Telephone
     # BMBT Interface Control
     module Info
-      include API::Telephone
+      include Wilhelm::Virtual::API::Telephone
       include Constants
 
       # 0x93: Call cost current

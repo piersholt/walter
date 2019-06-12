@@ -2,7 +2,7 @@
 
 # require '/api/base_api'
 
-module API
+module Wilhelm::Virtual::API
   # API for command related to keys
   module Alive
     include BaseAPI

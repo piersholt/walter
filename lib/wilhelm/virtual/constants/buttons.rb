@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Virtual
+class Wilhelm::Virtual
   module Constants
     module Buttons
       BMBT_LEFT = :bmbt_left

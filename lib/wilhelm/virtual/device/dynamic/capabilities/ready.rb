@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   # Comment
   module Ready
-    include API::Ready
+    include Wilhelm::Virtual::API::Readiness
 
     # Request
     def ping(to)

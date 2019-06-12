@@ -1,4 +1,4 @@
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Diagnostics
     module Lighting
       def any(to, *args)

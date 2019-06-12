@@ -1,10 +1,10 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module GFX
     # BMBT Interface Control
     module OBC
-      include API::OBC
+      include Wilhelm::Virtual::API::OBC
       include Constants
       # include DataTools
 

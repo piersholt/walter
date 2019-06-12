@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Radio
     # CD Changer Reqests
     module CDChangerDisplay
-      include API::Radio
+      include Wilhelm::Virtual::API::Radio
 
       # rad  gfx  23  CA 20  "CD 1-01",
       # rad  gfx  23  CA 20  "CD 1-01",

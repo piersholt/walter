@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Virtual
+class Wilhelm::Virtual
   module Constants
     # Should commands that do not affect module state be relayed...?
     module Commands

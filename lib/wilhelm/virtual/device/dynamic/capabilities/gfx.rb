@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   # Comment
   module GFX
     include Helpers

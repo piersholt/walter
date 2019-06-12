@@ -1,4 +1,4 @@
-module API
+module Wilhelm::Virtual::API
   module BaseAPI
     include Event
     include Observable

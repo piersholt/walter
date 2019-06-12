@@ -1,4 +1,4 @@
-class Virtual
+class Wilhelm::Virtual
   class Bus
     include Singleton
     extend Forwardable

@@ -1,10 +1,10 @@
 # frozen_string_literal: false
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module GFX
     # BMBT Interface Control
     module UserControls
-      include API::GFX
+      include Wilhelm::Virtual::API::GFX
 
       def select(i, l = 0x60)
         input(layout: l, index: i)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module API
+module Wilhelm::Virtual::API
   # Comment
   module GFX
     include Command::Aliases

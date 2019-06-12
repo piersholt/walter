@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   module Radio
     # BMBT Interface Control
     module RadioLED
-      include API::RadioLED
+      include Wilhelm::Virtual::API::RadioLED
       include Constants
 
       def led_off

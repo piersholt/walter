@@ -4,7 +4,7 @@ puts "\tLoading wilhelm/virtual/device"
 
 require_relative 'device/events'
 require_relative 'device/receivable'
-require_relative 'device/device'
+require_relative 'device/base'
 # TODO: remove broadcast
 require_relative 'device/broadcast'
 

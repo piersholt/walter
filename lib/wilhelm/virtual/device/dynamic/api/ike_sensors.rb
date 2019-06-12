@@ -3,7 +3,7 @@
 # ignition
 # speed
 
-module API
+module Wilhelm::Virtual::API
   module IKESensors
     include BaseAPI
 

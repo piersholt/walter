@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Capabilities
+module Wilhelm::Virtual::Capabilities
   # Comment
   module Radio
     include Helpers
