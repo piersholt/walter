@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vehicle
+class Wilhelm::API
   class Controls
     class Control
       # Comment

@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Vehicle
+class Wilhelm::API
   class Audio
     # Audio API LED methods
     module LED

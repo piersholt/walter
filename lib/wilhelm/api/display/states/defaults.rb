@@ -1,4 +1,4 @@
-class Vehicle
+class Wilhelm::API
   class Display
     module Defaults
       def ping(context)

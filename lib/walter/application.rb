@@ -175,10 +175,10 @@ class Walter
 
   def setup_api(context)
     # Walter API
-    vehicle_display = Vehicle::Display.instance
-    vehicle_button = Vehicle::Controls.instance
-    vehicle_audio = Vehicle::Audio.instance
-    vehicle_telephone = Vehicle::Telephone.instance
+    vehicle_display = Wilhelm::API::Display.instance
+    vehicle_button = Wilhelm::API::Controls.instance
+    vehicle_audio = Wilhelm::API::Audio.instance
+    vehicle_telephone = Wilhelm::API::Telephone.instance
 
     vehicle_display.bus = context
     vehicle_button.bus = context

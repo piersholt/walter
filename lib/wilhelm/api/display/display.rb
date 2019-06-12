@@ -1,6 +1,6 @@
 # Okay, a thing that listens to certain devices that affect it...
 
-class Vehicle
+class Wilhelm::API
   # This class handles the re-draw
   # The states will determine this automatically
   # When busy, it will not draw

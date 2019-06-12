@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Vehicle
+class Wilhelm::API
   class Telephone
     # Control of the BMBT/MID telephone status LEDs
     module LED

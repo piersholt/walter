@@ -1,4 +1,4 @@
-class Vehicle
+class Wilhelm::API
   class Display
     # External device has priority. Do not draw/refresh display
     # Examples are user control, i.e. 'Set', 'Aux Heating', 'Telephone'

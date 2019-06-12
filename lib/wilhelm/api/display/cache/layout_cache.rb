@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vehicle
+class Wilhelm::API
   class Display
     # Comment
     class Cache
@@ -27,7 +27,7 @@ class Vehicle
   end
 end
 
-class Vehicle
+class Wilhelm::API
   class Display
     # Comment
     class Cache
@@ -79,7 +79,7 @@ class Vehicle
   end
 end
 
-class Vehicle
+class Wilhelm::API
   class Display
     # Comment
     class Cache

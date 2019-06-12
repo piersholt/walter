@@ -39,9 +39,9 @@ class Walter
         result = context.player.power
         logger.info(AUDIO_ON) { "#power() => #{result}" }
         if result
-          Vehicle::Audio.instance.on
+          Wilhelm::API::Audio.instance.on
         else
-          Vehicle::Audio.instance.off
+          Wilhelm::API::Audio.instance.off
         end
         result
       end

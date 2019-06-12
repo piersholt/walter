@@ -4,11 +4,11 @@ module SDK
   module Controls
     # Base Controls Interface Mapping
     module Register
-      include Vehicle::Events
+      include Wilhelm::API::Events
 
-      STATELESS_CONTROL = Vehicle::Controls::Control::Stateless
-      STATEFUL_CONTROL = Vehicle::Controls::Control::Stateful
-      TWO_STAGE_CONTROL = Vehicle::Controls::Control::TwoStage
+      STATELESS_CONTROL = Wilhelm::API::Controls::Control::Stateless
+      STATEFUL_CONTROL = Wilhelm::API::Controls::Control::Stateful
+      TWO_STAGE_CONTROL = Wilhelm::API::Controls::Control::TwoStage
 
       STATELESS = :stateless
       STATEFUL = :stateful

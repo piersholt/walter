@@ -1,4 +1,4 @@
-class Vehicle
+class Wilhelm::API
   class Display
     # Display not in use, and is available
     class Available

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vehicle
+class Wilhelm::API
   class Controls
     class Control
       # Stateless controls will only notify on the press event. This is best

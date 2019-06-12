@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vehicle
+class Wilhelm::API
   class Controls
     class Control
       # Stateful controls will notify on the press and release events, which

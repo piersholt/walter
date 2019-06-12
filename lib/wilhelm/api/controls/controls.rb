@@ -4,7 +4,7 @@
 # - EQ Hifi
 # - EQ Top HiFi (DSP)
 
-class Vehicle
+class Wilhelm::API
   # Controls object for vehicle API
   class Controls
     STATELESS = :stateless

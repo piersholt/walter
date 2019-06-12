@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Vehicle
+class Wilhelm::API
   module States
     PRIORITY_GFX = :gfx_priority_gfx
     PRIORITY_RADIO = :gfx_priority_radio
@@ -73,7 +73,7 @@ class Vehicle
   end
 end
 
-class Vehicle
+class Wilhelm::API
   module Events
     include States
     include Commands
@@ -82,10 +82,10 @@ class Vehicle
 end
 
 class Virtual
-  # Vehicle Events
+  # Wilhelm::API Events
   module Events
-    include Vehicle::States
-    include Vehicle::Commands
-    include Vehicle::Buttons
+    include Wilhelm::API::States
+    include Wilhelm::API::Commands
+    include Wilhelm::API::Buttons
   end
 end

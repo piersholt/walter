@@ -1,4 +1,4 @@
-class Vehicle
+class Wilhelm::API
   class Display
     # In use by Walter
     class Captured

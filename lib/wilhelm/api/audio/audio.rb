@@ -4,7 +4,7 @@
 # - EQ Hifi
 # - EQ Top HiFi (DSP)
 
-class Vehicle
+class Wilhelm::API
   # Audio object for vehicle API
   class Audio
     include Singleton

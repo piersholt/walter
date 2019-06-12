@@ -9,7 +9,7 @@ module Wilhelm
       ROOT_CONTROLLER = :debug
 
       def initialize(application_context, options = {
-        renderer: Vehicle::Display.instance
+        renderer: Wilhelm::API::Display.instance
       })
         @application_context = application_context
         @renderer = options[:renderer]

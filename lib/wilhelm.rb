@@ -15,6 +15,8 @@ begin
   add_load_path('api')
   add_load_path('sdk')
 
+  module Wilhelm; end
+
   require 'wilhelm/core'
   require 'wilhelm/virtual'
   require 'wilhelm/api'

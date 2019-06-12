@@ -10,7 +10,7 @@ module Wilhelm
 
       def initialize(context)
         logger.debug(WILHELM_EST) { '#initialize' }
-        context.register_controls(Vehicle::Controls.instance)
+        context.register_controls(Wilhelm::API::Controls.instance)
       end
 
       def close(context)

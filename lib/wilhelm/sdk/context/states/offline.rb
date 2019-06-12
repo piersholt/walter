@@ -14,7 +14,7 @@ module Wilhelm
         
         context.notifications!
         context.ui!
-        context.register_controls(Vehicle::Controls.instance)
+        context.register_controls(Wilhelm::API::Controls.instance)
       end
     end
   end

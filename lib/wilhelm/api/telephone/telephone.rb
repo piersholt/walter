@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Vehicle
+class Wilhelm::API
   # Telephone object for vehicle API
   class Telephone
     include Singleton
