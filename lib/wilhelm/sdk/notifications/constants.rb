@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wilhelm
+module Wilhelm::SDK
   # Default Wilhelm logger
   module Constants
     include LogActually::ErrorOutput

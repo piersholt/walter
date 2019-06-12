@@ -1,4 +1,4 @@
-module Wilhelm
+module Wilhelm::SDK
   class UserInterface
     class Context
       attr_accessor :application_context, :header, :service

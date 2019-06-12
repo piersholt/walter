@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Wilhelm
+module Wilhelm::SDK
   class Node
     # Thingo
     module Defaults

@@ -5,17 +5,17 @@ class Walter
     module View
       # Walter constants
       module Constants
-        BASIC_MENU      = Wilhelm::UserInterface::View::BasicMenu
-        TITLED_MENU     = Wilhelm::UserInterface::View::TitledMenu
-        STATIC_MENU     = Wilhelm::UserInterface::View::StaticMenu
+        BASIC_MENU      = Wilhelm::SDK::UserInterface::View::BasicMenu
+        TITLED_MENU     = Wilhelm::SDK::UserInterface::View::TitledMenu
+        STATIC_MENU     = Wilhelm::SDK::UserInterface::View::StaticMenu
 
-        CHECKED_ITEM    = Wilhelm::UserInterface::View::CheckedItem
-        BASE_MENU_ITEM    = Wilhelm::UserInterface::View::BaseMenuItem
+        CHECKED_ITEM    = Wilhelm::SDK::UserInterface::View::CheckedItem
+        BASE_MENU_ITEM    = Wilhelm::SDK::UserInterface::View::BaseMenuItem
       end
 
       # Comment
       module Header
-        DEFAULT_HEADER  = Wilhelm::UserInterface::View::DefaultHeader
+        DEFAULT_HEADER  = Wilhelm::SDK::UserInterface::View::DefaultHeader
       end
 
       # Comment

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wilhelm
+module Wilhelm::SDK
   class ApplicationContext
     # Wilhelm Service Establishing State
     class Establishing

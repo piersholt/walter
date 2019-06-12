@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Top level namespace
-module Wilhelm
+module Wilhelm::SDK
   class ApplicationContext
     # Wilhelm Service Online State
     class Online
@@ -92,7 +92,7 @@ module Wilhelm
 
       def create_ui(context)
         LogActually.ui.debug(WILHELM) { "#create_ui (#{Thread.current})" }
-        ui_context = Wilhelm::UserInterface::Context.new(context)
+        ui_context = Wilhelm::SDK::UserInterface::Context.new(context)
         register_service_controllers(ui_context)
         context.changed
         context.notify_observers(ui_context)
@@ -106,11 +106,11 @@ module Wilhelm
           "#register_service_controllers (#{Thread.current})"
         end
         ui_context.register_service_controllers(
-          header:  Wilhelm::UserInterface::Controller::HeaderController,
-          debug:  Wilhelm::UserInterface::Controller::DebugController,
-          nodes:  Wilhelm::UserInterface::Controller::NodesController,
-          services:  Wilhelm::UserInterface::Controller::ServicesController,
-          characters:  Wilhelm::UserInterface::Controller::CharactersController
+          header:  Wilhelm::SDK::UserInterface::Controller::HeaderController,
+          debug:  Wilhelm::SDK::UserInterface::Controller::DebugController,
+          nodes:  Wilhelm::SDK::UserInterface::Controller::NodesController,
+          services:  Wilhelm::SDK::UserInterface::Controller::ServicesController,
+          characters:  Wilhelm::SDK::UserInterface::Controller::CharactersController
         )
       rescue StandardError => e
         with_backtrace(logger, e)

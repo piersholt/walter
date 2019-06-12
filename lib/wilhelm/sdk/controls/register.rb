@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module SDK
+module Wilhelm::SDK
   module Controls
     # Base Controls Interface Mapping
     module Register

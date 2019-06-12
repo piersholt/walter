@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Wilhelm
+module Wilhelm::SDK
   class UserInterface
     module View
       module Header

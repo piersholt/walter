@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Wilhelm
+module Wilhelm::SDK
   class ApplicationContext
     # Comment
     module Controls
       include Constants
-      include SDK::Controls::Register
+      include Wilhelm::SDK::Controls::Register
 
       LOGGER_NAME = WILHELM
 

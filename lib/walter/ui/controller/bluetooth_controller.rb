@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-# Wilhelm::UserInterface::Controller::BaseController
+# Wilhelm::SDK::UserInterface::Controller::BaseController
 
 class Walter
   class UserInterface

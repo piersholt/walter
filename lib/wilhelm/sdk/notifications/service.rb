@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-module Wilhelm
+module Wilhelm::SDK
   class Notifications
     include LogActually::ErrorOutput
     attr_accessor :listener, :handler, :context

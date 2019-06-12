@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Comment
-module Wilhelm
+module Wilhelm::SDK
   class Notifications
     # Comment
     class Listener

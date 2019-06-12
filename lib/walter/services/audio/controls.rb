@@ -4,7 +4,7 @@ class Walter
   class Audio
     # Comment
     module Controls
-      include SDK::Controls::Register
+      include Wilhelm::SDK::Controls::Register
       include Logging
 
       LOGGER_NAME = AUDIO_CONTROLS

@@ -197,7 +197,7 @@ class Walter
   end
 
   def setup_sdk
-    @wolfgang = Wilhelm::ApplicationContext.new
+    @wolfgang = Wilhelm::SDK::ApplicationContext.new
 
     manager = Walter::Manager.new
     audio = Walter::Audio.new

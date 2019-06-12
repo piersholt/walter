@@ -5,7 +5,7 @@ class Walter
     module Controller
       # Walter constants
       module Constants
-        BASE_CONTROLLER = Wilhelm::UserInterface::Controller::BaseController
+        BASE_CONTROLLER = Wilhelm::SDK::UserInterface::Controller::BaseController
       end
     end
   end
