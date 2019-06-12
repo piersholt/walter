@@ -28,26 +28,86 @@ class Wernher
       end
     end
 
-    def duplicates
-      LOGGER.debug(self.class.name) { "#duplicates()" }
-      (0..length).each do |start_index|
-        start_offset = start_index + 1
-        last_index = length - 2
-        (start_offset..last_index).each do |stop_index|
-          target_range = subset(start_index..stop_index)
-          duplicate_result = find_duplicate(start_index, stop_index)
-          do_something_with_result(start_index, stop_index, checksum) if checksum_result
-        end
-      end
+    def matches
+      @matches ||= {}
     end
 
-    def find_duplicate(start_index, stop_index)
-      LOGGER.debug(self.class.name) { "#find_duplicate(#{start_index}, #{stop_index}, #{checksum})" }
-      checksum_byte = ByteBasic.new(checksum, :integer)
-      next_byte(stop_index).any? do |i|
-        test(i, checksum_byte)
+    def not_subset?(segment_length, segment_start)
+      return true
+      matches[segment_length]
+    end
+
+    def duplicates
+      LOGGER.debug(self.class.name) { "#duplicates()" }
+      segment_length = 11
+      while segment_length >= 8 do
+        LOGGER.debug(self.class.name) { "segment_length => #{segment_length}" }
+        matches[segment_length] = []
+        segment_start = 0
+        segment = bytes[segment_start, segment_length]
+        while segment.length == segment_length do
+          LOGGER.debug(self.class.name) { "\tsegment_start => [#{segment_start}, #{segment_length}]" }
+          other_segment_start = segment_start + segment_length
+          # matches.fetch(segment_length)[segment] = 0
+          # this_segment_count = matches.fetch(segment_length)[segment]
+          # bytes.slice(other_segment_start..-1).each_slice(segment_length) do |slice|
+          #   result = segment.eql?(slice)
+          #   if result && not_subset?(segment_length, segment_start)
+          #     this_segment_count += 1
+              # matches << { segment_length: segment_length, segment_start: segment_start, other_segment_start: other_segment_start }
+              # matches.fetch(segment_length) << [(segment_start..(segment_start + segment_length - 1)), (other_segment_start..(other_segment_start + segment_length - 1))]
+              # LOGGER.debug(self.class.name) { "\t\t\tResult! segment_length: #{segment_length}, segment_start: #{segment_start}, other_segment_start: #{other_segment_start}" }
+          #   end
+          # end
+          other_segment = bytes[other_segment_start, segment_length]
+          while other_segment.length == segment_length do
+            LOGGER.debug(self.class.name) { "\t\tother_segment_start => [#{other_segment_start}, #{segment_length}]" }
+            LOGGER.debug(self.class.name) { "\t\t\t#{segment} == #{other_segment}" }
+            result = segment.eql?(other_segment)
+            if result && not_subset?(segment_length, segment_start)
+              # matches << { segment_length: segment_length, segment_start: segment_start, other_segment_start: other_segment_start }
+              matches.fetch(segment_length) << [(segment_start..(segment_start + segment_length - 1)), (other_segment_start..(other_segment_start + segment_length - 1))]
+              LOGGER.debug(self.class.name) { "\t\t\tResult! segment_length: #{segment_length}, segment_start: #{segment_start}, other_segment_start: #{other_segment_start}" }
+            end
+            other_segment_start += 1
+            other_segment = bytes[other_segment_start, segment_length]
+          end
+          segment_start += 1
+          segment = bytes[segment_start, segment_length]
+        end
+        segment_length -= 1
+        segment_start = 0
+        other_segment_start = segment_start + segment_length
       end
 
+      # longest_matchs = matches.find { |_, objects| objects.length > 0 }
+      matches.each do |length, ranges|
+        LOGGER.info(self.class.name) { "Length: #{length}" }
+        highlight(*ranges)
+      end
+      # longest_range_pairs = longest_matchs[1]
+      # highlight(*longest_range_pairs)
+      true
+    end
+
+    def highlight(*ranges)
+      LOGGER.debug(self.class.name) { "#highlight(#{ranges})" }
+      ranges.each do |r1, r2|
+        LOGGER.debug(self.class.name) { "r1 => #{r1}, r2 => #{r2}" }
+        prefix_range = prefix(r1.first)
+        r1_range = subset(r1)
+        middle_range = subset((r1.last + 1)..(r2.first - 1))
+        r2_range = subset(r2)
+        suffix_range = suffix(r2.last)
+
+        LOGGER.info(self.class.name) do
+          "#{gray}#{to_s(prefix_range)}#{fuck_off}"\
+          "#{green}#{to_s(r1_range)}#{fuck_off}"\
+          "#{gray}#{to_s(middle_range)}#{fuck_off}"\
+          "#{red}#{to_s(r2_range)}#{fuck_off}"\
+          "#{gray}#{to_s(suffix_range)}#{fuck_off}"
+        end
+      end
     end
 
     def checksums
@@ -75,7 +135,6 @@ class Wernher
       LOGGER.debug(self.class.name) { 'Match!' }
       LOGGER.debug(self.class.name) { "Unformatted\t: #{to_s(prefix_range, target_range, suffix_range)}" }
       LOGGER.info(self.class.name) do
-        "Formatted\t: "\
         "#{gray}#{to_s(prefix_range)}#{fuck_off}"\
         "#{green}#{to_s(target_range)}#{fuck_off}"\
         "#{red}#{to_s(checksum_range)}#{fuck_off}"\
@@ -139,6 +198,8 @@ class Wernher
 
     def to_s(*arrays)
       arrays.reduce('') do |i, array|
+        return '' unless array
+        return '' if array.empty?
         i + '' + array.join(' ') + ' '
       end
     end
