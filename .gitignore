@@ -4,6 +4,9 @@
 tmp
 log
 
+# Bundler
+.bundle
+
 ### OSX ###
 # General
 .DS_Store
