@@ -4,17 +4,14 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
-# gem 'pry'
-gem 'awesome_print'
-gem 'pry-byebug'
-gem 'rspec'
-gem 'serialport'
-
 gem 'figaro'
-
-gem 'capistrano'
-gem 'capistrano-rbenv'
-
+gem 'pry-byebug'
+gem 'serialport'
 gem 'wilhelm-tools', git: 'https://github.com/piersholt/wilhelm-tools.git',
                      branch: 'master'
-# gem 'rbczmq'
+
+group :development, optional: true do
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'rspec'
+end
