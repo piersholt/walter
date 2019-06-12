@@ -23,6 +23,8 @@ module Wilhelm
         BMBT_TEL => { load_bluetooth: STATEFUL }
       }.freeze
 
+      # TODO: these needs to be programatically added by services
+
       def load_debug
         logger.debug(LOGGER_NAME) { '#load_debug()' }
         @state.load_debug(self)

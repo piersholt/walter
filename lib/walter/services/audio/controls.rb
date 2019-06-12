@@ -10,7 +10,6 @@ class Walter
       LOGGER_NAME = AUDIO_CONTROLS
 
       CONTROL_REGISTER = {
-        # BMBT_OVERLAY => STATELESS_CONTROL,
         BMBT_POWER => STATELESS_CONTROL,
         BMBT_NEXT => TWO_STAGE_CONTROL,
         BMBT_PREV => TWO_STAGE_CONTROL,
@@ -24,7 +23,6 @@ class Walter
       }.freeze
 
       CONTROL_ROUTES = {
-        # BMBT_OVERLAY => { overlay: STATELESS },
         BMBT_POWER => { power: STATELESS },
         BMBT_NEXT => { seek_forward: STATELESS,
                        scan_forward: STATEFUL },
