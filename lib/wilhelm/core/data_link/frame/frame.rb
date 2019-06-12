@@ -1,4 +1,4 @@
-require 'physical/bytes'
+# require 'physical/bytes'
 require 'data_link/frame/frame_header'
 require 'data_link/frame/frame_tail'
 
