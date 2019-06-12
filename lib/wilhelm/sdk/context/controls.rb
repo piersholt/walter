@@ -11,13 +11,15 @@ module Wilhelm
 
       CONTROL_REGISTER = {
         BMBT_AUX_HEAT => STATELESS_CONTROL,
+        BMBT_MODE => STATELESS_CONTROL,
         BMBT_OVERLAY => STATELESS_CONTROL,
         BMBT_TEL => STATEFUL_CONTROL
       }.freeze
 
       CONTROL_ROUTES = {
         BMBT_AUX_HEAT => { load_debug: :stateless },
-        BMBT_OVERLAY => { load_audio: :stateless },
+        BMBT_MODE => { load_audio: :stateless },
+        BMBT_OVERLAY => { load_now_playing: :stateless },
         BMBT_TEL => { load_bluetooth: STATEFUL }
       }.freeze
 
@@ -44,6 +46,11 @@ module Wilhelm
       def load_audio
         logger.debug(LOGGER_NAME) { '#load_audio()' }
         @state.load_audio(self)
+      end
+
+      def load_now_playing
+        logger.debug(LOGGER_NAME) { '#load_now_playing()' }
+        @state.load_now_playing(self)
       end
     end
   end

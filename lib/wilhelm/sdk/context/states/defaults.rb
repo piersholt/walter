@@ -66,6 +66,10 @@ module Wilhelm
         false
       end
 
+      def load_now_playing(___)
+        false
+      end
+
       def alive?(___)
         false
       end

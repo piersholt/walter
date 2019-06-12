@@ -66,6 +66,10 @@ module Wilhelm
       end
 
       def load_audio(context)
+        context.ui.launch(:audio, :index)
+      end
+
+      def load_now_playing(context)
         context.ui.launch(:audio, :now_playing)
       end
 
