@@ -13,6 +13,7 @@ LogActually.controls.i
 LogActually.audio.i
 LogActually.tel.i
 
+require_relative 'api/constants'
 require_relative 'api/display'
 require_relative 'api/controls'
 require_relative 'api/audio'
