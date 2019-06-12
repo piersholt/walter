@@ -21,14 +21,7 @@ LogActually.mfl.i
 LogActually.is_all_around(:tel)
 LogActually.tel.i
 
-require 'device/device'
-
-bus_root = 'bus'
-require "#{bus_root}/devices"
-require "#{bus_root}/bus_handler"
-require "#{bus_root}/bus"
-require "#{bus_root}/initialization"
-require "#{bus_root}/message"
-require "#{bus_root}/packet_wrapper"
+require_relative 'virtual/device'
+require_relative 'virtual/bus'
 
 puts "\tDone!"
