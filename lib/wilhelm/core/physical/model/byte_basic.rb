@@ -4,7 +4,7 @@ module Wilhelm
   module Core
     # Comment
     class ByteBasic
-      include Wilhelm::Core::DataTools
+      include Wilhelm::Helpers::DataTools
 
       TYPES = %i[char integer hex].freeze
 

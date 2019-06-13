@@ -3,7 +3,7 @@
 class Wilhelm::Virtual
   # Comment
   class DynamicDeviceBuilder
-    include Wilhelm::Core::ModuleTools
+    include Wilhelm::Helpers::ModuleTools
 
     CLASS_MAP = {
       dsp: 'SimulatedDSP',

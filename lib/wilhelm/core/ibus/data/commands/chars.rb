@@ -177,7 +177,7 @@ class Wilhelm::Core::Command
     def parse_byte_array(bytes)
       bytes.map do |byte|
         integer = byte.to_d
-        hex = Wilhelm::Core::DataTools.decimal_to_hex(integer)
+        hex = Wilhelm::Helpers::DataTools.decimal_to_hex(integer)
         # char =
 
         thingo = case integer
@@ -186,7 +186,7 @@ class Wilhelm::Core::Command
         when (128..255)
           ['☐', '✗']
         else
-          [integer.chr(Wilhelm::Core::DataTools::BINARY_ENCODING), ' ']
+          [integer.chr(Wilhelm::Helpers::DataTools::BINARY_ENCODING), ' ']
         end
 
         char = thingo[0]

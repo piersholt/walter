@@ -3,7 +3,7 @@
 module PBus
   class Frame
     class Synchronisation
-      include Wilhelm::Core::DataTools
+      include Wilhelm::Helpers::DataTools
       attr_reader :buffer, :frame
 
       SYNC = 'Sync /'

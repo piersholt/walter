@@ -5,7 +5,7 @@ class Wilhelm::Core::BitArray
     end
   end
   extend Forwardable
-  include Wilhelm::Core::DataTools
+  include Wilhelm::Helpers::DataTools
 
   FORWARD_MESSAGES = Array.instance_methods(false)
   FORWARD_MESSAGES << :reduce

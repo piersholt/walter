@@ -3,7 +3,9 @@
 puts 'Loading wilhelm/core'
 
 module Wilhelm
-  module Core; end
+  # Setup namespace due to short class names in wilhelm-core
+  module Core
+  end
 end
 
 # Walter-Core

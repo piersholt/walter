@@ -9,7 +9,7 @@ class Wilhelm::Core::BaseParameter
   # extend DelegatedCommandParameter
 
   include Wilhelm::Core::Helpers
-  include Wilhelm::Core::DataTools
+  include Wilhelm::Helpers::DataTools
 
   DEFAULT_LABEL_WIDTH = 0
   LABEL_DELIMITER = ' '

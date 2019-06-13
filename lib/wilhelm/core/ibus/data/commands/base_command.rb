@@ -4,7 +4,7 @@
 class Wilhelm::Core::Command
   # Basic device class
   class BaseCommand
-    include Wilhelm::Core::DataTools
+    include Wilhelm::Helpers::DataTools
     include Wilhelm::Core::Helpers
     # include Printable
     PADDED_DEFAULT = true

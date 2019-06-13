@@ -4,7 +4,7 @@ module Wilhelm
   module Core
     # Comment
     class Byte
-      include Wilhelm::Core::DataTools
+      include Wilhelm::Helpers::DataTools
 
       def initialize(format, value)
         fail ArgumentError, 'One valid data type required' unless FORMATS.include?(format)

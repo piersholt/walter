@@ -6,7 +6,7 @@ module Wilhelm::Virtual::Capabilities
     module RDSDisplay
       include Wilhelm::Virtual::API::Radio
       include Constants
-      include Wilhelm::Core::DataTools
+      include Wilhelm::Helpers::DataTools
 
       def pad_chars(string, required_length)
         Kernel.format("%-#{required_length}s", string)

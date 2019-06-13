@@ -5,15 +5,17 @@ puts "\tLoading wilhelm/core/helpers"
 # require_relative 'delayable'
 # require_relative 'stateful'
 
-require_relative 'helpers/data_tools'
 require_relative 'helpers/debug_tools'
-require_relative 'helpers/module_tools'
-require_relative 'helpers/name_tools'
 # require_relative 'printable'
 
-module Wilhelm::Core::Helpers
-  include Wilhelm::Core::ModuleTools
-  extend Wilhelm::Core::ModuleTools
-  include Wilhelm::Core::NameTools
-  include Wilhelm::Core::Device::Groups
+module Wilhelm
+  module Core
+    # All helpers available within single module
+    module Helpers
+      include Wilhelm::Helpers::ModuleTools
+      extend Wilhelm::Helpers::ModuleTools
+      include Wilhelm::Helpers::NameTools
+      include Wilhelm::Core::Device::Groups
+    end
+  end
 end

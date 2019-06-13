@@ -2,7 +2,7 @@
 
 class Wilhelm::Core::Command
   class IKESensors < BaseCommand
-    include Wilhelm::Core::DataTools
+    include Wilhelm::Helpers::DataTools
     PROC = 'IKESensors'
     def initialize(id, props)
       super(id, props)

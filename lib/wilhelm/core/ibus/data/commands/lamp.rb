@@ -2,7 +2,7 @@
 
 class Wilhelm::Core::Command
   class Lamp < BaseCommand
-    include Wilhelm::Core::DataTools
+    include Wilhelm::Helpers::DataTools
 
     def initialize(id, props)
       super(id, props)
