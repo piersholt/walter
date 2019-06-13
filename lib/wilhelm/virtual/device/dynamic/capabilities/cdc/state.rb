@@ -5,7 +5,7 @@ module Wilhelm::Virtual::Capabilities
     # Comment
     module State
       include Constants
-      include Wilhelm::Core::Stateful
+      include Wilhelm::Helpers::Stateful
       include Chainable
 
       DEFAULT_STATE = {

@@ -5,7 +5,7 @@ class Wilhelm::Virtual
     module State
       # Comment
       module Model
-        include Wilhelm::Core::Stateful
+        include Wilhelm::Helpers::Stateful
         include Capabilities::Telephone::Constants
 
         DEFAULT_STATE = {

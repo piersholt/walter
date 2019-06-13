@@ -12,7 +12,7 @@ class Wilhelm::API
 
     include Singleton
     include Observable
-    include Wilhelm::Core::Stateful
+    include Wilhelm::Helpers::Stateful
     include Listener
 
     attr_accessor :bus

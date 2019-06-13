@@ -7,7 +7,7 @@ class Wilhelm::Virtual
     module State
       # Comment
       module Model
-        include Wilhelm::Core::Stateful
+        include Wilhelm::Helpers::Stateful
         include Constants
 
         DEFAULT_STATE = {

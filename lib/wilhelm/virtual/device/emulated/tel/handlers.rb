@@ -5,7 +5,7 @@ class Wilhelm::Virtual
     # Simulated CD Changer
     module Deprecated
       include Capabilities::Telephone::Constants
-      # include Wilhelm::Core::Stateful
+      # include Wilhelm::Helpers::Stateful
       include API::Telephone
 
       def bluetooth_pending
