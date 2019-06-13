@@ -1,8 +1,11 @@
+# frozen_string_literal: false
+
 module Wilhelm::Virtual::API
+  # Comment
   module BaseAPI
     include Wilhelm::Core::Event
     include Observable
-    include Wilhelm::Core::ClusterTools
+    include Helpers::Cluster
     include LogActually::ErrorOutput
 
     def name

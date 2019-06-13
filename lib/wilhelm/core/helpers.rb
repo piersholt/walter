@@ -7,7 +7,6 @@ puts "\tLoading wilhelm/core/helpers"
 
 require_relative 'helpers/data_tools'
 require_relative 'helpers/debug_tools'
-require_relative 'helpers/cluster_tools'
 require_relative 'helpers/module_tools'
 require_relative 'helpers/name_tools'
 # require_relative 'printable'

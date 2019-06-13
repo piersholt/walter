@@ -1,10 +1,9 @@
-# require '/api/base_api'
-
+# frozen_string_literal: false
 
 module Wilhelm::Virtual::API
   module CCM
     include BaseAPI
-    include ClusterTools
+    include Helpers::Cluster
 
     CCM_ALERT = {
       id:   0x1A,
