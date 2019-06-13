@@ -6,7 +6,7 @@ module Wilhelm
     class Interface
       include Observable
       include ManageableThreads
-      include Delayable
+      include Wilhelm::Helpers::Delayable
 
       FILE_TYPE = { tty: 'characterSpecial', file: 'file', fifo: 'fifo' }.freeze
       FILE_TYPE_HANDLERS = { tty: Interface::UART, file: Interface::File }.freeze

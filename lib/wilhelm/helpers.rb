@@ -6,6 +6,7 @@ require_relative 'helpers/data_tools'
 require_relative 'helpers/module'
 require_relative 'helpers/name'
 require_relative 'helpers/stateful'
+require_relative 'helpers/delayable'
 
 module Wilhelm
   # Comment
