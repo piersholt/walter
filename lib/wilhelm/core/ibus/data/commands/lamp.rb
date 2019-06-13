@@ -1,8 +1,8 @@
 # require 'application/commands/parameter/bit_array'
 
-class Command
+class Wilhelm::Core::Command
   class Lamp < BaseCommand
-    include DataTools
+    include Wilhelm::Core::DataTools
 
     def initialize(id, props)
       super(id, props)

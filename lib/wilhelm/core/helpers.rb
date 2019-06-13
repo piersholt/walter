@@ -12,9 +12,9 @@ require_relative 'helpers/module_tools'
 require_relative 'helpers/name_tools'
 # require_relative 'printable'
 
-module Helpers
-  include ModuleTools
-  extend ModuleTools
-  include NameTools
-  include Device::Groups
+module Wilhelm::Core::Helpers
+  include Wilhelm::Core::ModuleTools
+  extend Wilhelm::Core::ModuleTools
+  include Wilhelm::Core::NameTools
+  include Wilhelm::Core::Device::Groups
 end

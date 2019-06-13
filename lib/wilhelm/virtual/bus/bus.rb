@@ -2,7 +2,7 @@ class Wilhelm::Virtual
   class Bus
     include Singleton
     extend Forwardable
-    include NameTools
+    include Wilhelm::Core::NameTools
 
     attr_reader :devices
 

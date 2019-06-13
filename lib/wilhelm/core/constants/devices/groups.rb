@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-module Device
+module Wilhelm::Core::Device
   # Comment
   module Groups
     include Aliases

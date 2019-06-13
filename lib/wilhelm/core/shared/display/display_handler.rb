@@ -1,7 +1,7 @@
 require 'singleton'
 
-class DisplayHandler < BaseHandler
-  include Command::Aliases
+class Wilhelm::Core::DisplayHandler < Wilhelm::Core::BaseHandler
+  include Wilhelm::Core::Command::Aliases
   include Singleton
 
   name = 'DisplayHandler'.freeze
@@ -174,6 +174,6 @@ class DisplayHandler < BaseHandler
   end
 
   def populate_devices
-    AddressLookupTable.instance.idents
+    Wilhelm::Core::AddressLookupTable.instance.idents
   end
 end

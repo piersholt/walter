@@ -1,4 +1,4 @@
-module DataTools
+module Wilhelm::Core::DataTools
   extend self
 
   MOD_PROC = 'DataTools'

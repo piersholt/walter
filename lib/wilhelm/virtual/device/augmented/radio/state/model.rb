@@ -4,7 +4,7 @@ class Wilhelm::Virtual
   class AugmentedRadio < AugmentedDevice
     module State
       module Model
-        include Stateful
+        include Wilhelm::Core::Stateful
         include Constants
 
         DEFAULT_STATE = {

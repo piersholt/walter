@@ -3,7 +3,7 @@
 module Wilhelm::Virtual::API
   # API for command related to keys
   module MultiFunctionWheel
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
     include BaseAPI
 
     def mfl_func_button(from: :mfl, to:, **arguments)

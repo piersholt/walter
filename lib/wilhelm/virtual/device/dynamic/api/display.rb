@@ -4,7 +4,7 @@ module Wilhelm::Virtual::API
   # Comment
   module Display
     include BaseAPI
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
 
     # 0x21
     def mid(from: :tel, to: :gfx, **arguments)

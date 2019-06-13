@@ -1,4 +1,4 @@
-module NameTools
+module Wilhelm::Core::NameTools
   # Convert a symbol :name to instance variable name
   # @return [Instance Variable Name] :@variable_name
   def inst_var(name)

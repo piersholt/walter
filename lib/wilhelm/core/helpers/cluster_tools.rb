@@ -1,4 +1,4 @@
-module ClusterTools
+module Wilhelm::Core::ClusterTools
   HUD_SIZE = 20
 
   LEFT = :ljust

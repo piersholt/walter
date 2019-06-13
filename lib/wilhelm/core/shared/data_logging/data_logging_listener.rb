@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 # Comment
-class DataLoggingListener < BaseListener
+class Wilhelm::Core::DataLoggingListener < Wilhelm::Core::BaseListener
   # name = self.class.name
 
-  def initialize(data_logging_handler = DataLoggingHandler.instance)
+  def initialize(data_logging_handler = Wilhelm::Core::DataLoggingHandler.instance)
     @data_logging_handler = data_logging_handler
   end
 

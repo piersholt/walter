@@ -1,7 +1,7 @@
 
 
-class ParameterConfiguration
-  include Helpers
+class Wilhelm::Core::ParameterConfiguration
+  include Wilhelm::Core::Helpers
   PROC = 'ParamConfig'.freeze
   MAP = :map
   SWITCH = :switch

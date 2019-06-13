@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Command
+class Wilhelm::Core::Command
   # Comment
   module Groups
     include Aliases

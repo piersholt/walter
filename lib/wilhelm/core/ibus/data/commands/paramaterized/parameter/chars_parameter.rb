@@ -1,7 +1,7 @@
 # require 'application/commands/parameter/base_parameter'
 # require 'application/commands/chars'
 
-class CharsParameter < BaseParameter
+class Wilhelm::Core::CharsParameter < Wilhelm::Core::BaseParameter
   PROC = 'CharsParameter'.freeze
 
   attr_reader :chars
@@ -14,7 +14,7 @@ class CharsParameter < BaseParameter
 
   def format_char_array
     LOGGER.warn(PROC) { "Cannot create @chars without value. Value = #{value}" } if value.nil?
-    @chars = Command::Chars.new(value, true)
+    @chars = Wilhelm::Core::Command::Chars.new(value, true)
   end
 
   def to_s

@@ -5,7 +5,7 @@
 module Wilhelm::Virtual::API
   # API for command related to keys
   module Radio
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
     include BaseAPI
 
     # BMBT

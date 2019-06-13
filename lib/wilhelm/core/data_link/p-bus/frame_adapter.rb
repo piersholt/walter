@@ -1,7 +1,7 @@
 module PBus
   class Frame
     class Adapter
-      include DataTools
+      include Wilhelm::Core::DataTools
       extend Forwardable
       def_delegators :@frame, :command
 

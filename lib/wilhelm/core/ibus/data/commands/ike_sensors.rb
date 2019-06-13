@@ -1,8 +1,8 @@
 # require 'application/commands/parameter/bit_array'
 
-class Command
+class Wilhelm::Core::Command
   class IKESensors < BaseCommand
-    include DataTools
+    include Wilhelm::Core::DataTools
     PROC = 'IKESensors'
     def initialize(id, props)
       super(id, props)

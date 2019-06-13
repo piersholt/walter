@@ -1,6 +1,6 @@
 # require 'application/commands/chars'
 
-class Command
+class Wilhelm::Core::Command
   # 35 / 0x24
   class MediaDisplay < BaseCommand
     attr_accessor :text, :chars, :gfx, :ike

@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   # ID: 26 0x1A
   class CCMDisplay < BaseCommand
 

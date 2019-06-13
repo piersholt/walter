@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   class Button < BaseCommand
     attr_reader :button_state, :totally_unique_variable_name
 

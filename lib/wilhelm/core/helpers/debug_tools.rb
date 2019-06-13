@@ -1,8 +1,8 @@
 # DebugTools
 # Helpers for common tasks on CLI
-module DebugTools
+module Wilhelm::Core::DebugTools
   PROC_MOD = 'DebugTools'.freeze
-  include Command::Groups
+  include Wilhelm::Core::Command::Groups
 
   # Defaults
 
@@ -14,112 +14,112 @@ module DebugTools
   # Session
 
   def messages
-    SessionHandler.i.messages
+    Wilhelm::Core::SessionHandler.i.messages
   end
 
   # def d
   #   instance_variable_get(:@virtual_display)
   # end
 
-  # DisplayHandler
+  # Wilhelm::Core::DisplayHandler
 
   def s
-    DisplayHandler.instance.enable
+    Wilhelm::Core::DisplayHandler.instance.enable
   end
 
   def h
-    DisplayHandler.instance.disable
+    Wilhelm::Core::DisplayHandler.instance.disable
   end
 
-  # DisplayHandler FILTERING
+  # Wilhelm::Core::DisplayHandler FILTERING
 
   def c
-    DisplayHandler.i.clear_filter
+    Wilhelm::Core::DisplayHandler.i.clear_filter
   end
 
   def shutup!(set = NOISEY_NG)
     set.each do |group, command_ids|
       LOGGER.debug { "Shutting up: #{group}" }
-      DisplayHandler.i.h_c(*command_ids)
+      Wilhelm::Core::DisplayHandler.i.h_c(*command_ids)
     end
   end
 
   def touch!
-    DisplayHandler.i.h_c(*BUTTON)
+    Wilhelm::Core::DisplayHandler.i.h_c(*BUTTON)
   end
 
   def mid!
-    DisplayHandler.i.h_c(*MID)
+    Wilhelm::Core::DisplayHandler.i.h_c(*MID)
   end
 
   alias shh! shutup!
 
   def ready
-    DisplayHandler.i.filter_commands(*READY)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*READY)
   end
 
   def buttons
-    DisplayHandler.i.filter_commands(*BUTTON)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*BUTTON)
   end
 
   def menus
-    DisplayHandler.i.filter_commands(*MENUS)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*MENUS)
   end
 
   def diag
-    DisplayHandler.i.filter_commands(*DIAGNOSTICS)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*DIAGNOSTICS)
   end
 
   def obc
-    DisplayHandler.i.filter_commands(*OBC)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*OBC)
   end
 
   def ign
-    DisplayHandler.i.filter_commands(*IGNITION)
+    Wilhelm::Core::DisplayHandler.i.filter_commands(*IGNITION)
   end
 
   def tel
-    DisplayHandler.i.f_t(*Device::Groups::TELEPHONE + Device::Groups::BROADCAST)
-    DisplayHandler.i.f_f(*Device::Groups::TELEPHONE)
-    DisplayHandler.i.h_c(
+    Wilhelm::Core::DisplayHandler.i.f_t(*Wilhelm::Core::Device::Groups::TELEPHONE + Wilhelm::Core::Device::Groups::BROADCAST)
+    Wilhelm::Core::DisplayHandler.i.f_f(*Wilhelm::Core::Device::Groups::TELEPHONE)
+    Wilhelm::Core::DisplayHandler.i.h_c(
       *SPEED, *TEMPERATURE, *COUNTRY, *VEHICLE, *LAMP,
       *SENSORS, *OBC, *READY, *IGNITION
     )
-    DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SRC_SND, MENU_GFX, MENU_RAD)
+    Wilhelm::Core::DisplayHandler.i.h_c(RAD_LED, SRC_CTL, SRC_SND, MENU_GFX, MENU_RAD)
   end
 
   def nav
-    DisplayHandler.i.f_t(*Device::Groups::NAV)
-    DisplayHandler.i.f_f(*Device::Groups::NAV)
-    DisplayHandler.i.h_c(
+    Wilhelm::Core::DisplayHandler.i.f_t(*Wilhelm::Core::Device::Groups::NAV)
+    Wilhelm::Core::DisplayHandler.i.f_f(*Wilhelm::Core::Device::Groups::NAV)
+    Wilhelm::Core::DisplayHandler.i.h_c(
       *SPEED, *TEMPERATURE, *VEHICLE, *LAMP,
       *SENSORS, *OBC, *IGNITION
     )
   end
 
   def cdc
-    DisplayHandler.i.f_t(*Device::Groups::CD)
-    DisplayHandler.i.f_f(*Device::Groups::CD)
-    DisplayHandler.i.h_c(
+    Wilhelm::Core::DisplayHandler.i.f_t(*Wilhelm::Core::Device::Groups::CD)
+    Wilhelm::Core::DisplayHandler.i.f_f(*Wilhelm::Core::Device::Groups::CD)
+    Wilhelm::Core::DisplayHandler.i.h_c(
       *READY, *SPEED, *TEMPERATURE, *COUNTRY,
       *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
     )
   end
 
   def cdc!
-    DisplayHandler.i.f_t(*Device::Groups::CD)
-    DisplayHandler.i.f_f(*Device::Groups::CD)
-    DisplayHandler.i.h_c(
+    Wilhelm::Core::DisplayHandler.i.f_t(*Wilhelm::Core::Device::Groups::CD)
+    Wilhelm::Core::DisplayHandler.i.f_f(*Wilhelm::Core::Device::Groups::CD)
+    Wilhelm::Core::DisplayHandler.i.h_c(
       *READY, *SPEED, *TEMPERATURE, *COUNTRY,
       *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
     )
 
-    DisplayHandler.i.h_c(*DISPLAY, *BUTTON)
+    Wilhelm::Core::DisplayHandler.i.h_c(*DISPLAY, *BUTTON)
   end
 
   def media
-    DisplayHandler.i.f_t(*Device::Groups::MEDIA + BROADCAST)
-    DisplayHandler.i.f_f(*Device::Groups::MEDIA)
+    Wilhelm::Core::DisplayHandler.i.f_t(*Wilhelm::Core::Device::Groups::MEDIA + BROADCAST)
+    Wilhelm::Core::DisplayHandler.i.f_f(*Wilhelm::Core::Device::Groups::MEDIA)
   end
 
   # Logging

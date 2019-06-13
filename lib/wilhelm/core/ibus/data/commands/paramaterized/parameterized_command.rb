@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   class ParameterizedCommand < BaseCommand
     def to_s
       str_buffer = "#{sn}\t"

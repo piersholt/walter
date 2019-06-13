@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 # Comment
-class SessionListener < BaseListener
+class Wilhelm::Core::SessionListener < Wilhelm::Core::BaseListener
   # name = self.class.name
 
   def initialize(handlers = {})
-    @session_handler = SessionHandler.instance
+    @session_handler = Wilhelm::Core::SessionHandler.instance
   end
 
   def name

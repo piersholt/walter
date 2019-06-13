@@ -1,7 +1,7 @@
 
 # require 'event'
 
-class BaseListener
+class Wilhelm::Core::BaseListener
   include Observable
-  include Event
+  include Wilhelm::Core::Event
 end

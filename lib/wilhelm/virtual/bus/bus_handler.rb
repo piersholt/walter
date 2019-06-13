@@ -4,7 +4,7 @@ class RoutingError < StandardError
   end
 end
 
-class BusHandler < BaseHandler
+class BusHandler < Wilhelm::Core::BaseHandler
   include LogActually::ErrorOutput
   PROC = 'BusHandler'.freeze
 
@@ -87,7 +87,7 @@ class BusHandler < BaseHandler
   end
 
   def parse_packet(packet)
-    bus_message = Virtual::PacketWrapper.wrap(packet)
+    bus_message = Wilhelm::Virtual::PacketWrapper.wrap(packet)
 
     from_ident = bus_message.from
     to_ident   = bus_message.to
@@ -96,11 +96,11 @@ class BusHandler < BaseHandler
 
     command_object = parse_command(from_ident, command.i, args)
 
-    Virtual::Message.new(from_ident, to_ident, command_object)
+    Wilhelm::Virtual::Message.new(from_ident, to_ident, command_object)
   end
 
   def parse_command(from_ident, command, arguments)
-    command_config = CommandMap.instance.config(command, from_ident)
+    command_config = Wilhelm::Core::CommandMap.instance.config(command, from_ident)
     parameter_values_hash = parse_argumets(command_config, arguments)
     LOGGER.debug(self.class) { "Parameter Values: #{parameter_values_hash}" }
     command_object = build_command(command_config, parameter_values_hash)
@@ -126,7 +126,7 @@ class BusHandler < BaseHandler
     begin
       argument_index = command_config.index
       LOGGER.debug(self.class) { "argument index: #{argument_index}" }
-      indexed_arguments = IndexedArguments.new(arguments, argument_index)
+      indexed_arguments = Wilhelm::Core::IndexedArguments.new(arguments, argument_index)
       LOGGER.debug(self.class) { "indexed_arguments: #{indexed_arguments}" }
 
       indexed_arguments.parameters.each do |name|

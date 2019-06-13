@@ -11,9 +11,9 @@
 # i.e. don't have statistic events, have events that the statslistener attaches to
 
 # NOTE there's no.. events.. per se, it's... states..
-class GlobalListener
+class Wilhelm::Core::GlobalListener
   include Observable
-  include Event
+  include Wilhelm::Core::Event
 
   PROC = 'GlobalListener'
 

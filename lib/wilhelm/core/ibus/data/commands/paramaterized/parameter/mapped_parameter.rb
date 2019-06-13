@@ -1,6 +1,6 @@
 # require 'application/commands/parameter/base_parameter'
 
-class MappedParameter < BaseParameter
+class Wilhelm::Core::MappedParameter < Wilhelm::Core::BaseParameter
   PROC = 'MappedParameter'.freeze
 
   attr_accessor :map, :dictionary, :label

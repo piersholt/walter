@@ -1,8 +1,8 @@
 module Wilhelm::Virtual::API
   module BaseAPI
-    include Event
+    include Wilhelm::Core::Event
     include Observable
-    include ClusterTools
+    include Wilhelm::Core::ClusterTools
     include LogActually::ErrorOutput
 
     def name
@@ -10,8 +10,8 @@ module Wilhelm::Virtual::API
     end
 
     def try(from, to, command_id, command_arguments = {})
-      from = DeviceMap.instance.find_by_ident(from)
-      to = DeviceMap.instance.find_by_ident(to)
+      from = Wilhelm::Core::DeviceMap.instance.find_by_ident(from)
+      to = Wilhelm::Core::DeviceMap.instance.find_by_ident(to)
       command_object = to_command(command_id: command_id,
                                   command_arguments: command_arguments,
                                   schema_from: from)
@@ -25,7 +25,7 @@ module Wilhelm::Virtual::API
 
     def send_it!(from, to, command)
       LogActually.api.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
-      message = Message.new(from, to, command)
+      message = Wilhelm::Core::Message.new(from, to, command)
       changed
       notify_observers(MESSAGE_SENT, message: message)
       true
@@ -40,7 +40,7 @@ module Wilhelm::Virtual::API
     private
 
     def to_command(command_id:, command_arguments:, schema_from:)
-      command_config = CommandMap.instance.config(command_id, schema_from)
+      command_config = Wilhelm::Core::CommandMap.instance.config(command_id, schema_from)
       command_builder = command_config.builder
       command_builder = command_builder.new(command_config)
       command_builder.add_parameters(command_arguments)

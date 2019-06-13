@@ -19,14 +19,14 @@ RSpec.describe Byte do
 
     context 'with invalid input' do
       it 'should throw error on non string' do
-        expect { Byte.new(invalid_input) }
+        expect { Wilhelm::Core::Byte.new(invalid_input) }
           .to raise_error ArgumentError
       end
 
       # A value grater than a byte cannot be Encoding::ASCII_8BIT
       # so it's picked up by the encoding validation
       # it 'should throw error on values larger than one byte' do
-      #   expect { Byte.new(BYTE_ASCII_8BIT_LARGE) }
+      #   expect { Wilhelm::Core::Byte.new(BYTE_ASCII_8BIT_LARGE) }
       #     .to raise_error ArgumentError
       # end
     end
@@ -38,7 +38,7 @@ RSpec.describe Byte do
     end
 
     context 'with hex of \'0x80\'' do
-      let(:byte) { Byte.new(:encoded, BYTE_ENCODED_0x80) }
+      let(:byte) { Wilhelm::Core::Byte.new(:encoded, BYTE_ENCODED_0x80) }
 
       it 'should return \'0x80\'' do
         expect(byte.to_h(true)).to eq("0x80")
@@ -50,7 +50,7 @@ RSpec.describe Byte do
     end
 
     context 'with hex of \'0xF0\'' do
-      let(:byte) { Byte.new(:encoded, BYTE_ENCODED_0xF0) }
+      let(:byte) { Wilhelm::Core::Byte.new(:encoded, BYTE_ENCODED_0xF0) }
 
       it 'should return \'0xF0\'' do
         expect(byte.to_h(true)).to eq("0xF0")
@@ -62,7 +62,7 @@ RSpec.describe Byte do
     end
 
     context 'with hex of \'0x08\'' do
-      let(:byte) { Byte.new(:hex, '08') }
+      let(:byte) { Wilhelm::Core::Byte.new(:hex, '08') }
 
       it 'should return \'0x08\'' do
         expect(byte.to_h(true)).to eq("0x08")
@@ -80,7 +80,7 @@ RSpec.describe Byte do
     end
 
     context 'with hex of \'0x80\'' do
-      let(:byte) { Byte.new(:encoded, BYTE_ENCODED_0x80) }
+      let(:byte) { Wilhelm::Core::Byte.new(:encoded, BYTE_ENCODED_0x80) }
 
       it 'should return 128' do
         expect(byte.to_d).to eq(128)
@@ -88,7 +88,7 @@ RSpec.describe Byte do
     end
 
     context 'with hex of \'0xF0\'' do
-      let(:byte) { Byte.new(:encoded, BYTE_ENCODED_0xF0) }
+      let(:byte) { Wilhelm::Core::Byte.new(:encoded, BYTE_ENCODED_0xF0) }
 
       it 'should return 240' do
         expect(byte.to_d).to eq(240)

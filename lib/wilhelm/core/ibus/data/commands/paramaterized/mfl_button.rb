@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Command
+class Wilhelm::Core::Command
   # Command 0x38
   class MFLFunction < ButtonParameterized
     # @override

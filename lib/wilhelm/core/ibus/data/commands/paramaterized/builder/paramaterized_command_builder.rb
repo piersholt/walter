@@ -1,7 +1,7 @@
 # require 'application/commands/builder/base_command_builder'
 
 # For command classes that have parameters
-class ParameterizedCommandBuilder < BaseCommandBuilder
+class Wilhelm::Core::ParameterizedCommandBuilder < Wilhelm::Core::BaseCommandBuilder
   def add_parameters(parameter_value_hash)
     LOGGER.debug('ParameterizedCommandBuilder') { "#add_parameters(#{parameter_value_hash})" }
     @command_config.parameters.each do |param_name, param_config|
@@ -34,7 +34,7 @@ class ParameterizedCommandBuilder < BaseCommandBuilder
     LOGGER.debug('ParameterizedCommandBuilder') { "#parse_parameter(#{param_name}, #{param_config}, #{param_value})" }
     param_type  = param_config.type
 
-    param_object = DelegatedCommandParameter.create(param_config, param_type, param_value)
+    param_object = Wilhelm::Core::DelegatedCommandParameter.create(param_config, param_type, param_value)
     param_config.configure(param_object)
 
     param_object

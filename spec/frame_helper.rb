@@ -23,7 +23,7 @@ BYTE_ENCODED_VALID = BYTE_ENCODED_0x80
 
 FRAME_ENCODED = ['68', '04', 'FF', '02', '00', '91'].map do |h|
   data_encoded = DataTools.public_send(:hex_to_encoded, h)
-  Byte.new(:encoded, data_encoded)
+  Wilhelm::Core::Byte.new(:encoded, data_encoded)
 end
 
 FRAME_HEADER = FRAME_ENCODED[0..1]

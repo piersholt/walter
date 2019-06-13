@@ -1,13 +1,13 @@
-class BaseHandlerError < StandardError
+class Wilhelm::Core::BaseHandlerError < StandardError
   def message
     'BaseHandler Erro'
   end
 end
 
-class BaseHandler
+class Wilhelm::Core::BaseHandler
   include Observable
-  include Event
-  include Helpers
+  include Wilhelm::Core::Event
+  include Wilhelm::Core::Helpers
 
   def fetch(props, key)
     raise BaseHandlerError, "#{key} is not in properties!" unless props.key?(key)

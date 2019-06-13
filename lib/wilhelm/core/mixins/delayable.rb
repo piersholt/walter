@@ -1,4 +1,4 @@
-module Delayable
+module Wilhelm::Core::Delayable
   DEFAULT_ENABLED = true
   DEFAULT_TIME = 5
 

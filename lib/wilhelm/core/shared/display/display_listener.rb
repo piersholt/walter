@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # Comment
-class DisplayListener < BaseListener
-  def initialize(display_handler = DisplayHandler.instance)
+class Wilhelm::Core::DisplayListener < Wilhelm::Core::BaseListener
+  def initialize(display_handler = Wilhelm::Core::DisplayHandler.instance)
     @display_handler = display_handler
   end
 

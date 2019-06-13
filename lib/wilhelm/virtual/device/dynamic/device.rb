@@ -3,7 +3,7 @@
 # Comment
 class Wilhelm::Virtual
   class DynamicDevice < Device
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
 
     DEFAULT_STATUS = :up
 

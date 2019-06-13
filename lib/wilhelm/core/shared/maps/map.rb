@@ -5,7 +5,7 @@
 # fuck.. am i.. loading the specific class type MappedCommand...
 # Map is generic.. but there's no reason the results
 
-class BaseMap
+class Wilhelm::Core::BaseMap
   DEFAULT_BASE_PATH = './lib/wilhelm/core/shared/maps/'.freeze
   DEFAULT_FILE_EXTENSSION = '.yaml'.freeze
   FORCE_RELOAD = true

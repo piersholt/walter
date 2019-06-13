@@ -3,7 +3,7 @@
 # require 'application/commands/parameter/bit_array'
 # require 'application/commands/parameter/indexed_bit_array'
 
-class BitArrayParameter < BaseParameter
+class Wilhelm::Core::BitArrayParameter < Wilhelm::Core::BaseParameter
   PROC = 'BitArrayParam'.freeze
 
   attr_reader :parameters, :index, :bit_array, :indexed_bit_array
@@ -67,9 +67,9 @@ class BitArrayParameter < BaseParameter
 
   def parse_bit_array_parameters(parameter_config, numeric)
     begin
-      @bit_array = BitArray.from_i(numeric)
+      @bit_array = Wilhelm::Core::BitArray.from_i(numeric)
       return false unless parameter_config.has_parameters?
-      @indexed_bit_array = IndexedBitArray.new(@bit_array, parameter_config.index)
+      @indexed_bit_array = Wilhelm::Core::IndexedBitArray.new(@bit_array, parameter_config.index)
       @parameters = {}
 
       parameter_config.parameters.each do |bit_array_param_name, bit_array_param_config|
@@ -77,7 +77,7 @@ class BitArrayParameter < BaseParameter
         param_value = @indexed_bit_array.lookup(bit_array_param_name)
         param_type  = bit_array_param_config.type
 
-        param_object = DelegatedCommandParameter.create(bit_array_param_config, param_type, param_value)
+        param_object = Wilhelm::Core::DelegatedCommandParameter.create(bit_array_param_config, param_type, param_value)
         bit_array_param_config.configure(param_object)
 
         param_object.instance_variable_set(var_name, param_object)

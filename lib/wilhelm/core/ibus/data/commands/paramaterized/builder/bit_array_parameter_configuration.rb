@@ -1,6 +1,6 @@
 # require 'application/commands/builder/parameter_configuration'
 
-class BitArrayParameterConfiguration < ParameterConfiguration
+class Wilhelm::Core::BitArrayParameterConfiguration < Wilhelm::Core::ParameterConfiguration
   PROC = 'BitArrayParamConf'.freeze
 
   attr_reader :parameters
@@ -15,7 +15,7 @@ class BitArrayParameterConfiguration < ParameterConfiguration
     begin
       @parameters = {}
       mapped_parameters.each do |name, data|
-        new_parameter = ParameterConfiguration.new(name, data)
+        new_parameter = Wilhelm::Core::ParameterConfiguration.new(name, data)
         @parameters[name] = new_parameter
       end
     rescue StandardError => e

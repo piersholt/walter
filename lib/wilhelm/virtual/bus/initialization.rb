@@ -21,7 +21,7 @@ class Wilhelm::Virtual
     end
 
     def lookup_devices
-      alt = AddressLookupTable.instance
+      alt = Wilhelm::Core::AddressLookupTable.instance
       idents = alt.idents
       LogActually.virtual.debug(PROC) { "Idents: #{idents}|" }
       idents

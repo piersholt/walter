@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   # ID: DECIMAL? HEX?
   class OBCDisplay < BaseCommand
     # Arguments Map

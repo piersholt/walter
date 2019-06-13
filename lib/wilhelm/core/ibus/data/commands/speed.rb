@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   # ID: 25 0x19
   class Speed < BaseCommand
 

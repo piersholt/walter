@@ -6,7 +6,7 @@ module Wilhelm::Virtual::Capabilities
     module OBC
       include Wilhelm::Virtual::API::OBC
       include Constants
-      # include DataTools
+      # include Wilhelm::Core::DataTools
 
       def set_time(hour = Time.now.hour, minute = Time.now.min)
         return false unless valid_time?(hour, minute)

@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-class Command
+class Wilhelm::Core::Command
   # Comment
   module Aliases
     PING = 0x01

@@ -1,7 +1,7 @@
 # require 'daru'
 require 'matrix'
 
-class Command
+class Wilhelm::Core::Command
   class Chars
     # COLUMN_COUNT = 3
     COLUMN_MAP = { integer: 0, hex: 1, char: 2, control: 3 }
@@ -18,7 +18,7 @@ class Command
       space_char: ' ' }.freeze
 
     def initialize(byte_array, format = false)
-      byte_array = byte_array.map {|i| Byte.new(:decimal, i) } if format
+      byte_array = byte_array.map {|i| Wilhelm::Core::Byte.new(:decimal, i) } if format
       @byte_array = byte_array
       parse_arguments(byte_array)
     end
@@ -177,7 +177,7 @@ class Command
     def parse_byte_array(bytes)
       bytes.map do |byte|
         integer = byte.to_d
-        hex = DataTools.decimal_to_hex(integer)
+        hex = Wilhelm::Core::DataTools.decimal_to_hex(integer)
         # char =
 
         thingo = case integer
@@ -186,7 +186,7 @@ class Command
         when (128..255)
           ['☐', '✗']
         else
-          [integer.chr(DataTools::BINARY_ENCODING), ' ']
+          [integer.chr(Wilhelm::Core::DataTools::BINARY_ENCODING), ' ']
         end
 
         char = thingo[0]

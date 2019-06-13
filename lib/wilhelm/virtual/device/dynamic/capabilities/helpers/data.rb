@@ -21,7 +21,7 @@ module Wilhelm::Virtual::Capabilities
     end
 
     def bytes(decimal_array)
-      array_of_bytes = decimal_array.map { |int| Byte.new(:decimal, int) }
+      array_of_bytes = decimal_array.map { |int| Wilhelm::Core::Byte.new(:decimal, int) }
       Bytes.new(array_of_bytes)
     end
 

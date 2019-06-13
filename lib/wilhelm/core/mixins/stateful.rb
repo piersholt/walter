@@ -1,4 +1,4 @@
-module Stateful
+module Wilhelm::Core::Stateful
   def state
     @state ||= default_state
   end

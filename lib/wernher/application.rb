@@ -3,7 +3,7 @@
 # Application Container
 class Wernher
   include Observable
-  include DebugTools
+  include Wilhelm::Core::DebugTools
   include ManageableThreads
   include Analyze
   include Shared

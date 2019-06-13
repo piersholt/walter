@@ -1,5 +1,5 @@
 # events.rb
-module Event
+module Wilhelm::Core::Event
   # Channel
   BUS_OFFLINE = :offline
   BUS_ONLINE = :online

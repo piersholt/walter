@@ -3,7 +3,7 @@
 module Wilhelm::Virtual::API
   # Comment
   module OBC
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
     include BaseAPI
 
     # 0x40

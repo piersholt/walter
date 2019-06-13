@@ -1,4 +1,4 @@
-class IndexedBitArray < BitArray
+class Wilhelm::Core::IndexedBitArray < Wilhelm::Core::BitArray
   BASE_2 = 2
 
   def initialize(bit_array = nil, index = nil)

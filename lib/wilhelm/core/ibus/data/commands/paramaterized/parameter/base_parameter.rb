@@ -5,11 +5,11 @@
 # this should have the map
 # if you change the value, you shouldn't need to also set the display value etc
 # it will need to be an instance variable
-class BaseParameter
+class Wilhelm::Core::BaseParameter
   # extend DelegatedCommandParameter
 
-  include Helpers
-  include DataTools
+  include Wilhelm::Core::Helpers
+  include Wilhelm::Core::DataTools
 
   DEFAULT_LABEL_WIDTH = 0
   LABEL_DELIMITER = ' '

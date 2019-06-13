@@ -1,4 +1,4 @@
-class DataLoggingHandler < BaseHandler
+class Wilhelm::Core::DataLoggingHandler < Wilhelm::Core::BaseHandler
   include Singleton
 
   def self.i

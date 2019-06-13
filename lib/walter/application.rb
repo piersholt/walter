@@ -3,9 +3,9 @@
 # Application Container
 class Walter
   include Observable
-  include DebugTools
+  include Wilhelm::Core::DebugTools
   include ManageableThreads
-  include Analyze
+  include Wilhelm::Core::Analyze
   include Shared
 
   attr_reader :bus, :wolfgang
@@ -124,20 +124,20 @@ class Walter
 
   def setup_core
     # TODO: better argument handling to support multiple log files
-    @interface   = Interface.new(ARGV.shift)
+    @interface   = Wilhelm::Core::Interface.new(ARGV.shift)
 
-    @receiver    = Receiver.new(@interface.input_buffer)
-    @transmitter = Transmitter.new(@interface.output_buffer)
+    @receiver    = Wilhelm::Core::Receiver.new(@interface.input_buffer)
+    @transmitter = Wilhelm::Core::Transmitter.new(@interface.output_buffer)
 
     @demultiplexer =
-      DataLink::LogicalLinkLayer::Demultiplexer
+      Wilhelm::Core::DataLink::LogicalLinkLayer::Demultiplexer
       .new(@receiver.frame_input_buffer)
     @multiplexer =
-      DataLink::LogicalLinkLayer::Multiplexer
+      Wilhelm::Core::DataLink::LogicalLinkLayer::Multiplexer
       .new(@transmitter.frame_output_buffer)
 
-    interface_handler = DataLinkHandler.new(@transmitter)
-    @data_link_listener = DataLinkListener.new(interface_handler)
+    interface_handler = Wilhelm::Core::DataLinkHandler.new(@transmitter)
+    @data_link_listener = Wilhelm::Core::DataLinkListener.new(interface_handler)
 
     @interface.add_observer(global_listener)
     @interface.add_observer(@data_link_listener)

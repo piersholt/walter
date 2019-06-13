@@ -1,5 +1,5 @@
 # This needs the :state and :label property of this specific parameter
-class SwitchedParameter < BaseParameter
+class Wilhelm::Core::SwitchedParameter < Wilhelm::Core::BaseParameter
   PROC = 'SwitchedParameter'.freeze
 
 
@@ -11,7 +11,7 @@ class SwitchedParameter < BaseParameter
 
   def initialize(configuration, integer)
     @value = integer
-    @bit_array = BitArray.from_i(integer)
+    @bit_array = Wilhelm::Core::BitArray.from_i(integer)
     # @label = 'Something Important'
     # @state = :ok
   end

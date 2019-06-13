@@ -3,7 +3,7 @@
 module Wilhelm::Virtual::API
   # Comment
   module GFX
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
     include BaseAPI
 
     # MENU/USER INTERFACE

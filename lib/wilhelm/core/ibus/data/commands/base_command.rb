@@ -1,11 +1,11 @@
 
 
 # this is a comment about a thing?
-class Command
+class Wilhelm::Core::Command
   # Basic device class
   class BaseCommand
-    include DataTools
-    include Helpers
+    include Wilhelm::Core::DataTools
+    include Wilhelm::Core::Helpers
     # include Printable
     PADDED_DEFAULT = true
 

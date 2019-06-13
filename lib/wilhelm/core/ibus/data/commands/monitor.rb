@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   class Monitor < BaseCommand
 
     def initialize(id, props)

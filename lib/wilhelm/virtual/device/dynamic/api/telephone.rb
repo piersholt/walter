@@ -4,7 +4,7 @@ module Wilhelm::Virtual::API
   # API for telephone related commands
   module Telephone
     include BaseAPI
-    include Command::Aliases
+    include Wilhelm::Core::Command::Aliases
 
     # 0x2b
     def led(from: :tel, to: :anzv, **arguments)

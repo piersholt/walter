@@ -25,18 +25,18 @@ require_relative 'shared/global_listener'
 # Comment
 module Shared
   def session_listener
-    @session_listener ||= SessionListener.new
+    @session_listener ||= Wilhelm::Core::SessionListener.new
   end
 
   def data_logging_listener
-    @data_logging_listener ||= DataLoggingListener.new
+    @data_logging_listener ||= Wilhelm::Core::DataLoggingListener.new
   end
 
   def display_listener
-    @display_listener ||= DisplayListener.new
+    @display_listener ||= Wilhelm::Core::DisplayListener.new
   end
 
   def global_listener
-    @global_listener ||= GlobalListener.new({})
+    @global_listener ||= Wilhelm::Core::GlobalListener.new({})
   end
 end

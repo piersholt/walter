@@ -1,4 +1,4 @@
-module Analyze
+module Wilhelm::Core::Analyze
   attr_accessor :frames
 
   S = 0

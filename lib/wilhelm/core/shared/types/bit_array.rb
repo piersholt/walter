@@ -1,11 +1,11 @@
-class BitArray
+class Wilhelm::Core::BitArray
   class DataError < StandardError
     def message
       "Binary data failure"
     end
   end
   extend Forwardable
-  include DataTools
+  include Wilhelm::Core::DataTools
 
   FORWARD_MESSAGES = Array.instance_methods(false)
   FORWARD_MESSAGES << :reduce
@@ -24,7 +24,7 @@ class BitArray
   end
 
   def self.from_i(int)
-    bit_array = BitArray.new
+    bit_array = Wilhelm::Core::BitArray.new
     bit_array.parse_integer(int)
     bit_array
   end

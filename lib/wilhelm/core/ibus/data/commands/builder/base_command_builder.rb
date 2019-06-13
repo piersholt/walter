@@ -1,7 +1,5 @@
-
-
-class BaseCommandBuilder
-  include Helpers
+class Wilhelm::Core::BaseCommandBuilder
+  include Wilhelm::Core::Helpers
 
   def initialize(command_config)
     @command_config = command_config

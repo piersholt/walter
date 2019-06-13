@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   # ID: 25 0x19
   class Temperature < BaseCommand
     attr_accessor :a1, :a2, :a3

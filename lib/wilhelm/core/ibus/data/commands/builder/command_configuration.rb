@@ -4,8 +4,8 @@
 # require 'application/commands/builder/base_command_builder'
 # require 'application/commands/builder/paramaterized_command_builder'
 
-class CommandConfiguration
-  include Helpers
+class Wilhelm::Core::CommandConfiguration
+  include Wilhelm::Core::Helpers
   PROC = 'CommandConfig'.freeze
 
   MAP = :map
@@ -13,14 +13,14 @@ class CommandConfiguration
   BIT_ARRAY = :bit_array
   TYPES = [MAP, BIT_ARRAY, SWITCH].freeze
 
-  DEFAULT_COMMAND_NAMESPACE = 'Command'.freeze
+  DEFAULT_COMMAND_NAMESPACE = 'Wilhelm::Core::Command'.freeze
   BASE_COMMAND_STRING = 'BaseCommand'.freeze
   PARAMETERIZED_COMMAND_STRING = 'ParameterizedCommand'.freeze
 
-  BASE_COMMMAND_BUILDER_STRING = 'BaseCommandBuilder'.freeze
-  PARAMETERIZED_COMMAND_BUILDER_STRING = 'ParameterizedCommandBuilder'.freeze
+  BASE_COMMMAND_BUILDER_STRING = 'Wilhelm::Core::BaseCommandBuilder'.freeze
+  PARAMETERIZED_COMMAND_BUILDER_STRING = 'Wilhelm::Core::ParameterizedCommandBuilder'.freeze
 
-  WRAPPER = ParameterConfiguration
+  WRAPPER = Wilhelm::Core::ParameterConfiguration
 
   attr_reader :id, :parameters, :normal_fucking_decimal
 
@@ -91,7 +91,7 @@ class CommandConfiguration
 
   def parse_command(mapped_command)
     command_id = @command_hash[:default_id]
-    id_byte = Byte.new(:decimal, command_id)
+    id_byte = Wilhelm::Core::Byte.new(:decimal, command_id)
     @command_hash[:id] = id_byte
     @id = id_byte
     @normal_fucking_decimal = command_id
@@ -107,9 +107,9 @@ class CommandConfiguration
       new_parameter =
         case
         when data[:type] == BIT_ARRAY
-          BitArrayParameterConfiguration.new(name, data)
+          Wilhelm::Core::BitArrayParameterConfiguration.new(name, data)
         else
-          ParameterConfiguration.new(name, data)
+          Wilhelm::Core::ParameterConfiguration.new(name, data)
         end
       @parameters[name] = new_parameter
     end

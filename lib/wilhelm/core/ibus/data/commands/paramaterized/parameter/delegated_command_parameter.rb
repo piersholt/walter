@@ -1,5 +1,5 @@
-module DelegatedCommandParameter
-  include Helpers
+module Wilhelm::Core::DelegatedCommandParameter
+  include Wilhelm::Core::Helpers
   PROC = 'DelCommandParam'
 
   MAP = :map
@@ -10,11 +10,11 @@ module DelegatedCommandParameter
   # PARAMETERS_TO_SETUP = [MAP, BIT_ARRAY, SWITCH].freeze
 
   TYPE_CLASS_MAP =
-    { SWITCH => 'SwitchedParameter',
-      MAP => 'MappedParameter',
-      CHARS => 'CharsParameter',
-      BIT_ARRAY => 'BitArrayParameter',
-      default:  'BaseParameter' }
+    { SWITCH => 'Wilhelm::Core::SwitchedParameter',
+      MAP => 'Wilhelm::Core::MappedParameter',
+      CHARS => 'Wilhelm::Core::CharsParameter',
+      BIT_ARRAY => 'Wilhelm::Core::BitArrayParameter',
+      default:  'Wilhelm::Core::BaseParameter' }
 
   def self.create(configuration, type, value)
     LOGGER.debug(PROC) { "#create(#{configuration}, #{type}, #{value})" }
@@ -33,7 +33,7 @@ module DelegatedCommandParameter
       raise ArgumentError, "wtf is #{type ? type : 'no type!'} or this bullshit klass_string #{klass_string ? klass_string : 'blank!' }"
     end
 
-    klass = Helpers.get_class(klass_string)
+    klass = Wilhelm::Core::Helpers.get_class(klass_string)
     begin
       klass.new(configuration, value)
     rescue StandardError => e

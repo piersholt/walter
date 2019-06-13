@@ -2,6 +2,10 @@
 
 puts 'Loading wilhelm/core'
 
+module Wilhelm
+  module Core; end
+end
+
 # Walter-Core
 LogActually.is_all_around(:interface)
 LogActually.interface.i

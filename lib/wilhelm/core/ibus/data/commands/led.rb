@@ -1,4 +1,4 @@
-class Command
+class Wilhelm::Core::Command
   class LED < BaseCommand
     # attr_reader :led_state
 

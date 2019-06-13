@@ -1,7 +1,7 @@
 require 'singleton'
 # require 'application/messages'
 
-class SessionHandler < BaseHandler
+class Wilhelm::Core::SessionHandler < Wilhelm::Core::BaseHandler
   include Singleton
 
   METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]
@@ -18,7 +18,7 @@ class SessionHandler < BaseHandler
   end
 
   def initialize
-    @messages = Messages.new
+    @messages = Wilhelm::Core::Messages.new
     @frames = []
   end
 
