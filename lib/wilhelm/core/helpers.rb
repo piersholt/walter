@@ -12,9 +12,9 @@ module Wilhelm
   module Core
     # All helpers available within single module
     module Helpers
-      include Wilhelm::Helpers::ModuleTools
-      extend Wilhelm::Helpers::ModuleTools
-      include Wilhelm::Helpers::NameTools
+      include Wilhelm::Helpers::Module
+      extend Wilhelm::Helpers::Module
+      include Wilhelm::Helpers::Name
       include Wilhelm::Core::Device::Groups
     end
   end

@@ -3,15 +3,16 @@
 puts 'Loading wilhelm/helpers'
 
 require_relative 'helpers/data_tools'
-require_relative 'helpers/module_tools'
-require_relative 'helpers/name_tools'
+require_relative 'helpers/module'
+require_relative 'helpers/name'
+require_relative 'helpers/stateful'
 
 module Wilhelm
   # Comment
   module Helpers
-    include ModuleTools
-    extend ModuleTools
-    include NameTools
+    include Module
+    extend Module
+    include Name
   end
 end
 

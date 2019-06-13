@@ -3,7 +3,7 @@
 module Wilhelm
   module Helpers
     # Comment
-    module ModuleTools
+    module Module
       # Retrieve a constant from a String i.e. "NameSpaceA::ClassX"
       def get_class(name)
         Kernel.const_get(name)

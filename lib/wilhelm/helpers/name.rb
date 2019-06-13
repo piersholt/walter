@@ -3,7 +3,7 @@
 module Wilhelm
   module Helpers
     # Comment
-    module NameTools
+    module Name
       # Convert a symbol :name to instance variable name
       # @return [Instance Variable Name] :@variable_name
       def inst_var(name)
