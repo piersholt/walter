@@ -5,8 +5,6 @@ class Wilhelm::Virtual
     module State
       # Comment
       module Sent
-        # include Events
-
         # 0x3B
         def handle_mfl_func_button(command)
           logger.debug(moi) { "MFL_FUNC -> #{command.pretty}" }

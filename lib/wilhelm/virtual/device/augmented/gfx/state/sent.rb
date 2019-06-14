@@ -5,7 +5,8 @@ class Wilhelm::Virtual
     module State
       # Comment
       module Sent
-        include Events
+        include Wilhelm::Virtual::Constants::Commands
+        include Wilhelm::Virtual::Constants::Buttons
 
         # Command 0x01
         def evaluate_ping(command)

@@ -6,7 +6,6 @@ class Wilhelm::Virtual
       include Constants
       include Model
       include Chainable
-      include Events
       include Received
 
       # source: 0x60 (RDS 1) / function: 00 (--) / action: 00 (Offset 0)

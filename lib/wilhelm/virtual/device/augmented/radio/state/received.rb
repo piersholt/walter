@@ -5,7 +5,6 @@ class Wilhelm::Virtual
     module State
       # Comment
       module Received
-        include Events
         include Constants
 
         def handle_menu_gfx(command)
