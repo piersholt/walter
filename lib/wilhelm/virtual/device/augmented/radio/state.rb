@@ -2,23 +2,12 @@
 
 class Wilhelm::Virtual
   class AugmentedRadio < AugmentedDevice
+    # Comment
     module State
       include Constants
       include Model
       include Chainable
       include Received
-
-      # source: 0x60 (RDS 1) / function: 00 (--) / action: 00 (Offset 0)
-      # def handle_tel_data(command)
-      #   # logger.error('oh hai!') { command }
-      #   case command.source.value
-      #   when (0x60..0x63)
-      #     index = command.action.parameters[:button_id].value
-      #     state = command.action.parameters[:button_state].state
-      #     changed
-      #     notify_observers(DATA_SELECT, index: index, state: state)
-      #   end
-      # end
 
       def evaluate_menu_rad(command)
         case command.state.value

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Comment
 class Wilhelm::Virtual
   # Comment
   class AugmentedRadio < AugmentedDevice
