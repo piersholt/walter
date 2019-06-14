@@ -3,7 +3,6 @@
 puts "\tLoading wilhelm/virtual/device/emulated"
 
 # Base
-require_relative 'emulated/common/alive'
 require_relative 'emulated/device'
 
 # CDC

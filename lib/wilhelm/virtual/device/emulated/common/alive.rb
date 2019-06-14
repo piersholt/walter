@@ -1,6 +1,12 @@
+# frozen_string_literal: false
 
+# @deprecated: This should not be in use anywhere
 module Wilhelm::Virtual::Alive
   include Wilhelm::Virtual::API::Alive
+
+  def self.included(mod)
+    raise ScriptError, "#{mod} is attempting to load deprecated module: Printable"
+  end
 
   # Think about device state and need to announce etc....
   # Some devices will only be ignition position II, some I...
