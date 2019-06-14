@@ -4,7 +4,8 @@ class Wilhelm::API
   class Display
     # Comment
     module InputHandler
-      include Events
+      include Wilhelm::API::Constants::Buttons
+
       NAME = 'InputHandler'
 
       def handle_button(button:, state:, source:)

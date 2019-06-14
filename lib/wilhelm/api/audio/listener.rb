@@ -4,7 +4,6 @@ class Wilhelm::API
   class Button
     # Comment
     module Listener
-      include Events
       NAME = 'Button Listener'
 
       def update(event, properties = {})

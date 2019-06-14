@@ -10,5 +10,22 @@ module Wilhelm
       include Virtual::Constants::Commands
       include Virtual::Constants::Buttons
     end
+
+    module Constants
+      # Wilhelm::API alias
+      module States
+        include Virtual::Constants::States
+      end
+
+      # Wilhelm::API alias
+      module Commands
+        include Virtual::Constants::Commands
+      end
+
+      # Wilhelm::API alias
+      module Buttons
+        include Virtual::Constants::Buttons
+      end
+    end
   end
 end

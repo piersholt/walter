@@ -4,11 +4,15 @@ class Wilhelm::API
   class Display
     # Comment
     module Listener
-      include Events
+      include Wilhelm::API::Constants::States
+      include Wilhelm::API::Constants::Buttons
+      include Wilhelm::API::Constants::Commands
+      
       NAME = 'Display Listener'
 
       def update(event, properties = {})
         # logger.debug(NAME) { "#update(#{event})" }
+        # Constants::States
         case event
         when :header_cache
           header_cache(properties)
@@ -38,6 +42,7 @@ class Wilhelm::API
           overwritten!
         end
 
+        # Constants::Commands
         case event
         when GFX_PING
           LogActually.alive.debug(NAME) { "#update(#{GFX_PING})" }
@@ -47,6 +52,7 @@ class Wilhelm::API
           announce
         end
 
+        # Constants::Buttons
         case event
         when :button
           handle_button(properties)

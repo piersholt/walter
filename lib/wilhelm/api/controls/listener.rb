@@ -4,7 +4,7 @@ class Wilhelm::API
   class Controls
     # Comment
     module Listener
-      include Buttons
+      include Wilhelm::API::Constants::Buttons
 
       NAME = 'Controls Listener'
 
