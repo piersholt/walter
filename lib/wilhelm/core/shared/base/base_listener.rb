@@ -3,5 +3,5 @@
 
 class Wilhelm::Core::BaseListener
   include Observable
-  include Wilhelm::Core::Event
+  include Wilhelm::Core::Constants::Events
 end

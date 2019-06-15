@@ -1,7 +1,7 @@
 class Wilhelm::Virtual
   class Device
     module Receivable
-      include Wilhelm::Core::Event
+      include Wilhelm::Core::Constants::Events
 
       def virtual_receive(message)
         message

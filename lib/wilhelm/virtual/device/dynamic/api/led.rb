@@ -13,7 +13,7 @@
 module Wilhelm::Virtual::API
   module LED
     include Observable
-    include Wilhelm::Core::Event
+    include Wilhelm::Core::Constants::Events
     # extend self
 
     COMMAND_ID = 0x2B

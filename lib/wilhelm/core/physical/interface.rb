@@ -53,11 +53,11 @@ module Wilhelm
       def offline?
         if @stream.instance_of?(Interface::File)
           changed
-          notify_observers(Event::BUS_OFFLINE, @stream.class)
+          notify_observers(Constants::Events::BUS_OFFLINE, @stream.class)
           return true
         elsif @stream.instance_of?(Interface::UART)
           changed
-          notify_observers(Event::BUS_ONLINE, @stream.class)
+          notify_observers(Constants::Events::BUS_ONLINE, @stream.class)
           return false
         else
           raise StandardError, 'no status!'
@@ -136,7 +136,7 @@ module Wilhelm
                 #   1. PendingData
                 #   2. NoData
                 changed
-                notify_observers(Event::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, byte_basic: byte_basic)
+                notify_observers(Constants::Events::BYTE_RECEIVED, read_byte: read_byte, parsed_byte: parsed_byte, byte_basic: byte_basic)
 
                 input_buffer.push(byte_basic)
               rescue EncodingError => e

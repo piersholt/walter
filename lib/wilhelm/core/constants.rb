@@ -7,3 +7,5 @@ require_relative 'constants/commands/groups'
 
 require_relative 'constants/devices/aliases'
 require_relative 'constants/devices/groups'
+
+require_relative 'constants/events'

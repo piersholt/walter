@@ -8,7 +8,7 @@ module Wilhelm
         class Demultiplexer
           include Observable
           include ManageableThreads
-          include Event
+          include Constants::Events
 
           attr_reader :frame_input_buffer, :packet_input_buffer, :read_thread
 

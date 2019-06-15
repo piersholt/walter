@@ -6,7 +6,7 @@ end
 
 class Wilhelm::Core::BaseHandler
   include Observable
-  include Wilhelm::Core::Event
+  include Wilhelm::Core::Constants::Events
   include Wilhelm::Core::Helpers
 
   def fetch(props, key)

@@ -5,7 +5,6 @@ puts "\tLoading wilhelm/core/shared"
 require_relative 'shared/types/bit_array'
 require_relative 'shared/types/indexed_bit_array'
 
-require_relative 'shared/base/event'
 require_relative 'shared/base/base_handler'
 require_relative 'shared/base/base_listener'
 

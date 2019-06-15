@@ -81,9 +81,9 @@ class PBusReceiver
   def clean_up(buffer, new_frame)
     LogActually.datalink.debug(name) { "#clean_up" }
 
-    # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Event::FRAME_FAILED}" }
+    # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
     # changed
-    # notify_observers(Event::FRAME_FAILED, frame: new_frame)
+    # notify_observers(Constants::Events::FRAME_FAILED, frame: new_frame)
 
     LogActually.datalink.debug(name) { "Shifting one byte." }
 

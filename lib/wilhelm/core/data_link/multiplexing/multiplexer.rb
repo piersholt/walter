@@ -6,7 +6,7 @@ module Wilhelm
       module LogicalLinkLayer
         # Comment
         class Multiplexer
-          include Event
+          include Constants::Events
           include ManageableThreads
 
           attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread

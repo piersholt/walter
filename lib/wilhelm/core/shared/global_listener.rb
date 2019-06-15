@@ -13,7 +13,7 @@
 # NOTE there's no.. events.. per se, it's... states..
 class Wilhelm::Core::GlobalListener
   include Observable
-  include Wilhelm::Core::Event
+  include Wilhelm::Core::Constants::Events
 
   PROC = 'GlobalListener'
 

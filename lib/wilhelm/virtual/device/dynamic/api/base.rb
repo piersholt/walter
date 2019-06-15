@@ -3,7 +3,7 @@
 module Wilhelm::Virtual::API
   # Comment
   module BaseAPI
-    include Wilhelm::Core::Event
+    include Wilhelm::Core::Constants::Events
     include Observable
     include Helpers::Cluster
     include LogActually::ErrorOutput

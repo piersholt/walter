@@ -77,11 +77,11 @@ module Wilhelm
         synchronisation = @frame_synchronisation.new(buffer)
         new_frame = synchronisation.run
 
-        LogActually.datalink.debug(name) { "#{Event::FRAME_RECEIVED}: #{new_frame}" }
+        LogActually.datalink.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
         # reset_interval
         # output(new_frame)
         changed
-        notify_observers(Event::FRAME_RECEIVED, frame: new_frame)
+        notify_observers(Constants::Events::FRAME_RECEIVED, frame: new_frame)
 
         frame_input_buffer.push(new_frame)
       rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
@@ -97,9 +97,9 @@ module Wilhelm
       def clean_up(buffer, new_frame)
         LogActually.datalink.debug(name) { "#{SYNC_ERROR} #clean_up" }
 
-        # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Event::FRAME_FAILED}" }
+        # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
         # changed
-        # notify_observers(Event::FRAME_FAILED, frame: new_frame)
+        # notify_observers(Constants::Events::FRAME_FAILED, frame: new_frame)
 
         # LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
 
