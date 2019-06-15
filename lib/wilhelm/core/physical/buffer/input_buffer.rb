@@ -7,7 +7,7 @@ module Wilhelm
       # An extension of a Queue to support multi shifts, and unshifting
       # NOTE this should not handle unshift.... argh.. well.. unshift is framer behaviour..
       # but it's still capsulated with framer.. the actual behaviour of unshift is generic...
-      class ByteBuffer < SizedQueue
+      class InputBuffer < SizedQueue
         SIZE = 1024
         def initialize
           super(SIZE)
@@ -31,8 +31,8 @@ module Wilhelm
 
         def shift(number_of_bytes = 1)
           # binding.pry
-          LogActually.interface.debug("ByteBuffer") { "#shift(#{number_of_bytes})" }
-          # raise ::ArgumentError, 'ByteBuffer does not support single object shift' if
+          LogActually.interface.debug("InputBuffer") { "#shift(#{number_of_bytes})" }
+          # raise ::ArgumentError, 'InputBuffer does not support single object shift' if
           #   number_of_bytes <= 1
 
           shift_result = Bytes.new
@@ -51,8 +51,8 @@ module Wilhelm
         private
 
         def take_unshifted_bytes(shift_result, number_of_bytes)
-          LogActually.interface.debug("ByteBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
-          LogActually.interface.debug("ByteBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
+          LogActually.interface.debug("InputBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
+          LogActually.interface.debug("InputBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
           required_bytes = number_of_bytes
           return false if @unshift_buffer.empty?
           until @unshift_buffer.empty? || required_bytes.zero?
@@ -60,7 +60,7 @@ module Wilhelm
             shift_result.push(unshifted_byte)
             required_bytes -= 1
           end
-          LogActually.interface.debug("ByteBuffer") { "#{shift_result.size} unshifted bytes taken." }
+          LogActually.interface.debug("InputBuffer") { "#{shift_result.size} unshifted bytes taken." }
           true
         end
       end

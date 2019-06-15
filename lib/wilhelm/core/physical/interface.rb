@@ -33,7 +33,7 @@ module Wilhelm
       def initialize(path, options = NO_OPTIONS)
         @stream = parse_path(path, options)
 
-        @input_buffer = ByteBuffer.new
+        @input_buffer = InputBuffer.new
         @output_buffer = OutputBuffer.new(@stream)
       end
 
@@ -132,7 +132,7 @@ module Wilhelm
 
                 # NOTE this is intesresting.. this event isn't to do with the
                 # primary processing..it's only for logging..
-                # i could technically have a state of ByteBuffer being:
+                # i could technically have a state of InputBuffer being:
                 #   1. PendingData
                 #   2. NoData
                 changed

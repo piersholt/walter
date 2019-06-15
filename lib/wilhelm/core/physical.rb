@@ -14,5 +14,5 @@ require_relative 'physical/interface'
 
 puts "\tLoading wilhelm/core/physical/buffer"
 
-require_relative 'physical/buffer/byte_buffer'
+require_relative 'physical/buffer/input_buffer'
 require_relative 'physical/buffer/output_buffer'
