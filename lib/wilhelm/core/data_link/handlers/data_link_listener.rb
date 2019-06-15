@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     # Comment
-    class DataLinkListener < Wilhelm::Core::BaseListener
+    class DataLinkListener < BaseListener
       def initialize(interface_handler)
         @interface_handler = interface_handler
       end

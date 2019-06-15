@@ -1,7 +1,11 @@
+# frozen_string_literal: false
 
-# require 'event'
-
-class Wilhelm::Core::BaseListener
-  include Observable
-  include Wilhelm::Core::Constants::Events
+module Wilhelm
+  module Core
+    # Comment
+    class BaseListener
+      include Observable
+      include Constants::Events
+    end
+  end
 end
