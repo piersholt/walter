@@ -6,7 +6,7 @@ class Wilhelm::Virtual
       # Chianable state commands
       module Chainable
         include Constants
-        include Wilhelm::Virtual::Constants::States
+        include Wilhelm::Virtual::Constants::Events::Display
         include Observable
 
         def log_state(delta, level = :debug)

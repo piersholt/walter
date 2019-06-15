@@ -4,7 +4,8 @@ module Wilhelm::SDK
   module Controls
     # Base Controls Interface Mapping
     module Register
-      include Wilhelm::API::Events
+      include Wilhelm::Virtual::Constants::Buttons::BMBT
+      include Wilhelm::Virtual::Constants::Buttons::MFL
 
       STATELESS_CONTROL = Wilhelm::API::Controls::Control::Stateless
       STATEFUL_CONTROL = Wilhelm::API::Controls::Control::Stateful

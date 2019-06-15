@@ -2,6 +2,8 @@
 
 puts "\tLoading wilhelm/virtual/device/augmented"
 
+require_relative 'augmented/constants'
+
 augmented_root = 'device/augmented'
 
 require "#{augmented_root}/device"

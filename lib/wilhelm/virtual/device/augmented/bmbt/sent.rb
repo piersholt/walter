@@ -4,7 +4,7 @@ class Wilhelm::Virtual
   class AugmentedBMBT < AugmentedDevice
     # Comment
     module Sent
-      include Wilhelm::Virtual::Constants::Buttons
+      include Wilhelm::Virtual::Constants::Buttons::BMBT
 
       # 0x48
       def handle_bmbt_1_button(command)
