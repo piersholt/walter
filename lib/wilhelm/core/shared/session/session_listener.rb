@@ -4,18 +4,11 @@ module Wilhelm
   module Core
     # Comment
     class SessionListener < BaseListener
-      # name = self.class.name
-
-      def initialize(handlers = {})
-        @session_handler = SessionHandler.instance
-      end
-
-      def name
-        self.class.name
+      def initialize(session_handler = SessionHandler.instance)
+        @session_handler = session_handler
       end
 
       def update(action, properties = {})
-        # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
         case action
         when BYTE_RECEIVED
           byte_received(action, properties)

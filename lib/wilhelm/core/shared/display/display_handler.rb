@@ -25,10 +25,6 @@ module Wilhelm
         str_buffer.concat("\n\tFrom: #{filtered_senders}")
       end
 
-      def name
-        self.class.name
-      end
-
       def add_message(message)
         filtered_output(message)
       end

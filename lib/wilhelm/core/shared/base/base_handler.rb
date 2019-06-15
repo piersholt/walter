@@ -19,6 +19,10 @@ module Wilhelm
       include Constants::Events
       include Wilhelm::Core::Helpers
 
+      def name
+        self.class.name
+      end
+
       def fetch(props, key)
         raise BaseHandlerError, "#{key} is not in properties!" unless props.key?(key)
         object = props[key]

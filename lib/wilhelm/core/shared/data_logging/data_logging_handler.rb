@@ -10,16 +10,11 @@ module Wilhelm
         instance
       end
 
-      def name
-        self.class.name
-      end
-
       def inspect
         str_buffer = "<DataLoggingHandler>"
       end
 
       def update(action, properties)
-        # LOGGER.debug(name) { "\t#update(#{action}, #{properties})" }
         case action
         when BYTE_RECEIVED
           read_byte = fetch(properties, :read_byte)

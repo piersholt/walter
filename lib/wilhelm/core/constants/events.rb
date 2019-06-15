@@ -3,16 +3,16 @@
 module Wilhelm
   module Core
     module Constants
+      # Comment
       module Events
-        # Channel
-        module Channel
+        # Interface
+        module Interface
           BUS_OFFLINE = :offline
           BUS_ONLINE = :online
           BUS_BUSY = :busy
           BUS_IDLE = :idle
           BUS_ACTIVE = :active
           BYTE_RECEIVED = :byte_received
-
         end
 
         # Receiver
@@ -41,19 +41,19 @@ module Wilhelm
           EXIT = :exit
         end
 
-        include Channel
+        include Interface
         include Receiver
         include Multiplexing
         include Deprecated
         include Application
 
-        CHANNEL_EVENTS  = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
-        RECEIVER_EVENTS = [FRAME_RECEIVED, FRAME_FAILED, FRAME_SENT].freeze
-        LAYER_EVENTS    = [MESSAGE_RECEIVED, MESSAGE_SENT, PACKET_RECEIVED, PACKET_ROUTABLE].freeze
-        USER_EVENTS     = [MESSAGE_DISPLAY].freeze
-        APP_EVENTS      = [STATUS_REQUEST, EXIT].freeze
+        INTERFACE_EVENTS = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
+        RECEIVER_EVENTS  = [FRAME_RECEIVED, FRAME_FAILED, FRAME_SENT].freeze
+        LAYER_EVENTS     = [MESSAGE_RECEIVED, MESSAGE_SENT, PACKET_RECEIVED, PACKET_ROUTABLE].freeze
+        USER_EVENTS      = [MESSAGE_DISPLAY].freeze
+        APP_EVENTS       = [STATUS_REQUEST, EXIT].freeze
 
-        ALL_EVENTS = (CHANNEL_EVENTS + RECEIVER_EVENTS + LAYER_EVENTS + USER_EVENTS + APP_EVENTS).freeze
+        ALL_EVENTS = (INTERFACE_EVENTS + RECEIVER_EVENTS + LAYER_EVENTS + USER_EVENTS + APP_EVENTS).freeze
 
         def event_valid?(event)
           ALL_EVENTS.one? { |e| e == event }

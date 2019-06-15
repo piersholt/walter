@@ -6,6 +6,10 @@ module Wilhelm
     class BaseListener
       include Observable
       include Constants::Events
+
+      def name
+        self.class.name
+      end
     end
   end
 end

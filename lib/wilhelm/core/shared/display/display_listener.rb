@@ -8,12 +8,7 @@ module Wilhelm
         @display_handler = display_handler
       end
 
-      def name
-        self.class.name
-      end
-
       def update(action, properties = {})
-        # LOGGER.unknown(name) { "#update(#{action}, #{properties})" }
         case action
         when MESSAGE_RECEIVED
           message_received(action, properties)

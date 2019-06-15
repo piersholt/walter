@@ -12,12 +12,7 @@ module Wilhelm
         instance
       end
 
-      def name
-        self.class.name
-      end
-
       def update(action, properties)
-        # LOGGER.debug(name) { "\t#update(#{action}, #{properties})" }
         case action
         when BUS_OFFLINE
           bus_offline

@@ -14,10 +14,6 @@ module Wilhelm
         instance
       end
 
-      def name
-        self.class.name
-      end
-
       def initialize
         @messages = Messages.new
         @frames = []

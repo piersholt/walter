@@ -8,12 +8,7 @@ module Wilhelm
         @interface_handler = interface_handler
       end
 
-      def name
-        self.class.name
-      end
-
       def update(action, properties = {})
-        # LogActually.datalink.unknown(name) { "#update(#{action}, #{properties})" }
         case action
         when BUS_OFFLINE
           bus_offline(action, properties)
