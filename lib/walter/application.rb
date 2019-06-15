@@ -7,6 +7,7 @@ class Walter
   include ManageableThreads
   include Wilhelm::Core::Analyze
   include Shared
+  include Wilhelm::Core::Constants::Events::Application
 
   attr_reader :bus, :wolfgang
   alias w wolfgang
@@ -97,7 +98,7 @@ class Walter
     LOGGER.debug 'Interrupt signal caught.'
     binding.pry
     changed
-    notify_observers(Event::EXIT, {reason: 'Interrupt!'})
+    notify_observers(EXIT, {reason: 'Interrupt!'})
     stop
     return 1
   end
@@ -109,10 +110,10 @@ class Walter
 
     LOGGER.info(PROC) { "Walter is closing!" }
 
-    LOGGER.info(PROC) { "Publishing event: #{Event::EXIT}" }
+    LOGGER.info(PROC) { "Publishing event: #{EXIT}" }
     changed
-    notify_observers(Event::EXIT, {reason: 'Debug exiting'})
-    LOGGER.info(PROC) { "Subscribers updated! #{Event::EXIT}" }
+    notify_observers(EXIT, {reason: 'Debug exiting'})
+    LOGGER.info(PROC) { "Subscribers updated! #{EXIT}" }
 
     LOGGER.info(PROC) { "Turning stack off ⛔️" }
     stop
