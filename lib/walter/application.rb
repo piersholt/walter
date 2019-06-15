@@ -23,7 +23,6 @@ class Walter
     setup_sdk
 
     # For exit event
-    add_observer(global_listener)
     add_observer(data_logging_listener)
     add_observer(display_listener)
 
@@ -140,12 +139,10 @@ class Walter
     interface_handler = Wilhelm::Core::DataLinkHandler.new(@transmitter)
     @data_link_listener = Wilhelm::Core::DataLinkListener.new(interface_handler)
 
-    @interface.add_observer(global_listener)
     @interface.add_observer(@data_link_listener)
     @interface.add_observer(data_logging_listener)
     @interface.add_observer(session_listener)
 
-    @receiver.add_observer(global_listener)
     @receiver.add_observer(data_logging_listener)
     @receiver.add_observer(session_listener)
   end
@@ -164,7 +161,6 @@ class Walter
     interface.add_observer(bus_handler)
     demultiplexer.add_observer(bus_handler)
 
-    bus_handler.add_observer(global_listener)
     bus_handler.add_observer(display_listener)
     bus_handler.add_observer(session_listener)
     bus_handler.add_observer(bus_handler)

@@ -14,7 +14,6 @@ class Wernher
     setup_core
 
     # For exit event
-    add_observer(global_listener)
     add_observer(data_logging_listener)
     add_observer(display_listener)
   end

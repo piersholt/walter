@@ -19,8 +19,6 @@ require_relative 'shared/data_logging/data_logging_listener'
 
 require_relative 'shared/maps/map'
 
-require_relative 'shared/global_listener'
-
 # Comment
 module Shared
   def session_listener
@@ -33,9 +31,5 @@ module Shared
 
   def display_listener
     @display_listener ||= Wilhelm::Core::DisplayListener.new
-  end
-
-  def global_listener
-    @global_listener ||= Wilhelm::Core::GlobalListener.new({})
   end
 end
