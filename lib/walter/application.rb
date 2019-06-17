@@ -135,8 +135,8 @@ class Walter
       Wilhelm::Core::DataLink::LogicalLinkLayer::Multiplexer
       .new(@transmitter.frame_output_buffer)
 
-    interface_handler = Wilhelm::Core::DataLinkHandler.new(@transmitter)
-    @data_link_listener = Wilhelm::Core::DataLinkListener.new(interface_handler)
+    interface_handler = Wilhelm::Core::InterfaceHandler.new(@transmitter)
+    @data_link_listener = Wilhelm::Core::CoreListener.new(interface_handler)
 
     @interface.add_observer(@data_link_listener)
     @interface.add_observer(data_logging_listener)

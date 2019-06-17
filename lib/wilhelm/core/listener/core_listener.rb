@@ -3,26 +3,27 @@
 module Wilhelm
   module Core
     # Comment
-    class DataLinkListener < BaseListener
+    class CoreListener < BaseListener
+      attr_accessor :interface_handler
+
       def initialize(interface_handler)
         @interface_handler = interface_handler
+      end
+
+      NAME = 'Core::CoreListener'
+
+      def name
+        NAME
       end
 
       def update(action, properties = {})
         case action
         when BUS_OFFLINE
-          bus_offline(action, properties)
+          interface_handler&.bus_offline
         end
       rescue StandardError => e
         LogActually.datalink.error(name) { e }
         e.backtrace.each { |l| LogActually.datalink.error(l) }
-      end
-
-      private
-
-      def bus_offline(action, properties)
-        # LogActually.datalink.warn(name) { 'Bus Offline!' }
-        @interface_handler.update(action, properties)
       end
     end
   end

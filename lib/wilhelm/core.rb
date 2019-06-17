@@ -31,6 +31,8 @@ require_relative 'core/mixins'
 require_relative 'core/shared'
 require_relative 'core/physical'
 require_relative 'core/datalink'
+require_relative 'core/listener'
+require_relative 'core/handler'
 require_relative 'core/ibus'
 
 puts "\tDone!"

@@ -27,7 +27,3 @@ require_relative 'data_link/model/packet'
 puts "\tLoading wilhelm/core/data_link/multiplexing"
 require_relative 'data_link/multiplexing/multiplexer'
 require_relative 'data_link/multiplexing/demultiplexer'
-
-puts "\tLoading wilhelm/core/data_link/handlers"
-require_relative 'data_link/handlers/data_link_handler'
-require_relative 'data_link/handlers/data_link_listener'

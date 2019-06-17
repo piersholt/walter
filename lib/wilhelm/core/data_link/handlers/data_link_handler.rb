@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     # Comment
-    class DataLinkHandler < BaseHandler
+    class InterfaceHandler < BaseHandler
       def initialize(transitter)
         @transmitter = transitter
       end
