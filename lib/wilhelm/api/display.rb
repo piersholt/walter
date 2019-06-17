@@ -17,6 +17,7 @@ require_relative 'display/listener'
 
 require_relative 'display/cache/value'
 require_relative 'display/cache/attributes'
+require_relative 'display/cache/base'
 require_relative 'display/cache/digital'
 require_relative 'display/cache/static'
 require_relative 'display/cache/titled'

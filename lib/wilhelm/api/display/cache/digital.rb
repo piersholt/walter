@@ -5,9 +5,7 @@ class Wilhelm::API
     # Comment
     class Cache
       # Comment
-      class Digital
-        include Attributes
-        attr_reader :attributes
+      class Digital < BaseCache
         INDEX_START = 0
         LENGTH = 9
 
