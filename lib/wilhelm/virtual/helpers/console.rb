@@ -14,7 +14,7 @@ module Wilhelm
 
         def apply_debug_defaults
           LOGGER.info(PROC_MOD) { 'Applying console defaults.' }
-          # shutup!
+          shutup!
         end
       end
     end
