@@ -14,6 +14,12 @@ module Wilhelm
         str_buffer = "<DataLoggingHandler>"
       end
 
+      NAME = 'DataLogging'.freeze
+
+      def name
+        NAME
+      end
+
       def update(action, properties)
         case action
         when BYTE_RECEIVED

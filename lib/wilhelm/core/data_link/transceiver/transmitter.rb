@@ -23,6 +23,10 @@ module Wilhelm
         @threads = ThreadGroup.new
       end
 
+      def name
+        PROG_NAME
+      end
+
       def off
         LogActually.transmitter.debug(PROG_NAME) { "#{self.class}#off" }
         close_threads

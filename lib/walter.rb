@@ -10,3 +10,5 @@ require_relative 'walter/ui'
 
 puts "\tLoading walter/application"
 require_relative 'walter/application'
+
+puts "\tDone!"

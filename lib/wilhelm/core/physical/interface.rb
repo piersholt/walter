@@ -25,6 +25,9 @@ module Wilhelm
         Thread.current[:name]
       end
 
+      # @override: ManageableThreads#proc_name
+      alias proc_name name
+
       # The interface should protect the interface from the implementation.
       # i shouldn't be forwarding methods.. that's what bit me with rubyserial
       # i was tried to the API of the library.. and not protected for it

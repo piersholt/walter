@@ -26,8 +26,11 @@ module Wilhelm
       end
 
       def name
-        self.class.name
+        NAME
       end
+
+      # @override: ManageableThreads#proc_name
+      alias proc_name name
 
       def off
         LogActually.datalink.debug(name) { "#{self.class}#off" }

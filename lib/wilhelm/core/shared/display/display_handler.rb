@@ -7,10 +7,14 @@ module Wilhelm
       include Command::Aliases
       include Singleton
 
-      name = 'DisplayHandler'.freeze
+      NAME = 'Display'.freeze
 
       def self.i
         instance
+      end
+
+      def name
+        NAME
       end
 
       def initialize
