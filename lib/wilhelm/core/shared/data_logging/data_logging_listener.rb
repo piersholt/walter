@@ -8,6 +8,12 @@ module Wilhelm
         @data_logging_handler = data_logging_handler
       end
 
+      NAME = 'DataLogging'
+
+      def name
+        NAME
+      end
+
       def update(action, properties = {})
         case action
         when BYTE_RECEIVED

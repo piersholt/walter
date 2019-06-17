@@ -7,6 +7,12 @@ module Wilhelm
       class MessageHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 
+        NAME = 'MessageHandler'.freeze
+
+        def name
+          NAME
+        end
+
         def initialize(bus, packet_output_buffer)
           @bus = bus
           @packet_output_buffer = packet_output_buffer

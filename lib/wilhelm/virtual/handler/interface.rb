@@ -11,6 +11,12 @@ module Wilhelm
           @bus = bus
         end
 
+        NAME = 'InterfaceHandler'.freeze
+
+        def name
+          NAME
+        end
+
         def bus_online
           LOGGER.warn(name) { 'Bus Online! Enabling virtual bus.' }
           @bus.online
