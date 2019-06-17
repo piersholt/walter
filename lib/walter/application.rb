@@ -14,8 +14,8 @@ class Walter
 
   PROC = 'Walter'
 
-  def initialize
-    @core = setup_core
+  def initialize(file)
+    @core = setup_core(file)
     context = setup_virtual(interface: @core.interface,
                             multiplexer: @core.multiplexer,
                             demultiplexer: @core.demultiplexer)
@@ -105,8 +105,8 @@ class Walter
     return -1
   end
 
-  def setup_core
-    core = Wilhelm::Core::Context.new(ARGV.shift)
+  def setup_core(file)
+    core = Wilhelm::Core::Context.new(file)
     core.interface.add_observer(data_logging_listener)
     core.receiver.add_observer(data_logging_listener)
     core
