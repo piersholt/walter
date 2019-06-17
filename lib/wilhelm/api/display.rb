@@ -17,7 +17,10 @@ require_relative 'display/listener'
 
 require_relative 'display/cache/value'
 require_relative 'display/cache/attributes'
-require_relative 'display/cache/layout_cache'
-require_relative 'display/cache/cache'
+require_relative 'display/cache/digital'
+require_relative 'display/cache/static'
+require_relative 'display/cache/titled'
+require_relative 'display/cache/basic'
+require_relative 'display/cache'
 
 require_relative 'display/display'
