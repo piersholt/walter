@@ -29,5 +29,7 @@ LogActually.tel.i
 
 require_relative 'virtual/device'
 require_relative 'virtual/bus'
+require_relative 'virtual/listener'
+require_relative 'virtual/handler'
 
 puts "\tDone!"

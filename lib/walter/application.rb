@@ -24,7 +24,6 @@ class Walter
 
     # For exit event
     add_observer(data_logging_listener)
-    add_observer(display_listener)
 
     apply_debug_defaults
 
@@ -153,20 +152,32 @@ class Walter
       .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
       .execute
 
+    core_listener = Wilhelm::Virtual::Listener::CoreListener.new
+    core_listener.packet_handler = Wilhelm::Virtual::Handler::PacketHandler.new(bus)
+    core_listener.interface_handler = Wilhelm::Virtual::Handler::InterfaceHandler.new(bus)
+
+    interface.add_observer(core_listener)
+    demultiplexer.add_observer(core_listener)
+
+    virtual_listener = Wilhelm::Virtual::Listener::VirtualListener.new
+    virtual_listener.message_handler = Wilhelm::Virtual::Handler::MessageHandler.new(bus, multiplexer.packet_output_buffer)
+    virtual_listener.display_handler = Wilhelm::Core::DisplayHandler.instance
+
+    application_listener = Wilhelm::Virtual::Listener::ApplicationListener.new
+    application_listener.display_handler = Wilhelm::Core::DisplayHandler.instance
+    add_observer(application_listener)
+
+    # Convoluted: Listening for MESSAGE_RECEIVED
+    core_listener.packet_handler.add_observer(virtual_listener)
+
     bus_handler = BusHandler
                    .new(bus: bus,
                         packet_output_buffer:
                           multiplexer.packet_output_buffer)
 
-    interface.add_observer(bus_handler)
-    demultiplexer.add_observer(bus_handler)
 
-    bus_handler.add_observer(display_listener)
-    bus_handler.add_observer(session_listener)
-    bus_handler.add_observer(bus_handler)
-
-    bus.send_all(:add_observer, bus_handler)
     # bus.send_all(:add_observer, vehicle_display)
+    bus.send_all(:add_observer, virtual_listener)
     bus
   end
 

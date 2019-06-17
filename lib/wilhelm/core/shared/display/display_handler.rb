@@ -75,6 +75,12 @@ module Wilhelm
         @output_enabled
       end
 
+      def exit(___)
+        LOGGER.info(name) { 'Exit: Disabling output.' }
+        # hide the message output as it clutters the exit log messages
+        disable
+      end
+
       # ************************************************************************* #
       #                              OUTPUT FILTERING
       # ************************************************************************* #

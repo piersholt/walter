@@ -12,7 +12,6 @@ require_relative 'shared/session/session_handler'
 require_relative 'shared/session/session_listener'
 
 require_relative 'shared/display/display_handler'
-require_relative 'shared/display/display_listener'
 
 require_relative 'shared/data_logging/data_logging_handler'
 require_relative 'shared/data_logging/data_logging_listener'
@@ -27,9 +26,5 @@ module Shared
 
   def data_logging_listener
     @data_logging_listener ||= Wilhelm::Core::DataLoggingListener.new
-  end
-
-  def display_listener
-    @display_listener ||= Wilhelm::Core::DisplayListener.new
   end
 end

@@ -1,9 +1,11 @@
+# @deprecated
 class RoutingError < StandardError
   def message
     "A routing error has occured!"
   end
 end
 
+# @deprecated
 class BusHandler < Wilhelm::Core::BaseHandler
   include LogActually::ErrorOutput
   PROC = 'BusHandler'.freeze
