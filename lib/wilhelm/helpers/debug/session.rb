@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  module Core
+  module Helpers
     # DebugTools
     # Helpers for common tasks on CLI
     module Debug

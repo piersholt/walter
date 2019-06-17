@@ -1,22 +1,16 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  module Core
+  module Helpers
     # DebugTools
     # Helpers for common tasks on CLI
     module Debug
       include Delayable
-      include Display
       include Session
       include Threads
       include Yabber
 
       PROC_MOD = 'Debug'.freeze
-
-      def apply_debug_defaults
-        LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
-        shutup!
-      end
 
       def nl
         new_line_thread = Thread.new do
