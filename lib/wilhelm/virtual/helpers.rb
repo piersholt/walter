@@ -2,6 +2,6 @@
 
 puts 'Loading wilhelm/virtual/helpers'
 
-require_relative 'helpers/debug'
+require_relative 'helpers/console'
 
 puts "\tDone!"

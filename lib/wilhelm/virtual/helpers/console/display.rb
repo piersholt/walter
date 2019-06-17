@@ -3,7 +3,7 @@
 module Wilhelm
   class Virtual
     module Helpers
-      module Debug
+      module Console
         # Comment
         module Display
           include Constants::Command::Groups

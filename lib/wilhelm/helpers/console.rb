@@ -4,13 +4,13 @@ module Wilhelm
   module Helpers
     # DebugTools
     # Helpers for common tasks on CLI
-    module Debug
+    module Console
       include Delayable
       include Session
       include Threads
       include Yabber
 
-      PROC_MOD = 'Debug'.freeze
+      PROC_MOD = 'Console'.freeze
 
       def nl
         new_line_thread = Thread.new do

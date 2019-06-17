@@ -3,7 +3,7 @@
 # Application Container
 class Walter
   include Observable
-  include Wilhelm::Virtual::Helpers::Debug
+  include Wilhelm::Virtual::Helpers::Console
   include ManageableThreads
   include Wilhelm::Core::Analyze
   include Shared

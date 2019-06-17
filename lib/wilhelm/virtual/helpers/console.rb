@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-puts 'Loading wilhelm/virtual/helpers/debug'
-require_relative 'debug/display'
+puts 'Loading wilhelm/virtual/helpers/console'
+require_relative 'console/display'
 puts "\tDone!"
 
 module Wilhelm
   class Virtual
     module Helpers
       # Comment
-      module Debug
-        include Wilhelm::Helpers::Debug
+      module Console
+        include Wilhelm::Helpers::Console
         include Display
 
         def apply_debug_defaults
-          LOGGER.info(PROC_MOD) { 'Applying debug defaults.' }
+          LOGGER.info(PROC_MOD) { 'Applying console defaults.' }
           # shutup!
         end
       end

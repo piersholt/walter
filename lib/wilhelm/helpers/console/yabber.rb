@@ -4,7 +4,7 @@ module Wilhelm
   module Helpers
     # DebugTools
     # Helpers for common tasks on CLI
-    module Debug
+    module Console
       module Yabber
         LOG_LEVEL_MAP = {
           d: :debug,

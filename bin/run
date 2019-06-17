@@ -33,7 +33,7 @@ begin
 
   options = OpenStruct.new
   options.environment = 'development'
-  options.debug = true
+  options.console = true
 
   OptionParser.new do |opts|
     opts.banner = 'Usage: run -e development -d'
@@ -42,8 +42,8 @@ begin
       options.environment = e
     end
 
-    opts.on('-d', '--debug', 'Run in debug mode') do |d|
-      options.debug = d
+    opts.on('-c', '--console', 'Open Walter console') do |c|
+      options.console = c
     end
   end.parse!
 

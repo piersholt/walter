@@ -8,13 +8,13 @@ require_relative 'helpers/name'
 require_relative 'helpers/stateful'
 require_relative 'helpers/delayable'
 
-puts 'Loading wilhelm/helpers/debug'
+puts 'Loading wilhelm/helpers/console'
 
-require_relative 'helpers/debug/delayable'
-require_relative 'helpers/debug/session'
-require_relative 'helpers/debug/threads'
-require_relative 'helpers/debug/yabber'
-require_relative 'helpers/debug'
+require_relative 'helpers/console/delayable'
+require_relative 'helpers/console/session'
+require_relative 'helpers/console/threads'
+require_relative 'helpers/console/yabber'
+require_relative 'helpers/console'
 
 module Wilhelm
   # Comment

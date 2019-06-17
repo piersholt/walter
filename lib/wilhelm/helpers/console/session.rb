@@ -4,7 +4,7 @@ module Wilhelm
   module Helpers
     # DebugTools
     # Helpers for common tasks on CLI
-    module Debug
+    module Console
       module Session
         def messages
           SessionHandler.i.messages
