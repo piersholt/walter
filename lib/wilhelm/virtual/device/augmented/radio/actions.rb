@@ -6,8 +6,7 @@ class Wilhelm::Virtual
   class AugmentedRadio < AugmentedDevice
     # User Input to be published
     module Actions
-      include Wilhelm::Core::Command::Aliases
-      include Wilhelm::Core::Command::Aliases
+      include Wilhelm::Virtual::Constants::Command::Aliases
       # include ::Actions
       include Messaging::Constants
       include Messaging::API

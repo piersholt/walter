@@ -5,7 +5,7 @@
 module Wilhelm::Virtual::API
   # API for command related to keys
   module OnBoardMonitor
-    include Wilhelm::Core::Command::Aliases
+    include Wilhelm::Virtual::Constants::Command::Aliases
     include BaseAPI
 
     def button(from: :bmbt, to:, arguments:)

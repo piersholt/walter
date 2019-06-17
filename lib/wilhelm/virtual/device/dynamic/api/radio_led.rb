@@ -4,7 +4,7 @@
 
 module Wilhelm::Virtual::API
   module RadioLED
-    include Wilhelm::Core::Command::Aliases
+    include Wilhelm::Virtual::Constants::Command::Aliases
     include BaseAPI
 
     # 0x4A / Radio LED

@@ -27,6 +27,7 @@ LogActually.mfl.i
 LogActually.is_all_around(:tel)
 LogActually.tel.i
 
+require_relative 'virtual/constants'
 require_relative 'virtual/device'
 require_relative 'virtual/bus'
 require_relative 'virtual/listener'

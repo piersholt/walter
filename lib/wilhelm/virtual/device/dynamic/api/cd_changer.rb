@@ -3,7 +3,7 @@
 module Wilhelm::Virtual::API
   # API for command related to keys
   module CDChanger
-    include Wilhelm::Core::Command::Aliases
+    include Wilhelm::Virtual::Constants::Command::Aliases
     include BaseAPI
 
     def cd_changer_status(from: :cdc, to: :rad, arguments:)
