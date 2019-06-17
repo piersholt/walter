@@ -33,13 +33,11 @@ module Wilhelm::SDK
           menu_items.to_h
         end
 
-        # def indexed_chars
-        #   fields.map do |field|
-        #     index = field[0]
-        #     field_object = field[1]
-        #     [index, field_object.to_c]
-        #   end&.to_h
-        # end
+        def indexed_chars
+          menu_items.map do |index, field|
+            [index, field.to_c]
+          end&.to_h
+        end
 
         # Helpers
 

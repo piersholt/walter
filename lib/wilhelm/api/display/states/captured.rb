@@ -28,25 +28,10 @@ class Wilhelm::API
       # end
 
       def render_new_header(context, view)
-        LogActually.display.debug(DISPLAY_CAPTURED) { "#render_new_header(context, view)" }
-        case view.type
-        when :default
-          context.default_header = view
-          context.header = view
-        when :notification
-          context.notification_header = view
-          context.header = view
-          Thread.new(context, view) do |contextual, vuew|
-            begin
-              Kernel.sleep(contextual.timeout)
-              result = contextual.dismiss(vuew)
-              LogActually.display.debug(DISPLAY_CAPTURED) { "Dimiss? => #{result}" }
-            rescue StandardError => e
-              LogActually.display.error(DISPLAY_CAPTURED) { e }
-            end
-            LogActually.display.warn(DISPLAY_CAPTURED) { 'Notify dismiss thread ending?' } unless result
-          end
-        end
+        LogActually.display.unknown(DISPLAY_CAPTURED) { "#render_new_header(context, view)" }
+        context.default_header = view
+        context.header = view
+
         # dirty_fields = context.cache.digital.dirty.to_h.keys
         # subset of fields for dynamic write
         # context.cache.digital.cache!({ 0 => context.header.title.to_c }, false)
