@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-puts 'Loading wilhelm/virtual/helpers'
+puts "\tLoading wilhelm/virtual/helpers"
 
 require_relative 'helpers/console'
-
-puts "\tDone!"

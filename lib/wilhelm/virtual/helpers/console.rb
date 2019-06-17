@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-puts 'Loading wilhelm/virtual/helpers/console'
+puts "\tLoading wilhelm/virtual/helpers/console"
 require_relative 'console/display'
-puts "\tDone!"
 
 module Wilhelm
   class Virtual

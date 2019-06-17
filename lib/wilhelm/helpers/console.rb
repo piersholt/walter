@@ -1,5 +1,12 @@
 # frozen_string_literal: false
 
+puts "\tLoading wilhelm/helpers/console"
+
+require_relative 'console/delayable'
+require_relative 'console/session'
+require_relative 'console/threads'
+require_relative 'console/yabber'
+
 module Wilhelm
   module Helpers
     # DebugTools
