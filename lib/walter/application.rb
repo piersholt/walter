@@ -172,11 +172,6 @@ class Walter
     # Convoluted: Listening for MESSAGE_RECEIVED
     core_listener.packet_handler.add_observer(virtual_listener)
 
-    bus_handler = BusHandler
-                   .new(bus: bus,
-                        packet_output_buffer:
-                          multiplexer.packet_output_buffer)
-
     # MESSAGE_RECEIVED
     # bus_handler.add_observer(session_listener)
 
