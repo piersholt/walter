@@ -163,10 +163,10 @@ class Walter
 
     virtual_listener = Wilhelm::Virtual::Listener::VirtualListener.new
     virtual_listener.message_handler = Wilhelm::Virtual::Handler::MessageHandler.new(bus, multiplexer.packet_output_buffer)
-    virtual_listener.display_handler = Wilhelm::Core::DisplayHandler.instance
+    virtual_listener.display_handler = Wilhelm::Virtual::Handler::DisplayHandler.instance
 
     application_listener = Wilhelm::Virtual::Listener::ApplicationListener.new
-    application_listener.display_handler = Wilhelm::Core::DisplayHandler.instance
+    application_listener.display_handler = Wilhelm::Virtual::Handler::DisplayHandler.instance
     add_observer(application_listener)
 
     # Convoluted: Listening for MESSAGE_RECEIVED

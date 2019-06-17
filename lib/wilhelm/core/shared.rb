@@ -11,8 +11,6 @@ require_relative 'shared/base/base_listener'
 require_relative 'shared/session/session_handler'
 require_relative 'shared/session/session_listener'
 
-require_relative 'shared/display/display_handler'
-
 require_relative 'shared/data_logging/data_logging_handler'
 require_relative 'shared/data_logging/data_logging_listener'
 
