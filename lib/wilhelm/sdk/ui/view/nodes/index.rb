@@ -26,7 +26,7 @@ module Wilhelm::SDK
 
           def navigation_item
             navigation(index: NAVIGATION_INDEX,
-                       label: 'Main Menu',
+                       label: 'Debug Menu',
                        action: :debug_index)
           end
 

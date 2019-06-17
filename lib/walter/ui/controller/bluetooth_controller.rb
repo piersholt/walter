@@ -91,7 +91,7 @@ class Walter
             # destroy(:index)
             # destroy(:device)
             # context.ui.root.load(:index)
-            ui_context.launch(:debug, :index)
+            ui_context.launch(:services, :index)
           when :bluetooth_connect
             device_address = selected_menu_item.id
             context.manager.connect(device_address)

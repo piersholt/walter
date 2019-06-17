@@ -25,7 +25,7 @@ class Walter
 
           def navigation_item
             navigation(index: NAVIGATION_INDEX,
-                       label: 'Main Menu',
+                       label: 'Services Menu',
                        action: :main_menu_index)
           end
 

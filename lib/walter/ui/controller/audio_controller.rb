@@ -98,7 +98,7 @@ class Walter
           when :main_menu_index
             # destroy(:index)
             # context.ui.root.load(:index)
-            ui_context.launch(:debug, :index)
+            ui_context.launch(:services, :index)
           when :audio_now_playing
             # destroy(:index)
             # load(:now_playing)
