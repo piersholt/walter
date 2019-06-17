@@ -15,10 +15,10 @@ class Walter
   PROC = 'Walter'
 
   def initialize
-    setup_core
-    context = setup_virtual(interface: @interface,
-                            multiplexer: @multiplexer,
-                            demultiplexer: @demultiplexer)
+    @core = setup_core
+    context = setup_virtual(interface: @core.interface,
+                            multiplexer: @core.multiplexer,
+                            demultiplexer: @core.demultiplexer)
     setup_api(context)
     setup_sdk
 
@@ -59,11 +59,7 @@ class Walter
 
   def start
     LOGGER.debug(PROC) { '#start' }
-    @interface.on
-    @receiver.on
-    @transmitter.on
-    @demultiplexer.on
-    @multiplexer.on
+    @core.on
 
     @wolfgang.open
   end
@@ -75,19 +71,7 @@ class Walter
     @wolfgang.close
     LOGGER.info(PROC) { 'Wilhelm is off! 👍' }
 
-    LOGGER.info(PROC) { 'Switching off Multiplexing...' }
-    @demultiplexer.off
-    @multiplexer.off
-    LOGGER.info(PROC) { 'Multiplexing is off! 👍' }
-
-    LOGGER.info(PROC) { 'Switching off Transceiver...' }
-    @receiver.off
-    @transmitter.off
-    LOGGER.info(PROC) { 'Transceiver is off! 👍' }
-
-    LOGGER.info(PROC) { 'Switching off Interface...' }
-    @interface.off
-    LOGGER.info(PROC) { 'Interface is off! 👍' }
+    @core.off
   end
 
   private
@@ -122,30 +106,10 @@ class Walter
   end
 
   def setup_core
-    # TODO: better argument handling to support multiple log files
-    @interface   = Wilhelm::Core::Interface.new(ARGV.shift)
-
-    @receiver    = Wilhelm::Core::Receiver.new(@interface.input_buffer)
-    @transmitter = Wilhelm::Core::Transmitter.new(@interface.output_buffer)
-
-    @demultiplexer =
-      Wilhelm::Core::DataLink::LogicalLinkLayer::Demultiplexer
-      .new(@receiver.frame_input_buffer)
-    @multiplexer =
-      Wilhelm::Core::DataLink::LogicalLinkLayer::Multiplexer
-      .new(@transmitter.frame_output_buffer)
-
-    interface_handler = Wilhelm::Core::InterfaceHandler.new(@transmitter)
-    @data_link_listener = Wilhelm::Core::CoreListener.new(interface_handler)
-
-    @interface.add_observer(@data_link_listener)
-    @interface.add_observer(data_logging_listener)
-    # BYTE_RECEIVED
-    # @interface.add_observer(session_listener)
-
-    @receiver.add_observer(data_logging_listener)
-    # FRAME_RECEIVED
-    # @receiver.add_observer(session_listener)
+    core = Wilhelm::Core::Context.new(ARGV.shift)
+    core.interface.add_observer(data_logging_listener)
+    core.receiver.add_observer(data_logging_listener)
+    core
   end
 
   def setup_virtual(interface:, multiplexer:, demultiplexer:)
