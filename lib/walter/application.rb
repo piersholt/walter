@@ -140,10 +140,12 @@ class Walter
 
     @interface.add_observer(@data_link_listener)
     @interface.add_observer(data_logging_listener)
-    @interface.add_observer(session_listener)
+    # BYTE_RECEIVED
+    # @interface.add_observer(session_listener)
 
     @receiver.add_observer(data_logging_listener)
-    @receiver.add_observer(session_listener)
+    # FRAME_RECEIVED
+    # @receiver.add_observer(session_listener)
   end
 
   def setup_virtual(interface:, multiplexer:, demultiplexer:)
@@ -175,6 +177,8 @@ class Walter
                         packet_output_buffer:
                           multiplexer.packet_output_buffer)
 
+    # MESSAGE_RECEIVED
+    # bus_handler.add_observer(session_listener)
 
     # bus.send_all(:add_observer, vehicle_display)
     bus.send_all(:add_observer, virtual_listener)
