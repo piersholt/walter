@@ -2,11 +2,6 @@
 
 puts "\tLoading wilhelm/core/helpers"
 
-# require_relative 'delayable'
-# require_relative 'stateful'
-
-# require_relative 'printable'
-
 module Wilhelm
   module Core
     # All helpers available within single module
@@ -14,7 +9,10 @@ module Wilhelm
       include Wilhelm::Helpers::Module
       extend Wilhelm::Helpers::Module
       include Wilhelm::Helpers::Name
-      include Wilhelm::Core::Device::Groups
+      # Device and Command constants now under Virtual.
+      # I'm unsure if the absense of constants in Core
+      # will cause any issues. Stand by....
+      # include Wilhelm::Core::Device::Groups
     end
   end
 end

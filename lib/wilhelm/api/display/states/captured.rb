@@ -39,8 +39,10 @@ class Wilhelm::API
         LogActually.display.debug(DISPLAY_CAPTURED) { "Get dirty field IDs => #{dirty_ids}" }
         LogActually.display.debug(DISPLAY_CAPTURED) { "Overwrite cache with view field values..." }
         context.cache.digital.overwrite!(context.header.indexed_chars)
+
         LogActually.display.debug(DISPLAY_CAPTURED) { "Render header..." }
         context.bus.rad.build_new_header(view.layout, view.fields_with_index(dirty_ids), view.title)
+        true
       end
 
       def dismiss(context, view)
@@ -52,9 +54,12 @@ class Wilhelm::API
       end
 
       def render_menu(context, view)
+        LogActually.display.debug(DISPLAY_CAPTURED) { "#render_menu(context, view)" }
         context.menu = view
+
+
+        LogActually.display.debug(DISPLAY_CAPTURED) { "Render menu..." }
         context.bus.rad.build_menu(view.layout, view.menu_items_with_index)
-        # context.change_state(Captured.new)
         true
       end
 
