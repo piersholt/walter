@@ -14,7 +14,9 @@ class Walter
 
   PROC = 'Walter'
 
-  def initialize(file)
+  def initialize(file:, console:)
+    @console = console
+
     @core = setup_core(file)
     context = setup_virtual(interface: @core.interface,
                             multiplexer: @core.multiplexer,
@@ -39,71 +41,52 @@ class Walter
     Thread.current[:name] = 'Walter (Main)'
     begin
       start
-      # TODO: menu to facilitate common features...
-      raise NotImplementedError, 'menu not implemented. fallback to CLI...'
+      raise NotImplementedError, 'Pry Console' if @console
 
       LOGGER.debug 'Main Thread / Entering keep alive loop...'
       loop do
         news
         sleep 120
       end
-
-      # TODO: menu to facilitate common features...
-      # raise NotImplementedError, 'menu not implemented. fallback to CLI...'
     rescue NotImplementedError
-      rescue_not_implemented
+      LOGGER.info(PROC) { 'Console start.' }
+      binding.pry
+      LOGGER.info(PROC) { 'Console end.' }
     rescue Interrupt
-      rescue_interrupt
+      LOGGER.debug 'Interrupt signal caught.'
+    ensure
+      LOGGER.info(PROC) { "Walter is closing!" }
+
+      LOGGER.info(PROC) { "Publishing event: #{EXIT}" }
+      changed
+      notify_observers(EXIT, {reason: 'bin'})
+      LOGGER.info(PROC) { "Subscribers updated! #{EXIT}" }
+
+      LOGGER.info(PROC) { "Turning stack off ⛔️" }
+      stop
+      LOGGER.info(PROC) { "Stack is off 👍" }
+
+      LOGGER.info(PROC) { "See you anon ✌️" }
     end
   end
 
   def start
     LOGGER.debug(PROC) { '#start' }
     @core.on
-
+    LOGGER.info(PROC) { 'Switching on Wilhelm...' }
     @wolfgang.open
+    LOGGER.info(PROC) { 'Wilhelm is on! 👍' }
   end
 
   def stop
     LOGGER.debug(PROC) { '#stop' }
-
     LOGGER.info(PROC) { 'Switching off Wilhelm...' }
     @wolfgang.close
     LOGGER.info(PROC) { 'Wilhelm is off! 👍' }
-
     @core.off
   end
 
   private
-
-  def rescue_interrupt
-    LOGGER.debug 'Interrupt signal caught.'
-    binding.pry
-    changed
-    notify_observers(EXIT, {reason: 'Interrupt!'})
-    stop
-    return 1
-  end
-
-  def rescue_not_implemented
-    LOGGER.info(PROC) { 'fallback CLI' }
-
-    binding.pry
-
-    LOGGER.info(PROC) { "Walter is closing!" }
-
-    LOGGER.info(PROC) { "Publishing event: #{EXIT}" }
-    changed
-    notify_observers(EXIT, {reason: 'Debug exiting'})
-    LOGGER.info(PROC) { "Subscribers updated! #{EXIT}" }
-
-    LOGGER.info(PROC) { "Turning stack off ⛔️" }
-    stop
-    LOGGER.info(PROC) { "Stack is off 👍" }
-
-    LOGGER.info(PROC) { "See you anon ✌️" }
-    return -1
-  end
 
   def setup_core(file)
     core = Wilhelm::Core::Context.new(file)

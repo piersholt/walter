@@ -38,7 +38,7 @@ begin
 
   options = OpenStruct.new
   options.environment = 'development'
-  options.console = true
+  options.console = false
   options.file = '/dev/cu.SLAB_USBtoUART'
 
   OptionParser.new do |opts|
@@ -105,7 +105,7 @@ PROC = 'Walter'.freeze
 LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
 
 begin
-  app = Walter.new(options.file)
+  app = Walter.new(file: options.file, console: options.console)
   app.launch
 rescue Interrupt
   Signal.trap(0, proc { puts "Terminating: #{$$}" })
