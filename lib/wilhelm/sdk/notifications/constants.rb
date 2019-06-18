@@ -12,7 +12,7 @@ module Wilhelm::SDK
     NOTIFICATIONS_ACTIVE = 'Notif. (Active)'
 
     def logger
-      LogActually.wolfgang
+      LogActually.context
     end
   end
 end

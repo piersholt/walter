@@ -7,7 +7,7 @@ module Wilhelm
         # Comment
         class Audio < DEFAULT_HEADER
           def initialize(addressed_player)
-            LogActually.wolfgang.debug('Audio') { "#initialize(#{addressed_player})" }
+            LogActually.context.debug('Audio') { "#initialize(#{addressed_player})" }
             super(
               [nil,
                nil,

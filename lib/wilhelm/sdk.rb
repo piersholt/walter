@@ -7,13 +7,13 @@ LogActually.is_all_around(:notify)
 LogActually.is_all_around(:alive)
 LogActually.is_all_around(:ui)
 LogActually.is_all_around(:node)
-LogActually.is_all_around(:wolfgang)
+LogActually.is_all_around(:context)
 
 LogActually.notify.i
 LogActually.alive.i
 LogActually.ui.i
 LogActually.node.i
-LogActually.wolfgang.i
+LogActually.context.i
 
 require_relative 'sdk/controls'
 require_relative 'sdk/ui'

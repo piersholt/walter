@@ -16,7 +16,7 @@ module Wilhelm
     # AUDIO_NP = 'Audio NP'
 
     def logger
-      LogActually.wolfgang
+      LogActually.context
     end
   end
 end

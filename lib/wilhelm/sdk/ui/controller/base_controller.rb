@@ -10,7 +10,7 @@ module Wilhelm::SDK
         attr_reader :view, :loaded_view
 
         # def logger
-        #   LogActually.wolfgang
+        #   LogActually.context
         # end
 
         def initialize(ui_context, application_context)

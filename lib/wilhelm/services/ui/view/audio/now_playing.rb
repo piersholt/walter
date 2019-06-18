@@ -16,7 +16,7 @@ module Wilhelm
           # PLAYER_PROPERTIES = %i[line1 line2 album].freeze
 
           def initialize(player)
-            LogActually.wolfgang.debug('NowPlaying') { "#initialize(#{player})" }
+            LogActually.context.debug('NowPlaying') { "#initialize(#{player})" }
             @attributes = indexed_attributes(player)
             # @options = indexed_options(model.options)
             @options = NO_OPTIONS

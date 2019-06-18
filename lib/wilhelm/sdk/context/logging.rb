@@ -32,8 +32,8 @@ module Wilhelm::SDK
       end
 
       def logger
-        # LogActually.wolfgang.unknown(NODE) { '#logger' }
-        LogActually.wolfgang
+        # LogActually.context.unknown(NODE) { '#logger' }
+        LogActually.context
       end
     end
   end
