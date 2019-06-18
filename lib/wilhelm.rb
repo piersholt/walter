@@ -15,6 +15,7 @@ begin
   add_load_path('virtual')
   add_load_path('api')
   add_load_path('sdk')
+  add_load_path('services')
 
   # Setup namespace prior to loading deprendencies to allow for any files that
   # reference Wilhelm via short names, i.e. class Wilhelm::MyKlass
@@ -25,6 +26,7 @@ begin
   require 'wilhelm/virtual'
   require 'wilhelm/api'
   require 'wilhelm/sdk'
+  require 'wilhelm/services'
 rescue LoadError => e
   puts "#{e.class}: #{e}"
   e.backtrace.each { |line| puts "\t#{line}" }
