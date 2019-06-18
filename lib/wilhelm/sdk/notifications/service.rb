@@ -30,7 +30,7 @@ module Wilhelm::SDK
     end
 
     def change_state(new_state)
-      logger.info(NOTIFICATIONS) { "state change => #{new_state.class}" }
+      logger.debug(NOTIFICATIONS) { "State => #{new_state.class}" }
       @state = new_state
     end
 

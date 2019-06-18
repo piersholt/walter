@@ -23,10 +23,10 @@ module Wilhelm
       logger.debug(MANAGER) { "ApplicationContext => #{new_state.class}" }
       case new_state
       when Wilhelm::SDK::ApplicationContext::Online
-        logger.debug(MANAGER) { 'Enable Manager' }
+        logger.info(MANAGER) { 'Enable Manager' }
         enable
       when Wilhelm::SDK::ApplicationContext::Offline
-        logger.debug(MANAGER) { 'Disable Mananger' }
+        logger.info(MANAGER) { 'Disable Mananger' }
         disable
       when Wilhelm::SDK::UserInterface::Context
         new_state

@@ -32,7 +32,7 @@ class Wilhelm::API
 
     def change_state(new_state)
       return false if new_state.class == @state.class
-      logger.info(self) { "state change => #{new_state.class}" }
+      logger.debug(self) { "State => #{new_state.class}" }
       @state = new_state
     end
 

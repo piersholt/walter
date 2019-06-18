@@ -5,9 +5,9 @@ module Wilhelm
     # Comment
     module State
       include Constants
-      
+
       def change_state(new_state)
-        logger.info(MANAGER) { "state change => #{new_state.class}" }
+        logger.debug(MANAGER) { "State => #{new_state.class}" }
         @state = new_state
         changed
         notify_observers(@state)

@@ -28,7 +28,7 @@ module Wilhelm::SDK
     # STATES -------------------------------------------------------------
 
     def change_state(new_state)
-      logger.info(WILHELM) { "state change => #{new_state.class}" }
+      logger.info(WILHELM) { "State => #{new_state.class}" }
       @state = new_state
       changed
       notify_observers(state)
