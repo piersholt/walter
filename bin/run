@@ -2,6 +2,11 @@
 
 # frozen_string_literal: false
 
+puts "Walter Copyright (C) 2019 Piers Holt\n"\
+     "This program comes with ABSOLUTELY NO WARRANTY.\n"\
+     "This is free software, and you are welcome to redistribute it\n"\
+     'under certain conditions.'
+
 # *************************************************************************** #
 #                                  LOAD PATHS                                 #
 # *************************************************************************** #
