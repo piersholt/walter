@@ -21,7 +21,7 @@ module Wilhelm::SDK
       connection_options =
         { port: ENV['client_port'],
           host: ENV['client_host'] }
-      logger.warn(WILHELM) { "Client connection options: #{connection_options}" }
+      logger.debug(WILHELM) { "Client connection options: #{connection_options}" }
       Client.params(connection_options)
     end
 

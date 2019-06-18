@@ -61,7 +61,7 @@ module Wilhelm::SDK
             connection_options =
               { port: ENV['subscriber_port'],
                 host: ENV['subscriber_host'] }
-            logger.warn(NOTIFICATIONS_LISTENER) { "Subscriber connection options: #{connection_options}" }
+            logger.debug(NOTIFICATIONS_LISTENER) { "Subscriber connection options: #{connection_options}" }
             Subscriber.params(connection_options)
             begin
               logger.debug(NOTIFICATIONS_LISTENER) { 'Thread listen start!' }
