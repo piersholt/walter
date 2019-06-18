@@ -6,16 +6,12 @@ puts 'Loading wilhelm/sdk'
 LogActually.is_all_around(:notify)
 LogActually.is_all_around(:alive)
 LogActually.is_all_around(:ui)
-LogActually.is_all_around(:audio_service)
-LogActually.is_all_around(:manager_service)
 LogActually.is_all_around(:node)
 LogActually.is_all_around(:wolfgang)
 
 LogActually.notify.i
 LogActually.alive.i
 LogActually.ui.i
-LogActually.audio_service.i
-LogActually.manager_service.d
 LogActually.node.i
 LogActually.wolfgang.i
 

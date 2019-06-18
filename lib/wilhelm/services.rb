@@ -2,6 +2,12 @@
 
 puts 'Loading wilhelm/services'
 
+LogActually.is_all_around(:audio_service)
+LogActually.is_all_around(:manager_service)
+
+LogActually.audio_service.i
+LogActually.manager_service.d
+
 # Audio
 puts "\tLoading wilhelm/services/audio"
 require_relative 'services/audio'
