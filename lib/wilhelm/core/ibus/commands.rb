@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/core/ibus/data/commands"
+puts "\tLoading wilhelm/core/ibus/commands"
 
 require_relative 'commands/chars'
 

@@ -18,9 +18,6 @@ puts "\tLoading wilhelm/core/data_link/transceiver"
 require_relative 'data_link/transceiver/receiver'
 require_relative 'data_link/transceiver/transmitter'
 
-puts "\tLoading wilhelm/core/data_link/maps"
-require_relative 'data_link/maps/address_lookup_table'
-
 puts "\tLoading wilhelm/core/data_link/model"
 require_relative 'data_link/model/packet'
 

@@ -6,7 +6,7 @@
 # Map is generic.. but there's no reason the results
 
 class Wilhelm::Core::BaseMap
-  DEFAULT_BASE_PATH = './lib/wilhelm/core/shared/maps/'.freeze
+  DEFAULT_BASE_PATH = './lib/wilhelm/core/ibus/maps/'.freeze
   DEFAULT_FILE_EXTENSSION = '.yaml'.freeze
   FORCE_RELOAD = true
 

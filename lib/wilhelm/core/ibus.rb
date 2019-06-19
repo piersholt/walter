@@ -2,6 +2,7 @@
 
 puts "\tLoading wilhelm/core/ibus"
 
-require_relative 'ibus/data'
-require_relative 'ibus/maps/device_map'
-require_relative 'ibus/maps/command_map'
+require_relative 'ibus/commands'
+require_relative 'ibus/devices'
+require_relative 'ibus/message'
+require_relative 'ibus/maps'
