@@ -3,17 +3,25 @@
 puts 'Loading wilhelm/sdk'
 
 # Walter SDK
-LogActually.is_all_around(:notify)
-LogActually.is_all_around(:alive)
-LogActually.is_all_around(:ui)
-LogActually.is_all_around(:node)
-LogActually.is_all_around(:context)
+# LogActually.is_all_around(:notify)
+# LogActually.is_all_around(:alive)
+# LogActually.is_all_around(:ui)
+# LogActually.is_all_around(:node)
+# LogActually.is_all_around(:context)
+LogActually.is_all_around(:sdk)
 
-LogActually.notify.i
-LogActually.alive.i
-LogActually.ui.i
-LogActually.node.i
-LogActually.context.i
+# LogActually.notify.i
+# LogActually.alive.i
+# LogActually.ui.i
+# LogActually.node.i
+# LogActually.context.i
+LogActually.sdk.d
+
+module Wilhelm
+  module SDK
+    LOGGER = LogActually.sdk
+  end
+end
 
 require_relative 'sdk/controls'
 require_relative 'sdk/ui'
