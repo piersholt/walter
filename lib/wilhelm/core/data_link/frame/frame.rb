@@ -49,26 +49,26 @@ module Wilhelm
       end
 
       def set_header(new_header)
-        LogActually.datalink.debug(PROG_NAME) { "#set_header(#{new_header})." }
+        LOGGER.debug(PROG_NAME) { "#set_header(#{new_header})." }
 
-        # LogActually.datalink.debug(PROG_NAME) { "Updating self with bytes." }
+        # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
         wholesale(new_header + tail)
-        # LogActually.datalink.debug(PROG_NAME) { self }
+        # LOGGER.debug(PROG_NAME) { self }
 
-        # LogActually.datalink.debug(PROG_NAME) { "Setting @header." }
+        # LOGGER.debug(PROG_NAME) { "Setting @header." }
         @header = FrameHeader.new(new_header)
 
         true
       end
 
       def set_tail(new_tail)
-        LogActually.datalink.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
+        LOGGER.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
 
-        # LogActually.datalink.debug(PROG_NAME) { "Updating self with bytes." }
+        # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
         wholesale(header + new_tail)
-        # LogActually.datalink.debug(PROG_NAME) { self }
+        # LOGGER.debug(PROG_NAME) { self }
 
-        # LogActually.datalink.debug(PROG_NAME) { "Setting @tail." }
+        # LOGGER.debug(PROG_NAME) { "Setting @tail." }
         @tail = FrameTail.new(new_tail)
 
         true
@@ -79,26 +79,26 @@ module Wilhelm
       # ************************************************************************* #
 
       def valid?
-        LogActually.datalink.debug(PROG_NAME) { "#valid?" }
+        LOGGER.debug(PROG_NAME) { "#valid?" }
         raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
 
-        LogActually.datalink.debug(PROG_NAME) { "@header => #{@header}" }
-        LogActually.datalink.debug(PROG_NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
+        LOGGER.debug(PROG_NAME) { "@header => #{@header}" }
+        LOGGER.debug(PROG_NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
 
         frame_bytes = @header + @tail.no_fcs
         checksum = frame_bytes.reduce(0) do |c,d|
           c^= d.to_d
         end
 
-        LogActually.datalink.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
+        LOGGER.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
         checksum == tail.checksum
       rescue TypeError => e
-        LogActually.datalink.error(name) { e.class }
-        LogActually.datalink.error(name) { e }
-        e.backtrace.each { |l| LogActually.datalink.warn(l) }
+        LOGGER.error(name) { e.class }
+        LOGGER.error(name) { e }
+        e.backtrace.each { |l| LOGGER.warn(l) }
         binding.pry
-        LogActually.datalink.warn(name) { 'Debug end...'}
+        LOGGER.warn(name) { 'Debug end...'}
       end
     end
   end

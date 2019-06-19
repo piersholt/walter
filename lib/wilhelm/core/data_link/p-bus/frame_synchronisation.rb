@@ -40,10 +40,10 @@ module PBus
       def shift(read_buffer = [], read_length = 4)
         @frame = read_buffer + buffer.shift(read_length)
         validate_frame
-        LogActually.datalink.debug(name) { formatted_frame }
+        LOGGER.debug(name) { formatted_frame }
         frame
       rescue ChecksumError => e
-        LogActually.datalink.warn(name) { formatted_frame }
+        LOGGER.warn(name) { formatted_frame }
         shift(frame, 1)
       end
 
@@ -64,7 +64,7 @@ module PBus
 
       def validate_frame
         result = frame_check
-        # LogActually.datalink.debug(name) { "#{checksum} == #{frame[-1].d} => #{result}" }
+        # LOGGER.debug(name) { "#{checksum} == #{frame[-1].d} => #{result}" }
         raise ChecksumError unless result
       end
     end

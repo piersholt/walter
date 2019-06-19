@@ -18,18 +18,18 @@ module Wilhelm
         end
 
         def on
-          LogActually.demultiplexer.debug(name) { '#on' }
+          LOGGER.debug(name) { '#on' }
           @read_thread = thread_read_input_frame_buffer(@frame_input_buffer, @packet_input_buffer)
           add_thread(@read_thread)
           true
         rescue StandardError => e
-          LogActually.demultiplexer.error(e)
-          e.backtrace.each { |l| LogActually.demultiplexer.error(l) }
+          LOGGER.error(e)
+          e.backtrace.each { |l| LOGGER.error(l) }
           raise e
         end
 
         def off
-          LogActually.demultiplexer.debug(name) { '#off' }
+          LOGGER.debug(name) { '#off' }
           close_threads
         end
 
@@ -42,7 +42,7 @@ module Wilhelm
         alias proc_name name
 
         def thread_read_input_frame_buffer(frame_input_buffer, packet_input_buffer)
-          LogActually.demultiplexer.debug(name) { 'New Thread: Frame Demultiplexing' }
+          LOGGER.debug(name) { 'New Thread: Frame Demultiplexing' }
           Thread.new do
             Thread.current[:name] = name
             begin
@@ -53,14 +53,14 @@ module Wilhelm
                 changed
                 notify_observers(PACKET_RECEIVED, packet: new_packet)
 
-                # LogActually.demultiplexer.unknown(PROG_NAME) { "packet_input_buffer.push(#{new_packet})" }
+                # LOGGER.unknown(PROG_NAME) { "packet_input_buffer.push(#{new_packet})" }
                 # packet_input_buffer.push(new_packet)
               end
             rescue StandardError => e
-              LogActually.demultiplexer.error(name) { e }
-              e.backtrace.each { |l| LogActually.demultiplexer.error(l) }
+              LOGGER.error(name) { e }
+              e.backtrace.each { |l| LOGGER.error(l) }
             end
-            LogActually.demultiplexer.warn(name) { "End Thread: Frame Demultiplexing" }
+            LOGGER.warn(name) { "End Thread: Frame Demultiplexing" }
           end
         end
 
@@ -68,26 +68,26 @@ module Wilhelm
           from      = frame.from
           from_id   = from.to_i
           from_device = @address_lookup_table.find(from_id)
-          LogActually.demultiplexer.debug(name) { "from_device: #{from_device}" }
+          LOGGER.debug(name) { "from_device: #{from_device}" }
 
           to        = frame.to
           to_id     = to.to_i
           to_device   = @address_lookup_table.find(to_id)
-          LogActually.demultiplexer.debug(name) { "to_device: #{to_device}" }
+          LOGGER.debug(name) { "to_device: #{to_device}" }
 
           payload   = frame.payload
-          LogActually.demultiplexer.debug(name) { "payload: #{payload}" }
+          LOGGER.debug(name) { "payload: #{payload}" }
 
           packet = Packet.new(from_device, to_device, payload)
-          LogActually.demultiplexer.debug(name) { "Packet build: #{packet}" }
+          LOGGER.debug(name) { "Packet build: #{packet}" }
           packet
         rescue TypeError => e
-          LogActually.demultiplexer.error(name) { e }
-          LogActually.demultiplexer.error(name) { e.cause }
-          e.backtrace.each { |l| LogActually.demultiplexer.error(l) }
+          LOGGER.error(name) { e }
+          LOGGER.error(name) { e.cause }
+          e.backtrace.each { |l| LOGGER.error(l) }
         rescue StandardError => e
-          LogActually.demultiplexer.error(name) { e }
-          e.backtrace.each { |l| LogActually.demultiplexer.error(l) }
+          LOGGER.error(name) { e }
+          e.backtrace.each { |l| LOGGER.error(l) }
         end
       end
     end

@@ -6,6 +6,7 @@ module Wilhelm
       class Frame
         class Synchronisation
           include Wilhelm::Helpers::DataTools
+          
           attr_reader :buffer, :frame
 
           SYNC = 'Sync /'
@@ -34,10 +35,10 @@ module Wilhelm
           def shift(read_buffer = [], read_length = 11)
             @frame = read_buffer + buffer.shift(read_length)
             validate_frame
-            LogActually.datalink.debug(name) { formatted_frame }
+            LOGGER.debug(name) { formatted_frame }
             frame
           rescue ChecksumError => e
-            LogActually.datalink.warn(name) { formatted_frame }
+            LOGGER.warn(name) { formatted_frame }
             shift(frame, 1)
           end
 

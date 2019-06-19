@@ -17,12 +17,13 @@ module Wilhelm
 
       attr_reader :input_buffer, :output_buffer, :read_thread
 
-      def log
-        :interface
-      end
-
       def name
         Thread.current[:name]
+      end
+
+      # @override Delayable#log
+      def log
+        :interface
       end
 
       # @override: ManageableThreads#proc_name
@@ -48,19 +49,19 @@ module Wilhelm
       end
 
       def off
-        LogActually.interface.debug(PROC) { "#off" }
+        LOGGER.debug(PROC) { "#off" }
         close_threads
       end
 
       # This should be implemented in a sub class of Interface
       def offline?
         if @stream.instance_of?(Interface::File)
-          LogActually.interface.warn(PROC) { "IO stream is file => Bus Offline!" }
+          LOGGER.warn(PROC) { "IO stream is file => Bus Offline!" }
           changed
           notify_observers(Constants::Events::BUS_OFFLINE, @stream.class)
           return true
         elsif @stream.instance_of?(Interface::UART)
-          LogActually.interface.warn(PROC) { "IO stream is tty => Bus Online!" }
+          LOGGER.warn(PROC) { "IO stream is tty => Bus Online!" }
           changed
           notify_observers(Constants::Events::BUS_ONLINE, @stream.class)
           return false
@@ -72,27 +73,27 @@ module Wilhelm
       private
 
       def parse_path(path, options)
-        LogActually.interface.debug(PROC) { "#parse_path(#{path}, #{options})" }
+        LOGGER.debug(PROC) { "#parse_path(#{path}, #{options})" }
         path = DEFAULT_PATH if path.nil?
         path = ::File.expand_path(path)
         file_type_handler = evaluate_stream_type(path)
-        LogActually.interface.debug(PROC) { "File handler: #{file_type_handler}" }
+        LOGGER.debug(PROC) { "File handler: #{file_type_handler}" }
         file_type_handler.new(path, options)
       end
 
       def evaluate_stream_type(path)
-        LogActually.interface.debug(PROC) { "Evaluating file type of: #{path}" }
+        LOGGER.debug(PROC) { "Evaluating file type of: #{path}" }
         file_type = ::File.ftype(path)
-        LogActually.interface.debug(PROC) { "#{path} of type: #{file_type}" }
+        LOGGER.debug(PROC) { "#{path} of type: #{file_type}" }
         case file_type
         when FILE_TYPE[:tty]
-          LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}" }
+          LOGGER.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:tty]}" }
           FILE_TYPE_HANDLERS[:tty]
         when FILE_TYPE[:file]
-          LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
+          LOGGER.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
           FILE_TYPE_HANDLERS[:file]
         when FILE_TYPE[:fifo]
-          LogActually.interface.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
+          LOGGER.debug(PROC) { "#{file_type} handled by: #{FILE_TYPE_HANDLERS[:file]}" }
           FILE_TYPE_HANDLERS[:file]
         else
           raise IOError, "Unrecognised file type: #{::File.ftype(path)}"
@@ -102,7 +103,7 @@ module Wilhelm
       # ------------------------------ THREADS ------------------------------ #
 
       def thread_populate_input_buffer(stream, input_buffer)
-        LogActually.interface.debug(PROC) { "#thread_populate_input_buffer" }
+        LOGGER.debug(PROC) { "#thread_populate_input_buffer" }
         Thread.new do
           thread_name = 'Interface (Input Buffer)'
           tn = thread_name
@@ -115,7 +116,7 @@ module Wilhelm
             parsed_byte = nil
             offline_file_count = 1
 
-            # LogActually.interface.debug "Stream / Position: #{stream.pos}"
+            # LOGGER.debug "Stream / Position: #{stream.pos}"
 
             loop do
               begin
@@ -146,26 +147,26 @@ module Wilhelm
                 input_buffer.push(byte_basic)
               rescue EncodingError => e
                 if stream.class == FILE_TYPE_HANDLERS[:file]
-                  LogActually.interface.warn(tn) { "ARGF EOF. Files read: #{offline_file_count}." }
+                  LOGGER.warn(tn) { "ARGF EOF. Files read: #{offline_file_count}." }
                   offline_file_count += 1
                 elsif stream.class == FILE_TYPE_HANDLERS[:tty]
-                  LogActually.interface.error(tn) { "#readpartial returned nil. Stream type: #{}." }
+                  LOGGER.error(tn) { "#readpartial returned nil. Stream type: #{}." }
                 end
-                # LogActually.interface.error(")
+                # LOGGER.error(")
                 # sleep 2
-                # e.backtrace.each { |l| LogActually.interface.error l }
-                # LogActually.interface.error("read_byte: #{read_byte}")
-                # LogActually.interface.error("parsed_byte: #{parsed_byte}")
+                # e.backtrace.each { |l| LOGGER.error l }
+                # LOGGER.error("read_byte: #{read_byte}")
+                # LOGGER.error("parsed_byte: #{parsed_byte}")
                 # binding.pry
               end
             end
           rescue EOFError
-            LogActually.interface.warn(PROC) { "#{tn}: Stream reached EOF!" }
+            LOGGER.warn(PROC) { "#{tn}: Stream reached EOF!" }
           rescue StandardError => e
-            LogActually.interface.error(PROC) { "#{tn}: #{e}" }
-            e.backtrace.each { |line| LogActually.interface.error(PROC) { line } }
+            LOGGER.error(PROC) { "#{tn}: #{e}" }
+            e.backtrace.each { |line| LOGGER.error(PROC) { line } }
           end
-          LogActually.interface.warn(PROC) { "#{tn} thread is ending." }
+          LOGGER.warn(PROC) { "#{tn} thread is ending." }
         end
       end
     end

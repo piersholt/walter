@@ -17,18 +17,18 @@ class PBusReceiver
   end
 
   def off
-    LogActually.datalink.debug(name) { "#{self.class}#off" }
+    LOGGER.debug(name) { "#{self.class}#off" }
     close_threads
   end
 
   def on
-    LogActually.datalink.debug(name) { "#{self.class}#on" }
+    LOGGER.debug(name) { "#{self.class}#on" }
     begin
       @read_thread = thread_read_buffer(@input_buffer)
       add_thread(@read_thread)
     rescue StandardError => e
-      LogActually.datalink.error(e)
-      e.backtrace.each { |l| LogActually.datalink.error(l) }
+      LOGGER.error(e)
+      e.backtrace.each { |l| LOGGER.error(l) }
       raise e
     end
     true
@@ -40,21 +40,21 @@ class PBusReceiver
   end
 
   def thread_read_buffer(buffer)
-    LogActually.datalink.debug(name) { 'New Thread: P-BUS Frame Synchronisation.' }
+    LOGGER.debug(name) { 'New Thread: P-BUS Frame Synchronisation.' }
     Thread.new do
       Thread.current[:name] = THREAD_NAME
-      # LogActually.datalink.debug(name) { 'Entering byte shift loop.' }
+      # LOGGER.debug(name) { 'Entering byte shift loop.' }
       shift_count = 1
       loop do
-        LogActually.datalink.debug(name) { "##{shift_count}. Begin." }
+        LOGGER.debug(name) { "##{shift_count}. Begin." }
         begin
-          # LogActually.datalink.info(name) { "Byte Buffer size: #{buffer.size}." }
-          # LogActually.datalink.info(name) { "Byte Buffer size: #{buffer}." }
+          # LOGGER.info(name) { "Byte Buffer size: #{buffer.size}." }
+          # LOGGER.info(name) { "Byte Buffer size: #{buffer}." }
           # shift_count
           # new_frame = Array.new(4)
           new_frame = buffer.shift(4)
           LOGGER.debug(name) { new_frame }
-          # LogActually.datalink.debug(name) { "#{SYNC_VALIDATION} Validating new frame." }
+          # LOGGER.debug(name) { "#{SYNC_VALIDATION} Validating new frame." }
           checksum = new_frame[0..-2].reduce(0) { |x,y| x^=y.d }
           result = checksum == new_frame[-1].d
           LOGGER.debug(name) { "#{checksum} == #{new_frame[-1].d} => #{result}" }
@@ -64,41 +64,41 @@ class PBusReceiver
           end
           success(new_frame)
         rescue ChecksumError => e
-          LogActually.datalink.warn(name) { e }
-          # e.backtrace.each { |l| LogActually.datalink.error(l) }
+          LOGGER.warn(name) { e }
+          # e.backtrace.each { |l| LOGGER.error(l) }
           clean_up(buffer, new_frame)
         rescue StandardError => e
-          LogActually.datalink.error(e)
-          e.backtrace.each { |l| LogActually.datalink.error(l) }
+          LOGGER.error(e)
+          e.backtrace.each { |l| LOGGER.error(l) }
           clean_up(buffer, new_frame)
         end
-        LogActually.datalink.debug(name) { "##{shift_count}. End." }
+        LOGGER.debug(name) { "##{shift_count}. End." }
         shift_count += 1
       end
     end
   end
 
   def clean_up(buffer, new_frame)
-    LogActually.datalink.debug(name) { "#clean_up" }
+    LOGGER.debug(name) { "#clean_up" }
 
-    # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
+    # LOGGER.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
     # changed
     # notify_observers(Constants::Events::FRAME_FAILED, frame: new_frame)
 
-    LogActually.datalink.debug(name) { "Shifting one byte." }
+    LOGGER.debug(name) { "Shifting one byte." }
 
     byte_to_discard = new_frame[0]
-    LogActually.datalink.debug(name) { "Discard: #{byte_to_discard}." }
+    LOGGER.debug(name) { "Discard: #{byte_to_discard}." }
 
     bytes_to_unshift = new_frame[1..-1]
     bytes_to_unshift = Bytes.new(bytes_to_unshift)
-    LogActually.datalink.debug(name) { "Unshift: #{bytes_to_unshift}." }
+    LOGGER.debug(name) { "Unshift: #{bytes_to_unshift}." }
 
-    LogActually.datalink.debug(name) { "Unshifting..." }
+    LOGGER.debug(name) { "Unshifting..." }
     buffer.unshift(*bytes_to_unshift)
-    LogActually.datalink.debug(name) { "Unshifting..." }
+    LOGGER.debug(name) { "Unshifting..." }
   rescue StandardError => e
-    LogActually.datalink.error(e)
-    e.backtrace.each { |l| LogActually.datalink.warn(l) }
+    LOGGER.error(e)
+    e.backtrace.each { |l| LOGGER.warn(l) }
   end
 end

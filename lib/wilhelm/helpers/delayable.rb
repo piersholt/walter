@@ -7,6 +7,10 @@ module Wilhelm
       DEFAULT_ENABLED = true
       DEFAULT_TIME = 5
 
+      def log
+        LOGGER
+      end
+
       def delay
         case sleep_enabled
         when true

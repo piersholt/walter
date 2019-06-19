@@ -17,7 +17,7 @@ module Wilhelm
         # Not existing client implemention matches Array#unshift, requirin multiple
         # arguments to be splatted, i.e. buffer.unshift(*my_array)
         def unshift(*objects)
-          LogActually.interface.debug("#{self.class}#unshift(#{objects.size})")
+          LOGGER.debug("#{self.class}#unshift(#{objects.size})")
           @unshift_buffer.unshift(*objects)
         end
 
@@ -31,7 +31,7 @@ module Wilhelm
 
         def shift(number_of_bytes = 1)
           # binding.pry
-          LogActually.interface.debug("InputBuffer") { "#shift(#{number_of_bytes})" }
+          LOGGER.debug("InputBuffer") { "#shift(#{number_of_bytes})" }
           # raise ::ArgumentError, 'InputBuffer does not support single object shift' if
           #   number_of_bytes <= 1
 
@@ -51,8 +51,8 @@ module Wilhelm
         private
 
         def take_unshifted_bytes(shift_result, number_of_bytes)
-          LogActually.interface.debug("InputBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
-          LogActually.interface.debug("InputBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
+          LOGGER.debug("InputBuffer") { "#take_unshifted_bytes(#{number_of_bytes})" }
+          LOGGER.debug("InputBuffer") { "#{@unshift_buffer.size} unshifted bytes available." }
           required_bytes = number_of_bytes
           return false if @unshift_buffer.empty?
           until @unshift_buffer.empty? || required_bytes.zero?
@@ -60,7 +60,7 @@ module Wilhelm
             shift_result.push(unshifted_byte)
             required_bytes -= 1
           end
-          LogActually.interface.debug("InputBuffer") { "#{shift_result.size} unshifted bytes taken." }
+          LOGGER.debug("InputBuffer") { "#{shift_result.size} unshifted bytes taken." }
           true
         end
       end

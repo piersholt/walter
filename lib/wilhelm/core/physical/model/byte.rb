@@ -83,12 +83,6 @@ module Wilhelm
           @decimal = value
           @hex = decimal_to_hex(value)
         end
-        # rescue EncodingError => e
-        #   LogActually.interface.error('A read byte was nil!')
-        #   e.backtrace.each { |l| LogActually.interface.error l }
-        #   binding.pry
-        #   # LogActually.interface.error("POS: #{@stream}")
-        # end
       end
     end
   end

@@ -16,16 +16,14 @@ module Wilhelm
       end
 
       # Object
-      
+
       # @override Object#to_s
       def to_s
-        # LogActually.interface.error(PROC) { '#to_s' }
         inspect
       end
 
       # @override Object#inspect
       def inspect
-        # LogActually.interface.error(PROC) { '#inspect' }
         to_h(false)
       end
 

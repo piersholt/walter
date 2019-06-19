@@ -33,18 +33,18 @@ module Wilhelm
       alias proc_name name
 
       def off
-        LogActually.datalink.debug(name) { "#{self.class}#off" }
+        LOGGER.debug(name) { "#{self.class}#off" }
         close_threads
       end
 
       def on
-        LogActually.datalink.debug(name) { "#{self.class}#on" }
+        LOGGER.debug(name) { "#{self.class}#on" }
         @read_thread = thread_read_buffer(@input_buffer, @frame_input_buffer)
         add_thread(@read_thread)
         true
       rescue StandardError => e
-        LogActually.datalink.error(e)
-        e.backtrace.each { |l| LogActually.datalink.error(l) }
+        LOGGER.error(e)
+        e.backtrace.each { |l| LOGGER.error(l) }
         raise e
       end
 
@@ -54,25 +54,25 @@ module Wilhelm
 
       def thread_read_buffer(buffer, frame_input_buffer)
         Thread.new do
-          LogActually.datalink.debug(name) { 'New Thread: Frame Synchronisation.' }
+          LOGGER.debug(name) { 'New Thread: Frame Synchronisation.' }
           Thread.current[:name] = THREAD_NAME
           synchronisation(buffer)
-          LogActually.datalink.warn(name) { "#{self.class} thread is finished..!" }
+          LOGGER.warn(name) { "#{self.class} thread is finished..!" }
         end
       end
 
       def synchronisation(buffer)
-        LogActually.datalink.debug(name) { 'Entering byte shift loop.' }
+        LOGGER.debug(name) { 'Entering byte shift loop.' }
         shift_count = 1
         loop do
-          # LogActually.datalink.debug(name) { "#{shift_count}. Start." }
+          # LOGGER.debug(name) { "#{shift_count}. Start." }
           synchronise_frame(buffer)
-          # LogActually.datalink.debug(name) { "#{shift_count}. End." }
+          # LOGGER.debug(name) { "#{shift_count}. End." }
           shift_count += 1
         end
       rescue StandardError => e
-        LogActually.datalink.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-        e.backtrace.each { |l| LogActually.datalink.error(l) }
+        LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
+        e.backtrace.each { |l| LOGGER.error(l) }
         binding.pry
       end
 
@@ -80,7 +80,7 @@ module Wilhelm
         synchronisation = @frame_synchronisation.new(buffer)
         new_frame = synchronisation.run
 
-        LogActually.datalink.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
+        LOGGER.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
         # reset_interval
         # output(new_frame)
         changed
@@ -88,33 +88,33 @@ module Wilhelm
 
         frame_input_buffer.push(new_frame)
       rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
-        LogActually.datalink.warn(name) { "#{e}!" }
+        LOGGER.warn(name) { "#{e}!" }
         clean_up(buffer, synchronisation.frame)
       rescue StandardError => e
-        LogActually.datalink.error(name) { e }
-        e.backtrace.each { |line| LogActually.datalink.warn(line) }
+        LOGGER.error(name) { e }
+        e.backtrace.each { |line| LOGGER.warn(line) }
         clean_up(buffer, synchronisation.frame)
         binding.pry
       end
 
       def clean_up(buffer, new_frame)
-        LogActually.datalink.debug(name) { "#{SYNC_ERROR} #clean_up" }
+        LOGGER.debug(name) { "#{SYNC_ERROR} #clean_up" }
 
-        # LogActually.datalink.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
+        # LOGGER.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
         # changed
         # notify_observers(Constants::Events::FRAME_FAILED, frame: new_frame)
 
-        # LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
+        # LOGGER.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
 
         byte_to_discard = new_frame[0]
-        LogActually.datalink.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
+        LOGGER.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
 
         bytes_to_unshift = new_frame[1..-1]
         bytes_to_unshift = Bytes.new(bytes_to_unshift)
-        LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
-        LogActually.datalink.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
+        LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
+        LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
 
-        # LogActually.datalink.debug(name) { "#{SYNC_SHIFT} ..." }
+        # LOGGER.debug(name) { "#{SYNC_SHIFT} ..." }
         buffer.unshift(*bytes_to_unshift)
       end
 
@@ -122,7 +122,7 @@ module Wilhelm
 
       def output(new_frame)
         wrapped_frame = PBus::Frame::Adapter.wrap(new_frame)
-        LogActually.datalink.info(name) { "#{wrapped_frame}" } unless IGNORE.any? { |i| i == new_frame[0].d }
+        LOGGER.info(name) { "#{wrapped_frame}" } unless IGNORE.any? { |i| i == new_frame[0].d }
       end
     end
   end

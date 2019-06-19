@@ -30,8 +30,8 @@ module Wilhelm
           interface_handler&.bus_offline
         end
       rescue StandardError => e
-        LogActually.datalink.error(name) { e }
-        e.backtrace.each { |l| LogActually.datalink.error(l) }
+        LOGGER.error(name) { e }
+        e.backtrace.each { |l| LOGGER.error(l) }
       end
     end
   end

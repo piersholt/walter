@@ -2,25 +2,29 @@
 
 puts 'Loading wilhelm/core'
 
+# Walter-Core
+LogActually.is_all_around(:interface)
+LogActually.is_all_around(:datalink)
+LogActually.is_all_around(:multiplexer)
+LogActually.is_all_around(:demultiplexer)
+LogActually.is_all_around(:transmitter)
+LogActually.is_all_around(:parameterized)
+LogActually.is_all_around(:core)
+
+LogActually.interface.i
+LogActually.datalink.i
+LogActually.multiplexer.i
+LogActually.demultiplexer.i
+LogActually.transmitter.i
+LogActually.parameterized.i
+LogActually.core.i
+
 module Wilhelm
   # Setup namespace due to short class names in wilhelm-core
   module Core
+    LOGGER = LogActually.core
   end
 end
-
-# Walter-Core
-LogActually.is_all_around(:interface)
-LogActually.interface.i
-LogActually.is_all_around(:datalink)
-LogActually.datalink.i
-LogActually.is_all_around(:multiplexer)
-LogActually.multiplexer.i
-LogActually.is_all_around(:demultiplexer)
-LogActually.demultiplexer.i
-LogActually.is_all_around(:transmitter)
-LogActually.transmitter.i
-LogActually.is_all_around(:parameterized)
-LogActually.parameterized.i
 
 puts "\tLoading wilhelm/core/serialport"
 require 'serialport'

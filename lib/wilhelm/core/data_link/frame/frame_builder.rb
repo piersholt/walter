@@ -28,13 +28,13 @@ module Wilhelm
 
       def clone(frame)
         @from = frame.from
-        LogActually.datalink.warn('FrameBuilder') { "from: #{from}" }
+        LOGGER.warn('FrameBuilder') { "from: #{from}" }
         @to = frame.to
-        LogActually.datalink.warn('FrameBuilder') { "to: #{to}" }
+        LOGGER.warn('FrameBuilder') { "to: #{to}" }
         @command = frame.command
-        LogActually.datalink.warn('FrameBuilder') { "command: #{command}" }
+        LOGGER.warn('FrameBuilder') { "command: #{command}" }
         @arguments = frame.arguments
-        LogActually.datalink.warn('FrameBuilder') { "arguments: #{arguments}" }
+        LOGGER.warn('FrameBuilder') { "arguments: #{arguments}" }
         true
       end
 
@@ -60,8 +60,8 @@ module Wilhelm
           self.arguments= []
         end
       rescue StandardError => e
-        LogActually.datalink.error("#{self.class} Exception: #{e}")
-        e.backtrace.each { |l| LogActually.datalink.error(l) }
+        LOGGER.error("#{self.class} Exception: #{e}")
+        e.backtrace.each { |l| LOGGER.error(l) }
       end
 
       def result
@@ -119,7 +119,7 @@ module Wilhelm
         result = REQUIRED_FIELDS.none?(&:nil?)
         return true if result
         fields_not_set = REQUIRED_FIELDS.find_all(&:nil?)
-        LogActually.datalink.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
+        LOGGER.warn('FrameBuilder') { "Required fields: #{fields_not_set}" }
         false
       end
 
@@ -130,13 +130,13 @@ module Wilhelm
         fcs_len =      DEFAULT_LENGTH
 
         buffer = to_len + command_len + args_len + fcs_len
-        LogActually.datalink.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
+        LOGGER.debug('FrameBuilder') { "length / Calculated = #{buffer}" }
         buffer
       end
 
       def calculate_fcs
         checksum = all_fields.reduce(0) { |c, d| c ^= d.to_d }
-        LogActually.datalink.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
+        LOGGER.debug('FrameBuilder') { "Checksum / Calculated = #{checksum}" }
         checksum
       end
 
@@ -151,7 +151,7 @@ module Wilhelm
       def all_fields
         bytes = Bytes.new([from, length, to, command])
         bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
-        LogActually.datalink.debug("FrameBuilder") { "#{bytes}" }
+        LOGGER.debug("FrameBuilder") { "#{bytes}" }
         bytes
       end
 

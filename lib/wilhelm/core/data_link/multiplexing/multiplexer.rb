@@ -24,23 +24,23 @@ module Wilhelm
         alias proc_name name
 
         def off
-          LogActually.multiplexer.debug(name) { "#{self.class}#off" }
+          LOGGER.debug(name) { "#{self.class}#off" }
           close_threads
         end
 
         def on
-          LogActually.multiplexer.debug(name) { "#{self.class}#on" }
+          LOGGER.debug(name) { "#{self.class}#on" }
           @write_thread = thread_write_output_frame_buffer(@frame_output_buffer, @packet_output_buffer)
           @threads.add(@write_thread)
           true
         rescue StandardError => e
-          LogActually.multiplexer.error(e)
-          e.backtrace.each { |l| LogActually.multiplexer.error(l) }
+          LOGGER.error(e)
+          e.backtrace.each { |l| LOGGER.error(l) }
           raise e
         end
 
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
-          LogActually.multiplexer.debug(name) { 'New Thread: Frame Multiplexing' }
+          LOGGER.debug(name) { 'New Thread: Frame Multiplexing' }
           Thread.new do
             Thread.current[:name] = name
             begin
@@ -48,43 +48,43 @@ module Wilhelm
                 message = packet_output_buffer.pop
                 message = resolve_addresses(message)
                 new_frame = multiplex(message)
-                LogActually.multiplexer.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
+                LOGGER.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
                 frame_output_buffer.push(new_frame)
               end
             rescue StandardError => e
-              LogActually.multiplexer.error(name) { e }
-              e.backtrace.each { |l| LogActually.multiplexer.error(l) }
+              LOGGER.error(name) { e }
+              e.backtrace.each { |l| LOGGER.error(l) }
             end
-            LogActually.multiplexer.warn(name) { "End Thread: Frame Multiplexing" }
+            LOGGER.warn(name) { "End Thread: Frame Multiplexing" }
           end
         end
 
         private
 
         def resolve_addresses(message)
-          LogActually.multiplexer.debug(name) { "#resolve_addresses(#{message})" }
+          LOGGER.debug(name) { "#resolve_addresses(#{message})" }
 
           from = address_lookup_table.resolve_ident(message.from)
           message.sender = from
-          LogActually.demultiplexer.debug(name) { "from_device: #{message.sender}" }
+          LOGGER.debug(name) { "from_device: #{message.sender}" }
 
           to = address_lookup_table.resolve_ident(message.to)
           message.receiver = to
-          LogActually.demultiplexer.debug(name) { "to_device: #{message.receiver}" }
+          LOGGER.debug(name) { "to_device: #{message.receiver}" }
 
           message
         end
 
         # @return Frame
         def multiplex(message)
-          LogActually.multiplexer.debug(name) { "#multiplex(#{message})" }
+          LOGGER.debug(name) { "#multiplex(#{message})" }
           frame_builder = FrameBuilder.new
           frame_builder.from = message.from
           frame_builder.to = message.to
           frame_builder.command = message.command
 
           frame = frame_builder.result
-          LogActually.multiplexer.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }
+          LOGGER.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }
           frame
         end
       end
