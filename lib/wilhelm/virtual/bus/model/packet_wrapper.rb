@@ -1,29 +1,33 @@
-class Wilhelm::Virtual
-  class PacketWrapper
-    extend Forwardable
+# frozen_string_literal: false
 
-    def_delegators :@packet, :to, :from, :data
+module Wilhelm
+  class Virtual
+    class PacketWrapper
+      extend Forwardable
 
-    def self.wrap(packet)
-      PacketWrapper.new(packet)
-    end
+      def_delegators :@packet, :to, :from, :data
 
-    def initialize(packet)
-      @packet = packet
-    end
+      def self.wrap(packet)
+        PacketWrapper.new(packet)
+      end
 
-    def command
-      data = @packet.data
-      data[0]
-    end
+      def initialize(packet)
+        @packet = packet
+      end
 
-    def arguments
-      data = @packet.data
-      data[1..-1]
-    end
+      def command
+        data = @packet.data
+        data[0]
+      end
 
-    def to_s
-      "#{from} >\t[#{command}]\t#{arguments}"
+      def arguments
+        data = @packet.data
+        data[1..-1]
+      end
+
+      def to_s
+        "#{from} >\t[#{command}]\t#{arguments}"
+      end
     end
   end
 end

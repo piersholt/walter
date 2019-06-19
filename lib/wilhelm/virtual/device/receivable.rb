@@ -1,14 +1,18 @@
-class Wilhelm::Virtual
-  class Device
-    module Receivable
-      include Wilhelm::Core::Constants::Events
+# frozen_string_literal: false
 
-      def virtual_receive(message)
-        message
-      end
+module Wilhelm
+  class Virtual
+    class Device
+      module Receivable
+        include Wilhelm::Core::Constants::Events
 
-      def virtual_transmit(message)
-        message
+        def virtual_receive(message)
+          message
+        end
+
+        def virtual_transmit(message)
+          message
+        end
       end
     end
   end

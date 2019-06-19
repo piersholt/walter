@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-module Wilhelm::Virtual::Capabilities
-  # Comment
-  module MultiFunctionWheel
-    include Helpers
-    include Buttons
+module Wilhelm
+  class Virtual
+    module Capabilities
+      # Comment
+      module MultiFunctionWheel
+        include Helpers
+        include Buttons
+      end
+    end
   end
 end

@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
-class Wilhelm::Virtual
-  class AugmentedRadio < AugmentedDevice
-    module State
-      module Model
-        include Wilhelm::Helpers::Stateful
-        include Constants
-
-        DEFAULT_STATE = {
-          power: OFF,
-          source: UNKNOWN,
-          dependencies: EMPTY_ARRAY.dup,
-          layout: UNKNOWN,
-          index: UNKNOWN,
-          last_pong: ZERO,
-          audio_obc: OFF
-        }.freeze
+module Wilhelm
+  class Virtual
+    class AugmentedRadio < AugmentedDevice
+      module State
+        module Model
+          include Wilhelm::Helpers::Stateful
+          include Constants
+          
+          DEFAULT_STATE = {
+            power: OFF,
+            source: UNKNOWN,
+            dependencies: EMPTY_ARRAY.dup,
+            layout: UNKNOWN,
+            index: UNKNOWN,
+            last_pong: ZERO,
+            audio_obc: OFF
+          }.freeze
 
           def default_state
             DEFAULT_STATE.dup
@@ -47,6 +48,7 @@ class Wilhelm::Virtual
             state[:audio_obc]
           end
         end
+      end
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 module Wilhelm
   class Virtual
     class Initialization

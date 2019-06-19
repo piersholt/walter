@@ -1,64 +1,68 @@
-class Wilhelm::Virtual
-  class Devices
-    extend Forwardable
+# frozen_string_literal: false
 
-    array_methods = Array.instance_methods(false)
-    array_methods = array_methods + Enumerable.instance_methods(false)
-    array_methods.each do |fwrd_message|
-      def_delegator :@devices, fwrd_message
-    end
+module Wilhelm
+  class Virtual
+    class Devices
+      extend Forwardable
 
-    def initialize(devices = [])
-      @devices = devices
-    end
-
-    def send_all(method, *arguments)
-      @devices.each do |device|
-        device.public_send(method, *arguments)
+      array_methods = Array.instance_methods(false)
+      array_methods = array_methods + Enumerable.instance_methods(false)
+      array_methods.each do |fwrd_message|
+        def_delegator :@devices, fwrd_message
       end
-    end
 
-    def include?(device_ident)
-      @devices.one? do |device|
-        device.ident == device_ident
+      def initialize(devices = [])
+        @devices = devices
       end
-    end
 
-    def add(device)
-      @devices << device
-    end
-
-    def list
-      @devices.map(&:ident)
-    end
-
-    def dumb
-      dumb_devices = @devices.find_all  {|d| d.type == :dumb }
-      Devices.new(dumb_devices)
-    end
-
-    def dynamic
-      dynamic_devices = @devices.find_all do |d|
-        %i(simulated augmented).any? { |t| t == d.type }
+      def send_all(method, *arguments)
+        @devices.each do |device|
+          device.public_send(method, *arguments)
+        end
       end
-      Devices.new(dynamic_devices)
-    end
 
-    def augmented
-      augmented_devices = @devices.find_all  {|d| d.type == :augmented }
-      Devices.new(augmented_devices)
-    end
+      def include?(device_ident)
+        @devices.one? do |device|
+          device.ident == device_ident
+        end
+      end
 
-    def simulated
-      simulated_devices = @devices.find_all  {|d| d.type == :simulated }
-      Devices.new(simulated_devices)
-    end
+      def add(device)
+        @devices << device
+      end
 
-    alias emulated simulated
+      def list
+        @devices.map(&:ident)
+      end
 
-    def broadcast
-      broadcast_devices = @devices.find_all  {|d| d.type == :broadcast }
-      Devices.new(broadcast_devices)
+      def dumb
+        dumb_devices = @devices.find_all  {|d| d.type == :dumb }
+        Devices.new(dumb_devices)
+      end
+
+      def dynamic
+        dynamic_devices = @devices.find_all do |d|
+          %i(simulated augmented).any? { |t| t == d.type }
+        end
+        Devices.new(dynamic_devices)
+      end
+
+      def augmented
+        augmented_devices = @devices.find_all  {|d| d.type == :augmented }
+        Devices.new(augmented_devices)
+      end
+
+      def simulated
+        simulated_devices = @devices.find_all  {|d| d.type == :simulated }
+        Devices.new(simulated_devices)
+      end
+
+      alias emulated simulated
+
+      def broadcast
+        broadcast_devices = @devices.find_all  {|d| d.type == :broadcast }
+        Devices.new(broadcast_devices)
+      end
     end
   end
 end
