@@ -7,12 +7,12 @@ LogActually.is_all_around(:services)
 LogActually.services.i
 
 # Audio
-puts "\tLoading wilhelm/services/audio"
-require_relative 'services/audio'
+print "\tLoading wilhelm/services/audio => "
+puts require_relative('services/audio') ? 'Success' : Error
 
 # Manager
-puts "\tLoading wilhelm/services/manager"
-require_relative 'services/manager'
+print "\tLoading wilhelm/services/manager => "
+puts require_relative('services/manager') ? 'Success' : Error
 
 # UI
 puts "\tLoading wilhelm/services/ui"
