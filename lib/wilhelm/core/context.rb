@@ -47,8 +47,8 @@ module Wilhelm
       end
 
       def setup_multiplexing(input_buffer, output_buffer)
-        @demultiplexer = DataLink::LogicalLinkLayer::Demultiplexer.new(input_buffer)
-        @multiplexer = DataLink::LogicalLinkLayer::Multiplexer.new(output_buffer)
+        @demultiplexer = DataLink::Demultiplexer.new(input_buffer)
+        @multiplexer = DataLink::Multiplexer.new(output_buffer)
       end
 
       def setup_event_handling(application_object)
