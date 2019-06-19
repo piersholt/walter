@@ -1,118 +1,120 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Manager
-    # Comment
-    class Device
-      include Constants
-      include Observable
+  module Services
+    class Manager
+      # Comment
+      class Device
+        include Logging
+        include Observable
 
-      CONNECTED = 'Connected'
-      PAIRED = 'Paired'
-      NAME = 'Name'
-      ADDRESS = 'Address'
-      KLASS = 'Class'
-      UUIDS = 'UUIDs'
-      TRUSTED = 'Trusted'
-      BLOCKED = 'Blocked'
-      ALIAS = 'Alias'
-      ADAPTER = 'Adapter'
-      ICON = 'Idapter'
+        CONNECTED = 'Connected'
+        PAIRED = 'Paired'
+        NAME = 'Name'
+        ADDRESS = 'Address'
+        KLASS = 'Class'
+        UUIDS = 'UUIDs'
+        TRUSTED = 'Trusted'
+        BLOCKED = 'Blocked'
+        ALIAS = 'Alias'
+        ADAPTER = 'Adapter'
+        ICON = 'Idapter'
 
-      attr_reader :attributes
+        attr_reader :attributes
 
-      def initialize(attributes)
-        @attributes = attributes
-      end
-
-      def pending
-        @pending ||= false
-      end
-
-      def connecting
-        @pending = true
-        changed
-        notify_observers(:connecting, device: self)
-      end
-
-      def disconnecting
-        @pending = true
-        changed
-        notify_observers(:disconnecting, device: self)
-      end
-
-      def connected
-        @pending = false
-        changed
-        notify_observers(:connected, device: self)
-      end
-
-      def disconnected
-        @pending = false
-        changed
-        notify_observers(:disconnected, device: self)
-      end
-
-      def connected?
-        attributes[CONNECTED]
-      end
-
-      def disconnected?
-        !connected?
-      end
-
-      def paired?
-        attributes[PAIRED]
-      end
-
-      def name
-        attributes[NAME]
-      end
-
-      def address
-        attributes[ADDRESS]
-      end
-
-      def klass
-        attributes[KLASS]
-      end
-
-      def uuids
-        attributes[UUIDS]
-      end
-
-      def trusted?
-        attributes[TRUSTED]
-      end
-
-      def blocked?
-        attributes[BLOCKED]
-      end
-
-      def alias
-        attributes[ALIAS]
-      end
-
-      def adapter
-        attributes[ADAPTER]
-      end
-
-      def icon
-        attributes[ICON]
-      end
-
-      def attributes!(new_device)
-        changed = []
-        attributes.merge!(new_device.attributes) do |key, old, new|
-          changed << key
-          old.is_a?(Hash) ? squish(old, new) : new
+        def initialize(attributes)
+          @attributes = attributes
         end
-        changed
-        notify_observers(:updated, changed: changed, device: self)
-      end
 
-      def squish(old, new)
-        old.merge(new)
+        def pending
+          @pending ||= false
+        end
+
+        def connecting
+          @pending = true
+          changed
+          notify_observers(:connecting, device: self)
+        end
+
+        def disconnecting
+          @pending = true
+          changed
+          notify_observers(:disconnecting, device: self)
+        end
+
+        def connected
+          @pending = false
+          changed
+          notify_observers(:connected, device: self)
+        end
+
+        def disconnected
+          @pending = false
+          changed
+          notify_observers(:disconnected, device: self)
+        end
+
+        def connected?
+          attributes[CONNECTED]
+        end
+
+        def disconnected?
+          !connected?
+        end
+
+        def paired?
+          attributes[PAIRED]
+        end
+
+        def name
+          attributes[NAME]
+        end
+
+        def address
+          attributes[ADDRESS]
+        end
+
+        def klass
+          attributes[KLASS]
+        end
+
+        def uuids
+          attributes[UUIDS]
+        end
+
+        def trusted?
+          attributes[TRUSTED]
+        end
+
+        def blocked?
+          attributes[BLOCKED]
+        end
+
+        def alias
+          attributes[ALIAS]
+        end
+
+        def adapter
+          attributes[ADAPTER]
+        end
+
+        def icon
+          attributes[ICON]
+        end
+
+        def attributes!(new_device)
+          changed = []
+          attributes.merge!(new_device.attributes) do |key, old, new|
+            changed << key
+            old.is_a?(Hash) ? squish(old, new) : new
+          end
+          changed
+          notify_observers(:updated, changed: changed, device: self)
+        end
+
+        def squish(old, new)
+          old.merge(new)
+        end
       end
     end
   end

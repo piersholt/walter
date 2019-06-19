@@ -59,11 +59,11 @@ module Wilhelm::SDK
         def manager(action)
           LogActually.ui.debug(NAME) { "#manager(#{action})" }
           case action
-          when Walter::Manager::On
+          when Walter::Services::Manager::On
             index
-          when Walter::Manager::Enabled
+          when Walter::Services::Manager::Enabled
             index
-          when Walter::Manager::Disabled
+          when Walter::Services::Manager::Disabled
             index
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }
@@ -73,11 +73,11 @@ module Wilhelm::SDK
         def audio(action)
           LogActually.ui.debug(NAME) { "#audio(#{action})" }
           case action
-          when Walter::Audio::On
+          when Walter::Services::Audio::On
             index
-          when Walter::Audio::Enabled
+          when Walter::Services::Audio::Enabled
             index
-          when Walter::Audio::Disabled
+          when Walter::Services::Audio::Disabled
             index
           else
             LogActually.ui.debug(NAME) { "#update: #{action} not implemented." }

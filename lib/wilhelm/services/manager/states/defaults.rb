@@ -1,53 +1,57 @@
+# frozen_string_literal: false
+
 module Wilhelm
-  class Manager
-    # Unimplemented methods fallback for states
-    module Defaults
-      include Constants
+  module Services
+    class Manager
+      # Unimplemented methods fallback for states
+      module Defaults
+        include Logging
 
-      # STATES --------------------------------------------------
+        # STATES --------------------------------------------------
 
-      def disable(___)
-        false
-      end
+        def disable(___)
+          false
+        end
 
-      def enable(___)
-        false
-      end
+        def enable(___)
+          false
+        end
 
-      def on(___)
-        false
-      end
+        def on(___)
+          false
+        end
 
-      # Commands
+        # Commands
 
-      def connect_device(___)
-        false
-      end
+        def connect_device(___)
+          false
+        end
 
-      def disconnect_device(___)
-        false
-      end
+        def disconnect_device(___)
+          false
+        end
 
-      # Notifications ------------------------------------------------
+        # Notifications ------------------------------------------------
 
-      def device_connected(___, ___)
-        false
-      end
+        def device_connected(___, ___)
+          false
+        end
 
-      def device_disconnected(___, ___)
-        false
-      end
+        def device_disconnected(___, ___)
+          false
+        end
 
-      def device_connecting(___)
-        false
-      end
+        def device_connecting(___)
+          false
+        end
 
-      def device_disconnecting(___)
-        false
-      end
+        def device_disconnecting(___)
+          false
+        end
 
-      def new_device(___)
-        false
+        def new_device(___)
+          false
+        end
       end
     end
   end

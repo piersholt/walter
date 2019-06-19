@@ -2,11 +2,9 @@
 
 puts 'Loading wilhelm/services'
 
-LogActually.is_all_around(:audio_service)
-LogActually.is_all_around(:manager_service)
+LogActually.is_all_around(:services)
 
-LogActually.audio_service.i
-LogActually.manager_service.d
+LogActually.services.i
 
 # Audio
 puts "\tLoading wilhelm/services/audio"
