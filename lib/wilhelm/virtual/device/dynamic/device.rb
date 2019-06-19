@@ -46,18 +46,6 @@ module Wilhelm
         end
       end
 
-      def alt
-        @alt ||= AddressLookupTable.instance
-      end
-
-      def address(ident)
-        alt.get_address(ident)
-      end
-
-      def my_address
-        alt.get_address(ident)
-      end
-
       # @override Virtual::Device#receive_packet
       # Allows the introduction of custom behaviour
       # def receive_packet(packet)
