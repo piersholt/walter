@@ -1,27 +1,29 @@
 # frozen_string_literal: false
 
-class Wilhelm::API
-  # Telephone object for vehicle API
-  class Telephone
-    include Singleton
-    include Observable
+module Wilhelm
+  module API
+    # Telephone object for vehicle API
+    class Telephone
+      include Singleton
+      include Observable
 
-    include LED
+      include LED
 
-    attr_accessor :bus
+      attr_accessor :bus
 
-    def logger
-      LogActually.telephone
-    end
+      def logger
+        LOGGER
+      end
 
-    def to_s
-      'Telephone'
-    end
+      def to_s
+        'Telephone'
+      end
 
-    # TODO: module
-    def incoming(caller_id = nil)
-      caller_id unless caller_id.nil?
-      false
+      # TODO: module
+      def incoming(caller_id = nil)
+        caller_id unless caller_id.nil?
+        false
+      end
     end
   end
 end

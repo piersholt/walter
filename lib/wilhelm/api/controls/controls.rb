@@ -4,37 +4,39 @@
 # - EQ Hifi
 # - EQ Top HiFi (DSP)
 
-class Wilhelm::API
-  # Controls object for vehicle API
-  class Controls
-    STATELESS = :stateless
-    STATEFUL = :stateful
+module Wilhelm
+  module API
+    # Controls object for vehicle API
+    class Controls
+      STATELESS = :stateless
+      STATEFUL = :stateful
 
-    include Singleton
-    include Observable
-    include Wilhelm::Helpers::Stateful
-    include Listener
+      include Singleton
+      include Observable
+      include Wilhelm::Helpers::Stateful
+      include Listener
 
-    attr_accessor :bus
+      attr_accessor :bus
 
-    alias control_state state
+      alias control_state state
 
-    # HELPERS ----------------------------------------------------
+      # HELPERS ----------------------------------------------------
 
-    def logger
-      LogActually.controls
-    end
+      def logger
+        LOGGER
+      end
 
-    def to_s
-      'Controls'
-    end
+      def to_s
+        'Controls'
+      end
 
-    def targets
-      %i[mfl bmbt]
-    end
+      def targets
+        %i[mfl bmbt]
+      end
 
-    def default_state
-      { mfl: {}, bmbt: {} }
+      def default_state
+        { mfl: {}, bmbt: {} }
+      end
     end
   end
 end

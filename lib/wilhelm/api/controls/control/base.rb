@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
-class Wilhelm::API
-  class Controls
-    class Control
-      # Comment
-      class Base
-        attr_reader :control_id
-        def initialize(control_id)
-          @control_id = control_id
-        end
+module Wilhelm
+  module API
+    class Controls
+      class Control
+        # Comment
+        class Base
+          attr_reader :control_id
+          def initialize(control_id)
+            @control_id = control_id
+          end
 
-        def logger
-          LogActually.controls
-        end
+          def logger
+            LOGGER
+          end
 
-        def upgrade
-          false
+          def upgrade
+            false
+          end
         end
       end
     end

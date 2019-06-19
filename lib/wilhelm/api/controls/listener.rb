@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class API
+  module API
     class Controls
       # Comment
       module Listener

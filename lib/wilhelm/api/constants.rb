@@ -3,7 +3,7 @@
 puts "\tLoading wilhelm/api/constants"
 
 module Wilhelm
-  class API
+  module API
     module Constants
       include Virtual::Constants
     end

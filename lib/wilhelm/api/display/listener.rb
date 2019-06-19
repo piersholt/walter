@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class API
+  module API
     class Display
       # Comment
       module Listener
@@ -36,7 +36,7 @@ module Wilhelm
             logger.debug(NAME) { "#update(#{GFX_MONITOR_OFF})" }
             monitor_off
           when GFX_PING
-            LogActually.alive.debug(NAME) { "#update(#{GFX_PING})" }
+            LOGGER.debug(NAME) { "#update(#{GFX_PING})" }
             ping
           when GFX_ANNOUNCE
             logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
