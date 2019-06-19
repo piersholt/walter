@@ -24,9 +24,6 @@ class Walter
     setup_api(context)
     setup_sdk
 
-    # For exit event
-    add_observer(data_logging_listener)
-
     apply_debug_defaults
 
     connection_options =
@@ -86,9 +83,7 @@ class Walter
   private
 
   def setup_core(file)
-    core = Wilhelm::Core::Context.new(file)
-    core.interface.add_observer(data_logging_listener)
-    core.receiver.add_observer(data_logging_listener)
+    core = Wilhelm::Core::Context.new(self, file)
     core
   end
 

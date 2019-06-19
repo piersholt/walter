@@ -14,7 +14,7 @@ module Wilhelm
         str_buffer = "<DataLoggingHandler>"
       end
 
-      NAME = 'DataLogging'.freeze
+      NAME = 'Core::DataLogging'.freeze
 
       def name
         NAME
@@ -23,25 +23,44 @@ module Wilhelm
       def update(action, properties)
         case action
         when BYTE_RECEIVED
-          read_byte = fetch(properties, :read_byte)
-          log_byte(read_byte)
+          byte_received(properties)
         when FRAME_RECEIVED
-          frame = fetch(properties, :frame)
-          log_frame(frame)
+          frame_received(properties)
         when BUS_ONLINE
-          LOGGER.info(name) { 'Bus Online! Enable logging.' }
-          enable_logging
+          bus_online
         when BUS_OFFLINE
-          # LOGGER.warn(name) { BUS_OFFLINE }
-          LOGGER.warn(name) { 'Bus Offline! Disabling logging.' }
-          disable_logging
+          bus_offline
         when EXIT
-          LOGGER.info(name) { 'Exit: Closing log files.' }
-          close_log_files
+          exit
         end
       rescue StandardError => e
         LOGGER.error(name) { e }
         e.backtrace.each { |line| LOGGER.error(line) }
+      end
+
+      def byte_received(properties)
+        read_byte = fetch(properties, :read_byte)
+        log_byte(read_byte)
+      end
+
+      def frame_received(properties)
+        frame = fetch(properties, :frame)
+        log_frame(frame)
+      end
+
+      def bus_online
+        LOGGER.info(name) { 'Bus Online! Enable logging.' }
+        enable_logging
+      end
+
+      def bus_offline
+        LOGGER.warn(name) { 'Bus Offline! Disabling logging.' }
+        disable_logging
+      end
+
+      def exit
+        LOGGER.info(name) { 'Exit: Closing log files.' }
+        close_log_files
       end
 
       private

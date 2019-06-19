@@ -6,11 +6,11 @@ module Wilhelm
     class Context
       attr_reader :interface, :receiver, :transmitter, :multiplexer, :demultiplexer
 
-      def initialize(path)
+      def initialize(application_object, path)
         setup_interface(path)
         setup_transceiver(@interface.input_buffer, @interface.output_buffer)
         setup_multiplexing(@receiver.frame_input_buffer, @transmitter.frame_output_buffer)
-        setup_event_handling
+        setup_event_handling(application_object)
       end
 
       def on
@@ -51,9 +51,20 @@ module Wilhelm
         @multiplexer = DataLink::LogicalLinkLayer::Multiplexer.new(output_buffer)
       end
 
-      def setup_event_handling
-        core_listener = CoreListener.new(InterfaceHandler.new(@transmitter))
+      def setup_event_handling(application_object)
+        interface_handler = InterfaceHandler.new(@transmitter)
+        data_logging_handler = DataLoggingHandler.instance
+
+        core_listener = CoreListener.new
+        core_listener.interface_handler = interface_handler
+        core_listener.data_logging_handler = data_logging_handler
+
+        application_listener = Listener::ApplicationListener.new
+        application_listener.data_logging_handler = data_logging_handler
+
         @interface.add_observer(core_listener)
+        @receiver.add_observer(core_listener)
+        application_object.add_observer(application_listener)
       end
     end
   end
