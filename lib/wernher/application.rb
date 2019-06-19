@@ -5,7 +5,6 @@ class Wernher
   include Observable
   include Wilhelm::Core::DebugTools
   include ManageableThreads
-  include Analyze
   include Shared
 
   PROC = 'Walter'
