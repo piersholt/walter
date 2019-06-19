@@ -1,7 +1,4 @@
-# require '/stateful'
-# require '/alive'
-# require '/cd'
-# require '/telephone'
+# frozen_string_literal: false
 
 class Wilhelm::Virtual
   class EmulatedDevice < DynamicDevice

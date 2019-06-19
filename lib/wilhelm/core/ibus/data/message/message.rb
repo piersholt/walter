@@ -65,6 +65,7 @@ module Wilhelm
 
       # TODO the objects should keep/instatiate their own lazy Bytes
       def bytes
+        raise(RuntimeError, "#{self.class.name}#bytes is deprecated!")
         b_from = Wilhelm::Core::Byte.new(:decimal, from.d)
         b_to = Wilhelm::Core::Byte.new(:decimal, to.d)
         b_command = Wilhelm::Core::Byte.new(:decimal, command.d)
