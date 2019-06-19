@@ -20,5 +20,7 @@ require_relative 'sdk/ui'
 require_relative 'sdk/notifications'
 require_relative 'sdk/nodes'
 require_relative 'sdk/context'
+require_relative 'sdk/listener'
+require_relative 'sdk/handler'
 
 puts "\tDone!"

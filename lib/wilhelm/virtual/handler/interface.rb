@@ -11,7 +11,7 @@ module Wilhelm
           @bus = bus
         end
 
-        NAME = 'InterfaceHandler'.freeze
+        NAME = 'Virtual::InterfaceHandler'.freeze
 
         def name
           NAME

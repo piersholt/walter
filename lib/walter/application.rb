@@ -73,9 +73,6 @@ class Walter
   def start
     LOGGER.debug(PROC) { '#start' }
     @core.on
-    LOGGER.info(PROC) { 'Switching on Wilhelm...' }
-    @wolfgang.open
-    LOGGER.info(PROC) { 'Wilhelm is on! 👍' }
   end
 
   def stop
@@ -152,6 +149,11 @@ class Walter
 
   def setup_sdk
     @wolfgang = Wilhelm::SDK::ApplicationContext.new
+
+    core_listener = Wilhelm::SDK::Listener::CoreListener.new
+    interface_handler = Wilhelm::SDK::Handler::InterfaceHandler.new(@wolfgang)
+    core_listener.interface_handler = interface_handler
+    @core.interface.add_observer(core_listener)
 
     manager = Wilhelm::Services::Manager.new
     audio = Wilhelm::Services::Audio.new
