@@ -22,6 +22,8 @@ module Wilhelm
         mapped_result = :universal
       end
 
+      alias resolve_address find
+
       def down(ident)
         # LOGGER.debug(PROC) { "#down(#{ident})" }
         mapped_result = nil
@@ -33,6 +35,8 @@ module Wilhelm
         mapped_result = :universal
         mapped_result
       end
+
+      alias resolve_ident down
 
       def get_ident(device_id)
         find(device_id)

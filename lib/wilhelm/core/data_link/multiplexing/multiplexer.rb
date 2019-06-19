@@ -9,12 +9,13 @@ module Wilhelm
           include Constants::Events
           include ManageableThreads
 
-          attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
+          attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread, :address_lookup_table
 
-          def initialize(frame_output_buffer)
+          def initialize(frame_output_buffer, address_lookup_table = AddressLookupTable.instance)
             @frame_output_buffer = frame_output_buffer
             @packet_output_buffer = SizedQueue.new(32)
             @threads = ThreadGroup.new
+            @address_lookup_table = address_lookup_table
           end
 
           def name
@@ -46,6 +47,7 @@ module Wilhelm
               begin
                 loop do
                   message = packet_output_buffer.pop
+                  message = resolve_addresses(message)
                   new_frame = multiplex(message)
                   LogActually.multiplexer.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
                   frame_output_buffer.push(new_frame)
@@ -60,16 +62,26 @@ module Wilhelm
 
           private
 
+          def resolve_addresses(message)
+            LogActually.multiplexer.debug(name) { "#resolve_addresses(#{message})" }
+
+            from = address_lookup_table.resolve_ident(message.from)
+            message.sender = from
+            LogActually.demultiplexer.debug(name) { "from_device: #{message.sender}" }
+
+            to = address_lookup_table.resolve_ident(message.to)
+            message.receiver = to
+            LogActually.demultiplexer.debug(name) { "to_device: #{message.receiver}" }
+
+            message
+          end
+
           # @return Frame
           def multiplex(message)
             LogActually.multiplexer.debug(name) { "#multiplex(#{message})" }
-            from = DeviceMap.instance.resolve_ident(message.from)
-            to = DeviceMap.instance.resolve_ident(message.to)
-
             frame_builder = FrameBuilder.new
-
-            frame_builder.from = from.d
-            frame_builder.to = to.d
+            frame_builder.from = message.from
+            frame_builder.to = message.to
             frame_builder.command = message.command
 
             frame = frame_builder.result
