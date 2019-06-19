@@ -144,11 +144,9 @@ module Wilhelm::Core::Analyze
 
   def device_name(hex_string)
     # LOGGER.info('#device_name') { hex_string }
-    mapped_device = DeviceMap.instance.map[hex_string.hex]
-    return 'Error' unless mapped_device
-    mapped_device[:properties][:short_name]
-
-    # DeviceMap.instance.find()
+    device_ident = AddressLookupTable.instance.resolve_address(hex_string.hex)
+    return 'Error' unless device_ident
+    device_ident
   end
 
   def print_senders_length
