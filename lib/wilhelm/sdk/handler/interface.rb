@@ -19,16 +19,16 @@ module Wilhelm
 
         def bus_online
           LOGGER.warn(name) { 'Bus Online! Enabling ApplicationContext.' }
-          LOGGER.info(PROC) { 'Switching on Wilhelm...' }
+          LOGGER.debug(name) { 'Switching on Wilhelm...' }
           @application_context.online!
-          LOGGER.info(PROC) { 'Wilhelm is on! 👍' }
+          LOGGER.debug(name) { 'Wilhelm is on! 👍' }
         end
 
         def bus_offline
           LOGGER.warn(name) { 'Bus Offline! Disabling ApplicationContext.' }
-          LOGGER.info(PROC) { 'Switching off Wilhelm...' }
+          LOGGER.debug(name) { 'Switching off Wilhelm...' }
           @application_context.offline!
-          LOGGER.info(PROC) { 'Wilhelm is off! 👍' }
+          LOGGER.debug(name) { 'Wilhelm is off! 👍' }
         end
       end
     end

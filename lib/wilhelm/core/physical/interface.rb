@@ -55,10 +55,12 @@ module Wilhelm
       # This should be implemented in a sub class of Interface
       def offline?
         if @stream.instance_of?(Interface::File)
+          LogActually.interface.warn(PROC) { "IO stream is file => Bus Offline!" }
           changed
           notify_observers(Constants::Events::BUS_OFFLINE, @stream.class)
           return true
         elsif @stream.instance_of?(Interface::UART)
+          LogActually.interface.warn(PROC) { "IO stream is tty => Bus Online!" }
           changed
           notify_observers(Constants::Events::BUS_ONLINE, @stream.class)
           return false
