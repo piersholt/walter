@@ -63,10 +63,13 @@ module Wilhelm
           # @return Frame
           def multiplex(message)
             LogActually.multiplexer.debug(name) { "#multiplex(#{message})" }
+            from = DeviceMap.instance.resolve_ident(message.from)
+            to = DeviceMap.instance.resolve_ident(message.to)
+
             frame_builder = FrameBuilder.new
 
-            frame_builder.from = message.from.d
-            frame_builder.to = message.to.d
+            frame_builder.from = from.d
+            frame_builder.to = to.d
             frame_builder.command = message.command
 
             frame = frame_builder.result

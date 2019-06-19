@@ -45,13 +45,15 @@ module Wilhelm
         address_lookup_table.get_address(ident)
       rescue StandardError => e
         LOGGER.error(name) { e }
-        e.backtrace.each { |line| LOGGER.error(line) }
+        e.backtrace.each { |line| LOGGER.error(name) { line } }
       end
 
       def find_by_ident(device_ident)
         device_id = to_id(device_ident)
         find(device_id)
       end
+
+      alias resolve_ident find_by_ident
 
       # Analyze: this was #find.. will cause bugs?
       def find(device_id)

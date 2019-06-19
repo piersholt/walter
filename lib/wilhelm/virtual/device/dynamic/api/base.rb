@@ -13,8 +13,6 @@ module Wilhelm::Virtual::API
     end
 
     def try(from, to, command_id, command_arguments = {})
-      from = Wilhelm::Core::DeviceMap.instance.find_by_ident(from)
-      to = Wilhelm::Core::DeviceMap.instance.find_by_ident(to)
       command_object = to_command(command_id: command_id,
                                   command_arguments: command_arguments,
                                   schema_from: from)
