@@ -4,7 +4,7 @@ module Wilhelm
   module Core
     module Listener
       # Comment
-      class ApplicationListener < Core::BaseHandler
+      class ApplicationListener < BaseListener
         include LogActually::ErrorOutput
 
         attr_accessor :data_logging_handler

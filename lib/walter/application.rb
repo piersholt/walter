@@ -5,7 +5,6 @@ class Walter
   include Observable
   include Wilhelm::Virtual::Helpers::Console
   include ManageableThreads
-  include Shared
   include Wilhelm::Core::Constants::Events::Application
 
   attr_reader :bus, :wolfgang

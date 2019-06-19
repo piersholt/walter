@@ -27,7 +27,6 @@ require 'serialport'
 
 require_relative 'core/constants'
 require_relative 'core/helpers'
-require_relative 'core/shared'
 require_relative 'core/physical'
 require_relative 'core/datalink'
 require_relative 'core/listener'
