@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     class EmulationDummy < EmulatedDevice
       PROC = 'EmulationDummy'.freeze
 

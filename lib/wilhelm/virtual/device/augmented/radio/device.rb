@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedRadio < AugmentedDevice
       include State
@@ -17,7 +17,7 @@ module Wilhelm
       SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, TEL_DATA]
 
       def logger
-        LogActually.rad
+        LOGGER
       end
 
       def publish?(command_id)

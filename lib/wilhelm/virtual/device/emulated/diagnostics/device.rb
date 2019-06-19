@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class ManualDiagnostics < EmulatedDevice
       # include API::Diagnostics

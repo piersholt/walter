@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class Device
       module Receivable
         include Wilhelm::Core::Constants::Events

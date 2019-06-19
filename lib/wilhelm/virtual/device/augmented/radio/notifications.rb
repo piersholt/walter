@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedRadio < AugmentedDevice
       module Notifications
@@ -18,12 +18,12 @@ module Wilhelm
         end
 
         def track_change(new_track)
-          LogActually.messaging.debug(self.class.name) { "#track_change(#{new_track})" }
+          LOGGER.debug(self.class.name) { "#track_change(#{new_track})" }
           self.track = new_track
           render_track(self.track)
         rescue StandardError => e
-          LogActually.messaging.error(self.class) { e }
-          e.backtrace.each { |line| LogActually.messaging.warn(line) }
+          LOGGER.error(self.class) { e }
+          e.backtrace.each { |line| LOGGER.warn(line) }
         end
       end
     end

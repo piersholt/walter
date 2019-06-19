@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class AugmentedRadio < AugmentedDevice
       module State
         # Comment
@@ -45,18 +45,18 @@ module Wilhelm
 
           # Handlers?
           def handle_bmbt_1_button(message)
-            # LogActually.rad.debug('Radio') { "Handling: BMBT-1" }
+            # LOGGER.debug('Radio') { "Handling: BMBT-1" }
             value = message.command.action.parameters[:totally_unique_variable_name].value
 
             case value
             when POWER_PRESS
-              # LogActually.rad.debug('Radio') { "POWER_PRESS" }
+              # LOGGER.debug('Radio') { "POWER_PRESS" }
               switch_power
             when MODE_PREV_PRESS
-              # LogActually.rad.debug('Radio') { "MODE_PREV_PRESS" }
+              # LOGGER.debug('Radio') { "MODE_PREV_PRESS" }
               previous_source
             when MODE_NEXT_PRESS
-              # LogActually.rad.debug('Radio') { "MODE_NEXT_PRESS" }
+              # LOGGER.debug('Radio') { "MODE_NEXT_PRESS" }
               next_source
             when MENU_PRESS
             when OVERLAY_PRESS

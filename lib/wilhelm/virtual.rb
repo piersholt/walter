@@ -2,12 +2,6 @@
 
 puts 'Loading wilhelm/virtual'
 
-module Wilhelm
-  # Allow for shortstyle namespaces
-  class Virtual
-  end
-end
-
 # Walter-Virtual
 LogActually.is_all_around(:virtual)
 LogActually.virtual.i
@@ -26,6 +20,12 @@ LogActually.is_all_around(:mfl)
 LogActually.mfl.i
 LogActually.is_all_around(:tel)
 LogActually.tel.i
+
+module Wilhelm
+  module Virtual
+    LOGGER = LogActually.virtual
+  end
+end
 
 require_relative 'virtual/constants'
 require_relative 'virtual/helpers'

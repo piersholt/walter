@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Constants
       module Device
         # Comment

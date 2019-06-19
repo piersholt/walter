@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class SimulatedTEL < EmulatedDevice
       include Capabilities::Telephone
@@ -14,7 +14,7 @@ module Wilhelm
       SUBSCRIBE = [PING, PONG, GFX_STATUS, TEL_DATA, TEL_OPEN].freeze
 
       def logger
-        LogActually.tel
+        LOGGER
       end
 
       def subscribe?(command_id)

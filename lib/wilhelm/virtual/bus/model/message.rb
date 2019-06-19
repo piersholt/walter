@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class Message
       attr_accessor :from, :to, :command
 

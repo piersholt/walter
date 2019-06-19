@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     class BroadcastDevice < Device
       PROC = 'BroadcastDevice'
 

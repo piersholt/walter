@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     module Capabilities
       module CDChanger
         module Constants

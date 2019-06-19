@@ -87,7 +87,7 @@ class Walter
 
   def setup_virtual(interface:, multiplexer:, demultiplexer:)
     @bus =
-      Wilhelm::Virtual::Initialization
+      Wilhelm::Virtual::Bus::Initialization
       .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
       .execute
 

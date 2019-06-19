@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class AugmentedMFL < AugmentedDevice
       # Comment
       module State

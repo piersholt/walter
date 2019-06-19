@@ -4,7 +4,7 @@ puts "\tLoading wilhelm/virtual/helpers/console"
 require_relative 'console/display'
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Helpers
       # Comment
       module Console

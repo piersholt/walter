@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Handler
       # Comment
       class PacketHandler < Core::BaseHandler

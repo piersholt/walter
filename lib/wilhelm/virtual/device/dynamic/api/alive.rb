@@ -3,7 +3,7 @@
 # require '/api/base_api'
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module API
       # API for command related to keys
       module Alive

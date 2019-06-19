@@ -1,7 +1,7 @@
 # require '/api/base_api'
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module API
       module RadioGFX
         include BaseAPI

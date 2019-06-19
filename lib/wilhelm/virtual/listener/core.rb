@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Listener
       # Comment
       class CoreListener < Core::BaseHandler

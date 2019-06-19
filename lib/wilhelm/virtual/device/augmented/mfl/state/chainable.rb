@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedMFL < AugmentedDevice
       module State

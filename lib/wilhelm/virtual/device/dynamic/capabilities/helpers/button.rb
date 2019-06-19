@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Capabilities
       module ButtonHelpers
         def wait(wait_time = 0.01)

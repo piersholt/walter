@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedMFL < AugmentedDevice
       include State
@@ -19,7 +19,7 @@ module Wilhelm
       end
 
       def logger
-        LogActually.mfl
+        LOGGER
       end
 
       def publish?(command_id)

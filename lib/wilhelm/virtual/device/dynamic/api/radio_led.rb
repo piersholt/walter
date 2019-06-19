@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module API
       module RadioLED
         include Wilhelm::Virtual::Constants::Command::Aliases

@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class SimulatedRadio < EmulatedDevice
       include Capabilities::Radio
@@ -11,7 +11,7 @@ module Wilhelm
       SUBSCRIBE = [PING, MENU_GFX].freeze
 
       def logger
-        LogActually.rad
+        LOGGER
       end
 
       def subscribe?(command_id)

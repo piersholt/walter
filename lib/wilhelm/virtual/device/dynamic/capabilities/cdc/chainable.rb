@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Capabilities
       module CDChanger
         # Chainable state changes

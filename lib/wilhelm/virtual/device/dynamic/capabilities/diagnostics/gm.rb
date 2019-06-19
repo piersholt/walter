@@ -1,5 +1,5 @@
 module Wilhelm
-  class Virtual
+  module Virtual
     module Capabilities
       module Diagnostics
         module CentralLocking

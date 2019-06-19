@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     class AugmentedDevice < DynamicDevice
       # include Actions
 

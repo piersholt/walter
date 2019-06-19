@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Capabilities
       # Comment
       module Telephone
@@ -14,7 +14,7 @@ module Wilhelm
         include Info
 
         def logger
-          LogActually.tel
+          LOGGER
         end
 
         def set_status(bit_array)

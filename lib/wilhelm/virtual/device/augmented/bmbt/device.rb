@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedBMBT < AugmentedDevice
       include Capabilities::OnBoardMonitor
@@ -18,7 +18,7 @@ module Wilhelm
       end
 
       def logger
-        LogActually.bmbt
+        LOGGER
       end
 
       def publish?(command_id)

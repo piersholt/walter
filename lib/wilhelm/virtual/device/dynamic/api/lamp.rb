@@ -4,7 +4,7 @@
 # speed
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module API
       module Lamp
         include BaseAPI

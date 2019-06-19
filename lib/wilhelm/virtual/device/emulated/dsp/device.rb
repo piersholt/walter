@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     class SimulatedDSP < EmulatedDevice
       PROC = 'SimulatedDSP'.freeze
 

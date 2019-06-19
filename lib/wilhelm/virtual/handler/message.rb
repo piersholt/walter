@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  class Virtual
+  module Virtual
     module Handler
       # Comment
       class MessageHandler < Core::BaseHandler
@@ -22,18 +22,18 @@ module Wilhelm
         end
 
         def message_received(properties)
-          # LogActually.virtual.warn(self.class) { "#message_received" }
+          # LOGGER.warn(self.class) { "#message_received" }
           message = message?(properties)
           route_to_senders(message)
           route_to_receivers(message)
         end
 
         def message_sent(properties)
-          # LogActually.api.debug(name) { "#message_sent(#{action}, #{properties})" }
+          # LOGGER.debug(name) { "#message_sent(#{action}, #{properties})" }
           message = message?(properties)
           add_to_output_buffer(message)
         rescue StandardError => e
-          with_backtrace(LogActually.api, e)
+          with_backtrace(LOGGER, e)
         end
 
         private
@@ -45,7 +45,7 @@ module Wilhelm
         end
 
         def route_to_receivers(packet)
-          # LogActually.virtual.warn(self.class) { "#route_to_receivers" }
+          # LOGGER.warn(self.class) { "#route_to_receivers" }
           recipient = packet.to
           raise RoutingError, 'Recipient is nil!' unless recipient
           observers = subscribers[recipient]
@@ -59,7 +59,7 @@ module Wilhelm
         end
 
         def route_to_senders(packet)
-          # LogActually.virtual.warn(self.class) { "#route_to_senders" }
+          # LOGGER.warn(self.class) { "#route_to_senders" }
           sender = packet.from
           raise RoutingError, 'Recipient is nil!' unless sender
           observers = publishers[sender]
@@ -74,7 +74,7 @@ module Wilhelm
 
         def add_to_output_buffer(message)
           result = @packet_output_buffer.push(message)
-          LogActually.virtual.debug(name) { "#add_to_output_buffer(#{message}) => #{result}" }
+          LOGGER.debug(name) { "#add_to_output_buffer(#{message}) => #{result}" }
           result
         end
 

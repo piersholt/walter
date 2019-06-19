@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedGFX < AugmentedDevice
       include Capabilities::Ready
@@ -32,7 +32,7 @@ module Wilhelm
       end
 
       def logger
-        LogActually.gfx
+        LOGGER
       end
 
       def publish?(command_id)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class AugmentedGFX < AugmentedDevice
       module State
         # Comment
@@ -126,7 +126,7 @@ module Wilhelm
               event = zone.zero? ? :menu_write : :menu_cache
               layout = :static
             else
-              LogActually.gfx.warn('AugmentedGFX') { 'No 0xA5 write event...?' }
+              LOGGER.warn('AugmentedGFX') { 'No 0xA5 write event...?' }
               event = false
             end
 
@@ -153,7 +153,7 @@ module Wilhelm
               event = :menu_cache
               layout = :static
             else
-              LogActually.gfx.warn('AugmentedGFX') { 'No 0x21 write event...?' }
+              LOGGER.warn('AugmentedGFX') { 'No 0x21 write event...?' }
               event = false
             end
 

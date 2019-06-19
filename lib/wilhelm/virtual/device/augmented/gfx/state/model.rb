@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Wilhelm
-  class Virtual
+  module Virtual
     class AugmentedGFX < AugmentedDevice
       module State
         # Comment
@@ -39,7 +39,7 @@ module Wilhelm
           end
 
           def priority?
-            LogActually.gfx.warn('AugmentedGFX') { '#priority is deprecated!' }
+            LOGGER.warn('AugmentedGFX') { '#priority is deprecated!' }
             state[:priority]
           end
 

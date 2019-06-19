@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class AugmentedRadio < AugmentedDevice
       # User Input to be published

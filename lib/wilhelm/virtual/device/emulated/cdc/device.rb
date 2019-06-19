@@ -2,7 +2,7 @@
 
 # Comment
 module Wilhelm
-  class Virtual
+  module Virtual
     # Comment
     class EmulatedCDC < EmulatedDevice
       # include Constants
@@ -24,14 +24,14 @@ module Wilhelm
       end
 
       def logger
-        LogActually.cdc
+        LOGGER
       end
 
       def handle_virtual_receive(message)
         id = message.command.normal_fucking_decimal
         case id
         when CDC_REQ
-          LogActually.cdc.debug(ident) { "#handle_message => CDC_REQ (#{CDC_REQ})" }
+          LOGGER.debug(ident) { "#handle_message => CDC_REQ (#{CDC_REQ})" }
           handle_cd_changer_request(message.command)
           # when TXT_GFX
           #   handle_cd_changer_request(message.command)
