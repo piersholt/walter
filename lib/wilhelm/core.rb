@@ -2,21 +2,8 @@
 
 puts 'Loading wilhelm/core'
 
-# Walter-Core
-# LogActually.is_all_around(:interface)
-# LogActually.is_all_around(:datalink)
-# LogActually.is_all_around(:multiplexer)
-# LogActually.is_all_around(:demultiplexer)
-# LogActually.is_all_around(:transmitter)
-# LogActually.is_all_around(:parameterized)
 LogActually.is_all_around(:core)
 
-# LogActually.interface.i
-# LogActually.datalink.i
-# LogActually.multiplexer.i
-# LogActually.demultiplexer.i
-# LogActually.transmitter.i
-# LogActually.parameterized.i
 LogActually.core.i
 
 module Wilhelm

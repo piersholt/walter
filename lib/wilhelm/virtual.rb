@@ -2,20 +2,8 @@
 
 puts 'Loading wilhelm/virtual'
 
-# LogActually.is_all_around(:cdc)
-# LogActually.is_all_around(:rad)
-# LogActually.is_all_around(:gfx)
-# LogActually.is_all_around(:bmbt)
-# LogActually.is_all_around(:mfl)
-# LogActually.is_all_around(:tel)
 LogActually.is_all_around(:virtual)
 
-# LogActually.cdc.i
-# LogActually.rad.i
-# LogActually.gfx.i
-# LogActually.bmbt.i
-# LogActually.mfl.i
-# LogActually.tel.i
 LogActually.virtual.i
 
 module Wilhelm

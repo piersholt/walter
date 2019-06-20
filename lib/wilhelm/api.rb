@@ -2,17 +2,8 @@
 
 puts 'Loading wilhelm/api'
 
-# Walter-API
-# LogActually.is_all_around(:display)
-# LogActually.is_all_around(:controls)
-# LogActually.is_all_around(:audio)
-# LogActually.is_all_around(:tel)
 LogActually.is_all_around(:api)
 
-# LogActually.display.w
-# LogActually.controls.i
-# LogActually.audio.i
-# LogActually.tel.i
 LogActually.api.i
 
 module Wilhelm
