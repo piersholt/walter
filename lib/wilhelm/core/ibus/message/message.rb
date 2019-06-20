@@ -1,9 +1,8 @@
-# require 'printable'
+# frozen_string_literal: false
 
 module Wilhelm
   module Core
     class Message
-      # include Printable
       attr_accessor :sender, :receiver, :command
 
       attr_accessor :frame
@@ -20,9 +19,6 @@ module Wilhelm
         @sender     = from
         @receiver   = to
         @command    = command
-
-        # Printable
-        # parse_mapped_bytes(bytes)
       end
 
       def to_f

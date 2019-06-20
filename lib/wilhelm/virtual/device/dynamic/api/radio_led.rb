@@ -1,5 +1,3 @@
-# require '/api/base_api'
-
 # frozen_string_literal: true
 
 module Wilhelm

@@ -1,7 +1,4 @@
-# require '/api/base_api'
-
-# ignition
-# speed
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual

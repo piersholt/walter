@@ -1,4 +1,4 @@
-# require '/api/base_api'
+# frozen_string_literal: false
 
 module Wilhelm
   module Virtual

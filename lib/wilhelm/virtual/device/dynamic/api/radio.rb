@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# # require '/api/base_api'
-
 module Wilhelm
   module Virtual
     module API

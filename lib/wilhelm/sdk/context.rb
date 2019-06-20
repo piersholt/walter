@@ -10,6 +10,7 @@ require_relative 'context/notifications/debug_handler'
 
 require_relative 'context/states/defaults'
 require_relative 'context/states/offline'
+# Possibly deprecated...
 # require_relative 'context/states/establishing'
 require_relative 'context/states/online'
 

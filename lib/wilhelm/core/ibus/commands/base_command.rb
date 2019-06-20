@@ -7,7 +7,7 @@ module Wilhelm
       class BaseCommand
         include Wilhelm::Helpers::DataTools
         include Helpers
-        # include Printable
+
         PADDED_DEFAULT = true
 
         attr_accessor :id, :short_name, :long_name, :arguments, :verbose
