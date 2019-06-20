@@ -10,7 +10,7 @@
 module Wilhelm
   module Core
     class BaseMap
-      DEFAULT_BASE_PATH = './lib/wilhelm/core/ibus/maps/'.freeze
+      DEFAULT_BASE_PATH = ENV['map_path'].freeze
       DEFAULT_FILE_EXTENSSION = '.yaml'.freeze
       FORCE_RELOAD = true
 
