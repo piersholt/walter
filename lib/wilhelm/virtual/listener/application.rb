@@ -9,6 +9,10 @@ module Wilhelm
 
         attr_accessor :display_handler
 
+        def name
+          'Virtual::ApplicationListener'
+        end
+
         def update(action, properties)
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action

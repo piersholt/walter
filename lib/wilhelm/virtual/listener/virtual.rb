@@ -10,6 +10,10 @@ module Wilhelm
         attr_reader :message_handler
         attr_accessor :display_handler
 
+        def name
+          'Virtual::VirtualListener'
+        end
+
         def update(action, properties)
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action

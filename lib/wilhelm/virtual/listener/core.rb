@@ -9,6 +9,10 @@ module Wilhelm
 
         attr_accessor :packet_handler, :interface_handler
 
+        def name
+          'Virtual::CoreListener'
+        end
+
         def update(action, properties)
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action
