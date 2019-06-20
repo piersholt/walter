@@ -101,5 +101,9 @@ module Wilhelm
   end
 end
 
-class Wilhelm::Core::Command
+module Wilhelm
+  module Core
+  end
+end
+class Command
 end
