@@ -1,47 +1,53 @@
-class Wilhelm::Core::Command
-  # ID: 26 0x1A
-  class Pong < BaseCommand
+# frozen_string_literal: false
 
-    attr_accessor :status
+module Wilhelm
+  module Core
+    class Command
+      # ID: 26 0x1A
+      class Pong < BaseCommand
 
-    def initialize(id, props)
-      super(id, props)
-      # LOGGER.warn props.to_s
+        attr_accessor :status
 
-      # @arguments mapped in super class
-      @argument_map = map_arguments(@arguments)
+        def initialize(id, props)
+          super(id, props)
+          # LOGGER.warn props.to_s
 
-      @status = parse_status(@argument_map[:status])
-    end
+          # @arguments mapped in super class
+          @argument_map = map_arguments(@arguments)
 
-    def to_s
-      command = sn
-      str_buffer = "#{command}\t#{@status}"
-      str_buffer
-    end
+          @status = parse_status(@argument_map[:status])
+        end
 
-    def inspect
-      command = sn
-      str_buffer = "#{command}\t#{@argument_map[:status]}"
-      str_buffer
-    end
+        def to_s
+          command = sn
+          str_buffer = "#{command}\t#{@status}"
+          str_buffer
+        end
 
-    def alt?
-      @argument_map[:status].d >= '0x40'.hex
-    end
+        def inspect
+          command = sn
+          str_buffer = "#{command}\t#{@argument_map[:status]}"
+          str_buffer
+        end
 
-    private
+        def alt?
+          @argument_map[:status].d >= '0x40'.hex
+        end
 
-    def map_arguments(arguments)
-      { status: arguments[0] }
-    end
+        private
 
-    def parse_status(status_byte)
-      # LOGGER.warn status_byte.d
-      # LOGGER.warn @status
-      status_value = status_byte.d
-      @status_map[status_value]
-      # status_value
+        def map_arguments(arguments)
+          { status: arguments[0] }
+        end
+
+        def parse_status(status_byte)
+          # LOGGER.warn status_byte.d
+          # LOGGER.warn @status
+          status_value = status_byte.d
+          @status_map[status_value]
+          # status_value
+        end
+      end
     end
   end
 end

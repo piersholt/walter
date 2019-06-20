@@ -23,7 +23,7 @@ module Wilhelm
 
       # @override Delayable#log
       def log
-        :interface
+        :core
       end
 
       # @override: ManageableThreads#proc_name
@@ -133,7 +133,7 @@ module Wilhelm
                 # of one file, only rasing EOF on last file
                 raise EncodingError if read_byte.nil?
 
-                parsed_byte = Wilhelm::Core::Byte.new(:encoded, read_byte)
+                parsed_byte = Byte.new(:encoded, read_byte)
                 byte_basic = ByteBasic.new(read_byte)
 
                 # NOTE this is intesresting.. this event isn't to do with the

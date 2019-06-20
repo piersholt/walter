@@ -38,7 +38,7 @@ module Wilhelm
       PROC = 'DeviceMap'
 
       def address_lookup_table
-        @address_lookup_table ||= Wilhelm::Core::AddressLookupTable.instance
+        @address_lookup_table ||= AddressLookupTable.instance
       end
 
       def to_id(ident)

@@ -39,16 +39,16 @@ module Wilhelm
       end
 
       def from=(device_id)
-        @from = Wilhelm::Core::Byte.new(:decimal, device_id)
+        @from = Byte.new(:decimal, device_id)
       end
 
       def to=(device_id)
-        @to = Wilhelm::Core::Byte.new(:decimal, device_id)
+        @to = Byte.new(:decimal, device_id)
       end
 
       def command=(command)
         command_id = command.d
-        @command = Wilhelm::Core::Byte.new(:decimal, command_id)
+        @command = Byte.new(:decimal, command_id)
         command_config = CommandMap.instance.config(command_id)
 
         if command_config.has_parameters?
@@ -79,10 +79,10 @@ module Wilhelm
 
         nested_arguments = args.map do |d|
           if d.instance_of?(Array)
-            array_of_bytes = d.map { |i| Wilhelm::Core::Byte.new(:decimal, i) }
+            array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
             Bytes.new(array_of_bytes)
           else
-            Wilhelm::Core::Byte.new(:decimal, d)
+            Byte.new(:decimal, d)
           end
         end
         nested_arguments.flatten
@@ -141,11 +141,11 @@ module Wilhelm
       end
 
       def generate_fcs
-        @fcs = Wilhelm::Core::Byte.new(:decimal, calculate_fcs)
+        @fcs = Byte.new(:decimal, calculate_fcs)
       end
 
       def generate_length
-        @length = Wilhelm::Core::Byte.new(:decimal, calculate_length)
+        @length = Byte.new(:decimal, calculate_length)
       end
 
       def all_fields

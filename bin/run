@@ -21,6 +21,7 @@ begin
   require 'observer'
   require 'optparse'
   require 'ostruct'
+  require 'matrix'
 
   # Setup load path for application (makes you realise RubyGems spoils you...)
   def setup_path(dir)
@@ -85,7 +86,6 @@ begin
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
 rescue LoadError => e
-  # LogActually.default.error('run') { e }
   puts e
   e.backtrace.each { |line| puts line }
   $LOAD_PATH.each { |line| puts line }

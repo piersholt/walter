@@ -5,7 +5,7 @@ module Wilhelm
     # Comment
     class BaseHandlerError < StandardError
       def message
-        'BaseHandler Erro'
+        'BaseHandler Error'
       end
     end
   end
@@ -17,7 +17,7 @@ module Wilhelm
     class BaseHandler
       include Observable
       include Constants::Events
-      include Wilhelm::Core::Helpers
+      include Helpers
 
       def name
         self.class.name

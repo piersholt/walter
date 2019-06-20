@@ -1,26 +1,32 @@
-class Wilhelm::Core::Command
-  class Key < BaseCommand
+# frozen_string_literal: false
 
-    def initialize(id, props)
-      super(id, props)
-    end
+module Wilhelm
+  module Core
+    class Command
+      class Key < BaseCommand
 
-    # ---- Printable ---- #
+        def initialize(id, props)
+          super(id, props)
+        end
 
-    def bytes
-      @bytes ||= {}
-    end
+        # ---- Printable ---- #
 
-    # ---- Core ---- #
+        def bytes
+          @bytes ||= {}
+        end
 
-    # @override
-    def to_s
-      str_buffer = "#{sn}\t#{key}: #{status}"
-      str_buffer
-    end
+        # ---- Core ---- #
 
-    def inspect
-      "#<#{self.class} @key=#{key.value} (#{key.to_s}) @status=#{status.value} (#{status.to_s})>"
+        # @override
+        def to_s
+          str_buffer = "#{sn}\t#{key}: #{status}"
+          str_buffer
+        end
+
+        def inspect
+          "#<#{self.class} @key=#{key.value} (#{key.to_s}) @status=#{status.value} (#{status.to_s})>"
+        end
+      end
     end
   end
 end

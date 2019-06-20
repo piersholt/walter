@@ -1,44 +1,50 @@
-class Wilhelm::Core::Command
-  class Button < BaseCommand
-    attr_reader :button_state, :totally_unique_variable_name
+# frozen_string_literal: false
 
-    def initialize(id, props)
-      super(id, props)
+module Wilhelm
+  module Core
+    class Command
+      class Button < BaseCommand
+        attr_reader :button_state, :totally_unique_variable_name
 
-      @argument_map = map_arguments(@arguments)
-      @button_state = parse_button_state(@argument_map[:state])
-    end
+        def initialize(id, props)
+          super(id, props)
 
-    # ---- Printable ---- #
+          @argument_map = map_arguments(@arguments)
+          @button_state = parse_button_state(@argument_map[:state])
+        end
 
-    def bytes
-      { state: @argument_map[:state] }
-    end
+        # ---- Printable ---- #
 
-    # ---- Core ---- #
+        def bytes
+          { state: @argument_map[:state] }
+        end
 
-    # @override
-    def to_s
-      str_buffer = "#{sn}\t#{@button_state}"
-      str_buffer
-    end
+        # ---- Core ---- #
 
-    def inspect
-      to_s
-    end
+        # @override
+        def to_s
+          str_buffer = "#{sn}\t#{@button_state}"
+          str_buffer
+        end
 
-    private
+        def inspect
+          to_s
+        end
 
-    def map_arguments(arguments)
-      { state: arguments[0] }
-    end
+        private
 
-    def parse_button_state(state)
-      state_decimal = state.d
-      @totally_unique_variable_name = state_decimal
-      # LOGGER.error(instance_variables)
-      return @state[state_decimal] if @state.key?(state_decimal)
-      "Unknown: #{d2h(state_decimal, true)}"
+        def map_arguments(arguments)
+          { state: arguments[0] }
+        end
+
+        def parse_button_state(state)
+          state_decimal = state.d
+          @totally_unique_variable_name = state_decimal
+          # LOGGER.error(instance_variables)
+          return @state[state_decimal] if @state.key?(state_decimal)
+          "Unknown: #{d2h(state_decimal, true)}"
+        end
+      end
     end
   end
 end

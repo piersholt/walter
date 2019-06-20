@@ -1,38 +1,44 @@
-class Wilhelm::Core::IndexedBitArray < Wilhelm::Core::BitArray
-  BASE_2 = 2
+# frozen_string_literal: false
 
-  def initialize(bit_array = nil, index = nil)
-    super(bit_array)
-    @index = index
-  end
+module Wilhelm
+  module Core
+    class IndexedBitArray < BitArray
+      BASE_2 = 2
 
-  def add_index(index)
-    @index = index
-  end
+      def initialize(bit_array = nil, index = nil)
+        super(bit_array)
+        @index = index
+      end
 
-  def lookup(name)
-    parameter_index = index_as_range(name)
-    bits = slice(parameter_index)
-    str_buffer = bits.join
-    str_buffer = str_buffer.prepend('0b')
-    integer = str_buffer.to_i(BASE_2)
-  # it was fog_front!
-  rescue TypeError => e
-    LOGGER.unknown(name) { e }
-    LOGGER.unknown(name) { e.cause }
-    e.backtrace.each { |l| LOGGER.unknown(l) }
-    binding.pry
-  end
+      def add_index(index)
+        @index = index
+      end
 
-  def parameters
-    @index.keys
-  end
+      def lookup(name)
+        parameter_index = index_as_range(name)
+        bits = slice(parameter_index)
+        str_buffer = bits.join
+        str_buffer = str_buffer.prepend('0b')
+        integer = str_buffer.to_i(BASE_2)
+        # it was fog_front!
+      rescue TypeError => e
+        LOGGER.unknown(name) { e }
+        LOGGER.unknown(name) { e.cause }
+        e.backtrace.each { |l| LOGGER.unknown(l) }
+        binding.pry
+      end
 
-  private
+      def parameters
+        @index.keys
+      end
 
-  def index_as_range(name)
-    parameter_index = @index[name]
-    return parameter_index if parameter_index.instance_of?(Range)
-    Range.new(parameter_index, parameter_index)
+      private
+
+      def index_as_range(name)
+        parameter_index = @index[name]
+        return parameter_index if parameter_index.instance_of?(Range)
+        Range.new(parameter_index, parameter_index)
+      end
+    end
   end
 end

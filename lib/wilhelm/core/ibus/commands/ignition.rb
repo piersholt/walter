@@ -1,65 +1,71 @@
-class Wilhelm::Core::Command
-  # ID: 17 0x11
-  class Ignition < BaseCommand
-    attr_accessor :v1
+# frozen_string_literal: false
 
-    VALUE_MAP = { ignition: :v1 }.freeze
+module Wilhelm
+  module Core
+    class Command
+      # ID: 17 0x11
+      class Ignition < BaseCommand
+        attr_accessor :v1
 
-    def initialize(id, props)
-      super(id, props)
-      @argument_map = map_arguments(@arguments)
+        VALUE_MAP = { ignition: :v1 }.freeze
 
-      @v1 = parse_bytes(@argument_map[:ignition])
-    end
+        def initialize(id, props)
+          super(id, props)
+          @argument_map = map_arguments(@arguments)
 
-    def accessory?
-      @argument_map[:ignition] > 0
-    end
+          @v1 = parse_bytes(@argument_map[:ignition])
+        end
 
-    # ---- Interface ---- #
+        def accessory?
+          @argument_map[:ignition] > 0
+        end
 
-    # def ambient
-    #   @v1
-    # end
-    
-    # def coolant
-    #   @v2
-    # end
+        # ---- Interface ---- #
 
-    # ---- Printable ---- #
+        # def ambient
+        #   @v1
+        # end
 
-    def bytes
-      { ignition: @argument_map[:ignition] }
-    end
+        # def coolant
+        #   @v2
+        # end
 
-    # ---- Core ---- #
+        # ---- Printable ---- #
 
-    # @override
-    def to_s
-      str_buffer = "#{sn}\tIgnition: #{v1}"
-      str_buffer
-    end
+        def bytes
+          { ignition: @argument_map[:ignition] }
+        end
 
-    def inspect
-      str_buffer = "#{sn}\tIgnition: #{v1}"
-      str_buffer
-    end
+        # ---- Core ---- #
 
-    # def argument_map
-    #   @argument_map ||= {}
-    # end
+        # @override
+        def to_s
+          str_buffer = "#{sn}\tIgnition: #{v1}"
+          str_buffer
+        end
 
-    private
+        def inspect
+          str_buffer = "#{sn}\tIgnition: #{v1}"
+          str_buffer
+        end
 
-    def map_arguments(arguments)
-      # first = @ignition[:index][:start]
-      # last = @ignition[:index][:end]
+        # def argument_map
+        #   @argument_map ||= {}
+        # end
 
-      { ignition: arguments[0] }
-    end
+        private
 
-    def parse_bytes(value)
-      @ignition[value.d]
+        def map_arguments(arguments)
+          # first = @ignition[:index][:start]
+          # last = @ignition[:index][:end]
+
+          { ignition: arguments[0] }
+        end
+
+        def parse_bytes(value)
+          @ignition[value.d]
+        end
+      end
     end
   end
 end

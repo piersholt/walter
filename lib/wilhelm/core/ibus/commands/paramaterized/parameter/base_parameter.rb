@@ -1,38 +1,32 @@
+# frozen_string_literal: true
 
+module Wilhelm
+  module Core
+    # this should have the map
+    # if you change the value, you shouldn't need to also set the display value etc
+    # it will need to be an instance variable
+    class BaseParameter
+      include Helpers
+      include Wilhelm::Helpers::DataTools
 
-# require 'application/commands/parameter/delegated_command_parameter'
+      DEFAULT_LABEL_WIDTH = 0
+      LABEL_DELIMITER = ' '
+      PROC = 'CommandParam'
 
-# this should have the map
-# if you change the value, you shouldn't need to also set the display value etc
-# it will need to be an instance variable
-class Wilhelm::Core::BaseParameter
-  # extend DelegatedCommandParameter
+      attr_reader :value, :name
 
-  include Wilhelm::Core::Helpers
-  include Wilhelm::Helpers::DataTools
+      def initialize(configuration, value)
+        configuration.configure(self)
+        @value = value
+      end
 
-  DEFAULT_LABEL_WIDTH = 0
-  LABEL_DELIMITER = ' '
-  PROC = 'CommandParam'
+      def inspect
+        "<#{PROC} @value=#{value}>"
+      end
 
-  attr_reader :value, :name
-
-  def initialize(configuration, value)
-    configuration.configure(self)
-    @value = value
-  end
-
-  def inspect
-    str_buffer = "<#{PROC} @value=#{value}>"
-  end
-
-  def to_s
-    "#{name}: \"#{value}\""
+      def to_s
+        "#{name}: \"#{value}\""
+      end
+    end
   end
 end
-
-# # require 'application/commands/parameter/base_parameter'
-# require 'application/commands/parameter/bit_array_parameter'
-# require 'application/commands/parameter/switched_parameter'
-# require 'application/commands/parameter/mapped_parameter'
-# require 'application/commands/parameter/chars_parameter'

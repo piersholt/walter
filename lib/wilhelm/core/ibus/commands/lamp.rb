@@ -1,41 +1,45 @@
-# require 'application/commands/parameter/bit_array'
+# frozen_string_literal: false
 
-class Wilhelm::Core::Command
-  class Lamp < BaseCommand
-    include Wilhelm::Helpers::DataTools
+module Wilhelm
+  module Core
+    class Command
+      class Lamp < BaseCommand
+        include Wilhelm::Helpers::DataTools
 
-    def initialize(id, props)
-      super(id, props)
+        def initialize(id, props)
+          super(id, props)
+        end
+
+        # ---- Core ---- #
+
+        # @override
+        def to_s
+          "#{sn}\t#{@byte1}"
+        end
+
+        def inspect
+          "#{sn}\t#{(@byte1.inspect)}"
+        end
+
+        def raw
+
+          # \t#{bit_array(@byte2)}\t#{bit_array(@byte3)}\t#{bit_array(@byte4)}
+        end
+
+      end
     end
 
-    # ---- Core ---- #
+    # 0100 0011	0000 0000	0000 0100	0000 0000 RIGHT
+    # 0010 0011	0000 0000	0000 0100	0000 0000
 
-    # @override
-    def to_s
-      "#{sn}\t#{@byte1}"
-    end
 
-    def inspect
-      "#{sn}\t#{(@byte1.inspect)}"
-    end
+    # nothing happens on reverse
+    # nothing happens on brake
 
-    def raw
-
-      # \t#{bit_array(@byte2)}\t#{bit_array(@byte3)}\t#{bit_array(@byte4)}
-    end
-
+    # check brake lights
+    # right out
+    # 0000 0000 /	0000 0000	/ 0000 0010	/ 0000 0001
+    # left out
+    # 0000 0000 /	0000 0000	/ 0000 0010	/ 0000 0010
   end
 end
-
-# 0100 0011	0000 0000	0000 0100	0000 0000 RIGHT
-# 0010 0011	0000 0000	0000 0100	0000 0000
-
-
-# nothing happens on reverse
-# nothing happens on brake
-
-# check brake lights
-# right out
-# 0000 0000 /	0000 0000	/ 0000 0010	/ 0000 0001
-# left out
-# 0000 0000 /	0000 0000	/ 0000 0010	/ 0000 0010

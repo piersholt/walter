@@ -1,58 +1,64 @@
-class Wilhelm::Core::Command
-  class RadioLED < BaseCommand
+# frozen_string_literal: false
 
-    def initialize(id, props)
-      super(id, props)
-    end
+module Wilhelm
+  module Core
+    class Command
+      class RadioLED < BaseCommand
 
-    # ---- Printable ---- #
+        def initialize(id, props)
+          super(id, props)
+        end
 
-    def bytes
-      @bytes ||= {}
-    end
+        # ---- Printable ---- #
 
-    # ---- Core ---- #
+        def bytes
+          @bytes ||= {}
+        end
 
-    # @override
-    def to_s
-      str_buffer = "#{sn}\tLED: #{led}"
-      str_buffer
-    end
+        # ---- Core ---- #
 
-    def inspect
-      "#<#{self.class} @led=#{led.value} (#{led})>"
-    end
+        # @override
+        def to_s
+          str_buffer = "#{sn}\tLED: #{led}"
+          str_buffer
+        end
 
-    def tape?
-      led? == :tape
-    end
+        def inspect
+          "#<#{self.class} @led=#{led.value} (#{led})>"
+        end
 
-    def off?
-      led? == :off
-    end
+        def tape?
+          led? == :tape
+        end
 
-    def radio?
-      led? == :radio
-    end
+        def off?
+          led? == :off
+        end
 
-    def on?
-      led? == :on
-    end
+        def radio?
+          led? == :radio
+        end
 
-    def led?
-      case led.value
-      when (0x40..0x45)
-        :tape
-      when 0x48
-        :radio
-      when 0x00
-        :off
-      when (0x5a..0x5f)
-        :tape
-      when 0x90
-        :reset
-      when 0xff
-        :on
+        def on?
+          led? == :on
+        end
+
+        def led?
+          case led.value
+          when (0x40..0x45)
+            :tape
+          when 0x48
+            :radio
+          when 0x00
+            :off
+          when (0x5a..0x5f)
+            :tape
+          when 0x90
+            :reset
+          when 0xff
+            :on
+          end
+        end
       end
     end
   end

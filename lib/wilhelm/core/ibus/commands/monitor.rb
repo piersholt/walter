@@ -1,26 +1,32 @@
-class Wilhelm::Core::Command
-  class Monitor < BaseCommand
+# frozen_string_literal: false
 
-    def initialize(id, props)
-      super(id, props)
+module Wilhelm
+  module Core
+    class Command
+      class Monitor < BaseCommand
+
+        def initialize(id, props)
+          super(id, props)
+        end
+
+        # ---- Printable ---- #
+
+        def bytes
+          @bytes ||= {}
+        end
+
+        # ---- Core ---- #
+
+        # @override
+        def to_s
+          str_buffer = "#{sn}\tAction: #{action} (#{dictionary(:action)}), Nav: #{nav} (#{dictionary(:nav)})"
+          str_buffer
+        end
+
+        # def inspect
+        #   "#<#{self.class} @key=#{key} (#{dict(:key, key)}) @status=#{status} (#{dict(:status, status)})>"
+        # end
+      end
     end
-
-    # ---- Printable ---- #
-
-    def bytes
-      @bytes ||= {}
-    end
-
-    # ---- Core ---- #
-
-    # @override
-    def to_s
-      str_buffer = "#{sn}\tAction: #{action} (#{dictionary(:action)}), Nav: #{nav} (#{dictionary(:nav)})"
-      str_buffer
-    end
-
-    # def inspect
-    #   "#<#{self.class} @key=#{key} (#{dict(:key, key)}) @status=#{status} (#{dict(:status, status)})>"
-    # end
   end
 end
