@@ -3,10 +3,12 @@
 require_relative 'controller/constants'
 
 module Wilhelm
-  class UserInterface
-    # Comment
-    module Controller
-      include Constants
+  module Services
+    class UserInterface
+      # Comment
+      module Controller
+        include Constants
+      end
     end
   end
 end

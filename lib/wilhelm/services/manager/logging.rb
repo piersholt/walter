@@ -30,7 +30,7 @@ module Wilhelm
         end
 
         def logger
-          LogActually.services
+          LOGGER
         end
       end
     end

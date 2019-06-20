@@ -16,7 +16,7 @@ module Wilhelm
           TARGET_HANDLER = 'Target'
 
           def logger
-            LogActually.services
+            LOGGER
           end
 
           def take_responsibility(notification)
