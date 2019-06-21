@@ -5,7 +5,7 @@ module Wilhelm
     class Manager
       # Comment
       class Devices
-        include Logging
+        include Constants
         extend Forwardable
         include Observable
 

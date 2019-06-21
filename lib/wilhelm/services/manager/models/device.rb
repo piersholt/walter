@@ -5,7 +5,7 @@ module Wilhelm
     class Manager
       # Comment
       class Device
-        include Logging
+        include Constants
         include Observable
 
         CONNECTED = 'Connected'
