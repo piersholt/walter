@@ -17,5 +17,6 @@ require_relative 'api/display'
 require_relative 'api/controls'
 require_relative 'api/audio'
 require_relative 'api/telephone'
+require_relative 'api/context'
 
 puts "\tDone!"

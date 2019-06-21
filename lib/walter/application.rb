@@ -18,7 +18,7 @@ module Walter
 
       @core = Wilhelm::Core::Context.new(self, file)
       @virtual = Wilhelm::Virtual::Context.new(self, @core)
-      setup_api(virtual.bus)
+      Wilhelm::API::Context.new(virtual.bus)
       setup_sdk
 
       apply_debug_defaults
@@ -78,29 +78,6 @@ module Walter
     end
 
     private
-
-    def setup_api(context)
-      # Walter API
-      vehicle_display = Wilhelm::API::Display.instance
-      vehicle_button = Wilhelm::API::Controls.instance
-      vehicle_audio = Wilhelm::API::Audio.instance
-      vehicle_telephone = Wilhelm::API::Telephone.instance
-
-      vehicle_display.bus = context
-      vehicle_button.bus = context
-      vehicle_audio.bus = context
-      vehicle_telephone.bus = context
-
-      vehicle_button.targets.each do |target|
-        device = context.public_send(target)
-        device.add_observer(vehicle_button)
-      end
-
-      vehicle_display.targets.each do |target|
-        device = context.public_send(target)
-        device.add_observer(vehicle_display)
-      end
-    end
 
     def setup_sdk
       @wolfgang = Wilhelm::SDK::ApplicationContext.new
