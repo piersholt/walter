@@ -19,8 +19,8 @@ module Walter
       @core = Wilhelm::Core::Context.new(self, file)
       virtual = Wilhelm::Virtual::Context.new(self, @core)
       Wilhelm::API::Context.new(virtual.bus)
-      sdk = Wilhelm::SDK::Context.new(@core)
-      setup_services(sdk.environment)
+      @sdk = Wilhelm::SDK::Context.new(@core)
+      setup_services(@sdk.environment)
 
       apply_debug_defaults
 
@@ -73,7 +73,7 @@ module Walter
     def stop
       LOGGER.debug(PROC) { '#stop' }
       LOGGER.info(PROC) { 'Switching off Wilhelm...' }
-      @wolfgang.close
+      @sdk.close
       LOGGER.info(PROC) { 'Wilhelm is off! 👍' }
       @core.off
     end

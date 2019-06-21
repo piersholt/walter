@@ -11,6 +11,10 @@ module Wilhelm
         setup_event_handling(core_context)
       end
 
+      def close
+        environment.close
+      end
+
       def setup_event_handling(core_context)
         core_listener = Listener::CoreListener.new
         core_listener
