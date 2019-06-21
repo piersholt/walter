@@ -21,12 +21,12 @@ module Wilhelm
       # Application Context State Change ----------------------------------------
 
       def state_change(new_state)
-        logger.debug(MANAGER) { "ApplicationContext => #{new_state.class}" }
+        logger.debug(MANAGER) { "Environment => #{new_state.class}" }
         case new_state
-        when Wilhelm::SDK::ApplicationContext::Online
+        when Wilhelm::SDK::Environment::Online
           logger.info(MANAGER) { 'Enable Manager' }
           enable
-        when Wilhelm::SDK::ApplicationContext::Offline
+        when Wilhelm::SDK::Environment::Offline
           logger.info(MANAGER) { 'Disable Mananger' }
           disable
         when Wilhelm::SDK::UserInterface::Context

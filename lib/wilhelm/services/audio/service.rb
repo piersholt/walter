@@ -22,12 +22,12 @@ module Wilhelm
       # Application Context State Change ----------------------------------------
 
       def state_change(new_state)
-        logger.debug(AUDIO) { "ApplicationContext => #{new_state.class}" }
+        logger.debug(AUDIO) { "Environment => #{new_state.class}" }
         case new_state
-        when Wilhelm::SDK::ApplicationContext::Online
+        when Wilhelm::SDK::Environment::Online
           logger.info(AUDIO) { 'Enable Audio' }
           enable
-        when Wilhelm::SDK::ApplicationContext::Offline
+        when Wilhelm::SDK::Environment::Offline
           logger.info(AUDIO) { 'Disable Audio' }
           disable
         when Wilhelm::SDK::UserInterface::Context

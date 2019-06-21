@@ -17,9 +17,10 @@ module Walter
       @console = console
 
       @core = Wilhelm::Core::Context.new(self, file)
-      @virtual = Wilhelm::Virtual::Context.new(self, @core)
+      virtual = Wilhelm::Virtual::Context.new(self, @core)
       Wilhelm::API::Context.new(virtual.bus)
-      setup_sdk
+      sdk = Wilhelm::SDK::Context.new(@core)
+      setup_services(sdk.environment)
 
       apply_debug_defaults
 
@@ -79,22 +80,15 @@ module Walter
 
     private
 
-    def setup_sdk
-      @wolfgang = Wilhelm::SDK::ApplicationContext.new
-
-      core_listener = Wilhelm::SDK::Listener::CoreListener.new
-      interface_handler = Wilhelm::SDK::Handler::InterfaceHandler.new(@wolfgang)
-      core_listener.interface_handler = interface_handler
-      @core.interface.add_observer(core_listener)
-
+    def setup_services(environment)
       manager = Wilhelm::Services::Manager.new
       audio = Wilhelm::Services::Audio.new
 
       manager.disable
       audio.disable
 
-      @wolfgang.register_service(:manager, manager)
-      @wolfgang.register_service(:audio, audio)
+      environment.register_service(:manager, manager)
+      environment.register_service(:audio, audio)
     end
   end
 end

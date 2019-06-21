@@ -1,18 +1,22 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
-puts "\tLoading wilhelm/sdk/context"
+module Wilhelm
+  module SDK
+    # SDK Container
+    class Context
+      attr_reader :environment
 
-require_relative 'context/constants'
-require_relative 'context/logging'
-require_relative 'context/nodes'
+      def initialize(core_context)
+        @environment = Environment.new
+        setup_event_handling(core_context)
+      end
 
-require_relative 'context/notifications/debug_handler'
-
-require_relative 'context/states/defaults'
-require_relative 'context/states/offline'
-# Possibly deprecated...
-# require_relative 'context/states/establishing'
-require_relative 'context/states/online'
-
-require_relative 'context/controls'
-require_relative 'context/service'
+      def setup_event_handling(core_context)
+        core_listener = Listener::CoreListener.new
+        core_listener
+          .interface_handler = Handler::InterfaceHandler.new(environment)
+        core_context.interface.add_observer(core_listener)
+      end
+    end
+  end
+end

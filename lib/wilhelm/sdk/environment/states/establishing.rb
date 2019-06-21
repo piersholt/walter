@@ -3,7 +3,7 @@
 # Top level namespace
 module Wilhelm
   module SDK
-    class ApplicationContext
+    class Environment
       # Wilhelm Service Establishing State
       class Establishing
         include Defaults

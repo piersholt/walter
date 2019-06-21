@@ -2,7 +2,7 @@
 
 module Wilhelm
   module SDK
-    class ApplicationContext
+    class Environment
       # Comment
       module Nodes
         include Constants

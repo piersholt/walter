@@ -3,7 +3,7 @@
 # Top level namespace
 module Wilhelm
   module SDK
-    class ApplicationContext
+    class Environment
       # Wilhelm Service Online State
       class Online
         include Defaults

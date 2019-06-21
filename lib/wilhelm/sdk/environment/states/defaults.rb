@@ -2,7 +2,7 @@
 
 module Wilhelm
   module SDK
-    class ApplicationContext
+    class Environment
       # Thingo
       module Defaults
         # User Control

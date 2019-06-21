@@ -4,7 +4,7 @@
 module Wilhelm
   module SDK
     # Wilhelm Service
-    class ApplicationContext
+    class Environment
       include Logging
       include Constants
       include Observable

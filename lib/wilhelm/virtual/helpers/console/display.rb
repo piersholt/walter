@@ -28,7 +28,7 @@ module Wilhelm
 
           def shutup!(set = NOISEY_NG)
             set.each do |group, command_ids|
-              LOGGER.debug { "Shutting up: #{group}" }
+              LOGGER.info { "Shutting up: #{group}" }
               display_handler.i.h_c(*command_ids)
             end
           end

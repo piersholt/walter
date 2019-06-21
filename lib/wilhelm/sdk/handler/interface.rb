@@ -18,14 +18,14 @@ module Wilhelm
         end
 
         def bus_online
-          LOGGER.info(name) { 'Bus Online! Enabling ApplicationContext.' }
+          LOGGER.info(name) { 'Bus Online! Enabling Environment.' }
           LOGGER.debug(name) { 'Switching on Wilhelm...' }
           @application_context.online!
           LOGGER.debug(name) { 'Wilhelm is on! 👍' }
         end
 
         def bus_offline
-          LOGGER.info(name) { 'Bus Offline! Disabling ApplicationContext.' }
+          LOGGER.info(name) { 'Bus Offline! Disabling Environment.' }
           LOGGER.debug(name) { 'Switching off Wilhelm...' }
           @application_context.offline!
           LOGGER.debug(name) { 'Wilhelm is off! 👍' }

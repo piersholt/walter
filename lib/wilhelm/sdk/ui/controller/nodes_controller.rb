@@ -60,9 +60,9 @@ module Wilhelm
           def wolfgang(action)
             LOGGER.debug(NAME) { "#wolfgang(#{action})" }
             case action
-            when ApplicationContext::Online
+            when Environment::Online
               index
-            when ApplicationContext::Offline
+            when Environment::Offline
               index
             else
               LOGGER.debug(NAME) { "#update: #{action} not implemented." }
