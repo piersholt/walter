@@ -8,8 +8,8 @@ module Wilhelm
 
       def initialize(application_object, path)
         setup_interface(path)
-        setup_transceiver(@interface.input_buffer, @interface.output_buffer)
-        setup_multiplexing(@receiver.frame_input_buffer, @transmitter.frame_output_buffer)
+        setup_transceiver(interface)
+        setup_multiplexing(@receiver.output_buffer, @transmitter.frame_output_buffer)
         setup_event_handling(application_object)
       end
 
@@ -38,12 +38,14 @@ module Wilhelm
       private
 
       def setup_interface(path)
-        @interface = Interface.new(path)
+        stream = Interface::Stat.new(path)
+        stream_handler = stream.handler
+        @interface = stream_handler.new(path)
       end
 
-      def setup_transceiver(input_buffer, output_buffer)
-        @receiver    = Receiver.new(input_buffer)
-        @transmitter = Transmitter.new(output_buffer)
+      def setup_transceiver(io_buffer)
+        @receiver    = Receiver.new(io_buffer)
+        @transmitter = Transmitter.new(io_buffer)
       end
 
       def setup_multiplexing(input_buffer, output_buffer)
@@ -52,15 +54,10 @@ module Wilhelm
       end
 
       def setup_event_handling(application_object)
-        interface_handler = InterfaceHandler.new(@transmitter)
-        data_logging_handler = DataLoggingHandler.instance
-
-        core_listener = CoreListener.new
-        core_listener.interface_handler = interface_handler
-        core_listener.data_logging_handler = data_logging_handler
-
+        core_listener = Listener::CoreListener.new
         application_listener = Listener::ApplicationListener.new
-        application_listener.data_logging_handler = data_logging_handler
+
+        core_listener.interface_handler = InterfaceHandler.new(@transmitter)
 
         @interface.add_observer(core_listener)
         @receiver.add_observer(core_listener)

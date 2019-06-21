@@ -17,11 +17,11 @@ module Wilhelm
       SYNC_ERROR = 'Error /'
       SYNC_SHIFT = 'Unshift! /'
 
-      attr_reader :input_buffer, :frame_input_buffer, :read_thread
+      attr_reader :input_buffer, :output_buffer, :read_thread
 
       def initialize(input_buffer, frame_synchronisation = FrameSynchronisation)
         @input_buffer = input_buffer
-        @frame_input_buffer = SizedQueue.new(32)
+        @output_buffer = SizedQueue.new(32)
         @frame_synchronisation = frame_synchronisation
       end
 
@@ -39,7 +39,7 @@ module Wilhelm
 
       def on
         LOGGER.debug(name) { "#{self.class}#on" }
-        @read_thread = thread_read_buffer(@input_buffer, @frame_input_buffer)
+        @read_thread = thread_read_buffer(@input_buffer, @output_buffer)
         add_thread(@read_thread)
         true
       rescue StandardError => e
@@ -52,21 +52,21 @@ module Wilhelm
 
       # ------------------------------ THREADS ------------------------------ #
 
-      def thread_read_buffer(buffer, frame_input_buffer)
+      def thread_read_buffer(input_buffer, output_buffer)
         Thread.new do
           LOGGER.debug(name) { 'New Thread: Frame Synchronisation.' }
           Thread.current[:name] = THREAD_NAME
-          synchronisation(buffer)
+          synchronisation(input_buffer)
           LOGGER.warn(name) { "#{self.class} thread is finished..!" }
         end
       end
 
-      def synchronisation(buffer)
+      def synchronisation(input_buffer)
         LOGGER.debug(name) { 'Entering byte shift loop.' }
         shift_count = 1
         loop do
           # LOGGER.debug(name) { "#{shift_count}. Start." }
-          synchronise_frame(buffer)
+          synchronise_frame(input_buffer)
           # LOGGER.debug(name) { "#{shift_count}. End." }
           shift_count += 1
         end
@@ -76,8 +76,8 @@ module Wilhelm
         binding.pry
       end
 
-      def synchronise_frame(buffer)
-        synchronisation = @frame_synchronisation.new(buffer)
+      def synchronise_frame(input_buffer)
+        synchronisation = @frame_synchronisation.new(input_buffer)
         new_frame = synchronisation.run
 
         LOGGER.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
@@ -86,14 +86,14 @@ module Wilhelm
         changed
         notify_observers(Constants::Events::FRAME_RECEIVED, frame: new_frame)
 
-        frame_input_buffer.push(new_frame)
+        output_buffer.push(new_frame)
       rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
         LOGGER.warn(name) { "#{e}!" }
-        clean_up(buffer, synchronisation.frame)
+        clean_up(input_buffer, synchronisation.frame)
       rescue StandardError => e
         LOGGER.error(name) { e }
         e.backtrace.each { |line| LOGGER.warn(line) }
-        clean_up(buffer, synchronisation.frame)
+        clean_up(input_buffer, synchronisation.frame)
         binding.pry
       end
 

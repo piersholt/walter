@@ -9,17 +9,17 @@ module Wilhelm
         include ManageableThreads
         include Constants::Events
 
-        attr_reader :frame_input_buffer, :packet_input_buffer, :read_thread
+        attr_reader :input_buffer, :output_buffer, :read_thread
 
-        def initialize(frame_input_buffer, address_lookup_table = AddressLookupTable.instance)
-          @frame_input_buffer = frame_input_buffer
-          @packet_input_buffer = SizedQueue.new(32)
+        def initialize(input_buffer, address_lookup_table = AddressLookupTable.instance)
+          @input_buffer = input_buffer
+          @output_buffer = SizedQueue.new(32)
           @address_lookup_table = address_lookup_table
         end
 
         def on
           LOGGER.debug(name) { '#on' }
-          @read_thread = thread_read_input_frame_buffer(@frame_input_buffer, @packet_input_buffer)
+          @read_thread = thread_read_input_frame_buffer(@input_buffer, @output_buffer)
           add_thread(@read_thread)
           true
         rescue StandardError => e
@@ -41,20 +41,20 @@ module Wilhelm
 
         alias proc_name name
 
-        def thread_read_input_frame_buffer(frame_input_buffer, packet_input_buffer)
+        def thread_read_input_frame_buffer(input_buffer, output_buffer)
           LOGGER.debug(name) { 'New Thread: Frame Demultiplexing' }
           Thread.new do
             Thread.current[:name] = name
             begin
               loop do
-                new_frame = frame_input_buffer.pop
+                new_frame = input_buffer.pop
                 new_packet = demultiplex(new_frame)
 
                 changed
                 notify_observers(PACKET_RECEIVED, packet: new_packet)
 
-                # LOGGER.unknown(PROG_NAME) { "packet_input_buffer.push(#{new_packet})" }
-                # packet_input_buffer.push(new_packet)
+                # LOGGER.unknown(PROG_NAME) { "output_buffer.push(#{new_packet})" }
+                # output_buffer.push(new_packet)
               end
             rescue StandardError => e
               LOGGER.error(name) { e }
