@@ -33,7 +33,7 @@ module Wilhelm
         when Wilhelm::SDK::UserInterface::Context
           new_state
           .register_service_controllers(
-            audio: Wilhelm::UserInterface::Controller::AudioController
+            audio: Wilhelm::Services::UserInterface::Controller::AudioController
           )
         when Wilhelm::SDK::Notifications
           target_handler = Wilhelm::Services::Audio::Notifications::TargetHandler.instance
