@@ -92,14 +92,13 @@ module Walter
           .new(augmented: %i[gfx bmbt mfl], emulated: %i[rad tel])
           .execute
 
-          interface_listener = Wilhelm::Virtual::Listener::InterfaceListener.new
-          interface_listener.interface_handler = Wilhelm::Virtual::Handler::InterfaceHandler.new(bus)
+          core_listener = Wilhelm::Virtual::Listener::CoreListener.new
 
-          multiplexing_listener = Wilhelm::Virtual::Listener::MultiplexingListener.new
-          multiplexing_listener.packet_handler = Wilhelm::Virtual::Handler::PacketHandler.new(bus)
+          core_listener.interface_handler = Wilhelm::Virtual::Handler::InterfaceHandler.new(bus)
+          core_listener.packet_handler = Wilhelm::Virtual::Handler::PacketHandler.new(bus)
 
-          interface.add_observer(interface_listener)
-          demultiplexer.add_observer(multiplexing_listener)
+          interface.add_observer(core_listener)
+          demultiplexer.add_observer(core_listener)
 
           virtual_listener = Wilhelm::Virtual::Listener::VirtualListener.new
           virtual_listener.message_handler = Wilhelm::Virtual::Handler::MessageHandler.new(bus, multiplexer.packet_output_buffer)
@@ -110,7 +109,7 @@ module Walter
           add_observer(application_listener)
 
           # Convoluted: Listening for MESSAGE_RECEIVED
-          multiplexing_listener.packet_handler.add_observer(virtual_listener)
+          core_listener.packet_handler.add_observer(virtual_listener)
 
           # MESSAGE_RECEIVED
           # bus_handler.add_observer(session_listener)
