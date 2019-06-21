@@ -371,8 +371,8 @@
       :type: :map
       :map:
         0x00: unrecognised
-        0x04: valid
         0x01: unauthenticated
+        0x04: valid
         0x05: authenticated
       :dictionary:
         0x00: No Longer Recognised
@@ -405,9 +405,11 @@
     :senders:
       - EWS
     :notes:
-      - 0x05 goes to 0x01
-      - 0x04 goes to 0x00
-      - i assume there's a different state if the key is IDENTIFIED but DISABLED?
+      - invalid reasons:
+        - changing code
+        - identification
+        - password
+        - disabled
 # ************************************************************************* #
 #                                 MEMORY?
 # ************************************************************************* #
