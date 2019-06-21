@@ -10,6 +10,7 @@ module Wilhelm
       include Notifications
       include Actions
       include Requests
+      include Replies
       include Messaging::API
 
       attr_reader :state

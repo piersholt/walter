@@ -21,5 +21,6 @@ require_relative 'manager/state'
 require_relative 'manager/notifications'
 require_relative 'manager/actions'
 require_relative 'manager/requests'
+require_relative 'manager/replies'
 
 require_relative 'manager/service'
