@@ -10,7 +10,7 @@ module Wilhelm
         @transmitter = transitter
       end
 
-      NAME = 'Core::InterfaceHandler'
+      NAME = 'InterfaceHandler'
 
       def name
         NAME

@@ -11,21 +11,21 @@ module Wilhelm
           @application_context = application_context
         end
 
-        NAME = 'SDK::InterfaceHandler'.freeze
+        NAME = 'InterfaceHandler'.freeze
 
         def name
           NAME
         end
 
         def bus_online
-          LOGGER.warn(name) { 'Bus Online! Enabling ApplicationContext.' }
+          LOGGER.info(name) { 'Bus Online! Enabling ApplicationContext.' }
           LOGGER.debug(name) { 'Switching on Wilhelm...' }
           @application_context.online!
           LOGGER.debug(name) { 'Wilhelm is on! 👍' }
         end
 
         def bus_offline
-          LOGGER.warn(name) { 'Bus Offline! Disabling ApplicationContext.' }
+          LOGGER.info(name) { 'Bus Offline! Disabling ApplicationContext.' }
           LOGGER.debug(name) { 'Switching off Wilhelm...' }
           @application_context.offline!
           LOGGER.debug(name) { 'Wilhelm is off! 👍' }

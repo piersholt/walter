@@ -30,7 +30,7 @@ module Wilhelm
           end
 
           def on
-            LOGGER.warn(self.class.name) { '#on' }
+            LOGGER.info(NAME) { '#on' }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             online!
@@ -38,7 +38,7 @@ module Wilhelm
           end
 
           def off
-            LOGGER.warn(self.class.name) { '#off' }
+            LOGGER.info(NAME) { '#off' }
             close_threads
             close_capture
           end

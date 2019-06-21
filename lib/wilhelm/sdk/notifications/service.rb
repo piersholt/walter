@@ -40,7 +40,7 @@ module Wilhelm
       end
 
       def register_handlers(*handlers)
-        logger.info(NOTIFICATIONS) { "#register_handlers(#{handlers})" }
+        logger.debug(NOTIFICATIONS) { "#register_handlers(#{handlers})" }
         handlers.each do |handler|
           registered_handlers << handler
         end

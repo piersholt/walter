@@ -11,20 +11,20 @@ module Wilhelm
           @bus = bus
         end
 
-        NAME = 'Virtual::InterfaceHandler'.freeze
+        NAME = 'InterfaceHandler'.freeze
 
         def name
           NAME
         end
 
         def bus_online
-          LOGGER.warn(name) { 'Bus Online! Enabling virtual bus.' }
+          LOGGER.info(name) { 'Bus Online! Enabling virtual bus.' }
           @bus.online
           @bus.simulated.send_all(:enable)
         end
 
         def bus_offline
-          LOGGER.warn(name) { 'Bus Offline! Disabling virtual bus.' }
+          LOGGER.info(name) { 'Bus Offline! Disabling virtual bus.' }
           @bus.offline
           @bus.simulated.send_all(:disable)
           @bus.augmented.send_all(:disable)

@@ -13,7 +13,7 @@ module Wilhelm
           include State
 
           NAME = 'Capture'.freeze
-          
+
           def name
             NAME
           end
@@ -27,14 +27,14 @@ module Wilhelm
           end
 
           def on
-            LOGGER.warn(NAME) { '#on' }
+            LOGGER.info(NAME) { '#on' }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             offline!
           end
 
           def off
-            LOGGER.warn(NAME) { '#off' }
+            LOGGER.info(NAME) { '#off' }
             close_threads
           end
 

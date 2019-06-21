@@ -30,7 +30,7 @@ module Wilhelm
           end
 
           def release!
-            LOGGER.warn(name) { 'Bus Offline! Disabling logging.' }
+            LOGGER.info(name) { 'Bus Offline! Disabling logging.' }
             @capture = false
           end
 

@@ -8,13 +8,13 @@ module Wilhelm
         include Observable
 
         def offline!
-          LOGGER.warn(PROC) { "IO stream is file => Bus Offline!" }
+          LOGGER.info(PROC) { "IO stream is #{self.class.name} => Bus Offline!" }
           changed
           notify_observers(Constants::Events::BUS_OFFLINE, self.class)
         end
 
         def online!
-          LOGGER.warn(PROC) { "IO stream is tty => Bus Online!" }
+          LOGGER.info(PROC) { "IO stream is #{self.class.name} => Bus Online!" }
           changed
           notify_observers(Constants::Events::BUS_ONLINE, self.class)
         end

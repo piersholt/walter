@@ -4,7 +4,7 @@ puts 'Loading wilhelm/sdk'
 
 LogActually.is_all_around(:sdk)
 
-LogActually.sdk.d
+LogActually.sdk.i
 
 module Wilhelm
   module SDK
