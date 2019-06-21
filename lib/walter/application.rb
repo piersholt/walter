@@ -17,7 +17,7 @@ module Walter
       @console = console
 
       @core = Wilhelm::Core::Context.new(self, file)
-      virtual = Wilhelm::Virtual::Context.new(self, @core)
+      @virtual = Wilhelm::Virtual::Context.new(self, @core)
       Wilhelm::API::Context.new(virtual.bus)
       @sdk = Wilhelm::SDK::Context.new(@core)
       setup_services(@sdk.environment)

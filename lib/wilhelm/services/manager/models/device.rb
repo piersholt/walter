@@ -18,7 +18,7 @@ module Wilhelm
         BLOCKED = 'Blocked'
         ALIAS = 'Alias'
         ADAPTER = 'Adapter'
-        ICON = 'Idapter'
+        ICON = 'Icon'
 
         attr_reader :attributes
 
