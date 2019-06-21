@@ -36,7 +36,7 @@ module Wilhelm
       end
 
       def fetch_frame_header
-        LOGGER.debug(name) { "#{SYNC} Byte Buffer size:  #{buffer.register} + #{buffer.size}." }
+        LOGGER.debug(name) { "#{SYNC} Byte Buffer size: #{buffer.size} (+ #{buffer.register}.)" }
 
         LOGGER.debug(name) { "#{SYNC_HEADER} Trying to shift #{Frame::HEADER_LENGTH} bytes." }
         header = buffer.shift(Frame::HEADER_LENGTH)
@@ -53,7 +53,7 @@ module Wilhelm
       end
 
       def fetch_frame_tail
-        LOGGER.debug(name) { "#{SYNC} Input Buffer: #{buffer.size}." }
+        LOGGER.debug(name) { "#{SYNC_TAIL} Input Buffer: #{buffer.size}." }
 
         to_fetch = pending
 

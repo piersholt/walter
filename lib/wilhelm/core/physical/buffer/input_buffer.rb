@@ -9,8 +9,8 @@ module Wilhelm
       # but it's still capsulated with framer.. the actual behaviour of unshift is generic...
       class InputBuffer < SizedQueue
         SIZE = 1024
-        def initialize
-          super(SIZE)
+        def initialize(size = SIZE)
+          super(size)
           @unshift_buffer = []
         end
 

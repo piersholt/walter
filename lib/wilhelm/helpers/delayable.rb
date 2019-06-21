@@ -8,7 +8,7 @@ module Wilhelm
       DEFAULT_TIME = 5
 
       def log
-        LOGGER
+        LOGGER.id
       end
 
       def delay
