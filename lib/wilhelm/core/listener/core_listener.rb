@@ -19,8 +19,6 @@ module Wilhelm
 
         def update(action, ___ = {})
           case action
-          when BYTE_RECEIVED
-            false
           when FRAME_RECEIVED
             false
           when BUS_ONLINE

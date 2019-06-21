@@ -10,8 +10,6 @@ module Wilhelm
 
       def update(action, properties = {})
         case action
-        when BYTE_RECEIVED
-          byte_received(action, properties)
         when FRAME_RECEIVED
           frame_received(action, properties)
         when FRAME_FAILED
