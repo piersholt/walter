@@ -15,9 +15,9 @@ require_relative 'capabilities/cdc/chainable'
 require_relative 'capabilities/cdc/state'
 require_relative 'capabilities/cdc'
 
-require_relative 'capabilities/diagnostics/gm'
-require_relative 'capabilities/diagnostics/lcm'
-require_relative 'capabilities/diagnostics'
+require_relative 'capabilities/diag/gm'
+require_relative 'capabilities/diag/lcm'
+require_relative 'capabilities/diag'
 
 require_relative 'capabilities/gfx/constants'
 require_relative 'capabilities/gfx/user_interface'
