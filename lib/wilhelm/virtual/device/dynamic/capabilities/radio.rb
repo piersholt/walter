@@ -11,7 +11,7 @@ module Wilhelm
         include CDChangerControl
         include CDChangerDisplay
         include RDSDisplay
-        include RadioLED
+        include LED
       end
     end
   end

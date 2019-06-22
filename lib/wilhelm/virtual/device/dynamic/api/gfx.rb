@@ -20,9 +20,9 @@ module Wilhelm
           try(from, to, SRC_SND, arguments)
         end
 
-        # 0x23
+        # 0x31 TEL_DATA
         def user_input(from: :gfx, to: :rad, **arguments)
-          try(from, to, 0x31, arguments)
+          try(from, to, TEL_DATA, arguments)
         end
 
         # # 0x4F SRC-GFX

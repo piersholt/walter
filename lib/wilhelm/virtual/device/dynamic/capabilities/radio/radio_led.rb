@@ -5,8 +5,8 @@ module Wilhelm
     module Capabilities
       module Radio
         # BMBT Interface Control
-        module RadioLED
-          include Wilhelm::Virtual::API::RadioLED
+        module LED
+          include Wilhelm::Virtual::API::Radio::LED
           include Constants
 
           def led_off

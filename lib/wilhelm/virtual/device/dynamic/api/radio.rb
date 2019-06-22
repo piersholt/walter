@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module API
-      # API for command related to keys
+      # Radio API
       module Radio
         include Wilhelm::Virtual::Constants::Command::Aliases
         include BaseAPI
@@ -11,14 +11,14 @@ module Wilhelm
         # BMBT
 
         # 0x4A
-        def led(from: :rad, to: :bmbt, **arguments)
-          format_chars!(arguments)
-          try(from, to, RAD_LED, arguments)
-        end
-
-        def l(i)
-          led(led: i)
-        end
+        # def led(from: :rad, to: :bmbt, **arguments)
+        #   format_chars!(arguments)
+        #   try(from, to, RAD_LED, arguments)
+        # end
+        #
+        # def l(i)
+        #   led(led: i)
+        # end
 
         # CD CHANGER
 
