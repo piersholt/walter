@@ -1,31 +1,15 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module Diagnostics
         # Comment
         class Emulated < Device::Emulated
-          # include API::Diagnostics
-          include Capabilities::Diagnostics
+          include Capabilities
 
-          PROC = 'ManualDiagnostics'
-
-          def type
-            :augmented
-          end
-
-          # @override Object#inspect
-          def inspect
-            "#<AugmentedDevice :#{@ident}>"
-          end
-
-          # @override Object#to_s
-          def to_s
-            "<:#{@ident}>"
-          end
-
+          PROC = 'Emulated::Diagnostics'
+          
           def handle_virtual_receive(message)
             command_id = message.command.d
             # return super if command_id == PING

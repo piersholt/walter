@@ -6,10 +6,6 @@ require_relative 'capabilities/helpers'
 
 require_relative 'capabilities/ready'
 
-require_relative 'capabilities/diag/gm'
-require_relative 'capabilities/diag/lcm'
-require_relative 'capabilities/diag'
-
 require_relative 'capabilities/gfx/constants'
 require_relative 'capabilities/gfx/user_interface'
 require_relative 'capabilities/gfx/user_controls'
