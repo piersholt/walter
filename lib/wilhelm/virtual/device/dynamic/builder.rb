@@ -5,20 +5,16 @@ module Wilhelm
     # Comment
     class DynamicDeviceBuilder
       include Wilhelm::Helpers::Module
-      
+
       CLASS_MAP = {
-        dsp: 'SimulatedDSP',
-        cdc: 'EmulatedCDC',
-        tel: 'SimulatedTEL',
-        rad: 'SimulatedRadio',
-        gfx: 'AugmentedGFX',
-        dia: 'ManualDiagnostics',
-        iris: 'EmulationDummy',
-        nav_jp: 'EmulationDummy',
-        bmbt: 'AugmentedBMBT',
-        nav: 'EmulationDummy',
-        tv: 'EmulationDummy',
-        mfl: 'AugmentedMFL'
+        dsp: 'Device::DSP::Emulated',
+        cdc: 'Device::CDC::Emulated',
+        tel: 'Device::Telephone::Emulated',
+        rad: 'Device::Radio::Emulated',
+        gfx: 'Device::GFX::Augmented',
+        dia: 'Device::Diagnostics::Emulated',
+        bmbt: 'Device::BMBT::Augmented',
+        mfl: 'Device::MFL::Augmented'
       }.freeze
 
       attr_reader :ident

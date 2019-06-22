@@ -1,30 +1,45 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
-puts "\tLoading wilhelm/virtual/device/emulated"
+module Wilhelm
+  module Virtual
+    class EmulatedDevice < DynamicDevice
+      include Capabilities::Ready
 
-# Base
-require_relative 'emulated/device'
+      PROC = 'EmulatedDevice'.freeze
 
-# CDC
-require_relative 'emulated/cdc/handlers'
-require_relative 'emulated/cdc/device'
+      def initialize(args)
+        super(args)
+      end
 
-# DSP
-require_relative 'emulated/dsp/device'
+      def type
+        :simulated
+      end
 
-# Radio
-require_relative 'emulated/rad/device'
+      # @override Object#inspect
+      def inspect
+        "#<EmulatedDevice :#{@ident}>"
+      end
 
-# Telephone
-require_relative 'emulated/tel/state/model'
-require_relative 'emulated/tel/state/chainable'
-require_relative 'emulated/tel/state'
-require_relative 'emulated/tel/received'
-require_relative 'emulated/tel/handlers'
-require_relative 'emulated/tel/device'
+      # @override Object#to_s
+      def to_s
+        "<:#{@ident}>"
+      end
 
-# Diagnostics
-require_relative 'emulated/diagnostics/device'
+      # @override Virtual::Device#receive_packet
 
-# Dummy
-require_relative 'emulated/dummy/device'
+      def handle_virtual_receive(message)
+        # logger.fatal(PROC) { "handle_virtual_receive: #{message.command.d}" }
+        command_id = message.command.d
+        case command_id
+        when PING
+          # logger.fatal(PROC) { "Rx: Handling: PING" }
+          pong
+        end
+      end
+
+      def handle_virtual_transmit(message)
+        false
+      end
+    end
+  end
+end

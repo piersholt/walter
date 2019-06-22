@@ -1,44 +1,30 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/virtual/device/augmented"
+# Comment
+module Wilhelm
+  module Virtual
+    class AugmentedDevice < DynamicDevice
+      # include Actions
 
-require_relative 'augmented/constants'
+      PROC = 'AugmentedDevice'.freeze
 
-augmented_root = 'device/augmented'
+      def initialize(args)
+        super(args)
+      end
 
-require "#{augmented_root}/device"
+      def type
+        :augmented
+      end
 
-# Radio
-radio_root = augmented_root + '/radio'
-require "#{radio_root}/state/constants"
-require "#{radio_root}/state/model"
-require "#{radio_root}/state/chainable"
-require "#{radio_root}/state/received"
-require "#{radio_root}/state"
-require "#{radio_root}/actions"
-require "#{radio_root}/notifications"
-require "#{radio_root}/device"
+      # @override Object#inspect
+      def inspect
+        "#<AugmentedDevice :#{@ident}>"
+      end
 
-# Radio
-gfx_root = augmented_root + '/gfx'
-require "#{gfx_root}/state/constants"
-require "#{gfx_root}/state/model"
-require "#{gfx_root}/state/chainable"
-require "#{gfx_root}/state/sent"
-require "#{gfx_root}/state/received"
-require "#{gfx_root}/state"
-require "#{gfx_root}/device"
-
-# BMBT
-bmbt_root = augmented_root + '/bmbt'
-require "#{bmbt_root}/sent"
-require "#{bmbt_root}/device"
-
-# MFL
-mfl_root = augmented_root + '/mfl'
-require "#{mfl_root}/state/constants"
-require "#{mfl_root}/state/model"
-require "#{mfl_root}/state/chainable"
-require "#{mfl_root}/state/sent"
-require "#{mfl_root}/state"
-require "#{mfl_root}/device"
+      # @override Object#to_s
+      def to_s
+        "<:#{@ident}>"
+      end
+    end
+  end
+end
