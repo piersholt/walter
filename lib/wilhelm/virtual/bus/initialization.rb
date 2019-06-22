@@ -39,10 +39,10 @@ module Wilhelm
         def create_device(device_ident)
           if @emulated.include?(device_ident)
             LOGGER.debug(PROC) { "Create Emulated #{device_ident}" }
-            Device::Dynamic.builder.target(device_ident).result
+            Device::Dynamic.builder.target(device_ident).type(:emulated).result
           elsif @augmented.include?(device_ident)
             LOGGER.debug(PROC) { "Create Augmented #{device_ident}" }
-            Device::Dynamic.builder.target(device_ident).result
+            Device::Dynamic.builder.target(device_ident).type(:augmented).result
           else
             LOGGER.debug(PROC) { "Create dumb: #{device_ident}|" }
             Device::Base.new(device_ident)

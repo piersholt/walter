@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Wilhelm
   module Virtual
@@ -7,18 +7,22 @@ module Wilhelm
       class Builder
         include Wilhelm::Helpers::Module
 
-        CLASS_MAP = {
-          dsp: 'Device::DSP::Emulated',
-          cdc: 'Device::CDC::Emulated',
-          tel: 'Device::Telephone::Emulated',
-          rad: 'Device::Radio::Emulated',
-          gfx: 'Device::GFX::Augmented',
-          dia: 'Device::Diagnostics::Emulated',
-          bmbt: 'Device::BMBT::Augmented',
-          mfl: 'Device::MFL::Augmented'
-        }.freeze
+        TYPES_MAP =
+          { base: 'Base',
+            emulated: 'Emulated',
+            augmented: 'Augmented' }.freeze
 
-        attr_reader :ident
+        CLASS_MAP =
+          { dsp: 'DSP',
+            cdc: 'CDC',
+            tel: 'Telephone',
+            rad: 'Radio',
+            gfx: 'GFX',
+            dia: 'Diagnostics',
+            bmbt: 'BMBT',
+            mfl: 'MFL' }.freeze
+
+        attr_reader :ident, :klass
 
         def name
           'Device::Builder'
@@ -26,17 +30,47 @@ module Wilhelm
 
         def target(ident)
           LOGGER.debug(name) { ident }
-          raise StandardError, "no class to target #{ident}" unless CLASS_MAP.key?(ident)
+          validate_target(ident)
           @ident = ident
           self
         end
 
+        def type(klass)
+          validate_type(klass)
+          @klass = TYPES_MAP[klass]
+          self
+        end
+
         def result
-          raise StandardError, "no ident set!" unless @ident
-          klass_constant = CLASS_MAP[ident]
-          klass_constant = prepend_namespace('Wilhelm::Virtual', klass_constant)
+          validate_parameters
+          klass_constant = join_namespaces('Wilhelm', 'Virtual', 'Device', CLASS_MAP[ident], klass)
           klass = get_class(klass_constant)
           klass.new(ident)
+        end
+
+        def validate_parameters
+          return true if ident && klass
+          raise(ArgumentError, 'Parameters not set!'\
+                               "Ident: #{ident ? ident : 'nil!'},"\
+                               "Klass: #{klass ? klass : 'nil!'}")
+        end
+
+        def validate_type(klass)
+          return true if valid_type?(klass)
+          raise(ArgumentError, "Type must be one of: #{TYPES_MAP.keys}")
+        end
+
+        def validate_target(ident)
+          return true if valid_target?(ident)
+          raise(ArgumentError, "Target must be one of: #{CLASS_MAP.keys}")
+        end
+
+        def valid_type?(klass)
+          TYPES_MAP.key?(klass)
+        end
+
+        def valid_target?(ident)
+          CLASS_MAP.key?(ident)
         end
       end
     end
