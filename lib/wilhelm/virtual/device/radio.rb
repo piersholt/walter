@@ -2,6 +2,9 @@
 
 puts "\tLoading wilhelm/virtual/device/radio"
 
+require_relative 'radio/api'
+require_relative 'radio/capabilities'
+
 require_relative 'radio/augmented/state/constants'
 require_relative 'radio/augmented/state/model'
 require_relative 'radio/augmented/state/chainable'

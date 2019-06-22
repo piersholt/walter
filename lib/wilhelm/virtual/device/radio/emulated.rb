@@ -7,7 +7,7 @@ module Wilhelm
       module Radio
         # Comment
         class Emulated < Device::Emulated
-          include Capabilities::Radio
+          include Capabilities
 
           PROC = 'SimulatedRadio'
           SUBSCRIBE = [PING, MENU_GFX].freeze

@@ -11,7 +11,7 @@ module Wilhelm
           include Actions
           include Notifications
           # include Capabilities::OnBoardMonitor
-          include Capabilities::Radio
+          include Capabilities
 
           PROC = 'AugmentedRadio'
 
