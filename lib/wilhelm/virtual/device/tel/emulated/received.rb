@@ -7,7 +7,7 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Comment
           module Received
-            include Capabilities::Telephone::Constants
+            include Capabilities::Constants
 
             # Piggyback off the radio announce to annunce
             def handle_announce(message)

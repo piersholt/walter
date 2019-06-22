@@ -2,6 +2,9 @@
 
 puts "\tLoading wilhelm/virtual/device/tel"
 
+require_relative 'tel/api'
+require_relative 'tel/capabilities'
+
 require_relative 'tel/emulated/state/model'
 require_relative 'tel/emulated/state/chainable'
 require_relative 'tel/emulated/state'

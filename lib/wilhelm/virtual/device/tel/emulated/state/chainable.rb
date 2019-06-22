@@ -8,7 +8,7 @@ module Wilhelm
           module State
             # Comment
             module Chainable
-              include Capabilities::Telephone::Constants
+              include Capabilities::Constants
 
               # STATUS
 

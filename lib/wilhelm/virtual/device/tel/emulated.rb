@@ -6,7 +6,7 @@ module Wilhelm
       module Telephone
         # Comment
         class Emulated < Device::Emulated
-          include Capabilities::Telephone
+          include Capabilities
           include Deprecated
           include State
           include Received

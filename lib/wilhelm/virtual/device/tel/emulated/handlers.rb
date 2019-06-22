@@ -7,9 +7,9 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Simulated CD Changer
           module Deprecated
-            include Capabilities::Telephone::Constants
+            include Capabilities::Constants
             # include Wilhelm::Helpers::Stateful
-            include API::Telephone
+            include API
 
             def bluetooth_pending
               LOGGER.unknown(PROC) { 'Bluetooth connection pending...' }

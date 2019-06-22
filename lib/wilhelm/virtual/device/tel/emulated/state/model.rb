@@ -9,7 +9,7 @@ module Wilhelm
             # Comment
             module Model
               include Wilhelm::Helpers::Stateful
-              include Capabilities::Telephone::Constants
+              include Capabilities::Constants
 
               DEFAULT_STATE = {
                 STATE_STATUS =>
