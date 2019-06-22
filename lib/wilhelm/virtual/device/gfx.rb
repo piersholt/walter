@@ -1,7 +1,9 @@
 # frozen_string_literal: false
 
-
 puts "\tLoading wilhelm/virtual/device/gfx"
+
+require_relative 'gfx/api'
+require_relative 'gfx/capabilities'
 
 require_relative 'gfx/augmented/state/constants'
 require_relative 'gfx/augmented/state/model'

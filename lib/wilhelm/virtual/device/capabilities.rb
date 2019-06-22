@@ -6,12 +6,6 @@ require_relative 'capabilities/helpers'
 
 require_relative 'capabilities/ready'
 
-require_relative 'capabilities/gfx/constants'
-require_relative 'capabilities/gfx/user_interface'
-require_relative 'capabilities/gfx/user_controls'
-require_relative 'capabilities/gfx/obc'
-require_relative 'capabilities/gfx'
-
 require_relative 'capabilities/mfl/constants'
 require_relative 'capabilities/mfl/buttons'
 require_relative 'capabilities/mfl'

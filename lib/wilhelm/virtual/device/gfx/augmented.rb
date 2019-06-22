@@ -6,8 +6,7 @@ module Wilhelm
       module GFX
         # Comment
         class Augmented < Device::Augmented
-          include Capabilities::Ready
-          include Capabilities::GFX
+          include Capabilities
           include State
 
           PUBLISH = [
