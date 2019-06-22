@@ -7,7 +7,7 @@ module Wilhelm
       module BMBT
         # Comment
         class Augmented < Device::Augmented
-          include Capabilities::OnBoardMonitor
+          include Capabilities
           include Sent
 
           PUBLISH = [BMBT_A, BMBT_B, BMBT_I, MFL_VOL].freeze

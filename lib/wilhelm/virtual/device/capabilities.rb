@@ -6,10 +6,6 @@ require_relative 'capabilities/helpers'
 
 require_relative 'capabilities/ready'
 
-require_relative 'capabilities/bmbt/constants'
-require_relative 'capabilities/bmbt/user_controls'
-require_relative 'capabilities/bmbt'
-
 require_relative 'capabilities/diag/gm'
 require_relative 'capabilities/diag/lcm'
 require_relative 'capabilities/diag'

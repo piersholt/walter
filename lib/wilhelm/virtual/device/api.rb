@@ -4,7 +4,6 @@ puts "\tLoading wilhelm/virtual/device/dynamic/api"
 
 require_relative 'api/helpers/cluster'
 require_relative 'api/base'
-require_relative 'api/bmbt'
 require_relative 'api/diag'
 require_relative 'api/gfx'
 require_relative 'api/mfl'
