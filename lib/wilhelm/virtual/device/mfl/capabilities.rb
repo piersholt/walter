@@ -9,7 +9,7 @@ module Wilhelm
       module MFL
         # Comment
         module Capabilities
-          include Helpers
+          include Helpers::Button
           include Buttons
         end
       end

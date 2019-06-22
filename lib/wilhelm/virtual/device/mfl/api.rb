@@ -7,7 +7,7 @@ module Wilhelm
         # API for command related to keys
         module API
           include Constants::Command::Aliases
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
 
           def mfl_func_button(from: :mfl, to:, **arguments)
             LOGGER.unknown('API::MFL') { "#{from}, #{to}, #{arguments}" }

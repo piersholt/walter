@@ -7,7 +7,7 @@ module Wilhelm
         # API for command related to keys
         module API
           include Constants::Command::Aliases
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
 
           def cd_changer_status(from: :cdc, to: :rad, arguments:)
             try(from, to, CDC_REP, arguments)

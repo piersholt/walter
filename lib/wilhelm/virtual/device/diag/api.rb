@@ -6,7 +6,7 @@ module Wilhelm
       module Diagnostics
         # API for command related to keys
         module API
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
 
           def vehicle_control(from: me, to:, arguments:)
             try(from, to, 0x0C, arguments)

@@ -11,7 +11,7 @@ module Wilhelm
       module GFX
         # Comment
         module Capabilities
-          include Helpers
+          include Helpers::Button
           include UserInterface
           include UserControls
           include OBC

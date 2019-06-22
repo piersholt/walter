@@ -8,7 +8,7 @@ module Wilhelm
           # Comment
           module LED
             include Constants::Command::Aliases
-            include Virtual::API::BaseAPI
+            include Device::API::BaseAPI
 
             # 0x4A / Radio LED
             # def switch(from: 0x68, to: 0xf0, led:)

@@ -7,7 +7,7 @@ module Wilhelm
         # API for command related to keys
         module API
           include Constants::Command::Aliases
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
 
           def button(from: :bmbt, to:, arguments:)
             try(from, to, BMBT_A, arguments)

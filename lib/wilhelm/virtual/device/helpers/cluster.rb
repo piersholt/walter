@@ -2,8 +2,9 @@
 
 module Wilhelm
   module Virtual
-    module API
+    class Device
       module Helpers
+        # Comment
         module Cluster
           HUD_SIZE = 20
 

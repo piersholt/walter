@@ -8,7 +8,6 @@ module Wilhelm
           # Comment
           module UserControls
             include API
-            # include Helpers
             include Constants
 
             def power

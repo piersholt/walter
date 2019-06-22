@@ -9,7 +9,7 @@ module Wilhelm
         # Radio API
         module API
           include Constants::Command::Aliases
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
           include LED
 
           # BMBT

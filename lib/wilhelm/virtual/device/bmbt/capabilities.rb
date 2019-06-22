@@ -9,7 +9,7 @@ module Wilhelm
       module BMBT
         # Comment
         module Capabilities
-          include Helpers
+          include Helpers::Button
           include UserControls
         end
       end

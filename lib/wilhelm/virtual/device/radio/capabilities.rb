@@ -14,7 +14,8 @@ module Wilhelm
       module Radio
         # Comment
         module Capabilities
-          include Helpers
+          include Helpers::Button
+          include Helpers::Data
           include UserInterface
           include CDChangerControl
           include CDChangerDisplay

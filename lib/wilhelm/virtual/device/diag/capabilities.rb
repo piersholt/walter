@@ -9,7 +9,7 @@ module Wilhelm
       module Diagnostics
         # Comment
         module Capabilities
-          include Helpers
+          include Helpers::Data
           include API
           include Windows
           include Seats

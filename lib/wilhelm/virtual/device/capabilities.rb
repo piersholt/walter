@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/virtual/device/dynamic/capabilities"
-
-require_relative 'capabilities/helpers'
+puts "\tLoading wilhelm/virtual/device/capabilities"
 
 require_relative 'capabilities/ready'

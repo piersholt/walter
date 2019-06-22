@@ -11,7 +11,7 @@ module Wilhelm
         # Comment
         module Capabilities
           include API
-          include Helpers
+          include Helpers::Data
           include State
 
           def done

@@ -8,7 +8,7 @@ module Wilhelm
           # Comment
           module Buttons
             include API
-            include Virtual::Capabilities::ButtonHelpers
+            include Helpers::Button
             include Constants
 
             # 0x3B MFL-FUNC ---------------------------------------------------------

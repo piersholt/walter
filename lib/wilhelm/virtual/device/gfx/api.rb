@@ -7,7 +7,7 @@ module Wilhelm
         # Comment
         module API
           include Constants::Command::Aliases
-          include Virtual::API::BaseAPI
+          include Device::API::BaseAPI
 
           # MENU/USER INTERFACE
 

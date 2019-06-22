@@ -2,6 +2,7 @@
 
 puts "\tLoading wilhelm/virtual/device"
 
+require_relative 'device/helpers'
 require_relative 'device/base'
 
 require_relative 'device/api'
