@@ -5,7 +5,7 @@ module Wilhelm
     module Capabilities
       # Comment
       module Ready
-        include Wilhelm::Virtual::API::Readiness
+        include API::Readiness
 
         # Request
         def ping(to)

@@ -11,7 +11,6 @@ module Wilhelm
       module GFX
         # Comment
         module Capabilities
-          include Virtual::Capabilities::Ready
           include Helpers
           include UserInterface
           include UserControls

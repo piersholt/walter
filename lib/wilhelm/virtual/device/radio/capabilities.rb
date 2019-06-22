@@ -15,7 +15,6 @@ module Wilhelm
         # Comment
         module Capabilities
           include Helpers
-          include Virtual::Capabilities::Ready
           include UserInterface
           include CDChangerControl
           include CDChangerDisplay

@@ -13,7 +13,6 @@ module Wilhelm
         module Capabilities
           include Constants
           include Helpers
-          include Virtual::Capabilities::Ready
           include LED
           include Directory
           include Info
