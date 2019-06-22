@@ -7,7 +7,7 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Incoming command handlers
           module Handlers
-            include Capabilities::CDChanger::Constants
+            include Capabilities::Constants
             include Messaging::API
             include Messaging::Constants
             include LogActually::ErrorOutput
