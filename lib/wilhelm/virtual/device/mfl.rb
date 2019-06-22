@@ -2,6 +2,9 @@
 
 puts "\tLoading wilhelm/virtual/device/mfl"
 
+require_relative 'mfl/api'
+require_relative 'mfl/capabilities'
+
 require_relative 'mfl/augmented/state/constants'
 require_relative 'mfl/augmented/state/model'
 require_relative 'mfl/augmented/state/chainable'

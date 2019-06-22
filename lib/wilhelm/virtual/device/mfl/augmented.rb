@@ -8,7 +8,7 @@ module Wilhelm
         # Comment
         class Augmented < Device::Augmented
           include State
-          include Capabilities::MultiFunctionWheel
+          include Capabilities
 
           PUBLISH = [MFL_VOL, MFL_FUNC, MFL_VOL].freeze
           SUBSCRIBE = [].freeze

@@ -6,10 +6,6 @@ require_relative 'capabilities/helpers'
 
 require_relative 'capabilities/ready'
 
-require_relative 'capabilities/mfl/constants'
-require_relative 'capabilities/mfl/buttons'
-require_relative 'capabilities/mfl'
-
 require_relative 'capabilities/radio/constants'
 require_relative 'capabilities/radio/cd_changer_control'
 require_relative 'capabilities/radio/cd_changer_display'
