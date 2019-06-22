@@ -2,10 +2,13 @@
 
 puts "\tLoading wilhelm/virtual/device"
 
-require_relative 'device/receivable'
-
 require_relative 'device/base'
+
+require_relative 'device/api'
+require_relative 'device/capabilities'
+require_relative 'device/builder'
 require_relative 'device/dynamic'
+
 require_relative 'device/augmented'
 require_relative 'device/emulated'
 

@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Radio
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           module State
             # Chianable state commands
             module Chainable

@@ -5,7 +5,7 @@ module Wilhelm
   module Virtual
     class Device
       module DSP
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           PROC = 'SimulatedDSP'.freeze
 
           def handle_virtual_receive(message)

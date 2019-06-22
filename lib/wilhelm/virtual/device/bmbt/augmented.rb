@@ -6,7 +6,7 @@ module Wilhelm
     class Device
       module BMBT
         # Comment
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           include Capabilities::OnBoardMonitor
           include Sent
 

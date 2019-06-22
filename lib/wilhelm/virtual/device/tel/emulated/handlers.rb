@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           # Simulated CD Changer
           module Deprecated
             include Capabilities::Telephone::Constants

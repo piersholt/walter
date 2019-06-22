@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           # Comment
           module State
             include Model

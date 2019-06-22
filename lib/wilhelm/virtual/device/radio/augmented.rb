@@ -5,7 +5,7 @@ module Wilhelm
     # Comment
     class Device
       module Radio
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           include State
           # include Retroactive
           include Actions

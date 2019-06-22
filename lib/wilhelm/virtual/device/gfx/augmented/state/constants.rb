@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module GFX
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           # Radio related command constants
           module State
             module Constants

@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Dummy
         # Comment
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           PROC = 'EmulationDummy'.freeze
 
           def handle_virtual_receive(message)

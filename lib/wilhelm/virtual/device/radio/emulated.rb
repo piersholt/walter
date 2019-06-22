@@ -6,7 +6,7 @@ module Wilhelm
     class Device
       module Radio
         # Comment
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           include Capabilities::Radio
 
           PROC = 'SimulatedRadio'

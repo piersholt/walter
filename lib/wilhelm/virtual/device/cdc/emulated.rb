@@ -6,7 +6,7 @@ module Wilhelm
     class Device
       module CDC
         # Comment
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           # include Constants
           # include State
           include Handlers

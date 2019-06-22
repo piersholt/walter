@@ -6,7 +6,7 @@ module Wilhelm
     class Device
       module MFL
         # Comment
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           module State
             # Comment
             module Model

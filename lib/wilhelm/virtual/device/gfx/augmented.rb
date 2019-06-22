@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module GFX
         # Comment
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           include Capabilities::Ready
           include Capabilities::GFX
           include State

@@ -3,27 +3,29 @@
 # Comment
 module Wilhelm
   module Virtual
-    class AugmentedDevice < DynamicDevice
-      # include Actions
+    class Device
+      class Augmented < Dynamic
+        # include Actions
 
-      PROC = 'AugmentedDevice'.freeze
+        PROC = 'Device::Augmented'.freeze
 
-      def initialize(args)
-        super(args)
-      end
+        def initialize(args)
+          super(args)
+        end
 
-      def type
-        :augmented
-      end
+        def type
+          :augmented
+        end
 
-      # @override Object#inspect
-      def inspect
-        "#<AugmentedDevice :#{@ident}>"
-      end
+        # @override Object#inspect
+        def inspect
+          "#<Augmented: #{@ident}>"
+        end
 
-      # @override Object#to_s
-      def to_s
-        "<:#{@ident}>"
+        # @override Object#to_s
+        def to_s
+          "<:#{@ident}>"
+        end
       end
     end
   end

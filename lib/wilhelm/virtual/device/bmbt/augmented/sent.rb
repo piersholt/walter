@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module BMBT
-        class Augmented < AugmentedDevice
+        class Augmented < Device::Augmented
           # Comment
           module Sent
             include Wilhelm::Virtual::Constants::Buttons::BMBT

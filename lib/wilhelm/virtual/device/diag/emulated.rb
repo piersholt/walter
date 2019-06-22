@@ -6,7 +6,7 @@ module Wilhelm
     class Device
       module Diagnostics
         # Comment
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           # include API::Diagnostics
           include Capabilities::Diagnostics
 

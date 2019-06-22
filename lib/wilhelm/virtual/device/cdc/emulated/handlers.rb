@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module CDC
-        class Emulated < EmulatedDevice
+        class Emulated < Device::Emulated
           # Incoming command handlers
           module Handlers
             include Capabilities::CDChanger::Constants
