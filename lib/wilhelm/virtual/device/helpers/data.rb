@@ -4,29 +4,32 @@ module Wilhelm
   module Virtual
     class Device
       module Helpers
+        # Parse arguments for raw device APIs
+        module Parse
+          def integers_to_byte_array(*integers)
+            byte_array = integers.map do |i|
+              Wilhelm::Core::Byte.new(:decimal, i)
+            end
+            Core::Bytes.new(byte_array)
+          end
+
+          alias bytes integers_to_byte_array
+        end
+
         # Comment
         module Data
-          # @deprecated alias
-          def integers(*arguments)
-            integers_input(*arguments)
+          include Parse
+
+          # BMBT::UserControls::UserControls
+          alias integers_input bytes
+
+          # Radio::Capabilities::CDChangerDisplay
+          def integer_array_to_chars(array)
+            array.map {|i| i.chr }.join
           end
 
-          # @deprecated alias
-          def array(arguments)
-            integer_array_input(arguments)
-          end
-
-          def integer_array_input(arguments)
-            bytes(arguments)
-          end
-
-          def integers_input(*arguments)
-            bytes(arguments)
-          end
-
-          def bytes(decimal_array)
-            array_of_bytes = decimal_array.map { |int| Wilhelm::Core::Byte.new(:decimal, int) }
-            Bytes.new(array_of_bytes)
+          def wait
+            Kernel.sleep(0.01)
           end
 
           def generate_ints(length = 1)
@@ -45,14 +48,6 @@ module Wilhelm
             items.times.map do
               "#{delimiter.chr}#{genc(5)}"
             end.join
-          end
-
-          def integer_array_to_chars(array)
-            array.map {|i| i.chr }.join
-          end
-          
-          def wait
-            Kernel.sleep(0.01)
           end
 
           alias genc generate_chars

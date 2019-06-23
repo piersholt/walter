@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'api/lcd'
+
 module Wilhelm
   module Virtual
     class Device

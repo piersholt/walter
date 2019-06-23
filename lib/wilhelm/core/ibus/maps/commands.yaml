@@ -3979,6 +3979,19 @@
     :short_name: DIA-ERR-DEL
     :long_name: Diagnostics Clear Error Memeory?
   :klass: BaseCommand
+  :schemas:
+    - :gfx
+  :gfx:
+    :klass: BaseCommand
+    :properties:
+      :short_name: LCD-SET
+      :long_name: LCD Brightness
+    :meta:
+      - absence of third argument will have BMBT reply with current brightness
+      - gfx   bmbt	05  40 01
+      - bmbt  gfx	  06  7F
+      - this is what causes the bar meter value to change
+
   :meta:
     - when radio clear error memory selected
     - :example:
@@ -4150,9 +4163,13 @@
     :short_name: DIA-MEM-READ
     :long_name: Diagnostics Read Memory
   :klass: BaseCommand
-  # :parameters:
-  #   :data:
-  #     :type: :integer
+  :schemas:
+    - :bmbt
+  :bmbt:
+    :klass: BaseCommand
+    :properties:
+      :short_name: LCD-REP
+      :long_name: LCD Brightness
   :meta:
     - the read memory function in INPA?
     - used to populate BMBT service mode displays

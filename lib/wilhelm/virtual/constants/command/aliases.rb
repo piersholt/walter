@@ -9,6 +9,9 @@ module Wilhelm
           PING = 0x01
           PONG = 0x02
 
+          LCD_SET = 0x05
+          LCD_REP = 0x06
+
           IGNITION_REQ = 0x10
           IGNITION_REP = 0x11
 

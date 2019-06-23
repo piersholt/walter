@@ -4,6 +4,7 @@ require_relative 'capabilities/constants'
 require_relative 'capabilities/user_interface'
 require_relative 'capabilities/user_controls'
 require_relative 'capabilities/obc'
+require_relative 'capabilities/lcd'
 
 module Wilhelm
   module Virtual
@@ -15,6 +16,7 @@ module Wilhelm
           include UserInterface
           include UserControls
           include OBC
+          include LCD
         end
       end
     end
