@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 puts "\tLoading wilhelm/virtual/helpers/console"
-require_relative 'console/display'
+require_relative 'console/filter'
 
 module Wilhelm
   module Virtual
@@ -9,7 +9,7 @@ module Wilhelm
       # Comment
       module Console
         include Wilhelm::Helpers::Console
-        include Display
+        include Filter
 
         def apply_debug_defaults
           LOGGER.info(PROC_MOD) { 'Applying console defaults.' }

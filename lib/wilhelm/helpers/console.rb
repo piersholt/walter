@@ -18,6 +18,10 @@ module Wilhelm
       include Threads
       include Yabber
 
+      def command_map
+        Wilhelm::Core::CommandMap.instance
+      end
+
       PROC_MOD = 'Console'.freeze
 
       def nl

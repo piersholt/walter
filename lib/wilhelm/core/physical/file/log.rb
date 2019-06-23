@@ -18,6 +18,8 @@ module Wilhelm
             NAME
           end
 
+          attr_reader :read_thread
+
           def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
           def_delegators :private_input_buffer, *InputBuffer.instance_methods(false)
           def_delegator :private_input_buffer, :size

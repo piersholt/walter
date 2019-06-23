@@ -5,7 +5,7 @@ module Wilhelm
     module Helpers
       module Console
         # Comment
-        module Display
+        module Filter
           include Constants::Command::Groups
 
           def display_handler
