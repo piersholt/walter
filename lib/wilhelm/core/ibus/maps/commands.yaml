@@ -1748,8 +1748,8 @@
     :d: 69
     :h: '0x45'
   :properties:
-    :short_name: MENU-GFX
-    :long_name: Radio to resume?
+    :short_name: UI-CFG
+    :long_name: Radio UI Config.
   :klass: ParameterizedCommand
   :parameters:
     :config:
@@ -1757,7 +1757,7 @@
       :parameters:
         :unknown:
           :type: :switch
-          :label: Unknown BM53?
+          :label: Split Screen?
           :states:
             0: :off
             1: :on
@@ -1769,7 +1769,7 @@
             1: :on
         :info:
           :type: :switch
-          :label: Info?
+          :label: Split Coded?
           :states:
             0: :off
             1: :on
@@ -1796,8 +1796,8 @@
     :d: 70
     :h: '0x46'
   :properties:
-    :short_name: MENU-RAD
-    :long_name: Unknown
+    :short_name: UI-RAD
+    :long_name: Radio UI Requests
   :klass: ParameterizedCommand
   :parameters:
     :state:
@@ -1817,7 +1817,7 @@
             1: :on
         :hide_panel:
           :type: :switch
-          :label: Hide Panel
+          :label: Hide Panel (C23)
           :states:
             0: :off
             1: :on

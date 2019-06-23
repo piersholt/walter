@@ -59,8 +59,11 @@ module Wilhelm
           BMBT_A   = 0x48
           BMBT_B   = 0x49
 
-          MENU_GFX = 0x45
-          MENU_RAD = 0x46
+          UI_CONFIG = 0x45
+          UI_RADIO  = 0x46
+
+          MENU_GFX = UI_CONFIG
+          MENU_RAD = MENU_RAD
 
           RAD_LED = 0x4A
           SRC_CTL = 0x4B
