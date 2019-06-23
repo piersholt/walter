@@ -3,6 +3,7 @@
 module Wilhelm
   module Virtual
     class Device
+      # Comment
       class Emulated < Dynamic
         include Capabilities::Ready
 

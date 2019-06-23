@@ -5,7 +5,8 @@ module Wilhelm
     class Bus
       # Comment
       class Initialization
-        PROC = 'Initialization'
+        PROC = 'Initialization'.freeze
+        
         def initialize(emulated: [], augmented: [])
           @emulated = emulated
           @augmented = augmented
