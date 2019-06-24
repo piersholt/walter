@@ -12,7 +12,7 @@ module Wilhelm
       # Comment
       module Helpers
         def self.included(mod)
-          LOGGER.error('Debug') { "#{mod} is including #{self.name}" }
+          LOGGER.debug('Debug') { "#{mod} is including #{self.name}" }
         end
       end
     end
