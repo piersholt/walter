@@ -81,7 +81,7 @@ module Wilhelm
         end
 
         def parse_packet(packet)
-          bus_message = Wilhelm::Virtual::PacketWrapper.wrap(packet)
+          bus_message = PacketWrapper.wrap(packet)
 
           from_ident = bus_message.from
           to_ident   = bus_message.to
@@ -90,7 +90,7 @@ module Wilhelm
 
           command_object = parse_command(from_ident, command.i, args)
 
-          Wilhelm::Virtual::Message.new(from_ident, to_ident, command_object)
+          Message.new(from_ident, to_ident, command_object)
         end
 
         def parse_command(from_ident, command, arguments)
