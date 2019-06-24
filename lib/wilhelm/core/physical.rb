@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/core/physical/buffer"
-
-require_relative 'physical/buffer/input_buffer'
-require_relative 'physical/buffer/output_buffer'
+require_relative 'physical/buffer'
 
 puts "\tLoading wilhelm/core/physical/model"
 

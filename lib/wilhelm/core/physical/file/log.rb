@@ -23,7 +23,7 @@ module Wilhelm
           alias proc_name name
 
           def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
-          def_delegators :private_input_buffer, *InputBuffer.instance_methods(false)
+          def_delegators :private_input_buffer, *Buffer::InputBuffer.instance_methods(false)
           def_delegator :private_input_buffer, :size
 
           def initialize(path)
@@ -64,7 +64,7 @@ module Wilhelm
           end
 
           def private_input_buffer
-            @private_input_buffer ||= InputBuffer.new
+            @private_input_buffer ||= Buffer::InputBuffer.new
           end
 
           def thread_populate_input_buffer
