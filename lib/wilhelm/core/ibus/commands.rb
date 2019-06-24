@@ -19,11 +19,18 @@ require_relative 'commands/ike_sensors'
 require_relative 'commands/lamp'
 require_relative 'commands/radio_led'
 
+puts "\tLoading wilhelm/core/ibus/commands/configuration"
+
+require_relative 'commands/configuration/parameter_configuration'
+require_relative 'commands/configuration/command_configuration'
+require_relative 'commands/configuration/bit_array_parameter_configuration'
+
 puts "\tLoading wilhelm/core/ibus/commands/builder"
 
-require_relative 'commands/builder/parameter_configuration'
-require_relative 'commands/builder/command_configuration'
 require_relative 'commands/builder/base_command_builder'
+require_relative 'commands/builder/paramaterized_command_builder'
+require_relative 'commands/builder/indexed_arguments'
+require_relative 'commands/builder/arguments_builder'
 
 puts "\tLoading wilhelm/core/ibus/commands/paramaterized/model"
 
@@ -48,6 +55,3 @@ require_relative 'commands/paramaterized/mfl_button'
 require_relative 'commands/paramaterized/mfl_volume'
 
 puts "\tLoading wilhelm/core/ibus/commands/paramaterized/builder"
-
-require_relative 'commands/paramaterized/builder/bit_array_parameter_configuration'
-require_relative 'commands/paramaterized/builder/paramaterized_command_builder'

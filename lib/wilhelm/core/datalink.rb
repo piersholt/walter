@@ -3,16 +3,20 @@
 puts "\tLoading wilhelm/core/data_link"
 
 puts "\tLoading wilhelm/core/data_link/frame"
-require_relative 'data_link/frame/frame_header'
-require_relative 'data_link/frame/frame_tail'
+require_relative 'data_link/frame/header'
+require_relative 'data_link/frame/tail'
 require_relative 'data_link/frame/frame'
-require_relative 'data_link/frame/frame_synchronisation'
-require_relative 'data_link/frame/indexed_arguments'
-require_relative 'data_link/frame/arguments_builder'
+require_relative 'data_link/frame/synchronisation'
 require_relative 'data_link/frame/frame_builder'
 
-puts "\tLoading wilhelm/core/data_link/fbzv"
-require_relative 'data_link/fbzv/frame_synchronisation'
+# puts "\tLoading wilhelm/core/data_link/fbzv"
+# require_relative 'data_link/fbzv/frame_synchronisation'
+
+# puts "\tLoading wilhelm/core/data_link/peripheral"
+# require_relative 'data_link/peripheral/synchronisation'
+# require_relative 'data_link/peripheral/frames'
+# require_relative 'data_link/peripheral/frame_adapter'
+# require_relative 'data_link/peripheral/pbus_receiver'
 
 puts "\tLoading wilhelm/core/data_link/transceiver"
 require_relative 'data_link/transceiver/receiver'
