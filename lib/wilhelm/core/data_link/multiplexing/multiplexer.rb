@@ -5,27 +5,15 @@ module Wilhelm
     module DataLink
       # Comment
       class Multiplexer
-        include Constants::Events
         include ManageableThreads
+        include Constants::Events
 
-        attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread, :address_lookup_table
+        attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
-        def initialize(frame_output_buffer, address_lookup_table = AddressLookupTable.instance)
+        def initialize(frame_output_buffer)
           @frame_output_buffer = frame_output_buffer
           @packet_output_buffer = SizedQueue.new(32)
           @threads = ThreadGroup.new
-          @address_lookup_table = address_lookup_table
-        end
-
-        def name
-          'Multiplexer'
-        end
-
-        alias proc_name name
-
-        def off
-          LOGGER.debug(name) { "#{self.class}#off" }
-          close_threads
         end
 
         def on
@@ -39,6 +27,19 @@ module Wilhelm
           raise e
         end
 
+        def off
+          LOGGER.debug(name) { "#{self.class}#off" }
+          close_threads
+        end
+
+        private
+
+        def name
+          'Multiplexer'
+        end
+
+        alias proc_name name
+
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
           LOGGER.debug(name) { 'New Thread: Frame Multiplexing' }
           Thread.new do
@@ -46,7 +47,6 @@ module Wilhelm
             begin
               loop do
                 message = packet_output_buffer.pop
-                message = resolve_addresses(message)
                 new_frame = multiplex(message)
                 LOGGER.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
                 frame_output_buffer.push(new_frame)
@@ -57,22 +57,6 @@ module Wilhelm
             end
             LOGGER.warn(name) { "End Thread: Frame Multiplexing" }
           end
-        end
-
-        private
-
-        def resolve_addresses(message)
-          LOGGER.debug(name) { "#resolve_addresses(#{message})" }
-
-          from = address_lookup_table.resolve_ident(message.from)
-          message.sender = from
-          LOGGER.debug(name) { "from_device: #{message.sender}" }
-
-          to = address_lookup_table.resolve_ident(message.to)
-          message.receiver = to
-          LOGGER.debug(name) { "to_device: #{message.receiver}" }
-
-          message
         end
 
         # @return Frame

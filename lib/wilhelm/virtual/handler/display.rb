@@ -184,7 +184,7 @@ module Wilhelm
         end
 
         def populate_devices
-          Core::AddressLookupTable.instance.idents
+          AddressLookupTable.instance.idents
         end
       end
     end

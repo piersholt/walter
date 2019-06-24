@@ -7,12 +7,14 @@ module Wilhelm
       class PacketHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 
-        def initialize(bus)
+        def initialize(bus, address_lookup_table = AddressLookupTable.instance)
           @bus = bus
+          @address_lookup_table = address_lookup_table
         end
 
         def packet_received(properties)
           packet = packet?(properties)
+          resolve_addresses(packet)
           return false unless addressable?(packet)
           message = parse_packet(packet)
           changed
@@ -21,6 +23,34 @@ module Wilhelm
         end
 
         private
+
+        def resolve_addresses(packet)
+          LOGGER.debug(name) { "#resolve_addresses(#{packet})" }
+
+          from = @address_lookup_table.resolve_address(packet.from)
+          packet.from = from
+          LOGGER.debug(name) { "from_device: #{packet.sender}" }
+
+          to = @address_lookup_table.resolve_address(packet.to)
+          packet.to = to
+          LOGGER.debug(name) { "to_device: #{packet.receiver}" }
+
+          packet
+        end
+
+        def resolve_idents(message)
+          LOGGER.debug(name) { "#resolve_addresses(#{message})" }
+
+          from = @address_lookup_table.resolve_ident(message.from)
+          message.sender = from
+          LOGGER.debug(name) { "from_device: #{message.sender}" }
+
+          to = @address_lookup_table.resolve_ident(message.to)
+          message.receiver = to
+          LOGGER.debug(name) { "to_device: #{message.receiver}" }
+
+          message
+        end
 
         def packet?(properties)
           packet = fetch(properties, :packet)
@@ -64,7 +94,7 @@ module Wilhelm
         end
 
         def parse_command(from_ident, command, arguments)
-          command_config = Wilhelm::Core::CommandMap.instance.config(command, from_ident)
+          command_config = CommandMap.instance.config(command, from_ident)
           parameter_values_hash = parse_argumets(command_config, arguments)
           LOGGER.debug(self.class) { "Parameter Values: #{parameter_values_hash}" }
           command_object = build_command(command_config, parameter_values_hash)
@@ -90,7 +120,7 @@ module Wilhelm
           begin
             argument_index = command_config.index
             LOGGER.debug(self.class) { "argument index: #{argument_index}" }
-            indexed_arguments = Wilhelm::Core::IndexedArguments.new(arguments, argument_index)
+            indexed_arguments = IndexedArguments.new(arguments, argument_index)
             LOGGER.debug(self.class) { "indexed_arguments: #{indexed_arguments}" }
 
             indexed_arguments.parameters.each do |name|

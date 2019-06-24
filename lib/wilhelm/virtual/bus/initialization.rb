@@ -6,7 +6,7 @@ module Wilhelm
       # Comment
       class Initialization
         PROC = 'Initialization'.freeze
-        
+
         def initialize(emulated: [], augmented: [])
           @emulated = emulated
           @augmented = augmented
@@ -26,7 +26,7 @@ module Wilhelm
         end
 
         def lookup_devices
-          idents = Core::AddressLookupTable.instance.idents
+          idents = AddressLookupTable.instance.idents
           LOGGER.debug(PROC) { "Idents: #{idents}|" }
           idents
         end

@@ -13,6 +13,7 @@ module Wilhelm
 end
 
 require_relative 'virtual/constants'
+require_relative 'virtual/protocol'
 require_relative 'virtual/helpers'
 require_relative 'virtual/device'
 require_relative 'virtual/bus'

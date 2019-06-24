@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Virtual
-    class SessionHandler < BaseHandler
+    class SessionHandler < Core::BaseHandler
       include Singleton
 
       METRICS = [BYTE_RECEIVED, FRAME_RECEIVED, FRAME_FAILED, MESSAGE_RECEIVED]

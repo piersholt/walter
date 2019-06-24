@@ -22,7 +22,6 @@ require_relative 'core/physical'
 require_relative 'core/datalink'
 require_relative 'core/listener'
 require_relative 'core/handler'
-require_relative 'core/ibus'
 require_relative 'core/context'
 
 puts "\tDone!"

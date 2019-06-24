@@ -4,7 +4,10 @@ module Wilhelm
   module Core
     # Comment
     class Packet
-      attr_reader :from, :to, :data
+      attr_accessor :from, :to, :data
+
+      alias receiver to
+      alias sender from
 
       def initialize(from, to, data)
         @from = from
@@ -17,7 +20,7 @@ module Wilhelm
       end
 
       def to_s
-        "#{from.upcase}\t#{to.upcase}\t#{data}"
+        "#{from}\t#{to}\t#{data}"
       end
     end
   end

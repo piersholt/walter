@@ -11,10 +11,9 @@ module Wilhelm
 
         attr_reader :input_buffer, :output_buffer, :read_thread
 
-        def initialize(input_buffer, address_lookup_table = AddressLookupTable.instance)
+        def initialize(input_buffer)
           @input_buffer = input_buffer
           @output_buffer = SizedQueue.new(32)
-          @address_lookup_table = address_lookup_table
         end
 
         def on
@@ -65,18 +64,10 @@ module Wilhelm
         end
 
         def demultiplex(frame)
-          from      = frame.from
-          from_id   = from.to_i
-          from_device = @address_lookup_table.find(from_id)
-          LOGGER.debug(name) { "from_device: #{from_device}" }
-
-          to        = frame.to
-          to_id     = to.to_i
-          to_device   = @address_lookup_table.find(to_id)
-          LOGGER.debug(name) { "to_device: #{to_device}" }
-
+          LOGGER.debug(name) { "#demultiplex(#{frame})" }
+          from_device = frame.from.to_i
+          to_device   = frame.to.to_i
           payload   = frame.payload
-          LOGGER.debug(name) { "payload: #{payload}" }
 
           packet = Packet.new(from_device, to_device, payload)
           LOGGER.debug(name) { "Packet build: #{packet}" }
