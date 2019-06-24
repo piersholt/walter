@@ -27,10 +27,7 @@ module Wilhelm
           end
 
           def shutup!(set = NOISEY_NG)
-            set.each do |group, command_ids|
-              LOGGER.info { "Shutting up: #{group}" }
-              display_handler.i.h_c(*command_ids)
-            end
+            display_handler.i.hide_command_set(set)
           end
 
           def touch!

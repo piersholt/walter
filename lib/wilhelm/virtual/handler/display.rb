@@ -130,6 +130,14 @@ module Wilhelm
           hide_commands(*command_ids)
         end
 
+        def hide_command_set(set)
+          LOGGER.info(name) { 'Hiding command set...' }
+          set.each do |group, command_ids|
+            LOGGER.info(name) { "Hide: #{group} => #{command_ids}" }
+            h_c(*command_ids)
+          end
+        end
+
         def hide_commands(*command_ids)
           LOGGER.debug(name) { "Hiding commands: #{command_ids}" }
           command_ids.each { |command_id| filtered_commands.delete(command_id) }
