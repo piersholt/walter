@@ -3,9 +3,6 @@
 module Wilhelm
   module Core
     # Comment
-    class TransmissionError < StandardError; end
-
-    # Comment
     class Transmitter
       include Observable
 

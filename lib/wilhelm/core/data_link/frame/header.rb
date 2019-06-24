@@ -5,12 +5,6 @@ module Wilhelm
     # Comment
     class Frame < Bytes
       # Comment
-      class HeaderValidationError < StandardError; end
-
-      # Comment
-      class HeaderImplausibleError < StandardError; end
-
-      # Comment
       class Header < Bytes
         VALID_SIZE = (2..2)
 

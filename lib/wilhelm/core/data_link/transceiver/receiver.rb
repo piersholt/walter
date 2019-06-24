@@ -81,7 +81,7 @@ module Wilhelm
         new_frame = synchronisation.run
         LOGGER.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
         output_buffer.push(new_frame)
-      rescue Frame::HeaderValidationError, Frame::HeaderImplausibleError, Frame::TailValidationError, Frame::ChecksumError => e
+      rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
         LOGGER.warn(name) { "#{e}!" }
         clean_up(input_buffer, synchronisation.frame)
       rescue StandardError => e

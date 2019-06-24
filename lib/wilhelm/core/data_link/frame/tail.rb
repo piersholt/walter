@@ -5,9 +5,6 @@ module Wilhelm
     # Comment
     class Frame < Bytes
       # Comment
-      class TailValidationError < StandardError; end
-
-      # Comment
       class Tail < Bytes
         VALID_SIZE = (3..255)
 
