@@ -22,6 +22,8 @@ module Wilhelm
           # @override: ManageableThreads#proc_name
           alias proc_name name
 
+          attr_reader :read_thread
+
           def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
           def_delegators :private_input_buffer, *Buffer::InputBuffer.instance_methods(false)
           def_delegator :private_input_buffer, :size
