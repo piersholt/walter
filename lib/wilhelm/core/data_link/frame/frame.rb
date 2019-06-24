@@ -3,11 +3,10 @@
 module Wilhelm
   module Core
     # Comment
-    class ChecksumError < StandardError
-    end
-
-    # Comment
     class Frame < Bytes
+      # Comment
+      class ChecksumError < StandardError
+      end
       PROG_NAME = 'Frame'.freeze
       HEADER_LENGTH = 2
       HEADER_INDEX_LENGTH = 2
