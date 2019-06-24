@@ -6,8 +6,10 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module Lighting
+            include API
+
             def any(to, *args)
-              vehicle_control(to: to, arguments: array(args))
+              api_vehicle_control(to: to, arguments: array(args))
             end
 
             BYTE_1 = {
@@ -71,8 +73,19 @@ module Wilhelm
             }
 
             def lcm(*args)
-              vehicle_control(to: :lcm, arguments: array(args))
+              api_vehicle_control(to: :lcm, arguments: array(args))
             end
+
+            # [ID:T URN_LIGHT S_OFF] 00 04 BF 76 00 cc
+            # [ID:FLASH_WARN] 00 04 bf 76 02 cc
+            # [ID:FLASH_LOW] 00 04 bf 76 04 cc
+            # [ID:FLASH_LOW_WARN] 00 04 bf 76 06 cc
+            # [ID:FLASH_HI] 00 04 bf 76 08 cc
+            # [ID:FLASH_HI_WARN] 00 04 bf 76 0A cc
+            # [ID:FLASH_LOW_HI] 00 04 bf 76 0C
+            # [ID:FLASH_LOW_HI_WARN] 00 04 bf 76 0E cc
+            # [ID:FLASH_LOW_SMALL] 80 04 BF 11 03 cc
+            # [ID:FLASH_T EST 1] 00 04 bf 76 11 cc
           end
         end
       end
