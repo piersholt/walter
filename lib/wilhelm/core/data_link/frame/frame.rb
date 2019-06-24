@@ -12,11 +12,11 @@ module Wilhelm
       HEADER_LENGTH = 2
       HEADER_INDEX_LENGTH = 2
 
-      FrameHeader.instance_methods(false).each do |header_method|
+      Header.instance_methods(false).each do |header_method|
         def_delegator :header, header_method
       end
 
-      FrameTail.instance_methods(false).each do |tail_method|
+      Tail.instance_methods(false).each do |tail_method|
         def_delegator :tail, tail_method
       end
 
@@ -56,7 +56,7 @@ module Wilhelm
         # LOGGER.debug(PROG_NAME) { self }
 
         # LOGGER.debug(PROG_NAME) { "Setting @header." }
-        @header = FrameHeader.new(new_header)
+        @header = Header.new(new_header)
 
         true
       end
@@ -69,7 +69,7 @@ module Wilhelm
         # LOGGER.debug(PROG_NAME) { self }
 
         # LOGGER.debug(PROG_NAME) { "Setting @tail." }
-        @tail = FrameTail.new(new_tail)
+        @tail = Tail.new(new_tail)
 
         true
       end
