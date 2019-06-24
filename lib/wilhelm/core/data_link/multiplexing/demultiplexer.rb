@@ -48,12 +48,9 @@ module Wilhelm
               loop do
                 new_frame = input_buffer.pop
                 new_packet = demultiplex(new_frame)
-
+                LOGGER.debug(name) { "#{PACKET_RECEIVED}: #{new_packet}" }
                 changed
                 notify_observers(PACKET_RECEIVED, packet: new_packet)
-
-                # LOGGER.unknown(PROG_NAME) { "output_buffer.push(#{new_packet})" }
-                # output_buffer.push(new_packet)
               end
             rescue StandardError => e
               LOGGER.error(name) { e }

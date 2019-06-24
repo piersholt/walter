@@ -17,7 +17,7 @@ module Wilhelm
         end
 
         def on
-          LOGGER.debug(name) { "#{self.class}#on" }
+          LOGGER.debug(name) { '#on' }
           @write_thread = thread_write_output_frame_buffer(@frame_output_buffer, @packet_output_buffer)
           @threads.add(@write_thread)
           true
@@ -28,7 +28,7 @@ module Wilhelm
         end
 
         def off
-          LOGGER.debug(name) { "#{self.class}#off" }
+          LOGGER.debug(name) { '#of' }
           close_threads
         end
 
