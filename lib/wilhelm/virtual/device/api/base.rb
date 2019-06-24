@@ -54,16 +54,6 @@ module Wilhelm
             rescue StandardError => e
               with_backtrace(LOGGER, e)
             end
-
-            def format_chars!(command_arguments, opts = { align: :center })
-              chars_string = command_arguments[:chars]
-              return false unless chars_string
-
-              align(chars_string, opts[:align])
-
-              chars_array = chars_string.bytes
-              command_arguments[:chars] = chars_array
-            end
           end
         end
     end
