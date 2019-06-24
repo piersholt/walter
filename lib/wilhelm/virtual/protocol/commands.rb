@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/core/ibus/commands"
+puts "\tLoading wilhelm/virtual/protocol/commands"
 
 require_relative 'commands/chars'
 
@@ -19,25 +19,25 @@ require_relative 'commands/ike_sensors'
 require_relative 'commands/lamp'
 require_relative 'commands/radio_led'
 
-puts "\tLoading wilhelm/core/ibus/commands/configuration"
+puts "\tLoading wilhelm/virtual/protocol/commands/configuration"
 
 require_relative 'commands/configuration/parameter_configuration'
 require_relative 'commands/configuration/command_configuration'
 require_relative 'commands/configuration/bit_array_parameter_configuration'
 
-puts "\tLoading wilhelm/core/ibus/commands/builder"
+puts "\tLoading wilhelm/virtual/protocol/commands/builder"
 
 require_relative 'commands/builder/base_command_builder'
 require_relative 'commands/builder/paramaterized_command_builder'
 require_relative 'commands/builder/indexed_arguments'
 require_relative 'commands/builder/arguments_builder'
 
-puts "\tLoading wilhelm/core/ibus/commands/paramaterized/model"
+puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/model"
 
 require_relative 'commands/paramaterized/model/bit_array'
 require_relative 'commands/paramaterized/model/indexed_bit_array'
 
-puts "\tLoading wilhelm/core/ibus/commands/paramaterized/parameter"
+puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/parameter"
 
 require_relative 'commands/paramaterized/parameter/delegated_command_parameter'
 require_relative 'commands/paramaterized/parameter/base_parameter'
@@ -46,12 +46,10 @@ require_relative 'commands/paramaterized/parameter/switched_parameter'
 require_relative 'commands/paramaterized/parameter/mapped_parameter'
 require_relative 'commands/paramaterized/parameter/chars_parameter'
 
-puts "\tLoading wilhelm/core/ibus/commands/paramaterized"
+puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized"
 
 require_relative 'commands/paramaterized/parameterized_command'
 require_relative 'commands/paramaterized/cd_changer_request'
 require_relative 'commands/paramaterized/button'
 require_relative 'commands/paramaterized/mfl_button'
 require_relative 'commands/paramaterized/mfl_volume'
-
-puts "\tLoading wilhelm/core/ibus/commands/paramaterized/builder"

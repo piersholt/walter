@@ -7,11 +7,11 @@ module Wilhelm
 
       attr_accessor :frame
 
-      alias :to           :receiver
-      alias :from         :sender
+      alias from         sender
+      alias source       sender
 
-      alias :destination  :receiver
-      alias :source       :sender
+      alias to           receiver
+      alias destination  receiver
 
       PROC = 'Message'.freeze
 
