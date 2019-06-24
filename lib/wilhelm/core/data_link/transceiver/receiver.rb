@@ -79,13 +79,7 @@ module Wilhelm
       def synchronise_frame(input_buffer)
         synchronisation = @frame_synchronisation.new(input_buffer)
         new_frame = synchronisation.run
-
         LOGGER.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
-        # reset_interval
-        # output(new_frame)
-        changed
-        notify_observers(Constants::Events::FRAME_RECEIVED, frame: new_frame)
-
         output_buffer.push(new_frame)
       rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
         LOGGER.warn(name) { "#{e}!" }

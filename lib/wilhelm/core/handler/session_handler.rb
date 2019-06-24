@@ -53,6 +53,11 @@ module Wilhelm
         end
       end
 
+      def message_received(properties)
+        update_stats(MESSAGE_RECEIVED)
+        add_message(properties[:message])
+      end
+
       def stats
         @stats ||= METRICS.map do |metric|
           [metric, 0]
