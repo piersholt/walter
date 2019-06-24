@@ -10,6 +10,7 @@ module Wilhelm
         include Constants::Events
 
         NAME = 'Demultiplexer'
+        THREAD_NAME = 'wilhelm-core/data_link Demultiplexer (Input Buffer)'
 
         attr_reader :input_buffer, :output_buffer, :read_thread
 
@@ -46,7 +47,7 @@ module Wilhelm
         def thread_read_input_frame_buffer(input_buffer, output_buffer)
           LOGGER.debug(name) { 'New Thread: Frame Demultiplexing' }
           Thread.new do
-            Thread.current[:name] = name
+            Thread.current[:name] = THREAD_NAME
             begin
               loop do
                 new_frame = input_buffer.pop

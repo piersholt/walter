@@ -10,7 +10,7 @@ module Wilhelm
         include Constants
 
         NAME = 'Receiver'
-        THREAD_NAME = NAME
+        THREAD_NAME = 'wilhelm-core/data_link Receiver (Input Buffer)'
 
         attr_reader :input_buffer, :output_buffer, :read_thread
 

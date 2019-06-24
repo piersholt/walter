@@ -9,6 +9,7 @@ module Wilhelm
         include Constants::Events
 
         NAME = 'Multiplexer'
+        THREAD_NAME = 'wilhelm-core/data_link Multiplexer (Output Buffer)'
 
         attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
@@ -46,7 +47,7 @@ module Wilhelm
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
           LOGGER.debug(name) { 'New Thread: Frame Multiplexing' }
           Thread.new do
-            Thread.current[:name] = name
+            Thread.current[:name] = THREAD_NAME
             begin
               loop do
                 message = packet_output_buffer.pop

@@ -13,11 +13,14 @@ module Wilhelm
           include State
 
           NAME = 'UART'.freeze
-          THREAD_NAME = 'UART (Input Buffer)'
+          THREAD_NAME = 'wilhelm-core/physical UART (Input Buffer)'
 
           def name
             NAME
           end
+
+          # @override: ManageableThreads#proc_name
+          alias proc_name name
 
           def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
           def_delegators :private_input_buffer, *InputBuffer.instance_methods(false)
@@ -30,7 +33,7 @@ module Wilhelm
           end
 
           def on
-            LOGGER.info(NAME) { '#on' }
+            LOGGER.debug(NAME) { '#on' }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             online!
@@ -38,7 +41,7 @@ module Wilhelm
           end
 
           def off
-            LOGGER.info(NAME) { '#off' }
+            LOGGER.debug(NAME) { '#off' }
             close_threads
             close_capture
           end

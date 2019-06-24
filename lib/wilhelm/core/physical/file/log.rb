@@ -12,13 +12,15 @@ module Wilhelm
           include Wilhelm::Helpers::Delayable
           include State
 
-          NAME = 'Capture'.freeze
+          NAME = 'Interface'.freeze
+          THREAD_NAME = 'wilhelm-core/physical Log (Input Buffer)'
 
           def name
             NAME
           end
 
-          attr_reader :read_thread
+          # @override: ManageableThreads#proc_name
+          alias proc_name name
 
           def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
           def_delegators :private_input_buffer, *InputBuffer.instance_methods(false)
@@ -29,14 +31,14 @@ module Wilhelm
           end
 
           def on
-            LOGGER.info(NAME) { '#on' }
+            LOGGER.debug(NAME) { '#on' }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             offline!
           end
 
           def off
-            LOGGER.info(NAME) { '#off' }
+            LOGGER.debug(NAME) { '#off' }
             close_threads
           end
 
@@ -66,10 +68,9 @@ module Wilhelm
           end
 
           def thread_populate_input_buffer
-            LOGGER.debug(PROC) { '#thread_populate_input_buffer' }
             Thread.new do
-              thread_name = 'Log (Input Buffer)'
-              Thread.current[:name] = thread_name
+              LOGGER.debug(name) { '#thread_populate_input_buffer' }
+              Thread.current[:name] = THREAD_NAME
               read_byte = nil
               i = 1
               begin
@@ -83,16 +84,16 @@ module Wilhelm
                     private_input_buffer.push(byte_basic)
                     delay
                   rescue EncodingError
-                    LOGGER.error(thread_name) { '#readpartial returned nil!' }
+                    LOGGER.error(THREAD_NAME) { '#readpartial returned nil!' }
                   end
                 end
               rescue EOFError
-                LOGGER.warn(PROC) { "#{thread_name}: Stream reached EOF!" }
+                LOGGER.warn(name) { "#{THREAD_NAME}: Stream reached EOF!" }
               rescue StandardError => e
-                LOGGER.error(PROC) { "#{thread_name}: #{e}" }
-                e.backtrace.each { |line| LOGGER.error(PROC) { line } }
+                LOGGER.error(name) { "#{THREAD_NAME}: #{e}" }
+                e.backtrace.each { |line| LOGGER.error(name) { line } }
               end
-              LOGGER.warn(PROC) { "#{thread_name} thread is ending." }
+              LOGGER.warn(name) { "#{THREAD_NAME} thread is ending." }
             end
           end
         end

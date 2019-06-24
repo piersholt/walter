@@ -1,10 +1,12 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
     # Parent class
     class Context
       attr_reader :interface, :receiver, :transmitter, :multiplexer, :demultiplexer
+
+      NAME = 'Context'
 
       def initialize(application_object, path)
         setup_interface(path)
@@ -22,17 +24,19 @@ module Wilhelm
       end
 
       def off
-        LOGGER.info(PROC) { 'Switching off Multiplexing...' }
+        LOGGER.info(NAME) { 'Switching off Multiplexing...' }
         @demultiplexer.off
         @multiplexer.off
-        LOGGER.info(PROC) { 'Multiplexing is off! 👍' }
-        LOGGER.info(PROC) { 'Switching off Transceiver...' }
+        LOGGER.info(NAME) { 'Multiplexing is off! 👍' }
+
+        LOGGER.info(NAME) { 'Switching off Transceiver...' }
         @receiver.off
         @transmitter.off
-        LOGGER.info(PROC) { 'Transceiver is off! 👍' }
-        LOGGER.info(PROC) { 'Switching off Interface...' }
+        LOGGER.info(NAME) { 'Transceiver is off! 👍' }
+
+        LOGGER.info(NAME) { 'Switching off Interface...' }
         @interface.off
-        LOGGER.info(PROC) { 'Interface is off! 👍' }
+        LOGGER.info(NAME) { 'Interface is off! 👍' }
       end
 
       private

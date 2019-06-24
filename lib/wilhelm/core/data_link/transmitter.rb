@@ -9,7 +9,7 @@ module Wilhelm
         include ManageableThreads
 
         NAME = 'Transmitter'
-        THREAD_NAME = NAME
+        THREAD_NAME = 'wilhelm-core/data_link Transmitter (Output Buffer)'
         MAX_RETRY = 3
 
         attr_reader :write_queue
