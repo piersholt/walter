@@ -7,7 +7,7 @@ require_relative 'data_link/frame/header'
 require_relative 'data_link/frame/tail'
 require_relative 'data_link/frame/frame'
 require_relative 'data_link/frame/synchronisation'
-require_relative 'data_link/frame/frame_builder'
+require_relative 'data_link/frame/builder'
 
 # puts "\tLoading wilhelm/core/data_link/fbzv"
 # require_relative 'data_link/fbzv/frame_synchronisation'

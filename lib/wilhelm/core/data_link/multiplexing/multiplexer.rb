@@ -62,7 +62,7 @@ module Wilhelm
         # @return Frame
         def multiplex(message)
           LOGGER.debug(name) { "#multiplex(#{message})" }
-          frame_builder = FrameBuilder.new
+          frame_builder = Frame::Builder.new
           frame_builder.from = message.from
           frame_builder.to = message.to
           frame_builder.payload = message.command.raw
