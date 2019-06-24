@@ -5,8 +5,66 @@ module Wilhelm
     class Command
       # Basic device class
       class BaseCommand
+        module Raw
+          def config
+            @config ||= get_config
+          end
+
+          def get_config
+            c = Wilhelm::Core::CommandMap.instance.config(id.d)
+            raise(StandardError, "No config! #{id}") unless c
+            c
+          end
+
+          def raw
+            if config.has_parameters?
+              index = config.index
+              Bytes.new([id, *process_arguments(self, index)])
+            elsif !config.has_parameters? && command.arguments
+              Bytes.new([id, *arguments])
+            else
+              Bytes.new([id])
+            end
+          rescue StandardError => e
+            LOGGER.error("#{self.class} Exception: #{e}")
+            e.backtrace.each { |l| LOGGER.error(l) }
+          end
+
+          def process_arguments(command, index)
+            args = map_arguments(command, index)
+
+            nested_arguments = args.map do |d|
+              if d.instance_of?(Array)
+                array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
+                Bytes.new(array_of_bytes)
+              else
+                Byte.new(:decimal, d)
+              end
+            end
+            nested_arguments.flatten
+          end
+
+          def map_arguments(command, index)
+            values_with_index = index.map do |param, i|
+              param_object = command.public_send(param)
+              param_value = param_object.respond_to?(:value) ? param_object.value : param_object
+              param_value ? [param_value, i] : nil
+            end.compact
+
+            values_with_index.sort_by! do |object|
+              index = object[1]
+              index.instance_of?(Range) ? index.first : index
+            end
+
+            values_with_index.map do |object|
+              object[0]
+            end
+          end
+        end
+
         include Wilhelm::Helpers::DataTools
         include Helpers
+        include Raw
 
         PADDED_DEFAULT = true
 

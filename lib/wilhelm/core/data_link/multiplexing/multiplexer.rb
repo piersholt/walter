@@ -81,7 +81,7 @@ module Wilhelm
           frame_builder = FrameBuilder.new
           frame_builder.from = message.from
           frame_builder.to = message.to
-          frame_builder.command = message.command
+          frame_builder.payload = message.command.raw
 
           frame = frame_builder.result
           LOGGER.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }
