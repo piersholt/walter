@@ -44,8 +44,8 @@ module Wilhelm
       end
 
       def setup_transceiver(io_buffer)
-        @receiver    = Receiver.new(io_buffer)
-        @transmitter = Transmitter.new(io_buffer)
+        @receiver    = DataLink::Receiver.new(io_buffer)
+        @transmitter = DataLink::Transmitter.new(io_buffer)
       end
 
       def setup_multiplexing(input_buffer, output_buffer)
