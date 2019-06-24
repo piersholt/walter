@@ -11,7 +11,7 @@ module Wilhelm
     module DataLink
       # Comment
       class Frame < Bytes
-        PROG_NAME = 'Frame'.freeze
+        NAME = 'Frame'.freeze
         HEADER_LENGTH = 2
         HEADER_INDEX_LENGTH = 2
 
@@ -52,26 +52,26 @@ module Wilhelm
         end
 
         def set_header(new_header)
-          LOGGER.debug(PROG_NAME) { "#set_header(#{new_header})." }
+          LOGGER.debug(NAME) { "#set_header(#{new_header})." }
 
-          # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(new_header + tail)
-          # LOGGER.debug(PROG_NAME) { self }
+          # LOGGER.debug(NAME) { self }
 
-          # LOGGER.debug(PROG_NAME) { "Setting @header." }
+          # LOGGER.debug(NAME) { "Setting @header." }
           @header = Header.new(new_header)
 
           true
         end
 
         def set_tail(new_tail)
-          LOGGER.debug(PROG_NAME) { "#set_tail(#{new_tail})." }
+          LOGGER.debug(NAME) { "#set_tail(#{new_tail})." }
 
-          # LOGGER.debug(PROG_NAME) { "Updating self with bytes." }
+          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(header + new_tail)
-          # LOGGER.debug(PROG_NAME) { self }
+          # LOGGER.debug(NAME) { self }
 
-          # LOGGER.debug(PROG_NAME) { "Setting @tail." }
+          # LOGGER.debug(NAME) { "Setting @tail." }
           @tail = Tail.new(new_tail)
 
           true
@@ -82,18 +82,18 @@ module Wilhelm
         # ************************************************************************* #
 
         def valid?
-          LOGGER.debug(PROG_NAME) { "#valid?" }
+          LOGGER.debug(NAME) { "#valid?" }
           raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
 
-          LOGGER.debug(PROG_NAME) { "@header => #{@header}" }
-          LOGGER.debug(PROG_NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
+          LOGGER.debug(NAME) { "@header => #{@header}" }
+          LOGGER.debug(NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
 
           frame_bytes = @header + @tail.no_fcs
           checksum = frame_bytes.reduce(0) do |c,d|
             c^= d.to_d
           end
 
-          LOGGER.debug(PROG_NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
+          LOGGER.debug(NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
 
           checksum == tail.checksum
         rescue TypeError => e

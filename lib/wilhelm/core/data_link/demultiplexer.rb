@@ -9,6 +9,8 @@ module Wilhelm
         include ManageableThreads
         include Constants::Events
 
+        NAME = 'Demultiplexer'
+
         attr_reader :input_buffer, :output_buffer, :read_thread
 
         def initialize(input_buffer)
@@ -35,9 +37,10 @@ module Wilhelm
         private
 
         def name
-          'Demultiplexer'
+          NAME
         end
 
+        # @override: ManageableThreads#proc_name
         alias proc_name name
 
         def thread_read_input_frame_buffer(input_buffer, output_buffer)

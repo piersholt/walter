@@ -8,6 +8,8 @@ module Wilhelm
         include ManageableThreads
         include Constants::Events
 
+        NAME = 'Multiplexer'
+
         attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
         def initialize(frame_output_buffer)
@@ -19,7 +21,7 @@ module Wilhelm
         def on
           LOGGER.debug(name) { '#on' }
           @write_thread = thread_write_output_frame_buffer(@frame_output_buffer, @packet_output_buffer)
-          @threads.add(@write_thread)
+          add_thread(@write_thread)
           true
         rescue StandardError => e
           LOGGER.error(e)
@@ -35,9 +37,10 @@ module Wilhelm
         private
 
         def name
-          'Multiplexer'
+          NAME
         end
 
+        # @override: ManageableThreads#proc_name
         alias proc_name name
 
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
@@ -59,7 +62,6 @@ module Wilhelm
           end
         end
 
-        # @return Frame
         def multiplex(message)
           LOGGER.debug(name) { "#multiplex(#{message})" }
           frame_builder = Frame::Builder.new

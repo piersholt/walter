@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
@@ -6,40 +6,41 @@ module Wilhelm
       # Comment
       class Transmitter
         include Observable
+        include ManageableThreads
 
-        PROG_NAME = 'Transmitter'.freeze
-        THREAD_NAME = PROG_NAME
+        NAME = 'Transmitter'
+        THREAD_NAME = NAME
         MAX_RETRY = 3
 
-        attr_reader :threads, :write_queue
+        attr_reader :write_queue
 
         alias frame_output_buffer write_queue
 
         def initialize(output_buffer, write_queue = Queue.new)
           @output_buffer = output_buffer
           @write_queue = write_queue
-          @threads = ThreadGroup.new
         end
 
         def name
-          PROG_NAME
+          NAME
         end
 
+        # @override: ManageableThreads#proc_name
+        alias proc_name name
+
         def off
-          LOGGER.debug(PROG_NAME) { "#{self.class}#off" }
+          LOGGER.debug(name) { "#{self.class}#off" }
           close_threads
         end
 
-        def disable
-          LOGGER.debug(PROG_NAME) { "#{self.class}#disable" }
-          off
-        end
+        alias disable off
 
         def on
-          LOGGER.debug(PROG_NAME) { "#{self.class}#on" }
+          LOGGER.debug(name) { "#{self.class}#on" }
           begin
-            write_thread = thread_write_buffer(@write_queue, @output_buffer)
-            @threads.add(write_thread)
+            @write_thread = thread_write_buffer(@write_queue, @output_buffer)
+            add_thread(@write_thread)
+            true
           rescue StandardError => e
             LOGGER.error(e)
             e.backtrace.each { |l| LOGGER.error(l) }
@@ -52,46 +53,36 @@ module Wilhelm
 
         # ------------------------------ THREADS ------------------------------ #
 
-        def close_threads
-          LOGGER.debug "#{self.class}#close_threads"
-          threads = @threads.list
-          threads.each_with_index do |t, i|
-            LOGGER.debug "Thread ##{i+1} / #{t.status}"
-            t.exit.join
-            LOGGER.debug "Thread ##{i+1} / #{t.status}"
+        def thread_write_buffer(write_queue, output_buffer)
+          Thread.new do
+            LOGGER.debug(name) { 'New Thread: Frame Write.' }
+            Thread.current[:name] = THREAD_NAME
+            transmission(write_queue, output_buffer)
+            LOGGER.warn(name) { "#{self.class} thread is finished..!" }
           end
         end
 
-        def thread_write_buffer(write_queue, output_buffer)
-          LOGGER.debug(PROG_NAME) { 'New Thread: Frame Write.' }
+        def transmission(write_queue, output_buffer)
+          loop do
+            more_transmission(write_queue, output_buffer)
+          end
+        rescue StandardError => e
+          LOGGER.error(name) { "#{tn}: Exception: #{e}" }
+          e.backtrace.each { |l| LOGGER.error(l) }
+          binding.pry
+        end
 
-          Thread.new do
-            Thread.current[:name] = THREAD_NAME
-
-            begin
-              loop do
-                begin
-                  # frame_to_write = nil
-                  LOGGER.debug(THREAD_NAME) { "Transmit queue length: #{write_queue.size}" }
-                  LOGGER.debug(THREAD_NAME) { "Get next frame in queue... (blocking)" }
-                  frame_to_write = write_queue.deq
-                  # binding.pry
-                  transmit(output_buffer, frame_to_write)
-                rescue TransmissionError => e
-                  LOGGER.error(THREAD_NAME) { e }
-                  e.backtrace.each { |l| LOGGER.error(l) }
-                rescue StandardError => e
-                  LOGGER.error(THREAD_NAME) { e }
-                  e.backtrace.each { |l| LOGGER.error(l) }
-                end # begin
-              end # loop
-            rescue StandardError => e
-              LOGGER.error(PROG_NAME) { "#{tn}: Exception: #{e}" }
-              e.backtrace.each { |l| LOGGER.error(l) }
-              binding.pry
-            end
-            LOGGER.warn(SYNC_ERROR) { "#{self.class} thread is finished..!" }
-          end # thread_w
+        def more_transmission(write_queue, output_buffer)
+          LOGGER.debug(THREAD_NAME) { "Transmit queue length: #{write_queue.size}" }
+          LOGGER.debug(THREAD_NAME) { "Get next frame in queue... (blocking)" }
+          frame_to_write = write_queue.deq
+          transmit(output_buffer, frame_to_write)
+        rescue TransmissionError => e
+          LOGGER.error(THREAD_NAME) { e }
+          e.backtrace.each { |l| LOGGER.error(l) }
+        rescue StandardError => e
+          LOGGER.error(THREAD_NAME) { e }
+          e.backtrace.each { |l| LOGGER.error(l) }
         end
 
         def transmit(output_buffer, frame_to_write)

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+puts "\tLoading wilhelm/core/data_link/constants"
+
 module Wilhelm
   module Core
     module DataLink

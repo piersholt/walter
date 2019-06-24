@@ -10,7 +10,7 @@ module Wilhelm
         include Constants
 
         NAME = 'Receiver'
-        THREAD_NAME = 'Receiver'
+        THREAD_NAME = NAME
 
         attr_reader :input_buffer, :output_buffer, :read_thread
 
@@ -58,12 +58,8 @@ module Wilhelm
 
         def synchronisation(input_buffer)
           LOGGER.debug(name) { 'Entering byte shift loop.' }
-          shift_count = 1
           loop do
-            # LOGGER.debug(name) { "#{shift_count}. Start." }
             synchronise_frame(input_buffer)
-            # LOGGER.debug(name) { "#{shift_count}. End." }
-            shift_count += 1
           end
         rescue StandardError => e
           LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
