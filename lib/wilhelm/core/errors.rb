@@ -1,16 +1,32 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/core/errors"
-
-require_relative 'errors/all'
-
 module Wilhelm
   module Core
     # wilhelm-core Errors
     module Errors
-      include Frame
-      include Transmitter
-      include Handler
+      # Comment
+      module Frame
+        # Comment
+        class ChecksumError < StandardError; end
+        # Comment
+        class HeaderValidationError < StandardError; end
+
+        # Comment
+        class HeaderImplausibleError < StandardError; end
+
+        # Comment
+        class TailValidationError < StandardError; end
+      end
+
+      module Transmitter
+        # Comment
+        class TransmissionError < StandardError; end
+      end
+
+      module Handler
+        # Comment
+        class BaseHandlerError < StandardError; end
+      end
     end
 
     include Errors
