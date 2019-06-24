@@ -63,7 +63,7 @@ module Wilhelm
           UI_RADIO  = 0x46
 
           MENU_GFX = UI_CONFIG
-          MENU_RAD = MENU_RAD
+          MENU_RAD = UI_RADIO
 
           RAD_LED = 0x4A
           SRC_CTL = 0x4B
