@@ -7,7 +7,7 @@ module Wilhelm
     module Console
       module Session
         def messages
-          Core::SessionHandler.i.messages
+          Virtual::SessionHandler.i.messages
         end
 
         def hello?

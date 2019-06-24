@@ -15,7 +15,7 @@ module Wilhelm
         end
 
         def session_handler
-          @session_handler ||= Core::SessionHandler.instance
+          @session_handler ||= SessionHandler.instance
         end
 
         def update(action, properties)
