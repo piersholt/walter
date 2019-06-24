@@ -30,11 +30,23 @@ module Wilhelm
           false
         end
 
-        def scan_forward(toggle)
+        def pause(context)
           false
         end
 
-        def scan_backward(toggle)
+        def seek_forward(context)
+          false
+        end
+
+        def seek_backward(context)
+          false
+        end
+
+        def scan_forward(context, toggle)
+          false
+        end
+
+        def scan_backward(context, toggle)
           false
         end
 
