@@ -11,7 +11,7 @@ module Wilhelm
           @interface_handler = interface_handler
         end
 
-        NAME = 'Core::CoreListener'
+        NAME = 'CoreListener'
 
         def name
           NAME

@@ -54,8 +54,8 @@ module Wilhelm
         # ------------------------------ THREADS ------------------------------ #
 
         def thread_write_buffer(write_queue, output_buffer)
+          LOGGER.debug(name) { 'New Thread: Frame Write.' }
           Thread.new do
-            LOGGER.debug(name) { 'New Thread: Frame Write.' }
             Thread.current[:name] = THREAD_NAME
             transmission(write_queue, output_buffer)
             LOGGER.warn(name) { "#{self.class} thread is finished..!" }

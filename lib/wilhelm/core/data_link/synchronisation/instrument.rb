@@ -1,11 +1,14 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
     module DataLink
       module Synchronisation
-        # Comment
+        # Frame synchronisation for Instrument (I), and Body, i.e. Karosserie (K) buses.
         class Instrument
+          include Constants
+          NAME = 'Sync::I/K_Bus'
+
           attr_reader :buffer, :frame
 
           def initialize(buffer, frame = Frame.new)
@@ -27,19 +30,23 @@ module Wilhelm
           private
 
           def name
-            self.class.name
+            NAME
+          end
+
+          def buffer?(log)
+            LOGGER.debug(name) { "#{log} Byte Buffer size: #{buffer.size + buffer.register}. (Buffer: #{buffer.size}, Unshifted: #{buffer.register})" }
           end
 
           def fetch_frame_header
-            LOGGER.debug(name) { "#{SYNC} Byte Buffer size: #{buffer.size} (+ #{buffer.register}.)" }
+            buffer?(SYNC_HEADER)
 
-            LOGGER.debug(name) { "#{SYNC_HEADER} Trying to shift #{Frame::HEADER_LENGTH} bytes." }
+            LOGGER.debug(name) { "#{SYNC_HEADER} Shifting #{Frame::HEADER_LENGTH} bytes." }
             header = buffer.shift(Frame::HEADER_LENGTH)
             LOGGER.debug(name) { "#{SYNC_HEADER} Shifted bytes: #{header}" }
 
             # LOGGER.debug(SYNC_HEADER) { "Setting new frame header." }
             frame.set_header(header)
-            LOGGER.debug(name) { "#{SYNC_HEADER} New frame header set: #{frame.header}" }
+            # LOGGER.debug(name) { "#{SYNC_HEADER} New frame header set: #{frame.header}" }
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             raise e
           rescue StandardError => e
@@ -48,17 +55,16 @@ module Wilhelm
           end
 
           def fetch_frame_tail
-            LOGGER.debug(name) { "#{SYNC_TAIL} Input Buffer: #{buffer.size}." }
+            buffer?(SYNC_TAIL)
+            remaining_bytes = read_length_from_header
 
-            to_fetch = pending
-
-            LOGGER.debug(name) { "#{SYNC_TAIL} Shifting #{to_fetch} bytes." }
-            tail = buffer.shift(to_fetch)
+            LOGGER.debug(name) { "#{SYNC_TAIL} Shifting #{remaining_bytes} bytes." }
+            tail = buffer.shift(remaining_bytes)
             LOGGER.debug(name) { "#{SYNC_TAIL} Shifted bytes: #{tail}" }
 
             # LOGGER.debug(SYNC_TAIL) { "Setting new frame tail." }
             frame.set_tail(tail)
-            LOGGER.debug(name) { "#{SYNC_TAIL} New frame tail set: #{frame.tail}" }
+            # LOGGER.debug(name) { "#{SYNC_TAIL} New frame tail set: #{frame.tail}" }
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             raise e
           rescue StandardError => e
@@ -66,7 +72,7 @@ module Wilhelm
             e.backtrace.each { |l| LOGGER.warn(l) }
           end
 
-          def pending
+          def read_length_from_header
             LOGGER.debug(name) { "#{SYNC_HEADER} Reading frame length from header." }
             outstanding = frame.header.tail_length
             LOGGER.debug(name) { "#{SYNC_HEADER} Remaining frame bytes: #{outstanding}" }

@@ -70,8 +70,8 @@ module Wilhelm
           end
 
           def thread_populate_input_buffer
+            LOGGER.debug(name) { 'New Thread: Byte Read.' }
             Thread.new do
-              LOGGER.debug(name) { '#thread_populate_input_buffer' }
               Thread.current[:name] = THREAD_NAME
               read_byte = nil
               i = 1
@@ -83,6 +83,7 @@ module Wilhelm
                     read_byte = readpartial(1)
                     raise EncodingError if read_byte.nil?
                     byte_basic = ByteBasic.new(read_byte)
+                    LOGGER.debug(name) { "Byte: #{byte_basic}" }
                     private_input_buffer.push(byte_basic)
                     delay
                   rescue EncodingError

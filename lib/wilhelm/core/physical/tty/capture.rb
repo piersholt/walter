@@ -12,11 +12,13 @@ module Wilhelm
 
           def capture_byte(byte)
             return false unless capture?
+            LOGGER.debug(name) { "#capture_byte(#{byte})" }
             byte_log.write(byte)
           end
 
           def capture_frame(frame)
             return false unless capture?
+            LOGGER.debug(name) { "#capture_frame(#{frame})" }
             frame_log.write("#{frame}\n")
           end
 

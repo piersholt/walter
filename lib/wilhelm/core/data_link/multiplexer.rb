@@ -31,7 +31,7 @@ module Wilhelm
         end
 
         def off
-          LOGGER.debug(name) { '#of' }
+          LOGGER.debug(name) { '#off' }
           close_threads
         end
 

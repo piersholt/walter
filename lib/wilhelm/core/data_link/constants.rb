@@ -6,6 +6,10 @@ module Wilhelm
   module Core
     module DataLink
       module Constants
+        module Events
+          include Core::Constants::Events
+        end
+
         SYNC = 'Sync /'
         SYNC_HEADER = 'Header /'
         SYNC_TAIL = 'Tail /'
@@ -13,6 +17,7 @@ module Wilhelm
         SYNC_ERROR = 'Error /'
         SYNC_SHIFT = 'Unshift! /'
       end
+      include Constants
     end
   end
 end

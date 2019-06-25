@@ -48,8 +48,8 @@ module Wilhelm
         # ------------------------------ THREADS ------------------------------ #
 
         def thread_read_buffer(input_buffer, output_buffer)
+          LOGGER.debug(name) { 'New Thread: Frame Read.' }
           Thread.new do
-            LOGGER.debug(name) { 'New Thread: Frame Synchronisation.' }
             Thread.current[:name] = THREAD_NAME
             synchronisation(input_buffer)
             LOGGER.warn(name) { "#{self.class} thread is finished..!" }
@@ -70,7 +70,7 @@ module Wilhelm
         def synchronise_frame(input_buffer)
           synchronisation = @synchronisation.new(input_buffer)
           new_frame = synchronisation.run
-          LOGGER.debug(name) { "#{Constants::Events::FRAME_RECEIVED}: #{new_frame}" }
+          LOGGER.debug(name) { "Frame: #{new_frame}" }
           output_buffer.push(new_frame)
         rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
           LOGGER.warn(name) { "#{e}!" }

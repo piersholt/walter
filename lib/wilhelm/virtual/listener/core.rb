@@ -9,8 +9,10 @@ module Wilhelm
 
         attr_accessor :packet_handler, :interface_handler
 
+        NAME = 'CoreListener'
+
         def name
-          'Virtual::CoreListener'
+          NAME
         end
 
         def update(action, properties)
