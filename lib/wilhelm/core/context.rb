@@ -54,11 +54,11 @@ module Wilhelm
 
       def setup_multiplexing(input_buffer, output_buffer)
         @demultiplexer = DataLink::Demultiplexer.new(input_buffer)
-        @multiplexer = DataLink::Multiplexer.new(output_buffer)
+        @multiplexer   = DataLink::Multiplexer.new(output_buffer)
       end
 
       def setup_event_handling(application_object)
-        core_listener = Listener::CoreListener.new
+        core_listener        = Listener::CoreListener.new
         application_listener = Listener::ApplicationListener.new
 
         core_listener.interface_handler = InterfaceHandler.new(@transmitter)
