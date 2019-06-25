@@ -8,8 +8,9 @@ module Walter
     include ManageableThreads
     include Wilhelm::Core::Constants::Events::Application
 
-    attr_reader :core, :virtual, :wolfgang
-    alias w wolfgang
+    attr_reader :core, :virtual, :manager, :audio
+    alias m manager
+    alias a audio
 
     PROC = 'Walter'
 
@@ -29,6 +30,7 @@ module Walter
       }
       LOGGER.debug(PROC) { "Publisher connection options: #{connection_options}" }
       Publisher.params(connection_options)
+      Publisher.announcement(:walter)
     end
 
     def launch
@@ -81,8 +83,8 @@ module Walter
     private
 
     def setup_services(environment)
-      manager = Wilhelm::Services::Manager.new
-      audio = Wilhelm::Services::Audio.new
+      @manager = Wilhelm::Services::Manager.new
+      @audio = Wilhelm::Services::Audio.new
 
       manager.disable
       audio.disable
