@@ -11,6 +11,7 @@ module Wilhelm
           include Configuration
           include Wilhelm::Helpers::Delayable
           include State
+          include Errors
 
           NAME = 'Interface'.freeze
           THREAD_NAME = 'wilhelm-core/physical Log (Input Buffer)'

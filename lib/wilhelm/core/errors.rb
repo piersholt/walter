@@ -4,13 +4,12 @@ module Wilhelm
   module Core
     # wilhelm-core Errors
     module Errors
+      class BaseHandlerError < StandardError; end
       class ChecksumError < StandardError; end
-      class HeaderValidationError < StandardError; end
       class HeaderImplausibleError < StandardError; end
+      class HeaderValidationError < StandardError; end
       class TailValidationError < StandardError; end
       class TransmissionError < StandardError; end
-      class BaseHandlerError < StandardError; end
     end
-    include Errors
   end
 end

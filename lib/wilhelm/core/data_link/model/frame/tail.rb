@@ -7,6 +7,7 @@ module Wilhelm
       class Frame < Bytes
         # Comment
         class Tail < Bytes
+          include Errors
           VALID_SIZE = (3..255)
 
           def initialize(bytes)

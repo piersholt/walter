@@ -8,6 +8,7 @@ module Wilhelm
         include Observable
         include ManageableThreads
         include Constants
+        include Errors
 
         NAME = 'Receiver'
         THREAD_NAME = 'wilhelm-core/data_link Receiver (Input Buffer)'

@@ -7,6 +7,8 @@ module Wilhelm
         # Frame synchronisation for Instrument (I), and Body, i.e. Karosserie (K) buses.
         class Instrument
           include Constants
+          include Errors
+          
           NAME = 'Sync::I/K_Bus'
 
           attr_reader :buffer, :frame

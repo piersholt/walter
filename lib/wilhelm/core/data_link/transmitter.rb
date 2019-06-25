@@ -7,6 +7,7 @@ module Wilhelm
       class Transmitter
         include Observable
         include ManageableThreads
+        include Errors
 
         NAME = 'Transmitter'
         THREAD_NAME = 'wilhelm-core/data_link Transmitter (Output Buffer)'

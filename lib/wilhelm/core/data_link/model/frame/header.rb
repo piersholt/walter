@@ -7,6 +7,7 @@ module Wilhelm
       class Frame < Bytes
         # Comment
         class Header < Bytes
+          include Errors
           VALID_SIZE = (2..2)
 
           MIN_LENGTH_VALUE = (3..255)
@@ -38,7 +39,7 @@ module Wilhelm
           end
 
           private
-          
+
           def validate_args(bytes)
             raise HeaderValidationError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
             tail_length_value = bytes[LENGTH_INDEX].d
