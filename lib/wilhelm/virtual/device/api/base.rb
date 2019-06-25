@@ -14,7 +14,7 @@ module Wilhelm
           NAME = 'BaseAPI'.freeze
 
           def resolve_ident(ident)
-            AddressLookupTable.instance(ident)
+            AddressLookupTable.instance.resolve_ident(ident)
           end
 
           def name

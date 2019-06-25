@@ -5,6 +5,7 @@ module Wilhelm
     class Manager
       class On
         include Logging
+        include Defaults
         include Notifications
         include Actions
 

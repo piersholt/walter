@@ -9,47 +9,47 @@ module Wilhelm
 
         # STATES --------------------------------------------------
 
-        def disable(___)
+        def disable(*)
           false
         end
 
-        def enable(___)
+        def enable(*)
           false
         end
 
-        def on(___)
+        def on(*)
           false
         end
 
         # Commands
 
-        def connect_device(___)
+        def connect_device(*)
           false
         end
 
-        def disconnect_device(___)
+        def disconnect_device(*)
           false
         end
 
         # Notifications ------------------------------------------------
 
-        def device_connected(___, ___)
+        def device_connected(*)
           false
         end
 
-        def device_disconnected(___, ___)
+        def device_disconnected(*)
           false
         end
 
-        def device_connecting(___)
+        def device_connecting(*)
           false
         end
 
-        def device_disconnecting(___)
+        def device_disconnecting(*)
           false
         end
 
-        def new_device(___)
+        def new_device(*)
           false
         end
       end

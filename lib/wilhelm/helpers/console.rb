@@ -19,7 +19,7 @@ module Wilhelm
       include Yabber
 
       def command_map
-        Wilhelm::Core::CommandMap.instance
+        Wilhelm::Virtual::CommandMap.instance
       end
 
       PROC_MOD = 'Console'.freeze
