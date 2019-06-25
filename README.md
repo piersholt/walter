@@ -11,7 +11,7 @@ Relative to the project, the underlying library is over engineered (over complic
 
 ## Background
 
-Walter began as a means to add support for Bluetooth audio (A2DP/AVRCP) with native display, and control via the on-board monitor (BMBT), and multi-function steering wheel controls (MFL) to my [BMW E39 5 series](https://en.wikipedia.org/wiki/BMW_5_Series_(E39). In my case, a 1997 528i Touring, optioned with navigation, HiFi, and telephone (i.e. High IKE, with both I and K buses).
+Walter began as a means to add support for Bluetooth audio (A2DP/AVRCP) with native display, and control via the on-board monitor (BMBT), and multi-function steering wheel controls (MFL) to my [BMW E39 5 series](https://en.wikipedia.org/wiki/BMW_5_Series_(E39)). In my case, a 1997 528i Touring, optioned with navigation, HiFi, and telephone (i.e. High IKE, with both I and K buses).
 
 There are a number of products available that fulfil this need, but each had compromises, and I was curious to what functionality could be developed via the I/K bus.
 
