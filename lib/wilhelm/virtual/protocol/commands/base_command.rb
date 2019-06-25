@@ -6,28 +6,30 @@ module Wilhelm
       # Basic device class
       class BaseCommand
         module Raw
-          def config
-            @config ||= get_config
+          def command_config
+            @config ||= get_command_config
           end
 
-          def get_config
+          def get_command_config
             c = CommandMap.instance.config(id.d)
-            raise(StandardError, "No config! #{id}") unless c
+            raise(StandardError, "#get_command_config(#{id.d}) => No command_config #{id}") unless c
             c
           end
 
           def raw
-            if config.has_parameters?
-              index = config.index
+            raise(StandardError, "#config() => No command_config #{id}") unless command_config
+            if command_config.has_parameters?
+              index = command_config.index
               Core::Bytes.new([id, *process_arguments(self, index)])
-            elsif !config.has_parameters? && command.arguments
+            elsif !command_config.has_parameters? && command.arguments
               Core::Bytes.new([id, *arguments])
             else
               Core::Bytes.new([id])
             end
           rescue StandardError => e
-            LOGGER.error("#{self.class} Exception: #{e}")
-            e.backtrace.each { |l| LOGGER.error(l) }
+            LOGGER.error('BaseCommand') { e }
+            LOGGER.error('BaseCommand') { "ID: #{id}, ID Decimal: #{id.d}" }
+            e.backtrace.each { |l| LOGGER.error('BaseCommand') { l } }
           end
 
           def process_arguments(command, index)
@@ -35,7 +37,7 @@ module Wilhelm
 
             nested_arguments = args.map do |d|
               if d.instance_of?(Array)
-                array_of_bytes = d.map { |i| Byte.new(:decimal, i) }
+                array_of_bytes = d.map { |i| Core::Byte.new(:decimal, i) }
                 Core::Bytes.new(array_of_bytes)
               else
                 Core::Byte.new(:decimal, d)
