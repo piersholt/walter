@@ -1,5 +1,6 @@
-`wilhelm-api`
-
-The purpose is to provide an abstract interface as to be more agnostic, and not tightly
-coupled to the BMW. API objects reflect common features, i.e. Communication, or Radio,
-with methods being universal, i.e. Communications#incoming_call, or Radio.on.
+### `wilhelm-api`
+- sits atop `wilhelm-virtual`
+- a completely abstracted, agnostic, bi-directional API, decoupled from the underlying BMW bus implementation
+- API objects modelled on universal feature sets, i.e. `Communication`, or `Audio`
+- API object methods reflecting common use cases, i.e. `Communications.incoming_call(caller_id)`, or `Audio.on()`
+- Callbacks for feature events, such as user control input e.g. `<Button::Stateful :id => :bmbt_next, :state => :hold>`
