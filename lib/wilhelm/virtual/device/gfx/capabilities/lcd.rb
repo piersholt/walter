@@ -26,6 +26,8 @@ module Wilhelm
             # Set Brightness
             # gfx bmbt 05 41 01 60
             # gfx bmbt 05 42 01 60
+            # Using 41 or 42 individually both seem to work.
+            # Backwards compatability?
             def brightness(level)
               lcd_brightness_set(arguments: bytes(0x41, 0x01, level))
               lcd_brightness_set(arguments: bytes(0x42, 0x01, level))
