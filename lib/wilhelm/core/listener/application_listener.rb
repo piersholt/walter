@@ -20,13 +20,14 @@ module Wilhelm
         end
 
         def update(action, properties)
+          LOGGER.warn(name) { "ApplicationListener disabled!" }
+          return false
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action
           when EXIT
-            LOGGER.warn(name) { 'ApplicationListener exit event disabled' }
-            # LOGGER.debug(name) { "Delegate: #{@data_logging_handler.class}" }
-            # data_logging_handler&.exit
-            # LOGGER.debug(name) { "Delegate: #{@data_logging_handler.class} complete!" }
+            LOGGER.debug(name) { "Delegate: #{@data_logging_handler.class}" }
+            data_logging_handler&.exit
+            LOGGER.debug(name) { "Delegate: #{@data_logging_handler.class} complete!" }
           end
         rescue StandardError => e
           LOGGER.error(name) { e }
