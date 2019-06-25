@@ -4,6 +4,8 @@ Walter is a proof of concept SDK for BMWs utilising I/K-BUS. It includes resourc
 
 This _is not_, and _should not_ be considered a library (hence the absence of a published gem), nor a how to guide. Although, I plan to continue developing the underlying library- albeit, to suit my needs, and general philosophy.
 
+Relative to the project, the underlying library is over engineered (over complicated?), but a large part of my interest was in developing a flexible and extensible tool kit, for which this project was the first use case.
+
 ---
 
 
