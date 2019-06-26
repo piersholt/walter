@@ -12,7 +12,6 @@ puts "Walter Copyright (C) 2019 Piers Holt\n"\
 # *************************************************************************** #
 begin
   # Bundler dependencies
-  require 'rubygems'
   require 'bundler/setup'
 
   require 'pry-byebug'
@@ -72,7 +71,6 @@ begin
   end
 
   setup_path('lib')
-  setup_path('lib/walter')
 
   dir_check
 
