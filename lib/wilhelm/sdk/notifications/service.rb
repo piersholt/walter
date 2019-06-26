@@ -7,12 +7,13 @@ module Wilhelm
       include LogActually::ErrorOutput
       attr_accessor :listener, :handler, :context
       attr_writer :bus
-      alias wolfgang_context context
+
+      alias environment context
 
       include Constants
 
-      def initialize(wolfgang_context)
-        @context = wolfgang_context
+      def initialize(context)
+        @context = context
         @state = Inactive.new
       end
 

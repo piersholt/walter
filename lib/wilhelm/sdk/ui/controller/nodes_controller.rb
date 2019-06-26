@@ -57,8 +57,8 @@ module Wilhelm
 
           # SYSTEM EVENTS ------------------------------------------------------
 
-          def wolfgang(action)
-            LOGGER.debug(NAME) { "#wolfgang(#{action})" }
+          def environment(action)
+            LOGGER.debug(NAME) { "#environment(#{action})" }
             case action
             when Environment::Online
               index

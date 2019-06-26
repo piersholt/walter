@@ -16,7 +16,7 @@ module Wilhelm
         end
 
         def nickname
-          :wolfgang
+          :environment
         end
 
         def state_string
