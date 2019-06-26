@@ -38,7 +38,7 @@ Given the increasing- if not complete obsolescence, of said systems, I decided t
 - [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/) (with [Bluetooth modules](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#index6h2))
 - [Wolfgang](https://www.github.com/piersholt/wolfgang) (see below)
 
-#### Wilhelm
+### Architecture
 
 Walter relies upon a package `wilhelm`, which is broken into several libraries:
 
