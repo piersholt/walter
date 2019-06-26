@@ -13,7 +13,7 @@ module Wilhelm
             MENU_GFX,
             SRC_SND, SRC_GFX,
             TEL_OPEN, GFX_STATUS, TEL_DATA, DSP_EQ,
-            OBC_CONFIG, OBC_REQ,
+            OBC_VAR, OBC_REQ,
             PING, PONG,
             COUNTRY_REQ, COUNTRY_REP,
             IGNITION_REQ, IGNITION_REP
@@ -21,7 +21,7 @@ module Wilhelm
 
           SUBSCRIBE = [
             PING, PONG,
-            TXT_MID, TXT_GFX, TXT_HUD, TXT_NAV,
+            TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV,
             RAD_ALT, MENU_RAD,
             BMBT_A, BMBT_B
           ].freeze

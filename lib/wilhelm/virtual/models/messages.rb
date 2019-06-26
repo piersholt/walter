@@ -86,12 +86,12 @@ module Wilhelm
 
       def commands
         messages_with_unique_commands = @messages.uniq do |m|
-          m.command.id
+          m.command.id.d
         end
 
         messages_with_unique_commands.map do |m|
           m.command.h
-        end
+        end&.sort
       end
 
       def arguments(index = (0..0))

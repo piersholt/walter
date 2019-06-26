@@ -4,8 +4,8 @@ module Wilhelm
   module Virtual
     class Device
       module GFX
-        # Comment
         module API
+          # Comment
           module LCD
             include Constants::Command::Aliases
             include Device::API::BaseAPI

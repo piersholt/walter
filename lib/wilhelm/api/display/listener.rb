@@ -42,7 +42,7 @@ module Wilhelm
             logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
             announce
           when GFX_OBC_REQ
-            logger.debug(NAME) { "#update(#{GFX_OBC_REQ})" }
+            logger.info(NAME) { "#update(#{GFX_OBC_REQ}, #{properties})" }
             obc_request
           when RADIO_BODY_CLEARED
             logger.debug(NAME) { "#update(#{RADIO_BODY_CLEARED})" }

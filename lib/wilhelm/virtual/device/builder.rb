@@ -15,6 +15,7 @@ module Wilhelm
         CLASS_MAP =
           { dsp: 'DSP',
             cdc: 'CDC',
+            ike: 'IKE',
             tel: 'Telephone',
             rad: 'Radio',
             gfx: 'GFX',

@@ -7,6 +7,7 @@ module Wilhelm
         module Capabilities
           # BMBT Interface Control
           module LCD
+            include API
             include Constants
             include Helpers::Parse
 

@@ -47,10 +47,10 @@ module Wilhelm
               obc_config(b1: property, b2: x , b3: y, b4: z)
             end
 
-            # OBC_CTL ----------------------------------------
-            def aux(control = 0b0000_0000, unconfirmed = 0b0000_0000)
-              obc_ctl(control: control, unconfirmed: unconfirmed)
-            end
+            # ANZV_BOOL ----------------------------------------
+            # def aux(control = 0b0000_0000, unconfirmed = 0b0000_0000)
+            #   obc_ctl(control: control, unconfirmed: unconfirmed)
+            # end
 
             private
 

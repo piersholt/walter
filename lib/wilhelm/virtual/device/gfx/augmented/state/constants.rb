@@ -67,6 +67,18 @@ module Wilhelm
               SELECT = (0x40..0x70)
               TONE = (0x80..0xff)
 
+              # Command 0x41 OBC-REQ Parameters
+              OUTSIDE_TEMP = 0x03
+              ECON_1 = 0x04
+              ECON_2 = 0x05
+              RANGE = 0x06
+              SPEED_LIMIT = 0x09
+              AVG_SPEED = 0x0a
+              STOPWATCH = 0x0e
+              OBC_PARAMS = [OUTSIDE_TEMP, ECON_1, ECON_2, RANGE, SPEED_LIMIT, AVG_SPEED, STOPWATCH]
+
+
+
               # MODEL ------------------------------------------------
 
               # DATA_MODEL = {

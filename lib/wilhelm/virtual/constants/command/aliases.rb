@@ -34,9 +34,10 @@ module Wilhelm
           TXT_MID    = 0x21
           GFX_STATUS = 0x22
           TXT_GFX    = 0x23
-          TXT_HUD    = 0x24
           TXT_NAV    = 0xA5
 
+          ANZV_VAR  = 0x24
+          ANZV_BOOL = 0x2A
           TEL_LED   = 0x2B
           TEL_STATE = 0x2C
           TEL_DATA  = 0x31
@@ -48,8 +49,7 @@ module Wilhelm
           CDC_REP = 0x39
           # CDC_REP = CDC
 
-          OBC_CTL    = 0x2A
-          OBC_CONFIG = 0x40
+          OBC_VAR = 0x40
           OBC_REQ    = 0x41
           # OBC_REP = 0x24 = TXT_24
 

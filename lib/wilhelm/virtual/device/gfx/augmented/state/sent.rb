@@ -10,6 +10,7 @@ module Wilhelm
             module Sent
               include Virtual::Constants::Events::Display
               include Virtual::Constants::Buttons::BMBT
+              include Constants
 
               # Command 0x01
               def evaluate_ping(command)
@@ -62,11 +63,13 @@ module Wilhelm
                 end
               end
 
+
+
               def evaluate_obc_req(command)
                 id = command.field.value
-                if [0x03, 0x04, 0x05, 0x06, 0x09, 0x0a, 0x0e].include?(id)
+                if OBC_PARAMS.include?(id)
                   changed
-                  notify_observers(GFX_OBC_REQ, device: moi)
+                  notify_observers(GFX_OBC_REQ, device: moi, menu: :on_board_computer)
                 end
               end
             end

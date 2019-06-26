@@ -20,9 +20,9 @@ module Wilhelm
           LAMP = [LAMP_REQ, LAMP_REP].freeze
           DOOR = [DOOR_REQ, DOOR_REP].freeze
 
-          OBC = [OBC_CTL, OBC_CONFIG, OBC_REQ].freeze
+          OBC = [ANZV_BOOL, OBC_VAR, OBC_REQ].freeze
 
-          DISPLAY = [TXT_MID, TXT_GFX, TXT_HUD, TXT_NAV, GFX_STATUS].freeze
+          DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
 
           NAVIGATION = [COORDINATES, ADDRESS, REAR, CELL, UTC].freeze
 

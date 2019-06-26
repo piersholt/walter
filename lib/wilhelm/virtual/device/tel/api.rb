@@ -37,7 +37,7 @@ module Wilhelm
           # 0x24
           def hud(from: :tel, to: :gfx, **arguments)
             format_chars!(arguments)
-            try(from, to, TXT_HUD, arguments)
+            try(from, to, ANZV_VAR, arguments)
           end
         end
       end

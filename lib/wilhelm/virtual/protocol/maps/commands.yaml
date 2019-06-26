@@ -3161,7 +3161,7 @@
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: TXT-24
+    :short_name: ANZV-VAR
     :long_name: OBC Display (IKE, GFX)
     :verbose: false
   :klass: ParameterizedCommand
@@ -3173,6 +3173,8 @@
       :dictionary:
         0x01: Time
         0x02: Date
+
+        # On-board Computer
         0x03: Outside Temp.
         0x04: Econ. 1
         0x05: Econ. 2
@@ -3181,21 +3183,29 @@
         0x08: Arrival
         0x09: Speed Limit
         0x0a: Avg. Speed
-        0x0c: Memo
-        0x0d: Memo
         0x0e: Stopwatch
+
+        # Aux Venting/Heating
         0x0f: Aux. Timer 1
         0x10: Aux. Timer 2
+
+        # Radio
+        0x40: Radio HUD
+
+        # Code
+        0x16: Emergency Disarm
+
+        # Unconfirmed
+        0x0c: Memo
+        0x0d: Memo
         0x11: Aux Heating Off
         0x12: Aux Heating On
         0x13: Aux Vent. Off
         0x14: Aux Vent. On
         0x15: End Stellmode
-        0x16: Emergency Disarm
         0x1a: Interim Time
         0x1b: Aux Heat/Vent
         0x1f: Test Mode
-        0x40: Radio HUD
     :ike:
       :type: :map
       :dictionary:
@@ -3789,7 +3799,8 @@
     :d: 64
     :h: '0x40'
   :properties:
-    :short_name: OBC-CONFIG
+    # :short_name: OBC-CONFIG
+    :short_name: OBC-VAR
     :long_name: Set OBC Data
   :klass: ParameterizedCommand
   :parameters:
@@ -3802,7 +3813,7 @@
         0x07: Set Distance
         0x09: Set Speed Limit
 
-        0x0D: Set Code
+        0x0D: Set Code (Deactivate)
 
         0x0F: Set Aux Timer 1
         0x10: Set Aux Timer 2
@@ -3848,7 +3859,8 @@
     :h: '0x41'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: OBC-REQ
+    # :short_name: OBC-REQ
+    :short_name: OBC-BOOL
     :long_name: OBC Data Request
   :parameters:
     :field:
@@ -3863,21 +3875,23 @@
         0x05: Econ. 2
         0x06: Range
         0x07: Distance
-        0x08: Arrival
         0x09: Speed Limit
         0x0a: Avg. Speed
         0x0c: Memo 1
-        0x0d: Memo 2
         0x0e: Stopwatch
         0x0f: Aux. Timer 1
         0x10: Aux. Timer 2
+        0x1a: Interim Time
+
+        # Unconfirmed?
+        0x08: Arrival
+        0x0d: Memo 2
         0x11: Aux Heating Off
         0x12: Aux Heating On
         0x13: Aux Vent. Off
         0x14: Aux Vent. On
         0x15: End Stellmode
-        0x16: Emergency Disarm
-        0x1a: Interim Time
+        0x16: Code (Emergency Disarm)
         0x1b: Aux Heat/Vent
         0x1f: Test Mode
         0x40: Radio HUD
@@ -3911,11 +3925,23 @@
     :h: '0x2A'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: OBC-CTL
-    :long_name: IKE to ANZV OBC Control (Relays command send to IKE)
+    # :short_name: OBC-CTL
+    :short_name: ANZV-BOOL
+    :long_name: IKE to ANZV OBC Control
+  :index:
+    :control_a: 0
+    :control_b: 1
   :parameters:
-    :control:
+    :control_a:
       :type: :bit_array
+      :index:
+        :memo:  !ruby/range
+                begin: 1
+                end: 2
+        :timer: 4
+        :limit: !ruby/range
+                begin: 5
+                end: 6
       :parameters:
         :memo:
           # 0010 0000
@@ -3942,15 +3968,7 @@
             0b01: :on
             0b10: :on
             0b11: :on
-      :index:
-        :memo:  !ruby/range
-                begin: 1
-                end: 2
-        :timer: 4
-        :limit: !ruby/range
-                begin: 5
-                end: 6
-    :unconfirmed:
+    :control_b:
       :type: :bit_array
       :index:
         :code:  !ruby/range
@@ -3992,9 +4010,6 @@
             0b00: :off
             0b01: :enabled
             0b10: :disabled
-  :index:
-    :control: 0
-    :unconfirmed: 1
   :meta:
     :senders:
       - IKE

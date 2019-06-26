@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'api/lcd'
+require_relative 'api/obc'
 
 module Wilhelm
   module Virtual
@@ -34,18 +35,6 @@ module Wilhelm
           # def sound_source(from: :tv, to: :bmbt, arguments:)
           #   try(from, to, SRC_GFX, arguments)
           # end
-
-          # 0x40
-          def obc_config(from: :gfx, to: :ike, **arguments)
-            # LOGGER.unknown('API::OBC') { "#{from}, #{to}, #{arguments}" }
-            try(from, to, OBC_CONFIG, arguments)
-          end
-
-          # 0x2A
-          def obc_ctl(from: :ike, to: :anzv, **arguments)
-            # LOGGER.unknown('API::OBC') { "#{from}, #{to}, #{arguments}" }
-            try(from, to, OBC_CTL, arguments)
-          end
         end
       end
     end
