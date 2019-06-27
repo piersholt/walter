@@ -8,7 +8,7 @@ module Walter
     include ManageableThreads
     include Wilhelm::Core::Constants::Events::Application
 
-    attr_reader :core, :virtual, :manager, :audio
+    attr_reader :core, :virtual, :api, :manager, :audio
     alias m manager
     alias a audio
 
@@ -19,7 +19,7 @@ module Walter
 
       @core = Wilhelm::Core::Context.new(self, file)
       @virtual = Wilhelm::Virtual::Context.new(self, @core)
-      Wilhelm::API::Context.new(virtual.bus)
+      @api = Wilhelm::API::Context.new(virtual.bus)
       @sdk = Wilhelm::SDK::Context.new(@core)
       setup_services(@sdk.environment)
 
