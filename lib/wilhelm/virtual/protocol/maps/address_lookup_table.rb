@@ -18,7 +18,7 @@ module Wilhelm
         LOGGER.debug(PROC) { "#find(#{device_id})" }
         mapped_result = super(device_id)
       rescue IndexError => e
-        LOGGER.warn(PROC) {"Device #{DataTools.decimal_to_hex(device_id, true)} not found!" }
+        LOGGER.warn(PROC) {"Device #{Helpers::DataTools.decimal_to_hex(device_id, true)} not found!" }
         mapped_result = :universal
       end
 

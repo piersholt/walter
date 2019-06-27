@@ -21,7 +21,7 @@ module Wilhelm
             if command_config.has_parameters?
               index = command_config.index
               Core::Bytes.new([id, *process_arguments(self, index)])
-            elsif !command_config.has_parameters? && command.arguments
+            elsif !command_config.has_parameters? && self.arguments
               Core::Bytes.new([id, *arguments])
             else
               Core::Bytes.new([id])
