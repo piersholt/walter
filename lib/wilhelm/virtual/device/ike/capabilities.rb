@@ -9,6 +9,7 @@ module Wilhelm
           include API
           include Helpers::Data
 
+          # OBC
           def obc_bool(byte_one, byte_two)
             api_2a(control: byte_one, unconfirmed: byte_two)
           end

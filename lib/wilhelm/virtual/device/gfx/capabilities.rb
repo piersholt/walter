@@ -1,10 +1,13 @@
 # frozen_string_literal: false
 
 require_relative 'capabilities/constants'
-require_relative 'capabilities/user_interface'
-require_relative 'capabilities/user_controls'
+
+require_relative 'capabilities/auxiliary'
+require_relative 'capabilities/code'
 require_relative 'capabilities/obc'
-require_relative 'capabilities/lcd'
+require_relative 'capabilities/settings'
+require_relative 'capabilities/user_controls'
+require_relative 'capabilities/user_interface'
 
 module Wilhelm
   module Virtual
@@ -13,10 +16,12 @@ module Wilhelm
         # Comment
         module Capabilities
           include Helpers::Button
-          include UserInterface
+          include AuxiliaryVentilation
+          include Code
+          include OnBoardComputer
+          include Settings
           include UserControls
-          include OBC
-          include LCD
+          include UserInterface
         end
       end
     end

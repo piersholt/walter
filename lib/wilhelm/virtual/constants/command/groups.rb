@@ -20,7 +20,7 @@ module Wilhelm
           LAMP = [LAMP_REQ, LAMP_REP].freeze
           DOOR = [DOOR_REQ, DOOR_REP].freeze
 
-          OBC = [ANZV_BOOL, OBC_VAR, OBC_REQ].freeze
+          OBC = [ANZV_BOOL, OBC_VAR, OBC_BOOL].freeze
 
           DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
 
@@ -99,11 +99,4 @@ module Wilhelm
       end
     end
   end
-end
-
-module Wilhelm
-  module Core
-  end
-end
-class Command
 end

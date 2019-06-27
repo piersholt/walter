@@ -41,8 +41,8 @@ module Wilhelm
           when GFX_ANNOUNCE
             logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
             announce
-          when GFX_OBC_REQ
-            logger.info(NAME) { "#update(#{GFX_OBC_REQ}, #{properties})" }
+          when GFX_OBC_BOOL
+            logger.info(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
             obc_request
           when RADIO_BODY_CLEARED
             logger.debug(NAME) { "#update(#{RADIO_BODY_CLEARED})" }

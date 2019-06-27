@@ -10,7 +10,7 @@ module Wilhelm
             GFX_MONITOR_OFF = :gfx_monitor_off
             GFX_PING = :gfx_ping
             GFX_ANNOUNCE = :gfx_announce
-            GFX_OBC_REQ = :gfx_obc_req
+            GFX_OBC_BOOL = :gfx_obc_req
             RADIO_BODY_CLEARED = :radio_body_cleared
             # Not In Use
             PRIORITY_GFX = :gfx_priority_gfx

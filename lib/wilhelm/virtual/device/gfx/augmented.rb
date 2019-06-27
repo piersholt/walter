@@ -13,7 +13,7 @@ module Wilhelm
             MENU_GFX,
             SRC_SND, SRC_GFX,
             TEL_OPEN, GFX_STATUS, TEL_DATA, DSP_EQ,
-            OBC_VAR, OBC_REQ,
+            OBC_VAR, OBC_BOOL,
             PING, PONG,
             COUNTRY_REQ, COUNTRY_REP,
             IGNITION_REQ, IGNITION_REP
@@ -70,8 +70,8 @@ module Wilhelm
             when SRC_SND
               # logger.debug(moi) { "Tx: Source SND (#{DataTools.d2h(SRC_SND)})" }
               # evaluate_menu_gfx(message.command)
-            when OBC_REQ
-              logger.debug(moi) { "Tx: OBC Req. (#{DataTools.d2h(OBC_REQ)})" }
+            when OBC_BOOL
+              logger.debug(moi) { "Tx: OBC Req. (#{DataTools.d2h(OBC_BOOL)})" }
               evaluate_obc_req(message.command)
             end
           end

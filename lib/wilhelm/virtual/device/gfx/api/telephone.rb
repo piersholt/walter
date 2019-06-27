@@ -5,14 +5,14 @@ module Wilhelm
     class Device
       module GFX
         module API
-          # Comment
-          module LCD
+          # GFX/Telephone interaction
+          module Telephone
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
-            # 0x05 LCD-SET
-            def lcd_brightness_set(from: :gfx, to: :bmbt, arguments:)
-              try(from, to, LCD_SET, arguments)
+            # 0x31 TEL_DATA
+            def user_input(from: :gfx, to: :rad, **arguments)
+              try(from, to, TEL_DATA, arguments)
             end
           end
         end

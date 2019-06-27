@@ -69,7 +69,7 @@ module Wilhelm
                 id = command.field.value
                 if OBC_PARAMS.include?(id)
                   changed
-                  notify_observers(GFX_OBC_REQ, device: moi, menu: :on_board_computer)
+                  notify_observers(GFX_OBC_BOOL, device: moi, menu: :on_board_computer)
                 end
               end
             end

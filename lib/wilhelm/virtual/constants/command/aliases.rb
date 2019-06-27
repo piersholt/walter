@@ -50,7 +50,7 @@ module Wilhelm
           # CDC_REP = CDC
 
           OBC_VAR = 0x40
-          OBC_REQ    = 0x41
+          OBC_BOOL = 0x41
           # OBC_REP = 0x24 = TXT_24
 
           MFL_VOL  = 0x32

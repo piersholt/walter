@@ -3171,19 +3171,21 @@
     :gfx:
       :type: :map
       :dictionary:
+        # SETTINGS
         0x01: Time
         0x02: Date
 
-        # On-board Computer
+        # ON-BOARD COMPUTER
         0x03: Outside Temp.
-        0x04: Econ. 1
-        0x05: Econ. 2
+        0x04: Consump. 1
+        0x05: Consump. 2
         0x06: Range
         0x07: Distance
         0x08: Arrival
-        0x09: Speed Limit
+        0x09: Limit
         0x0a: Avg. Speed
-        0x0e: Stopwatch
+        0x0e: Timer
+        0x1a: Timer (Lap)
 
         # Aux Venting/Heating
         0x0f: Aux. Timer 1
@@ -3203,7 +3205,6 @@
         0x13: Aux Vent. Off
         0x14: Aux Vent. On
         0x15: End Stellmode
-        0x1a: Interim Time
         0x1b: Aux Heat/Vent
         0x1f: Test Mode
     :ike:
@@ -3807,16 +3808,20 @@
     :b1:
       :type: :map
       :dictionary:
-        0x01: Set Time
-        0x02: Set Date
+        # SETTINGS
+        0x01: Input Time
+        0x02: Input Date
 
-        0x07: Set Distance
-        0x09: Set Speed Limit
+        # ON-BOARD COMPUTER
+        0x07: Input Distance
+        0x09: Input Limit
 
-        0x0D: Set Code (Deactivate)
+        # CODE
+        0x0D: Input Code (Deactivate/Change?)
 
-        0x0F: Set Aux Timer 1
-        0x10: Set Aux Timer 2
+        # AUX. VENTILATION
+        0x0F: Input Aux. Timer 1
+        0x10: Input Aux. Timer 2
     :b2:
       :label: 'b2'
       :type: :integer
@@ -3833,24 +3838,24 @@
     :b4: 3
   :meta:
     # LIMIT
-    - GFX   	IKE   	OBC-SET   	09 00 21
-    - IKE   	ANZV  	OBC-CTL    	02 00
-    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 33 KM/H"
+    - GFX   	IKE   	OBC-VAR   	09 00 21
+    - IKE   	ANZV  	ANZV-VAR   	Limit	" 33 KM/H"
 
-    - GFX   	IKE   	OBC-SET   	09 00 36
-    - IKE   	ANZV  	OBC-CTL    	02 00
-    - IKE   	ANZV  	TXT-INFO   	Speed Limit	" 54 KM/H"
+    - GFX   	IKE   	OBC-VAR   	09 00 36
+    - IKE   	ANZV  	ANZV-VAR   	Limit	" 54 KM/H"
 
     # DISTANCE
-    - GFX   	IKE   	OBC-SET   	07 00 30
-    - IKE   	ANZV  	OBC       	Distance  	"  48 KM "
-    - IKE   	ANZV  	TXT-INFO   	Arrival   	"--:--  "
+    - GFX   	IKE   	OBC-VAR   	07 00 30
+    - IKE   	ANZV  	ANZV-VAR    07 "  48 KM "
+    - IKE   	ANZV  	ANZV-VAR   	08 "--:--  "
 
     # AUX TIMER
-    - GFX   	IKE   	OBC-REQ   	0F 0C 06
-    - IKE   	ANZV  	TXT-INFO   	Aux. Timer 1   	"--:--  "
-    - GFX   	IKE   	OBC-REQ   	10 03 00
+    - GFX   	IKE   	OBC-?   	0F 0C 06
+    - IKE   	ANZV  	ANZV-VAR   	Aux. Timer 1   	"--:--  "
+    - GFX   	IKE   	OBC-?   	10 03 00
     - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
+
+    # DATE/TIME
     - 11AM = d2b(0x8B, true, true) => "0b10001011"
     - 11PM = d2b(0x0b, true, true) => "0b00001011"
 0x41:
@@ -3868,23 +3873,30 @@
       :map:
         0x00: disabled
       :dictionary:
-        0x01: Time
-        0x02: Date
-        0x03: Outside Temp.
-        0x04: Econ. 1
-        0x05: Econ. 2
-        0x06: Range
-        0x07: Distance
-        0x09: Speed Limit
-        0x0a: Avg. Speed
-        0x0c: Memo 1
-        0x0e: Stopwatch
-        0x0f: Aux. Timer 1
-        0x10: Aux. Timer 2
-        0x1a: Interim Time
+        # SETTINGS
+        0x0c: Memo 1  # On, Off
 
-        # Unconfirmed?
-        0x08: Arrival
+        # ON BOARD COMPUTER
+        0x04: Consump. 1              # Recalculate/"--.- L/100"
+        0x05: Consump. 2              # Recalculate/"--.- L/100"
+        0x09: Limit             # On, Off/"--- MPH "
+        0x0a: Avg. Speed              # Recalculate/"--.- MPH "
+        0x0e: Timer                   # On, Off/"13.0  SEC "
+        0x1a: Lap Timer               # Lap/" 6.2  SEC "
+
+        # AUX. VENTILATION
+        0x0f: Aux. Timer 1            # On, Off/"23:00  "
+        0x10: Aux. Timer 2            # On, Off/" 0:58  "
+
+        # REQUEST
+        0x01: Time                    # "17:27  "
+        0x02: Date                    # "22.07.2019"
+        0x03: Temperature             # "+14.5"
+        0x06: Range                   # " 59 MLS"
+        0x07: Distance                # "   5 MLS"
+        0x08: Arrival                 # "17:39  "
+
+        # Unconfirmed
         0x0d: Memo 2
         0x11: Aux Heating Off
         0x12: Aux Heating On
@@ -3900,23 +3912,25 @@
       :map:
         0x00: empty
       :dictionary:
-        0x01: Alt. (Interum?)
-        0x10: Reset/Recalculate
-        0x02: "0x02"
-        0x03: "0x03"
-        0x04: Switch On
-        0x08: Switch Off
-        0x20: Set As Current Speed
+        0b0000_0001: Lap/Variable Request
+        0b0000_0010: '?'
+        0b0000_0100: 'On/Start'
+        0b0000_1000: 'Off/Stop'
+
+        0b0001_0000: Reset/Recalculate
+        0b0010_0000: Set As Current Speed
+        0b0100_0000: '?'
+        0b1000_0000: '?'
   :index:
     :field: 0
     :control: 1
   :meta:
     :notes:
       - two bytes. first byte corresponds to same code as obc
-      - GFX IKE   41    08 01
-      - IKE ANZV  TXT-1 08 00 2D 2D 3A 2D 2D 20 20
-      - GFX IKE   41    04 01
-      - IKE ANZV  TXT-1 04 00 2D 2D 2E 2D 20 4C 2F 31 30 30
+      - GFX IKE   OBC-BOOL    08 01
+      - IKE ANZV  ANZV-VAR    08 00   "--:--  "
+      - GFX IKE   OBC-BOOL    04 01
+      - IKE ANZV  ANZV-VAR    04 00   "--.- L/100"
     :recipients:
       - IKE: IKE houses on board computer
 0x2A:
@@ -3962,7 +3976,7 @@
         :limit:
           # 0000 0010
           :type: :switch
-          :label: 'Speed Limit'
+          :label: 'Limit'
           :states:
             0b00: :off
             0b01: :on
