@@ -16,7 +16,6 @@ module Wilhelm
             # Code 0x0d User input of four digit code
             # @note alias code
             def input_code(*digits)
-              return false unless valid_digits?(digits)
               b2 = nibbles!(d0, d1)
               b3 = nibbles!(d2, d3)
               obc_var(b1: FIELD_CODE, b2: b2, b3: b3, b4: VAR_NIL)
@@ -29,14 +28,6 @@ module Wilhelm
             # Convert a series of nibbles to bytes
             def nibbles!(*nibbles)
               nibbles.reduce(0) { |m, o| (m << NIBBLE_SHIFT) + o }
-            end
-
-            def valid_digits?(*digits)
-              return false unless digits.length == 4
-              digits.all? do |digit|
-                digit.is_a?(Integer)
-                VALID_DIGITS.cover?(digit)
-              end
             end
           end
         end
