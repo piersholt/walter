@@ -3805,7 +3805,7 @@
     :long_name: Set OBC Data
   :klass: ParameterizedCommand
   :parameters:
-    :b1:
+    :field:
       :type: :map
       :dictionary:
         # SETTINGS
@@ -3822,20 +3822,14 @@
         # AUX. VENTILATION
         0x0F: Input Aux. Timer 1
         0x10: Input Aux. Timer 2
-    :b2:
-      :label: 'b2'
-      :type: :integer
-    :b3:
-      :label: 'b3'
-      :type: :integer
-    :b4:
-      :label: 'b4'
-      :type: :integer
+    :input:
+      :type: :data
   :index:
-    :b1: 0
-    :b2: 1
-    :b3: 2
-    :b4: 3
+    :field: 0
+    :input: !ruby/range
+              begin: 1
+              end: -1
+              excl: false
   :meta:
     # LIMIT
     - GFX   	IKE   	OBC-VAR   	09 00 21

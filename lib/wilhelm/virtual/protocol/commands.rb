@@ -44,6 +44,7 @@ require_relative 'commands/paramaterized/parameter/bit_array_parameter'
 require_relative 'commands/paramaterized/parameter/switched_parameter'
 require_relative 'commands/paramaterized/parameter/mapped_parameter'
 require_relative 'commands/paramaterized/parameter/chars_parameter'
+require_relative 'commands/paramaterized/parameter/data_parameter'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized"
 

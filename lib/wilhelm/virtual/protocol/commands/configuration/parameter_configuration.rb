@@ -10,13 +10,15 @@ module Wilhelm
       BIT_ARRAY = :bit_array
       CHARS = :chars
       INTEGER = :integer
-      TYPES = [MAP, BIT_ARRAY, SWITCH, CHARS, INTEGER].freeze
+      DATA = :data
+      TYPES = [MAP, BIT_ARRAY, SWITCH, CHARS, INTEGER, DATA].freeze
 
       PROPERTIES = {
         MAP => [:map, :dictionary, :label],
         SWITCH => [:label, :states],
         BIT_ARRAY => [],
         CHARS => [],
+        DATA => [],
         INTEGER => [] }
 
         attr_reader :name, :type
