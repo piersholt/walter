@@ -36,7 +36,7 @@ module Wilhelm
                 on: 0b0100_0000
               }.freeze
 
-              AUX_LED_FLASH = {
+              AUX_HEATING = {
                 off: ZERO,
                 on: 0b0010_0000
               }.freeze
@@ -46,7 +46,7 @@ module Wilhelm
                 on: 0b0001_0000
               }.freeze
 
-              AUX_DIRECT = {
+              AUX_VENTILATION = {
                 off: ZERO,
                 on: 0b0000_1000
               }.freeze

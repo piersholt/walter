@@ -37,7 +37,7 @@ module Wilhelm
               def valid_time?(hour, minute)
                 return false unless integers?(hour, minute)
                 return false if negative?(hour, minute)
-                return false unless valid_hour?(house) && valid_minute?(minute)
+                return false unless valid_hour?(hour) && valid_minute?(minute)
                 true
               end
 

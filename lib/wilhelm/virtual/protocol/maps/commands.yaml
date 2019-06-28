@@ -3176,7 +3176,7 @@
         0x02: Date
 
         # ON-BOARD COMPUTER
-        0x03: Outside Temp.
+        0x03: Temperature
         0x04: Consump. 1
         0x05: Consump. 2
         0x06: Range
@@ -3941,7 +3941,7 @@
   :properties:
     # :short_name: OBC-CTL
     :short_name: ANZV-BOOL
-    :long_name: IKE to ANZV OBC Control
+    :long_name: IKE to ANZV OBC Display
   :index:
     :control_a: 0
     :control_b: 1
@@ -3986,16 +3986,23 @@
       :type: :bit_array
       :index:
         :code:  !ruby/range
-                          begin: 0
-                          end: 1
-        :aux_led_flash: 2
+                begin: 0
+                end: 1
+        :aux_heating: 2
         :aux_timer_2: 3
-        :aux_direct: 4
+        :aux_ventilation: 4
         :aux_timer_1: 5
       :parameters:
-        :aux_timer_1:
+        :code:
           :type: :switch
-          :label: 'Aux Timer 1'
+          :label: 'Code'
+          :states:
+            0b00: :off
+            0b01: :enabled
+            0b10: :disabled
+        :aux_heating:
+          :type: :switch
+          :label: 'Aux Heating'
           :states:
             0: :off
             1: :on
@@ -4005,25 +4012,18 @@
           :states:
             0: :off
             1: :on
-        :aux_direct:
+        :aux_ventilation:
           :type: :switch
-          :label: 'Aux Direct.'
+          :label: 'Aux Ventilation'
           :states:
             0: :off
             1: :on
-        :aux_led_flash:
+        :aux_timer_1:
           :type: :switch
-          :label: 'Aux LED Flash'
+          :label: 'Aux Timer 1'
           :states:
             0: :off
             1: :on
-        :code:
-          :type: :switch
-          :label: 'Code'
-          :states:
-            0b00: :off
-            0b01: :enabled
-            0b10: :disabled
   :meta:
     :senders:
       - IKE

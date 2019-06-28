@@ -10,15 +10,13 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
-            # 0x40
+            # 0x40 OBC_VAR
             def obc_var(from: :gfx, to: :ike, **arguments)
-              # LOGGER.unknown('API::OBC') { "#{from}, #{to}, #{arguments}" }
+              # LOGGER.unknown('API::Settings#obc_var') { "#{from}, #{to}, #{arguments}" }
               try(from, to, OBC_VAR, arguments)
             end
-            
-            alias obc_config obc_var
 
-            # 0x41
+            # 0x41 OBC_BOOL
             def obc_bool(from: :gfx, to: :ike, **arguments)
               try(from, to, OBC_BOOL, arguments)
             end
@@ -27,6 +25,8 @@ module Wilhelm
             def lcd_brightness_set(from: :gfx, to: :bmbt, arguments:)
               try(from, to, LCD_SET, arguments)
             end
+
+            alias obc_config obc_var
           end
         end
       end

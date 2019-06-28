@@ -11,6 +11,10 @@ module Wilhelm
         module Capabilities
           include AuxiliaryVentilation
           include Settings
+
+          def boolean!
+            anzv_bool(control_a: control_a, control_b: control_b)
+          end
         end
       end
     end

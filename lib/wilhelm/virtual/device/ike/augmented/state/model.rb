@@ -13,14 +13,14 @@ module Wilhelm
               include Constants
 
               DEFAULT_STATE = {
-                memo:          MEMO[ON],
-                timer:         TIMER[ON],
-                limit:         LIMIT[ON],
-                code:          CODE[ON],
-                aux_led_flash: AUX_LED_FLASH[ON],
-                aux_timer_2:   AUX_TIMER_2[ON],
-                aux_direct:    AUX_DIRECT[ON],
-                aux_timer_1:   AUX_TIMER_1[ON]
+                memo:          MEMO[OFF],
+                timer:         TIMER[OFF],
+                limit:         LIMIT[OFF],
+                code:          CODE[OFF],
+                aux_heating: AUX_HEATING[OFF],
+                aux_timer_2:   AUX_TIMER_2[OFF],
+                aux_ventilation:    AUX_VENTILATION[OFF],
+                aux_timer_1:   AUX_TIMER_1[OFF]
               }.freeze
 
               def default_state
@@ -63,12 +63,12 @@ module Wilhelm
                 bitwise_on?(code, CODE[:on])
               end
 
-              def aux_led_flash
-                state[:aux_led_flash]
+              def aux_heating
+                state[:aux_heating]
               end
 
-              def aux_led_flash?
-                bitwise_on?(aux_led_flash, AUX_LED_FLASH[:on])
+              def aux_heating?
+                bitwise_on?(aux_heating, AUX_HEATING[:on])
               end
 
               def aux_timer_2
@@ -79,12 +79,12 @@ module Wilhelm
                 bitwise_on?(aux_timer_2, AUX_TIMER_2[:on])
               end
 
-              def aux_direct
-                state[:aux_direct]
+              def aux_ventilation
+                state[:aux_ventilation]
               end
 
-              def aux_direct?
-                bitwise_on?(aux_direct, AUX_DIRECT[:on])
+              def aux_ventilation?
+                bitwise_on?(aux_ventilation, AUX_VENTILATION[:on])
               end
 
               def aux_timer_1
@@ -93,12 +93,6 @@ module Wilhelm
 
               def aux_timer_1?
                 bitwise_on?(aux_timer_1, AUX_TIMER_1[:on])
-              end
-
-              def off!(*properties)
-                properties.each do |property|
-                  state[property] = ZERO
-                end
               end
             end
           end

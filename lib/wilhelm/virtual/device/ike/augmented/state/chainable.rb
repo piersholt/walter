@@ -30,8 +30,8 @@ module Wilhelm
                 self
               end
 
-              def aux_led_flash!
-                state[:aux_led_flash] = AUX_LED_FLASH[:on]
+              def aux_heating!
+                state[:aux_heating] = AUX_HEATING[:on]
                 self
               end
 
@@ -40,13 +40,20 @@ module Wilhelm
                 self
               end
 
-              def aux_direct!
-                state[:aux_direct] = AUX_DIRECT[:on]
+              def aux_ventilation!
+                state[:aux_ventilation] = AUX_VENTILATION[:on]
                 self
               end
 
               def aux_timer_1!
                 state[:aux_timer_1] = AUX_TIMER_1[:on]
+                self
+              end
+
+              def off!(*properties)
+                properties.each do |property|
+                  state[property] = ZERO
+                end
                 self
               end
             end

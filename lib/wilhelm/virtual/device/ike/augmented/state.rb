@@ -19,7 +19,7 @@ module Wilhelm
             end
 
             def control_b
-              bitwise_or(code, aux_led_flash, aux_timer_2, aux_direct, aux_timer_1)
+              bitwise_or(code, aux_heating, aux_timer_2, aux_ventilation, aux_timer_1)
             end
           end
         end

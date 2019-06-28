@@ -15,7 +15,6 @@ module Wilhelm
       module GFX
         # Comment
         module Capabilities
-          include Helpers::Button
           include AuxiliaryVentilation
           include Code
           include OnBoardComputer
