@@ -36,11 +36,15 @@ module Wilhelm
 
               # Speed Limit 0x09 Value (mph vs. kmph?)
               def input_limit(speed)
-                obc_var(
-                  b1: FIELD_LIMIT, b2: VAR_NIL,
-                  b3: speed, b4: VAR_NIL
-                )
+                LOGGER.debug('GFX::OBC::Limit') { "#input_limit(#{speed})" }
+                speed_byte_array = base_256_digits(speed)
+                obc_var(field: FIELD_LIMIT, input: speed_byte_array)
               end
+
+              private
+
+              # @todo
+              def valid_limit?; end
             end
           end
         end

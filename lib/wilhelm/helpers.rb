@@ -9,6 +9,7 @@ require_relative 'helpers/stateful'
 require_relative 'helpers/delayable'
 require_relative 'helpers/console'
 require_relative 'helpers/bitwise'
+require_relative 'helpers/positional'
 
 module Wilhelm
   # Comment

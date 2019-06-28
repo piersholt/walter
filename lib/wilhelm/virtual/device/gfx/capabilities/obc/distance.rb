@@ -11,27 +11,48 @@ module Wilhelm
               include API
               include Constants
 
+              NUMBER_KLASS = Integer
+              VALID_NUMBERS = (0..300)
+
+              # Distance 0x07 Request draw OBC
               def distance?
                 obc_bool(field: FIELD_DISTANCE, control: CONTROL_REQUEST)
               end
 
-              # Distance Value
+              alias d? distance?
+
+              # Distance 0x07 Value (kms vs. miles?)
               def input_distance(distance)
-                return false unless valid_distance?(distance)
-                obc_var(
-                  b1: FIELD_DISTANCE, b2: VAR_NIL,
-                  b3: distance, b4: VAR_NIL
-                )
+                validate_distance(distance)
+                distance_byte_array = base_256_digits(distance)
+
+                obc_var(field: FIELD_DISTANCE, input: distance_byte_array)
               end
 
               private
 
-              def valid_distance?(distance)
-                return false unless distance.is_a?(Integer)
-                # You need to deal with b2 if you want larger distance
-                return false if distance > 0b1111_1111
-                return false if distance.negative?
-                true
+              def validate_distance(distance)
+                validate_number_type(*distance)
+                validate_number_range(*distance)
+              end
+
+              def validate_number_type(*numbers)
+                return true if numbers.all? { |i| i.is_a?(NUMBER_KLASS) }
+                raise(
+                  ArgumentError,
+                  "Number tyes are: #{numbers.map(&:class)}"\
+                  ", but must all be: #{NUMBER_KLASS}"
+                )
+              end
+
+              def validate_number_range(*numbers)
+                return true if numbers.all? { |i| VALID_NUMBERS.cover?(i) }
+                raise(
+                  ArgumentError,
+                  "Numbers are: #{numbers.join(', ')}"\
+                  ", but must all be: #{VALID_NUMBERS}"\
+                  "P.S. #{VALID_NUMBERS.last}kmph..? Really?"
+                )
               end
             end
           end
