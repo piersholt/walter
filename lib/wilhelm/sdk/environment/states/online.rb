@@ -20,14 +20,6 @@ module Wilhelm
           # Application Context
           logger.debug(WILHELM_ONLINE) { 'Stop Notifications' }
           context.notifications&.stop
-
-          # logger.debug(WILHELM_ONLINE) { 'Disconnect Client.' }
-          # Client.disconnect
-          # logger.debug(WILHELM_ONLINE) { 'Disconnect Publisher.' }
-          # Publisher.disconnect
-          # logger.debug(WILHELM_ONLINE) { 'Destroy context.' }
-          # Publisher.destroy
-          # context.offline!
         end
 
         # APPLICATION CONTEXT -----------------------------------------------------
