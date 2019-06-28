@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
+require_relative 'capabilities/auxiliary'
+require_relative 'capabilities/settings'
+
 module Wilhelm
   module Virtual
     class Device
       module IKE
-        # Comment
+        # OBC, Set, and Aux. Vent/Heat Control
         module Capabilities
-          include API
-          include Helpers::Data
-
-          # OBC
-          def obc_bool(byte_one, byte_two)
-            api_2a(control: byte_one, unconfirmed: byte_two)
-          end
-
-          def obc_var(gfx, ike, chars = genc(6).bytes)
-            api_24(gfx: gfx, ike: ike, chars: chars)
-          end
+          include AuxiliaryVentilation
+          include Settings
         end
       end
     end

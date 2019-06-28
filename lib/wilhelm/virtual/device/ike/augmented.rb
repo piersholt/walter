@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'augmented/state'
+
 # Comment
 module Wilhelm
   module Virtual
@@ -7,6 +9,7 @@ module Wilhelm
       module IKE
         # Comment
         class Augmented < Device::Augmented
+          include State
           include Capabilities
 
           PUBLISH = [].freeze

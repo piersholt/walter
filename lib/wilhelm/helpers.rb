@@ -8,6 +8,7 @@ require_relative 'helpers/name'
 require_relative 'helpers/stateful'
 require_relative 'helpers/delayable'
 require_relative 'helpers/console'
+require_relative 'helpers/bitwise'
 
 module Wilhelm
   # Comment
