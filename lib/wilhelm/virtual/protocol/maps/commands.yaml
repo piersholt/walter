@@ -1207,7 +1207,7 @@
     :d: 52
     :h: '0x34'
   :properties:
-    :short_name: DSP-EQ
+    :short_name: DSP-SET
     :long_name: DSP EQ. Button
   :klass: ParameterizedCommand
   :parameters:
@@ -1403,7 +1403,7 @@
     :d: 53
     :h: '0x35'
   :properties:
-    :short_name: DSP
+    :short_name: DSP-REP
     :long_name: DSP Reply
   :klass: ParameterizedCommand
   :parameters:
@@ -1607,107 +1607,107 @@
     :setting:
       :type: :map
       :dictionary:
-        0xaf: dunno
+        0xa_f: dunno
 
-        0x60: BASS -0
-        0x62: BASS -1
-        0x64: BASS -2
-        0x66: BASS -3
-        0x68: BASS -4
-        0x6A: BASS -5
-        0x6C: BASS -6
+        0x4_0: BALANCE -0
+        0x4_1: BALANCE -1
+        0x4_2: BALANCE -2
+        0x4_3: BALANCE -3
+        0x4_4: BALANCE -4
+        0x4_5: BALANCE -5
+        0x4_6: BALANCE -6
+        0x4_7: BALANCE -7
+        0x4_8: BALANCE -8
+        0x4_9: BALANCE -9
+        0x4_a: BALANCE -10
+        0x4_b: BALANCE -11
+        0x4_c: BALANCE -12
+        0x4_d: BALANCE -13
+        0x4_e: BALANCE -14
+        0x4_f: BALANCE -15
 
-        0x70: BASS +0
-        0x72: BASS +1
-        0x74: BASS +2
-        0x76: BASS +3
-        0x78: BASS +4
-        0x7A: BASS +5
-        0x7C: BASS +6
+        0x5_0: BALANCE +0
+        0x5_1: BALANCE +1
+        0x5_2: BALANCE +2
+        0x5_3: BALANCE +3
+        0x5_4: BALANCE +4
+        0x5_5: BALANCE +5
+        0x5_6: BALANCE +6
+        0x5_7: BALANCE +7
+        0x5_8: BALANCE +8
+        0x5_9: BALANCE +9
+        0x5_a: BALANCE +10
+        0x5_b: BALANCE +11
+        0x5_c: BALANCE +12
+        0x5_d: BALANCE +13
+        0x5_e: BALANCE +14
+        0x5_f: BALANCE +15
 
-        0xD0: TREBLE -0
-        0xD2: TREBLE -1
-        0xD4: TREBLE -2
-        0xD6: TREBLE -3
-        0xD8: TREBLE -4
-        0xDA: TREBLE -5
-        0xDC: TREBLE -6
+        0x6_0: BASS -0
+        0x6_2: BASS -1
+        0x6_4: BASS -2
+        0x6_6: BASS -3
+        0x6_8: BASS -4
+        0x6_a: BASS -5
+        0x6_c: BASS -6
 
-        0xC0: TREBLE +0
-        0xC2: TREBLE +1
-        0xC4: TREBLE +2
-        0xC6: TREBLE +3
-        0xC8: TREBLE +4
-        0xCA: TREBLE +5
-        0xCC: TREBLE +6
+        0x7_0: BASS +0
+        0x7_2: BASS +1
+        0x7_4: BASS +2
+        0x7_6: BASS +3
+        0x7_8: BASS +4
+        0x7_a: BASS +5
+        0x7_c: BASS +6
 
-        0x80: FADER -0
-        0x81: FADER -1
-        0x82: FADER -2
-        0x83: FADER -3
-        0x84: FADER -4
-        0x85: FADER -5
-        0x86: FADER -6
-        0x87: FADER -7
-        0x88: FADER -8
-        0x89: FADER -9
-        0x8a: FADER -10
-        0x8b: FADER -11
-        0x8c: FADER -12
-        0x8d: FADER -13
-        0x8e: FADER -14
-        0x8f: FADER -15
+        0x8_0: FADER -0
+        0x8_1: FADER -1
+        0x8_2: FADER -2
+        0x8_3: FADER -3
+        0x8_4: FADER -4
+        0x8_5: FADER -5
+        0x8_6: FADER -6
+        0x8_7: FADER -7
+        0x8_8: FADER -8
+        0x8_9: FADER -9
+        0x8_a: FADER -10
+        0x8_b: FADER -11
+        0x8_c: FADER -12
+        0x8_d: FADER -13
+        0x8_e: FADER -14
+        0x8_f: FADER -15
 
-        0x90: FADER +0
-        0x91: FADER +1
-        0x92: FADER +2
-        0x93: FADER +3
-        0x94: FADER +4
-        0x95: FADER +5
-        0x96: FADER +6
-        0x97: FADER +7
-        0x98: FADER +8
-        0x99: FADER +9
-        0x9a: FADER +10
-        0x9b: FADER +11
-        0x9c: FADER +12
-        0x9d: FADER +13
-        0x9e: FADER +14
-        0x9f: FADER +15
+        0x9_0: FADER +0
+        0x9_1: FADER +1
+        0x9_2: FADER +2
+        0x9_3: FADER +3
+        0x9_4: FADER +4
+        0x9_5: FADER +5
+        0x9_6: FADER +6
+        0x9_7: FADER +7
+        0x9_8: FADER +8
+        0x9_9: FADER +9
+        0x9_a: FADER +10
+        0x9_b: FADER +11
+        0x9_c: FADER +12
+        0x9_d: FADER +13
+        0x9_e: FADER +14
+        0x9_f: FADER +15
 
-        0x40: BALANCE -0
-        0x41: BALANCE -1
-        0x42: BALANCE -2
-        0x43: BALANCE -3
-        0x44: BALANCE -4
-        0x45: BALANCE -5
-        0x46: BALANCE -6
-        0x47: BALANCE -7
-        0x48: BALANCE -8
-        0x49: BALANCE -9
-        0x4a: BALANCE -10
-        0x4b: BALANCE -11
-        0x4c: BALANCE -12
-        0x4d: BALANCE -13
-        0x4e: BALANCE -14
-        0x4f: BALANCE -15
+        0xc_0: TREBLE +0
+        0xc_2: TREBLE +1
+        0xc_4: TREBLE +2
+        0xc_6: TREBLE +3
+        0xc_8: TREBLE +4
+        0xc_a: TREBLE +5
+        0xc_c: TREBLE +6
 
-        0x50: BALANCE +0
-        0x51: BALANCE +1
-        0x52: BALANCE +2
-        0x53: BALANCE +3
-        0x54: BALANCE +4
-        0x55: BALANCE +5
-        0x56: BALANCE +6
-        0x57: BALANCE +7
-        0x58: BALANCE +8
-        0x59: BALANCE +9
-        0x5a: BALANCE +10
-        0x5b: BALANCE +11
-        0x5c: BALANCE +12
-        0x5d: BALANCE +13
-        0x5e: BALANCE +14
-        0x5f: BALANCE +15
+        0xd_0: TREBLE -0
+        0xd_2: TREBLE -1
+        0xd_4: TREBLE -2
+        0xd_6: TREBLE -3
+        0xd_8: TREBLE -4
+        0xd_a: TREBLE -5
+        0xd_c: TREBLE -6
 0x37:
   :id:
     :d: 55

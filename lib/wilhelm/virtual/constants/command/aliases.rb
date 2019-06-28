@@ -42,8 +42,10 @@ module Wilhelm
           TEL_STATE = 0x2C
           TEL_DATA  = 0x31
 
-          DSP_EQ = 0x34
-          RAD_EQ = 0x36
+          DSP_SET = 0x34
+          DSP_EQ  = DSP_SET
+          DSP_REP = 0x35
+          RAD_EQ  = 0x36
           RAD_ALT = 0x37
           CDC_REQ = 0x38
           CDC_REP = 0x39
