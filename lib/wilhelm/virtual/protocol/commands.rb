@@ -29,16 +29,16 @@ puts "\tLoading wilhelm/virtual/protocol/commands/builder"
 
 require_relative 'commands/builder/base_command_builder'
 require_relative 'commands/builder/paramaterized_command_builder'
-require_relative 'commands/builder/indexed_arguments'
+require_relative 'commands/builder/delegated_command_parameter'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/model"
 
 require_relative 'commands/paramaterized/model/bit_array'
 require_relative 'commands/paramaterized/model/indexed_bit_array'
+require_relative 'commands/paramaterized/model/indexed_arguments'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/parameter"
 
-require_relative 'commands/paramaterized/parameter/delegated_command_parameter'
 require_relative 'commands/paramaterized/parameter/base_parameter'
 require_relative 'commands/paramaterized/parameter/bit_array_parameter'
 require_relative 'commands/paramaterized/parameter/switched_parameter'
