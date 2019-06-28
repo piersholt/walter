@@ -3817,7 +3817,7 @@
         0x09: Input Limit
 
         # CODE
-        0x0D: Input Code (Deactivate/Change?)
+        0x0D: Input Code
 
         # AUX. VENTILATION
         0x0F: Input Aux. Timer 1
