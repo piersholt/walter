@@ -11,6 +11,7 @@ module Wilhelm
       BIT_ARRAY = :bit_array
       CHARS = :chars
       INTEGER = :integer
+      DATA = :data
       # PARAMETERS_TO_SETUP = [MAP, BIT_ARRAY, SWITCH].freeze
 
       TYPE_CLASS_MAP =
@@ -18,6 +19,7 @@ module Wilhelm
         MAP => 'Wilhelm::Virtual::MappedParameter',
         CHARS => 'Wilhelm::Virtual::CharsParameter',
         BIT_ARRAY => 'Wilhelm::Virtual::BitArrayParameter',
+        DATA => 'Wilhelm::Virtual::DataParameter',
         default:  'Wilhelm::Virtual::BaseParameter' }
 
         def self.create(configuration, type, value)
@@ -31,6 +33,8 @@ module Wilhelm
             klass_string = TYPE_CLASS_MAP[BIT_ARRAY]
           when CHARS
             klass_string = TYPE_CLASS_MAP[CHARS]
+          when DATA
+            klass_string = TYPE_CLASS_MAP[DATA]
           when INTEGER
             klass_string = TYPE_CLASS_MAP[:default]
           else

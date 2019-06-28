@@ -30,7 +30,6 @@ puts "\tLoading wilhelm/virtual/protocol/commands/builder"
 require_relative 'commands/builder/base_command_builder'
 require_relative 'commands/builder/paramaterized_command_builder'
 require_relative 'commands/builder/indexed_arguments'
-require_relative 'commands/builder/arguments_builder'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/model"
 
