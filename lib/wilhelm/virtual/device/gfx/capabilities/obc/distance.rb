@@ -12,7 +12,7 @@ module Wilhelm
               include Constants
 
               NUMBER_KLASS = Integer
-              VALID_NUMBERS = (0..300)
+              VALID_NUMBERS = (0..999)
 
               # Distance 0x07 Request draw OBC
               def distance?
@@ -23,6 +23,7 @@ module Wilhelm
 
               # Distance 0x07 Value (kms vs. miles?)
               def input_distance(distance)
+                LOGGER.debug('GFX::OBC::Limit') { "#input_distance(#{distance})" }
                 validate_distance(distance)
                 distance_byte_array = base_256_digits(distance)
 
@@ -32,11 +33,11 @@ module Wilhelm
               private
 
               def validate_distance(distance)
-                validate_number_type(*distance)
-                validate_number_range(*distance)
+                validate_distance_type(*distance)
+                validate_distance_range(*distance)
               end
 
-              def validate_number_type(*numbers)
+              def validate_distance_type(*numbers)
                 return true if numbers.all? { |i| i.is_a?(NUMBER_KLASS) }
                 raise(
                   ArgumentError,
@@ -45,13 +46,12 @@ module Wilhelm
                 )
               end
 
-              def validate_number_range(*numbers)
+              def validate_distance_range(*numbers)
                 return true if numbers.all? { |i| VALID_NUMBERS.cover?(i) }
                 raise(
                   ArgumentError,
                   "Numbers are: #{numbers.join(', ')}"\
-                  ", but must all be: #{VALID_NUMBERS}"\
-                  "P.S. #{VALID_NUMBERS.last}kmph..? Really?"
+                  ", but must all be: #{VALID_NUMBERS}"
                 )
               end
             end

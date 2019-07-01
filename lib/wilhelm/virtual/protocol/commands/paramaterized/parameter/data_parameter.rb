@@ -24,7 +24,7 @@ module Wilhelm
       end
 
       def pretty
-        "Fixnum: #{base256!(*value)}"
+        "Fixnum: #{base256(*value)}"
       end
 
       alias to_sym ugly
