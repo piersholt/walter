@@ -11,6 +11,820 @@
 
 
 # ************************************************************************* #
+#                               ANZV (BOOLEAN)
+# ************************************************************************* #
+
+0x21: # MID-RAD-21 / MID-TEL-21
+  :id:
+    :d: 33
+    :h: '0x21'
+  :schemas:
+    - :tel
+  :properties:
+    :short_name: MID-RAD-21
+    :long_name: MID Display
+    :verbose: false
+  :klass: ParameterizedCommand
+  :index:
+    :m1: 0
+    :m2: 1
+    :m3: 2
+    :chars: !ruby/range
+            begin: 3
+            end: -1
+            excl: false
+  :parameters:
+    :m1:
+      :type: :map
+      :dictionary:
+        # notice how these match 0x23 layout parameter?
+        0x41: '(RAD) Presets'
+        0x43: '(RAD) Source'
+        0x60: '(RDS) Menu A'
+        0x61: '(RDS) Menu B'
+        0x62: '(RDS) Header'
+        0x63: '(RDS) Static'
+        0x83: '(TAPE) Side'
+        0xc0: '(CD) Discs?'
+    :m2:
+      :type: :integer
+    :m3:
+      :type: :bit_array
+      :parameters:
+        # no GFX-STATUS using this using MK1 GFX
+        :block:
+          :type: :switch
+          :label: Block
+          :states:
+            0: :off
+            1: :on
+        :flush:
+          :type: :switch
+          :label: Flush
+          :states:
+            0: :off
+            1: :on
+        :index:
+          :type: :integer
+      :index:
+        :block: 1
+        :flush: 2
+        :index:  !ruby/range
+                  begin: 3
+                  end: 7
+                  excl: false
+    :chars:
+      :type: :chars
+  # SCHEMA 0x21 MID-TEL-21
+  :tel:
+    :id:
+      :d: 33
+      :h: '0x21'
+    :properties:
+      :short_name: MID-TEL-21
+      :long_name: MID Display
+      :verbose: false
+    :klass: ParameterizedCommand
+    :index:
+      :m1: 0
+      :m2: 1
+      :m3: 2
+      :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+    :parameters:
+      :m1:
+        :type: :map
+        :dictionary:
+          0x42: 'Dial'
+          0x43: 'Directory'
+          0x80: 'Top 8'
+      :m2:
+        :type: :integer
+      :m3:
+        :type: :bit_array
+        :parameters:
+          :block:
+            :type: :switch
+            :label: Blocking?
+            :states:
+              0: :off
+              1: :on
+          :flush:
+            :type: :switch
+            :label: Flush?
+            :states:
+              0: :off
+              1: :on
+          :column_2:
+            :type: :switch
+            :label: Column 2
+            :states:
+              0: :off
+              1: :on
+          :row_2:
+            :type: :switch
+            :label: Row 2
+            :states:
+              0: :off
+              1: :on
+        :index:
+          :block: 1
+          :flush: 2
+          :column_2: 3
+          :row_2: 5
+      :chars:
+        :type: :chars
+  :meta:
+    :notes: always RAD to GFX
+    :parameters:
+      - 0x41: select station present number (1-6)? another row?
+      - 0x43: MID display? another row?
+
+
+0x22: # MID-22
+  :id:
+    :d: 34
+    :h: '0x22'
+  :properties:
+    :short_name: GFX-CACHE
+    :long_name: GFX Cache
+  :klass: ParameterizedCommand
+  :parameters:
+    :status:
+      :type: :integer
+  :index:
+    :status: 0
+  :meta:
+    :notes:
+      - I _think_ this is.... cache/buffered count....?
+      - 00: Dial Function
+      - 01 FF: Radio On?
+      - [0, 1, 2, 3, 4, 7, 16]
+      - 0x00: Available always after screen has been cleared
+      - 0x01: Done? (always preceded by 0x21 and 0x23 AND which is when loading a screen)
+      - 0x02: (only preceded by 0x21) when... manually navigating to a screen
+      - 0x03: Done?
+      - 0x07: unknown?
+      - 0x10: Unrecognised command?
+
+
+0x23: # LCD-RAD-23 / LCD-TEL-23
+  :id:
+    :d: 35
+    :h: '0x23'
+  :properties:
+    :short_name: TXT-23
+    :long_name: Update Text Display (BMBT, IKE)
+  :klass: MediaDisplay
+  :schemas:
+    - :tel
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        # Service Mode
+        0x0_2: (Service) Serial Number
+        0x0_3: (Service) Software Version
+        0x0_4: (Service) GAL
+        0x0_5: (Service) F & Q?
+        0x0_6: (Service) DSP
+        0x0_7: (Service) Seek Level
+        0x0_8: (Service) TP Volume
+        0x0_9: (Service) AF
+        0x0_a: (Service) Region
+
+        0x1_2: (Service) Serial Number
+        0x1_3: (Service) Software Version
+        0x1_4: (Service) GAL
+        0x1_5: (Service) F & Q?
+        0x1_6: (Service) DSP
+        0x1_7: (Service) Seek Level
+        0x1_8: (Service) TP Volume
+
+        # Weather Band
+        0x2_0: (Weather Band) No Station
+        0x2_1: (Weather Band) WB CH 1
+        0x2_2: (Weather Band) WB CH 2
+        0x2_3: (Weather Band) WB CH 3
+        0x2_4: (Weather Band) WB CH 4
+        0x2_5: (Weather Band) WB CH 5
+        0x2_6: (Weather Band) WB CH 6
+        0x2_7: (Weather Band) WB CH 7
+        0x2_8: (Weather Band) WB
+
+        0x3_0: (Weather Band) No Station
+        0x3_1: (Weather Band) WB CH 1
+        0x3_2: (Weather Band) WB CH 2
+        0x3_3: (Weather Band) WB CH 3
+        0x3_4: (Weather Band) WB CH 4
+        0x3_5: (Weather Band) WB CH 5
+        0x3_6: (Weather Band) WB CH 6
+        0x3_7: (Weather Band) WB CH 7
+        0x3_8: (Weather Band) WB
+
+        # Radio
+        0x4_0: (Radio) Set Station
+        0x4_1: (Radio) m    # Mode: Manual
+        0x4_2: (Radio) SCAN # Mode: SCAN
+        0x4_3: (Radio) II   # Mode: Search (Sensitive)
+        0x4_4: (Radio) I    # Mode: Search (Non Sensitive)
+        0x4_5: (Radio) --
+        0x4_6: (Radio) T    # Traffic Reports
+        0x4_7: (Radio) TP   # Traffic Program
+        0x4_8: (Radio) T (upper right?)
+        0x4_9: (Radio) m + T
+        0x4_a: (Radio) Scan + T
+        0x4_b: (Radio) II + T
+        0x4_c: (Radio) I? + T
+        0x4_d: (Radio) T
+        0x4_e: (Radio) T + T
+        0x4_f: (Radio) TP + T
+
+        0x5_0: (Radio) Stereo
+        0x5_1: (Radio) m
+        0x5_2: (Radio) SCAN
+        0x5_3: (Radio) II
+        0x5_4: (Radio) I
+        0x5_5: (Radio) --
+        0x5_6: (Radio) T
+        0x5_7: (Radio) TP
+        0x5_8: (Radio) T (upper right)
+        0x5_9: (Radio) m + T
+        0x5_a: (Radio) Scan + T
+        0x5_b: (Radio) II + T
+        0x5_c: (Radio) I? + T
+        0x5_d: (Radio) T
+        0x5_e: (Radio) T + T
+        0x5_f: (Radio) TP + T
+
+        # 0x60 to 0x7F are 'nav' screens
+        # so far... only 0x62 sets anything
+        0x6_0: (RDS)
+        0x6_1: (RDS)
+        0x6_2: (RDS)
+
+        # Tape
+        0x8_0: Tape Error
+        0x8_1: --
+        0x8_2: Tape (1) ▶︎
+        0x8_3: Tape (1) ▷▷▷
+        0x8_4: Tape (1) ◁◁◁
+        0x8_6: Tape (1) ▷▷
+        0x8_7: Tape (1) ◁◁
+        0x8_8: Tape Clean
+        0x8_9: Tape (A) <<>>
+        0x8_a: Tape (A)
+        0x8_b: --
+        0x8_c: --
+        0x8_d: --
+        0x8_e: --
+        0x8_f: --
+
+        0x9_0: Tape Error
+        0x9_1: --
+        0x9_2: Tape (2) ▶︎
+        0x9_3: Tape (2) ▷▷▷
+        0x9_4: Tape (2) ◁◁◁
+        0x9_6: Tape (2) ▷▷
+        0x9_7: Tape (2) ◁◁
+        0x9_8: Tape Clean
+        0x9_9: Tape (B) <<>>
+        0x9_a: Tape (B)
+        0x9_b: --
+        0x9_c: --
+        0x9_d: --
+        0x9_e: --
+        0x9_f: --
+
+        # RDS: TP?
+        # On a Euro car, the button you have labelled as TRAFFIC becomes
+        # RDS TP (only the labelling on the button changes)
+        0xa_0: (Traffic) No Station
+        0xa_1: (Traffic) Traffic 1
+        0xa_2: (Traffic) Traffic 2
+        0xa_3: --
+        0xa_4: (Traffic) No Station
+        0xa_5: (Traffic) Traffic 1
+        0xa_6: (Traffic) Traffic 2
+        0xa_7: --
+        0xa_8: (Traffic) No Station
+        0xa_9: (Traffic) Traffic 1
+        0xa_a: (Traffic) Traffic 2
+        0xa_b: --
+        0xa_c: --
+        0xa_d: --
+        0xa_e: --
+        0xa_f: --
+
+        0xb_0: Untested
+        0xb_1: Untested
+        0xb_2: Untested
+        0xb_3: Untested
+        0xb_4: Untested
+        0xb_5: Untested
+        0xb_6: Untested
+        0xb_7: Untested
+        0xb_8: Untested
+        0xb_9: Untested
+        0xb_a: Untested
+        0xb_b: Untested
+        0xb_c: Untested
+        0xb_d: Untested
+        0xb_e: Untested
+        0xb_f: Untested
+
+        # all the way through to C0, then
+        # C0..DF: display text
+
+        # E0..EF: nothing
+        # 0x41: IKE Set (540)
+        # 0x62: Section Update? (540)
+
+        # To have the 'Track' layout applied, the below format must be used
+        # otherwise the zone defaults to 11 characters without a layout.
+        # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
+        0xc_0: --
+        0xc_1: (CD) No Magazine!
+        0xc_2: (CD) No Disc!
+        0xc_3: --
+        0xc_4: (CD) [< >] Disc/Track
+        0xc_5: (CD) >>
+        0xc_6: (CD) <<R
+        0xc_7: (CD) [SCAN]
+        0xc_8: (CD) [RANDOM]
+        0xc_9: --
+        0xc_a: (CD) [<< >>] Fast Forward/Reverse
+        0xc_b: (CD) Empty Casette Track Change?
+        0xc_c: --
+        0xc_d: --
+        0xc_e: --
+        0xc_f: --
+    :ike:
+      :type: :bit_array
+      :parameters:
+        :set:
+          :label: IKE Display
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :update:
+          :label: Update Only
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :set: 2
+        :update: 3
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :tel: # LCD-TEL-23
+    :klass: MediaDisplay
+    :properties:
+      :short_name: TEL-23
+      :long_name: Update Text Display (BMBT, IKE)
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          # to: ANZV
+          0x0_1: '[ANZV] On Call [▷ ◁]'    # [198, 199]
+          0x0_2: '[ANZV] On Call HFS [🔊]' # [197]
+
+          # to: IKE
+          0x4_0: '[IKE] Clear Post Call?'  # ""
+          0x4_1: '[IKE] Radio Mode On'     # ""
+          0x4_2: '[IKE] Contact'           # "TEL1-MessageBank"
+          0x4_3: '[IKE] Contact Call'      # "TEL    98272742"
+
+          # to: GFX
+          0x5_2: '[Directory] Contact Name'         # "MUM"
+          0x5_3: '[Directory] Contact Number/Clear' # "98272742"
+
+          0x6_1: '[Dial/Recent] Clear'
+          0x6_3: '[Dial/Recent] Number Add'
+
+          0x8_0: '[Top 8] Clear'
+          0x8_1: '[Top 8] Contact Name'
+          0x8_2: '[Top 8] Contact Number'
+
+          # TBC
+          # This is used when there was no SIM card inserted.
+          # It just had emergency button from memory
+          0x0_0: '[Telephone] Title?'
+          0x0_5: '[Pin] Title?'
+          0x9_0: '[Info] Title?'
+          # This might have been "SOS: 112!"?
+          0xc_0: '[SOS] Title?'
+      :ike:
+        :type: :map
+        :dictionary:
+          0x0_0: --
+          0x2_0: Set IKE
+          0x3_0: Update IKE
+      :chars:
+        :type: :chars
+  :meta:
+    :desc: used to updated display with media informtion upon change. Text displayed
+      is based upon the media mode (radio, tape, CDC).
+    :recipients:
+      0xFF: GLO-H
+      0x80: IKE
+      0x3B: GFX
+    :notes:
+      - How you change the radio station affects what messages are sent
+      - Changing via MFL will send to GLO-H as the message is consumed by
+        multiple devices (GFX and HUD set)
+      - Changing via BMBT will only send to GFX as the IKE display is not
+        updated.
+      - When the change is made via BMBT the message will still contain the
+        sub command for the IKE but it will always be 0x20
+      - The text sub command contains control characters of 0x04, 0x03 etc,
+        but I'm not sure what their purpose is yet.
+      - i know the GFX has multiple zones and it might denote the substrings
+        intended for each screen element
+    :examples:
+      - MFL (Next/Previous)
+      - display radio freuqnecy (with CLEAR display text being displayed)
+        - RAD	GLO-H	23	40 20	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio freuqnecy (with EXISITING text being displayed)
+        - RAD	GLO-H	23	40 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
+      - update radio frequency updaed \'ST\'
+        - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
+      - clear IKE display
+      - RAD	IKE	  23	50 20
+
+# ************************************************************************* #
+#                               ANZV (VAR)
+# ************************************************************************* #
+
+0x24: # ANZV-IKE-VAR / ANZV-TEL-VAR*
+  :id:
+    :d: 36
+    :h: '0x24'
+  :properties:
+    :short_name: ANZV-IKE-VAR
+    :long_name: OBC Display (IKE, GFX)
+    :verbose: false
+  :klass: ParameterizedCommand
+  :schemas:
+    - :tel
+  :parameters:
+    :gfx:
+      :type: :map
+      :dictionary:
+        # SETTINGS
+        0x01: Time
+        0x02: Date
+
+        # ON-BOARD COMPUTER
+        0x03: Temperature
+        0x04: Consump. 1
+        0x05: Consump. 2
+        0x06: Range
+        0x07: Distance
+        0x08: Arrival
+        0x09: Limit
+        0x0a: Avg. Speed
+        0x0e: Timer
+        0x1a: Timer (Lap)
+
+        # Aux Venting/Heating
+        0x0f: Aux. Timer 1
+        0x10: Aux. Timer 2
+
+        # Radio
+        0x40: Radio HUD
+
+        # Code
+        0x16: Emergency Disarm
+
+        # Unconfirmed
+        0x0c: Memo
+        0x0d: Memo
+        0x11: Aux Heating Off
+        0x12: Aux Heating On
+        0x13: Aux Vent. Off
+        0x14: Aux Vent. On
+        0x15: End Stellmode
+        0x1b: Aux Heat/Vent
+        0x1f: Test Mode
+    :ike:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Set
+        0x30: Update
+    :chars:
+      :type: :chars
+  :index:
+    :gfx: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  # 0x24 ANZV-TEL-VAR*
+  :tel:
+    :klass: MediaDisplay
+    :properties:
+      :short_name: ANZV-TEL-VAR*
+      :long_name: Update Info
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          0x91: Signal Strength
+          0x93: Call cost current
+          0x94: Call cost total
+          0x96: Call Time minutes
+          0x97: Call time seconds
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x20: Set
+          0x30: Update
+      :chars:
+        :type: :chars
+        # 0xB2 = 7 bars
+        # 0xB3 = 6 bars
+        # 0xB4 = 5 bars
+        # 0xB5 = 4 bars
+        # 0xB6 = 3 bars
+        # 0xB7 = 2 bars
+        # 0x5F = 1 bar
+        # 0xB8 = 0 bars
+  :meta:
+    :examples:
+      - RAD GLO-H TXT-1 Radio HUD "102.1   "
+      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
+
+# ************************************************************************* #
+#                               ANZV (BOOLEAN)
+# ************************************************************************* #
+
+0x2A: # ANZV-IKE-BOOL
+  :id:
+    :d: 42
+    :h: '0x2A'
+  :klass: ParameterizedCommand
+  :properties:
+    :short_name: ANZV-IKE-BOOL
+    :long_name: IKE to ANZV OBC Display
+  :index:
+    :control_a: 0
+    :control_b: 1
+  :parameters:
+    :control_a:
+      :type: :bit_array
+      :index:
+        :memo:  !ruby/range
+                begin: 1
+                end: 2
+        :timer: 4
+        :limit: !ruby/range
+                begin: 5
+                end: 6
+      :parameters:
+        :memo:
+          # 0010 0000
+          :type: :switch
+          :label: 'Memo'
+          :states:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+        :timer:
+          # 0010 1010
+          :type: :switch
+          :label: 'Timer'
+          :states:
+            0: :off
+            1: :on
+        :limit:
+          # 0000 0010
+          :type: :switch
+          :label: 'Limit'
+          :states:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+    :control_b:
+      :type: :bit_array
+      :index:
+        :code:  !ruby/range
+                begin: 0
+                end: 1
+        :aux_heating: 2
+        :aux_timer_2: 3
+        :aux_ventilation: 4
+        :aux_timer_1: 5
+      :parameters:
+        :code:
+          :type: :switch
+          :label: 'Code'
+          :states:
+            0b00: :off
+            0b01: :enabled
+            0b10: :disabled
+        :aux_heating:
+          :type: :switch
+          :label: 'Aux Heating'
+          :states:
+            0: :off
+            1: :on
+        :aux_timer_2:
+          :type: :switch
+          :label: 'Aux Timer 2'
+          :states:
+            0: :off
+            1: :on
+        :aux_ventilation:
+          :type: :switch
+          :label: 'Aux Ventilation'
+          :states:
+            0: :off
+            1: :on
+        :aux_timer_1:
+          :type: :switch
+          :label: 'Aux Timer 1'
+          :states:
+            0: :off
+            1: :on
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - ANZV
+    :length:
+      - always 2 bytes
+      - first byte 0x00 or 0x0B
+      - second byte 0x00
+      - memo on 20 00
+      - memo off 00 00
+0x2B: # ANZV-TEL-LED (TEL-LED)
+  :id:
+    :d: 43
+    :h: '0x2b'
+  :properties:
+    :short_name: ANZV-TEL-BOOL-LED
+    :long_name: Telephone LEDs on BMBT
+  :klass: ParameterizedCommand
+  :index:
+    :leds: 0
+  :parameters:
+    :leds:
+      :type: :bit_array
+      :index:
+        :red: 7
+        :red_blink: 6
+        :yellow: 5
+        :yellow_blink: 4
+        :green: 3
+        :green_blink: 2
+      :parameters:
+        :red:
+          :label: Red
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :red_blink:
+          :label: Red Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow:
+          :label: Yellow
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :yellow_blink:
+          :label: Yellow Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green:
+          :label: Green
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :green_blink:
+          :label: Green Blink
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+  :meta:
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+0x2C: # ANZV-TEL-BOOL (TEL-STATUS)
+  :id:
+    :d: 44
+    :h: '0x2C'
+  :properties:
+    :short_name: ANZV-TEL-BOOL-STATUS
+    :long_name: Unknown
+  :parameters:
+    :status:
+      :type: :bit_array
+      :index:
+        :active: 2
+        :power: 3
+        :display: 4
+        :incoming: 5
+        :menu: 6
+        :hfs: 7
+      :parameters:
+        :active:
+          :label: In Use
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :power:
+          :label: Telephone
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :display:
+          :label: Display?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :incoming:
+          :label: Incoming Call
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :menu:
+          :label: Menu?
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+        :hfs:
+          :label: Handsfree
+          :type: :switch
+          :states:
+            0: :off
+            1: :on
+  :index:
+    :status: 0
+  :klass: ParameterizedCommand
+  :meta:
+    :status:
+      - 0: messages?
+      - 1: messages?
+      - active: changes phone icon to green/red
+      - power: '?'
+      - display: '?'
+      - incoming: monitor view
+      - menu: menu is open on BMBT?
+      - hfs: hide/show speaker icon
+    :senders:
+      - TEL
+    :recipients:
+      - ANZV
+
+
+# ************************************************************************* #
 #                                 NAVIGATION
 # ************************************************************************* #
 
@@ -2595,430 +3409,11 @@
 # ************************************************************************* #
 #                               DISPLAYS
 # ************************************************************************* #
-0x23:
-  :id:
-    :d: 35
-    :h: '0x23'
-  :properties:
-    :short_name: TXT-23
-    :long_name: Update Text Display (BMBT, IKE)
-  :klass: MediaDisplay
-  :schemas:
-    - :tel
-  :parameters:
-    :gfx:
-      :type: :map
-      :dictionary:
-        # Service Mode
-        0x0_2: (Service) Serial Number
-        0x0_3: (Service) Software Version
-        0x0_4: (Service) GAL
-        0x0_5: (Service) F & Q?
-        0x0_6: (Service) DSP
-        0x0_7: (Service) Seek Level
-        0x0_8: (Service) TP Volume
-        0x0_9: (Service) AF
-        0x0_a: (Service) Region
 
-        0x1_2: (Service) Serial Number
-        0x1_3: (Service) Software Version
-        0x1_4: (Service) GAL
-        0x1_5: (Service) F & Q?
-        0x1_6: (Service) DSP
-        0x1_7: (Service) Seek Level
-        0x1_8: (Service) TP Volume
+# 0x23
 
-        # Weather Band
-        0x2_0: (Weather Band) No Station
-        0x2_1: (Weather Band) WB CH 1
-        0x2_2: (Weather Band) WB CH 2
-        0x2_3: (Weather Band) WB CH 3
-        0x2_4: (Weather Band) WB CH 4
-        0x2_5: (Weather Band) WB CH 5
-        0x2_6: (Weather Band) WB CH 6
-        0x2_7: (Weather Band) WB CH 7
-        0x2_8: (Weather Band) WB
+# 0x21 RAD-21
 
-        0x3_0: (Weather Band) No Station
-        0x3_1: (Weather Band) WB CH 1
-        0x3_2: (Weather Band) WB CH 2
-        0x3_3: (Weather Band) WB CH 3
-        0x3_4: (Weather Band) WB CH 4
-        0x3_5: (Weather Band) WB CH 5
-        0x3_6: (Weather Band) WB CH 6
-        0x3_7: (Weather Band) WB CH 7
-        0x3_8: (Weather Band) WB
-
-        # Radio
-        0x4_0: (Radio) Set Station
-        0x4_1: (Radio) m    # Mode: Manual
-        0x4_2: (Radio) SCAN # Mode: SCAN
-        0x4_3: (Radio) II   # Mode: Search (Sensitive)
-        0x4_4: (Radio) I    # Mode: Search (Non Sensitive)
-        0x4_5: (Radio) --
-        0x4_6: (Radio) T    # Traffic Reports
-        0x4_7: (Radio) TP   # Traffic Program
-        0x4_8: (Radio) T (upper right?)
-        0x4_9: (Radio) m + T
-        0x4_a: (Radio) Scan + T
-        0x4_b: (Radio) II + T
-        0x4_c: (Radio) I? + T
-        0x4_d: (Radio) T
-        0x4_e: (Radio) T + T
-        0x4_f: (Radio) TP + T
-
-        0x5_0: (Radio) Stereo
-        0x5_1: (Radio) m
-        0x5_2: (Radio) SCAN
-        0x5_3: (Radio) II
-        0x5_4: (Radio) I
-        0x5_5: (Radio) --
-        0x5_6: (Radio) T
-        0x5_7: (Radio) TP
-        0x5_8: (Radio) T (upper right)
-        0x5_9: (Radio) m + T
-        0x5_a: (Radio) Scan + T
-        0x5_b: (Radio) II + T
-        0x5_c: (Radio) I? + T
-        0x5_d: (Radio) T
-        0x5_e: (Radio) T + T
-        0x5_f: (Radio) TP + T
-
-        # 0x60 to 0x7F are 'nav' screens
-        # so far... only 0x62 sets anything
-        0x6_0: (RDS)
-        0x6_1: (RDS)
-        0x6_2: (RDS)
-
-        # Tape
-        0x8_0: Tape Error
-        0x8_1: --
-        0x8_2: Tape (1) ▶︎
-        0x8_3: Tape (1) ▷▷▷
-        0x8_4: Tape (1) ◁◁◁
-        0x8_6: Tape (1) ▷▷
-        0x8_7: Tape (1) ◁◁
-        0x8_8: Tape Clean
-        0x8_9: Tape (A) <<>>
-        0x8_a: Tape (A)
-        0x8_b: --
-        0x8_c: --
-        0x8_d: --
-        0x8_e: --
-        0x8_f: --
-
-        0x9_0: Tape Error
-        0x9_1: --
-        0x9_2: Tape (2) ▶︎
-        0x9_3: Tape (2) ▷▷▷
-        0x9_4: Tape (2) ◁◁◁
-        0x9_6: Tape (2) ▷▷
-        0x9_7: Tape (2) ◁◁
-        0x9_8: Tape Clean
-        0x9_9: Tape (B) <<>>
-        0x9_a: Tape (B)
-        0x9_b: --
-        0x9_c: --
-        0x9_d: --
-        0x9_e: --
-        0x9_f: --
-
-        # RDS: TP?
-        # On a Euro car, the button you have labelled as TRAFFIC becomes
-        # RDS TP (only the labelling on the button changes)
-        0xa_0: (Traffic) No Station
-        0xa_1: (Traffic) Traffic 1
-        0xa_2: (Traffic) Traffic 2
-        0xa_3: --
-        0xa_4: (Traffic) No Station
-        0xa_5: (Traffic) Traffic 1
-        0xa_6: (Traffic) Traffic 2
-        0xa_7: --
-        0xa_8: (Traffic) No Station
-        0xa_9: (Traffic) Traffic 1
-        0xa_a: (Traffic) Traffic 2
-        0xa_b: --
-        0xa_c: --
-        0xa_d: --
-        0xa_e: --
-        0xa_f: --
-
-        0xb_0: Untested
-        0xb_1: Untested
-        0xb_2: Untested
-        0xb_3: Untested
-        0xb_4: Untested
-        0xb_5: Untested
-        0xb_6: Untested
-        0xb_7: Untested
-        0xb_8: Untested
-        0xb_9: Untested
-        0xb_a: Untested
-        0xb_b: Untested
-        0xb_c: Untested
-        0xb_d: Untested
-        0xb_e: Untested
-        0xb_f: Untested
-
-        # all the way through to C0, then
-        # C0..DF: display text
-
-        # E0..EF: nothing
-        # 0x41: IKE Set (540)
-        # 0x62: Section Update? (540)
-
-        # To have the 'Track' layout applied, the below format must be used
-        # otherwise the zone defaults to 11 characters without a layout.
-        # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
-        0xc_0: --
-        0xc_1: (CD) No Magazine!
-        0xc_2: (CD) No Disc!
-        0xc_3: --
-        0xc_4: (CD) [< >] Disc/Track
-        0xc_5: (CD) >>
-        0xc_6: (CD) <<R
-        0xc_7: (CD) [SCAN]
-        0xc_8: (CD) [RANDOM]
-        0xc_9: --
-        0xc_a: (CD) [<< >>] Fast Forward/Reverse
-        0xc_b: (CD) Empty Casette Track Change?
-        0xc_c: --
-        0xc_d: --
-        0xc_e: --
-        0xc_f: --
-    :ike:
-      :type: :bit_array
-      :parameters:
-        :set:
-          :label: IKE Display
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :update:
-          :label: Update Only
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-      :index:
-        :set: 2
-        :update: 3
-    :chars:
-      :type: :chars
-  :index:
-    :gfx: 0
-    :ike: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false
-  :tel:
-    :klass: MediaDisplay
-    :properties:
-      :short_name: TXT-23*
-      :long_name: Update Text Display (BMBT, IKE)
-    :index:
-      :gfx: 0
-      :ike: 1
-      :chars: !ruby/range
-                begin: 2
-                end: -1
-                excl: false
-    :parameters:
-      :gfx:
-        :type: :map
-        :dictionary:
-          0x0_0: '[Layout] [Header] Telephone Screen Set'
-          0x0_1: 'MID HFS On [▷ ◁]'
-          0x0_2: 'Header HFS [🔊]'
-
-          0x0_5: '[Layout] [Pin-Code] Screen'
-          0x4_0: End Call Clear?
-          # this is always no text
-          0x4_1: Clear Contact
-
-          0x4_2: Contact/Call
-          0x4_3: Show Contact Number
-
-          0x5_2: '[Header] [Directory] Header Set'
-          0x5_3: '[Header] [Directory] Header Overwrite'
-
-          0x6_1: '[Header] [Dial] Header Overwrite'
-          0x6_3: '[Header] [Dial] Header Overwrite 2'
-
-          0x8_0: Default Header Overwrite
-
-          0x8_1: '[Header] [Top 8] Set'
-          0x8_2: '[Header] [Top 8] Overwrite'
-
-          0x9_1: '[Layout] [Info] Screen'
-
-          0xc_0: '[Header] [SOS] Set?'
-      :ike:
-        :type: :map
-        :dictionary:
-          0x0_0: --
-          0x2_0: Set IKE
-          0x3_0: Update IKE
-      :chars:
-        :type: :chars
-  :meta:
-    :desc: used to updated display with media informtion upon change. Text displayed
-      is based upon the media mode (radio, tape, CDC).
-    :recipients:
-      0xFF: GLO-H
-      0x80: IKE
-      0x3B: GFX
-    :notes:
-      - How you change the radio station affects what messages are sent
-      - Changing via MFL will send to GLO-H as the message is consumed by
-        multiple devices (GFX and HUD set)
-      - Changing via BMBT will only send to GFX as the IKE display is not
-        updated.
-      - When the change is made via BMBT the message will still contain the
-        sub command for the IKE but it will always be 0x20
-      - The text sub command contains control characters of 0x04, 0x03 etc,
-        but I'm not sure what their purpose is yet.
-      - i know the GFX has multiple zones and it might denote the substrings
-        intended for each screen element
-    :examples:
-      - MFL (Next/Previous)
-      - display radio freuqnecy (with CLEAR display text being displayed)
-        - RAD	GLO-H	23	40 20	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
-      - update radio freuqnecy (with EXISITING text being displayed)
-        - RAD	GLO-H	23	40 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
-      - update radio frequency updaed \'ST\'
-        - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
-      - clear IKE display
-      - RAD	IKE	  23	50 20
-0x21:
-  :id:
-    :d: 33
-    :h: '0x21'
-  :schemas:
-    - :tel
-  :properties:
-    :short_name: RAD-21
-    :long_name: MID Display
-    :verbose: false
-  :klass: ParameterizedCommand
-  :index:
-    :m1: 0
-    :m2: 1
-    :m3: 2
-    :chars: !ruby/range
-            begin: 3
-            end: -1
-            excl: false
-  :parameters:
-    :m1:
-      :type: :map
-      :dictionary:
-        # notice how these match 0x23 layout parameter?
-        0x41: '(RAD) Presets'
-        0x43: '(RAD) Source'
-        0x60: '(RDS) Menu A'
-        0x61: '(RDS) Menu B'
-        0x62: Header
-        0x63: Static
-        0x83: '(TAPE) Side'
-        0xc0: '(CD) Discs?'
-    :m2:
-      :type: :integer
-    :m3:
-      :type: :bit_array
-      :parameters:
-        # no GFX-STATUS using this using MK1 GFX
-        :block:
-          :type: :switch
-          :label: Block
-          :states:
-            0: :off
-            1: :on
-        :flush:
-          :type: :switch
-          :label: Flush
-          :states:
-            0: :off
-            1: :on
-        :index:
-          :type: :integer
-      :index:
-        :block: 1
-        :flush: 2
-        :index:  !ruby/range
-                  begin: 3
-                  end: 7
-                  excl: false
-    :chars:
-      :type: :chars
-  # SCHEMA 0x21 TELEPHONE
-  :tel:
-    :id:
-      :d: 33
-      :h: '0x21'
-    :properties:
-      :short_name: TEL-21
-      :long_name: MID Display
-      :verbose: false
-    :klass: ParameterizedCommand
-    :index:
-      :m1: 0
-      :m2: 1
-      :m3: 2
-      :chars: !ruby/range
-              begin: 3
-              end: -1
-              excl: false
-    :parameters:
-      :m1:
-        :type: :map
-        :dictionary:
-          0x42: '[TEL] Dial'
-          0x43: '[TEL] Directory'
-          0x80: '[TEL] Top 8'
-      :m2:
-        :type: :integer
-      :m3:
-        :type: :bit_array
-        :parameters:
-          :block:
-            :type: :switch
-            :label: Blocking?
-            :states:
-              0: :off
-              1: :on
-          :flush:
-            :type: :switch
-            :label: Flush?
-            :states:
-              0: :off
-              1: :on
-          :column_2:
-            :type: :switch
-            :label: Column 2
-            :states:
-              0: :off
-              1: :on
-          :row_2:
-            :type: :switch
-            :label: Row 2
-            :states:
-              0: :off
-              1: :on
-        :index:
-          :block: 1
-          :flush: 2
-          :column_2: 3
-          :row_2: 5
-      :chars:
-        :type: :chars
-  :meta:
-    :notes: always RAD to GFX
-    :parameters:
-      - 0x41: select station present number (1-6)? another row?
-      - 0x43: MID display? another row?
 0xA5:
   :id:
     :d: 165
@@ -3156,138 +3551,10 @@
       - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-0x24: # ANZV-IKE-VAR
-  :id:
-    :d: 36
-    :h: '0x24'
-  :properties:
-    :short_name: ANZV-IKE-VAR
-    :long_name: OBC Display (IKE, GFX)
-    :verbose: false
-  :klass: ParameterizedCommand
-  :schemas:
-    - :tel
-  :parameters:
-    :gfx:
-      :type: :map
-      :dictionary:
-        # SETTINGS
-        0x01: Time
-        0x02: Date
 
-        # ON-BOARD COMPUTER
-        0x03: Temperature
-        0x04: Consump. 1
-        0x05: Consump. 2
-        0x06: Range
-        0x07: Distance
-        0x08: Arrival
-        0x09: Limit
-        0x0a: Avg. Speed
-        0x0e: Timer
-        0x1a: Timer (Lap)
+# 0x24 ANZV-IKE-VAR
 
-        # Aux Venting/Heating
-        0x0f: Aux. Timer 1
-        0x10: Aux. Timer 2
-
-        # Radio
-        0x40: Radio HUD
-
-        # Code
-        0x16: Emergency Disarm
-
-        # Unconfirmed
-        0x0c: Memo
-        0x0d: Memo
-        0x11: Aux Heating Off
-        0x12: Aux Heating On
-        0x13: Aux Vent. Off
-        0x14: Aux Vent. On
-        0x15: End Stellmode
-        0x1b: Aux Heat/Vent
-        0x1f: Test Mode
-    :ike:
-      :type: :map
-      :dictionary:
-        0x00: --
-        0x20: Set
-        0x30: Update
-    :chars:
-      :type: :chars
-  :index:
-    :gfx: 0
-    :ike: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false
-  # 0x24 ANZV-TEL-VAR*
-  :tel:
-    :klass: MediaDisplay
-    :properties:
-      :short_name: ANZV-TEL-VAR*
-      :long_name: Update Info
-    :index:
-      :gfx: 0
-      :ike: 1
-      :chars: !ruby/range
-                begin: 2
-                end: -1
-                excl: false
-    :parameters:
-      :gfx:
-        :meta: this does not seem to work for >= MK2
-        :type: :map
-        :dictionary:
-          0x91: Signal Strength
-          0x93: Call cost current
-          0x94: Call cost total
-          0x96: Call Time minutes
-          0x97: Call time seconds
-      :ike:
-        :type: :map
-        :dictionary:
-          0x00: --
-      :chars:
-        :type: :chars
-        # 0xB2 = 7 bars
-        # 0xB3 = 6 bars
-        # 0xB4 = 5 bars
-        # 0xB5 = 4 bars
-        # 0xB6 = 3 bars
-        # 0xB7 = 2 bars
-        # 0x5F = 1 bar
-        # 0xB8 = 0 bars
-  :meta:
-    :examples:
-      - RAD GLO-H TXT-1 Radio HUD "102.1   "
-      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
-0x22:
-  :id:
-    :d: 34
-    :h: '0x22'
-  :properties:
-    :short_name: GFX-CACHE
-    :long_name: GFX Cache
-  :klass: ParameterizedCommand
-  :parameters:
-    :status:
-      :type: :integer
-  :index:
-    :status: 0
-  :meta:
-    :notes:
-      - I _think_ this is.... cache/buffered count....?
-      - 00: Dial Function
-      - 01 FF: Radio On?
-      - [0, 1, 2, 3, 4, 7, 16]
-      - 0x00: Available always after screen has been cleared
-      - 0x01: Done? (always preceded by 0x21 and 0x23 AND which is when loading a screen)
-      - 0x02: (only preceded by 0x21) when... manually navigating to a screen
-      - 0x03: Done?
-      - 0x07: unknown?
-      - 0x10: Unrecognised command?
+# 0x22 MOVED
 
 # ************************************************************************* #
 #                             CLUSTER HUD
@@ -3446,7 +3713,7 @@
     :h: '0x31'
   :properties:
     :short_name: DATA
-    :long_name: Unknown
+    :long_name: BMBT/MID Soft Button Input
   :index:
     :source: 0
     :function: 1
@@ -3464,25 +3731,30 @@
 
         0x60: RDS 1
         0x61: RDS 2
+      :map:
+        0x00: :no_source
+        0x20: :info
+        0x42: :dial
+        0x43: :directory
+        0x80: :top 8
+        0x60: :rds_1
+        0x61: :rds_2
     :function:
       :type: :map
       :dictionary:
         0x00: --
-        0x01: Select Contact
-          # 0x00: Contact 1
-          # 0x02: Contact 2
-          # 0x04: Contact 3
-        0x02: Select Digit
-          # 0x00: (0)
-          # 0x07: (7)
-          # 0x08: (8)
-          # 0x09: (9)
-          # 0x0A: DEL
-          # 0x1A: "*"
-          # 0x1B: "#"
+        0x01: Contact
+        0x02: Digit
         0x05: SOS
-        0x07: Navigate Function
-        0x08: Navigate Info
+        0x07: Navigate
+        0x08: Info
+      :map:
+        0x00: :no_function
+        0x01: :contact
+        0x02: :digit
+        0x05: :sos
+        0x07: :navigate
+        0x08: :info
     :action:
       :type: :bit_array
       :index:
@@ -3495,9 +3767,34 @@
                         end: 2
                         excl: false
       :parameters:
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :dictionary:
+            0x00: 0x00
+            0x01: 0x01
+            0x02: 0x02
+            0x03: 0x03
+            0x04: 0x04
+            0x05: 0x05
+            0x06: 0x06
+            0x07: 0x07
+            0x08: 0x08
+            0x09: 0x09
+            0x0a: 0x0a
+            0x0b: 0x0b
+            0x0c: 0x0c
+            0x0d: 0x0d
+            0x0e: 0x0e
+            0x0f: 0x0f
+            0x1a: 0x1a
+            0x1b: 0x1b
+            0x1c: 0x1c
+            0x1d: 0x1d
+            0x1e: 0x1e
+            0x1f: 0x1f
         :button_state:
           :type: :switch
-          :label: 'State:'
           :states:
             0b00: :press
             0b01: :hold
@@ -3506,32 +3803,6 @@
             0b00: Press
             0b01: Hold
             0b10: Release
-        :button_id:
-          :type: :map
-          :label: 'Index:'
-          :dictionary:
-            0x00: Index 0
-            0x01: Index 1
-            0x02: Index 2
-            0x03: Index 3
-            0x04: Index 4
-            0x05: Index 5
-            0x06: Index 6
-            0x07: Index 7
-            0x08: Index 8/Emergency
-            0x09: Index 9
-
-            0x0A: Info Screen
-            0x0B: SOS
-            0x0C: Directory << Back
-            0x0D: Directory >> Forward
-
-            0x1A: Unknown 0x1A
-            0x1B: Unknown 0x1B
-            0x1C: Unknown 0x1C
-            0x1D: SMS Screen
-            0x1E: Dial Screen
-            0x1F: Directory Screen
   :klass: ParameterizedCommand
   :meta:
     :digit:
@@ -3619,178 +3890,10 @@
       - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
       - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
       - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
-0x2C: # ANZV-TEL-BOOL
-  :id:
-    :d: 44
-    :h: '0x2C'
-  :properties:
-    :short_name: ANZV-TEL-BOOL
-    :long_name: Unknown
-  :parameters:
-    :status:
-      :type: :bit_array
-      :index:
-        :active: 2
-        :power: 3
-        :display: 4
-        :incoming: 5
-        :menu: 6
-        :hfs: 7
-      :parameters:
-        :active:
-          :label: In Use
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :power:
-          :label: Telephone
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-        :display:
-          :label: Display?
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :incoming:
-          :label: Incoming Call
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :menu:
-          :label: Menu?
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :hfs:
-          :label: Handsfree
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-  :index:
-    :status: 0
-  :klass: ParameterizedCommand
-  :meta:
-    :status:
-      - hds: hide/show speaker icon
-      - active: changes phone icon to green/red
-      - incoming: unknow
-    :senders:
-      - TEL
-    :recipients:
-      - ANZV
-0x2b: # ANZV-TEL-LED
-  :id:
-    :d: 43
-    :h: '0x2b'
-  :properties:
-    :short_name: ANZV-TEL-LED
-    :long_name: Telephone LEDs on BMBT
-  :klass: ParameterizedCommand
-  :index:
-    :leds: 0
-  :parameters:
-    :leds:
-      :type: :bit_array
-      :index:
-        :red: 7
-        :red_blink: 6
-        :yellow: 5
-        :yellow_blink: 4
-        :green: 3
-        :green_blink: 2
-      :parameters:
-        :red:
-          :label: Red
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :red_blink:
-          :label: Red Blink
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :yellow:
-          :label: Yellow
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :yellow_blink:
-          :label: Yellow Blink
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :green:
-          :label: Green
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-        :green_blink:
-          :label: Green Blink
-          :type: :switch
-          :states:
-            0: :off
-            1: :on
-  # :properties:
-  #   :short_name: TEL-LED
-  #   :long_name: Telephone LEDs on BMBT
-  #   :state:
-  #     0: [0, 0, 0]
-  #     1: [0, 1, 0]
-  #     2: [0, 2, 0]
-  #     3: [0, 2, 0]
-  #     4: [1, 0, 0]
-  #     5: [1, 1, 0]
-  #     6: [1, 2, 0]
-  #     8: [2, 0, 0]
-  #     9: [2, 1, 0]
-  #     10: [0, 0, 1]
-  #     11: [0, 1, 1]
-  #     12: [0, 2, 1]
-  #     14: [2, 2, 0]
-  #     15: [2, 2, 0]
-  #     16: [0, 0, 1]
-  #     17: [0, 1, 1]
-  #     18: [0, 2, 1]
-  #     19: [0, 2, 1]
-  #     20: [1, 0, 1]
-  #     21: [1, 1, 1]
-  #     22: [1, 2, 1]
-  #     23: [1, 2, 1]
-  #     24: [2, 0, 1]
-  #     25: [2, 1, 1]
-  #   :index_map:
-  #     0: :yellow
-  #     1: :red
-  #     2: :green
-  #   :index_to_colour_map:
-  #     :yellow:  93
-  #     :red:     91
-  #     :green:   92
-  #   :value_map:
-  #     0: :off
-  #     1: :on
-  #     2: :blink
-  #   :value_to_type_map:
-  #     :off:   2
-  #     :on:    0
-  #     :blink: 5
-  :meta:
-    :senders:
-      - TEL
-    :recipients:
-      - ANZV
+
+# 0x2C: ANZV-TEL-BOOL
+
+# 0x2b ANZV-TEL-LED
 
 # ************************************************************************* #
 #                         ON BOARD COMPUTER (OBC)
@@ -3927,108 +4030,9 @@
       - IKE ANZV  ANZV-VAR    04 00   "--.- L/100"
     :recipients:
       - IKE: IKE houses on board computer
-0x2A: # ANZV-IKE-BOOL
-  :id:
-    :d: 42
-    :h: '0x2A'
-  :klass: ParameterizedCommand
-  :properties:
-    # :short_name: OBC-CTL
-    :short_name: ANZV-IKE-BOOL
-    :long_name: IKE to ANZV OBC Display
-  :index:
-    :control_a: 0
-    :control_b: 1
-  :parameters:
-    :control_a:
-      :type: :bit_array
-      :index:
-        :memo:  !ruby/range
-                begin: 1
-                end: 2
-        :timer: 4
-        :limit: !ruby/range
-                begin: 5
-                end: 6
-      :parameters:
-        :memo:
-          # 0010 0000
-          :type: :switch
-          :label: 'Memo'
-          :states:
-            0b00: :off
-            0b01: :on
-            0b10: :on
-            0b11: :on
-        :timer:
-          # 0010 1010
-          :type: :switch
-          :label: 'Timer'
-          :states:
-            0: :off
-            1: :on
-        :limit:
-          # 0000 0010
-          :type: :switch
-          :label: 'Limit'
-          :states:
-            0b00: :off
-            0b01: :on
-            0b10: :on
-            0b11: :on
-    :control_b:
-      :type: :bit_array
-      :index:
-        :code:  !ruby/range
-                begin: 0
-                end: 1
-        :aux_heating: 2
-        :aux_timer_2: 3
-        :aux_ventilation: 4
-        :aux_timer_1: 5
-      :parameters:
-        :code:
-          :type: :switch
-          :label: 'Code'
-          :states:
-            0b00: :off
-            0b01: :enabled
-            0b10: :disabled
-        :aux_heating:
-          :type: :switch
-          :label: 'Aux Heating'
-          :states:
-            0: :off
-            1: :on
-        :aux_timer_2:
-          :type: :switch
-          :label: 'Aux Timer 2'
-          :states:
-            0: :off
-            1: :on
-        :aux_ventilation:
-          :type: :switch
-          :label: 'Aux Ventilation'
-          :states:
-            0: :off
-            1: :on
-        :aux_timer_1:
-          :type: :switch
-          :label: 'Aux Timer 1'
-          :states:
-            0: :off
-            1: :on
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - ANZV
-    :length:
-      - always 2 bytes
-      - first byte 0x00 or 0x0B
-      - second byte 0x00
-      - memo on 20 00
-      - memo off 00 00
+
+# 0x2A ANZV-IKE-BOOL
+
 # ************************************************************************* #
 #                                 CLIMATE?
 # ************************************************************************* #

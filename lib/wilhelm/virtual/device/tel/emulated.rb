@@ -7,11 +7,10 @@ module Wilhelm
         # Comment
         class Emulated < Device::Emulated
           include Capabilities
-          include Deprecated
           include State
           include Received
 
-          PROC = 'SimulatedTEL'
+          PROC = 'TEL'
 
           SUBSCRIBE = [PING, PONG, GFX_STATUS, TEL_DATA, TEL_OPEN].freeze
 
@@ -36,7 +35,7 @@ module Wilhelm
               handle_gfx_status(message)
             when TEL_DATA
               logger.debug(PROC) { "Rx: Handling: TEL_DATA" }
-              handle_data_request(message)
+              handle_data_request(message.command)
             when TEL_OPEN
               logger.debug(PROC) { "Rx: Handling: TEL_OPEN" }
               handle_tel_open(message)

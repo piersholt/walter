@@ -8,7 +8,7 @@ module Wilhelm
           module State
             # Comment
             module Chainable
-              include Capabilities::Constants
+              include Constants
 
               # STATUS
 

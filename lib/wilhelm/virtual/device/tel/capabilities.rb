@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'capabilities/constants'
+require_relative 'capabilities/deprecated'
+require_relative 'capabilities/dial'
 require_relative 'capabilities/directory'
 require_relative 'capabilities/info'
+require_relative 'capabilities/last_numbers'
 require_relative 'capabilities/led'
+require_relative 'capabilities/top_8'
 
 module Wilhelm
   module Virtual
@@ -11,11 +14,15 @@ module Wilhelm
       module Telephone
         # Comment
         module Capabilities
-          include Constants
           include Helpers
-          include LED
+          include Constants
+          include Deprecated
+          include Dial
           include Directory
           include Info
+          include LastNumbers
+          include LED
+          include Top8
 
           def logger
             LOGGER

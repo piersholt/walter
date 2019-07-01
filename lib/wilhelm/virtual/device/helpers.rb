@@ -3,6 +3,7 @@
 puts "\tLoading wilhelm/virtual/device/helpers"
 
 require_relative 'helpers/cluster'
+require_relative 'helpers/contacts'
 require_relative 'helpers/data'
 require_relative 'helpers/button'
 

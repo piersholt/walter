@@ -65,13 +65,7 @@ module Wilhelm
           end
 
           def tel
-            display_handler.i.f_t(*Device::Groups::TELEPHONE + Device::Groups::BROADCAST)
-            display_handler.i.f_f(*Device::Groups::TELEPHONE)
-            display_handler.i.h_c(
-              *SPEED, *TEMPERATURE, *COUNTRY, *VEHICLE, *LAMP,
-              *SENSORS, *OBC, *READY, *IGNITION
-            )
-            display_handler.i.h_c(RAD_LED, SRC_CTL, SRC_SND, MENU_GFX, MENU_RAD)
+            display_handler.i.filter_commands(*TELEPHONE)
           end
 
           def nav

@@ -7,8 +7,9 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Comment
           module Received
-            include Capabilities::Constants
+            include Constants
 
+            # 0x02 PONG
             # Piggyback off the radio announce to annunce
             def handle_announce(message)
               # logger.warn('SimulatedTEL') { "handling pong: #{message.from}" }
@@ -21,6 +22,14 @@ module Wilhelm
               true
             end
 
+            # 0x20 TEL-OPEN
+            def handle_tel_open(message)
+              logger.debug(PROC) { "Mock: handling telephone tel open request..." }
+              generate_top_8
+              # mid(m1: LAYOUT_DIAL, m2: M2_DEFAULT, m3: 0x00, chars: [])
+            end
+
+            # 0x22 CACHE
             def handle_gfx_status(message)
               logger.debug(PROC) { "Mock: handling GFX status..." }
               if message.command.status.value == STATUS_CLEAR
@@ -38,43 +47,102 @@ module Wilhelm
               end
             end
 
-            def handle_data_request(message)
-              logger.debug(PROC) { "Mock: handling telephone data request..." }
-              # source = message.command.source
-              # case source
-              # when SOURCE_INFO
-              #   handle_info(message)
-              # when SOURCE_DIAL
-              #   handle_dial(message)
-              # when SOURCE_DIR
-              #   directory(message)
-              # when SOURCE_TOP
-              #   handle_top(message)
-              # end
-              source = message.command.source.value
-              function = message.command.function.value
-              action = message.command.action.value
-              case action
-              when ACTION_DIAL_OPEN
-                mid(m1: DRAW_DIAL, m2: MID_DEFAULT, m3: 0x00, chars: [])
-              when ACTION_DIR_OPEN
-                delegate_directory(action)
-              when ACTION_DIR_BACK
-                delegate_directory(action)
-              when ACTION_DIR_FORWARD
-                delegate_directory(action)
-              when ACTION_INFO_OPEN
-                delegate_info
+            # 0x31 DATA
+            def handle_data_request(command)
+              return false unless command.action.parameters[:button_state].value == 0b00
+              logger.unknown(PROC) { '#handle_data_request(command)' }
+
+              case command.source.value
+              when SOURCE_RECENT
+                false
+              when SOURCE_INFO
+                false
+              when SOURCE_DIAL
+                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
+                  dial_clear
+                end
+              when SOURCE_DIRECTORY
+                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
+                  directory_clear
+                end
+              when SOURCE_TOP_8
+                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
+                  top_8_clear
+                end
+              end
+
+              # @todo use source to work out when to clear
+
+              case command.function.value
+              when FUNCTION_RECENT
+                # delegate_contact
+              when FUNCTION_CONTACT
+                delegate_contact(command.source, command.action)
+              when FUNCTION_DIAL
+                delegate_dial(command.action)
+              when FUNCTION_SOS
+                delegate_sos
+              when FUNCTION_NAVIGATE
+                delegate_navigation(command.action)
+              when FUNCTION_INFO
+                delegate_function_info
               end
             end
 
-            def handle_tel_open(message)
-              logger.debug(PROC) { "Mock: handling telephone tel open request..." }
-              # delegate_favourites
-              mid(m1: DRAW_DIAL, m2: MID_DEFAULT, m3: 0x00, chars: [])
+            private
+
+            def button_id(action)
+              action.parameters[:button_id].value
             end
 
-            private
+            def delegate_contact(source, action)
+              logger.unknown(PROC) { "#delegate_contact(#{action})" }
+              index = button_id(action)
+              logger.unknown(PROC) { FUNCTIONS[FUNCTION_CONTACT][index] }
+
+              case source.value
+              when SOURCE_DIRECTORY
+                directory_name('Dir. Contact.')
+              when SOURCE_TOP_8
+                top_8_name('Top 8. Contact.')
+              end
+            end
+
+            def delegate_dial(action)
+              logger.unknown(PROC) { "#delegate_dial(#{action})" }
+              index = button_id(action)
+              logger.unknown(PROC) { FUNCTIONS[FUNCTION_DIAL][index] }
+              return dial_number_remove if index == ACTION_REMOVE
+              dial_number(FUNCTIONS[FUNCTION_DIAL][index])
+            end
+
+            def delegate_sos
+              logger.unknown(PROC) { "#delegate_sos" }
+              logger.unknown(PROC) { FUNCTIONS[FUNCTION_SOS][ACTION_SOS_OPEN] }
+              primary(gfx: 0xc0, ike: 0x20, chars: 'SOS: 112!')
+            end
+
+            def delegate_navigation(action)
+              logger.unknown(PROC) { "#delegate_navigation(#{action})" }
+              index = button_id(action)
+              case index
+              when ACTION_DIAL_OPEN
+                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_DIAL_OPEN] }
+                open_dial
+              when ACTION_SMS_OPEN
+                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_SMS_OPEN] }
+              when ACTION_DIR_OPEN
+                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_DIR_OPEN] }
+                generate_directory
+              else
+              end
+            end
+
+            def delegate_function_info
+              logger.unknown(PROC) { "#delegate_function_info" }
+              logger.unknown(PROC) { FUNCTIONS[FUNCTION_INFO][ACTION_INFO_OPEN] }
+              open_info
+            end
 
             # @deprecated
             def ready

@@ -7,7 +7,7 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Simulated CD Changer
           module Deprecated
-            include Capabilities::Constants
+            include Constants
             # include Wilhelm::Helpers::Stateful
             include API
 

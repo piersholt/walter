@@ -2,6 +2,8 @@
 
 puts "\tLoading wilhelm/virtual/device/tel"
 
+require_relative 'tel/constants'
+
 require_relative 'tel/api'
 require_relative 'tel/capabilities'
 
