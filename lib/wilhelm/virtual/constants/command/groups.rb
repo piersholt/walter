@@ -20,7 +20,7 @@ module Wilhelm
           LAMP = [LAMP_REQ, LAMP_REP].freeze
           DOOR = [DOOR_REQ, DOOR_REP].freeze
 
-          OBC = [ANZV_BOOL, OBC_VAR, OBC_BOOL].freeze
+          OBC = [ANZV_BOOL, ANZV_VAR,  OBC_VAR, OBC_BOOL].freeze
 
           DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
 
@@ -35,7 +35,7 @@ module Wilhelm
 
           BUTTON = MFL + BMBT
 
-          TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA].freeze
+          TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA, TXT_MID, TXT_GFX, ANZV_VAR].freeze
           CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 
           DIAGNOSTICS = [
@@ -72,7 +72,8 @@ module Wilhelm
             lamp: LAMP,
             door: DOOR,
             navigation: NAVIGATION,
-            cdc: CD_CHANGER
+            cdc: CD_CHANGER,
+            button: BMBT_B
           }.freeze
 
           NOISEY = {

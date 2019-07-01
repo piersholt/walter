@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     module Constants
       module Command
-        # Comment
+        # Command Aliases
         module Aliases
           PING = 0x01
           PONG = 0x02
@@ -36,11 +36,12 @@ module Wilhelm
           TXT_GFX    = 0x23
           TXT_NAV    = 0xA5
 
-          ANZV_VAR  = 0x24
-          ANZV_BOOL = 0x2A
-          TEL_LED   = 0x2B
-          TEL_STATE = 0x2C
-          TEL_DATA  = 0x31
+          ANZV_VAR   = 0x24
+          ANZV_BOOL  = 0x2A
+          TEL_LED    = 0x2B
+          TEL_STATE  = 0x2C
+          SOFT_INPUT = 0x31
+          TEL_DATA   = SOFT_INPUT
 
           DSP_SET = 0x34
           DSP_EQ  = DSP_SET

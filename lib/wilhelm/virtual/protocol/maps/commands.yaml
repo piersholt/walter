@@ -2899,7 +2899,7 @@
   :schemas:
     - :tel
   :properties:
-    :short_name: TXT-21
+    :short_name: RAD-21
     :long_name: MID Display
     :verbose: false
   :klass: ParameterizedCommand
@@ -3156,12 +3156,12 @@
       - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-0x24:
+0x24: # ANZV-IKE-VAR
   :id:
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: ANZV-VAR
+    :short_name: ANZV-IKE-VAR
     :long_name: OBC Display (IKE, GFX)
     :verbose: false
   :klass: ParameterizedCommand
@@ -3222,11 +3222,11 @@
               begin: 2
               end: -1
               excl: false
-  # 0x24 Alternative Schemas
+  # 0x24 ANZV-TEL-VAR*
   :tel:
     :klass: MediaDisplay
     :properties:
-      :short_name: TXT-24*
+      :short_name: ANZV-TEL-VAR*
       :long_name: Update Info
     :index:
       :gfx: 0
@@ -3619,12 +3619,12 @@
       - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
       - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
       - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
-0x2C:
+0x2C: # ANZV-TEL-BOOL
   :id:
     :d: 44
     :h: '0x2C'
   :properties:
-    :short_name: TEL-STATE
+    :short_name: ANZV-TEL-BOOL
     :long_name: Unknown
   :parameters:
     :status:
@@ -3685,12 +3685,12 @@
       - TEL
     :recipients:
       - ANZV
-0x2b:
+0x2b: # ANZV-TEL-LED
   :id:
     :d: 43
     :h: '0x2b'
   :properties:
-    :short_name: TEL-LED
+    :short_name: ANZV-TEL-LED
     :long_name: Telephone LEDs on BMBT
   :klass: ParameterizedCommand
   :index:
@@ -3927,14 +3927,14 @@
       - IKE ANZV  ANZV-VAR    04 00   "--.- L/100"
     :recipients:
       - IKE: IKE houses on board computer
-0x2A:
+0x2A: # ANZV-IKE-BOOL
   :id:
     :d: 42
     :h: '0x2A'
   :klass: ParameterizedCommand
   :properties:
     # :short_name: OBC-CTL
-    :short_name: ANZV-BOOL
+    :short_name: ANZV-IKE-BOOL
     :long_name: IKE to ANZV OBC Display
   :index:
     :control_a: 0
