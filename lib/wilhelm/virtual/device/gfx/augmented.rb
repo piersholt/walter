@@ -59,7 +59,7 @@ module Wilhelm
               logger.debug(moi) { "Tx: PONG" }
               evaluate_pong(message.command)
             when TEL_DATA
-              logger.debug(moi) { "Tx: Menu GFX (#{DataTools.d2h(TEL_DATA)})" }
+              logger.debug(moi) { "Tx: Data (#{DataTools.d2h(TEL_DATA)})" }
               evaluate_tel_data(message.command)
             when MENU_GFX
               logger.debug(moi) { "Tx: Menu GFX (#{DataTools.d2h(MENU_GFX)})" }

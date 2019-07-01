@@ -30,7 +30,7 @@ module Wilhelm
         # CONTROL
 
         def controls
-          CONTROL_MAP.vaues
+          CONTROL_MAP.values
         end
 
         def is?(control_symbol)
