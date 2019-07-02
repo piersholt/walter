@@ -9,17 +9,18 @@
 
 Object|Status
 :---|:---
-[`Audio`](lib/wilhelm/api/audio/)|🔧
-[`Controls`](lib/wilhelm/api/controls/)|✅
-[`Display`](lib/wilhelm/api/display/)|✅
-[`Telephone`](lib/wilhelm/api/telephone/)|🔧
-On-board Computer|🎯
-Settings|🎯
-Auxiliary Heating/Ventilation|🎯
+[`Audio`](audio)|🔧
+[`Auxiliary Heat./Vent.`](aux)|🎯
+[`Code`](code)|🎯
+[`Controls`](controls)|✅
+[`Display`](display)|✅
+[`On-board Computer (OBC)`](obc)|🎯
+[`Settings`](settings)|🎯
+[`Telephone`](telephone)|🔧
 
 #### Legend
 Icon|Description
 :---|:---
-✅ | Foundational component and reasonably stable.
+✅ | Reasonably stable.
 🔧 | In progress...
-🎯 | Will be developed in time.
+🎯 | Planned.
