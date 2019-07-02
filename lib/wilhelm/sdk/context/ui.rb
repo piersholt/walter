@@ -1,5 +1,10 @@
 # frozen_string_literal: false
 
+require_relative 'ui/constants'
+require_relative 'ui/model'
+require_relative 'ui/view'
+require_relative 'ui/controller'
+
 module Wilhelm
   module SDK
     class UserInterface
