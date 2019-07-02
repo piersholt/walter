@@ -67,10 +67,6 @@ module Wilhelm
           def update(action, selected_menu_item)
             LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
             case action
-            when :nodes
-              # destroy(:index)
-              # application_context.ui.bluetooth_controller.load(:index)
-              ui_context.launch(:nodes, :index)
             when :services
               # destroy(:index)
               # application_context.ui.audio_controller.load(:index)

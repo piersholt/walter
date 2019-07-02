@@ -44,10 +44,6 @@ module Wilhelm
           context.ui.launch(:debug, :index)
         end
 
-        def load_nodes(context)
-          context.ui.launch(:nodes, :index)
-        end
-
         def load_services(context)
           context.ui.launch(:services, :index)
         end
@@ -101,7 +97,6 @@ module Wilhelm
           ui_context.register_service_controllers(
             header:  Wilhelm::SDK::UserInterface::Controller::HeaderController,
             debug:  Wilhelm::SDK::UserInterface::Controller::DebugController,
-            nodes:  Wilhelm::SDK::UserInterface::Controller::NodesController,
             services:  Wilhelm::SDK::UserInterface::Controller::ServicesController,
             characters:  Wilhelm::SDK::UserInterface::Controller::CharactersController
           )

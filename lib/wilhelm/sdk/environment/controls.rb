@@ -31,11 +31,6 @@ module Wilhelm
           @state.load_debug(self)
         end
 
-        def load_nodes
-          logger.debug(LOGGER_NAME) { '#load_nodes()' }
-          @state.load_nodes(self)
-        end
-
         def load_services
           logger.debug(LOGGER_NAME) { '#load_services()' }
           @state.load_services(self)

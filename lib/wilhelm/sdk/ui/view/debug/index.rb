@@ -28,7 +28,7 @@ module Wilhelm
             def indexed_options
               # return NO_SERVICES if options.length.zero?
               # validate(options, COLUMN_ONE_MAX)
-              options = %w[Nodes Services Characters]
+              options = %w[Services Characters]
 
               options.first(COLUMN_ONE_MAX).map.with_index do |option, index|
                 indexed_option =

@@ -10,7 +10,6 @@ module Wilhelm
       include Observable
       include Messaging::API
       include Controls
-      include Nodes
 
       attr_reader :state
 

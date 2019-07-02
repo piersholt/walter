@@ -4,7 +4,6 @@ puts "\tLoading wilhelm/sdk/environment"
 
 require_relative 'environment/constants'
 require_relative 'environment/logging'
-require_relative 'environment/nodes'
 
 require_relative 'environment/notifications/debug_handler'
 

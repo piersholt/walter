@@ -30,7 +30,6 @@ require_relative 'ui/view/menu/static_menu'
 # Application Context
 require_relative 'ui/view/header/status'
 require_relative 'ui/view/debug/index'
-require_relative 'ui/view/nodes/index'
 require_relative 'ui/view/services/index'
 require_relative 'ui/view/characters/index'
 
@@ -43,7 +42,6 @@ require_relative 'ui/controller/base_controller'
 # Application Context
 require_relative 'ui/controller/header_controller'
 require_relative 'ui/controller/debug_controller'
-require_relative 'ui/controller/nodes_controller'
 require_relative 'ui/controller/services_controller'
 require_relative 'ui/controller/characters_controller'
 

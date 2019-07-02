@@ -51,10 +51,6 @@ module Wilhelm
           false
         end
 
-        def load_nodes(___)
-          false
-        end
-
         def load_services(___)
           false
         end

@@ -15,7 +15,6 @@ end
 require_relative 'sdk/controls'
 require_relative 'sdk/ui'
 require_relative 'sdk/notifications'
-require_relative 'sdk/nodes'
 require_relative 'sdk/environment'
 require_relative 'sdk/listener'
 require_relative 'sdk/handler'
