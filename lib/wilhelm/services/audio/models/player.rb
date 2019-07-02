@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::Player
       class Player
         include Logging
         include Observable

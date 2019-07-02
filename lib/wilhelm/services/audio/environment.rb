@@ -6,6 +6,8 @@ module Wilhelm
       # Audio::Environment
       # Application context state change handling
       module Environment
+        include Logging
+        
         def state_change(new_state)
           logger.debug(AUDIO) { "Environment => #{new_state.class}" }
           case new_state

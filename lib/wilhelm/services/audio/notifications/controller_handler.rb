@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Services
     class Audio
       module Notifications
-        # Comment
+        # Audio::Notifications::ControllerHandler
         class ControllerHandler
           include Singleton
           include NotificationDelegate

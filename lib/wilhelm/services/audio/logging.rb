@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::Logging
       module Logging
         include Constants
         include LogActually::ErrorOutput

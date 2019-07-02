@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::State
       module State
         include Logging
 

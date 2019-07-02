@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::Properties
       module Properties
         def target
           @target ||= Target.new

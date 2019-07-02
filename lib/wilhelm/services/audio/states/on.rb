@@ -7,7 +7,7 @@ require_relative 'on/states'
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::On
       class On
         include Logging
         include Defaults

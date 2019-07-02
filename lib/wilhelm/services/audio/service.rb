@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Services
-    # Comment
+    # Bluetooth Audio Streaming
     class Audio
       include Observable
       include Logging

@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::Notifications
       module Notifications
         # NOTIFICATIONS (TARGET) -------------------------------------------------
 

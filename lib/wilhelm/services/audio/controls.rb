@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Audio
-      # Comment
+      # Audio::Controls
       module Controls
         include Wilhelm::SDK::Controls::Register
         include Logging
