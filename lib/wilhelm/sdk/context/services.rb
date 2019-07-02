@@ -4,13 +4,9 @@ puts "\tLoading wilhelm/context/services"
 
 require_relative 'services/constants'
 require_relative 'services/logging'
-
-require_relative 'services/notifications/debug_handler'
-
 require_relative 'services/states/defaults'
 require_relative 'services/states/offline'
 require_relative 'services/states/online'
-
 require_relative 'services/controls'
 
 # Top level namespace
