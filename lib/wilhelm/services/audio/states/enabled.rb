@@ -1,11 +1,17 @@
 # frozen_string_literal: false
 
+require_relative 'enabled/notifications'
+require_relative 'enabled/states'
+
 module Wilhelm
   module Services
     class Audio
+      # Audio::Enabled
       class Enabled
         include Logging
         include Defaults
+        include States
+        include Notifications
 
         def initialize(context)
           logger.debug(AUDIO_ENABLED) { '#initialize' }
@@ -13,36 +19,6 @@ module Wilhelm
           context.player?
           # Wilhelm::API::Controls.instance.add_observer(context, :buttons_update)
           context.register_controls(Wilhelm::API::Controls.instance)
-        end
-
-        # STATES --------------------------------------------------
-
-        def disable(context)
-          context.change_state(Disabled.new)
-        end
-
-        def enable(context)
-          context.change_state(Enabled.new(context))
-        end
-
-        def on(context)
-          context.change_state(On.new(context))
-        end
-
-        # TARGET ------------------------------------------------
-
-        def addressed_player(context, properties)
-          logger.info(AUDIO_ENABLED) { ":addressed_player => #{properties}" }
-          player_object = Player.new(properties)
-          context.player.addressed_player!(player_object)
-          context.on
-          true
-        end
-
-        def player_added(context, properties)
-          context.on
-          context.target.player_added(properties)
-          true
         end
       end
     end

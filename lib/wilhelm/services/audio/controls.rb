@@ -24,22 +24,42 @@ module Wilhelm
         }.freeze
 
         CONTROL_ROUTES = {
-          BMBT_POWER => { power: STATELESS },
-          BMBT_NEXT => { seek_forward: STATELESS,
-            scan_forward: STATEFUL },
-            MFL_NEXT => { seek_forward: STATELESS,
-              scan_forward: STATEFUL },
-              BMBT_PREV => { seek_backward: STATELESS,
-                scan_backward: STATEFUL },
-                MFL_PREV => { seek_backward: STATELESS,
-                  scan_backward: STATEFUL },
-                  MFL_TEL => { pause: STATELESS },
-                  MFL_VOL_UP => { volume_up: STATELESS },
-                  MFL_VOL_DOWN => { volume_down: STATELESS },
-                  BMBT_VOL_UP => { volume_up: STATELESS },
-                  BMBT_VOL_DOWN => { volume_down: STATELESS }
-                }.freeze
-              end
-            end
-          end
+          BMBT_POWER => {
+            power: STATELESS
+          },
+          BMBT_NEXT => {
+            seek_forward: STATELESS,
+            scan_forward: STATEFUL
+          },
+          MFL_NEXT => {
+            seek_forward: STATELESS,
+            scan_forward: STATEFUL
+          },
+          BMBT_PREV => {
+            seek_backward: STATELESS,
+            scan_backward: STATEFUL
+          },
+          MFL_PREV => {
+            seek_backward: STATELESS,
+            scan_backward: STATEFUL
+          },
+          MFL_TEL => {
+            pause: STATELESS
+          },
+          MFL_VOL_UP => {
+            volume_up: STATELESS
+          },
+          MFL_VOL_DOWN => {
+            volume_down: STATELESS
+          },
+          BMBT_VOL_UP => {
+            volume_up: STATELESS
+          },
+          BMBT_VOL_DOWN => {
+            volume_down: STATELESS
+          }
+        }.freeze
+      end
+    end
+  end
 end

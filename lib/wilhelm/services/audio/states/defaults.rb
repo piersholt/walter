@@ -1,107 +1,20 @@
 # frozen_string_literal: false
 
+require_relative 'defaults/actions'
+require_relative 'defaults/notifications'
+
 module Wilhelm
   module Services
     class Audio
+      # Audio::Defaults
       module Defaults
-        # User Control
-
-        def volume_up(context)
-          false
-        end
-
-        def volume_down(context)
-          false
-        end
-
-        def overlay(context)
-          false
-        end
-
-        def power(context)
-          false
-        end
-
-        def next_track(context)
-          false
-        end
-
-        def prev(context)
-          false
-        end
-
-        def pause(context)
-          false
-        end
-
-        def seek_forward(context)
-          false
-        end
-
-        def seek_backward(context)
-          false
-        end
-
-        def scan_forward(context, toggle)
-          false
-        end
-
-        def scan_backward(context, toggle)
-          false
-        end
+        include Actions
+        include Notifications
 
         # API
-        def everyone(context, properties)
+        def everyone(*)
           false
         end
-
-        # PLAYER
-        def track_change(context, properties)
-          false
-        end
-
-        def track_start(context, properties)
-          false
-        end
-
-        def track_end(context, properties)
-          false
-        end
-
-        def position(context, properties)
-          false
-        end
-
-        def status(context, properties)
-          false
-        end
-
-        def repeat(context, properties)
-          false
-        end
-
-        def shuffle(context, properties)
-          false
-        end
-
-        # TARGET
-
-        def addressed_player(context, properties)
-          false
-        end
-
-        def player_added(context, properties)
-          false
-        end
-
-        def player_changed(context, properties)
-          false
-        end
-
-        def player_removed(context, properties)
-          false
-        end
-
       end
     end
   end
