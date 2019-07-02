@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     class Context
-      class Services
+      class ServicesContext
         # Wilhelm Service Establishing State
         class Establishing
           include Defaults

@@ -13,7 +13,7 @@ module Wilhelm
       alias environment services_context
 
       def initialize(core_context)
-        @services_context = Services.new
+        @services_context = ServicesContext.new
         setup_event_handling(core_context)
       end
 

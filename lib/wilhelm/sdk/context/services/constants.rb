@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     class Context
-      class Services
+      class ServicesContext
         # Context::Services::Constants
         module Constants
           include LogActually::ErrorOutput

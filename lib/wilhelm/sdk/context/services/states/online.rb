@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     class Context
-      class Services
+      class ServicesContext
         # Wilhelm Service Online State
         class Online
           include Defaults

@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     class Context
-      class Services
+      class ServicesContext
         class Notifications
           # Context::Services::Notifications::DebugHandler
           class DebugHandler

@@ -18,7 +18,7 @@ module Wilhelm
   module SDK
     class Context
       # Wilhelm Service
-      class Services
+      class ServicesContext
         include Logging
         include Constants
         include Observable
