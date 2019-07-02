@@ -91,18 +91,18 @@ module Wilhelm
           NIL = 0x00
 
           # TEL-DATA 0x31
-          # SOURCE_RECENT    = 0x00
-          # SOURCE_INFO      = 0x20
-          # SOURCE_DIAL      = 0x42
-          # SOURCE_DIRECTORY = 0x43
-          # SOURCE_TOP_8     = 0x80
+          SOURCE_RECENT    = 0x00
+          SOURCE_INFO      = 0x20
+          SOURCE_DIAL      = 0x42
+          SOURCE_DIRECTORY = 0x43
+          SOURCE_TOP_8     = 0x80
 
-          # FUNCTION_RECENT   = 0x00
-          # FUNCTION_CONTACT  = 0x01
-          # FUNCTION_DIAL     = 0x02
-          # FUNCTION_SOS      = 0x05
-          # FUNCTION_NAVIGATE = 0x07
-          # FUNCTION_INFO     = 0x08
+          FUNCTION_RECENT   = 0x00
+          FUNCTION_CONTACT  = 0x01
+          FUNCTION_DIAL     = 0x02
+          FUNCTION_SOS      = 0x05
+          FUNCTION_NAVIGATE = 0x07
+          FUNCTION_INFO     = 0x08
 
           # Function 0x00
           ACTION_RECENT_BACK    = 0x0C
