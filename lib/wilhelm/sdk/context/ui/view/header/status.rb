@@ -6,7 +6,7 @@ module Wilhelm
       module View
         module Header
           # Comment
-          class Status < DefaultHeader
+          class Status < BaseHeader
             def initialize(status_model)
               LOGGER.unknown(moi) { "#initialize(#{status_model})" }
               super(

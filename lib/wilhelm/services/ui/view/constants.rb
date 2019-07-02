@@ -16,7 +16,7 @@ module Wilhelm
 
         # Comment
         module Header
-          DEFAULT_HEADER  = Wilhelm::SDK::UserInterface::View::DefaultHeader
+          DEFAULT_HEADER  = Wilhelm::SDK::UserInterface::View::BaseHeader
         end
 
         # Comment
