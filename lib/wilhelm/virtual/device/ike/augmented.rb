@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'augmented/received'
+require_relative 'augmented/sent'
 require_relative 'augmented/state'
-require_relative 'augmented/transmitted'
 
 module Wilhelm
   module Virtual
