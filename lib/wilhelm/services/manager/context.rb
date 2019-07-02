@@ -5,7 +5,7 @@ module Wilhelm
     class Manager
       # Manager::Environment
       # Application Context State Change
-      module Environment
+      module Context
         include Logging
 
         def state_change(new_state)
@@ -23,7 +23,7 @@ module Wilhelm
               bluetooth: Wilhelm::Services::UserInterface::Controller::ManagerController
             )
           when Wilhelm::SDK::Context::Notifications
-            device_handler = Wilhelm::Services::Manager::Notifications::DeviceHandler.instance
+            device_handler = Notifications::DeviceHandler.instance
             device_handler.manager = self
             new_state.register_handlers(device_handler)
           end

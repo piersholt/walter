@@ -11,7 +11,7 @@ module Wilhelm
       include Notifications
       include Controls
       include Actions
-      include Environment
+      include Context
       include Messaging::API
 
       attr_reader :state

@@ -5,7 +5,7 @@ module Wilhelm
     class Audio
       # Audio::Environment
       # Application context state change handling
-      module Environment
+      module Context
         include Logging
 
         def state_change(new_state)
@@ -25,9 +25,9 @@ module Wilhelm
               )
           when Wilhelm::SDK::Context::Notifications
             target_handler =
-              Wilhelm::Services::Audio::Notifications::TargetHandler.instance
+              Notifications::TargetHandler.instance
             controller_handler =
-              Wilhelm::Services::Audio::Notifications::ControllerHandler.instance
+              Notifications::ControllerHandler.instance
             target_handler.audio = self
             controller_handler.audio = self
             new_state.register_handlers(target_handler, controller_handler)

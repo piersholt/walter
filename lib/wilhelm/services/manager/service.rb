@@ -12,7 +12,7 @@ module Wilhelm
       include Actions
       include Requests
       include Replies
-      include Environment
+      include Context
       include Messaging::API
 
       attr_reader :state
