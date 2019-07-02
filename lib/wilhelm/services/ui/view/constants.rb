@@ -20,7 +20,7 @@ module Wilhelm
         end
 
         # Comment
-        module Bluetooth
+        module Manager
           include Constants
 
           class Index < BASIC_MENU
@@ -45,6 +45,6 @@ module Wilhelm
           end
         end
       end
-  end
+    end
   end
 end

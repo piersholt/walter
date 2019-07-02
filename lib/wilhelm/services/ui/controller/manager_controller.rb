@@ -7,8 +7,8 @@ module Wilhelm
     class UserInterface
       module Controller
         # Comment
-        class BluetoothController < BASE_CONTROLLER
-          NAME = 'BluetoothController'
+        class ManagerController < BASE_CONTROLLER
+          NAME = 'ManagerController'
 
           def name
             NAME
@@ -20,14 +20,14 @@ module Wilhelm
 
           def index
             LOGGER.debug(NAME) { '#index' }
-            @view = View::Bluetooth::Index.new(@selected_devices)
+            @view = View::Manager::Index.new(@selected_devices)
             view.add_observer(self)
             render(view)
           end
 
           def device(selected_device = @selected_device)
             LOGGER.debug(NAME) { "#device(#{selected_device})" }
-            @view = View::Bluetooth::Device.new(selected_device)
+            @view = View::Manager::Device.new(selected_device)
             view.add_observer(self)
 
             render(view)

@@ -15,8 +15,8 @@ end
 
 require_relative 'view/header/audio'
 
-require_relative 'view/bluetooth/device'
-require_relative 'view/bluetooth/index'
+require_relative 'view/manager/device'
+require_relative 'view/manager/index'
 
 require_relative 'view/audio/now_playing'
 require_relative 'view/audio/index'

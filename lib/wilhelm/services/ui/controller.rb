@@ -13,5 +13,5 @@ module Wilhelm
   end
 end
 
-require_relative 'controller/bluetooth_controller'
+require_relative 'controller/manager_controller'
 require_relative 'controller/audio_controller'

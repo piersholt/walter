@@ -4,7 +4,7 @@ module Wilhelm
   module Services
     class UserInterface
       module View
-        module Bluetooth
+        module Manager
           # Comment
           class Device < BASIC_MENU
             include Constants
