@@ -4,6 +4,7 @@ module Wilhelm
   module Services
     class Manager
       class On
+        # Manager::On::Actions
         module Actions
           include Logging
 

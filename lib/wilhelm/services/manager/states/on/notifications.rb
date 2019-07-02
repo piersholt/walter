@@ -4,6 +4,7 @@ module Wilhelm
   module Services
     class Manager
       class On
+        # Manager::On::Notifications
         module Notifications
           include Logging
 

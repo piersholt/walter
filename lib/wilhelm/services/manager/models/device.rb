@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Device
       class Device
         include Constants
         include Observable

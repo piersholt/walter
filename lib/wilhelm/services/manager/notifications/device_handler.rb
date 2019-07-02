@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Services
     class Manager
       module Notifications
-        # Comment
+        # Manager::Notifications::DeviceHandler
         class DeviceHandler
           include Singleton
           include NotificationDelegate

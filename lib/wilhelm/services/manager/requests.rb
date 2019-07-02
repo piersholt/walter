@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Requests
       module Requests
         include Logging
 

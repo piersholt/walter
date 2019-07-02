@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::State
       module State
         include Logging
 

@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Replies
       module Replies
         include Logging
 

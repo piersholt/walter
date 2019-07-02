@@ -1,23 +1,15 @@
 # frozen_string_literal: false
 
+require_relative 'disabled/states'
+
 module Wilhelm
   module Services
     class Manager
+      # Manager::Disabled
       class Disabled
         include Logging
         include Defaults
-
-        def enable(context)
-          context.change_state(Enabled.new(context))
-        end
-
-        def disable(context)
-          context.change_state(Disabled.new)
-        end
-
-        def on(context)
-          context.change_state(On.new(context))
-        end
+        include States
       end
     end
   end

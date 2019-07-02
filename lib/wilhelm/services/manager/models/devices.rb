@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Devices
       class Devices
         include Constants
         extend Forwardable

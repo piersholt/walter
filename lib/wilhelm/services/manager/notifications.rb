@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Notifications
       module Notifications
         def device_connecting(properties)
           @state.device_connecting(self, properties)

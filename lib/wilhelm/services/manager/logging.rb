@@ -3,7 +3,7 @@
 module Wilhelm
   module Services
     class Manager
-      # Comment
+      # Manager::Logging
       module Logging
         include Constants
         include LogActually::ErrorOutput
