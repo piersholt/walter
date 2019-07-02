@@ -12,6 +12,8 @@ module Wilhelm
         class Augmented < Device::Augmented
           include State
           include Capabilities
+          include Sent
+          include Received
 
           PUBLISH = [ANZV_BOOL, ANZV_VAR].freeze
           SUBSCRIBE = [OBC_BOOL, OBC_VAR].freeze
