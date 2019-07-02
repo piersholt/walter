@@ -20,7 +20,6 @@ module Wilhelm
       # Wilhelm Service
       class ServicesContext
         include Logging
-        include Constants
         include Observable
         include Messaging::API
         include Controls

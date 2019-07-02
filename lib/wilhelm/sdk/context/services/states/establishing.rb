@@ -7,7 +7,7 @@ module Wilhelm
         # Wilhelm Service Establishing State
         class Establishing
           include Defaults
-          include Constants
+          include Logging
 
           def initialize(context)
             logger.debug(WILHELM_EST) { '#initialize' }

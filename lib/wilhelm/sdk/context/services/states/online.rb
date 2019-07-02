@@ -7,7 +7,7 @@ module Wilhelm
         # Wilhelm Service Online State
         class Online
           include Defaults
-          include Constants
+          include Logging
 
           def online!(___)
             logger.debug(WILHELM_ONLINE) { '#online' }
@@ -68,7 +68,7 @@ module Wilhelm
 
           def create_notifications(context)
             logger.debug(WILHELM_ONLINE) { '#create_notifications' }
-            notifications = Notifications.new(context)
+            notifications = Context::Notifications.new(context)
             context.changed
             context.notify_observers(notifications)
             # logger.debug(WILHELM_ONLINE) { '#notifications.start =>' }

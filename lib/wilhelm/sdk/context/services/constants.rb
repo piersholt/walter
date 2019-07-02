@@ -6,8 +6,6 @@ module Wilhelm
       class ServicesContext
         # Context::Services::Constants
         module Constants
-          include LogActually::ErrorOutput
-
           WILHELM = 'Wilhelm'
           WILHELM_OFFLINE = 'Wilhelm (Offline)'
           WILHELM_EST = 'Wilhelm (Est.)'

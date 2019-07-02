@@ -6,7 +6,7 @@ module Wilhelm
       class ServicesContext
         # Context::Services::Controls
         module Controls
-          include Constants
+          include Logging
           include Wilhelm::SDK::Controls::Register
 
           LOGGER_NAME = WILHELM

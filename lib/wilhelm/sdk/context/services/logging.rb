@@ -7,6 +7,7 @@ module Wilhelm
         # Context::Services::Logging
         module Logging
           include Constants
+          include LogActually::ErrorOutput
 
           # def self.included(mod)
           #   puts "#{mod} is including #{self.name}"

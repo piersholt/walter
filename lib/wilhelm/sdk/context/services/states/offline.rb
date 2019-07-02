@@ -7,7 +7,7 @@ module Wilhelm
         # Wilhelm Service Offline State
         class Offline
           include Defaults
-          include Constants
+          include Logging
 
           def online!(context)
             logger.debug(WILHELM_OFFLINE) { '#online' }
