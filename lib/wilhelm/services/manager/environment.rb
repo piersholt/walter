@@ -11,10 +11,10 @@ module Wilhelm
         def state_change(new_state)
           logger.debug(MANAGER) { "Environment => #{new_state.class}" }
           case new_state
-          when Wilhelm::SDK::Environment::Online
+          when Wilhelm::SDK::Context::ServicesContext::Online
             logger.info(MANAGER) { 'Enable Manager' }
             enable
-          when Wilhelm::SDK::Environment::Offline
+          when Wilhelm::SDK::Context::ServicesContext::Offline
             logger.info(MANAGER) { 'Disable Mananger' }
             disable
           when Wilhelm::SDK::UserInterface::Context
@@ -22,7 +22,7 @@ module Wilhelm
             .register_service_controllers(
               bluetooth: Wilhelm::Services::UserInterface::Controller::ManagerController
             )
-          when Wilhelm::SDK::Notifications
+          when Wilhelm::SDK::Context::Notifications
             device_handler = Wilhelm::Services::Manager::Notifications::DeviceHandler.instance
             device_handler.manager = self
             new_state.register_handlers(device_handler)

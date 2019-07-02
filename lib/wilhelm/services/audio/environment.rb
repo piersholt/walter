@@ -7,14 +7,14 @@ module Wilhelm
       # Application context state change handling
       module Environment
         include Logging
-        
+
         def state_change(new_state)
           logger.debug(AUDIO) { "Environment => #{new_state.class}" }
           case new_state
-          when Wilhelm::SDK::Environment::Online
+          when Wilhelm::SDK::Context::ServicesContext::Online
             logger.info(AUDIO) { 'Enable Audio' }
             enable
-          when Wilhelm::SDK::Environment::Offline
+          when Wilhelm::SDK::Context::ServicesContext::Offline
             logger.info(AUDIO) { 'Disable Audio' }
             disable
           when Wilhelm::SDK::UserInterface::Context
@@ -23,7 +23,7 @@ module Wilhelm
                 audio:
                   Wilhelm::Services::UserInterface::Controller::AudioController
               )
-          when Wilhelm::SDK::Notifications
+          when Wilhelm::SDK::Context::Notifications
             target_handler =
               Wilhelm::Services::Audio::Notifications::TargetHandler.instance
             controller_handler =
