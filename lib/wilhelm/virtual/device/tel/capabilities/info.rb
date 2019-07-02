@@ -35,25 +35,25 @@ module Wilhelm
 
             # 0x93: Call cost current
             # "     0"
-            def call_costs_current(current_cost = '11'.bytes)
+            def call_costs_current(current_cost = Random.rand(0..9).to_s.bytes)
               anzv_var(gfx: CALL_COST_CURRENT, chars: current_cost)
             end
 
             # 0x94: Call cost total
             # "      0"
-            def call_cost_total(total_cost = '22'.bytes)
+            def call_cost_total(total_cost = Random.rand(10..99).to_s.bytes)
               anzv_var(gfx: CALL_COST_TOTAL, chars: total_cost)
             end
 
             # 0x96: Call Time minutes
             # "  0" {1,3}
-            def call_time_minutes(minutes = '1'.bytes)
+            def call_time_minutes(minutes = Random.rand(0..59).to_s.bytes)
               anzv_var(gfx: CALL_TIME_MINUTES, chars: minutes)
             end
 
             # 0x97: Call time seconds
             # " 0" {2,2}
-            def call_time_seconds(seconds = '30'.bytes)
+            def call_time_seconds(seconds = Random.rand(0..59).to_s.bytes)
               anzv_var(gfx: CALL_TIME_SECONDS, chars: seconds)
             end
 
