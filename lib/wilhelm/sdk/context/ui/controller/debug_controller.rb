@@ -53,9 +53,9 @@ module Wilhelm
           def environment(action)
             LOGGER.debug(NAME) { "#environment(#{action})" }
             case action
-            when Environment::Online
+            when Context::ServicesContext::Online
               index
-            when Environment::Offline
+            when Context::ServicesContext::Offline
               index
             else
               LOGGER.debug(NAME) { "#update: #{action} not implemented." }

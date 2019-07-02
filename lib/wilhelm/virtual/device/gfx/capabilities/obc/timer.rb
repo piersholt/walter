@@ -28,7 +28,7 @@ module Wilhelm
 
               # Timer 0x1a [Lap]
               def lap!
-                obc_bool(field: FIELD_LAP_TIMER, control: CONTROL_RECALCULATE)
+                obc_bool(field: FIELD_LAP_TIMER, control: CONTROL_LAP)
               end
 
               # Timer 0x0e Request draw to OBC
