@@ -42,15 +42,15 @@ Given the increasing- if not complete obsolescence, of said systems, I decided t
 
 Walter relies upon a package `wilhelm`, which is broken into several libraries:
 
-**`wilhelm-core`** is akin to the first, and second layer of the OSI model. The lower of the two layers encapsulates IO operations for the bus, while higher of the two layers handles frame synchronisation, and error detection.
+**[`wilhelm-core`](lib/wilhelm/core)** is akin to the first, and second layer of the OSI model. The lower of the two layers encapsulates IO operations for the bus, while higher of the two layers handles frame synchronisation, and error detection.
 
-**`wilhelm-virtual`** is a model of the bus, and common devices. This allows for building device specific states, and APIs, and acts as a framework for implementing either emulated modules i.e. the radio when it has been removed, or augmented modules i.e. piggybacking the graphics stage.
+**[`wilhelm-virtual`](lib/wilhelm/virtual)** is a model of the bus, and common devices. This allows for building device specific states, and APIs, and acts as a framework for implementing either emulated modules i.e. the radio when it has been removed, or augmented modules i.e. piggybacking the graphics stage.
 
-**`wilhelm-api`** is a high level API with abstractions of vehicle features, i.e. audio, telephone, display. The API objects are designed to be pseudo-universal (i.e. communication, music, navigation), reflect common operations, e.g. `API::Telephone.incoming_call(caller_id)`, and remove the need to deal with the intricacies the bus.
+**[`wilhelm-api`](lib/wilhelm/api)** is a high level API with abstractions of vehicle features, i.e. audio, telephone, display. The API objects are designed to be pseudo-universal (i.e. communication, music, navigation), reflect common operations, e.g. `API::Telephone.incoming_call(caller_id)`, and remove the need to deal with the intricacies the bus.
 
-**`wilhelm-sdk`** is a small MVC framework, and runtime environment for services, and built on top of `wilhelm-api`. The runtime environment includes a messaging queue (via `wilhelm-tools`), for inter-process or network communication with supporting services.
+**[`wilhelm-sdk`](lib/wilhelm/sdk)** is a small MVC framework, and runtime environment for services, and built on top of `wilhelm-api`. The runtime environment includes a messaging queue (via `wilhelm-tools`), for inter-process or network communication with supporting services.
 
-**`wilhelm-services`** includes a simple Bluetooth device manager, and Bluetooth audio streaming, two examples of services built, and deployed using the `wilhelm-sdk` library. They act only as an abstraction for a Bluetooth car kit with Bluez doing the heavy lifting with a little help from [Wolfgang](https://www.github.com/piersholt/wolfgang), which encapsulates the [Bluez D-BUS API](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc), and implements a virtual car kit
+**[`wilhelm-services`](lib/wilhelm/services)** includes a simple Bluetooth device manager, and Bluetooth audio streaming, two examples of services built, and deployed using the `wilhelm-sdk` library. They act only as an abstraction for a Bluetooth car kit with Bluez doing the heavy lifting with a little help from [Wolfgang](https://www.github.com/piersholt/wolfgang), which encapsulates the [Bluez D-BUS API](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc), and implements a virtual car kit
 
 
 ## License
