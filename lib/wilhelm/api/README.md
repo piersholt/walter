@@ -7,26 +7,19 @@
 
 ### API Objects
 
-#### Audio
+Object|Status
+:---|:---
+[`Audio`](lib/wilhelm/api/audio/)|🔧
+[`Controls`](lib/wilhelm/api/controls/)|✅
+[`Display`](lib/wilhelm/api/display/)|✅
+[`Telephone`](lib/wilhelm/api/telephone/)|🔧
+On-board Computer|🎯
+Settings|🎯
+Auxiliary Heating/Ventilation|🎯
 
-    #on
-
-#### Controls
-
-    #register_control_listener(observer, control_id, strategy = Control::Stateless, function = :control_update)
-
-#### Display
-
-#### Telephone
-
-    #connect()
-
-    #connecting()
-
-    #connected()
-
-    #disconnect()
-
-    #disconnecting()
-
-    #disconnected()
+#### Legend
+Icon|Description
+:---|:---
+✅ | Foundational component and reasonably stable.
+🔧 | In progress...
+🎯 | Will be developed in time.
