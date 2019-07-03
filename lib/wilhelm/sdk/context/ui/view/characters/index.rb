@@ -5,8 +5,11 @@ module Wilhelm
     class UserInterface
       module View
         module Characters
-          # Comment
+          # Characters::Index
           class Index < BasicMenu
+            BACK_ICON = 171.chr
+            FORWARD_ICON = 187.chr
+
             def initialize(characters_model)
               @characters = parse_model(characters_model)
             end
@@ -18,14 +21,12 @@ module Wilhelm
             private
 
             def navigation_previous
-              navigation(index: 8, label: 171.chr, action: :page_previous)
+              navigation(index: 8, label: BACK_ICON, action: :page_previous)
             end
 
             def navigation_next
-              navigation(index: 9,
-                label: 187.chr,
-                action: :page_next)
-              end
+              navigation(index: 9, label: FORWARD_ICON, action: :page_next)
+            end
 
               def parse_model(characters_model)
                 characters_model.page.map.with_index do |character, index|

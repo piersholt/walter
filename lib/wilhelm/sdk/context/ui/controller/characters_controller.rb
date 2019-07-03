@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     class UserInterface
       module Controller
-        # Comment
+        # CharactersController
         class CharactersController < BaseController
           NAME = 'CharactersController'
 
