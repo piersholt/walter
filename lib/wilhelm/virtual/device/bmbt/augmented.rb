@@ -9,6 +9,7 @@ module Wilhelm
         class Augmented < Device::Augmented
           include Capabilities
           include Sent
+          include Received
 
           PUBLISH = [BMBT_A, BMBT_B, MFL_VOL].freeze
           SUBSCRIBE = [RAD_LED].freeze
@@ -56,33 +57,6 @@ module Wilhelm
             when RAD_LED
               handle_rad_led(message.command)
             end
-          end
-
-          def handle_rad_led(command)
-            case command.led?
-            when :on
-              on!
-            when :radio
-              on!
-            when :tape
-              on!
-            when :reset
-              off!
-            when :off
-              off!
-            end
-          end
-
-          def on!
-            @power = true
-          end
-
-          def off!
-            @power = false
-          end
-
-          def power?
-            @power ||= false
           end
         end
       end

@@ -6,4 +6,5 @@ require_relative 'bmbt/api'
 require_relative 'bmbt/capabilities'
 
 require_relative 'bmbt/augmented/sent'
+require_relative 'bmbt/augmented/received'
 require_relative 'bmbt/augmented'
