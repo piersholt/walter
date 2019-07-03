@@ -5,9 +5,11 @@ module Wilhelm
     class Device
       module GFX
         class Augmented < Device::Augmented
-          # Radio related command constants
           module State
+            # Radio related command constants
             module Constants
+              include Virtual::Constants::Events::Display
+
               UNKNOWN = :unknown
               ON = :on
               OFF = :off

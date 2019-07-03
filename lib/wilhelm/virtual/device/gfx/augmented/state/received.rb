@@ -108,7 +108,7 @@ module Wilhelm
                 return unless layout
 
                 changed
-                notify_observers(:header_write, layout: layout, index: 0, chars: command.chars.value)
+                notify_observers(HEADER_WRITE, layout: layout, index: 0, chars: command.chars.value)
               end
 
               def handle_draw_a5(command)
@@ -116,16 +116,16 @@ module Wilhelm
                 zone = command.zone.parameters[:zone].value
                 case layout
                 when MENU_BASIC
-                  event = zone.zero? ? :menu_write : :menu_cache
+                  event = zone.zero? ? MENU_WRITE : MENU_CACHE
                   layout = :basic
                 when MENU_TITLED
-                  event = zone.zero? ? :menu_write : :menu_cache
+                  event = zone.zero? ? MENU_WRITE : MENU_CACHE
                   layout = :titled
                 when HEADER_DIGITAL
-                  event = zone.zero? ? :header_write : :header_cache
+                  event = zone.zero? ? HEADER_WRITE : HEADER_CACHE
                   layout = :digital
                 when MENU_STATIC
-                  event = zone.zero? ? :menu_write : :menu_cache
+                  event = zone.zero? ? MENU_WRITE : MENU_CACHE
                   layout = :static
                 else
                   LOGGER.warn('AugmentedGFX') { 'No 0xA5 write event...?' }
@@ -143,16 +143,16 @@ module Wilhelm
                 zone = command.m3.parameters[:index].value
                 case layout
                 when MENU_BASIC
-                  event = :menu_cache
+                  event = MENU_CACHE
                   layout = :basic
                 when MENU_TITLED
-                  event = :menu_cache
+                  event = MENU_CACHE
                   layout = :titled
                 when HEADER_DIGITAL
-                  event = :header_cache
+                  event = HEADER_CACHE
                   layout = :digital
                 when MENU_STATIC
-                  event = :menu_cache
+                  event = MENU_CACHE
                   layout = :static
                 else
                   LOGGER.warn('AugmentedGFX') { 'No 0x21 write event...?' }

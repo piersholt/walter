@@ -14,15 +14,15 @@ module Wilhelm
 
           # CACHE
           case event
-          when :header_cache
+          when HEADER_CACHE
             header_cache(properties)
-          when :header_write
+          when HEADER_WRITE
             header_write(properties)
             overwritten_header!
-          when :menu_cache
+          when MENU_CACHE
             # menu_cache(properties)
             false
-          when :menu_write
+          when MENU_WRITE
             # menu_write(properties)
             false
           end
@@ -54,7 +54,7 @@ module Wilhelm
           when DATA_SELECT
             logger.debug(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
             data_select(properties)
-          when :button
+          when BMBT_BUTTON
             handle_button(properties)
           end
         end
