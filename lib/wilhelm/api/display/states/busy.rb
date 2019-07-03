@@ -17,7 +17,8 @@ module Wilhelm
         end
 
         def input_menu(context)
-          LOGGER.info(DISPLAY_BUSY) { "#input_menu" }
+          LOGGER.debug(DISPLAY_BUSY) { "#input_menu" }
+          LOGGER.info(DISPLAY_BUSY) { '[MENU] pressed. Setting Display to Enabled.'  }
           context.change_state(Enabled.new)
         end
       end

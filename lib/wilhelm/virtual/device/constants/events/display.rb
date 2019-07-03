@@ -47,6 +47,18 @@ module Wilhelm
           include State
           include Input
           include Cache
+
+          def cache?(event)
+            Cache.constants.include?(event)
+          end
+
+          def state?(event)
+            State.constants.include?(event)
+          end
+
+          def input?(event)
+            Input.constants.include?(event)
+          end
         end
       end
     end

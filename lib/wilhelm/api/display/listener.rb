@@ -10,9 +10,15 @@ module Wilhelm
         NAME = 'Display Listener'
 
         def update(event, properties = {})
-          # logger.debug(NAME) { "#update(#{event})" }
+          return update_cache(event, properties) if cache?(event)
+          return update_state(event, properties) if state?(event)
+          return update_input(event, properties) if input?(event)
+        end
 
-          # CACHE
+        private
+
+        # CACHE
+        def update_cache(event, properties = {})
           case event
           when HEADER_CACHE
             header_cache(properties)
@@ -26,8 +32,10 @@ module Wilhelm
             # menu_write(properties)
             false
           end
+        end
 
-          # STATE
+        # STATE
+        def update_state(event, properties = {})
           case event
           when GFX_MONITOR_ON
             logger.debug(NAME) { "#update(#{GFX_MONITOR_ON})" }
@@ -36,7 +44,7 @@ module Wilhelm
             logger.debug(NAME) { "#update(#{GFX_MONITOR_OFF})" }
             monitor_off
           when GFX_PING
-            LOGGER.debug(NAME) { "#update(#{GFX_PING})" }
+            logger.debug(NAME) { "#update(#{GFX_PING})" }
             ping
           when GFX_ANNOUNCE
             logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
@@ -48,8 +56,10 @@ module Wilhelm
             logger.debug(NAME) { "#update(#{RADIO_BODY_CLEARED})" }
             overwritten!
           end
+        end
 
-          # INPUT
+        # INPUT
+        def update_input(event, properties = {})
           case event
           when DATA_SELECT
             logger.debug(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
