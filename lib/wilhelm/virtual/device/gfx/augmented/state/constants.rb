@@ -78,27 +78,6 @@ module Wilhelm
               AVG_SPEED = 0x0a
               STOPWATCH = 0x0e
               OBC_PARAMS = [OUTSIDE_TEMP, ECON_1, ECON_2, RANGE, SPEED_LIMIT, AVG_SPEED, STOPWATCH]
-
-
-
-              # MODEL ------------------------------------------------
-
-              # DATA_MODEL = {
-              #   source: [:gfx, :tv],
-              #   monitor: [:on, :off],
-              #   radio_display: {
-              #     header: [
-              #       :service, :weather, :radio, :digital, :tape, :traffic, :cdc, :unknown
-              #     ],
-              #     body: {
-              #       off: true,
-              #       obc: true,
-              #       menu: [:simple, :advanced],
-              #       eq: [:show, :hide],
-              #       select: [:show, :hide]
-              #     }
-              #   }
-              # }.freeze
             end
           end
         end

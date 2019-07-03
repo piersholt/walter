@@ -22,7 +22,6 @@ begin
   require 'ostruct'
   require 'matrix'
 
-  # Setup load path for application (makes you realise RubyGems spoils you...)
   def setup_path(dir)
     load_path = File.expand_path(File.dirname(__FILE__) + "/../#{dir}")
     $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
