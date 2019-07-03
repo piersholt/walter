@@ -5,19 +5,25 @@ module Wilhelm
     class Device
       module BMBT
         class Augmented < Device::Augmented
-          # Comment
+          # BMBT::Augmented::Sent
           module Sent
             include Wilhelm::Virtual::Constants::Buttons::BMBT
 
             # 0x48
-            def handle_bmbt_1_button(command)
+            def evaluate_bmbt_1_button(command)
               logger.debug(moi) { "BMBT 1 -> #{command.pretty}" }
               return false if command.is?(BMBT_MENU) && (command.press? || command.hold?)
               notify_of_button(command)
             end
 
+            # 0x49
+            def evaluate_bmbt_2_button(command)
+              logger.debug(moi) { "BMBT B -> #{command.pretty}" }
+              notify_of_button(command)
+            end
+
             # 0x32
-            def handle_mfl_vol_button(command)
+            def evaluate_mfl_vol_button(command)
               logger.debug(moi) { "MFL VOL -> #{command.pretty}" }
               notify_of_button(command)
             end

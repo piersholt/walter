@@ -10,7 +10,7 @@ module Wilhelm
           include Capabilities
           include Sent
 
-          PUBLISH = [BMBT_A, BMBT_B, BMBT_I, MFL_VOL].freeze
+          PUBLISH = [BMBT_A, BMBT_B, MFL_VOL].freeze
           SUBSCRIBE = [RAD_LED].freeze
 
           PROC = 'AugmentedBMBT'
@@ -38,14 +38,13 @@ module Wilhelm
             case command_id
             when BMBT_A
               logger.debug(moi) { "Tx: BMBT A (#{DataTools.d2h(BMBT_A)})" }
-              handle_bmbt_1_button(message.command)
+              evaluate_bmbt_1_button(message.command)
             when BMBT_B
-              # nothing
-            when BMBT_I
-              # nothing
+              logger.debug(moi) { "Tx: BMBT A (#{DataTools.d2h(BMBT_B)})" }
+              evaluate_bmbt_2_button(message.command)
             when MFL_VOL
               logger.debug(moi) { "Tx: MFL_VOL (#{DataTools.d2h(MFL_VOL)})" }
-              handle_mfl_vol_button(message.command)
+              evaluate_mfl_vol_button(message.command)
             end
           end
 

@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module GFX
-        # Comment
+        # GFX::Augmented
         class Augmented < Device::Augmented
           include Capabilities
           include State
@@ -21,9 +21,8 @@ module Wilhelm
 
           SUBSCRIBE = [
             PING, PONG,
-            TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV,
-            RAD_ALT, MENU_RAD,
-            BMBT_A, BMBT_B
+            TXT_MID, TXT_GFX, TXT_NAV,
+            RAD_ALT, MENU_RAD
           ].freeze
 
           PROC = 'AugmentedGFX'
@@ -100,12 +99,6 @@ module Wilhelm
               logger.debug(moi) { "Rx: TXT_MID 0x#{DataTools.d2h(TXT_MID)}" }
               return false unless message.from == :rad
               handle_draw_21(message.command)
-            when BMBT_A
-              logger.debug(moi) { "Rx: BMBT_A 0x#{DataTools.d2h(BMBT_A)}" }
-              handle_bmbt_1_button(message.command)
-            when BMBT_B
-              logger.debug(moi) { "Rx: BMBT_B 0x#{DataTools.d2h(BMBT_B)}" }
-              handle_bmbt_2_button(message.command)
             end
           end
         end

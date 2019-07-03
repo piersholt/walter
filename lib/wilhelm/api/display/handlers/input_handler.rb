@@ -15,9 +15,12 @@ module Wilhelm
           when BMBT_MENU
             logger.debug(NAME) { "#handle_button(#{BMBT_MENU})" }
             input_menu
-            # when BMBT_AUX_HEAT
-            #   logger.debug(NAME) { "#handle_button(#{BMBT_AUX_HEAT})" }
-            #   input_aux_heat
+          when BMBT_LEFT
+            logger.debug(NAME) { "#handle_button(#{BMBT_LEFT}" }
+            input_left
+          when BMBT_RIGHT
+            logger.debug(NAME) { "#handle_button(#{BMBT_RIGHT}" }
+            input_right
           when BMBT_CONFIRM
             logger.debug(NAME) { "#handle_button(#{BMBT_CONFIRM}" }
             input_confirm(state: state)
@@ -26,33 +29,21 @@ module Wilhelm
 
         private
 
-        def input_confirm(properties)
-          user_input(:input_confirm, properties)
-        end
-
-        def input_next(properties)
-          user_input(:input_next, properties)
-        end
-
-        def input_prev(properties)
-          user_input(:input_prev, properties)
-        end
-
         def data_select(properties)
           user_input(:data_select, properties)
         end
 
-        def input_left(value)
-          # user_input(:input_left, value)
+        def input_left(value = 1)
+          user_input(:input_left, value)
         end
 
-        def input_right(value)
-          # user_input(:input_right, value)
+        def input_right(value = 1)
+          user_input(:input_right, value)
         end
 
-        # def input_overlay(value)
-        #   user_input(:input_overlay, properties)
-        # end
+        def input_confirm(properties)
+          user_input(:input_confirm, properties)
+        end
       end
     end
   end

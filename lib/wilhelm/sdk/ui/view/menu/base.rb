@@ -54,15 +54,15 @@ module Wilhelm
             # INPUT EVENTS ------------------------------------------------------
 
             # input: denotes button (not data) event
-            def input_confirm(state: nil)
+            def input_confirm(*)
               false
             end
 
-            def input_next(state: nil)
+            def input_left(*)
               false
             end
 
-            def input_prev(state: nil)
+            def input_right(*)
               false
             end
 
