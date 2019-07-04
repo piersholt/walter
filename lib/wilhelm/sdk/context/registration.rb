@@ -7,14 +7,18 @@ module Wilhelm
         # Context::Services::Context::Registration
         module Registration
           include Logging
+          include Helpers::Name
+
+          SERVICES_UPDATE_METHOD = :context_change
 
           def services
             @services ||= []
           end
 
           def register_service(service_name, service_object)
-            add_observer(service_object, :state_change)
-            service_object.services_context = self
+            # NOTE I'm not sure about this as yet...
+            service_object.context = self
+            add_observer(service_object, SERVICES_UPDATE_METHOD)
             instance_variable_set(inst_var(service_name), service_object)
             services << service_object
             self.class.class_eval do
@@ -26,11 +30,6 @@ module Wilhelm
 
           def semaphore
             @semaphore ||= Mutex.new
-          end
-
-          def inst_var(name)
-            name_string = name.id2name
-            ('@' + name_string).to_sym
           end
         end
       end

@@ -8,28 +8,31 @@ module Wilhelm
       module Context
         include Logging
 
-        def state_change(new_state)
-          logger.debug(AUDIO) { "Environment => #{new_state.class}" }
-          case new_state
-          when Wilhelm::SDK::Context::ServicesContext::Online
-            logger.info(AUDIO) { 'Enable Audio' }
+        attr_accessor :context
+
+        def context_change(context)
+          logger.debug(AUDIO) { "SDK::Context => #{context.class}" }
+          case context
+          when SDK::Context::ServicesContext::Online
+            logger.info(AUDIO) { 'Context Online => Enable Audio.' }
             enable
-          when Wilhelm::SDK::Context::ServicesContext::Offline
-            logger.info(AUDIO) { 'Disable Audio' }
+          when SDK::Context::ServicesContext::Offline
+            logger.info(AUDIO) { 'Context Offline => Disable Audio' }
             disable
-          when Wilhelm::SDK::UserInterface::Context
-            new_state
-              .register_service_controllers(
-                audio: UserInterface::Controller::AudioController
-              )
-          when Wilhelm::SDK::Context::Notifications
+          when SDK::Context::UserInterface
+            logger.info(AUDIO) { 'Context UI => Register Audio Controllers' }
+            context.register_service_controllers(
+              audio: UserInterface::Controller::AudioController
+            )
+          when SDK::Context::Notifications
+            logger.info(AUDIO) { 'Context Notifications => Register Notification Handlers' }
             target_handler =
               Notifications::TargetHandler.instance
             controller_handler =
               Notifications::ControllerHandler.instance
             target_handler.audio = self
             controller_handler.audio = self
-            new_state.register_handlers(target_handler, controller_handler)
+            context.register_handlers(target_handler, controller_handler)
           end
         end
       end

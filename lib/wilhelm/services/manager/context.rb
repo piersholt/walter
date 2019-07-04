@@ -8,24 +8,27 @@ module Wilhelm
       module Context
         include Logging
 
-        def state_change(new_state)
-          logger.debug(MANAGER) { "Environment => #{new_state.class}" }
-          case new_state
-          when Wilhelm::SDK::Context::ServicesContext::Online
-            logger.info(MANAGER) { 'Enable Manager' }
+        attr_accessor :context
+
+        def context_change(context)
+          logger.debug(MANAGER) { "SDK::Context => #{context.class}" }
+          case context
+          when SDK::Context::ServicesContext::Online
+            logger.info(MANAGER) { 'Context Online => Enable Manager.' }
             enable
-          when Wilhelm::SDK::Context::ServicesContext::Offline
-            logger.info(MANAGER) { 'Disable Mananger' }
+          when SDK::Context::ServicesContext::Offline
+            logger.info(MANAGER) { 'Context Offline => Disable Manager' }
             disable
-          when Wilhelm::SDK::UserInterface::Context
-            new_state
-            .register_service_controllers(
+          when SDK::Context::UserInterface
+            logger.info(MANAGER) { 'Context UI => Register Controllers' }
+            context.register_service_controllers(
               manager: UserInterface::Controller::ManagerController
             )
-          when Wilhelm::SDK::Context::Notifications
+          when SDK::Context::Notifications
+            logger.info(MANAGER) { 'Context Notifications => Register Notification Handlers' }
             device_handler = Notifications::DeviceHandler.instance
             device_handler.manager = self
-            new_state.register_handlers(device_handler)
+            context.register_handlers(device_handler)
           end
         end
       end
