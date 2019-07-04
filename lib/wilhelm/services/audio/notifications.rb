@@ -25,12 +25,6 @@ module Wilhelm
 
         # NOTIFICATIONS (PLAYER) -------------------------------------------------
 
-        # @deprecated
-        def everyone(properties)
-          logger.warn(AUDIO) { '#everyone is deprecated!' }
-          @state.everyone(self, properties)
-        end
-
         def track_change(properties)
           @state.track_change(self, properties)
         end

@@ -10,13 +10,6 @@ module Wilhelm
 
           # PLAYER
 
-          def everyone(context, properties)
-            logger.warn(AUDIO_ON) { '#everyone is deprecated!' }
-            logger.info(AUDIO_ON) { ":everyone => #{properties}" }
-            player_object = Player.new(properties)
-            context.player.everyone!(player_object)
-          end
-
           def track_change(context, properties)
             logger.info(AUDIO_ON) { ":track_change => #{properties}" }
             player_object = Player.new(properties)

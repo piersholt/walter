@@ -7,6 +7,8 @@ module Wilhelm
       module State
         include Logging
 
+        attr_reader :state
+
         def change_state(new_state)
           logger.debug(MANAGER) { "State => #{new_state.class}" }
           @state = new_state

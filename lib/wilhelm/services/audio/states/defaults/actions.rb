@@ -50,6 +50,8 @@ module Wilhelm
             false
           end
 
+          # UI
+
           def load_audio(*)
             false
           end

@@ -10,11 +10,6 @@ module Wilhelm
       module Defaults
         include Actions
         include Notifications
-
-        # API
-        def everyone(*)
-          false
-        end
       end
     end
   end

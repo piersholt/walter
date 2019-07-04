@@ -16,8 +16,6 @@ module Wilhelm
       include Context
       include Messaging::API
 
-      attr_reader :state
-
       def initialize
         @state = Disabled.new
       end
