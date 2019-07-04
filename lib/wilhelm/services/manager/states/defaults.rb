@@ -1,59 +1,17 @@
 # frozen_string_literal: false
 
+require_relative 'defaults/actions'
+require_relative 'defaults/notifications'
+require_relative 'defaults/states'
+
 module Wilhelm
   module Services
     class Manager
-      # Unimplemented methods fallback for states
+      # Manager::Defaults
       module Defaults
-        include Logging
-
-        # STATES --------------------------------------------------
-
-        def disable(*)
-          false
-        end
-
-        def enable(*)
-          false
-        end
-
-        def on(*)
-          false
-        end
-
-        # Commands
-
-        def connect_device(*)
-          false
-        end
-
-        def disconnect_device(*)
-          false
-        end
-
-        def load_manager(*); end
-
-        # Notifications ------------------------------------------------
-
-        def device_connected(*)
-          false
-        end
-
-        def device_disconnected(*)
-          false
-        end
-
-        def device_connecting(*)
-          false
-        end
-
-        def device_disconnecting(*)
-          false
-        end
-
-        def new_device(*)
-          false
-        end
+        include States
+        include Actions
+        include Notifications
       end
     end
   end

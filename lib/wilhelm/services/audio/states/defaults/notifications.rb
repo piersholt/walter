@@ -7,51 +7,29 @@ module Wilhelm
         # Audio::Defaults::Notifications
         module Notifications
           # PLAYER
-          def track_change(*)
-            false
-          end
+          def track_change(*); end
 
-          def track_start(*)
-            false
-          end
+          def track_start(*); end
 
-          def track_end(*)
-            false
-          end
+          def track_end(*); end
 
-          def position(*)
-            false
-          end
+          def position(*); end
 
-          def status(*)
-            false
-          end
+          def status(*); end
 
-          def repeat(*)
-            false
-          end
+          def repeat(*); end
 
-          def shuffle(*)
-            false
-          end
+          def shuffle(*); end
 
           # TARGET
 
-          def addressed_player(*)
-            false
-          end
+          def addressed_player(*); end
 
-          def player_added(*)
-            false
-          end
+          def player_added(*); end
 
-          def player_changed(*)
-            false
-          end
+          def player_changed(*); end
 
-          def player_removed(*)
-            false
-          end
+          def player_removed(*); end
         end
       end
     end
