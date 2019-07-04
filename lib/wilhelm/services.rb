@@ -20,8 +20,4 @@ puts require_relative('services/audio') ? 'Success' : Error
 print "\tLoading wilhelm/services/manager => "
 puts require_relative('services/manager') ? 'Success' : Error
 
-# UI
-puts "\tLoading wilhelm/services/ui"
-require_relative 'services/ui'
-
 puts "\tDone!"

@@ -2,11 +2,11 @@
 
 module Wilhelm
   module Services
-    class UserInterface
-      module View
-        # Comment
-        module Audio
-          class Index < TITLED_MENU
+    class Audio
+      class UserInterface
+        module View
+          # Audio::UserInterface::View::Index
+          class Index < Wilhelm::SDK::UserInterface::View::TitledMenu
             NO_THINGS = [].freeze
             NO_OPTIONS = [].freeze
 
@@ -36,16 +36,20 @@ module Wilhelm
 
             def titles(addressed_player)
               player_name = addressed_player.name
-              [BASE_MENU_ITEM.new(label: 'Audio'),
-               BASE_MENU_ITEM.new(label: player_name)]
+              [
+                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: 'Audio'),
+                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: player_name)
+              ]
             end
 
             private
 
             def navigation_item
-              navigation(index: NAVIGATION_INDEX,
-                         label: 'Services Menu',
-                         action: :main_menu_index)
+              navigation(
+                index: NAVIGATION_INDEX,
+                label: 'Services Menu',
+                action: :main_menu_index
+              )
             end
 
             def indexed_things(things)
@@ -54,7 +58,7 @@ module Wilhelm
 
               things.first(COLUMN_ONE_MAX).map.with_index do |thing, index|
                 indexed_thing =
-                  BASE_MENU_ITEM.new(label: thing[:name], action: thing[:action])
+                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: thing[:name], action: thing[:action])
                 [index, indexed_thing]
               end
             end
@@ -65,7 +69,7 @@ module Wilhelm
 
               options.first(COLUMN_TWO_MAX).map.with_index do |thing, index|
                 indexed_thing =
-                  BASE_MENU_ITEM.new(label: thing[:name], action: thing[:action])
+                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: thing[:name], action: thing[:action])
                 [index + COLUMN_TWO_OFFSET, indexed_thing]
               end
             end

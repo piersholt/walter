@@ -23,3 +23,5 @@ require_relative 'audio/actions'
 require_relative 'audio/controls'
 require_relative 'audio/context'
 require_relative 'audio/service'
+
+require_relative 'audio/ui'

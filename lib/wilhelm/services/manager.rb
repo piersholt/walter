@@ -23,3 +23,5 @@ require_relative 'manager/requests'
 require_relative 'manager/replies'
 require_relative 'manager/context'
 require_relative 'manager/service'
+
+require_relative 'manager/ui'
