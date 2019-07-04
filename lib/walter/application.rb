@@ -20,8 +20,8 @@ module Walter
       @core = Wilhelm::Core::Context.new(self, file)
       @virtual = Wilhelm::Virtual::Context.new(self, @core)
       @api = Wilhelm::API::Context.new(virtual.bus)
-      @sdk = Wilhelm::SDK::Context.new(@core)
-      setup_services(@sdk.environment)
+      @sdk = Wilhelm::SDK.context(@core)
+      setup_services(@sdk)
 
       apply_debug_defaults
 

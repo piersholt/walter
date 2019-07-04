@@ -81,7 +81,7 @@ module Wilhelm
 
           def create_ui(context)
             LOGGER.debug(WILHELM) { "#create_ui (#{Thread.current})" }
-            ui_context = Wilhelm::SDK::UserInterface::Context.new(context)
+            ui_context = UserInterface.new(context)
             register_service_controllers(ui_context)
             context.changed
             context.notify_observers(ui_context)
@@ -95,10 +95,10 @@ module Wilhelm
               "#register_service_controllers (#{Thread.current})"
             end
             ui_context.register_service_controllers(
-              header:  Wilhelm::SDK::UserInterface::Controller::HeaderController,
-              debug:  Wilhelm::SDK::UserInterface::Controller::DebugController,
-              services:  Wilhelm::SDK::UserInterface::Controller::ServicesController,
-              characters:  Wilhelm::SDK::UserInterface::Controller::CharactersController
+              header:  UserInterface::Controller::HeaderController,
+              debug:  UserInterface::Controller::DebugController,
+              services:  UserInterface::Controller::ServicesController,
+              characters:  UserInterface::Controller::CharactersController
             )
           rescue StandardError => e
             with_backtrace(logger, e)

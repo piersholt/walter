@@ -3,16 +3,15 @@
 # Top level namespace
 module Wilhelm
   module SDK
-    # Default Wilhelm logger
-    class UserInterface
-      module Constants
-        include LogActually::ErrorOutput
+    class Context
+      # Default Wilhelm logger
+      class UserInterface
+        module Constants
+          include LogActually::ErrorOutput
 
-        # AUDIO_INDEX = 'Audio INDEX'
-        # AUDIO_NP = 'Audio NP'
-
-        def logger
-          LOGGER
+          def logger
+            LOGGER
+          end
         end
       end
     end

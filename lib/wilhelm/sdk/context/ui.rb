@@ -7,8 +7,8 @@ require_relative 'ui/controller'
 
 module Wilhelm
   module SDK
-    class UserInterface
-      class Context
+    class Context
+      class UserInterface
         attr_accessor :application_context, :header, :service
         attr_reader :renderer
         alias context application_context

@@ -2,36 +2,33 @@
 
 module Wilhelm
   module SDK
-    class UserInterface
-      module View
-        module Header
-          # Comment
-          class Status < BaseHeader
-            def initialize(status_model)
-              LOGGER.unknown(moi) { "#initialize(#{status_model})" }
-              super(
-                ['A',
-                  'B',
-                  'C',
-                  'D',
-                  'E',
-                  status_model.field(5),
-                  status_model.field(6)],
-                  'Wilhelm')
-                rescue StandardError => e
-                  LOGGER.error(self.class.name) { e }
-                  e.backtrace.each { |line| LOGGER.error(self.class.name) { line } }
-                  LOGGER.error(self.class.name) { 'binding.pry start' }
-                  binding.pry
-                  LOGGER.error(self.class.name) { 'binding.pry end' }
-                end
+    class Context
+      class UserInterface
+        module View
+          module Header
+            # Context::UserInterface::View::Header::Status
+            class Status < UIKit::View::BaseHeader
+              def initialize(status_model)
+                LOGGER.unknown(moi) { "#initialize(#{status_model})" }
+                super(
+                  ['A', 'B', 'C', 'D', 'E', status_model.field(5), status_model.field(6)],
+                  'Wilhelm'
+                )
+              rescue StandardError => e
+                LOGGER.error(self.class.name) { e }
+                e.backtrace.each { |line| LOGGER.error(self.class.name) { line } }
+                LOGGER.error(self.class.name) { 'binding.pry start' }
+                binding.pry
+                LOGGER.error(self.class.name) { 'binding.pry end' }
+              end
 
-                def moi
-                  'Header Status'
-                end
+              def moi
+                'Header Status'
               end
             end
           end
         end
       end
+    end
+  end
 end
