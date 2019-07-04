@@ -11,6 +11,7 @@ module Wilhelm
             # Chianable state commands
             module Chainable
               include Constants
+              include Virtual::Constants::Buttons::BMBT
               include Observable
 
               def log_state(delta, level = :debug)
@@ -31,7 +32,7 @@ module Wilhelm
                 state!(delta)
                 log_state(delta)
                 changed
-                notify_observers(MFL_MODE_RAD, state: state)
+                notify_observers(MFL_RT_RAD, state: state)
                 self
               end
 
@@ -40,7 +41,7 @@ module Wilhelm
                 state!(delta)
                 log_state(delta)
                 changed
-                notify_observers(MFL_MODE_TEL, state: state)
+                notify_observers(MFL_RT_TEL, state: state)
                 self
               end
             end

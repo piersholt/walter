@@ -5,13 +5,11 @@ module Wilhelm
     class Device
       module MFL
         class Augmented < Device::Augmented
-          # Comment
+          # MFL::Augmented::State
           module State
-            include Constants
             include Model
             include Chainable
             include Sent
-            # include Received
           end
         end
       end

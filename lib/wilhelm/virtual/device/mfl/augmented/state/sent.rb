@@ -8,6 +8,8 @@ module Wilhelm
           module State
             # MFL::Augmented::State::Sent
             module Sent
+              include Virtual::Constants::Events::MFL
+
               # 0x3B
               def handle_mfl_func_button(command)
                 logger.debug(moi) { "MFL_FUNC -> #{command.pretty}" }
@@ -25,7 +27,7 @@ module Wilhelm
 
               def notify_of_button(command)
                 changed
-                notify_observers(Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON, button: command.button, state: command.state, source: :mfl)
+                notify_observers(MFL_BUTTON, button: command.button, state: command.state, source: :mfl)
               end
             end
           end

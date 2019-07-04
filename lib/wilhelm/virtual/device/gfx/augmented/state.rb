@@ -5,9 +5,8 @@ module Wilhelm
     class Device
       module GFX
         class Augmented < Device::Augmented
-          # Comment
+          # GFX::Augmented::State
           module State
-            include Constants
             include Model
             include Chainable
             include Sent

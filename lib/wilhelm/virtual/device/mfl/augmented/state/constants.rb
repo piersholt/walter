@@ -14,10 +14,6 @@ module Wilhelm
               MODE_TARGET_RAD = :rad
               MODE_TARGET_TEL = :tel
 
-              # TODO: duplicate of Constants::Buttons
-              MFL_MODE_RAD = :mfl_rt_rad
-              MFL_MODE_TEL = :mfl_rt_tel
-
               DEFAULT_MODE = MODE_RAD
             end
           end

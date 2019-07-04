@@ -7,7 +7,8 @@ module Wilhelm
         class Augmented < Device::Augmented
           # BMBT::Augmented::Sent
           module Sent
-            include Wilhelm::Virtual::Constants::Buttons::BMBT
+            include Virtual::Constants::Buttons::BMBT
+            include Virtual::Constants::Events::BMBT
 
             # 0x48
             def evaluate_bmbt_1_button(command)
@@ -32,7 +33,7 @@ module Wilhelm
 
             def notify_of_button(command)
               changed
-              notify_observers(Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON, button: command.button, state: command.state, source: :bmbt)
+              notify_observers(BMBT_BUTTON, button: command.button, state: command.state, source: :bmbt)
             end
           end
         end

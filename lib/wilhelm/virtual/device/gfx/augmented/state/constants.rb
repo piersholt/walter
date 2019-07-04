@@ -8,8 +8,6 @@ module Wilhelm
           module State
             # Radio related command constants
             module Constants
-              include Virtual::Constants::Events::Display
-
               UNKNOWN = :unknown
               ON = :on
               OFF = :off
