@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module View
           # Audio::UserInterface::View::NowPlaying
-          class NowPlaying < Wilhelm::SDK::UserInterface::View::StaticMenu
+          class NowPlaying < SDK::UIKit::View::StaticMenu
             NO_PLAYER = [].freeze
             NO_OPTIONS = [].freeze
 

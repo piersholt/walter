@@ -7,7 +7,7 @@ module Wilhelm
         module View
           module Header
             # Audio::UserInterface::View::Header::Audio
-            class Audio < Wilhelm::SDK::UserInterface::View::BaseHeader
+            class Audio < SDK::UIKit::View::BaseHeader
               def initialize(addressed_player)
                 LOGGER.debug('Audio') { "#initialize(#{addressed_player})" }
                 super([

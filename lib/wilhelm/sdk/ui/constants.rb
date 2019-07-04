@@ -4,7 +4,7 @@
 module Wilhelm
   module SDK
     # Default Wilhelm logger
-    class UserInterface
+    module UIKit
       module Constants
         include LogActually::ErrorOutput
 

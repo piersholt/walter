@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module Controller
           # Manager::UserInterface::Controller::ManagerController
-          class ManagerController < Wilhelm::SDK::UserInterface::Controller::BaseController
+          class ManagerController < SDK::UIKit::Controller::BaseController
             NAME = 'ManagerController'
 
             def name

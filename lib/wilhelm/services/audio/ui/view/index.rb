@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module View
           # Audio::UserInterface::View::Index
-          class Index < Wilhelm::SDK::UserInterface::View::TitledMenu
+          class Index < SDK::UIKit::View::TitledMenu
             NO_THINGS = [].freeze
             NO_OPTIONS = [].freeze
 

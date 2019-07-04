@@ -2,7 +2,7 @@
 
 module Wilhelm
   module SDK
-    class UserInterface
+    module UIKit
       module View
         # Comment
         class BaseField

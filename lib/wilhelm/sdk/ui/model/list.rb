@@ -2,15 +2,18 @@
 
 module Wilhelm
   module SDK
-    class UserInterface
+    module UIKit
       module Model
-        # Comment
+        # Model::List
         class List
           DEFAULT_PAGE_SIZE = 8
           DEFAULT_INDEX = 0
           DEFAULT_OPTIONS = { page_size: DEFAULT_PAGE_SIZE, index: DEFAULT_INDEX }
+          PROG = 'Model::List'
+
           attr_accessor :page_size
           attr_reader :index
+
           def initialize(items_array, opts = DEFAULT_OPTIONS)
             @list_items = items_array
             @page_size = opts[:page_size]
@@ -18,8 +21,13 @@ module Wilhelm
           end
 
           def page
-            LOGGER.unknown(self.class.name) { "#page; index => #{index}, page_size => #{page_size}" }
-            @list_items[index, page_size]
+            # LOGGER.unknown(PROG) { '#page' }
+            # LOGGER.unknown(PROG) { "index => #{index}" }
+            # LOGGER.unknown(PROG) { "page_size => #{page_size}" }
+            # LOGGER.unknown(PROG) { "@list_items => #{@list_items}" }
+            result = @list_items[index, page_size]
+            LOGGER.unknown(PROG) { "page => #{result}" }
+            result
           end
 
           def shift(i)
@@ -28,13 +36,18 @@ module Wilhelm
             # index
             i
           end
+
+          def forward
+            # LOGGER.unknown(self.class.name) { "#forward" }
+            shift(page_size)
+          end
+
+          def backward
+            # LOGGER.unknown(self.class.name) { "#backward" }
+            shift(-page_size)
+          end
         end
       end
     end
   end
 end
-
-# class View::List < TitledMenu
-#   PAGE_SIZE_MAX = 8
-#   ITEMS_PER_CELL = 1
-# end

@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module Controller
           # Audio::UserInterface::Controller::AudioController
-          class AudioController < Wilhelm::SDK::UserInterface::Controller::BaseController
+          class AudioController < SDK::UIKit::Controller::BaseController
             NAME = 'AudioController'
 
             attr_reader :addressed_player

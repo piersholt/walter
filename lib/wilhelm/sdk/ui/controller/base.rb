@@ -2,7 +2,7 @@
 
 module Wilhelm
   module SDK
-    class UserInterface
+    module UIKit
       module Controller
         # Comment
         class BaseController

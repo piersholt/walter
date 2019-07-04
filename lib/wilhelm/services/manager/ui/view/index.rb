@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module View
           # Manager::UserInterface::View::Index
-          class Index < Wilhelm::SDK::UserInterface::View::BasicMenu
+          class Index < SDK::UIKit::View::BasicMenu
             # include Constants
 
             NO_DEVICES = [].freeze
