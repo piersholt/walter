@@ -20,7 +20,7 @@ module Wilhelm
           when Wilhelm::SDK::UserInterface::Context
             new_state
             .register_service_controllers(
-              bluetooth: UserInterface::Controller::ManagerController
+              manager: UserInterface::Controller::ManagerController
             )
           when Wilhelm::SDK::Context::Notifications
             device_handler = Notifications::DeviceHandler.instance

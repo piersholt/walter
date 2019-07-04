@@ -50,8 +50,8 @@ module Wilhelm
 
           # Services
 
-          def load_bluetooth(context, *)
-            context.ui.launch(:bluetooth, :index)
+          def load_manager(context, *)
+            context.ui.launch(:manager, :index)
           end
 
           def load_audio(context)

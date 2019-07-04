@@ -93,7 +93,7 @@ module Wilhelm
             when :manager
               # destroy(:index)
               # application_context.ui.bluetooth_controller.load(:index)
-              ui_context.launch(:bluetooth, :index)
+              ui_context.launch(:manager, :index)
             when :audio
               # destroy(:index)
               # application_context.ui.audio_controller.load(:index)

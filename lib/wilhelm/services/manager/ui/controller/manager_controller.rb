@@ -80,12 +80,12 @@ module Wilhelm
                 # destroy(:device)
                 # create(:index)
                 # index
-                ui_context.launch(:bluetooth, :index)
+                ui_context.launch(:manager, :index)
               when :bluetooth_device
                 # destroy(:index)
                 # create(:device, selected_menu_item: selected_menu_item)
                 selected_device = device_from_menu_item(selected_menu_item)
-                ui_context.launch(:bluetooth, :device, selected_device)
+                ui_context.launch(:manager, :device, selected_device)
                 # device(@selected_device)
               when :main_menu_index
                 # destroy(:index)

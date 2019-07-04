@@ -56,7 +56,7 @@ module Wilhelm
             false
           end
 
-          def load_bluetooth(___, *)
+          def load_manager(___, *)
             false
           end
 

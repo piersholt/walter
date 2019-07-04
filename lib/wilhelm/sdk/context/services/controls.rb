@@ -22,7 +22,7 @@ module Wilhelm
             BMBT_AUX_HEAT => { load_debug: :stateless },
             BMBT_MODE => { load_audio: :stateless },
             BMBT_OVERLAY => { load_now_playing: :stateless },
-            BMBT_TEL => { load_bluetooth: STATEFUL }
+            BMBT_TEL => { load_manager: STATEFUL }
           }.freeze
 
           # TODO: these needs to be programatically added by services
@@ -37,9 +37,9 @@ module Wilhelm
             @state.load_services(self)
           end
 
-          def load_bluetooth(*args)
-            logger.debug(LOGGER_NAME) { "#load_bluetooth(#{args})" }
-            @state.load_bluetooth(self, args)
+          def load_manager(*args)
+            logger.debug(LOGGER_NAME) { "#load_manager(#{args})" }
+            @state.load_manager(self, args)
           end
 
           def load_audio
