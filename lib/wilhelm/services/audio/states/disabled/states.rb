@@ -14,8 +14,8 @@ module Wilhelm
             context.change_state(Enabled.new(context))
           end
 
-          def disable(context)
-            context.change_state(Disabled.new)
+          def off(context)
+            context.change_state(Off.new(context))
           end
 
           def on(context)

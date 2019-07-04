@@ -14,12 +14,12 @@ module Wilhelm
             logger.info(AUDIO_ENABLED) { ":addressed_player => #{properties}" }
             player_object = Player.new(properties)
             context.player.addressed_player!(player_object)
-            context.on
+            context.off
             true
           end
 
           def player_added(context, properties)
-            context.on
+            context.off
             context.target.player_added(properties)
             true
           end

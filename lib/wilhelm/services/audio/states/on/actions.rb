@@ -23,8 +23,10 @@ module Wilhelm
             logger.info(AUDIO_ON) { "#power() => #{result}" }
             if result
               Wilhelm::API::Audio.instance.on
+              context.on
             else
               Wilhelm::API::Audio.instance.off
+              context.off
             end
             result
           end

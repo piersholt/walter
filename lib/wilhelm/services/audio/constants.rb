@@ -10,6 +10,7 @@ module Wilhelm
         AUDIO_CONTROLS = 'Audio Controls'
         AUDIO_DISABLED = 'Audio (Disabled)'
         AUDIO_ENABLED = 'Audio (Enabled)'
+        AUDIO_OFF = 'Audio (Off)'
         AUDIO_ON = 'Audio (On)'
       end
     end

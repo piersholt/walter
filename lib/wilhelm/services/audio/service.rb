@@ -11,10 +11,10 @@ module Wilhelm
       include Notifications
       include Controls
       include Actions
+      include Requests
+      include Replies
       include Context
       include Messaging::API
-
-      attr_reader :state
 
       def initialize
         @state = Disabled.new

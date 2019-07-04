@@ -3,8 +3,8 @@
 module Wilhelm
   module Services
     class Audio
-      class Enabled
-        # Audio::Enabled::States
+      class Off
+        # Audio::Off::States
         module States
           include Logging
 
@@ -12,8 +12,8 @@ module Wilhelm
             context.change_state(Disabled.new)
           end
 
-          def off(context)
-            context.change_state(Off.new(context))
+          def enable(context)
+            context.change_state(Enabled.new(context))
           end
 
           def on(context)
