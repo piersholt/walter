@@ -20,14 +20,14 @@ module Wilhelm
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              view = View::Audio::Index.new(addressed_player)
+              view = View::Index.new(addressed_player)
               view.add_observer(self)
               render(view)
             end
 
             def now_playing
               LOGGER.debug(NAME) { '#now_playing' }
-              view = View::Audio::NowPlaying.new(addressed_player)
+              view = View::NowPlaying.new(addressed_player)
               view.add_observer(self)
               render(view)
             end

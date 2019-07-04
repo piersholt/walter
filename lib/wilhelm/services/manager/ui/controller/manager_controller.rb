@@ -19,14 +19,14 @@ module Wilhelm
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              @view = View::Manager::Index.new(@selected_devices)
+              @view = View::Index.new(@selected_devices)
               view.add_observer(self)
               render(view)
             end
 
             def device(selected_device = @selected_device)
               LOGGER.debug(NAME) { "#device(#{selected_device})" }
-              @view = View::Manager::Device.new(selected_device)
+              @view = View::Device.new(selected_device)
               view.add_observer(self)
 
               render(view)

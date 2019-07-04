@@ -8,6 +8,7 @@ module Wilhelm
           module Services
             # Context::UserInterface::View::Services::Index
             class Index < UIKit::View::TitledMenu
+              include UIKit::View
               include Constants
               NO_SERVICES = [].freeze
 

@@ -6,9 +6,11 @@ module Wilhelm
       class UserInterface
         module View
           module Debug
-            # Comment
+            # Context::UserInterface::View::Debug::Index
             class Index < UIKit::View::TitledMenu
+              include UIKit::View
               include Constants
+
               NO_SERVICES = [].freeze
 
               def initialize

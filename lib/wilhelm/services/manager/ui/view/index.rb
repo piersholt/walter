@@ -7,7 +7,7 @@ module Wilhelm
         module View
           # Manager::UserInterface::View::Index
           class Index < SDK::UIKit::View::BasicMenu
-            # include Constants
+            include SDK::UIKit::View
 
             NO_DEVICES = [].freeze
             NO_OPTIONS = [].freeze
@@ -38,7 +38,7 @@ module Wilhelm
 
               devices.first(COLUMN_ONE_MAX).map.with_index do |device, index|
                 indexed_device =
-                Wilhelm::SDK::UserInterface::View::CheckedItem.new(
+                CheckedItem.new(
                   id: device.address,
                   checked: device.connected?,
                   label: device.name,

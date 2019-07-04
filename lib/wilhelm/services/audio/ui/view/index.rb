@@ -7,6 +7,7 @@ module Wilhelm
         module View
           # Audio::UserInterface::View::Index
           class Index < SDK::UIKit::View::TitledMenu
+            include SDK::UIKit::View
             NO_THINGS = [].freeze
             NO_OPTIONS = [].freeze
 
@@ -37,8 +38,8 @@ module Wilhelm
             def titles(addressed_player)
               player_name = addressed_player.name
               [
-                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: 'Audio'),
-                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: player_name)
+                BaseMenuItem.new(label: 'Audio'),
+                BaseMenuItem.new(label: player_name)
               ]
             end
 
@@ -58,7 +59,7 @@ module Wilhelm
 
               things.first(COLUMN_ONE_MAX).map.with_index do |thing, index|
                 indexed_thing =
-                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: thing[:name], action: thing[:action])
+                BaseMenuItem.new(label: thing[:name], action: thing[:action])
                 [index, indexed_thing]
               end
             end
@@ -69,7 +70,7 @@ module Wilhelm
 
               options.first(COLUMN_TWO_MAX).map.with_index do |thing, index|
                 indexed_thing =
-                Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: thing[:name], action: thing[:action])
+                BaseMenuItem.new(label: thing[:name], action: thing[:action])
                 [index + COLUMN_TWO_OFFSET, indexed_thing]
               end
             end

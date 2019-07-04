@@ -7,7 +7,7 @@ module Wilhelm
         module View
           # Manager::UserInterface::View::Device
           class Device < SDK::UIKit::View::BasicMenu
-            # include Constants
+            include SDK::UIKit::View
 
             NO_VALUES = [].freeze
             NO_OPTIONS = [].freeze
@@ -39,7 +39,7 @@ module Wilhelm
 
               VALUES.first(COLUMN_ONE_MAX).map.with_index do |property, index|
                 property_value = device.public_send(property)
-                thingo = Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: property_value)
+                thingo = BaseMenuItem.new(label: property_value)
                 [index, thingo]
               end
             end
@@ -65,7 +65,7 @@ module Wilhelm
             end
 
             def connect(id)
-              Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(
+              BaseMenuItem.new(
                 id: id,
                 label: 'Connect',
                 action: :bluetooth_connect
@@ -73,7 +73,7 @@ module Wilhelm
             end
 
             def disconnect(id)
-              Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(
+              BaseMenuItem.new(
                 id: id,
                 label: 'Disconnect',
                 action: :bluetooth_disconnect
@@ -81,7 +81,7 @@ module Wilhelm
             end
 
             def pending(id)
-              Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(
+              BaseMenuItem.new(
                 id: id,
                 label: 'Please Wait...'
               )

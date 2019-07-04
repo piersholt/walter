@@ -11,6 +11,7 @@ module Wilhelm
           attr_reader :fields, :title
 
           LAYOUT = 0x62
+          TYPE = :default
 
           def initialize(values, title = nil)
             @fields = indexed_fields(values)

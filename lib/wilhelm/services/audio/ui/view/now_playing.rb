@@ -7,6 +7,7 @@ module Wilhelm
         module View
           # Audio::UserInterface::View::NowPlaying
           class NowPlaying < SDK::UIKit::View::StaticMenu
+            include SDK::UIKit::View
             NO_PLAYER = [].freeze
             NO_OPTIONS = [].freeze
 
@@ -52,26 +53,26 @@ module Wilhelm
             end
 
             def line1(player)
-              [0, Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: player.artist)]
+              [0, BaseMenuItem.new(label: player.artist)]
             end
 
             def line2(player)
               to_write = player.title
               to_write = to_write[0,40] if to_write.length > 40
-              [1, Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: to_write)]
+              [1, BaseMenuItem.new(label: to_write)]
             end
 
             def line3(player)
-              [2, Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: player.album)]
+              [2, BaseMenuItem.new(label: player.album)]
             end
 
             def line4(player)
               xxx = "#{player.number} of #{player.total}"
-              [3, Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: xxx)]
+              [3, BaseMenuItem.new(label: xxx)]
             end
 
             def line5(player)
-              [4, Wilhelm::SDK::UserInterface::View::BaseMenuItem.new(label: '---------')]
+              [4, BaseMenuItem.new(label: '---------')]
             end
 
             MARKER = 130
