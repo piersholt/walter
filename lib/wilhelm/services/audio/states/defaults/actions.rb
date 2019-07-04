@@ -49,6 +49,14 @@ module Wilhelm
           def scan_backward(*)
             false
           end
+
+          def load_audio(*)
+            false
+          end
+
+          def load_now_playing(*)
+            false
+          end
         end
       end
     end

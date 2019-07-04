@@ -17,6 +17,7 @@ module Wilhelm
           logger.debug(MANAGER_ENABLED) { '#initialize' }
           # Note: this is a request
           context.devices?
+          context.register_controls(Wilhelm::API::Controls.instance)
         end
       end
     end

@@ -46,7 +46,7 @@ module Wilhelm
           end
 
           def scan_forward(context, toggle)
-            logger.debug(AUDIO) { "#scan_forward(#{toggle})" }
+            logger.debug(AUDIO_ON) { "#scan_forward(#{toggle})" }
             case toggle
             when :on
               context.player.scan_forward_start
@@ -56,13 +56,23 @@ module Wilhelm
           end
 
           def scan_backward(context, toggle)
-            logger.debug(AUDIO) { "#scan_back(#{toggle})" }
+            logger.debug(AUDIO_ON) { "#scan_back(#{toggle})" }
             case toggle
             when :on
               context.player.scan_backward_start
             when :off
               context.player.scan_backward_stop
             end
+          end
+
+          def load_audio(context)
+            logger.info(AUDIO_ON) { '#load_audio()' }
+            context.context.ui.launch(:audio, :index)
+          end
+
+          def load_now_playing(context)
+            logger.info(AUDIO_ON) { '#load_now_playing()' }
+            context.context.ui.launch(:audio, :now_playing)
           end
         end
       end

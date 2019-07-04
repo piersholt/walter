@@ -5,6 +5,8 @@ module Wilhelm
     class Controls
       # Comment
       module Listener
+        # it's technicall not BMBT_BUTTON, as MFL sends it too
+        # Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON
         include Constants::Buttons::BMBT
         include Constants::Buttons::MFL
 

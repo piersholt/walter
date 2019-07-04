@@ -14,7 +14,9 @@ module Wilhelm
 
           BMBT_TEL = :bmbt_tel
 
-          BMBT_MODE = :bmbt_mode
+          BMBT_MODE_PREV = :bmbt_mode_prev
+          BMBT_MODE_NEXT = :bmbt_mode_next
+          BMBT_MODE = BMBT_MODE_PREV
           BMBT_OVERLAY = :bmbt_overlay
           BMBT_POWER = :bmbt_power
           BMBT_NEXT = :bmbt_next

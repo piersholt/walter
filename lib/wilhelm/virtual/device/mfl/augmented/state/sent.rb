@@ -6,7 +6,7 @@ module Wilhelm
       module MFL
         class Augmented < Device::Augmented
           module State
-            # Comment
+            # MFL::Augmented::State::Sent
             module Sent
               # 0x3B
               def handle_mfl_func_button(command)
@@ -25,7 +25,7 @@ module Wilhelm
 
               def notify_of_button(command)
                 changed
-                notify_observers(:button, button: command.button, state: command.state, source: :mfl)
+                notify_observers(Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON, button: command.button, state: command.state, source: :mfl)
               end
             end
           end

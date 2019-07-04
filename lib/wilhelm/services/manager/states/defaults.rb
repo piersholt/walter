@@ -31,6 +31,8 @@ module Wilhelm
           false
         end
 
+        def load_manager(*); end
+
         # Notifications ------------------------------------------------
 
         def device_connected(*)

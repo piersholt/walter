@@ -25,6 +25,8 @@ module Wilhelm
             RADIO_LAYOUT_TRAFFIC      = :radio_layout_traffic
             RADIO_LAYOUT_CDC          = :radio_layout_cdc
             RADIO_LAYOUT_UNKNOWN      = :radio_layout_unknown
+
+            STATES = constants.map { |i| const_get(i) }
           end
 
           # Input related events
@@ -34,6 +36,8 @@ module Wilhelm
             # Generic event used for any buttons- button specifics are handled
             # by the observers
             BMBT_BUTTON = :button
+
+            INPUTS = constants.map { |i| const_get(i) }
           end
 
           # Cache related events
@@ -42,6 +46,8 @@ module Wilhelm
             HEADER_WRITE = :header_write
             MENU_CACHE   = :menu_cache
             MENU_WRITE   = :menu_write
+
+            CACHES = constants.map { |i| const_get(i) }
           end
 
           include State
@@ -49,15 +55,15 @@ module Wilhelm
           include Cache
 
           def cache?(event)
-            Cache.constants.include?(event)
+            CACHES.include?(event)
           end
 
           def state?(event)
-            State.constants.include?(event)
+            STATES.include?(event)
           end
 
           def input?(event)
-            Input.constants.include?(event)
+            INPUTS.include?(event)
           end
         end
       end

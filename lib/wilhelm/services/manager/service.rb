@@ -9,6 +9,7 @@ module Wilhelm
       include State
       include Properties
       include Notifications
+      include Controls
       include Actions
       include Requests
       include Replies

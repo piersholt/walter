@@ -11,6 +11,8 @@ module Wilhelm
         LOGGER_NAME = AUDIO_CONTROLS
 
         CONTROL_REGISTER = {
+          BMBT_MODE => STATELESS_CONTROL,
+          BMBT_OVERLAY => STATELESS_CONTROL,
           BMBT_POWER => STATELESS_CONTROL,
           BMBT_NEXT => TWO_STAGE_CONTROL,
           BMBT_PREV => TWO_STAGE_CONTROL,
@@ -24,6 +26,12 @@ module Wilhelm
         }.freeze
 
         CONTROL_ROUTES = {
+          BMBT_MODE => {
+            load_audio: STATELESS
+          },
+          BMBT_OVERLAY => {
+            load_now_playing: STATELESS
+          },
           BMBT_POWER => {
             power: STATELESS
           },

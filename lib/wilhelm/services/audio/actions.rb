@@ -51,6 +51,16 @@ module Wilhelm
           logger.debug(AUDIO) { "#scan_backward(#{toggle})" }
           @state.scan_backward(self, toggle)
         end
+
+        def load_audio
+          logger.debug(AUDIO) { '#load_audio()' }
+          @state.load_audio(self)
+        end
+
+        def load_now_playing
+          logger.debug(AUDIO) { '#load_now_playing()' }
+          @state.load_now_playing(self)
+        end
       end
     end
   end

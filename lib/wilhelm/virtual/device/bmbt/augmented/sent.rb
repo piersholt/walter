@@ -32,7 +32,7 @@ module Wilhelm
 
             def notify_of_button(command)
               changed
-              notify_observers(:button, button: command.button, state: command.state, source: :bmbt)
+              notify_observers(Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON, button: command.button, state: command.state, source: :bmbt)
             end
           end
         end

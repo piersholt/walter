@@ -48,20 +48,6 @@ module Wilhelm
             context.ui.launch(:services, :index)
           end
 
-          # Services
-
-          def load_manager(context, *)
-            context.ui.launch(:manager, :index)
-          end
-
-          def load_audio(context)
-            context.ui.launch(:audio, :index)
-          end
-
-          def load_now_playing(context)
-            context.ui.launch(:audio, :now_playing)
-          end
-
           private
 
           # APPLICATION CONTEXT ---------------------------------------------------

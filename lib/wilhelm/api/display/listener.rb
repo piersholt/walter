@@ -10,6 +10,7 @@ module Wilhelm
         NAME = 'Display Listener'
 
         def update(event, properties = {})
+          # logger.debug(NAME) { "#update(#{event}, #{properties})" }
           return update_cache(event, properties) if cache?(event)
           return update_state(event, properties) if state?(event)
           return update_input(event, properties) if input?(event)
@@ -61,10 +62,13 @@ module Wilhelm
         # INPUT
         def update_input(event, properties = {})
           case event
+          # from GFX
           when DATA_SELECT
             logger.debug(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
             data_select(properties)
+          # from BMBT
           when BMBT_BUTTON
+            logger.debug(NAME) { "#update(#{BMBT_BUTTON}, #{properties})" }
             handle_button(properties)
           end
         end
