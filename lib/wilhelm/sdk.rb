@@ -12,7 +12,7 @@ module Wilhelm
   end
 end
 
-require_relative 'sdk/ui'
+require_relative 'sdk/ui_kit'
 require_relative 'sdk/controls'
 require_relative 'sdk/listener'
 require_relative 'sdk/handler'

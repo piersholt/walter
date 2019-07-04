@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "\tLoading wilhelm/sdk/context/ui/view/menu"
+puts "\tLoading wilhelm/sdk/context/ui_kit/view/menu"
 require_relative 'menu/item'
 require_relative 'menu/base'
 require_relative 'menu/basic'
