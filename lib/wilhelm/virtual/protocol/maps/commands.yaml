@@ -3347,24 +3347,29 @@
   :properties:
     :short_name: BMBT-BTN-2
     :long_name: BMBT Buttons
-    :state:
-      0x01: Left-1
-      0x02: Left-2
-      0x03: Left-3
-      0x04: Left-4
-      0x05: Left-5
-      0x06: Left-6
-      0x07: Left-7
-      0x08: Left-8
-      0x81: Right-1
-      0x82: Right-2
-      0x83: Right-3
-      0x84: Right-4
-      0x85: Right-5
-      0x86: Right-6
-      0x87: Right-7
-      0x88: Right-8
-  :klass: Button
+  :klass: MFLVolume
+  :index:
+    :action: 0
+  :parameters:
+    :action:
+      :type: :bit_array
+      :index:
+        :direction: 0
+        :magnitude: !ruby/range
+                      begin: 5
+                      end: 7
+                      excl: false
+      :parameters:
+        :direction:
+          :type: :map
+          :dictionary:
+            0: Left
+            1: Right
+          :map:
+            0: :bmbt_left
+            1: :bmbt_right
+        :magnitude:
+          :type: :integer
 0x57:
   :id:
     :d: 87
