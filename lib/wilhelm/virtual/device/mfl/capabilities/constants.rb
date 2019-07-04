@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module MFL
         module Capabilities
-          # Comment
+          # MFL::Capabilities::Constants
           module Constants
             MAGNITUDE_DEFAULT = 1
             MAGNITUDE_OFFSET = 0b0000_1111

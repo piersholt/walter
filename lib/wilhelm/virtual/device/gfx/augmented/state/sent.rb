@@ -6,7 +6,7 @@ module Wilhelm
       module GFX
         class Augmented < Device::Augmented
           module State
-            # Comment
+            # GFX::Augmented::State::Sent
             module Sent
               include Virtual::Constants::Events::Display
               include Virtual::Constants::Buttons::BMBT
@@ -35,7 +35,7 @@ module Wilhelm
                   index = command.action.parameters[:button_id].value
                   state = command.action.parameters[:button_state].state
                   changed
-                  notify_observers(DATA_SELECT, index: index, state: state)
+                  notify_observers(GFX_DATA_SELECT, index: index, state: state)
                 end
               end
 

@@ -5,7 +5,8 @@ module Wilhelm
     class Display
       # Comment
       module Listener
-        include Constants::Events::Display
+        # TODO add BMBT_BUTTON and MFL_BUTTON (even though they're both == :button)
+        include Constants::Events
 
         NAME = 'Display Listener'
 
@@ -62,13 +63,14 @@ module Wilhelm
         # INPUT
         def update_input(event, properties = {})
           case event
-          # from GFX
-          when DATA_SELECT
-            logger.debug(NAME) { "#update(#{DATA_SELECT}, #{properties})" }
+          when GFX_DATA_SELECT
+            logger.debug(NAME) { "#update(#{GFX_DATA_SELECT}, #{properties})" }
             data_select(properties)
-          # from BMBT
           when BMBT_BUTTON
             logger.debug(NAME) { "#update(#{BMBT_BUTTON}, #{properties})" }
+            handle_button(properties)
+          when MFL_BUTTON
+            logger.debug(NAME) { "#update(#{MFL_BUTTON}, #{properties})" }
             handle_button(properties)
           end
         end

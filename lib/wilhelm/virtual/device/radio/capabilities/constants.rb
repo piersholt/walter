@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Radio
         module Capabilities
-          # Comment
+          # Radio::Capabilities::Constants
           module Constants
             ZERO = 0x00
 

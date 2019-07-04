@@ -6,6 +6,19 @@ module Wilhelm
       module Events
         # Virtual::Device::GFX Events
         module Display
+          # Cache related events
+          module Cache
+            HEADER_CACHE = :header_cache
+            HEADER_WRITE = :header_write
+            MENU_CACHE   = :menu_cache
+            MENU_WRITE   = :menu_write
+          end
+
+          # Input related events
+          module Input
+            GFX_DATA_SELECT = :data_select
+          end
+
           # State related events
           module State
             GFX_MONITOR_ON     = :gfx_monitor_on
@@ -13,58 +26,13 @@ module Wilhelm
             GFX_PING           = :gfx_ping
             GFX_ANNOUNCE       = :gfx_announce
             GFX_OBC_BOOL       = :gfx_obc_req
-            RADIO_BODY_CLEARED = :radio_body_cleared
-            # Not In Use
-            PRIORITY_GFX              = :gfx_priority_gfx
-            PRIORITY_RADIO            = :gfx_priority_radio
-            RADIO_LAYOUT_SERVICE      = :radio_layout_service
-            RADIO_LAYOUT_WEATHER_BAND = :radio_layout_weather_band
-            RADIO_LAYOUT_RADIO        = :radio_layout_radio
-            RADIO_LAYOUT_DIGITAL      = :radio_layout_digital
-            RADIO_LAYOUT_TAPE         = :radio_layout_tape
-            RADIO_LAYOUT_TRAFFIC      = :radio_layout_traffic
-            RADIO_LAYOUT_CDC          = :radio_layout_cdc
-            RADIO_LAYOUT_UNKNOWN      = :radio_layout_unknown
 
-            STATES = constants.map { |i| const_get(i) }
+            GFX_STATES = constants.map { |i| const_get(i) }
           end
 
-          # Input related events
-          module Input
-            # Note: this is basically just 0x31 from GFX to RAD/TEL
-            DATA_SELECT = :data_select
-            # Generic event used for any buttons- button specifics are handled
-            # by the observers
-            BMBT_BUTTON = :button
-
-            INPUTS = constants.map { |i| const_get(i) }
-          end
-
-          # Cache related events
-          module Cache
-            HEADER_CACHE = :header_cache
-            HEADER_WRITE = :header_write
-            MENU_CACHE   = :menu_cache
-            MENU_WRITE   = :menu_write
-
-            CACHES = constants.map { |i| const_get(i) }
-          end
-
-          include State
-          include Input
           include Cache
-
-          def cache?(event)
-            CACHES.include?(event)
-          end
-
-          def state?(event)
-            STATES.include?(event)
-          end
-
-          def input?(event)
-            INPUTS.include?(event)
-          end
+          include Input
+          include State
         end
       end
     end

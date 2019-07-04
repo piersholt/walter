@@ -10,7 +10,7 @@ module Wilhelm
             module Chainable
               include Constants
               include Observable
-              include Wilhelm::Virtual::Constants::Events::Display
+              include Virtual::Constants::Events::Radio
 
               def log_state(delta, level = :debug)
                 logger.public_send(level, 'Radio') { "#{delta}" }

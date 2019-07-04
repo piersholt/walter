@@ -6,13 +6,13 @@ module Wilhelm
       # Comment
       module Listener
         # it's technicall not BMBT_BUTTON, as MFL sends it too
-        # Wilhelm::Virtual::Constants::Events::Display::Input::BMBT_BUTTON
         include Constants::Buttons::BMBT
         include Constants::Buttons::MFL
 
         NAME = 'Controls Listener'
 
         def update(event, properties = {})
+          # TODO :button => BMBT_BUTTON/MFL_BUTTON
           return false unless event == :button
           logger.debug(NAME) { "#update(#{event}, #{properties})" }
           case event
