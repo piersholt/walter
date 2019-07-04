@@ -40,11 +40,11 @@ module Wilhelm
         end
 
         def to_s
-          '<UserInterface>'
+          '<SDK::Context::UserInterface>'
         end
 
         def inspect
-          '<UserInterface>'
+          '<SDK::Context::UserInterface>'
         end
 
         def render_menu(view)

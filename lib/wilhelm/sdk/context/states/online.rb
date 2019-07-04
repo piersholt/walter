@@ -66,7 +66,7 @@ module Wilhelm
           end
 
           def create_ui(context)
-            LOGGER.debug(WILHELM) { "#create_ui (#{Thread.current})" }
+            LOGGER.debug(WILHELM_ONLINE) { "#create_ui (#{Thread.current})" }
             ui_context = UserInterface.new(context)
             register_service_controllers(ui_context)
             context.changed
@@ -77,7 +77,7 @@ module Wilhelm
           end
 
           def register_service_controllers(ui_context)
-            LOGGER.debug(WILHELM) do
+            LOGGER.debug(WILHELM_ONLINE) do
               "#register_service_controllers (#{Thread.current})"
             end
             ui_context.register_service_controllers(

@@ -17,7 +17,6 @@ module Wilhelm
           logger.debug(AUDIO_ENABLED) { '#initialize' }
           # Note: this is a request
           context.player?
-          # Wilhelm::API::Controls.instance.add_observer(context, :buttons_update)
           context.register_controls(Wilhelm::API::Controls.instance)
         end
       end
