@@ -75,7 +75,7 @@ module Wilhelm
 
         private
 
-        def header?(controller)
+        def header?(controller = nil)
           return controller == :header if controller
           @header ? true : false
         end
