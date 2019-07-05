@@ -14,15 +14,15 @@ module Wilhelm
             LIMIT_DIRECTORY = 8
 
             def directory_name(name = 'MUM')
-              primary(gfx: DIRECTORY_CONTACT_NAME, chars: name)
+              draw_23(gfx: DIRECTORY_CONTACT_NAME, chars: name)
             end
 
             def directory_number(number = '98764321')
-              primary(gfx: DIRECTORY_CONTACT_NUMBER, chars: number)
+              draw_23(gfx: DIRECTORY_CONTACT_NUMBER, chars: number)
             end
 
             def directory_clear
-              primary(gfx: DIRECTORY_CLEAR, chars: EMPTY_STRING)
+              draw_23(gfx: DIRECTORY_CLEAR, chars: EMPTY_STRING)
             end
 
             def generate_directory
@@ -39,13 +39,13 @@ module Wilhelm
               contacts.each do |contact|
                 delimitered_contact = delimiter_contact(contact)
                 logger.unknown(PROC) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
-                mid(m1: LAYOUT_DIRECTORY, m3: M3_BLOCK, chars: delimitered_contact)
+                draw_21(layout: LAYOUT_DIRECTORY, m3: M3_BLOCK, chars: delimitered_contact)
               end
               render_directory
             end
 
             def render_directory
-              mid(m1: LAYOUT_DIRECTORY, m3: M3_NIL, chars: CHARS_EMPTY)
+              draw_21(layout: LAYOUT_DIRECTORY, m3: M3_NIL, chars: CHARS_EMPTY)
             end
 
             alias gd generate_directory

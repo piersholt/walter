@@ -24,7 +24,7 @@ module Wilhelm
             end
 
             def directory_page(delimitered_contacts_string, i)
-              mid(m1: LAYOUT_DIRECTORY, m2: M2_DEFAULT, m3: PAGE[i], chars: delimitered_contacts_string)
+              draw_21(layout: LAYOUT_DIRECTORY, m2: M2_DEFAULT, m3: PAGE[i], chars: delimitered_contacts_string)
             end
 
             # TOP-8 -----------------------------------------------------------
@@ -37,7 +37,7 @@ module Wilhelm
             end
 
             def favourites_page(delimitered_contacts_string, i)
-              mid(m1: LAYOUT_TOP_8, m2: M2_DEFAULT, m3: PAGE[i], chars: delimitered_contacts_string)
+              draw_21(layout: LAYOUT_TOP_8, m2: M2_DEFAULT, m3: PAGE[i], chars: delimitered_contacts_string)
             end
 
             private
@@ -81,7 +81,7 @@ module Wilhelm
             def clear(display)
               logger.debug(PROC) { "Mock: clearing :#{display}!" }
 
-              m1 =
+              layout =
               case display
               when :directory
                 LAYOUT_DIRECTORY
@@ -89,7 +89,7 @@ module Wilhelm
                 LAYOUT_TOP_8
               end
 
-              mid(m1: m1, m2: M2_DEFAULT, m3: M3_FLUSH, chars: CHARS_EMPTY)
+              draw_21(layout: layout, m2: M2_DEFAULT, m3: M3_FLUSH, chars: CHARS_EMPTY)
             end
           end
         end

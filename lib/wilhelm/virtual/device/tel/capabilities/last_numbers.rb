@@ -11,11 +11,11 @@ module Wilhelm
             include Constants
 
             def recent_clear
-              primary(gfx: DIAL_CLEAR, chars: CHARS_EMPTY)
+              draw_23(gfx: DIAL_CLEAR, chars: CHARS_EMPTY)
             end
 
             def recent_contact(contact = '+61400111222')
-              primary(gfx: DIAL_DIGIT, chars: contact)
+              draw_23(gfx: DIAL_DIGIT, chars: contact)
             end
           end
         end

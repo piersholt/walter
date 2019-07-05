@@ -26,7 +26,7 @@
     :verbose: false
   :klass: ParameterizedCommand
   :index:
-    :m1: 0
+    :layout: 0
     :m2: 1
     :m3: 2
     :chars: !ruby/range
@@ -34,10 +34,9 @@
             end: -1
             excl: false
   :parameters:
-    :m1:
+    :layout:
       :type: :map
       :dictionary:
-        # notice how these match 0x23 layout parameter?
         0x41: '(RAD) Presets'
         0x43: '(RAD) Source'
         0x60: '(RDS) Menu A'
@@ -86,7 +85,7 @@
       :verbose: false
     :klass: ParameterizedCommand
     :index:
-      :m1: 0
+      :layout: 0
       :m2: 1
       :m3: 2
       :chars: !ruby/range
@@ -94,7 +93,7 @@
               end: -1
               excl: false
     :parameters:
-      :m1:
+      :layout:
         :type: :map
         :dictionary:
           0x42: 'Dial'

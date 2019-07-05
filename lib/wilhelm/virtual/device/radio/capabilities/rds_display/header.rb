@@ -28,7 +28,7 @@ module Wilhelm
                   field = fields_with_index.fetch(index, false)
                   next unless field
                   draw_21(
-                    m1: layout,
+                    layout: layout,
                     m2: ZERO,
                     m3: field_index,
                     chars: field.to_s

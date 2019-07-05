@@ -20,7 +20,7 @@ module Wilhelm
             end
 
             def info_header(header = 'Info Title')
-              primary(gfx: INFO_HEADER, chars: header)
+              draw_23(gfx: INFO_HEADER, chars: header)
             end
 
             # 0x91 Strength

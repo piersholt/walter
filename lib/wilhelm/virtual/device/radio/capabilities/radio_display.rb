@@ -54,7 +54,7 @@ module Wilhelm
             # [50, 32, 5, 5, 52, 42] ("2 ☐☐4*")
 
             def preset(index = 1)
-              list(m1: 0x41, m2: index, m3: 0x01, chars: PRESETS[index])
+              list(layout: 0x41, m2: index, m3: 0x01, chars: PRESETS[index])
             end
 
 

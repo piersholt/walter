@@ -12,22 +12,22 @@ module Wilhelm
 
             def open_dial
               logger.unknown(PROC) { '#open_dial()' }
-              mid(m1: LAYOUT_DIAL, m2: M2_DEFAULT, m3: M3_NIL, chars: CHARS_EMPTY)
+              draw_21(layout: LAYOUT_DIAL, m2: M2_DEFAULT, m3: M3_NIL, chars: CHARS_EMPTY)
             end
 
             def dial_clear
               clear_digits
-              primary(gfx: DIAL_CLEAR, chars: STRING_EMPTY)
+              draw_23(gfx: DIAL_CLEAR, chars: STRING_EMPTY)
             end
 
             def dial_number(digit = '0')
               add_digit(digit)
-              primary(gfx: DIAL_DIGIT, chars: digits_buffer)
+              draw_23(gfx: DIAL_DIGIT, chars: digits_buffer)
             end
 
             def dial_number_remove
               remove_digit
-              primary(gfx: DIAL_DIGIT, chars: digits_buffer)
+              draw_23(gfx: DIAL_DIGIT, chars: digits_buffer)
             end
 
             private

@@ -26,7 +26,7 @@ module Wilhelm
                   menu_item = menu_items_with_index.fetch(index, false)
                   next unless menu_item
                   draw_21(
-                    m1: layout,
+                    layout: layout,
                     m2: Random.rand(0x00..0x0F),
                     m3: item_index,
                     chars: menu_item.to_s
@@ -40,7 +40,7 @@ module Wilhelm
               def generate_menu(layout: LAYOUT_MENU_A, indices: ITEM_INDEXES)
                 indices.each do |index|
                   draw_21(
-                    m1: layout,
+                    layout: layout,
                     m2: ZERO,
                     m3: index,
                     chars: generate_21(layout, index)

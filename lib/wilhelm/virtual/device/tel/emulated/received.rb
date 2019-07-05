@@ -26,7 +26,7 @@ module Wilhelm
             def handle_tel_open(message)
               logger.debug(PROC) { "Mock: handling telephone tel open request..." }
               generate_top_8
-              # mid(m1: LAYOUT_DIAL, m2: M2_DEFAULT, m3: 0x00, chars: [])
+              # draw_21(layout: LAYOUT_DIAL, m2: M2_DEFAULT, m3: 0x00, chars: [])
             end
 
             # 0x22 CACHE
@@ -119,7 +119,7 @@ module Wilhelm
             def delegate_sos
               logger.unknown(PROC) { "#delegate_sos" }
               logger.unknown(PROC) { FUNCTIONS[FUNCTION_SOS][ACTION_SOS_OPEN] }
-              primary(gfx: 0xc0, ike: 0x20, chars: 'SOS: 112!')
+              draw_23(gfx: 0xc0, ike: 0x20, chars: 'SOS: 112!')
             end
 
             def delegate_navigation(action)
