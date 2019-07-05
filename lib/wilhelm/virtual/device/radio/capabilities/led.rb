@@ -10,6 +10,10 @@ module Wilhelm
             include API
             include Constants
 
+            LED_OFF = 0x00
+            LED_RESET = 0x90
+            LED_ON = 0xff
+
             def led_off
               l3d(led: LED_OFF)
             end
