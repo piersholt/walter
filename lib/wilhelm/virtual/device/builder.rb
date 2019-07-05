@@ -7,6 +7,8 @@ module Wilhelm
       class Builder
         include Wilhelm::Helpers::Module
 
+        ANCESTORS = %w[Wilhelm Virtual Device].freeze
+
         TYPES_MAP =
           { base: 'Base',
             emulated: 'Emulated',
@@ -21,6 +23,7 @@ module Wilhelm
             gfx: 'GFX',
             dia: 'Diagnostics',
             bmbt: 'BMBT',
+            tv: 'TV',
             mfl: 'MFL' }.freeze
 
         attr_reader :ident, :klass
@@ -44,7 +47,7 @@ module Wilhelm
 
         def result
           validate_parameters
-          klass_constant = join_namespaces('Wilhelm', 'Virtual', 'Device', CLASS_MAP[ident], klass)
+          klass_constant = join_namespaces(*ANCESTORS, CLASS_MAP[ident], klass)
           klass = get_class(klass_constant)
           klass.new(ident)
         end
