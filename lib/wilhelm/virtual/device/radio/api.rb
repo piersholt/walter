@@ -46,22 +46,28 @@ module Wilhelm
           # DISPLAY
 
           # 0x23
-          def primary(from: :rad, to: :gfx, **arguments)
+          def draw_23(from: :rad, to: :gfx, **arguments)
             format_chars!(arguments)
             try(from, to, TXT_GFX, arguments)
           end
 
+          alias primary draw_23
+
           # 0xA5
-          def secondary(from: :rad, to: :gfx, **arguments)
+          def draw_a5(from: :rad, to: :gfx, **arguments)
             format_chars!(arguments)
             try(from, to, TXT_NAV, arguments)
           end
 
+          alias secondary draw_a5
+
           # 0x21
-          def list(from: :rad, to: :gfx, **arguments)
+          def draw_21(from: :rad, to: :gfx, **arguments)
             format_chars!(arguments)
             try(from, to, TXT_MID, arguments)
           end
+
+          alias list draw_21
         end
       end
     end
