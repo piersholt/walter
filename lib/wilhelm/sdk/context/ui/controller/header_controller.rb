@@ -33,36 +33,38 @@ module Wilhelm
                 devices_object = context.manager.devices
 
                 @status_model = Model::Header::Status.new
-                status_model.player(player_object)
+                @status_model.player(player_object)
 
-                player_object.add_observer(status_model, :player_update)
-                devices_object.add_observer(status_model, :devices_update)
+                player_object.add_observer(@status_model, :player_update)
+                devices_object.add_observer(@status_model, :devices_update)
 
-                status_model.add_observer(self, :status_update)
+                @status_model.add_observer(self, :status_update)
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
                 false
               end
             rescue StandardError => e
-              LOGGER.error(self.class.name) { e }
-              e.backtrace.each { |line| LOGGER.error(self.class.name) { line } }
-              LOGGER.error(self.class.name) { 'binding.pry start' }
+              LOGGER.error(NAME) { e }
+              e.backtrace.each { |line| LOGGER.error(NAME) { line } }
+              LOGGER.error(NAME) { 'binding.pry start' }
               binding.pry
-              LOGGER.error(self.class.name) { 'binding.pry end' }
+              LOGGER.error(NAME) { 'binding.pry end' }
             end
 
             def destroy
               case :header
               when :header
-                return false unless status_model
+                return false unless @status_model
                 player_object = context.audio.player
                 devices_object = context.manager.devices
 
-                player_object.delete_observer(status_model)
-                devices_object.delete_observer(status_model)
+                player_object.delete_observer(@status_model)
+                devices_object.delete_observer(@status_model)
 
-                status_model.delete_observer(self)
+                @status_model.delete_observer(self)
+
+                @status_model = nil
                 true
               else
                 LOGGER.warn(NAME) { "Destroy: #{view} view not recognised." }

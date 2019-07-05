@@ -31,7 +31,7 @@ module Wilhelm
           end
 
           def destroy(*args)
-            raise("#create must be implemented by controllers. #{args}")
+            raise("#destroy must be implemented by controllers. #{args}")
           end
 
           def render(view)
