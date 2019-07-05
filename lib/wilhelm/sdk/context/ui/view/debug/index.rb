@@ -31,7 +31,7 @@ module Wilhelm
               def indexed_options
                 # return NO_SERVICES if options.length.zero?
                 # validate(options, COLUMN_ONE_MAX)
-                options = %w[Services Characters Pixels]
+                options = %w[Services CodeList Weight]
 
                 options.first(COLUMN_ONE_MAX).map.with_index do |option, index|
                   indexed_option =

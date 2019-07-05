@@ -9,17 +9,17 @@ module Wilhelm
           class CharactersController < UIKit::Controller::BaseController
             NAME = 'CharactersController'
 
-            def index
-              LOGGER.debug(NAME) { '#index' }
-              @view = View::Characters::Index.new(@characters_model)
+            def codelist
+              LOGGER.unknown(NAME) { '#codelist' }
+              @view = View::Characters::CodeList.new(@code_model)
               view.add_observer(self)
 
               render(view)
             end
 
-            def pixels
-              LOGGER.unknown(NAME) { '#pixels' }
-              @view = View::Characters::Pixels.new(@pixels_model)
+            def weight
+              LOGGER.unknown(NAME) { '#weight' }
+              @view = View::Characters::Weight.new(@weight_model)
               view.add_observer(self)
 
               render(view)
@@ -34,12 +34,11 @@ module Wilhelm
             def create(view)
               LOGGER.warn(NAME) { "#create(#{view})" }
               case view
-              when :index
-                # LOGGER.warn(NAME) { "@offset => #{offset}" }
-                @characters_model = Model::Characters::List.new(32, 8)
+              when :codelist
+                @code_model = Model::Characters::CodeList.new(32, 8)
                 true
-              when :pixels
-                @pixels_model = Model::Characters::Pixels.new(Random.rand(0..4), 5)
+              when :weight
+                @weight_model = Model::Characters::Weight.new(16, 0, 5)
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
@@ -49,11 +48,11 @@ module Wilhelm
 
             def destroy
               case loaded_view
-              when :index
-                @characters_model = nil
+              when :codelist
+                @code_model = nil
                 true
-              when :pixels
-                @pixels_model = nil
+              when :weight
+                @weight_model = nil
                 true
               else
                 LOGGER.warn(NAME) { "Destroy: #{view} view not recognised." }
@@ -68,41 +67,30 @@ module Wilhelm
             def update(action, selected_menu_item = nil)
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.class})" }
               case action
-              when :page_next
-                # LOGGER.debug(NAME) { "selected_menu_item.properties => #{selected_menu_item.properties}" }
-                # destroy(:index)
-                # application_context.ui.bluetooth_controller.load(:index)
-                new_index = @characters_model.forward
-                LOGGER.debug(NAME) { "@characters_model.forward => #{new_index}" }
-                # selected_menu_item
-                # @offset = selected_menu_item.properties[:offset] + 8
-                # ui_context.launch(:characters, :index, selected_menu_item.properties[:offset] + 8)
-                index
               when :page_previous
-                # LOGGER.debug(NAME) { "selected_menu_item.properties => #{selected_menu_item.properties}" }
-                # destroy(:index)
-                # application_context.ui.audio_controller.load(:index)
-                new_index = @characters_model.backward
-                LOGGER.debug(NAME) { "@characters_model.backward => #{new_index}" }
-                # selected_menu_item
-                # @offset = selected_menu_item.properties[:offset] - 8
-                index
-              when :pixels_left
-                new_index = @pixels_model.backward
-                LOGGER.debug(NAME) { "@pixels_model.forward => #{new_index}" }
-                pixels
-              when :pixels_right
-                new_index = @pixels_model.forward
-                LOGGER.debug(NAME) { "@pixels_model.forward => #{new_index}" }
-                pixels
-              when :pixels_fatter
-                new_fattness = @pixels_model.fatter!
-                LOGGER.debug(NAME) { "@pixels_model.fatter! => #{new_fattness}" }
-                pixels
-              when :pixels_rebirth
-                new_fattness = @pixels_model.rebirth!
-                LOGGER.debug(NAME) { "@pixels_model.fatter! => #{new_fattness}" }
-                pixels
+                new_index = @code_model.backward
+                LOGGER.debug(NAME) { "@code_model.backward => #{new_index}" }
+                codelist
+              when :page_next
+                new_index = @code_model.forward
+                LOGGER.debug(NAME) { "@code_model.forward => #{new_index}" }
+                codelist
+              when :weight_left
+                new_index = @weight_model.shift(-1)
+                LOGGER.debug(NAME) { "@weight_model.forward => #{new_index}" }
+                weight
+              when :weight_right
+                new_index = @weight_model.shift(1)
+                LOGGER.debug(NAME) { "@weight_model.forward => #{new_index}" }
+                weight
+              when :weight_less
+                new_width = @weight_model.less!
+                LOGGER.debug(NAME) { "@weight_model.fatter! => #{new_width}" }
+                weight
+              when :weight_more
+                new_width = @weight_model.more!
+                LOGGER.debug(NAME) { "@weight_model.fatter! => #{new_width}" }
+                weight
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

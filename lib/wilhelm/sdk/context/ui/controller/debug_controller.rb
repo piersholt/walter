@@ -72,15 +72,14 @@ module Wilhelm
                 # destroy(:index)
                 # application_context.ui.audio_controller.load(:index)
                 ui_context.launch(:services, :index)
-              when :characters
+              when :codelist
                 # destroy(:index)
                 # application_context.ui.audio_controller.load(:index)
-                ui_context.launch(:characters, :index)
-              when :pixels
+                ui_context.launch(:characters, :codelist)
+              when :weight
                 # destroy(:index)
                 # application_context.ui.audio_controller.load(:index)
-                LOGGER.unknown(NAME) { 'Pixels!' }
-                ui_context.launch(:characters, :pixels)
+                ui_context.launch(:characters, :weight)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end
