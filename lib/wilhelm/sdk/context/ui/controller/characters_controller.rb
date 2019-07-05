@@ -68,28 +68,22 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.class})" }
               case action
               when :page_previous
-                new_index = @code_model.backward
-                LOGGER.debug(NAME) { "@code_model.backward => #{new_index}" }
+                LOGGER.debug(NAME) { "backward => #{@code_model.backward}" }
                 codelist
               when :page_next
-                new_index = @code_model.forward
-                LOGGER.debug(NAME) { "@code_model.forward => #{new_index}" }
+                LOGGER.debug(NAME) { "forward => #{@code_model.forward}" }
                 codelist
               when :weight_left
-                new_index = @weight_model.shift(-1)
-                LOGGER.debug(NAME) { "@weight_model.forward => #{new_index}" }
+                LOGGER.debug(NAME) { "shift(-1) => #{@weight_model.shift(-1)}" }
                 weight
               when :weight_right
-                new_index = @weight_model.shift(1)
-                LOGGER.debug(NAME) { "@weight_model.forward => #{new_index}" }
+                LOGGER.debug(NAME) { "shift(1) => #{@weight_model.shift(1)}" }
                 weight
               when :weight_less
-                new_width = @weight_model.less!
-                LOGGER.debug(NAME) { "@weight_model.fatter! => #{new_width}" }
+                LOGGER.debug(NAME) { "less! => #{@weight_model.less!}" }
                 weight
               when :weight_more
-                new_width = @weight_model.more!
-                LOGGER.debug(NAME) { "@weight_model.fatter! => #{new_width}" }
+                LOGGER.debug(NAME) { "more! => #{@weight_model.more!}" }
                 weight
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }

@@ -8,7 +8,6 @@ module Wilhelm
           module Characters
             # Context::UserInterface::Model::Characters::Pixel
             class Weight < UIKit::Model::List
-              include Observable
               PROG = 'Characters::Weight'
               DEFAULT_WIDTH = 8
               DEFAULT_DELTA = 1

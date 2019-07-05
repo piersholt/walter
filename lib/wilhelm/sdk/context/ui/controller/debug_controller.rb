@@ -69,17 +69,13 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
               case action
               when :services
-                # destroy(:index)
-                # application_context.ui.audio_controller.load(:index)
                 ui_context.launch(:services, :index)
               when :codelist
-                # destroy(:index)
-                # application_context.ui.audio_controller.load(:index)
                 ui_context.launch(:characters, :codelist)
               when :weight
-                # destroy(:index)
-                # application_context.ui.audio_controller.load(:index)
                 ui_context.launch(:characters, :weight)
+              when :control
+                ui_context.launch(:characters, :control)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

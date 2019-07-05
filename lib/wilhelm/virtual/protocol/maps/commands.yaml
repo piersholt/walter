@@ -3468,17 +3468,13 @@
     :zone:
       :type: :bit_array
       :index:
-        :zone: !ruby/range
-                  begin: 5
-                  end: 7
-                  excl: false
-        :tbc: !ruby/range
-                  begin: 3
-                  end: 4
-                  excl: false
-        :flush: 2
-        :block: 1
         :flash: 0
+        :block: 1
+        :flush: 2
+        :zone: !ruby/range
+          begin: 5
+          end: 7
+          excl: false
       :parameters:
         :flash:
           :type: :switch
@@ -3498,19 +3494,6 @@
           :states:
             0: :off
             1: :on
-        :tbc:
-          :type: :integer
-          :label: 'TBC'
-          :map:
-            0x00: '?'
-            0x01: '?'
-            0x10: '?'
-            0x11: '?'
-          :dictionary:
-            0x00: '?'
-            0x01: '?'
-            0x10: '?'
-            0x11: '?'
         :zone:
           :type: :map
           :label: 'Zone'
@@ -3536,12 +3519,6 @@
 
             0b110: 'H2/6'
             0b111: 'H3/7'
-            #
-            # 0b000: '8'
-            # 0b001: '9'
-            # 0b010: '10'
-            # 0b011: '11'
-            # 0b100: '12'
     :chars:
       :type: :chars
   :meta:

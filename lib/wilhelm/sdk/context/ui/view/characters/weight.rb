@@ -52,8 +52,6 @@ module Wilhelm
                     character[:ordinal].chr
                   end
 
-                  # label_buffer[10] = (Random.rand(0..32)).chr
-
                   label_buffer = label_buffer.join
 
                   [index, BaseMenuItem.new(label: label_buffer)]
