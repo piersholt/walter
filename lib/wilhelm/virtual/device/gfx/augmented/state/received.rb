@@ -8,6 +8,7 @@ module Wilhelm
           module State
             # Comment
             module Received
+              include Virtual::Constants::Events
               include Constants
               def nested
                 Module.nesting

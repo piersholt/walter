@@ -19,14 +19,6 @@ module Wilhelm
           CACHES = constants.map { |c| const_get(c) }
         end
 
-        # State
-        module State
-          include Display::State
-          include Radio::State
-
-          STATES = constants.map { |c| const_get(c) }
-        end
-
         # Input
         module Input
           include BMBT::Input
@@ -35,6 +27,20 @@ module Wilhelm
 
           INPUTS = constants.map { |c| const_get(c) }
         end
+
+        # State
+        module State
+          include Display::State
+          include Radio::State
+
+          STATES = constants.map { |c| const_get(c) }
+        end
+
+        include Cache
+        include Input
+        include State
+
+
 
         def cache?(event)
           CACHES.include?(event)
