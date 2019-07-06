@@ -3,6 +3,7 @@
 require_relative 'display/generate'
 require_relative 'display/header'
 require_relative 'display/menu'
+require_relative 'display/sdk'
 require_relative 'display/quick'
 
 module Wilhelm
@@ -17,6 +18,7 @@ module Wilhelm
               include Header
               include Menu
               include Quick
+              include SDK
 
               def render(layout)
                 draw_a5(

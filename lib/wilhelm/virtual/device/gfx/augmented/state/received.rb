@@ -104,7 +104,7 @@ module Wilhelm
               end
 
               def handle_draw_21(command)
-                layout = command.m1.value
+                layout = command.layout.value
                 zone = command.m3.parameters[:index].value
                 case layout
                 when MENU_BASIC
