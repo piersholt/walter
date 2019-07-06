@@ -18,12 +18,12 @@ module Wilhelm
                   Kernel.format("%-#{required_length}s", string)
                 end
 
-                def generate_a5(layout, index)
-                  "a5 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
+                def generate_a5(layout, padding, index, length = 10)
+                  "a5 #{d2h(layout)} #{d2h(padding)} #{d2h(index)} #{genc(length)}"
                 end
 
-                def generate_21(layout, index)
-                  "21 #{d2h(layout)} #{d2h(index)} #{genc(20)}"
+                def generate_21(layout, m2, index, length = 10)
+                  "21 #{d2h(layout)} #{d2h(m2)} #{d2h(index)} #{genc(length)}"
                 end
               end
             end

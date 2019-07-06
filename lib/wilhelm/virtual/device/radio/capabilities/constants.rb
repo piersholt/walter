@@ -42,7 +42,7 @@ module Wilhelm
               INDEX_4 + BLOCK,
               INDEX_5 + BLOCK,
               INDEX_6 + BLOCK,
-              INDEX_7
+              INDEX_7 + BLOCK
             ].freeze
 
             # MENU
@@ -66,7 +66,7 @@ module Wilhelm
               INDEX_2 + BLOCK,
               INDEX_3 + BLOCK,
               INDEX_4 + BLOCK,
-              INDEX_5
+              INDEX_5 + BLOCK
             ].freeze
 
             LAYOUT_INDICES = {

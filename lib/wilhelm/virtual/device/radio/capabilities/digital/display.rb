@@ -29,6 +29,14 @@ module Wilhelm
                 )
               end
 
+              def draw_row_21(layout, m2, index, chars)
+                draw_21(layout: layout, m2: m2, m3: index, chars: chars)
+              end
+
+              def draw_row_a5(layout, padding, index, chars)
+                draw_a5(layout: layout, padding: padding, zone: index, chars: chars)
+              end
+
               alias render_header render
               alias render_menu render
             end
