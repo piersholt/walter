@@ -26,6 +26,10 @@ module Wilhelm
             public_send(action)
           end
 
+          def launch(*args)
+            ui_context.launch(*args)
+          end
+
           def create(*args)
             raise("#create must be implemented by controllers. #{args}")
           end
