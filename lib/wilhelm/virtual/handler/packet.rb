@@ -88,13 +88,13 @@ module Wilhelm
           command    = bus_message.command
           args       = bus_message.arguments
 
-          command_object = parse_command(from_ident, command.i, args)
+          command_object = parse_command(from_ident, to_ident, command.i, args)
 
           Message.new(from_ident, to_ident, command_object)
         end
 
-        def parse_command(from_ident, command, arguments)
-          command_config = CommandMap.instance.config(command, from_ident)
+        def parse_command(from_ident, to_ident, command, arguments)
+          command_config = CommandMap.instance.config(command, from: from_ident, to: to_ident)
           parameter_values_hash = parse_argumets(command_config, arguments)
           LOGGER.debug(self.class) { "Parameter Values: #{parameter_values_hash}" }
           command_object = build_command(command_config, parameter_values_hash)

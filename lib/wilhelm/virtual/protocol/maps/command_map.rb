@@ -18,29 +18,25 @@ module Wilhelm
         instance.reload!
       end
 
-      def find_or_default(command_id, from = nil)
+      def find_or_default(command_id, from: nil, to: nil)
         LOGGER.debug(PROC) { "#find_or_default(#{command_id})" }
         mapped_result = nil
 
         begin
           mapped_result = find(command_id)
         rescue IndexError
-          LOGGER.error(PROC) {
+          LOGGER.error(PROC) do
             "Command ID: #{command_id}, #{Helpers::DataTools.d2h(command_id, true)} not found!"
-          }
+          end
           mapped_result = find(:default)
           mapped_result[:id][:d] = command_id
         end
 
-        if from
+        if from || to
           schemas = mapped_result[:schemas]
           if schemas
-            # puts 'breakable point'
-            has_schema = schemas.include?(from)
-          end
-          if has_schema
-            # puts 'breakable point'
-            mapped_result = mapped_result[from]
+            mapped_result = mapped_result[from] if schemas.include?(from)
+            mapped_result = mapped_result[to] if schemas.include?(to)
           end
         end
 
@@ -50,8 +46,8 @@ module Wilhelm
         command_configuration
       end
 
-      def config(command_id, from = nil)
-        find_or_default(command_id, from)
+      def config(command_id, from: nil, to: nil)
+        find_or_default(command_id, from: from, to: to)
       end
     end
   end

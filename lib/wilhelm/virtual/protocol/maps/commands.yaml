@@ -39,10 +39,10 @@
       :dictionary:
         0x41: '(RAD) Presets'
         0x43: '(RAD) Source'
-        0x60: '(RDS) Menu A'
-        0x61: '(RDS) Menu B'
-        0x62: '(RDS) Header'
-        0x63: '(RDS) Static'
+        0x60: 'Menu A' # (RDS)
+        0x61: 'Menu B' # (RDS)
+        0x62: 'Header' # (RDS)
+        0x63: 'Static' # (RDS)
         0x83: '(TAPE) Side'
         0xc0: '(CD) Discs?'
     :m2:
@@ -3692,137 +3692,162 @@
   :id:
     :d: 49
     :h: '0x31'
-  :properties:
-    :short_name: DATA
-    :long_name: BMBT/MID Soft Button Input
-  :index:
-    :source: 0
-    :function: 1
-    :action: 2
-  :parameters:
-    :source:
-      :type: :map
-      :dictionary:
-        0x00: --
-
-        0x20: Info
-        0x42: Dial
-        0x43: Directory
-        0x80: Top 8
-
-        0x60: RDS 1
-        0x61: RDS 2
-      :map:
-        0x00: :no_source
-        0x20: :info
-        0x42: :dial
-        0x43: :directory
-        0x80: :top 8
-        0x60: :rds_1
-        0x61: :rds_2
-    :function:
-      :type: :map
-      :dictionary:
-        0x00: --
-        0x01: Contact
-        0x02: Digit
-        0x05: SOS
-        0x07: Navigate
-        0x08: Info
-      :map:
-        0x00: :no_function
-        0x01: :contact
-        0x02: :digit
-        0x05: :sos
-        0x07: :navigate
-        0x08: :info
-    :action:
-      :type: :bit_array
-      :index:
-        :button_id: !ruby/range
-                      begin: 3
-                      end: 7
-                      excl: false
-        :button_state: !ruby/range
-                        begin: 1
-                        end: 2
-                        excl: false
-      :parameters:
-        :button_id:
-          :type: :map
-          :label: 'Index:'
-          :dictionary:
-            0x00: 0x00
-            0x01: 0x01
-            0x02: 0x02
-            0x03: 0x03
-            0x04: 0x04
-            0x05: 0x05
-            0x06: 0x06
-            0x07: 0x07
-            0x08: 0x08
-            0x09: 0x09
-            0x0a: 0x0a
-            0x0b: 0x0b
-            0x0c: 0x0c
-            0x0d: 0x0d
-            0x0e: 0x0e
-            0x0f: 0x0f
-            0x1a: 0x1a
-            0x1b: 0x1b
-            0x1c: 0x1c
-            0x1d: 0x1d
-            0x1e: 0x1e
-            0x1f: 0x1f
-        :button_state:
-          :type: :switch
-          :states:
-            0b00: :press
-            0b01: :hold
-            0b10: :release
-          :dictionary:
-            0b00: Press
-            0b01: Hold
-            0b10: Release
-  :klass: ParameterizedCommand
-  :meta:
-    :digit:
-      :type: :map
-      :dictionary:
-        0x00: (0)
-        0x01: (1)
-        0x02: (2)
-        0x03: (3)
-        0x04: (4)
-        0x05: (5)
-        0x06: (6)
-        0x07: (7)
-        0x08: (8)
-        0x09: (9)
-        0x0A: DEL
-        0x1A: "*"
-        0x1B: "#"
-    :contact:
-      :type: :bit_array
-      :parameters:
+  :schemas:
+    - :tel
+    - :rad
+  :rad:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: DATA-RAD
+      :long_name: Radio Menu Soft Buttom
+    :index:
+      :source: 0
+      :function: 1
+      :action: 2
+    :parameters:
+      :source:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x60: Menu A # RDS
+          0x61: Menu B # RDS
+        :map:
+          0x00: :no_source
+          0x60: :rds_1
+          0x61: :rds_2
+      :function:
+        :type: :map
+        :dictionary:
+          0x00: --
+        :map:
+          0x00: :no_function
+      :action:
+        :type: :bit_array
         :index:
-          :column: 3
-          :row:  !ruby/range
-                  begin: 5
-                  end: 7
-                  excl: false
-        :column:
-          :type: :map
-          :dictionary:
-            0: Column 1
-            1: Column 2
-        :row:
-          :type: :map
-          :dictionary:
-            0x00: Row 1
-            0x02: Row 2
-            0x04: Row 3
-            0x06: Row 4
+          :button_id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
+          :button_state: !ruby/range
+                          begin: 1
+                          end: 2
+                          excl: false
+        :parameters:
+          :button_id:
+            :type: :map
+            :label: 'Index:'
+            :dictionary:
+              0x00: 'Index 0'
+              0x01: 'Index 1'
+              0x02: 'Index 2'
+              0x03: 'Index 3'
+              0x04: 'Index 4'
+              0x05: 'Index 5'
+              0x06: 'Index 6'
+              0x07: 'Index 7'
+              0x08: 'Index 8'
+              0x09: 'Index 9'
+              0x0a: 'Index 10'
+          :button_state:
+            :type: :switch
+            :states:
+              0b00: :press
+              0b01: :hold
+              0b10: :release
+            :dictionary:
+              0b00: Press
+              0b01: Hold
+              0b10: Release
+  :tel:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: DATA-TEL
+      :long_name: Telephone Menu Soft Buttom
+    :index:
+      :source: 0
+      :function: 1
+      :action: 2
+    :parameters:
+      :source:
+        :type: :map
+        :dictionary:
+          0x00: --
+
+          0x20: Info
+          0x42: Dial
+          0x43: Directory
+          0x80: Top 8
+        :map:
+          0x00: :no_source
+          0x20: :info
+          0x42: :dial
+          0x43: :directory
+          0x80: :top 8
+      :function:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x01: Contact
+          0x02: Digit
+          0x05: SOS
+          0x07: Navigate
+          0x08: Info
+        :map:
+          0x00: :no_function
+          0x01: :contact
+          0x02: :digit
+          0x05: :sos
+          0x07: :navigate
+          0x08: :info
+      :action:
+        :type: :bit_array
+        :index:
+          :button_id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
+          :button_state: !ruby/range
+                          begin: 1
+                          end: 2
+                          excl: false
+        :parameters:
+          :button_id:
+            :type: :map
+            :label: 'Index:'
+            :dictionary:
+              0x00: 0x00
+              0x01: 0x01
+              0x02: 0x02
+              0x03: 0x03
+              0x04: 0x04
+              0x05: 0x05
+              0x06: 0x06
+              0x07: 0x07
+              0x08: 0x08
+              0x09: 0x09
+              0x0a: 0x0a
+              0x0b: 0x0b
+              0x0c: 0x0c
+              0x0d: 0x0d
+              0x0e: 0x0e
+              0x0f: 0x0f
+              0x1a: 0x1a
+              0x1b: 0x1b
+              0x1c: 0x1c
+              0x1d: 0x1d
+              0x1e: 0x1e
+              0x1f: 0x1f
+          :button_state:
+            :type: :switch
+            :states:
+              0b00: :press
+              0b01: :hold
+              0b10: :release
+            :dictionary:
+              0b00: Press
+              0b01: Hold
+              0b10: Release
+  :meta:
     :commands:
       - 00 00 0D Directory Forward Page Start
       - 00 00 2D Directory Forward Page Scroll
