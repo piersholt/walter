@@ -5,7 +5,7 @@ module Wilhelm
     class Context
       class UserInterface
         module Model
-          module Characters
+          module Encoding
             # Context::UserInterface::Model::Characters::List
             class CodeList < UIKit::Model::List
               CHARACTER_SET_SIZE = 256

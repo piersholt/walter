@@ -84,7 +84,7 @@ module Wilhelm
               header:  UserInterface::Controller::HeaderController,
               debug:  UserInterface::Controller::DebugController,
               services:  UserInterface::Controller::ServicesController,
-              characters:  UserInterface::Controller::CharactersController
+              encoding:  UserInterface::Controller::EncodingController
             )
           rescue StandardError => e
             with_backtrace(logger, e)

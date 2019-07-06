@@ -29,7 +29,7 @@ module Wilhelm
               private
 
               def indexed_options
-                options = %w[Services Characters]
+                options = %w[Services Encoding]
                 options.first(COLUMN_ONE_MAX).map.with_index do |option, index|
                   indexed_option =
                   BaseMenuItem.new(label: option, action: option.downcase.to_sym)

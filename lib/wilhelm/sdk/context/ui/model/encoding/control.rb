@@ -5,11 +5,11 @@ module Wilhelm
     class Context
       class UserInterface
         module Model
-          module Characters
+          module Encoding
             # Context::UserInterface::Model::Characters::ControlCharacters
             class ControlCharacters < UIKit::Model::List
               PROG = 'Characters::ControlCharacters'
-              ASCII = Encoding::ASCII_8BIT
+              ASCII = ::Encoding::ASCII_8BIT
 
               # CONTROL CHARACTERS
               C_NULL         = 0x00
@@ -45,7 +45,7 @@ module Wilhelm
                 range.permutation(2).to_a.shuffle.map do |x, y|
                   # puts x.to_s + ' ' + y.to_s
                   chars = '"AAA BBB CCC"'.encode(ASCII).bytes
-                  chars.unshift(*("[#{x.to_s(16)}\t#{y.to_s(16)}]\t".encode(Encoding::ASCII_8BIT).bytes))
+                  chars.unshift(*("[#{x.to_s(16)}\t#{y.to_s(16)}]\t".encode(ASCII).bytes))
                   chars.insert(-1, x)
                   chars.insert(-1, y)
                   # chars.insert(0, y)

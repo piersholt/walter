@@ -5,7 +5,7 @@ module Wilhelm
     class Context
       class UserInterface
         module View
-          module Characters
+          module Encoding
             # Characters::Pixels
             class Weight < UIKit::View::StaticMenu
               include UIKit::View

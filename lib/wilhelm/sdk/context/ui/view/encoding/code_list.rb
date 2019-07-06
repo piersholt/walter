@@ -5,7 +5,7 @@ module Wilhelm
     class Context
       class UserInterface
         module View
-          module Characters
+          module Encoding
             # Characters::Index
             class CodeList < UIKit::View::BasicMenu
               include UIKit::View

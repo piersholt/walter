@@ -5,7 +5,7 @@ module Wilhelm
     class Context
       class UserInterface
         module Model
-          module Characters
+          module Encoding
             # Context::UserInterface::Model::Characters::Pixel
             class Weight < UIKit::Model::List
               PROG = 'Characters::Weight'

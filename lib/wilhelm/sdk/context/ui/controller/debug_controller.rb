@@ -70,8 +70,8 @@ module Wilhelm
               case action
               when :services
                 ui_context.launch(:services, :index)
-              when :characters
-                ui_context.launch(:characters, :index)
+              when :encoding
+                ui_context.launch(:encoding, :index)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

@@ -5,19 +5,19 @@ module Wilhelm
     class Context
       class UserInterface
         module Controller
-          # CharactersController
-          class CharactersController < UIKit::Controller::BaseController
-            NAME = 'CharactersController'
+          # EncodingController
+          class EncodingController < UIKit::Controller::BaseController
+            NAME = 'EncodingController'
 
             CHARACTERS = [
               { label: 'Character Set', action: :codelist },
               { label: 'Font Width', action: :weight },
-              { label: 'Control Characters', action: :control }
+              { label: 'Control Encoding', action: :control }
             ].freeze
 
             def index
               LOGGER.unknown(NAME) { '#index' }
-              @view = View::Characters::Index.new(CHARACTERS)
+              @view = View::Encoding::Index.new(CHARACTERS)
               view.add_observer(self)
 
               render(view)
@@ -25,7 +25,7 @@ module Wilhelm
 
             def codelist
               LOGGER.unknown(NAME) { '#codelist' }
-              @view = View::Characters::CodeList.new(@code_model)
+              @view = View::Encoding::CodeList.new(@code_model)
               view.add_observer(self, :update_codelist)
 
               render(view)
@@ -33,7 +33,7 @@ module Wilhelm
 
             def weight
               LOGGER.unknown(NAME) { '#weight' }
-              @view = View::Characters::Weight.new(@weight_model)
+              @view = View::Encoding::Weight.new(@weight_model)
               view.add_observer(self, :update_weight)
 
               render(view)
@@ -42,7 +42,7 @@ module Wilhelm
             def control
               LOGGER.unknown(NAME) { '#control' }
               # LOGGER.unknown(NAME) { "@control_model => #{@control_model.instance_variable_get(:@items)}" }
-              @view = View::Characters::ControlCharacters.new(@control_model)
+              @view = View::Encoding::ControlCharacters.new(@control_model)
               view.add_observer(self, :update_control)
 
               render(view)
@@ -60,13 +60,13 @@ module Wilhelm
               when :index
                 true
               when :codelist
-                @code_model = Model::Characters::CodeList.new(32, 8)
+                @code_model = Model::Encoding::CodeList.new(32, 8)
                 true
               when :weight
-                @weight_model = Model::Characters::Weight.new(16, 0, 5)
+                @weight_model = Model::Encoding::Weight.new(16, 0, 5)
                 true
               when :control
-                @control_model = Model::Characters::ControlCharacters.new(0, 5)
+                @control_model = Model::Encoding::ControlCharacters.new(0, 5)
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
@@ -99,11 +99,11 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.class})" }
               case action
               when :codelist
-                launch(:characters, :codelist)
+                launch(:encoding, :codelist)
               when :weight
-                launch(:characters, :weight)
+                launch(:encoding, :weight)
               when :control
-                launch(:characters, :control)
+                launch(:encoding, :control)
               when :debug_index
                 launch(:debug, :index)
               else
