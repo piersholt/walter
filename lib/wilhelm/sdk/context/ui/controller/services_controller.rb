@@ -92,17 +92,10 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
               case action
               when :manager
-                # destroy(:index)
-                # application_context.ui.bluetooth_controller.load(:index)
                 ui_context.launch(:manager, :index)
               when :audio
-                # destroy(:index)
-                # application_context.ui.audio_controller.load(:index)
                 ui_context.launch(:audio, :index)
               when :debug_index
-                # destroy(:index)
-                # destroy(:device)
-                # context.ui.root.load(:index)
                 ui_context.launch(:debug, :index)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
