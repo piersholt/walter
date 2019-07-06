@@ -15,16 +15,16 @@ module Wilhelm
             augmented: 'Augmented' }.freeze
 
         CLASS_MAP =
-          { dsp: 'DSP',
+          { bmbt: 'BMBT',
             cdc: 'CDC',
-            ike: 'IKE',
-            tel: 'Telephone',
-            rad: 'Radio',
-            gfx: 'GFX',
             dia: 'Diagnostics',
-            bmbt: 'BMBT',
-            tv: 'TV',
-            mfl: 'MFL' }.freeze
+            dsp: 'DSP',
+            gfx: 'GFX',
+            ike: 'IKE',
+            mfl: 'MFL',
+            rad: 'Radio',
+            tel: 'Telephone',
+            tv: 'TV' }.freeze
 
         attr_reader :ident, :klass
 

@@ -9,9 +9,11 @@ module Wilhelm
           include Constants::Command::Aliases
           include Device::API::BaseAPI
 
-          def button(from: :bmbt, to:, arguments:)
+          def bmbt_btn_a(from: :bmbt, to:, arguments:)
             try(from, to, BMBT_A, arguments)
           end
+
+          alias button bmbt_btn_a
         end
       end
     end

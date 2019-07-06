@@ -49,9 +49,9 @@ module Wilhelm
             private
 
             def press_and_release(press:, release:)
-              button(to: :rad, arguments: integers_input(press))
+              bmbt_btn_a(to: :rad, arguments: integers_input(press))
               Kernel.sleep(0.05)
-              button(to: :rad, arguments: integers_input(release))
+              bmbt_btn_a(to: :rad, arguments: integers_input(release))
             end
           end
         end
