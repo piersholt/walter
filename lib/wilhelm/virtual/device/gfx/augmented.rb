@@ -6,6 +6,7 @@ module Wilhelm
       module GFX
         # GFX::Augmented
         class Augmented < Device::Augmented
+          include Wilhelm::Helpers::DataTools
           include Capabilities
           include State
 
@@ -58,19 +59,19 @@ module Wilhelm
               logger.debug(moi) { "Tx: PONG" }
               evaluate_pong(message.command)
             when TEL_DATA
-              logger.debug(moi) { "Tx: Data (#{DataTools.d2h(TEL_DATA)})" }
+              logger.debug(moi) { "Tx: Data (#{d2h(TEL_DATA)})" }
               evaluate_tel_data(message.command)
             when MENU_GFX
-              logger.debug(moi) { "Tx: Menu GFX (#{DataTools.d2h(MENU_GFX)})" }
+              logger.debug(moi) { "Tx: Menu GFX (#{d2h(MENU_GFX)})" }
               evaluate_menu_gfx(message.command)
             when SRC_GFX
-              logger.debug(moi) { "Tx: Source GFX (#{DataTools.d2h(SRC_GFX)})" }
+              logger.debug(moi) { "Tx: Source GFX (#{d2h(SRC_GFX)})" }
               evaluate_src_gfx(message.command)
             when SRC_SND
-              # logger.debug(moi) { "Tx: Source SND (#{DataTools.d2h(SRC_SND)})" }
+              # logger.debug(moi) { "Tx: Source SND (#{d2h(SRC_SND)})" }
               # evaluate_menu_gfx(message.command)
             when OBC_BOOL
-              logger.debug(moi) { "Tx: OBC Req. (#{DataTools.d2h(OBC_BOOL)})" }
+              logger.debug(moi) { "Tx: OBC Req. (#{d2h(OBC_BOOL)})" }
               evaluate_obc_req(message.command)
             end
           end
@@ -82,21 +83,21 @@ module Wilhelm
 
             case command_id
             when TXT_GFX
-              logger.debug(moi) { "Rx: TXT_GFX 0x#{DataTools.d2h(TXT_GFX)}" }
+              logger.debug(moi) { "Rx: TXT_GFX 0x#{d2h(TXT_GFX)}" }
               return false unless message.from == :rad
               handle_draw_23(message.command)
             when MENU_RAD
-              logger.debug(moi) { "Rx: MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
+              logger.debug(moi) { "Rx: MENU_RAD 0x#{d2h(MENU_RAD)}" }
               handle_menu_rad(message.command)
             when RAD_ALT
-              logger.debug(moi) { "Rx: RAD_ALT 0x#{DataTools.d2h(RAD_ALT)}" }
+              logger.debug(moi) { "Rx: RAD_ALT 0x#{d2h(RAD_ALT)}" }
               handle_radio_alt(message.command)
             when TXT_NAV
-              logger.debug(moi) { "Rx: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
+              logger.debug(moi) { "Rx: TXT_NAV 0x#{d2h(TXT_NAV)}" }
               return false unless message.from == :rad
               handle_draw_a5(message.command)
             when TXT_MID
-              logger.debug(moi) { "Rx: TXT_MID 0x#{DataTools.d2h(TXT_MID)}" }
+              logger.debug(moi) { "Rx: TXT_MID 0x#{d2h(TXT_MID)}" }
               return false unless message.from == :rad
               handle_draw_21(message.command)
             end

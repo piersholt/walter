@@ -37,7 +37,7 @@ module Wilhelm
             end
 
             def send_it!(from, to, command)
-              LOGGER.debug(name) { "#send_it!(#{from.sn(false)}, #{to.sn(false)}, #{command.inspect})" }
+              LOGGER.debug(name) { "#send_it!(#{from}, #{to}, #{command.inspect})" }
               message = Message.new(from, to, command)
               changed
               notify_observers(MESSAGE_SENT, message: message)

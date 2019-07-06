@@ -7,6 +7,7 @@ module Wilhelm
       module BMBT
         # Comment
         class Augmented < Device::Augmented
+          include Wilhelm::Helpers::DataTools
           include Capabilities
           include Sent
           include Received
@@ -38,13 +39,13 @@ module Wilhelm
 
             case command_id
             when BMBT_A
-              logger.debug(moi) { "Tx: BMBT A (#{DataTools.d2h(BMBT_A)})" }
+              logger.debug(moi) { "Tx: BMBT A (#{d2h(BMBT_A)})" }
               evaluate_bmbt_1_button(message.command)
             when BMBT_B
-              logger.debug(moi) { "Tx: BMBT A (#{DataTools.d2h(BMBT_B)})" }
+              logger.debug(moi) { "Tx: BMBT A (#{d2h(BMBT_B)})" }
               evaluate_bmbt_2_button(message.command)
             when MFL_VOL
-              logger.debug(moi) { "Tx: MFL_VOL (#{DataTools.d2h(MFL_VOL)})" }
+              logger.debug(moi) { "Tx: MFL_VOL (#{d2h(MFL_VOL)})" }
               evaluate_mfl_vol_button(message.command)
             end
           end

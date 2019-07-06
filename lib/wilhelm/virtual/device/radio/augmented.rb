@@ -6,6 +6,7 @@ module Wilhelm
     class Device
       module Radio
         class Augmented < Device::Augmented
+          include Wilhelm::Helpers::DataTools
           include State
           # include Retroactive
           include Actions
@@ -45,24 +46,24 @@ module Wilhelm
             when TXT_MID
               # logger.debug('Radio') {Tx:  "Drawing to MID!" }
             when TXT_GFX
-              logger.debug('Radio') { "Tx: TXT_GFX 0x#{DataTools.d2h(TXT_GFX)}" }
+              logger.debug('Radio') { "Tx: TXT_GFX 0x#{d2h(TXT_GFX)}" }
               # foreground
               evaluate_display_layout(message.command)
             when TXT_NAV
-              # logger.debug('Radio') { "Tx: TXT_NAV 0x#{DataTools.d2h(TXT_NAV)}" }
+              # logger.debug('Radio') { "Tx: TXT_NAV 0x#{d2h(TXT_NAV)}" }
               # evaluate_nav_layout(message.command)
             when CDC_REQ
-              # logger.debug('Radio') { "Tx: CDC_REQ 0x#{DataTools.d2h(CDC_REQ)}!" }
+              # logger.debug('Radio') { "Tx: CDC_REQ 0x#{d2h(CDC_REQ)}!" }
               evaluate_cdc_request(message.command)
             when MENU_RAD
-              logger.debug('Radio') { "Tx: MENU_RAD 0x#{DataTools.d2h(MENU_RAD)}" }
+              logger.debug('Radio') { "Tx: MENU_RAD 0x#{d2h(MENU_RAD)}" }
               # background
               evaluate_menu_rad(message.command)
             when RAD_LED
-              logger.debug('Radio') { "Tx: RAD_LED 0x#{DataTools.d2h(RAD_LED)}!" }
+              logger.debug('Radio') { "Tx: RAD_LED 0x#{d2h(RAD_LED)}!" }
               evaluate_radio_led(message.command)
             when RAD_ALT
-              logger.debug('Radio') { "Tx: RAD_ALT 0x#{DataTools.d2h(RAD_ALT)}" }
+              logger.debug('Radio') { "Tx: RAD_ALT 0x#{d2h(RAD_ALT)}" }
               evaluate_radio_alt(message.command)
             end
 

@@ -7,6 +7,7 @@ module Wilhelm
       module MFL
         # Comment
         class Augmented < Device::Augmented
+          include Wilhelm::Helpers::DataTools
           include State
           include Capabilities
 
@@ -38,10 +39,10 @@ module Wilhelm
 
             case command_id
             when MFL_FUNC
-              logger.debug(moi) { "Tx: MFL_FUNC (#{DataTools.d2h(MFL_FUNC)})" }
+              logger.debug(moi) { "Tx: MFL_FUNC (#{d2h(MFL_FUNC)})" }
               handle_mfl_func_button(message.command)
             when MFL_VOL
-              logger.debug(moi) { "Tx: MFL_VOL (#{DataTools.d2h(MFL_VOL)})" }
+              logger.debug(moi) { "Tx: MFL_VOL (#{d2h(MFL_VOL)})" }
               handle_mfl_vol_button(message.command)
             end
           end
