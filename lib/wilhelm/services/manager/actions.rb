@@ -20,9 +20,9 @@ module Wilhelm
         end
 
         # via Controls
-        def load_manager(toggle)
+        def load_manager
           logger.debug(MANAGER) { "#load_manager(#{toggle})" }
-          @state.load_manager(self, toggle)
+          @state.load_manager(self)
         end
       end
     end

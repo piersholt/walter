@@ -22,7 +22,7 @@ module Wilhelm
           end
 
           # via Controls
-          def load_manager(context, *)
+          def load_manager(context)
             logger.info(MANAGER_ON) { '#load_manager()' }
             context.context.ui.launch(:manager, :index)
           end
