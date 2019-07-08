@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/piersholt/wilhelm-tools.git
-  revision: 4e71f3a66874a4532961b66fa169a8f908c6b19a
+  revision: 8bf062009536c0fddf2397cea31b3433540677d5
   branch: master
   specs:
-    wilhelm-tools (1.0.0)
+    wilhelm-tools (1.1.0)
       rbczmq (~> 1.7)
 
 GEM

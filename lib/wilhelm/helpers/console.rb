@@ -5,7 +5,7 @@ puts "\tLoading wilhelm/helpers/console"
 require_relative 'console/delayable'
 require_relative 'console/session'
 require_relative 'console/threads'
-require_relative 'console/yabber'
+# require_relative 'console/yabber'
 require_relative 'console/frames'
 
 module Wilhelm
@@ -16,7 +16,7 @@ module Wilhelm
       include Delayable
       include Session
       include Threads
-      include Yabber
+      # include Yabber
 
       def command_map
         Wilhelm::Virtual::CommandMap.instance

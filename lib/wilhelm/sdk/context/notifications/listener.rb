@@ -6,7 +6,7 @@ module Wilhelm
       class Notifications
         # Context::Notifications::Listener
         class Listener
-          include NotificationDelegator
+          include Yabber::NotificationDelegator
           include ManageableThreads
           include Singleton
           include Constants
@@ -14,7 +14,7 @@ module Wilhelm
           attr_reader :listener_thread
 
           def deserialize(serialized_object)
-            notification = Messaging::Serialized.new(serialized_object).parse
+            notification = Yabber::Serialized.new(serialized_object).parse
             logger.debug(NOTIFICATIONS_LISTENER) { "Deserialized: #{notification}" }
             # logger.debug(NOTIFICATIONS_LISTENER) { "name: #{notification.name} (#{notification.name.class})" }
             notification
@@ -26,7 +26,7 @@ module Wilhelm
 
           def pop_and_delegate(i)
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Wait" }
-            serialized_object = Subscriber.recv
+            serialized_object = Yabber::Subscriber.recv
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Received: #{serialized_object}" }
             notification = deserialize(serialized_object)
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Deserialzed: #{notification}" }
@@ -60,7 +60,7 @@ module Wilhelm
                 host: ENV['subscriber_host']
               }
               logger.debug(NOTIFICATIONS_LISTENER) { "Subscriber connection options: #{connection_options}" }
-              Subscriber.params(connection_options)
+              Yabber::Subscriber.params(connection_options)
               begin
                 logger.debug(NOTIFICATIONS_LISTENER) { 'Thread listen start!' }
                 listen_loop

@@ -29,8 +29,8 @@ module Walter
         port: ENV['publisher_port'], host: ENV['publisher_host']
       }
       LOGGER.debug(PROC) { "Publisher connection options: #{connection_options}" }
-      Publisher.params(connection_options)
-      Publisher.announcement(:walter)
+      Yabber::Publisher.params(connection_options)
+      Yabber::Publisher.announcement(:walter)
     end
 
     def launch

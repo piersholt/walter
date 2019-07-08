@@ -9,8 +9,8 @@ module Wilhelm
           module Actions
             include Wilhelm::Virtual::Constants::Command::Aliases
             # include ::Actions
-            include Messaging::Constants
-            include Messaging::API
+            include Yabber::Constants
+            include Yabber::API
 
             NEXT_PRESS = 0x00
             NEXT_HOLD = 0x40

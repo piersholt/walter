@@ -22,7 +22,7 @@ module Wilhelm
       class ServicesContext
         include Logging
         include Observable
-        include Messaging::API
+        include Yabber::API
         include States
         include Environment
         include Registration
@@ -37,7 +37,7 @@ module Wilhelm
             host: ENV['client_host']
           }
           logger.debug(WILHELM) { "Client connection options: #{connection_options}" }
-          Client.params(connection_options)
+          Yabber::Client.params(connection_options)
         end
       end
     end

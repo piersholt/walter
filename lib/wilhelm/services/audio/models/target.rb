@@ -7,7 +7,7 @@ module Wilhelm
       class Target
         include Logging
         include Observable
-        include Messaging::API
+        include Yabber::API
 
         PLAYER = 'Player'
         CONNECTED = 'Connected'

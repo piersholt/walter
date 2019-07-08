@@ -8,8 +8,8 @@ module Wilhelm
           # Incoming command handlers
           module Handlers
             include Capabilities::Constants
-            include Messaging::API
-            include Messaging::Constants
+            include Yabber::API
+            include Yabber::Constants
             include LogActually::ErrorOutput
 
             def handle_cd_changer_request(command)

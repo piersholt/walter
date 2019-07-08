@@ -7,8 +7,8 @@ module Wilhelm
         # Audio::Notifications::ControllerHandler
         class ControllerHandler
           include Singleton
-          include NotificationDelegate
-          include Messaging::Constants
+          include Yabber::NotificationDelegate
+          include Yabber::Constants
 
           attr_accessor :context, :audio
 

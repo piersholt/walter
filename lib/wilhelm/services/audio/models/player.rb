@@ -7,7 +7,7 @@ module Wilhelm
       class Player
         include Logging
         include Observable
-        include Messaging::API
+        include Yabber::API
 
         TRACK = 'Track'
         DEVICE = 'Device'

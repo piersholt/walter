@@ -7,8 +7,8 @@ module Wilhelm
         # Context::Notifications::DebugHandler
         class DebugHandler
           include Singleton
-          include NotificationDelegate
-          include Messaging::Constants
+          include Yabber::NotificationDelegate
+          include Yabber::Constants
 
           attr_accessor :context
 
