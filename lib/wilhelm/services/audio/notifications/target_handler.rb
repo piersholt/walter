@@ -22,16 +22,17 @@ module Wilhelm
             logger.debug(TARGET_HANDLER) { "#take_responsibility(#{notification})" }
             case notification.name
             when :addressed_player
-              logger.info(TARGET_HANDLER) { "#{:addressed_player}" }
+              logger.info(TARGET_HANDLER) { ':addressed_player' }
+              logger.warn(TARGET_HANDLER) { ':addressed_player => I don\'t like this notification....' }
               audio.addressed_player(notification.properties)
             when :player_added
-              logger.info(TARGET_HANDLER) { "#{:player_added}" }
+              logger.info(TARGET_HANDLER) { ':player_added' }
               audio.player_added(notification.properties)
             when :player_changed
-              logger.info(TARGET_HANDLER) { "#{:player_changed}" }
+              logger.info(TARGET_HANDLER) { ':player_changed' }
               audio.player_changed(notification.properties)
             when :player_removed
-              logger.info(TARGET_HANDLER) { "#{:player_removed}" }
+              logger.info(TARGET_HANDLER) { ':player_removed' }
               audio.player_removed(notification.properties)
             else
               not_handled(notification)

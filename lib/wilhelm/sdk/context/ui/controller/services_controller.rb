@@ -32,9 +32,6 @@ module Wilhelm
                   service.add_observer(self, service.nickname)
                 end
                 @services = application_context.services
-
-                # application_context.add_observer(self, application_context.nickname)
-                # @container = application_context
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
@@ -48,7 +45,6 @@ module Wilhelm
                 application_context.manager.delete_observer(self)
                 application_context.audio.delete_observer(self)
                 @services = nil
-                # @container = nil
                 true
               else
                 LOGGER.warn(NAME) { "Destroy: #{view} view not recognised." }
@@ -61,11 +57,11 @@ module Wilhelm
             def manager(action)
               LOGGER.debug(NAME) { "#manager(#{action})" }
               case action
-              when Wilhelm::Services::Manager::On
+              when Wilhelm::Services::Manager::Disabled
                 index
               when Wilhelm::Services::Manager::Enabled
                 index
-              when Wilhelm::Services::Manager::Disabled
+              when Wilhelm::Services::Manager::On
                 index
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
@@ -75,13 +71,13 @@ module Wilhelm
             def audio(action)
               LOGGER.debug(NAME) { "#audio(#{action})" }
               case action
-              when Wilhelm::Services::Audio::On
+              when Wilhelm::Services::Audio::Disabled
                 index
               when Wilhelm::Services::Audio::Enabled
                 index
               when Wilhelm::Services::Audio::Off
                 index
-              when Wilhelm::Services::Audio::Disabled
+              when Wilhelm::Services::Audio::On
                 index
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
