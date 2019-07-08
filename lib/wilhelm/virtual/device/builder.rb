@@ -21,6 +21,7 @@ module Wilhelm
             dsp: 'DSP',
             gfx: 'GFX',
             ike: 'IKE',
+            lcm: 'LCM',
             mfl: 'MFL',
             rad: 'Radio',
             tel: 'Telephone',

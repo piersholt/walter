@@ -14,7 +14,7 @@ module Wilhelm
         end
 
         def type
-          :simulated
+          TYPE_SIMULATED
         end
 
         # @override Object#inspect
@@ -22,25 +22,13 @@ module Wilhelm
           "#<Emulated :#{@ident}>"
         end
 
-        # @override Object#to_s
-        def to_s
-          "<:#{@ident}>"
-        end
-
-        # @override Virtual::Device#receive_packet
-
+        # @override Device::Dynamic
         def handle_virtual_receive(message)
-          # logger.fatal(PROC) { "handle_virtual_receive: #{message.command.d}" }
           command_id = message.command.d
           case command_id
           when PING
-            # logger.fatal(PROC) { "Rx: Handling: PING" }
             pong
           end
-        end
-
-        def handle_virtual_transmit(message)
-          false
         end
       end
     end

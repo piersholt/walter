@@ -3,70 +3,78 @@
 module Wilhelm
   module Virtual
     class Device
+      # Device::Dynamic
       class Dynamic < Base
         include Wilhelm::Virtual::Constants::Command::Aliases
 
-        DEFAULT_STATUS = :up
+        PROC = 'Device::Dynamic'
+
+        attr_reader :state
 
         def self.builder
           Builder.new
         end
 
+        PUBLISH = [].freeze
+        SUBSCRIBE = [].freeze
+
         def initialize(args)
           super(args)
-          @status = DEFAULT_STATUS
+          @state = Enabled.new
         end
 
-        def enable
-          @status = :up
-        end
-
-        def disable
-          @status = :down
+        def change_state(new_state)
+          return false if new_state.class == @state.class
+          LOGGER.debug(PROC) { "State => #{new_state.class}" }
+          @state = new_state
         end
 
         def enabled?
-          case @status
-          when nil
-            false
-          when :up
-            true
-          when :down
-            false
-          end
+          @state.enabled?(self)
         end
 
         def disabled?
-          case @status
-          when nil
-            false
-          when :up
-            false
-          when :down
-            true
-          end
+          @state.disabled?(self)
         end
 
-        # @override Virtual::Device#receive_packet
-        # Allows the introduction of custom behaviour
-        # def receive_packet(packet)
-        #   message = super(packet)
-        #   handle_message(message) if enabled?
-        # end
+        def enable!
+          @state.enable!(self)
+        end
 
-        # def publish_packet(packet)
-        #   message = super(packet)
-        #   handle_publish(message) if enabled?
-        # end
+        alias enable enable!
 
-        # @override Virtual::Device#virtual_receive (Receivable)
+        def disable!
+          @state.disable!(self)
+        end
+
+        alias disable disable!
+
+        # @override Device::Base.virtual_receive
         def virtual_receive(message)
-          handle_virtual_receive(message) if enabled?
+          @state.virtual_receive(self, message)
         end
 
-        # @override Virtual::Device#receive_packet (Receivable)
+        # @override Device::Base.virtual_transmit
         def virtual_transmit(message)
-          handle_virtual_transmit(message) if enabled?
+          @state.virtual_transmit(self, message)
+        end
+
+        def publish?(command_id)
+          self.class.const_get(:PUBLISH).include?(command_id)
+        end
+
+        def subscribe?(command_id)
+          self.class.const_get(:SUBSCRIBE).include?(command_id)
+        end
+
+        def handle_virtual_receive(*)
+          LOGGER.warn(PROC) { 'handle_virtual_receive not overridden!' }
+          false
+        end
+
+        def handle_virtual_transmit(*)
+          LOGGER.warn(PROC) { '#handle_virtual_transmit not overridden!' }
+          false
         end
       end
     end

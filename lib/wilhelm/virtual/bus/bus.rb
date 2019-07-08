@@ -7,17 +7,19 @@ module Wilhelm
       extend Forwardable
       include Wilhelm::Helpers::Name
 
-      attr_reader :devices
-
-      def_delegators :@devices, :send_all, :dynamic, :augmented, :simulated, :broadcast, :dumb
+      def_delegators :devices, :send_all, :dynamic, :augmented, :simulated, :broadcast, :dumb
 
       def initialize
         @devices = Devices.new
         @status = :down
       end
 
+      def devices
+        @devices ||= Devices.new
+      end
+
       def inspect
-        "#<Virtual::Bus:0x00>"
+        '#<Virtual::Bus:0x00>'
       end
 
       def online

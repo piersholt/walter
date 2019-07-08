@@ -2,8 +2,8 @@
 
 module Wilhelm
   module Virtual
-    # Comment
     class Device
+      # Device::Base
       class Base
         include Observable
 
@@ -11,18 +11,24 @@ module Wilhelm
 
         attr_reader :ident
 
-        alias_method :me, :ident
+        alias me ident
 
         def initialize(device_ident)
           @ident = device_ident
         end
 
-        def i_am(other)
+        def is?(other)
           ident == other
         end
 
+        alias i_am is?
+
+        def moi
+          ident.upcase
+        end
+
         def type
-          :dumb
+          TYPE_BASE
         end
 
         # @override Object#inspect
@@ -35,12 +41,12 @@ module Wilhelm
           "<:#{@ident}>"
         end
 
-        def virtual_receive(message)
-          message
+        def virtual_receive(*)
+          false
         end
 
-        def virtual_transmit(message)
-          message
+        def virtual_transmit(*)
+          false
         end
       end
     end

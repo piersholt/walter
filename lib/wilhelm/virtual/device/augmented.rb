@@ -1,30 +1,23 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
+      # Virtual::Device::Augmented
       class Augmented < Dynamic
-        # include Actions
-
-        PROC = 'Device::Augmented'.freeze
+        PROC = 'Device::Augmented'
 
         def initialize(args)
           super(args)
         end
 
         def type
-          :augmented
+          TYPE_AUGMENTED
         end
 
         # @override Object#inspect
         def inspect
           "#<Augmented: #{@ident}>"
-        end
-
-        # @override Object#to_s
-        def to_s
-          "<:#{@ident}>"
         end
       end
     end

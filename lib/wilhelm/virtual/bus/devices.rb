@@ -2,13 +2,16 @@
 
 module Wilhelm
   module Virtual
+    # Virtual::Devices Data Structure
     class Devices
       extend Forwardable
 
+      attr_reader :devices
+
       array_methods = Array.instance_methods(false)
-      array_methods = array_methods + Enumerable.instance_methods(false)
+      array_methods += Enumerable.instance_methods(false)
       array_methods.each do |fwrd_message|
-        def_delegator :@devices, fwrd_message
+        def_delegator :devices, fwrd_message
       end
 
       def initialize(devices = [])
@@ -16,51 +19,59 @@ module Wilhelm
       end
 
       def send_all(method, *arguments)
-        @devices.each do |device|
+        devices.each do |device|
           device.public_send(method, *arguments)
         end
       end
 
       def include?(device_ident)
-        @devices.one? do |device|
+        devices.one? do |device|
           device.ident == device_ident
         end
       end
 
       def add(device)
-        @devices << device
+        devices << device
       end
 
       def list
-        @devices.map(&:ident)
+        devices.map(&:ident)
       end
 
-      def dumb
-        dumb_devices = @devices.find_all  {|d| d.type == :dumb }
-        Devices.new(dumb_devices)
+      def base
+        base_devices = devices.find_all do |d|
+          d.type == TYPE_BASE
+        end
+        Devices.new(base_devices)
       end
 
       def dynamic
-        dynamic_devices = @devices.find_all do |d|
-          %i(simulated augmented).any? { |t| t == d.type }
+        dynamic_devices = devices.find_all do |d|
+          TYPE_DYNAMIC.any? { |t| t == d.type }
         end
         Devices.new(dynamic_devices)
       end
 
       def augmented
-        augmented_devices = @devices.find_all  {|d| d.type == :augmented }
+        augmented_devices = devices.find_all do |d|
+          d.type == TYPE_AUGMENTED
+        end
         Devices.new(augmented_devices)
       end
 
-      def simulated
-        simulated_devices = @devices.find_all  {|d| d.type == :simulated }
-        Devices.new(simulated_devices)
+      def emulated
+        emulated_devices = devices.find_all do |d|
+          d.type == TYPE_EMULATED
+        end
+        Devices.new(emulated_devices)
       end
 
-      alias emulated simulated
+      alias simulated emulated
 
       def broadcast
-        broadcast_devices = @devices.find_all  {|d| d.type == :broadcast }
+        broadcast_devices = devices.find_all do |d|
+          d.type == TYPE_BROADCAST
+        end
         Devices.new(broadcast_devices)
       end
     end

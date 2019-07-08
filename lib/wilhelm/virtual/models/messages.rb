@@ -35,6 +35,8 @@ module Wilhelm
         self.class.new(results)
       end
 
+      alias c command
+
       def context(command_id, before = 5, after = 5)
         positions = indexes(command_id)
         positions.map do |index|
