@@ -6,7 +6,7 @@ module Wilhelm
       module TV
         # TV::Emulated
         class Emulated < Device::Emulated
-          PROC = 'TV::Emulated'.freeze
+          PROC = 'TV::Emulated'
 
           def handle_virtual_receive(message)
             command_id = message.command.d

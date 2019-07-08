@@ -82,9 +82,9 @@ module Wilhelm
           CLUSTER_REP  = 0x5C
           CLUSTER_REQ  = 0x5D
 
-          REMOTE    = 0x72
+          REMOTE = 0x72
 
-          KEY_REQ   = 0x73
+          KEY_REQ = 0x73
           KEY_REP = 0x74
 
           DOOR_REQ = 0x79

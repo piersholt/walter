@@ -4,6 +4,8 @@ module Wilhelm
   module Helpers
     # Positional Notation Helpers
     module PositionalNotation
+      extend self
+      
       BASE_2 = 2
       BASE_10 = 10
       BASE_16_BIT_SHIFT = 4

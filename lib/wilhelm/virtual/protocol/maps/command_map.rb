@@ -5,6 +5,7 @@ module Wilhelm
     # Comment
     class CommandMap < BaseMap
       include Singleton
+      include Wilhelm::Helpers::DataTools
       PROC = 'CommandMap'.freeze
 
       COMMANDS_MAP_NAME = 'commands'.freeze
@@ -26,7 +27,7 @@ module Wilhelm
           mapped_result = find(command_id)
         rescue IndexError
           LOGGER.error(PROC) do
-            "Command ID: #{command_id}, #{Helpers::DataTools.d2h(command_id, true)} not found!"
+            "Command ID: #{command_id}, #{d2h(command_id, true)} not found!"
           end
           mapped_result = find(:default)
           mapped_result[:id][:d] = command_id

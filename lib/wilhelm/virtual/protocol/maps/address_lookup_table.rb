@@ -5,6 +5,7 @@ module Wilhelm
     # Comment
     class AddressLookupTable < BaseMap
       include Singleton
+      include Wilhelm::Helpers::DataTools
 
       PROC = 'AddressLookupTable'
       SOURCE_PATH = 'address_lookup_table'.freeze
@@ -18,7 +19,7 @@ module Wilhelm
         LOGGER.debug(PROC) { "#find(#{device_id})" }
         mapped_result = super(device_id)
       rescue IndexError => e
-        LOGGER.warn(PROC) {"Device #{Helpers::DataTools.decimal_to_hex(device_id, true)} not found!" }
+        LOGGER.warn(PROC) {"Device #{decimal_to_hex(device_id, true)} not found!" }
         mapped_result = :universal
       end
 
