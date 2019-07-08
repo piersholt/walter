@@ -79,6 +79,9 @@ module Wilhelm
           LAMP_REQ  = 0x5A
           LAMP_REP  = 0x5B
 
+          CLUSTER_REP  = 0x5C
+          CLUSTER_REQ  = 0x5D
+
           REMOTE    = 0x72
 
           KEY_REQ   = 0x73

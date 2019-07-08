@@ -1895,38 +1895,38 @@
   :id:
     :d: 84
     :h: '0x54'
+  :schemas:
+    - :dia
   :properties:
     :short_name: VEH
     :long_name: Vehicle Status
-  :schemas:
-    - :dia
+  :klass: ParameterizedCommand
   :parameters:
     :vin:
       :type: :chars
-    :mileage:
-      :type: :integer
-    :consumption:
-      :type: :integer
-    :service:
-      :type: :integer
+    :odometer:
+      :type: :data
+    :consumed_fuel_quantity:
+      :type: :data
+    :time_inspection_counter:
+      :type: :data
   :index:
       :vin: !ruby/range
-              begin: 1
-              end: 5
+              begin: 0
+              end: 4
               excl: false
-      :mileage: !ruby/range
-                  begin: 6
-                  end: 7
+      :odometer: !ruby/range
+                  begin: 5
+                  end: 6
                   excl: false
-      :consumption: !ruby/range
-                      begin: 8
-                      end: 9
+      :consumed_fuel_quantity: !ruby/range
+                      begin: 7
+                      end: 8
                       excl: false
-      :service: !ruby/range
-                  begin: 12
-                  end: 13
+      :time_inspection_counter: !ruby/range
+                  begin: 11
+                  end: 12
                   excl: false
-  :klass: BaseCommand
   :dia:
     :klass: ParameterizedCommand
     :properties:
@@ -1957,29 +1957,29 @@
     :d: 85
     :h: '0x55'
   :properties:
-    :short_name: USE
+    :short_name: SI
     :long_name: Service Interval Usage
   :klass: ParameterizedCommand
   :index:
-    :mileage: !ruby/range
-                begin: 1
-                end: 2
+    :odometer: !ruby/range
+                begin: 0
+                end: 1
                 excl: false
-    :consumption: !ruby/range
-                    begin: 3
-                    end: 4
+    :liters: !ruby/range
+                    begin: 2
+                    end: 3
                     excl: false
     :days: !ruby/range
-                begin: 7
-                end: 8
+                begin: 6
+                end: 7
                 excl: false
   :parameters:
-    :mileage:
-      :type: :integer
-    :consumption:
-      :type: :integer
+    :odometer:
+      :type: :data
+    :liters:
+      :type: :data
     :days:
-      :type: :integer
+      :type: :data
 # ************************************************************************* #
 #                               TEMPERATURE
 # ************************************************************************* #
@@ -4047,7 +4047,7 @@
     :d: 135
     :h: '0x87'
   :properties:
-    :short_name: "???"
+    :short_name: NAV-IHKA-REQ
     :long_name: Unknown
   :klass: BaseCommand
   :meta:
@@ -4058,7 +4058,7 @@
     :d: 134
     :h: '0x86'
   :properties:
-    :short_name: "???"
+    :short_name: NAV-IHKA-REP
     :long_name: Unknown
   :klass: BaseCommand
   :meta:

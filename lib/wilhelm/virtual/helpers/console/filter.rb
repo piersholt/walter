@@ -68,6 +68,14 @@ module Wilhelm
             display_handler.i.filter_commands(*TELEPHONE)
           end
 
+          def odo
+            display_handler.i.filter_commands(*ODOMETER)
+          end
+
+          def veh
+            display_handler.i.filter_commands(*VEHICLE)
+          end
+
           def nav
             display_handler.i.f_t(*Device::Groups::NAV)
             display_handler.i.f_f(*Device::Groups::NAV)
