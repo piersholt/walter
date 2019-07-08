@@ -12,7 +12,7 @@ module Wilhelm
 
           attr_accessor :context, :manager
 
-          DEVICE_HANDLER = 'Manager'
+          DEVICE_HANDLER = 'Manager::DeviceHandler'
 
           def logger
             LOGGER

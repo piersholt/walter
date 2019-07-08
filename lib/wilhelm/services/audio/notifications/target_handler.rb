@@ -12,7 +12,7 @@ module Wilhelm
 
           attr_accessor :context, :audio
 
-          TARGET_HANDLER = 'Target'
+          TARGET_HANDLER = 'Audio::TargetHandler'
 
           def logger
             LOGGER

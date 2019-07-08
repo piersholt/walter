@@ -18,12 +18,12 @@ module Wilhelm
 
         def state_string
           case state
-          when On
-            'Available'
-          when Enabled
-            'Pending'
           when Disabled
-            'Disabled'
+            MANAGER_STATE_DISABLED
+          when Enabled
+            MANAGER_STATE_ENABLED
+          when On
+            MANAGER_STATE_ON
           else
             state.class
           end

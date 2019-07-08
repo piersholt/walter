@@ -18,12 +18,14 @@ module Wilhelm
 
         def state_string
           case state
-          when On
-            'Available'
-          when Enabled
-            'Pending'
           when Disabled
-            'Disabled'
+            AUDIO_STATE_DISABLED
+          when Enabled
+            AUDIO_STATE_ENABLED
+          when Off
+            AUDIO_STATE_OFF
+          when On
+            AUDIO_STATE_ON
           else
             state.class
           end
