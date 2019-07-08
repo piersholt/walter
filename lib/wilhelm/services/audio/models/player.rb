@@ -87,7 +87,8 @@ module Wilhelm
           end
         end
 
-        # WHATEVER ------------------------------------------------------------
+        # ACTIONS/COMMANDS ----------------------------------------------------
+
         def power
           if on?
             stop!
@@ -148,7 +149,7 @@ module Wilhelm
           %w[stopped paused].one? { |s| s == status }
         end
 
-        # EVENTS ------------------------------------------------------------
+        # NOTIFICATIONS -------------------------------------------------------
 
         def addressed_player!(player_object)
           attributes!(player_object)
@@ -198,7 +199,7 @@ module Wilhelm
           notify_observers(:shuffle, player: self)
         end
 
-        # ATTRIBUTES ------------------------------------------------------------
+        # ATTRIBUTES ----------------------------------------------------------
 
         def device
           attributes.fetch(DEVICE, '')

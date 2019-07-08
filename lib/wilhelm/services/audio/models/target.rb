@@ -18,7 +18,7 @@ module Wilhelm
           @attributes = attributes
         end
 
-        # ATTRIBUTES ------------------------------------------------------------
+        # ATTRIBUTES ----------------------------------------------------------
 
         def player
           attributes[PLAYER]
@@ -27,6 +27,8 @@ module Wilhelm
         def connected
           attributes[CONNECTED]
         end
+
+        # NOTIFICATIONS -------------------------------------------------------
 
         def player_changed(new_player)
           attributes[PLAYER] = new_player
@@ -40,7 +42,7 @@ module Wilhelm
           attributes[PLAYER] = new_player
         end
 
-        # METHODS ---------------------------------------------------------------
+        # ACTIONS/COMMANDS ----------------------------------------------------
 
         def volume_up
           volume_up!

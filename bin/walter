@@ -99,7 +99,7 @@ end
 
 PROC = 'Walter'.freeze
 
-LOGGER.info(PROC) { "BMW I/K-BUS Interface" }
+LOGGER.info(PROC) { 'BMW I/K-BUS Interface' }
 
 begin
   app = Walter::Application.new(file: options.file, console: options.console)

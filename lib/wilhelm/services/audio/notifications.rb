@@ -5,7 +5,7 @@ module Wilhelm
     class Audio
       # Audio::Notifications
       module Notifications
-        # NOTIFICATIONS (TARGET) -------------------------------------------------
+        # NOTIFICATIONS (TARGET) ----------------------------------------------
 
         def addressed_player(properties)
           @state.addressed_player(self, properties)
@@ -23,7 +23,7 @@ module Wilhelm
           @state.player_removed(self, properties)
         end
 
-        # NOTIFICATIONS (PLAYER) -------------------------------------------------
+        # NOTIFICATIONS (PLAYER) ----------------------------------------------
 
         def track_change(properties)
           @state.track_change(self, properties)
