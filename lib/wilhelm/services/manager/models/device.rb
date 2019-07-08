@@ -103,13 +103,13 @@ module Wilhelm
         end
 
         def attributes!(new_device)
-          changed = []
+          modified = []
           attributes.merge!(new_device.attributes) do |key, old, new|
-            changed << key
+            modified << key
             old.is_a?(Hash) ? squish(old, new) : new
           end
           changed
-          notify_observers(:updated, changed: changed, device: self)
+          notify_observers(:updated, changed: modified, device: self)
         end
 
         def squish(old, new)
