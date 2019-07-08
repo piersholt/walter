@@ -7,7 +7,7 @@ module Wilhelm
       extend Forwardable
       include Wilhelm::Helpers::Name
 
-      def_delegators :devices, :send_all, :dynamic, :augmented, :simulated, :broadcast, :dumb
+      def_delegators :devices, :send_all, :dynamic, :augmented, :emulated, :broadcast, :dumb
 
       def initialize
         @devices = Devices.new

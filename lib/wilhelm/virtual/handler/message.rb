@@ -18,7 +18,7 @@ module Wilhelm
           @packet_output_buffer = packet_output_buffer
           register_devices(@bus.devices)
           register_tx_devices(@bus.dynamic)
-          register_for_broadcast(@bus.simulated)
+          register_for_broadcast(@bus.emulated)
         end
 
         def message_received(properties)

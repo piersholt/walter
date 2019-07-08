@@ -9,7 +9,6 @@ module Wilhelm
   module Virtual
     TYPE_BASE      = :base
     TYPE_AUGMENTED = :augmented
-    TYPE_SIMULATED = :simulated
     TYPE_EMULATED  = :emulated
     TYPE_BROADCAST = :broadcast
     TYPE_DYNAMIC = [TYPE_EMULATED, TYPE_AUGMENTED].freeze

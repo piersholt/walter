@@ -20,13 +20,13 @@ module Wilhelm
         def bus_online
           LOGGER.info(name) { 'Bus Online! Enabling virtual bus.' }
           @bus.online
-          @bus.simulated.send_all(:enable)
+          @bus.emulated.send_all(:enable)
         end
 
         def bus_offline
           LOGGER.info(name) { 'Bus Offline! Disabling virtual bus.' }
           @bus.offline
-          @bus.simulated.send_all(:disable)
+          @bus.emulated.send_all(:disable)
           @bus.augmented.send_all(:disable)
         end
       end

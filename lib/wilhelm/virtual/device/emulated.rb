@@ -14,7 +14,7 @@ module Wilhelm
         end
 
         def type
-          TYPE_SIMULATED
+          TYPE_EMULATED
         end
 
         # @override Object#inspect
