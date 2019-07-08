@@ -10,7 +10,7 @@ module Wilhelm
       include Singleton
       include Listener
       include CacheHandler
-      include InputHandler
+      include ControlHandler
 
       TIMEOUT = 5
 

@@ -12,29 +12,30 @@ module Wilhelm
             logger.debug(name) { '#notify(context)' }
             return false if context.hold?
             context.changed
-            context.notify_observers(:button,
+            context.notify_observers(
+              :control,
               control: context.button,
               state: toggle_state(context))
-            end
+          end
 
-            def toggle_state(context)
-              case context.state
-              when :press
-                :on
-              when :release
-                :off
-              end
+          def toggle_state(context)
+            case context.state
+            when :press
+              :on
+            when :release
+              :off
             end
+          end
 
-            def name
-              "#{control_id}:Stateful"
-            end
+          def name
+            "#{control_id}:Stateful"
+          end
 
-            def upgrade
-              context.strategy = TwoStage.new(context.name)
-            end
+          def upgrade
+            context.strategy = TwoStage.new(context.name)
           end
         end
       end
     end
+  end
 end

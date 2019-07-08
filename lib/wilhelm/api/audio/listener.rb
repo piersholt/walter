@@ -8,18 +8,18 @@ module Wilhelm
         NAME = 'Button Listener'
 
         def update(event, properties = {})
-          return false unless event == :button
+          return false unless event == :control
           logger.debug(NAME) { "#update(#{event}, #{properties})" }
           case event
-          when :button
-            handle_button(properties)
+          when :control
+            handle_control(properties)
           end
         end
 
-        def handle_button(button:, state:, source:)
-          state!(source => { button => state })
+        def handle_control(control:, state:, source:)
+          state!(source => { control => state })
           changed
-          notify_observers(:button, button: button, state: state, source: source)
+          notify_observers(:control, control: control, state: state, source: source)
         end
       end
     end

@@ -11,7 +11,7 @@ module Wilhelm
             # Chianable state commands
             module Chainable
               include Constants
-              include Virtual::Constants::Buttons::BMBT
+              include Virtual::Constants::Controls::BMBT
               include Observable
 
               def log_state(delta, level = :debug)

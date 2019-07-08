@@ -33,6 +33,8 @@ module Wilhelm
           MFL = [MFL_VOL, MFL_FUNC].freeze
           BMBT = [BMBT_I, BMBT_A, BMBT_B].freeze
 
+          VOLUME = [MFL_VOL, BMBT_B]
+
           BUTTON = MFL + BMBT
 
           TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA, TXT_MID, TXT_GFX, ANZV_VAR].freeze

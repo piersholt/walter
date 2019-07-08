@@ -3,8 +3,8 @@
 module Wilhelm
   module Virtual
     module Constants
-      module Buttons
-        # Buttons::MFL
+      module Controls
+        # Controls::MFL
         module MFL
           # Left
           MFL_PREV     = :mfl_prev

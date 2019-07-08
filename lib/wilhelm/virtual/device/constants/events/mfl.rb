@@ -6,12 +6,12 @@ module Wilhelm
       module Events
         # Virtual::Device::MFL Events
         module MFL
-          # Input related events
-          module Input
-            MFL_BUTTON = :button
+          # Control related events
+          module Control
+            MFL_BUTTON = :control
           end
 
-          include Input
+          include Control
         end
       end
     end

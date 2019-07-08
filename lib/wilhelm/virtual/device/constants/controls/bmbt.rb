@@ -3,8 +3,8 @@
 module Wilhelm
   module Virtual
     module Constants
-      module Buttons
-        # Buttons::BMBT
+      module Controls
+        # Controls::BMBT
         module BMBT
           # Right Panel
           BMBT_TEL = :bmbt_tel

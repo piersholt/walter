@@ -14,8 +14,8 @@ module Wilhelm
             MENU_WRITE   = :menu_write
           end
 
-          # Input related events
-          module Input
+          # Control related events
+          module Control
             GFX_DATA_SELECT = :data_select
           end
 
@@ -31,7 +31,7 @@ module Wilhelm
           end
 
           include Cache
-          include Input
+          include Control
           include State
         end
       end

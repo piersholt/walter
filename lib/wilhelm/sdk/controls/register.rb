@@ -5,8 +5,8 @@ module Wilhelm
     module Controls
       # Base Controls Interface Mapping
       module Register
-        include Wilhelm::Virtual::Constants::Buttons::BMBT
-        include Wilhelm::Virtual::Constants::Buttons::MFL
+        include Wilhelm::Virtual::Constants::Controls::BMBT
+        include Wilhelm::Virtual::Constants::Controls::MFL
 
         STATELESS_CONTROL = Wilhelm::API::Controls::Control::Stateless
         STATEFUL_CONTROL = Wilhelm::API::Controls::Control::Stateful
@@ -36,7 +36,7 @@ module Wilhelm
         end
 
         def control_event?(event)
-          result = event == :button
+          result = event == :control
           logger.debug(logger_name) { "#control_event?(#{event}) => #{result}" }
           result
         end

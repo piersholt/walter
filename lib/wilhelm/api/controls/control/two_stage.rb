@@ -20,41 +20,42 @@ module Wilhelm
             end
 
             context.changed
-            context.notify_observers(:button,
+            context.notify_observers(
+              :control,
               control: context.button,
               state: notify_state)
-            end
+          end
 
-            def upgrade
+          def upgrade
+            false
+          end
+
+          def toggle
+            @toggle ||= :off
+          end
+
+          def on?
+            case toggle
+            when :on
+              true
+            when :off
               false
             end
+          end
 
-            def toggle
-              @toggle ||= :off
-            end
+          def on!
+            @toggle = :on
+          end
 
-            def on?
-              case toggle
-              when :on
-                true
-              when :off
-                false
-              end
-            end
+          def off!
+            @toggle = :off
+          end
 
-            def on!
-              @toggle = :on
-            end
-
-            def off!
-              @toggle = :off
-            end
-
-            def name
-              "#{control_id}:TwoStage"
-            end
+          def name
+            "#{control_id}:TwoStage"
           end
         end
       end
     end
+  end
 end

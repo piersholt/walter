@@ -7,7 +7,7 @@ module Wilhelm
         class Augmented < Device::Augmented
           # BMBT::Augmented::Sent
           module Sent
-            include Virtual::Constants::Buttons::BMBT
+            include Virtual::Constants::Controls::BMBT
             include Virtual::Constants::Events::BMBT
 
             # 0x48

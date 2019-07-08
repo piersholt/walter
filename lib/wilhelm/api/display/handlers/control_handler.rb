@@ -4,25 +4,25 @@ module Wilhelm
   module API
     class Display
       # Comment
-      module InputHandler
-        include Constants::Buttons::BMBT
-        include Constants::Buttons::MFL
+      module ControlHandler
+        include Constants::Controls::BMBT
+        include Constants::Controls::MFL
 
-        NAME = 'InputHandler'
+        NAME = 'ControlHandler'
 
-        def handle_button(button:, state:, source:)
-          case button
+        def handle_control(control:, state:, source:)
+          case control
           when BMBT_MENU
-            logger.debug(NAME) { "#handle_button(#{BMBT_MENU})" }
+            logger.debug(NAME) { "#handle_control(#{BMBT_MENU})" }
             input_menu
           when BMBT_LEFT
-            logger.debug(NAME) { "#handle_button(#{BMBT_LEFT}" }
+            logger.debug(NAME) { "#handle_control(#{BMBT_LEFT}" }
             input_left
           when BMBT_RIGHT
-            logger.debug(NAME) { "#handle_button(#{BMBT_RIGHT}" }
+            logger.debug(NAME) { "#handle_control(#{BMBT_RIGHT}" }
             input_right
           when BMBT_CONFIRM
-            logger.debug(NAME) { "#handle_button(#{BMBT_CONFIRM}" }
+            logger.debug(NAME) { "#handle_control(#{BMBT_CONFIRM}" }
             input_confirm(state: state)
           end
         end

@@ -48,6 +48,10 @@ module Wilhelm
             display_handler.i.filter_commands(*BUTTON)
           end
 
+          def volume
+            display_handler.i.filter_commands(*VOLUME)
+          end
+
           def menus
             display_handler.i.filter_commands(*MENUS)
           end

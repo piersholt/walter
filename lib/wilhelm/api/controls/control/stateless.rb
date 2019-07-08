@@ -13,20 +13,21 @@ module Wilhelm
             logger.debug(name) { '#notify(context)' }
             return false unless context.press?
             context.changed
-            context.notify_observers(:button,
+            context.notify_observers(
+              :control,
               control: context.button,
               state: :run)
-            end
+          end
 
-            def name
-              "#{control_id}:Stateless"
-            end
+          def name
+            "#{control_id}:Stateless"
+          end
 
-            def upgrade
-              context.strategy = TwoStage.new(context.name)
-            end
+          def upgrade
+            context.strategy = TwoStage.new(context.name)
           end
         end
       end
     end
+  end
 end

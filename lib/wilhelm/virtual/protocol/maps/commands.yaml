@@ -3169,7 +3169,7 @@
             16: 16
   :meta:
     :notes:
-      - 16x9 display issues a different volume command
+      - 16x9 display issues a different command 0x49
   :bmbt:
     :id:
       :d: 50

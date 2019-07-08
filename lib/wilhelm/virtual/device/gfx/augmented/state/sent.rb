@@ -9,7 +9,7 @@ module Wilhelm
             # GFX::Augmented::State::Sent
             module Sent
               include Virtual::Constants::Events::Display
-              include Virtual::Constants::Buttons::BMBT
+              include Virtual::Constants::Controls::BMBT
               include Constants
 
               # Command 0x01

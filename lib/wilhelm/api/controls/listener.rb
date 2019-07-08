@@ -6,30 +6,27 @@ module Wilhelm
       # Comment
       module Listener
         # it's technicall not BMBT_BUTTON, as MFL sends it too
-        include Constants::Buttons::BMBT
-        include Constants::Buttons::MFL
+        include Constants::Controls::BMBT
+        include Constants::Controls::MFL
 
         NAME = 'Controls Listener'
 
         def update(event, properties = {})
-          # TODO :button => BMBT_BUTTON/MFL_BUTTON
-          return false unless event == :button
+          # TODO :control => BMBT_BUTTON/MFL_BUTTON
+          return false unless event == :control
           logger.debug(NAME) { "#update(#{event}, #{properties})" }
           case event
-          when :button
-            handle_button(properties)
+          when :control
+            handle_control(properties)
           end
         end
 
-        def handle_button(button:, state:, source:)
+        def handle_control(control:, state:, source:)
           return false unless listeners?
-          return false unless registered_control?(button)
-          control = control_state[button]
+          return false unless registered_control?(control)
+          control = control_state[control]
           logger.debug(NAME) { "#control => #{control}" }
           control.update(state)
-          # state!(source => { button => state })
-          # changed
-          # notify_observers(:button, button: button, state: state, source: source)
         end
 
         # @param strategy Strategy

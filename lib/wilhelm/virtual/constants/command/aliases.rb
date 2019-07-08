@@ -58,6 +58,7 @@ module Wilhelm
 
           MFL_VOL  = 0x32
           MFL_FUNC = 0x3B
+
           BMBT_I   = 0x47
           BMBT_A   = 0x48
           BMBT_B   = 0x49

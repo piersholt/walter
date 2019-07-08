@@ -6,12 +6,12 @@ module Wilhelm
       module Events
         # Virtual::Device::BMBT Events
         module BMBT
-          # Input related events
-          module Input
-            BMBT_BUTTON = :button
+          # Control related events
+          module Control
+            BMBT_BUTTON = :control
           end
 
-          include Input
+          include Control
         end
       end
     end
