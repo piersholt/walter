@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module MFL
-        # Comment
         class Augmented < Device::Augmented
           module State
-            # Comment
+            # Device::MFL::Augmente::State
             module Model
               include Wilhelm::Helpers::Stateful
               include Constants

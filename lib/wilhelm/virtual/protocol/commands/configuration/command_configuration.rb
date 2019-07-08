@@ -23,7 +23,7 @@ module Wilhelm
       attr_reader :id, :parameters, :normal_fucking_decimal
 
       def logger
-        LogActually.core
+        LOGGER
       end
 
       def initialize(mapped_command)

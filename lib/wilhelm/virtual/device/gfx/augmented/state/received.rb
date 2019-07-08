@@ -6,7 +6,7 @@ module Wilhelm
       module GFX
         class Augmented < Device::Augmented
           module State
-            # Comment
+            # Device::GFX
             module Received
               include Virtual::Constants::Events
               include Constants

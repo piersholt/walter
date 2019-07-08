@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module CDC
-        # Comment
+        # CDC::Emualted
         class Emulated < Device::Emulated
           include Handlers
           include Capabilities
@@ -14,14 +14,10 @@ module Wilhelm
           :control, :control_value,
           :mode, :mode_value
 
-          PROC = 'EmulatedCDC'
+          PROC = 'CDC::Emulated'
 
           def name
-            'EmulatedCDC'
-          end
-
-          def logger
-            LOGGER
+            PROC
           end
 
           def handle_virtual_receive(message)

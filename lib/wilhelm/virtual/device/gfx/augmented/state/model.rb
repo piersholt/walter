@@ -6,7 +6,7 @@ module Wilhelm
       module GFX
         class Augmented < Device::Augmented
           module State
-            # Comment
+            # Device::GFX::Augmented::State
             module Model
               include Wilhelm::Helpers::Stateful
               include Constants

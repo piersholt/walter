@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Radio
         class Augmented < Device::Augmented
-          # Comment
+          # Device::Radio::Augmented
           module Actions
             include Wilhelm::Virtual::Constants::Command::Aliases
             # include ::Actions

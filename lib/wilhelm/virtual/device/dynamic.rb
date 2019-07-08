@@ -23,6 +23,10 @@ module Wilhelm
           @state = Enabled.new
         end
 
+        def logger
+          LOGGER
+        end
+
         def change_state(new_state)
           return false if new_state.class == @state.class
           LOGGER.debug(PROC) { "State => #{new_state.class}" }

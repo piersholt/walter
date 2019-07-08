@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Radio
         module API
-          # Comment
+          # Device::Radio::API::LED
           module LED
             include Constants::Command::Aliases
             include Device::API::BaseAPI

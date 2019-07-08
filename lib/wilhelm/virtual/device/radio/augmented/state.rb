@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Radio
         class Augmented < Device::Augmented
-          # Comment
+          # Device::Radio::Augmented
           module State
             include Constants
             include Model

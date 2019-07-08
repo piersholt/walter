@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Helpers
-        # Comment
+        # Device::Helpers
         module Cluster
           HUD_SIZE = 20
 

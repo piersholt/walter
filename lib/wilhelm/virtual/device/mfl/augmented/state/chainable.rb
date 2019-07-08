@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module MFL
-        # Comment
         class Augmented < Device::Augmented
           module State
-            # Chianable state commands
+            # Device::MFL::Augmented::State::Chainable state commands
             module Chainable
               include Constants
               include Virtual::Constants::Controls::BMBT

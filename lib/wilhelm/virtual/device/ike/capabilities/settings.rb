@@ -5,12 +5,12 @@ module Wilhelm
     class Device
       module IKE
         module Capabilities
-          # Comment
+          # Device::IKE::Capabilities::Settings
           module Settings
             include API
             include Helpers::Data
 
-          
+
           end
         end
       end

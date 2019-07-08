@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Device
-      # Comment
+      # Device::Builder
       class Builder
         include Wilhelm::Helpers::Module
 

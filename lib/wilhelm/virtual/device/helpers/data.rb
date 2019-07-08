@@ -16,7 +16,7 @@ module Wilhelm
           alias bytes integers_to_byte_array
         end
 
-        # Comment
+        # Device::Helpers
         module Data
           include Parse
 

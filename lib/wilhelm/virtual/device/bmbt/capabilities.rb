@@ -7,7 +7,7 @@ module Wilhelm
   module Virtual
     class Device
       module BMBT
-        # Comment
+        # BMBT::Capabilities
         module Capabilities
           include Helpers::Button
           include UserControls

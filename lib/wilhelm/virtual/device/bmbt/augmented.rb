@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module BMBT
-        # Comment
+        # BMBT::Augmented
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
           include Capabilities
@@ -15,23 +14,7 @@ module Wilhelm
           PUBLISH = [BMBT_A, BMBT_B, MFL_VOL].freeze
           SUBSCRIBE = [RAD_LED].freeze
 
-          PROC = 'AugmentedBMBT'
-
-          def moi
-            ident.upcase
-          end
-
-          def logger
-            LOGGER
-          end
-
-          def publish?(command_id)
-            PUBLISH.include?(command_id)
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
+          PROC = 'BMBT::Augmented'
 
           def handle_virtual_transmit(message)
             command_id = message.command.d
@@ -50,7 +33,6 @@ module Wilhelm
             end
           end
 
-          # TODO: move to superclass
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)

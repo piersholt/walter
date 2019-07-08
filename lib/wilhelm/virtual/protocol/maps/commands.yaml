@@ -3209,11 +3209,8 @@
     :long_name: Unknown
   :klass: ParameterizedCommand
   :index:
-    # :unknown: 0
     :button: 1
   :parameters:
-    # :unknown:
-    #   :type: :integer
     :button:
       :type: :bit_array
       :index:

@@ -10,7 +10,7 @@ require_relative 'helpers/button'
 module Wilhelm
   module Virtual
     class Device
-      # Comment
+      # Device::Helpers
       module Helpers
         def self.included(mod)
           LOGGER.debug('Debug') { "#{mod} is including #{self.name}" }

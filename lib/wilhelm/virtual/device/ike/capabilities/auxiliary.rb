@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module IKE
         module Capabilities
-          # Comment
+          # Device::IKE::Capabilities::AuxiliaryVentilation
           module AuxiliaryVentilation
             include API
             include Helpers::Data

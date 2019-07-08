@@ -12,7 +12,7 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        # Comment
+        # Device::Telephone::Capabilities
         module Capabilities
           include Helpers
           include Constants
@@ -23,10 +23,6 @@ module Wilhelm
           include LastNumbers
           include LED
           include Top8
-
-          def logger
-            LOGGER
-          end
 
           def set_status(bit_array)
             status(status: bit_array)

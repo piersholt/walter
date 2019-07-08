@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module API
-        # Comment
+        # API::BaseAPI
         module BaseAPI
           include Wilhelm::Core::Constants::Events
           include Observable

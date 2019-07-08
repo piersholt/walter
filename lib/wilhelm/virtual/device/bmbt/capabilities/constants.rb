@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module BMBT
         module Capabilities
-          # Comment
+          # BMBT::Capabilities::Constants
           module Constants
             POWER_PRESS   = 0x06
             POWER_HOLD    = 0x46

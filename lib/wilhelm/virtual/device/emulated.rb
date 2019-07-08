@@ -1,13 +1,13 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual
     class Device
-      # Comment
+      # Device::Emulated
       class Emulated < Dynamic
         include Capabilities::Ready
 
-        PROC = 'Device::Emulated'.freeze
+        PROC = 'Device::Emulated'
 
         def initialize(args)
           super(args)

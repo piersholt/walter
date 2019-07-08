@@ -4,12 +4,12 @@ module Wilhelm
   module Virtual
     class Device
       module Diagnostics
-        # Comment
+        # Diagnostics::Emulated
         class Emulated < Device::Emulated
           include Capabilities
 
-          PROC = 'Emulated::Diagnostics'
-          
+          PROC = 'Diagnostics::Emulated'
+
           def handle_virtual_receive(message)
             command_id = message.command.d
             # return super if command_id == PING
@@ -20,8 +20,8 @@ module Wilhelm
             end
 
           rescue StandardError => e
-            LOGGER.error(self.class) { e }
-            e.backtrace.each { |line| LOGGER.error(self.class) { line } }
+            LOGGER.error(PROC) { e }
+            e.backtrace.each { |line| LOGGER.error(PROC) { line } }
           end
         end
       end

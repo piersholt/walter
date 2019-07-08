@@ -2,34 +2,20 @@
 
 module Wilhelm
   module Virtual
-    # Comment
     class Device
       module Radio
+        # Radio::Augmented
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
           include State
-          # include Retroactive
           include Actions
           include Notifications
-          # include Capabilities::OnBoardMonitor
           include Capabilities
 
-          PROC = 'AugmentedRadio'
+          PROC = 'Radio::Augmented'
 
-          PUBLISH     = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
+          PUBLISH   = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
           SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, TEL_DATA]
-
-          def logger
-            LOGGER
-          end
-
-          def publish?(command_id)
-            PUBLISH.include?(command_id)
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
 
           def handle_virtual_transmit(message)
             command_id = message.command.d

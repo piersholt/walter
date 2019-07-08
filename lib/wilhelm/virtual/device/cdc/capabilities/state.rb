@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module CDC
         module Capabilities
-          # Comment
+          # Device::CDC::Capabilities::State
           module State
             include Constants
             include Wilhelm::Helpers::Stateful

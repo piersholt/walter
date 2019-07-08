@@ -6,7 +6,7 @@ module Wilhelm
       module Telephone
         class Emulated < Device::Emulated
           module State
-            # Comment
+            # Device::Telephone::Emulated::State::Chainable
             module Chainable
               include Constants
 

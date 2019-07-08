@@ -4,23 +4,15 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        # Comment
+        # Telephone::Emulated
         class Emulated < Device::Emulated
           include Capabilities
           include State
           include Received
 
-          PROC = 'TEL'
+          PROC = 'Telephone::Emulated'
 
           SUBSCRIBE = [PING, PONG, GFX_STATUS, TEL_DATA, TEL_OPEN].freeze
-
-          def logger
-            LOGGER
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
 
           def handle_virtual_receive(message)
             command_id = message.command.d

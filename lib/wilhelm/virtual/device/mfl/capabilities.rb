@@ -7,7 +7,7 @@ module Wilhelm
   module Virtual
     class Device
       module MFL
-        # Comment
+        # Device::MFL::Capabilities
         module Capabilities
           include Helpers::Button
           include Buttons

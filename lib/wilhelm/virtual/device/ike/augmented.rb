@@ -8,7 +8,7 @@ module Wilhelm
   module Virtual
     class Device
       module IKE
-        # IKE Augmented
+        # IKE::Augmented
         class Augmented < Device::Augmented
           include State
           include Capabilities
@@ -21,22 +21,10 @@ module Wilhelm
           LogActually.is_all_around(:ike)
           LogActually.ike.i
 
-          PROC = 'IKE'
-
-          def moi
-            ident.upcase
-          end
+          PROC = 'IKE::Augmented'
 
           def logger
             LogActually.ike
-          end
-
-          def publish?(command_id)
-            PUBLISH.include?(command_id)
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
           end
 
           def handle_virtual_transmit(message)

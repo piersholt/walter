@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module GFX
         module Capabilities
-          # Comment
+          # Device::GFX
           module UserInterface
             include API
 

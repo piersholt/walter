@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Capabilities
-        # Comment
+        # Device::Capabilities::Ready
         module Ready
           include API::Readiness
 

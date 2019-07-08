@@ -1,24 +1,15 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module Radio
-        # Comment
+        # Radio::Emulated
         class Emulated < Device::Emulated
           include Capabilities
 
-          PROC = 'SimulatedRadio'
+          PROC = 'Radio::Emulated'
           SUBSCRIBE = [PING, MENU_GFX].freeze
-
-          def logger
-            LOGGER
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
 
           def handle_virtual_receive(message)
             command_id = message.command.d

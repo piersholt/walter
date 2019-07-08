@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module MFL
         module Capabilities
-          # Comment
+          # Device::MFL::Capabilities::Buttons
           module Buttons
             include API
             include Helpers::Button

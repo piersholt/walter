@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Comment
 module Wilhelm
   module Virtual
     class Device
       module MFL
-        # Comment
+        # MFL::Augmented
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
           include State
@@ -14,24 +13,7 @@ module Wilhelm
           PUBLISH = [MFL_VOL, MFL_FUNC, MFL_VOL].freeze
           SUBSCRIBE = [].freeze
 
-          PROC = 'AugmentedMFL'
-
-          # TODO: move to superclass
-          def moi
-            ident.upcase
-          end
-
-          def logger
-            LOGGER
-          end
-
-          def publish?(command_id)
-            PUBLISH.include?(command_id)
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
+          PROC = 'MFL::Augmented'
 
           def handle_virtual_transmit(message)
             command_id = message.command.d
@@ -45,12 +27,6 @@ module Wilhelm
               logger.debug(moi) { "Tx: MFL_VOL (#{d2h(MFL_VOL)})" }
               handle_mfl_vol_button(message.command)
             end
-          end
-
-          # TODO: move to superclass
-          def handle_virtual_receive(message)
-            command_id = message.command.d
-            return false unless subscribe?(command_id)
           end
         end
       end

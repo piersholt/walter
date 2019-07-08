@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module CDC
         module Capabilities
-          # Comment
+          # Device::CDC::Capabilities::Constants
           module Constants
             SCAN_THRESHOLD_SECONDS = 3
 

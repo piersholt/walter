@@ -14,10 +14,6 @@ module Wilhelm
 
           PROC = 'LCM::Augmented'
 
-          def logger
-            LOGGER
-          end
-
           def handle_virtual_transmit(message)
             command_id = message.command.d
             return false unless publish?(command_id)

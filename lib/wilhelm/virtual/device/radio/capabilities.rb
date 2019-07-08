@@ -11,7 +11,7 @@ module Wilhelm
   module Virtual
     class Device
       module Radio
-        # Comment
+        # Device::Radio::Capabilities
         module Capabilities
           include Helpers::Button
           include Helpers::Data

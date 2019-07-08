@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module BMBT
         module Capabilities
-          # Comment
+          # BMBT::Capabilities::UserControls
           module UserControls
             include API
             include Constants

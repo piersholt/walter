@@ -26,23 +26,7 @@ module Wilhelm
             RAD_ALT, MENU_RAD
           ].freeze
 
-          PROC = 'AugmentedGFX'
-
-          def moi
-            ident.upcase
-          end
-
-          def logger
-            LOGGER
-          end
-
-          def publish?(command_id)
-            PUBLISH.include?(command_id)
-          end
-
-          def subscribe?(command_id)
-            SUBSCRIBE.include?(command_id)
-          end
+          PROC = 'GFX::Augmented'
 
           def handle_virtual_transmit(message)
             command_id = message.command.d

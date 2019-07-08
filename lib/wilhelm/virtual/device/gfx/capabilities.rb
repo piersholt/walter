@@ -13,7 +13,7 @@ module Wilhelm
   module Virtual
     class Device
       module GFX
-        # Comment
+        # Device::GFX
         module Capabilities
           include AuxiliaryVentilation
           include Code

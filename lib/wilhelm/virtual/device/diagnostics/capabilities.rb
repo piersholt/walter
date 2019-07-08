@@ -8,7 +8,7 @@ module Wilhelm
   module Virtual
     class Device
       module Diagnostics
-        # Comment
+        # Device::Diagnostics::Capabilities
         module Capabilities
           include Body
           include Display

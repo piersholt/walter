@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Telephone
         class Emulated < Device::Emulated
-          # Comment
+          # Device::Telephone::Emulated::Received
           module Received
             include Constants
 

@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Helpers
-        # Comment
+        # Device::Helpers
         module Button
           def wait(wait_time = 0.01)
             Kernel.sleep(wait_time)

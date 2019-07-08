@@ -8,7 +8,7 @@ module Wilhelm
   module Virtual
     class Device
       module CDC
-        # Comment
+        # Device::CDC::Capabilities
         module Capabilities
           include API
           include Helpers::Data
