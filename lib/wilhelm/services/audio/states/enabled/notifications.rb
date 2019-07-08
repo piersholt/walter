@@ -19,8 +19,9 @@ module Wilhelm
           end
 
           def player_added(context, properties)
-            context.off
+            logger.info(AUDIO_ENABLED) { ":player_added => #{properties}" }
             context.target.player_added(properties)
+            context.off
             true
           end
         end

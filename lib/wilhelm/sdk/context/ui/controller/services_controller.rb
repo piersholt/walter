@@ -79,6 +79,8 @@ module Wilhelm
                 index
               when Wilhelm::Services::Audio::Enabled
                 index
+              when Wilhelm::Services::Audio::Off
+                index
               when Wilhelm::Services::Audio::Disabled
                 index
               else

@@ -19,6 +19,10 @@ module Wilhelm
           def on(context)
             context.change_state(On.new(context))
           end
+
+          def off(context)
+            context.change_state(Off.new(context))
+          end
         end
       end
     end
