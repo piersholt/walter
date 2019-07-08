@@ -27,7 +27,7 @@ module Wilhelm
 
               def notify_of_button(command)
                 changed
-                notify_observers(MFL_BUTTON, button: command.button, state: command.state, source: :mfl)
+                notify_observers(MFL_BUTTON, control: command.button, state: command.state, source: :mfl)
               end
             end
           end

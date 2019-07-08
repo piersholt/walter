@@ -33,7 +33,7 @@ module Wilhelm
 
             def notify_of_button(command)
               changed
-              notify_observers(BMBT_BUTTON, button: command.button, state: command.state, source: :bmbt)
+              notify_observers(BMBT_BUTTON, control: command.button, state: command.state, source: :bmbt)
             end
           end
         end

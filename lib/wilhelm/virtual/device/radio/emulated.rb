@@ -26,6 +26,10 @@ module Wilhelm
             e.backtrace.each { |line| logger.error(PROC) { line } }
           end
 
+          def handle_virtual_transmit(*)
+            false
+          end
+
           def handle_menu_gfx(command)
             case Kernel.format('%8.8b', command.config.value)[7]
             when '1'

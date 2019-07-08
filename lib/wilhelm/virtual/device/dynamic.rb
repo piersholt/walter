@@ -9,7 +9,7 @@ module Wilhelm
 
         PROC = 'Device::Dynamic'
 
-        attr_reader :state
+        attr_reader :dynamic_state
 
         def self.builder
           Builder.new
@@ -20,7 +20,7 @@ module Wilhelm
 
         def initialize(args)
           super(args)
-          @state = Enabled.new
+          @dynamic_state = Enabled.new
         end
 
         def logger
@@ -28,39 +28,39 @@ module Wilhelm
         end
 
         def change_state(new_state)
-          return false if new_state.class == @state.class
+          return false if new_state.class == @dynamic_state.class
           LOGGER.debug(PROC) { "State => #{new_state.class}" }
-          @state = new_state
+          @dynamic_state = new_state
         end
 
         def enabled?
-          @state.enabled?(self)
+          @dynamic_state.enabled?(self)
         end
 
         def disabled?
-          @state.disabled?(self)
+          @dynamic_state.disabled?(self)
         end
 
         def enable!
-          @state.enable!(self)
+          @dynamic_state.enable!(self)
         end
 
         alias enable enable!
 
         def disable!
-          @state.disable!(self)
+          @dynamic_state.disable!(self)
         end
 
         alias disable disable!
 
         # @override Device::Base.virtual_receive
         def virtual_receive(message)
-          @state.virtual_receive(self, message)
+          @dynamic_state.virtual_receive(self, message)
         end
 
         # @override Device::Base.virtual_transmit
         def virtual_transmit(message)
-          @state.virtual_transmit(self, message)
+          @dynamic_state.virtual_transmit(self, message)
         end
 
         def publish?(command_id)
@@ -72,12 +72,12 @@ module Wilhelm
         end
 
         def handle_virtual_receive(*)
-          LOGGER.warn(PROC) { 'handle_virtual_receive not overridden!' }
+          LOGGER.debug(PROC) { 'handle_virtual_receive not overridden!' }
           false
         end
 
         def handle_virtual_transmit(*)
-          LOGGER.warn(PROC) { '#handle_virtual_transmit not overridden!' }
+          LOGGER.debug(PROC) { '#handle_virtual_transmit not overridden!' }
           false
         end
       end
