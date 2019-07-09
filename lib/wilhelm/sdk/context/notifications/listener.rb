@@ -31,7 +31,7 @@ module Wilhelm
             notification = deserialize(serialized_object)
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Deserialzed: #{notification}" }
             delegate(notification)
-          rescue IfYouWantSomethingDone
+          rescue Yabber::IfYouWantSomethingDone
             logger.debug(NOTIFICATIONS_LISTENER) { "Chain did not handle! (#{notification})" }
           rescue StandardError => e
             logger.error(NOTIFICATIONS_LISTENER) { e }

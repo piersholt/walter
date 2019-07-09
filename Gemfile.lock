@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/piersholt/wilhelm-tools.git
-  revision: 8bf062009536c0fddf2397cea31b3433540677d5
+  revision: 256db3cf2a454926dbe8ec34626914bf3130c594
   branch: master
   specs:
     wilhelm-tools (1.1.0)
