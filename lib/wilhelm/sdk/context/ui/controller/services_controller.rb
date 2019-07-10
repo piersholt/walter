@@ -42,8 +42,9 @@ module Wilhelm
             def destroy
               case loaded_view
               when :index
-                application_context.manager.delete_observer(self)
-                application_context.audio.delete_observer(self)
+                application_context.services.each do |service|
+                  service.delete_observer(self)
+                end
                 @services = nil
                 true
               else
