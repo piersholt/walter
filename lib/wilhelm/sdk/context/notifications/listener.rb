@@ -26,7 +26,7 @@ module Wilhelm
 
           def pop_and_delegate(i)
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Wait" }
-            serialized_object = Yabber::Subscriber.recv
+            serialized_object = Yabber::Subscriber.receive_message
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Received: #{serialized_object}" }
             notification = deserialize(serialized_object)
             logger.debug(NOTIFICATIONS_LISTENER) { "#{i}. Deserialzed: #{notification}" }
