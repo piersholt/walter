@@ -47,6 +47,8 @@ module Wilhelm
 
           def write(*)
             raise TransmissionError, 'Device is log file. Cannot write to bus.'
+          rescue TransmissionError => e
+            LOGGER.warn(NAME) { e }
           end
 
           alias write_nonblock write
