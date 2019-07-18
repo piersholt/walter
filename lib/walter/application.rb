@@ -8,9 +8,10 @@ module Walter
     include ManageableThreads
     include Wilhelm::Core::Constants::Events::Application
 
-    attr_reader :core, :virtual, :api, :manager, :audio
+    attr_reader :core, :virtual, :api, :sdk, :manager, :audio
     alias m manager
     alias a audio
+    alias context sdk
 
     PROC = 'Walter'
 
