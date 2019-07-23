@@ -13,37 +13,37 @@ module Wilhelm
         #   connect/disconnect modifier
         #   contextualises connection operation as disconnection
 
+        # green
+        def connected
+          bus.tel.red(:off).green(:on).leds!
+        end
+
+        def disconnected
+          bus.tel.red(:on).green(:off).leds!
+        end
+
         # yellow
         # attempt to begin connection operation
         def connect
-          bus.tel.red(:off).yellow(:on).green(:blink).leds!
-        end
-
-        # yellow blink
-        # acknowledged operation via bluetooth service callback
-        def connecting
-          bus.tel.yellow(:blink).green(:blink).leds!
-        end
-
-        # green
-        def connected
-          bus.tel.red(:off).yellow(:off).green(:on).leds!
+          bus.tel.green(:blink).leds!
         end
 
         # red
         # attempt to begin disconnection operation
         def disconnect
-          bus.tel.yellow(:on).red(:blink).green(:off).leds!
+          bus.tel.red(:blink).leds!
+        end
+
+        # yellow blink
+        # acknowledged operation via bluetooth service callback
+        def connecting
+          bus.tel.green(:blink).leds!
         end
 
         # red blink
         # acknowledged operation via bluetooth service callback
         def disconnecting
-          bus.tel.yellow(:blink).red(:blink).green(:off).leds!
-        end
-
-        def disconnected
-          bus.tel.yellow(:off).green(:off).red(:on).leds!
+          bus.tel.red(:blink).leds!
         end
       end
     end
