@@ -26,6 +26,9 @@ module Wilhelm
             @state.offline!(self)
           end
 
+          alias online online!
+          alias offline offline!
+
           alias open online!
           alias close offline!
         end
