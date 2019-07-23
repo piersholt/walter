@@ -10,6 +10,8 @@ require_relative 'helpers/delayable'
 require_relative 'helpers/console'
 require_relative 'helpers/bitwise'
 require_relative 'helpers/positional'
+require_relative 'helpers/object'
+require_relative 'helpers/inspect'
 
 module Wilhelm
   # Comment
