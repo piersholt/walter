@@ -19,13 +19,12 @@ module Wilhelm
             logger.debug(WILHELM_EST) { 'Stop Notifications' }
             context.notifications&.stop
 
-            logger.debug(WILHELM_EST) { 'Disable Mananger' }
+            logger.debug(WILHELM_EST) { 'Disable Manager' }
             context.manager&.disable
             logger.debug(WILHELM_EST) { 'Disable Audio' }
             context.audio&.disable
 
             logger.debug(WILHELM_EST) { 'Disconnect Client.' }
-            # Client.disconnect
             context.offline!
           end
 
