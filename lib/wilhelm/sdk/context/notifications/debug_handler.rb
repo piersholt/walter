@@ -12,23 +12,27 @@ module Wilhelm
 
           attr_accessor :context
 
-          NODE_HANDLER = 'Nodes'
+          DEBUG_HANDLER = 'Handler::Debug'
+
+          def notification_delegate
+            DEBUG_HANDLER
+          end
 
           def logger
             LOGGER
           end
 
           def take_responsibility(notification)
-            logger.debug(NODE_HANDLER) { "#take_responsibility(#{notification})" }
+            logger.debug(DEBUG_HANDLER) { "#take_responsibility(#{notification})" }
             case notification.name
             when :announcement
-              logger.warn(NODE_HANDLER) { "Node accouncements are disabled!" }
+              logger.warn(DEBUG_HANDLER) { "Node accouncements are disabled!" }
               # context.announcement(notification.node)
             else
               not_handled(notification)
             end
           rescue StandardError => e
-            logger.error(NODE_HANDLER) { e }
+            logger.error(DEBUG_HANDLER) { e }
             e.backtrace.each { |l| logger.error(l) }
           end
 
