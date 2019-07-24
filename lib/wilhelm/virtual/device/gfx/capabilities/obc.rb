@@ -21,6 +21,12 @@ module Wilhelm
             include Range
             include Timer
 
+            def pad_byte_array(byte_array, length)
+              until byte_array.length == length
+                byte_array.unshift(0)
+              end
+            end
+
             # Draw all OBC fields
             def obc?
               range?

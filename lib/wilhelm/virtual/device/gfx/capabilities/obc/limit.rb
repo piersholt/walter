@@ -42,6 +42,8 @@ module Wilhelm
                 LOGGER.debug('GFX::OBC::Limit') { "#input_limit(#{speed})" }
                 validate_limit(speed)
                 speed_byte_array = base_256_digits(speed)
+                pad_byte_array(speed_byte_array, INPUT_LIMIT_LENGTH)
+
                 obc_var(field: FIELD_LIMIT, input: speed_byte_array)
               end
 

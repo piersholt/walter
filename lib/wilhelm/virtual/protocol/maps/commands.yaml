@@ -3974,12 +3974,12 @@
         0x00: disabled
       :dictionary:
         # SETTINGS
-        0x0c: Memo 1  # On, Off
+        0x0c: Memo 1                  # On, Off
 
         # ON BOARD COMPUTER
         0x04: Consump. 1              # Recalculate/"--.- L/100"
         0x05: Consump. 2              # Recalculate/"--.- L/100"
-        0x09: Limit             # On, Off/"--- MPH "
+        0x09: Limit                   # On, Off/"--- MPH "
         0x0a: Avg. Speed              # Recalculate/"--.- MPH "
         0x0e: Timer                   # On, Off/"13.0  SEC "
         0x1a: Lap Timer               # Lap/" 6.2  SEC "

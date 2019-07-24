@@ -26,6 +26,7 @@ module Wilhelm
                 LOGGER.debug('GFX::OBC::Limit') { "#input_distance(#{distance})" }
                 validate_distance(distance)
                 distance_byte_array = base_256_digits(distance)
+                pad_byte_array(distance_byte_array, INPUT_DISTANCE_LENGTH)
 
                 obc_var(field: FIELD_DISTANCE, input: distance_byte_array)
               end

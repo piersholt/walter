@@ -29,7 +29,11 @@ module Wilhelm
             FIELD_AUX_TIMER_1  = 0x0f
             FIELD_AUX_TIMER_2  = 0x10
 
-            # CONTROLS
+            # INPUTS (OBC_VAR)
+            INPUT_LIMIT_LENGTH = 2
+            INPUT_DISTANCE_LENGTH = 2
+
+            # CONTROLS (OBC-BOOL)
             CONTROL_NIL           = 0x00
             CONTROL_LAP           = 0x01
             CONTROL_REQUEST       = 0x01
