@@ -21,8 +21,8 @@ module Wilhelm
           @state.disable!(self)
         end
 
-        def enable!
-          @state.enable!(self)
+        def pending!
+          @state.pending!(self)
         end
 
         def on!

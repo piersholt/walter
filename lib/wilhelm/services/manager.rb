@@ -12,7 +12,7 @@ require_relative 'manager/notifications/device_handler'
 
 require_relative 'manager/states/defaults'
 require_relative 'manager/states/disabled'
-require_relative 'manager/states/enabled'
+require_relative 'manager/states/pending'
 require_relative 'manager/states/on'
 
 require_relative 'manager/state'

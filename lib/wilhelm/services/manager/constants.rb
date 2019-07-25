@@ -8,11 +8,11 @@ module Wilhelm
         MANAGER = 'Manager'
 
         MANAGER_STATE_DISABLED = 'Disabled'
-        MANAGER_STATE_ENABLED  = 'Pending'
+        MANAGER_STATE_PENDING  = 'Pending'
         MANAGER_STATE_ON       = 'On'
 
         MANAGER_DISABLED = "Manager (#{MANAGER_STATE_DISABLED})"
-        MANAGER_ENABLED  = "Manager (#{MANAGER_STATE_ENABLED})"
+        MANAGER_PENDING  = "Manager (#{MANAGER_STATE_PENDING})"
         MANAGER_ON       = "Manager (#{MANAGER_STATE_ON})"
 
         MANAGER_CONTROLS = 'Manager Controls'

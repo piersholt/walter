@@ -7,7 +7,7 @@ module Wilhelm
       module Requests
         include Logging
 
-        # Manager::Enabled.initialize ->
+        # Manager::Pending.initialize ->
         def devices?
           logger.debug(MANAGER) { '#devices?' }
           logger.info(MANAGER) { '[REQUEST] Devices.' }

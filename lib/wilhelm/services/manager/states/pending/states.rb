@@ -3,8 +3,8 @@
 module Wilhelm
   module Services
     class Manager
-      class Enabled
-        # Manager::Enabled::States
+      class Pending
+        # Manager::Pending::States
         module States
           include Logging
 

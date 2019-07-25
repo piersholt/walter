@@ -24,8 +24,8 @@ module Wilhelm
           case state
           when Disabled
             MANAGER_STATE_DISABLED
-          when Enabled
-            MANAGER_STATE_ENABLED
+          when Pending
+            MANAGER_STATE_PENDING
           when On
             MANAGER_STATE_ON
           else

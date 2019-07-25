@@ -6,8 +6,8 @@ module Wilhelm
       class Disabled
         # Manager::Disabled::States
         module States
-          def enable!(context)
-            context.change_state(Enabled.new(context))
+          def pending!(context)
+            context.change_state(Pending.new(context))
           end
 
           def disable!(context)

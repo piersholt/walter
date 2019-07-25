@@ -15,7 +15,7 @@ module Wilhelm
           case context
           when SDK::Context::ServicesContext::Online
             logger.info(MANAGER) { 'Context Online => Enable Manager.' }
-            enable!
+            pending!
           when SDK::Context::ServicesContext::Offline
             logger.info(MANAGER) { 'Context Offline => Disable Manager' }
             disable!
