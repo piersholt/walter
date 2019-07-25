@@ -51,14 +51,14 @@ module Wilhelm
               BOOLEANS.first(COLUMN_TWO_MAX).map.with_index do |boolean, index|
                 offset_index = index + COLUMN_TWO_OFFSET
                 thingo =
-                if device.pending
-                  pending(device.address)
+                if device.pending?
+                  pending(device.id)
                 elsif device.connected?
-                  disconnect(device.address)
+                  disconnect(device.id)
                 elsif device.disconnected?
-                  connect(device.address)
+                  connect(device.id)
                 else
-                  pending(device.address)
+                  pending(device.id)
                 end
                 [offset_index, thingo]
               end

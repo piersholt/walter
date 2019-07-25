@@ -13,13 +13,13 @@ module Wilhelm
               NAME
             end
 
-            attr_reader :selected_device, :selected_devices
+            attr_reader :selected_device, :devices
 
             # 'Pages' ------------------------------------------------------
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              @view = View::Index.new(@selected_devices)
+              @view = View::Index.new(@devices)
               view.add_observer(self)
               render(view)
             end
@@ -38,8 +38,8 @@ module Wilhelm
               case view
               when :index
                 LOGGER.debug(NAME) { "#create(#{view})" }
-                @selected_devices = context.manager.devices
-                @selected_devices.add_observer(self, :devices_update)
+                @devices = context.manager.devices
+                @devices.add_observer(self, :devices_update)
                 true
               when :device
                 LOGGER.debug(NAME) { "#create(#{view}, #{preloaded_device})" }
@@ -56,9 +56,9 @@ module Wilhelm
             def destroy
               case loaded_view
               when :index
-                return false unless @selected_devices
-                @selected_devices.delete_observer(self)
-                @selected_devices = nil
+                return false unless @devices
+                @devices.delete_observer(self)
+                @devices = nil
                 true
               when :device
                 return false unless @selected_device
@@ -93,11 +93,13 @@ module Wilhelm
                 # context.ui.root.load(:index)
                 ui_context.launch(:services, :index)
               when :bluetooth_connect
-                device_address = selected_menu_item.id
-                context.manager.connect(device_address)
+                # LOGGER.debug(NAME) { @selected_device }
+                # selected_device = device_from_menu_item(selected_menu_item)
+                context.manager.connect_device(@selected_device)
               when :bluetooth_disconnect
-                device_address = selected_menu_item.id
-                context.manager.disconnect(device_address)
+                # LOGGER.debug(NAME) { @selected_device }
+                # selected_device = device_from_menu_item(selected_menu_item)
+                context.manager.disconnect_device(@selected_device)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end
@@ -117,7 +119,7 @@ module Wilhelm
               when :disconnected
                 device(device)
               else
-                LOGGER.debug(NAME) { "#device_update: #{action} not implemented." }
+                LOGGER.warn(NAME) { "#device_update: #{action} not implemented." }
               end
             end
 
@@ -128,10 +130,12 @@ module Wilhelm
                 index
               when :disconnected
                 index
-              when :created
+              when :devices_created
+                index
+              when :devices_updated
                 index
               else
-                LOGGER.debug(NAME) { "devices_update: #{action} not implemented." }
+                LOGGER.warn(NAME) { "devices_update: #{action} not implemented." }
               end
             end
 
@@ -139,9 +143,9 @@ module Wilhelm
 
             def device_from_menu_item(selected_menu_item)
               LOGGER.debug(NAME) { "#device_from_menu_item(#{selected_menu_item})" }
-              device_address = selected_menu_item.id
-              LOGGER.debug(NAME) { "Device Address: #{device_address}" }
-              result = context.manager.devices.device(device_address)
+              id = selected_menu_item.id
+              LOGGER.debug(NAME) { "Device Address: #{id}" }
+              result = context.manager.devices.find_by_id(id)
               LOGGER.debug(NAME) { "Device Address: #{result.alias} (#{result.address})" }
               result
             end

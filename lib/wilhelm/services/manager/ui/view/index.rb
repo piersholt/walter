@@ -39,9 +39,9 @@ module Wilhelm
               devices.first(COLUMN_ONE_MAX).map.with_index do |device, index|
                 indexed_device =
                 CheckedItem.new(
-                  id: device.address,
+                  id: device.id,
                   checked: device.connected?,
-                  label: device.name,
+                  label: device.alias,
                   action: :bluetooth_device
                 )
                 [index, indexed_device]
