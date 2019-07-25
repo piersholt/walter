@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require_relative 'enabled/notifications'
 require_relative 'enabled/states'
 
 module Wilhelm
@@ -11,7 +10,6 @@ module Wilhelm
         include Logging
         include Defaults
         include States
-        include Notifications
 
         def initialize(context)
           logger.debug(MANAGER_ENABLED) { '#initialize' }
