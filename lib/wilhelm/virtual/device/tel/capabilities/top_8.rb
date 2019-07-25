@@ -13,16 +13,16 @@ module Wilhelm
 
             LIMIT_TOP_8 = 8
 
-            def top_8_clear
-              draw_23(gfx: TOP_8_CLEAR, chars: EMPTY_STRING)
-            end
-
             def top_8_name(name = 'MUM')
               draw_23(gfx: TOP_8_NAME, chars: name)
             end
 
             def top_8_number(number = '98764321')
               draw_23(gfx: TOP_8_NUMBER, chars: number)
+            end
+            
+            def top_8_clear
+              draw_23(gfx: TOP_8_CLEAR, chars: EMPTY_STRING)
             end
 
             def generate_top_8

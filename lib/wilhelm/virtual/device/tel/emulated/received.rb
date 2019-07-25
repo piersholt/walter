@@ -25,7 +25,7 @@ module Wilhelm
             # 0x20 TEL-OPEN
             def handle_tel_open(message)
               logger.debug(PROC) { "Mock: handling telephone tel open request..." }
-              generate_top_8
+              open_dial
               # draw_21(layout: LAYOUT_DIAL, m2: M2_DEFAULT, m3: 0x00, chars: [])
             end
 

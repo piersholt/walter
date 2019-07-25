@@ -33,7 +33,7 @@ module Wilhelm
 
           alias primary draw_23
 
-          # ANZ VAR -----------------------------------------------------------
+          # ANZV VAR -----------------------------------------------------------
 
           # 0x24 ANZV-VAR
           # Info: Sigal etc
@@ -43,16 +43,16 @@ module Wilhelm
             try(from, to, ANZV_VAR, arguments)
           end
 
-          # ANZ BOOLEAN -------------------------------------------------------
+          # ANZV BOOLEAN -------------------------------------------------------
 
-          # 0x2b ANZV
+          # 0x2b ANZV-BOOL
           def anzv_bool_led(from: :tel, to: :anzv, **arguments)
             try(from, to, TEL_LED, arguments)
           end
 
           alias led anzv_bool_led
 
-          # 0x2c ANZV
+          # 0x2c ANZV-BOOL
           def anzv_bool_status(from: :tel, to: :anzv, **arguments)
             try(from, to, TEL_STATE, arguments)
           end
