@@ -12,6 +12,8 @@ module Wilhelm
   end
 end
 
+require_relative 'services/collection'
+
 # Audio
 print "\tLoading wilhelm/services/audio => "
 puts require_relative('services/audio') ? 'Success' : Error
