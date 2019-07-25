@@ -19,10 +19,10 @@ require_relative 'services/collection'
 
 # Audio
 print "\tLoading wilhelm/services/audio => "
-puts require_relative('services/audio') ? 'Success' : Error
+puts require_relative('services/audio') ? 'Success' : 'Failed'
 
 # Manager
 print "\tLoading wilhelm/services/manager => "
-puts require_relative('services/manager') ? 'Success' : Error
+puts require_relative('services/manager') ? 'Success' : 'Failed'
 
 puts "\tDone!"
