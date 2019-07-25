@@ -18,6 +18,8 @@ module Wilhelm
         AUDIO_ON       = "Audio (#{AUDIO_STATE_ON})"
 
         AUDIO_CONTROLS = 'Audio Controls'
+
+        PROG = 'Services::Audio'
       end
     end
   end

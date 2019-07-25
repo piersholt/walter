@@ -5,6 +5,7 @@ puts 'Loading wilhelm/services'
 LogActually.is_all_around(:services)
 
 LogActually.services.i
+LogActually.audio.i
 
 module Wilhelm
   module Services

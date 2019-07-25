@@ -9,11 +9,15 @@ module Wilhelm
         include LogActually::ErrorOutput
 
         def to_s
-          "Audio (#{state_string})"
+          stateful
         end
 
         def nickname
           :audio
+        end
+
+        def stateful
+          "Audio (#{state_string})"
         end
 
         def state_string
@@ -29,6 +33,18 @@ module Wilhelm
           else
             state.class
           end
+        end
+
+        def debug(message, prog = PROG)
+          logger.debug(prog) { message }
+        end
+
+        def info(message, prog = PROG)
+          logger.info(prog) { message }
+        end
+
+        def warn(message, prog = PROG)
+          logger.warn(prog) { message }
         end
 
         def logger

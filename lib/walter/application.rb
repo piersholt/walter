@@ -88,7 +88,7 @@ module Walter
       @audio = Wilhelm::Services::Audio.new
 
       manager.disable
-      audio.disable
+      audio.disable!
 
       environment.register_service(:manager, manager)
       environment.register_service(:audio, audio)
