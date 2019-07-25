@@ -10,7 +10,6 @@ module Wilhelm
       module Defaults
         include States
         include Actions
-        include Notifications
       end
     end
   end
