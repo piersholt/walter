@@ -3,8 +3,8 @@
 module Wilhelm
   module Services
     class Audio
-      class Enabled
-        # Audio::Enabled::States
+      class Pending
+        # Audio::Pending::States
         module States
           include Logging
 

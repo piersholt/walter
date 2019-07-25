@@ -16,7 +16,7 @@ module Wilhelm
             off!
           when :unavailable
             logger.info(stateful) { "#{targets.connected.count} target(s) available." }
-            enable!
+            pending!
           end
         end
 

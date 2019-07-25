@@ -24,8 +24,8 @@ module Wilhelm
           case state
           when Disabled
             AUDIO_STATE_DISABLED
-          when Enabled
-            AUDIO_STATE_ENABLED
+          when Pending
+            AUDIO_STATE_PENDING
           when Off
             AUDIO_STATE_OFF
           when On

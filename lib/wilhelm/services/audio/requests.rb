@@ -8,7 +8,7 @@ module Wilhelm
         include Logging
         include Yabber::API
 
-        # Audio::Enabled.initialize ->
+        # Audio::Pending.initialize ->
         def targets?
           logger.debug(AUDIO) { '#targets?' }
           logger.info(AUDIO) { '[REQUEST] Targets.' }

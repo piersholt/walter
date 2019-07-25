@@ -8,7 +8,7 @@ module Wilhelm
         module States
           def disable(*); end
 
-          def enable(*); end
+          def pending(*); end
 
           def off(*); end
 

@@ -21,8 +21,8 @@ module Wilhelm
           @state.disable(self)
         end
 
-        def enable
-          @state.enable(self)
+        def pending
+          @state.pending(self)
         end
 
         def off
@@ -34,7 +34,7 @@ module Wilhelm
         end
 
         alias disable! disable
-        alias enable! enable
+        alias pending! pending
         alias off! off
         alias on! on
       end

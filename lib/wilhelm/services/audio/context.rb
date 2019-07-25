@@ -15,7 +15,7 @@ module Wilhelm
           case context
           when SDK::Context::ServicesContext::Online
             logger.info(AUDIO) { 'Context Online => Enable Audio.' }
-            enable!
+            pending!
           when SDK::Context::ServicesContext::Offline
             logger.info(AUDIO) { 'Context Offline => Disable Audio' }
             disable!

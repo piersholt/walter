@@ -8,12 +8,12 @@ module Wilhelm
         AUDIO = 'Audio'
 
         AUDIO_STATE_DISABLED = 'Disabled'
-        AUDIO_STATE_ENABLED  = 'Pending'
+        AUDIO_STATE_PENDING  = 'Pending'
         AUDIO_STATE_OFF      = 'Off'
         AUDIO_STATE_ON       = 'On'
 
         AUDIO_DISABLED = "Audio (#{AUDIO_STATE_DISABLED})"
-        AUDIO_ENABLED  = "Audio (#{AUDIO_STATE_ENABLED})"
+        AUDIO_PENDING  = "Audio (#{AUDIO_STATE_PENDING})"
         AUDIO_OFF      = "Audio (#{AUDIO_STATE_OFF})"
         AUDIO_ON       = "Audio (#{AUDIO_STATE_ON})"
 

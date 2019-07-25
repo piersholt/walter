@@ -12,7 +12,7 @@ require_relative 'audio/notifications/target_handler'
 
 require_relative 'audio/states/defaults'
 require_relative 'audio/states/disabled'
-require_relative 'audio/states/enabled'
+require_relative 'audio/states/pending'
 require_relative 'audio/states/off'
 require_relative 'audio/states/on'
 

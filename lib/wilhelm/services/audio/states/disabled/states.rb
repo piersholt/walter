@@ -10,8 +10,8 @@ module Wilhelm
           include Defaults
           include Notifications
 
-          def enable(context)
-            context.change_state(Enabled.new(context))
+          def pending(context)
+            context.change_state(Pending.new(context))
           end
 
           def off(context)
