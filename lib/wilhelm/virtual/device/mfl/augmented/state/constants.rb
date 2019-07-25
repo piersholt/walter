@@ -11,9 +11,6 @@ module Wilhelm
               MODE_RAD = :rad
               MODE_TEL = :tel
 
-              MODE_TARGET_RAD = :rad
-              MODE_TARGET_TEL = :tel
-
               DEFAULT_MODE = MODE_RAD
             end
           end

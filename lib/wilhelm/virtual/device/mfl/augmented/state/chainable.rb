@@ -8,9 +8,9 @@ module Wilhelm
           module State
             # Device::MFL::Augmented::State::Chainable state commands
             module Chainable
-              include Constants
-              include Virtual::Constants::Controls::BMBT
               include Observable
+              include Constants
+              include Virtual::Constants::Controls::MFL
 
               def log_state(delta, level = :debug)
                 logger.public_send(level, moi) { delta }

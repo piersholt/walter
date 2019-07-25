@@ -28,9 +28,9 @@ module Wilhelm
               def mode_target
                 case mode?
                 when MODE_TEL
-                  MODE_TARGET_TEL
+                  MODE_TEL
                 when MODE_RAD
-                  MODE_TARGET_RAD
+                  MODE_RAD
                 end
               end
             end
