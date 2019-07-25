@@ -2533,27 +2533,43 @@
     :mode:
       :type: :map
       :dictionary:
-        # Selection
-        0x40: (Select) (RADIO [m] Manual Staion Choice) (TAPE fast forward/reverse)
-        0x50: (Select) (RADIO [SCAN] Radio Station Sample) (TAPE music search)
-        0x60: (Select) (RADIO [a] Automatic Search)
-        0x70: (Select) CD Music Search
+        # SELECT C23
+        0x4_0: (Select) A
+          # [RADIO] [m] Manual Staion Choice
+          # [TAPE] fast forward/reverse
+        0x5_0: (Select) B
+          # [RADIO] [SCAN] Radio Station Sample
+          # [TAPE] music search
+        0x6_0: (Select) C
+          # [RADIO] [a] Automatic Search
+        0x7_0: (Select) D
+          # [CDC] [< >] Music Search
 
-        0x0_4: (Select) (BM53) (RADIO [m] Manual Staion Choice)
-        0x1_4: (Select) (BM53) (RADIO [SCAN] Station sample)
-        0x2_4: (Select) (BM53) (RADIO [II] Search sensitive)
-        0x3_4: (Select) (BM53) (RADIO [I] Search non sensitive)
+        # SELECT BM53
+        0x0_4: (Select) A
+          # [RADIO] [m]    Manual Staion Choice
+          # [CDC]   [< >]  Music Search
+        0x1_4: (Select) B
+          # [RADIO] [SCAN]   Station sample
+          # [CDC]   [RANDOM] Random generator
+        0x2_4: (Select) C
+          # [RADIO] [II]   Search sensitive
+          # [CDC]   [SCAN] Track sample
+        0x3_4: (Select) D
+          # [RADIO] [I]     Search non sensitive
+          # [CDC]   [<< >>] Fast forward/reverse
 
-        # Tone
-        0x80: (Tone) Equalizer
-        0x84: (Tone) (BM53) (CD) Equalizer
-        0x86: (Tone) (BM53) (Radio) Equalizer
-        0x90: (Tone) (BM53) (Radio) Equalizer
+        # TONE C23
+        0x8_0: (Tone) [?] Equalizer
 
-        0xc0: (Tone) EQ. Bass
-        0xd0: (Tone) EQ. Treble
-        0xe0: (Tone) EQ. Fader
-        0xf0: (Tone) EQ. Balance
+        0x8_4: (Tone) [CDC] Equalizer
+        0x8_6: (Tone) [RADIO] Equalizer
+        0x9_0: (Tone) [RADIO] Equalizer
+
+        0xc_0: (Tone) EQ. Bass
+        0xd_0: (Tone) EQ. Treble
+        0xe_0: (Tone) EQ. Fader
+        0xf_0: (Tone) EQ. Balance
   :index:
     :mode: 0
 0x45:
