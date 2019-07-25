@@ -6,6 +6,7 @@ module Wilhelm
       # Audio::Actions
       module Actions
         include Logging
+        include Yabber::API
 
         def volume_up
           logger.debug(stateful) { '#volume_up()' }

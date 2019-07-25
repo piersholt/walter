@@ -11,16 +11,16 @@ module Wilhelm
           # USER CONTROL
 
           def volume_up(context)
-            context.target.volume_up
+            context.volume_up!
           end
 
           def volume_down(context)
-            context.target.volume_down
+            context.volume_down!
           end
 
           def power(context)
-            result = context.player.power
-            logger.info(AUDIO_ON) { "#power() => #{result}" }
+            result = context.target.addressed_player.power
+            logger.info(AUDIO_ON) { "#power() => #{result ? 'On' : 'Off'}" }
             case result
             when true
               Wilhelm::API::Audio.instance.on
@@ -33,28 +33,28 @@ module Wilhelm
           end
 
           def pause(context)
-            result = context.player.pause
+            result = context.target.addressed_player.pause
             logger.info(AUDIO_ON) { "#pause() => #{result}" }
             result
           end
 
           def seek_forward(context)
-            logger.info(AUDIO_ON) { "#seek_forward()" }
-            context.player.seek_forward
+            logger.debug(AUDIO_ON) { "#seek_forward()" }
+            context.target.addressed_player.seek_forward
           end
 
           def seek_backward(context)
-            logger.info(AUDIO_ON) { "#seek_backward()" }
-            context.player.seek_backward
+            logger.debug(AUDIO_ON) { "#seek_backward()" }
+            context.target.addressed_player.seek_backward
           end
 
           def scan_forward(context, toggle)
             logger.debug(AUDIO_ON) { "#scan_forward(#{toggle})" }
             case toggle
             when :on
-              context.player.scan_forward_start
+              context.target.addressed_player.scan_forward_start
             when :off
-              context.player.scan_forward_stop
+              context.target.addressed_player.scan_forward_stop
             end
           end
 
@@ -62,19 +62,19 @@ module Wilhelm
             logger.debug(AUDIO_ON) { "#scan_back(#{toggle})" }
             case toggle
             when :on
-              context.player.scan_backward_start
+              context.target.addressed_player.scan_backward_start
             when :off
-              context.player.scan_backward_stop
+              context.target.addressed_player.scan_backward_stop
             end
           end
 
           def load_audio(context)
-            logger.info(AUDIO_ON) { '#load_audio()' }
+            logger.debug(AUDIO_ON) { '#load_audio()' }
             context.context.ui.launch(:audio, :index)
           end
 
           def load_now_playing(context)
-            logger.info(AUDIO_ON) { '#load_now_playing()' }
+            logger.debug(AUDIO_ON) { '#load_now_playing()' }
             context.context.ui.launch(:audio, :now_playing)
           end
         end

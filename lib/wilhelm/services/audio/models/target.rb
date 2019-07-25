@@ -1,72 +1,73 @@
 # frozen_string_literal: true
 
+require_relative 'target/constants'
+require_relative 'target/actions'
+require_relative 'target/attributes'
+require_relative 'target/notifications'
+
 module Wilhelm
   module Services
     class Audio
       # Audio::Target
       class Target
         include Logging
-        include Observable
-        include Yabber::API
+        include Constants
+        include Attributes
+        include Notifications
+        include Actions
 
-        PLAYER = 'Player'
-        CONNECTED = 'Connected'
-
-        attr_reader :attributes
+        attr_accessor :players
 
         def initialize(attributes = {})
           @attributes = attributes
         end
 
-        # ATTRIBUTES ----------------------------------------------------------
-
-        def player
-          attributes[PLAYER]
+        def is?(other_id)
+          id.eq?(other_id)
         end
 
-        def connected
-          attributes[CONNECTED]
+        def ==(other_object)
+          return false unless other_object.respond_to?(:id)
+          id == other_object.id
         end
 
-        # NOTIFICATIONS -------------------------------------------------------
-
-        def player_changed(new_player)
-          attributes[PLAYER] = new_player
+        def path
+          attributes[:path]
         end
 
-        def player_added(new_player)
-          attributes[PLAYER] = new_player
+        alias id path
+
+        def name
+          @name ||= Manager::Device.parse_device_path(id)
         end
 
-        def player_removed(new_player)
-          attributes[PLAYER] = new_player
+        # Player Object(s) References
+
+        # connected == true
+        # player != nil
+        def addressed_player
+          debug('#addressed_player', PROG)
+          raise NoAddressedPlayer unless player?
+          raise NoAddressedPlayer unless players?
+          players&.id(player)
         end
 
-        # ACTIONS/COMMANDS ----------------------------------------------------
-
-        def volume_up
-          volume_up!
+        def player?
+          return false if player.nil?
+          return false if player.empty?
+          true
         end
 
-        def volume_down
-          volume_down!
+        def players?
+          return false if players.nil?
+          return false if players.empty?
+          true
         end
 
-        # UPDATE ------------------------------------------------------------
-
-        def attributes!(new_object)
-          changed = []
-          attributes.merge!(new_object.attributes) do |key, old, new|
-            changed << key
-            old.is_a?(Hash) ? squish(old, new) : new
-          end
-          changed
-          notify_observers(:updated, changed: changed, target: self)
-        end
-
-        def squish(old, new)
-          old.merge(new)
-        end
+        # def player_properties_changed(player, properties)
+        #   debug("#player_properties_changed(#{player}, #{properties})", PROG)
+        #   players.properties_changed(player, properties)
+        # end
       end
     end
   end

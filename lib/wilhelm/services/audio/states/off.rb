@@ -15,8 +15,10 @@ module Wilhelm
         include Actions
         include Notifications
 
-        def initialize(*)
+        def initialize(context)
           logger.debug(AUDIO_OFF) { '#initialize' }
+          # Note: this is a request
+          context.player?(context.targets.selected_target&.player)
         end
       end
     end

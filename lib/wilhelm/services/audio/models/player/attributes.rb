@@ -10,6 +10,12 @@ module Wilhelm
 
           attr_reader :attributes
 
+          def path
+            attributes[:path]
+          end
+
+          alias id path
+
           def device
             attributes.fetch(DEVICE, EMPTY_ATTRIBUTE)
           end
@@ -63,66 +69,63 @@ module Wilhelm
           end
 
           def track
-            attributes.fetch(TRACK, EMPTY_TRACK.dup)
+            # attributes.fetch(TRACK, EMPTY_TRACK.dup)
+            @track ||= Track.new(attributes.fetch(TRACK, EMPTY_ATTRIBUTE))
           end
 
           # Track
 
           def title
-            track.fetch(TITLE, EMPTY_ATTRIBUTE)
+            track.title
           end
 
           def artist
-            track.fetch(ARTIST, EMPTY_ATTRIBUTE)
+            track.artist
           end
 
           def album
-            track.fetch(ALBUM, EMPTY_ATTRIBUTE)
+            track.album
           end
 
-          def number
-            track.fetch(TRACK_NUMBER, EMPTY_ATTRIBUTE)
+          def track_number
+            track.track_number
           end
 
-          def total
-            track.fetch(NUMBER_OF_TRACKS, EMPTY_ATTRIBUTE)
+          alias number track_number
+
+          def number_of_tracks
+            track.number_of_tracks
           end
+
+          alias tracks number_of_tracks
+          alias total number_of_tracks
 
           def genre
-            track.fetch(GENRE, EMPTY_ATTRIBUTE)
+            track.genre
+          end
+
+          def duration
+            track.duration
           end
 
           # UPDATE ------------------------------------------------------------
 
-          def attributes!(properties_hash, attributes_hash = attributes)
-            logger.unknown(fuck_off) { "attributes!(#{properties_hash}, #{attributes_hash})" }
-            audit = { created: [], updated: [] }
-            audit[:created] = properties_hash.keys - attributes_hash.keys
-
-            attributes_hash.update(properties_hash) do |key, stale, fresh|
-              if stale.eql?(fresh)
-                stale
-              elsif stale.is_a?(Hash)
-                attributes!(fresh, stale)
-              else
-                # logger.warn(fuck_off) { "#{stale}.eql?(#{fresh}) => false" }
-                audit[:updated] << key
-                fresh
-              end
-            end
-            logger.unknown(fuck_off) { "=> #{audit}" }
-            audit
-          end
-
-          def squish(stale, fresh)
-            stale.merge(fresh) do |key, stale, fresh|
-              if fresh.is_a?(String)
-                fresh.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, { undef: :replace })
-              else
-                fresh
-              end
+          def attributes!(player_object)
+            logger.debug(PROG) { "#attributes!(#{player_object&.attributes})" }
+            attributes.merge!(player_object.attributes) do |key, _, fresh|
+              key == TRACK ? track.attributes!(fresh) : fresh
             end
           end
+
+          # def squish(stale, fresh)
+          #   stale.merge(fresh) do |key, stale, fresh|
+          #     if fresh.is_a?(String)
+          #       fresh.encode(Encoding::ASCII_8BIT, Encoding::UTF_8, { undef: :replace })
+          #     else
+          #       fresh
+          #     end
+          #   end
+          # end
         end
       end
     end

@@ -32,6 +32,11 @@ module Wilhelm
         def on
           @state.on(self)
         end
+
+        alias disable! disable
+        alias enable! enable
+        alias off! off
+        alias on! on
       end
     end
   end

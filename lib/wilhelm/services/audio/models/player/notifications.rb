@@ -8,74 +8,55 @@ module Wilhelm
         module Notifications
           include Logging
 
-          # Target (Addressed Player)
-
-          def player_added!(*)
-            # attributes!(player_object)
+          def track_pending
             changed
-            notify_observers(:player_added, player: self)
+            notify_observers(:track_pending, player: self)
           end
 
-          def player_changed!(*)
-            # attributes!(player_object)
-            changed
-            notify_observers(:player_changed, player: self)
-          end
-
-          def player_removed!
-            # destroy!
-            changed
-            notify_observers(:player_removed, player: self)
-          end
-
-          # Player
-
-          def track_change!(player_object)
-            attributes!(player_object)
+          def track_change
             changed
             notify_observers(:track_change, player: self)
           end
 
-          def track_start!(player_object)
-            attributes!(player_object)
+          def track_start
             changed
             notify_observers(:track_start, player: self)
           end
 
-          def track_end!(player_object)
-            attributes!(player_object)
+          def track_end
             changed
             notify_observers(:track_end, player: self)
           end
 
-          def position!(player_object)
-            attributes!(player_object)
+          def position
             changed
             notify_observers(:position, player: self)
           end
 
-          def status!(player_object)
-            attributes!(player_object)
-            changed
-            notify_observers(:status, player: self)
-          end
+          # @note conflict with attribute of same name
+          # def status
+          #   changed
+          #   notify_observers(:status, player: self)
+          # end
 
-          def repeat!(player_object)
-            attributes!(player_object)
+          def repeat
             changed
             notify_observers(:repeat, player: self)
           end
 
-          def shuffle!(player_object)
-            attributes!(player_object)
+          def shuffle
             changed
             notify_observers(:shuffle, player: self)
           end
 
-          def changed!(player_object)
-            attributes!(player_object)
+          def created
             changed
-            notify_observers(:changed, player: self)
+            notify_observers(:created, player: self)
+          end
+
+          def updated
+            changed
+            notify_observers(:updated, player: self)
           end
         end
       end

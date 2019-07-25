@@ -12,7 +12,11 @@ module Wilhelm
 
           attr_accessor :context, :audio
 
-          TARGET_HANDLER = 'Audio::TargetHandler'
+          TARGET_HANDLER = 'Handler::Target'
+
+          def notification_delegate
+            TARGET_HANDLER
+          end
 
           def logger
             LOGGER
@@ -21,19 +25,18 @@ module Wilhelm
           def take_responsibility(notification)
             logger.debug(TARGET_HANDLER) { "#take_responsibility(#{notification})" }
             case notification.name
-            when :addressed_player
-              logger.info(TARGET_HANDLER) { ':addressed_player' }
-              logger.warn(TARGET_HANDLER) { ':addressed_player => I don\'t like this notification....' }
-              audio.addressed_player(notification.properties)
-            when :player_added
-              logger.info(TARGET_HANDLER) { ':player_added' }
-              audio.player_added(notification.properties)
-            when :player_changed
-              logger.info(TARGET_HANDLER) { ':player_changed' }
-              audio.player_changed(notification.properties)
-            when :player_removed
-              logger.info(TARGET_HANDLER) { ':player_removed' }
-              audio.player_removed(notification.properties)
+            when :added
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(TARGET_HANDLER) { ":added => #{id}" }
+              audio.targets.update(notification.properties, :added)
+            when :updated
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(TARGET_HANDLER) { ":updated => #{id}" }
+              audio.targets.update(notification.properties, :updated)
+            when :removed
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(TARGET_HANDLER) { ":removed => #{id}" }
+              audio.targets.update(notification.properties, :removed)
             else
               not_handled(notification)
             end

@@ -7,6 +7,7 @@ module Wilhelm
   module Services
     class Audio
       class Off
+        # @deprecated
         # Audio::Off::Notifications
         module Notifications
           include Target

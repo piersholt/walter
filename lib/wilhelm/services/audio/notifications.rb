@@ -5,52 +5,24 @@ module Wilhelm
     class Audio
       # Audio::Notifications
       module Notifications
-        # NOTIFICATIONS (TARGET) ----------------------------------------------
+        include Logging
 
-        def addressed_player(properties)
-          @state.addressed_player(self, properties)
+        # Audio::Properties.setup_targets
+        def targets_update(event, args = {})
+          logger.debug(stateful) { "#{event}!" }
+          case event
+          when :available
+            logger.info(stateful) { "#{targets.connected.count} target(s) available." }
+            off!
+          when :unavailable
+            logger.info(stateful) { "#{targets.connected.count} target(s) available." }
+            enable!
+          end
         end
 
-        def player_added(properties)
-          @state.player_added(self, properties)
-        end
-
-        def player_changed(properties)
-          @state.player_changed(self, properties)
-        end
-
-        def player_removed(properties)
-          @state.player_removed(self, properties)
-        end
-
-        # NOTIFICATIONS (PLAYER) ----------------------------------------------
-
-        def track_change(properties)
-          @state.track_change(self, properties)
-        end
-
-        def track_start(properties)
-          @state.track_start(self, properties)
-        end
-
-        def track_end(properties)
-          @state.track_end(self, properties)
-        end
-
-        def position(properties)
-          @state.position(self, properties)
-        end
-
-        def status(properties)
-          @state.status(self, properties)
-        end
-
-        def repeat(properties)
-          @state.repeat(self, properties)
-        end
-
-        def shuffle(properties)
-          @state.shuffle(self, properties)
+        # Audio::Properties.setup_players
+        def players_update(event, args = {})
+          logger.info(stateful) { "#{event}!" }
         end
       end
     end

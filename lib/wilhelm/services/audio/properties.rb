@@ -5,12 +5,34 @@ module Wilhelm
     class Audio
       # Audio::Properties
       module Properties
+        def targets
+          @targets ||= setup_targets
+        end
+
+        def players
+          @players ||= setup_players
+        end
+
         def target
-          @target ||= Target.new
+          targets.selected_target
         end
 
         def player
-          @player ||= Player.new
+          target&.addressed_player
+        end
+
+        private
+
+        def setup_targets
+          t = Targets.new(self)
+          t.add_observer(self, :targets_update)
+          t
+        end
+
+        def setup_players
+          t = Players.new
+          t.add_observer(self, :players_update)
+          t
         end
       end
     end

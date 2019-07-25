@@ -7,33 +7,46 @@ module Wilhelm
         # Audio::Player::Observation
         module Observation
           include Observable
+          include Constants
+          include Helpers::Object
 
           alias add_observer! add_observer
           alias delete_observer! delete_observer
 
-          def add_observer(object, method = nil)
-            logger.debug(fuck_off) { "#add_observer(#{object.class}:#{Kernel.format('%#.14x',(object.object_id * 2))})" }
-            raise ArgumentError, 'Duplicate!' if
-            @observer_peers&.keys&.find do |observer, method|
-              observer.class == object.class
-            end
-            # raise ArgumentError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
+          # @override Observeable#add_obvserver
+          def add_observer(object, method = :update)
+            logger.debug(PROG) { "#add_observer(#{hid(object)})" }
+            validate_observer(object)
             add_observer!(object, method)
           end
 
+          # @override Observeable#delete_observer
           def delete_observer(object)
-            logger.debug(fuck_off) { "#delete_observer(#{object.class}:#{Kernel.format('%#.14x',(object.object_id * 2))})" }
-            # raise ArgumentError, 'Duplicate!' if @observer_peers&.keys&.include?(object)
+            logger.debug(PROG) { "#delete_observer(#{hid(object)})" }
             delete_observer!(object)
           end
 
           def observers
-            x = instance_variable_get(:@observer_peers)
-            x.map do |observer, method|
-              klass = observer.class
-              id = Kernel.format('%#.14x',(observer.object_id * 2))
-              ["#{klass}:#{id}", method]
+            @observer_peers&.map do |observer, method|
+              [human_id(observer), method]
             end&.to_h
+          end
+
+          private
+
+          def duplicate?(object)
+            @observer_peers&.any? do |observer, _|
+              observer.class == object.class
+            end
+          end
+
+          def validate_observer(object)
+            return true unless duplicate?(object)
+            raise(ArgumentError, duplicate_msg(object))
+          end
+
+          def duplicate_msg(object)
+            "#{hid(object)} is already observing #{hid(self)}"
           end
         end
       end

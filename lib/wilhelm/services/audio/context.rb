@@ -15,10 +15,10 @@ module Wilhelm
           case context
           when SDK::Context::ServicesContext::Online
             logger.info(AUDIO) { 'Context Online => Enable Audio.' }
-            enable
+            enable!
           when SDK::Context::ServicesContext::Offline
             logger.info(AUDIO) { 'Context Offline => Disable Audio' }
-            disable
+            disable!
           when SDK::Context::UserInterface
             logger.info(AUDIO) { 'Context UI => Register Audio Controllers' }
             context.register_service_controllers(
@@ -32,7 +32,7 @@ module Wilhelm
               Notifications::ControllerHandler.instance
             target_handler.audio = self
             controller_handler.audio = self
-            context.register_handlers(target_handler, controller_handler)
+            context.register_handlers(controller_handler, target_handler)
           end
         end
       end

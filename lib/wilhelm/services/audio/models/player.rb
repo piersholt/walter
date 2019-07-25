@@ -12,6 +12,7 @@ module Wilhelm
     class Audio
       # Audio::Player
       class Player
+        include Logging
         include Constants
         include Observation
         include Attributes
@@ -19,24 +20,8 @@ module Wilhelm
         include Actions
         include Notifications
 
-        include Logging
-
-        def fuck_off
-          LOG_NAME
-        end
-
-        # -----------
-
         def initialize(attributes = EMPTY_ATTRIBUTES.dup)
           @attributes = attributes
-        end
-
-        def to_s
-          "#{LOG_NAME}: #{attributes}"
-        end
-
-        def inspect
-          attributes
         end
       end
     end

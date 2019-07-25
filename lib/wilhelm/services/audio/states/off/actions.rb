@@ -12,11 +12,12 @@ module Wilhelm
 
           def power(context)
             result = context.player.power
-            logger.info(AUDIO_OFF) { "#power() => #{result}" }
-            if result
+            logger.info(AUDIO_OFF) { "#power() => #{result ? 'On' : 'Off'}" }
+            case result
+            when true
               Wilhelm::API::Audio.instance.on
               context.on
-            else
+            when false
               Wilhelm::API::Audio.instance.off
               context.off
             end

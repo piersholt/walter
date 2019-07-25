@@ -3,6 +3,8 @@
 puts 'Loading wilhelm/services'
 
 LogActually.is_all_around(:services)
+LogActually.is_all_around(:manager)
+LogActually.is_all_around(:audio)
 
 LogActually.services.i
 LogActually.audio.i

@@ -14,7 +14,6 @@ module Wilhelm
       include Requests
       include Replies
       include Context
-      include Yabber::API
 
       def initialize
         @state = Disabled.new

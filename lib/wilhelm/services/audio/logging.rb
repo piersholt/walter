@@ -48,7 +48,7 @@ module Wilhelm
         end
 
         def logger
-          LOGGER
+          LogActually.audio
         end
       end
     end

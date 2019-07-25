@@ -16,7 +16,7 @@ module Wilhelm
         def initialize(context)
           logger.debug(AUDIO_ENABLED) { '#initialize' }
           # Note: this is a request
-          context.player?
+          context.targets?
           context.register_controls(Wilhelm::API::Controls.instance)
         end
       end

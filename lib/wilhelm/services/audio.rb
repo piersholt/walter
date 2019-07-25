@@ -5,8 +5,7 @@
 require_relative 'audio/constants'
 require_relative 'audio/logging'
 
-require_relative 'audio/models/player'
-require_relative 'audio/models/target'
+require_relative 'audio/models'
 
 require_relative 'audio/notifications/controller_handler'
 require_relative 'audio/notifications/target_handler'
