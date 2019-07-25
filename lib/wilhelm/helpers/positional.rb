@@ -47,6 +47,7 @@ module Wilhelm
       # NUMBER TO DIGITS
 
       # Split number into base-256 positional notation digits
+      # base-256 represents 1 byte, or 8 bits => 2**8 = 256
       # Example: 0x2706 => [0x27, 0x06]
       # @param Fixnum number
       # @return Array<Fixnum>
