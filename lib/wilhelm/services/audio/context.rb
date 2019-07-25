@@ -29,7 +29,7 @@ module Wilhelm
             target_handler =
               Notifications::TargetHandler.instance
             controller_handler =
-              Notifications::ControllerHandler.instance
+              Notifications::PlayerHandler.instance
             target_handler.audio = self
             controller_handler.audio = self
             context.register_handlers(controller_handler, target_handler)

@@ -4,9 +4,8 @@ module Wilhelm
   module Services
     class Audio
       module Notifications
-        # @todo MediaPlayerHandler
-        # Audio::Notifications::ControllerHandler
-        class ControllerHandler
+        # Audio::Notifications::PlayerHandler
+        class PlayerHandler
           include Singleton
           include Yabber::NotificationDelegate
           include Yabber::Constants
