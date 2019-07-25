@@ -17,16 +17,16 @@ module Wilhelm
           @state
         end
 
-        def enable
-          @state.enable(self)
+        def disable!
+          @state.disable!(self)
         end
 
-        def disable
-          @state.disable(self)
+        def enable!
+          @state.enable!(self)
         end
 
-        def on
-          @state.on(self)
+        def on!
+          @state.on!(self)
         end
       end
     end

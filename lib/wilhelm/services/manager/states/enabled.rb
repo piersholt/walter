@@ -15,6 +15,7 @@ module Wilhelm
 
         def initialize(context)
           logger.debug(MANAGER_ENABLED) { '#initialize' }
+          Wilhelm::API::Telephone.instance.disconnected
           # Note: this is a request
           context.devices?
           context.register_controls(Wilhelm::API::Controls.instance)

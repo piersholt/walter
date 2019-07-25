@@ -15,12 +15,12 @@ module Wilhelm
           case context
           when SDK::Context::ServicesContext::Online
             logger.info(MANAGER) { 'Context Online => Enable Manager.' }
-            enable
+            enable!
           when SDK::Context::ServicesContext::Offline
             logger.info(MANAGER) { 'Context Offline => Disable Manager' }
-            disable
+            disable!
           when SDK::Context::UserInterface
-            logger.info(MANAGER) { 'Context UI => Register Controllers' }
+            logger.info(MANAGER) { 'Context UI => Register Manager Controllers' }
             context.register_service_controllers(
               manager: UserInterface::Controller::ManagerController
             )

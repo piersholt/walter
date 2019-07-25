@@ -7,6 +7,7 @@ LogActually.is_all_around(:manager)
 LogActually.is_all_around(:audio)
 
 LogActually.services.i
+LogActually.manager.i
 LogActually.audio.i
 
 module Wilhelm

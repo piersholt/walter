@@ -12,7 +12,11 @@ module Wilhelm
 
           attr_accessor :context, :manager
 
-          DEVICE_HANDLER = 'Manager::DeviceHandler'
+          DEVICE_HANDLER = 'Handler::Device'
+
+          def notification_delegate
+            DEVICE_HANDLER
+          end
 
           def logger
             LOGGER
@@ -21,18 +25,22 @@ module Wilhelm
           def take_responsibility(notification)
             logger.debug(DEVICE_HANDLER) { "#take_responsibility(#{notification})" }
             case notification.name
-            when :device_connecting
-              logger.info(DEVICE_HANDLER) { ':device_connecting' }
-              manager.device_connecting(notification.properties)
-            when :device_connected
-              logger.info(DEVICE_HANDLER) { ':device_connected' }
-              manager.device_connected(notification.properties)
-            when :device_disconnecting
-              logger.info(DEVICE_HANDLER) { ':device_disconnecting' }
-              manager.device_disconnecting(notification.properties)
-            when :device_disconnected
-              logger.info(DEVICE_HANDLER) { ':device_disconnected' }
-              manager.device_disconnected(notification.properties)
+            when :connected
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(DEVICE_HANDLER) { ":device_connected => #{id}" }
+              manager.devices.update(notification.properties, :connected)
+            when :disconnected
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(DEVICE_HANDLER) { ":device_disconnected => #{id}" }
+              manager.devices.update(notification.properties, :disconnected)
+            when :connecting
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(DEVICE_HANDLER) { ":device_connecting => #{id}" }
+              manager.devices.update(notification.properties, :connecting)
+            when :disconnecting
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(DEVICE_HANDLER) { ":device_disconnecting => #{id}" }
+              manager.devices.update(notification.properties, :disconnecting)
             when :new_device
               logger.info(DEVICE_HANDLER) { ':new_device' }
               logger.warn(DEVICE_HANDLER) { ':new_device => I don\'t like this notification....' }

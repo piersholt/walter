@@ -6,13 +6,11 @@ module Wilhelm
       module Defaults
         # Manager::Defaults::States
         module States
-          def disable(*); end
+          def disable!(*); end
 
-          def enable(*); end
+          def enable!(*); end
 
-          def off(*); end
-
-          def on(*); end
+          def on!(*); end
         end
       end
     end

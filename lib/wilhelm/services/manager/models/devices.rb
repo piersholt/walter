@@ -4,73 +4,84 @@ module Wilhelm
   module Services
     class Manager
       # Manager::Devices
-      class Devices
+      class Devices < Collection
         include Constants
-        extend Forwardable
-        include Observable
 
-        FORWARD_MESSAGES = %i[<< push first last each empty? size sort_by length to_s count [] find_all find each_with_index find_index map group_by delete_at].freeze
-        # SEARCH_PROPERTY = [:command_id, :from_id, :to_id].freeze
+        PROG = 'Manager::Devices'
 
-        FORWARD_MESSAGES.each do |method_name|
-          def_delegator :devices, method_name
+        # SCOPE
+
+        def connected?
+          values.find_all(&:connected?).count
         end
 
-        def device(object)
-          return device_hash[object] if object.is_a?(String)
-          return false unless include?(object)
-          device_hash[object.address]
+        def connected
+          values.find_all(&:connected?)
         end
 
-        def device?(device_address)
-          device_hash.key?(device_address)
+        def disconnected
+          values.find_all(&:disconnected?)
         end
 
-        def include?(device_object)
-          device?(device_object.address)
-        end
+        # HANDLER
 
-        def update_devices(devices_enum, event = nil)
-          devices_enum.each do |a_device|
-            update_device(a_device, event)
-          end
-        end
-
-        def update_device(device_attributes_hash, event = nil)
-          device_object = Device.new(device_attributes_hash)
-          case include?(device_object)
-          when true
-            existing_device = device(device_object)
-            existing_device.attributes!(device_object)
-            existing_device.public_send(event) if event
-            changed
-            notify_observers(event || :updated, device: existing_device)
-            existing_device
-          when false
-            new_device = add_device(device_object)
-            new_device.public_send(event) if event
-            changed
-            notify_observers(event || :created, device: new_device)
-            new_device
-          end
+        def update(device_attributes_hash, notification = nil)
+          device = create_or_update(device_attributes_hash)
+          device.public_send(notification) if notification
         rescue StandardError => e
-          logger.error(self.class) { e }
-          with_backtrace(logger, e)
+          logger.error(PROG) { e }
+          e.backtrace.each { |line| logger.error(PROG) { line } }
         end
 
-        private
-
-        def add_device(device_object)
-          device_hash[device_object.address] = device_object
+        # @todo Manager should handle collection events
+        # Observable.notify
+        def device_update(notification, device:)
+          logger.debug(PROG) { "#device_update(#{device})" }
+          case notification
+          when :connected
+            logger.info(PROG) { "Device: #{notification}: #{device.id}" }
+            if connected.count == 1
+              changed
+              notify_observers(:connected, device: device)
+            end
+          when :disconnected
+            logger.info(PROG) { "Device: #{notification}: #{device.id}" }
+            if connected.count.zero?
+              changed
+              notify_observers(:disconnected, device: device)
+            end
+          when :connecting
+            logger.info(PROG) { "Device: #{notification}: #{device.id}" }
+            changed
+            notify_observers(:connecting, device: device)
+          when :disconnecting
+            logger.info(PROG) { "Device: #{notification}: #{device.id}" }
+            changed
+            notify_observers(:disconnecting, device: device)
+          else
+            logger.warn(PROG) { "Device unknown: #{notification}!" }
+          end
         end
 
-        def devices
-          device_hash.values
+        # COLLECTION
+
+        def update_method
+          :device_update
         end
 
-        def device_hash
-          @device_hash ||= {}
+        def klass
+          Device
         end
+
+        # @deprecated
+        # Currently only called by Manager::Replies
+        # def update_devices(devices_enum, notification = nil)
+        #   logger.warn(PROG) { 'Deprecated! #update_devices' }
+        #   return false
+        #   devices_enum.each do |a_device|
+        #     update_device(a_device, notification)
+        #   end
+        # end
       end
     end
   end

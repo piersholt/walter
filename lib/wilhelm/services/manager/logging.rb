@@ -9,11 +9,15 @@ module Wilhelm
         include LogActually::ErrorOutput
 
         def to_s
-          "Manager (#{state_string})"
+          stateful
         end
 
         def nickname
           :manager
+        end
+
+        def stateful
+          "Manager (#{state_string})"
         end
 
         def state_string
@@ -30,7 +34,7 @@ module Wilhelm
         end
 
         def logger
-          LOGGER
+          LogActually.manager
         end
       end
     end

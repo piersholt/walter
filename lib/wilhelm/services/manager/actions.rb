@@ -8,20 +8,20 @@ module Wilhelm
         include Logging
 
         # via ManagerControllers
-        def connect_device(device_address)
-          logger.debug(MANAGER) { "#connect_device(#{device_address})" }
-          @state.connect_device(self, device_address)
+        def connect_device(device)
+          logger.debug(MANAGER) { "#connect_device(#{device})" }
+          @state.connect_device(self, device)
         end
 
         # via ManagerControllers
-        def disconnect_device(device_address)
-          logger.debug(MANAGER) { "#disconnect_device(#{device_address})" }
-          @state.disconnect_device(self, device_address)
+        def disconnect_device(device)
+          logger.debug(MANAGER) { "#disconnect_device(#{device})" }
+          @state.disconnect_device(self, device)
         end
 
         # via Controls
         def load_manager
-          logger.debug(MANAGER) { "#load_manager(#{toggle})" }
+          logger.debug(MANAGER) { "#load_manager" }
           @state.load_manager(self)
         end
       end

@@ -5,24 +5,21 @@ module Wilhelm
     class Manager
       # Manager::Notifications
       module Notifications
-        def device_connecting(properties)
-          @state.device_connecting(self, properties)
-        end
+        include Logging
 
-        def device_connected(properties)
-          @state.device_connected(self, properties)
-        end
-
-        def device_disconnecting(properties)
-          @state.device_disconnecting(self, properties)
-        end
-
-        def device_disconnected(properties)
-          @state.device_disconnected(self, properties)
-        end
-
-        def new_device(properties)
-          @state.new_device(self, properties)
+        # Manager::Properties.setup_devices
+        def devices_update(event, args = {})
+          logger.info(stateful) { "#{event}!" }
+          case event
+          when :connected
+            Wilhelm::API::Telephone.instance.connected
+          when :disconnected
+            Wilhelm::API::Telephone.instance.disconnected
+          when :connecting
+            Wilhelm::API::Telephone.instance.connecting
+          when :disconnecting
+            Wilhelm::API::Telephone.instance.disconnecting
+          end
         end
       end
     end

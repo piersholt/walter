@@ -6,15 +6,15 @@ module Wilhelm
       class Disabled
         # Manager::Disabled::States
         module States
-          def enable(context)
+          def enable!(context)
             context.change_state(Enabled.new(context))
           end
 
-          def disable(context)
+          def disable!(context)
             context.change_state(Disabled.new)
           end
 
-          def on(context)
+          def on!(context)
             context.change_state(On.new(context))
           end
         end

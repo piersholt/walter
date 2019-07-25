@@ -8,11 +8,11 @@ module Wilhelm
         module States
           include Logging
 
-          def disable(context)
+          def disable!(context)
             context.change_state(Disabled.new)
           end
 
-          def on(context)
+          def on!(context)
             context.change_state(On.new(context))
           end
         end
