@@ -7,10 +7,12 @@ module Wilhelm
         module Controller
           # Audio::UserInterface::Controller::AudioController
           class AudioController < SDK::UIKit::Controller::BaseController
-            NAME = 'AudioController'
+            NAME = 'Controller::Audio'
 
-            attr_reader :addressed_player
+            attr_reader :target, :addressed_player
             alias player addressed_player
+
+            # LOGGER = LogActually.audio
 
             def name
               NAME
@@ -20,14 +22,21 @@ module Wilhelm
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              view = View::Index.new(addressed_player)
+              view = View::Index.new(@target)
+              view.add_observer(self)
+              render(view)
+            end
+
+            def targets
+              LOGGER.debug(NAME) { '#targets' }
+              view = View::Targets.new(@targets)
               view.add_observer(self)
               render(view)
             end
 
             def now_playing
               LOGGER.debug(NAME) { '#now_playing' }
-              view = View::NowPlaying.new(addressed_player)
+              view = View::NowPlaying.new(@player)
               view.add_observer(self)
               render(view)
             end
@@ -38,12 +47,18 @@ module Wilhelm
               LOGGER.debug(NAME) { "#create(#{view})" }
               case view
               when :index
-                @addressed_player = context.audio.player
-                addressed_player.add_observer(self, :player_update)
+                @target = context.audio.target
+                @target.add_observer(self, :target_update)
+                true
+              when :targets
+                @targets = context.audio.targets
                 true
               when :now_playing
-                @addressed_player = context.audio.player
-                addressed_player.add_observer(self, :playback_update)
+                @target = context.audio.target
+                @target.add_observer(self, :target_update)
+
+                @player = @target.addressed_player
+                @player.add_observer(self, :player_update)
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
@@ -55,12 +70,16 @@ module Wilhelm
               LOGGER.debug(NAME) { "#destroy(#{loaded_view})" }
               case loaded_view
               when :index
-                @addressed_player.delete_observer(self)
-                @addressed_player = nil
+                @target&.delete_observer(self)
+                @target = nil
                 true
+              when :targets
+                @targets = nil
               when :now_playing
-                @addressed_player.delete_observer(self)
-                @addressed_player = nil
+                @target&.delete_observer(self)
+                @target = nil
+                @player&.delete_observer(self)
+                @player = nil
                 true
               else
                 LOGGER.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
@@ -72,20 +91,21 @@ module Wilhelm
 
             # selected_menu_item may just be button state for non data request
             def update(action, selected_menu_item = nil)
-              LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" } if selected_menu_item
+              LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item&.id || selected_menu_item})" } if selected_menu_item
               LOGGER.debug(NAME) { "#update(#{action})" } unless selected_menu_item
               case action
               when :main_menu_index
-                # destroy(:index)
-                # context.ui.root.load(:index)
                 ui_context.launch(:services, :index)
               when :audio_now_playing
-                # destroy(:index)
-                # load(:now_playing)
                 ui_context.launch(:audio, :now_playing)
               when :audio_index
-                # destroy(:now_playing)
-                # load(:index)
+                ui_context.launch(:audio, :index)
+              when :audio_targets
+                ui_context.launch(:audio, :targets)
+              when :audio_select_target
+                LOGGER.debug(NAME) { "#audio_select_target(#{action})" }
+                # selected_target = target_from_menu_item(selected_menu_item)
+                context.audio.targets.select_target(selected_menu_item.id)
                 ui_context.launch(:audio, :index)
               when :audio_play
                 context.audio.play!
@@ -98,24 +118,37 @@ module Wilhelm
 
             # DATA EVENTS ------------------------------------------------------
 
-            def playback_update(action, player:)
-              LOGGER.debug('AudioController') { "#playback_update(#{action}, #{player})" }
+            def target_update(action, target:)
+              LOGGER.debug(NAME) { "#target_update(#{action}, #{target})" }
               case action
-              when :track_change
-                now_playing
-              when :status
-                now_playing
+              when :added
+                index
+              when :changed
+                index
+              when :removed
+                index
               end
             end
 
             def player_update(action, player:)
-              LOGGER.debug('AudioController') { "#player_update(#{action}, #{player})" }
+              LOGGER.debug(NAME) { "#player_update(#{action}, #{player})" }
               case action
+              when :track_pending
+                now_playing
               when :track_change
-                index
-              when :status
-                index
+                now_playing
               end
+            end
+
+            private
+
+            def target_from_menu_item(selected_menu_item)
+              LOGGER.debug(NAME) { "#target_from_menu_item(#{selected_menu_item})" }
+              id = selected_menu_item.id
+              LOGGER.debug(NAME) { "Target Address: #{id}" }
+              target_object = context.audio.targets.find_by_id(id)
+              LOGGER.debug(NAME) { "Target => #{target_object}" }
+              target_object
             end
           end
         end

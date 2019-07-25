@@ -29,13 +29,11 @@ module Wilhelm
               LOGGER.debug(NAME) { "#create(#{view}, #{create_argument})" }
               case view
               when :header
-                player_object = context.audio.player
                 devices_object = context.manager.devices
 
                 @status_model = Model::Header::Status.new
-                @status_model.player(player_object)
+                @status_model.device(devices_object.connected.first) if devices_object.connected?
 
-                player_object.add_observer(@status_model, :player_update)
                 devices_object.add_observer(@status_model, :devices_update)
 
                 @status_model.add_observer(self, :status_update)
@@ -56,13 +54,11 @@ module Wilhelm
               case :header
               when :header
                 return false unless @status_model
-                player_object = context.audio.player
                 devices_object = context.manager.devices
 
-                player_object.delete_observer(@status_model)
-                devices_object.delete_observer(@status_model)
+                devices_object&.delete_observer(@status_model)
 
-                @status_model.delete_observer(self)
+                @status_model&.delete_observer(self)
 
                 @status_model = nil
                 true
@@ -75,14 +71,14 @@ module Wilhelm
             # DATA EVENTS ------------------------------------------------------
 
             def status_update(action, model_object)
-              LOGGER.debug(NAME) { "#status_update(#{action}, #{model_object})" }
+              LOGGER.unknown(NAME) { "#status_update(#{action}, #{model_object})" }
               case action
               when :device_name
                 header
               when :player_name
                 header
               else
-                LOGGER.debug(NAME) { "status_update: #{action} not implemented." }
+                LOGGER.unknown(NAME) { "status_update: #{action} not implemented." }
               end
             end
           end

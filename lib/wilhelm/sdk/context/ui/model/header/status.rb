@@ -26,52 +26,68 @@ module Wilhelm
                 indexed_fields[i]
               end
 
-              def devices(devices_object)
+              # devices_update() =>
+              def device(devices_object)
                 return false if devices_object.name.nil? || devices_object.name.empty?
                 self.device_name = devices_object.name
                 changed
                 notify_observers(:device_name, self)
               end
 
-              def devices_removed(devices_object)
-                return false if devices_object.name.nil? || devices_object.name.empty?
+              # devices_update() =>
+              def device_removed
+                # return false if devices_object.name.nil? || devices_object.name.empty?
                 self.device_name = default(:device_name)
                 changed
                 notify_observers(:device_name, self)
               end
 
+              # player_update() =>
               def player(player_object)
                 return false if player_object.name.nil? || player_object.name.empty?
+                return false if self.player_name == player_object.name
                 self.player_name = player_object.name
                 changed
                 notify_observers(:player_name, self)
               end
 
+              # target_update() =>
+              def target_removed
+                self.player_name = default(:player_name)
+                changed
+                notify_observers(:player_name, self)
+              end
+
               def devices_update(action, device:)
-                LOGGER.debug(self.class.name) { "#devices_update(#{action}, #{device})" }
+                LOGGER.unknown(self.class.name) { "#devices_update(#{action}, #{device})" }
                 case action
                 when :connected
-                  devices(device)
+                  device(device)
                 when :disconnected
-                  devices_removed(device)
-                when :created
-                  devices(device)
+                  device_removed
+                when :devices_created
+                  device(device)
+                when :devices_updated
+                  device(device)
                 else
-                  LOGGER.debug(self.class.name) { "devices_update: #{action} not implemented." }
+                  LOGGER.unknown(self.class.name) { "devices_update: #{action} not implemented." }
                 end
               end
 
-              def player_update(action, player:)
+              def player_update(action, properties: , player:)
                 LOGGER.debug(self.class.name) { "#player_update(#{action}, #{player})" }
+                relevant_properties = %i[name track]
+                stale = relevant_properties.each { |prop| properties.any?(propr) }
+                player(player)
+              end
+
+              def target_update(action, target:)
+                LOGGER.debug(self.class.name) { "#target_update(#{action}, #{player})" }
                 case action
-                when :addressed_player
-                  player(player)
-                when :track_change
-                  player(player)
-                when :status
-                  player(player)
+                when :player_removed
+                  target_removed
                 else
-                  LOGGER.debug(self.class.name) { "player_update: #{action} not implemented." }
+                  LOGGER.debug(self.class.name) { "target_update: #{action} not implemented." }
                 end
               end
 

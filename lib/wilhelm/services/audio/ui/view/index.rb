@@ -16,7 +16,8 @@ module Wilhelm
             end
 
             THINGS = [
-              { name: 'Now Playing', action: :audio_now_playing }
+              { name: 'Now Playing', action: :audio_now_playing },
+              { name: 'Targets', action: :audio_targets }
             ].freeze
 
             OPTIONS = [
@@ -24,10 +25,10 @@ module Wilhelm
               { name: 'Pause', action: :audio_pause }
             ].freeze
 
-            def initialize(addressed_player, things = THINGS, options = OPTIONS)
+            def initialize(target, things = THINGS, options = OPTIONS)
               @things = indexed_things(things)
               @options = indexed_options(options)
-              @titles = indexed_titles(titles(addressed_player))
+              @titles = indexed_titles(titles(target))
             end
 
             def menu_items
@@ -35,8 +36,8 @@ module Wilhelm
               @things + @options + navigation_item + @titles
             end
 
-            def titles(addressed_player)
-              player_name = addressed_player.name
+            def titles(target)
+              player_name = target.name
               [
                 BaseMenuItem.new(label: 'Audio'),
                 BaseMenuItem.new(label: player_name)

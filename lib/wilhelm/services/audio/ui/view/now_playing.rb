@@ -53,13 +53,13 @@ module Wilhelm
             end
 
             def line1(player)
-              [0, BaseMenuItem.new(label: player.artist)]
+              to_write = player.title
+              to_write = to_write[0,40] if to_write.length > 40
+              [0, BaseMenuItem.new(label: to_write)]
             end
 
             def line2(player)
-              to_write = player.title
-              to_write = to_write[0,40] if to_write.length > 40
-              [1, BaseMenuItem.new(label: to_write)]
+              [1, BaseMenuItem.new(label: player.artist)]
             end
 
             def line3(player)
@@ -67,7 +67,7 @@ module Wilhelm
             end
 
             def line4(player)
-              xxx = "#{player.number} of #{player.total}"
+              xxx = "#{player.track_number} of #{player.number_of_tracks}"
               [3, BaseMenuItem.new(label: xxx)]
             end
 
