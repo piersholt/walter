@@ -1,7 +1,6 @@
 # frozen_string_literal: false
 
 require_relative 'on/actions'
-require_relative 'on/notifications'
 require_relative 'on/states'
 
 module Wilhelm
@@ -13,7 +12,6 @@ module Wilhelm
         include Defaults
         include States
         include Actions
-        include Notifications
 
         def initialize(*)
           logger.debug(AUDIO_ON) { '#initialize' }

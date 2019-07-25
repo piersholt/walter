@@ -1,7 +1,6 @@
 # frozen_string_literal: false
 
 require_relative 'defaults/actions'
-require_relative 'defaults/notifications'
 require_relative 'defaults/states'
 
 module Wilhelm
