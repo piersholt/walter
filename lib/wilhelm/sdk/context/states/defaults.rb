@@ -8,69 +8,37 @@ module Wilhelm
         module Defaults
           # User Control
 
-          def load_ui(___)
-            false
-          end
+          def load_ui(*); end
 
-          def online!(___)
-            false
-          end
+          def online!(*); end
 
-          def offline!(___)
-            false
-          end
+          def offline!(*); end
 
-          def establishing!(___)
-            false
-          end
+          def establishing!(*); end
 
-          def open(___)
-            false
-          end
+          def open(*); end
 
-          def close(___)
-            false
-          end
+          def close(*); end
 
-          def manager!(___)
-            false
-          end
+          def manager!(*); end
 
-          def audio!(___)
-            false
-          end
+          def audio!(*); end
 
-          def notifications!(___)
-            false
-          end
+          def notifications!(*); end
 
-          def ui!(___)
-            false
-          end
+          def ui!(*); end
 
-          def load_debug(___, ___ = nil)
-            false
-          end
+          def load_debug(*); end
 
-          def load_services(___)
-            false
-          end
+          def load_services(*); end
 
-          def load_manager(___, *)
-            false
-          end
+          def load_manager(*); end
 
-          def load_audio(___)
-            false
-          end
+          def load_audio(*); end
 
-          def load_now_playing(___)
-            false
-          end
+          def load_now_playing(*); end
 
-          def alive?(___)
-            false
-          end
+          def alive?(*); end
         end
       end
     end
