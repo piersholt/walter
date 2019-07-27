@@ -72,6 +72,14 @@ module Wilhelm
           as_good('Enabled')
         when :disabled
           as_good('Disabled')
+        when :blink
+          as_warn('Blink')
+        when :single
+          as_warn('Single')
+        when :double
+          as_warn('Double')
+        when :tone
+          as_warn('tone')
         end
       end
 

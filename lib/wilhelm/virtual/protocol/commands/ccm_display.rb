@@ -25,6 +25,7 @@ module Wilhelm
     class Command
       # ID: 26 0x1A
       class CCMDisplay < BaseCommand
+        include Helpers::DataTools
         attr_accessor :mode, :control, :chars
 
         def initialize(id, props)
@@ -39,15 +40,16 @@ module Wilhelm
           # puts @chars.overlay
           # "[#{@arguments.map(&:h).join(' ')}]"
 
-          str_buffer = sprintf("%-10s", sn)
+          # str_buffer = sprintf("%-10s", sn)
+          str_buffer = ''
           # str_buffer = str_buffer.concat("\t#{@mode} #{@control}")
-          str_buffer = str_buffer.concat("#{sn}\t#{mode.value} (#{mode.to_s}) | #{control.value} (#{control.to_s})\t#{chars.to_s}")
+          str_buffer = str_buffer.concat("#{sn}\ts#{d2h(mode.value, true)} (#{mode.to_s}) | #{d2h(control.value, true)} (#{control.to_s})\t#{chars.to_s}")
           # str_buffer = append_chars(str_buffer)
           str_buffer
         end
 
         def to_s
-          str_buffer = "#{sn}\t#{mode.value} (#{mode.to_s}) | #{control.value} (#{control.to_s})\t#{chars.to_s}"
+          str_buffer = "#{sn}\t#{d2h(mode.value, true)} (#{mode.to_s}) | #{d2h(control.value, true)} (#{control.to_s})\t#{chars.to_s}"
           # str_buffer = append_chars(str_buffer)
           str_buffer
         end

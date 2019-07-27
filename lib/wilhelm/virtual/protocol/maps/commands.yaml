@@ -3421,6 +3421,7 @@
           :label: 'Index:'
           :dictionary:
             0x01: Check Control
+            0x02: 'Not Check button?'
   :notes:
     - only press and relea
 # ************************************************************************* #
@@ -3557,10 +3558,18 @@
   :id:
     :d: 26
     :h: '0x1A'
+  :klass: CCMDisplay
   :properties:
     :short_name: CCM-ALRT
     :long_name: CCM Cluster Warning
     :verbose: false
+  :index:
+    :mode: 0
+    :control: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
   :parameters:
     :mode:
       :type: :map
@@ -3571,73 +3580,104 @@
         0x37: alert
       :dictionary:
         0x30: Clear
-        0x35: Request Fault
+        0x35: Recall
         0x36: Persist Indicators
         0x37: Alert
     :control:
-      :type: :map
-      :map:
-        0x00: none
-        0x01: on_off
-        0x03: blink_off
-        0x05: off_single
-        0x0F: on_single
-        0x09: blink_single
-      :dictionary:
-        0x00: "No Indicator/Gong"
-
-        0x01: "Chev: On     / Audio: Off"
-        0x03: "Chev: Blink  / Audio: Off"
-
-        0x04: "Chev: Off    / Audio: Single"
-        0x05: "Chec: On     / Audio: Single"
-        0x07: "Chev: Blink  / Audio: Single"
-
-        0xO8: "Chev: Off    / Audio: Constant"
-        0xO9: "Chev: On     / Audio: Constant"
-        0xOB: "Chev: Blink  / Audio: Constant"
-
-        0x0C: "Chev: Off    / Audio: Double"
-        0x0D: "Chev: On     / Audio: Double"
-        0x0F: "Chev: Blink  / Audio: Double"
-
-        0x10: 'something else must be duplicate?'
+      :type: :bit_array
+      :index:
+        :gong: !ruby/range
+                  begin: 4
+                  end: 5
+                  excl: false
+        :chevron: !ruby/range
+                    begin: 6
+                    end: 7
+                    excl: false
+      :parameters:
+        :gong:
+          :type: :switch
+          :label: 'Gong'
+          :states:
+            0b0_0: :off
+            0b0_1: :single
+            0b1_0: :tone
+            0b1_1: :double
+          :dictionary:
+            0b0_0: 'Off'
+            0b0_1: 'Single'
+            0b1_0: 'Tone'
+            0b1_1: 'Double'
+        :chevron:
+          :type: :switch
+          :label: 'Chevron'
+          :states:
+            0b0_0: :off
+            0b0_1: :on
+            0b1_1: :blink
+          :dictionary:
+            0b0_0: 'Off'
+            0b0_1: 'On'
+            0b1_1: 'Blink'
     :chars:
       :type: :chars
-  :index:
-    :mode: 0
-    :control: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false"
-
-  :klass: CCMDisplay
   :meta:
     :notes:
-      - at ignition off, 0x13 reports 0x00 00 00
-      -  0x1a always follows 30 00	"                    "
-      -  this is the only time it has a blank string
-      - IKE   	GLO-L 	IKE-SEN-ACK	01 B0 00]
-      - IKE   	GLO-L 	IGN       	Ignition: Off (Position I)
-      - IKE   	GLO-L 	IKE-SEN-ACK	00 00 00]
-      - IHK   	NAV-EU	???       	00]
-      - CCM   	GLO-L 	CCM?      	00]
-      - CCM   	IKE   	CCM-ALRT  	30 00	"                   "
-    :examples:
-      - Constantly see this >
-      - 1A 30 00
-      - 1B 00
-      - 1A 30 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
-      - 1B 00
-      - 1A 37 0F 20 20 20 20 20 4C 49 47 48 54 53 20 4F 4E 20 20 20 20 20 20
-      - 1B 00
-
-      - 37 0F	"     LIGHTS ON      "
-      - 36 03	""
-
-      - 37 05	"CHECK LOWBEAM LIGHTS"
-      - 35 01	""
+      priority_1:
+        :desc:
+          These defects are immediately indicated by a gong and a flashing
+          warning symbol (1). Simultaneous defects will be displayed
+          consecutively. These status reports remain in the display until the
+          defects are corrected. It is not possible to delete them by pressing
+          the CHECK button (3)
+        :warnings:
+          - RELEASE PARKINGBRAKE
+          - COOLANT TEMPERATURE
+          - STOP! ENGINE OILPRESS
+          - CHECK BRAKE FLUID
+          - FLAT TIRE
+          - LOAD LEVEL INACTIVE
+          - SPEED LIMIT
+      :priority_2:
+        :desc: These displays appear for 20 seconds when the ignition key is
+          turned to position 2. The warning symbols remain after the message
+          disappears. You can display the messages again by pressing the
+          CHECK button (3)
+        :warnings:
+          - TRUNKLID OPEN
+          - DOOR OPEN
+          - FASTEN SEAT BELTS*
+          - WASHER FLUID LOW
+          - CHECK ENGINE OIL LEV
+          - OUTSIDE TEMP. +207 (–56)
+          - TIRE PRESSURE SET*
+          - CHECK TIRE PRESSURE*
+          - TIRE CHECK INACTIVE*
+          - CHECK BRAKE LAMPS
+          - CHECK LOWBEAM LAMPS
+          - CHECK SIDE LAMPS
+          - CHECK REAR LAMPS
+          - CHECK FRONT FOGLAMPS
+          - CHECK LICPLATE LAMP
+          - CHECK HIGHBEAM LAMP
+          - CHECK BACK UP LAMPS
+          - TRANS. FAILSAFE PROG
+          - CHECK BRAKE LININGS
+          - CHECK COOLANT LEVEL
+          - ENGINE FAILSAFE PROG
+      :post_trip:
+        :desc:
+          All of the malfunctions registered during the trip appear consecutively
+          when the key is turned to Position 0. Display appears when you open the
+          driver's door after parking the vehicle. A supplementary gong is also heard.
+          Status reports remain available for a pe- riod of approx. three minutes
+          after the display goes out and the key is re- moved from the ignition. Press
+          the CHECK button. If there were multiple reports, press the CHECK button
+          repeatedly to view them all in sequence
+        :warnings:
+          - LIGHTS ON
+          - KEY IN IGNITION LOCK
+          - CHECK ENGINE OIL LEV
 0x1B:
   :id:
     :d: 27

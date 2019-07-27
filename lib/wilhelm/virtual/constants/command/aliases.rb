@@ -29,6 +29,10 @@ module Wilhelm
           TEMP_REQ = 0x1D
           TEMP_REP = 0x19
 
+          TXT_CCM = 0x1A
+          HUD_STATUS = 0x1B
+
+
           TEL_OPEN = 0x20
 
           TXT_MID    = 0x21
@@ -73,6 +77,10 @@ module Wilhelm
           SRC_CTL = 0x4B
           SRC_SND = 0x4E
           SRC_GFX = 0x4F
+
+          CCM_END = 0x51
+          CCM_TBC = 0x52
+          IKE_BTN = 0x57
 
           VEH_REQ   = 0x53
           VEH_REP   = 0x54

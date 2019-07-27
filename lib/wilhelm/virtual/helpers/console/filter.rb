@@ -80,6 +80,10 @@ module Wilhelm
             display_handler.i.filter_commands(*VEHICLE)
           end
 
+          def ccm
+            display_handler.i.filter_commands(*CCM)
+          end
+
           def nav
             display_handler.i.f_t(*Device::Groups::NAV)
             display_handler.i.f_f(*Device::Groups::NAV)
