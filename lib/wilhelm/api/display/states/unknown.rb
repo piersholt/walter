@@ -11,27 +11,27 @@ module Wilhelm
         DISPLAY_UNKNOWN = 'Disable (Unknown)'
 
         def ping(context)
-          LOGGER.debug(DISPLAY_UNKNOWN) { "#ping" }
+          LOGGER.debug(DISPLAY_UNKNOWN) { '#ping' }
           context.change_state(Enabled.new)
         end
 
         def announce(context)
-          LOGGER.info(DISPLAY_UNKNOWN) { "#announce" }
+          LOGGER.info(DISPLAY_UNKNOWN) { '#announce' }
           context.change_state(Enabled.new)
         end
 
         def monitor_on(context)
-          LOGGER.info(DISPLAY_UNKNOWN) { "#monitor_on" }
+          LOGGER.info(DISPLAY_UNKNOWN) { '#monitor_on' }
           context.change_state(Enabled.new)
         end
 
         def monitor_off(context)
-          LOGGER.info(DISPLAY_UNKNOWN) { "#monitor_off" }
+          LOGGER.info(DISPLAY_UNKNOWN) { '#monitor_off' }
           context.change_state(Disabled.new)
         end
 
         def input_menu(context)
-          LOGGER.info(DISPLAY_UNKNOWN) { "#input_menu" }
+          LOGGER.info(DISPLAY_UNKNOWN) { '#input_menu' }
           context.change_state(Enabled.new)
         end
       end

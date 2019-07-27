@@ -1,4 +1,4 @@
-# Okay, a thing that listens to certain devices that affect it...
+# frozen_string_literal: true
 
 module Wilhelm
   module API

@@ -3,7 +3,9 @@
 module Wilhelm
   module API
     class Display
+      # Display::Defaults
       module Defaults
+        # Events
         def ping(*); end
 
         def announce(*); end
@@ -14,15 +16,17 @@ module Wilhelm
 
         def obc_request(*); end
 
-        def input_menu(*); end
+        def overwritten!(*); end
+
+        def overwritten_header!(*); end
 
         def user_input(*); end
+
+        def input_menu(*); end
 
         def input_next(*); end
 
         def input_prev(*); end
-
-        def overwritten!(*); end
 
         def input_aux_heat(*); end
 
@@ -45,8 +49,6 @@ module Wilhelm
           context.menu = view
           true
         end
-
-        def overwritten_header!(*); end
       end
     end
   end
