@@ -4,32 +4,38 @@ module Wilhelm
   module API
     # API container
     class Context
-      attr_reader :display_api, :controls_api, :audio_api, :telephone_api
+      attr_reader :display, :controls, :audio, :telephone
 
-      alias d display_api
-      alias c controls_api
-      alias a audio_api
-      alias t telephone_api
+      alias d display
+      alias c controls
+      alias a audio
+      alias t telephone
+
+      # @note backwards compatibility
+      alias display_api   display
+      alias controls_api  controls
+      alias audio_api     audio
+      alias telephone_api telephone
 
       def initialize(virtual_context)
-        @display_api   = Display.instance
-        @controls_api  = Controls.instance
-        @audio_api     = Audio.instance
-        @telephone_api = Telephone.instance
+        @display   = Display.instance
+        @controls  = Controls.instance
+        @audio     = Audio.instance
+        @telephone = Telephone.instance
 
-        display_api.bus   = virtual_context
-        controls_api.bus  = virtual_context
-        audio_api.bus     = virtual_context
-        telephone_api.bus = virtual_context
+        display.bus   = virtual_context
+        controls.bus  = virtual_context
+        audio.bus     = virtual_context
+        telephone.bus = virtual_context
 
-        controls_api.targets.each do |target|
+        controls.targets.each do |target|
           device = virtual_context.public_send(target)
-          device.add_observer(controls_api)
+          device.add_observer(controls)
         end
 
-        display_api.targets.each do |target|
+        display.targets.each do |target|
           device = virtual_context.public_send(target)
-          device.add_observer(display_api)
+          device.add_observer(display)
         end
       end
     end
