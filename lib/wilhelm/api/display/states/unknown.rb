@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module API
@@ -7,7 +7,9 @@ module Wilhelm
       # Examples are user control, i.e. 'Set', 'Aux Heating', 'Telephone'
       class Unknown
         include Defaults
+
         DISPLAY_UNKNOWN = 'Disable (Unknown)'
+
         def ping(context)
           LOGGER.debug(DISPLAY_UNKNOWN) { "#ping" }
           context.change_state(Enabled.new)

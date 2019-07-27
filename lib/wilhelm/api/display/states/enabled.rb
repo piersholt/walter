@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module API
@@ -7,6 +7,7 @@ module Wilhelm
       # Examples are user control, i.e. 'Set', 'Aux Heating', 'Telephone'
       class Enabled
         include Defaults
+
         DISPLAY_ENABLED = 'Display (Enabled)'
 
         def monitor_off(context)

@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module API
@@ -7,7 +7,9 @@ module Wilhelm
       # Examples are user control, i.e. 'Set', 'Aux Heating', 'Telephone'
       class Busy
         include Defaults
+
         DISPLAY_BUSY = 'Display (Busy)'
+
         def user_input(context, method, properties)
           return false
         end
