@@ -22,15 +22,22 @@ module Wilhelm
         b: :binary
       }.freeze
 
-        def common(numbers)
+      SPACE = ' '
+      DELIMITER = '-'
+      WIDTH = 10
+      EMPTY = ''
+
+        def common(*numbers)
           numbers = numbers.dup
-          header = (Array.new(8) {|x| 7 -x}.join(' '))
-          LogActually.default.info(MOD_PROC) { '-'.center(7) + header }
-          LogActually.default.info(MOD_PROC) { '-'.center(7) + Array.new(header.length, '-').join('') }
+
+          header = (Array.new(8) {|x| 7 - x}.join(SPACE))
+
+          LogActually.default.info(MOD_PROC) { '-'.center(WIDTH) + header }
+          LogActually.default.info(MOD_PROC) { '-'.center(WIDTH) + Array.new(header.length, DELIMITER).join(EMPTY) }
           numbers.map! do |each_number|
             binary_string = Kernel.format('%.8b', each_number)
-            bits_array = binary_string.split('')
-            LogActually.default.info(MOD_PROC) { "#{each_number}".center(7) + "#{(bits_array.join(' '))}" }
+            bits_array = binary_string.split(EMPTY)
+            LogActually.default.info(MOD_PROC) { "#{each_number}".center(WIDTH) + "#{(bits_array.join(SPACE))}" }
             bits_array.reverse!
             bits_array.map! { |b_str| b_str.to_i }
           end
@@ -48,7 +55,7 @@ module Wilhelm
 
           footer = Array.new(8, '.')
           footer[-1] = '*'
-          output = '-'.center(7) + footer.join('.')
+          output = DELIMITER.center(WIDTH) + footer.join('.')
           LogActually.default.info(MOD_PROC) { output }
 
           puts "Position of common bit: #{result}"
