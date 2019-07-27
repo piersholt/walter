@@ -8,18 +8,19 @@ module Wilhelm
 
       MOD_PROC = 'DataTools'
 
-      HEX = (0..9).map { |i| i.to_s } + ('A'..'F').map {|c| c}
+      HEX = (0..9).map { |i| i.to_s } + ('A'..'F').map { |c| c }
       BINARY_ENCODING = Encoding::ASCII_8BIT
 
       FORMATS = [:encoded, :hex, :decimal, :binary]
       FORMAT_ALIASES = {
-        :e =>:encoded,
-        :enc =>:encoded,
-        :h =>:hex,
-        :d =>:decimal,
-        :dec =>:decimal,
-        :bin =>:binary,
-        :b =>:binary }
+        e: :encoded,
+        enc: :encoded,
+        h: :hex,
+        d: :decimal,
+        dec: :decimal,
+        bin: :binary,
+        b: :binary
+      }.freeze
 
         def common(numbers)
           numbers = numbers.dup
