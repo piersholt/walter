@@ -127,20 +127,28 @@ module Wilhelm
         "Display (#{state_string})"
       end
 
+      DISPLAY_UNKNOWN = 'Unknown'
+      DISPLAY_ENABLED = 'Enabled'
+      DISPLAY_DISABLED = 'Disabled'
+      DISPLAY_BUSY = 'Busy'
+      DISPLAY_CAPTURED = 'Captured'
+      DISPLAY_OVERWRITTEN = 'Overwritten'
+
+      # @todo a Hash would be more efficient
       def state_string
         case state
         when Unknown
-          'Unknown'
+          DISPLAY_UNKNOWN
         when Enabled
-          'Enabled'
+          DISPLAY_ENABLED
         when Disabled
-          'Disabled'
+          DISPLAY_DISABLED
         when Busy
-          'Busy'
+          DISPLAY_BUSY
         when Captured
-          'Captured'
+          DISPLAY_CAPTURED
         when Overwritten
-          'Overwritten'
+          DISPLAY_OVERWRITTEN
         else
           state.class
         end
