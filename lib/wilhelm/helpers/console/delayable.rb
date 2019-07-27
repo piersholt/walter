@@ -9,21 +9,21 @@ module Wilhelm
           @core.interface.read_thread
         end
 
+        alias t interface_read_thread
+
         def nap(seconds)
-          interface_read_thread.thread_variable_set(:sleep_time, seconds)
+          t.thread_variable_set(:sleep_time, seconds)
         end
 
         def sleepy?
-          interface_read_thread.thread_variable_get(:sleep_enabled)
+          t.thread_variable_get(:sleep_enabled)
         end
 
         def awake!
-          t = interface_read_thread
           t.thread_variable_set(:sleep_enabled, false)
         end
 
         def sleepy!
-          t = interface_read_thread
           t.thread_variable_set(:sleep_enabled, true)
         end
       end
