@@ -2,16 +2,19 @@
 
 module Wilhelm
   module Helpers
-    # Comment
+    # Helpers::DataTools
     module DataTools
       extend self
 
-      MOD_PROC = 'DataTools'
+      MOD_PROC = 'DataTools'.freeze
 
-      HEX = (0..9).map { |i| i.to_s } + ('A'..'F').map { |c| c }
+      hex09 = ('0'..'9').to_a
+      hex_af = ('A'..'F').to_a
+
+      HEX = (hex09 + hex_af).freeze
       BINARY_ENCODING = Encoding::ASCII_8BIT
 
-      FORMATS = [:encoded, :hex, :decimal, :binary]
+      FORMATS = %i[encoded hex decimal binary].freeze
       FORMAT_ALIASES = {
         e: :encoded,
         enc: :encoded,
@@ -22,24 +25,30 @@ module Wilhelm
         b: :binary
       }.freeze
 
-      SPACE = ' '
-      DELIMITER = '-'
-      WIDTH = 10
-      EMPTY = ''
+      MASK_DECIMAL      = '%#.d'.freeze
+      MASK_HEX          = '%.8b'.freeze
+      MASK_HEX_PREFIXED = '%#.8b'.freeze
+
+      WIDTH     = 10
+      SPACE     = ' '.freeze
+      DELIMITER = '-'.freeze
+      BLANK     = ''.freeze
+      ASTERISK  = '*'.freeze
+      PERIOD    = '.'.freeze
 
       def common(*numbers)
         numbers = numbers.dup
 
-        header = (Array.new(8) {|x| 7 - x}.join(SPACE))
+        header = Array.new(8) { |x| 7 - x }.join(SPACE)
 
-        LogActually.default.info(MOD_PROC) { '-'.center(WIDTH) + header }
-        LogActually.default.info(MOD_PROC) { '-'.center(WIDTH) + Array.new(header.length, DELIMITER).join(EMPTY) }
+        puts DELIMITER.center(WIDTH) + header
+        puts DELIMITER.center(WIDTH) + Array.new(header.length, DELIMITER).join(BLANK)
         numbers.map! do |each_number|
           binary_string = Kernel.format('%.8b', each_number)
-          bits_array = binary_string.split(EMPTY)
-          LogActually.default.info(MOD_PROC) { "#{each_number}".center(WIDTH) + "#{(bits_array.join(SPACE))}" }
+          bits_array = binary_string.split(BLANK)
+          puts each_number.to_s.center(WIDTH) + bits_array.join(SPACE).to_s
           bits_array.reverse!
-          bits_array.map! { |b_str| b_str.to_i }
+          bits_array.map!(&:to_i)
         end
 
         bit_positions = numbers.transpose
@@ -53,10 +62,10 @@ module Wilhelm
 
         raise RangeError, 'No common bits!' unless result
 
-        footer = Array.new(8, '.')
-        footer[-1] = '*'
-        output = DELIMITER.center(WIDTH) + footer.join('.')
-        LogActually.default.info(MOD_PROC) { output }
+        footer = Array.new(8, PERIOD)
+        footer[-1] = ASTERISK
+        output = DELIMITER.center(WIDTH) + footer.join(PERIOD)
+        puts output
 
         puts "Position of common bit: #{result}"
 
@@ -77,24 +86,18 @@ module Wilhelm
         hex_value.hex.chr(BINARY_ENCODING)
       end
 
-      # @alias
-      def h2d(hex_value)
-        hex_to_decimal(hex_value)
-      end
-
       def hex_to_decimal(hex_value)
         hex_value.hex
       end
 
-      # @alias
-      def h2b(hex, nibbles = false, prefix = false)
-        hex_to_binary(hex, nibbles, prefix)
-      end
+      alias h2d hex_to_decimal
 
       def hex_to_binary(hex, nibbles = false, prefix = false)
         hex = hex.to_s
         decimal_to_binary(hex.hex, nibbles, prefix)
       end
+
+      alias h2b hex_to_binary
 
       # ------------------------ DECIMAL TO X ------------------------ #
 
@@ -125,15 +128,15 @@ module Wilhelm
       end
 
       def binary_to_decimal(input_value)
-        mask = "%#.d"
-        str_buffer = Kernel.format(mask, input_value)
-        return str_buffer
+        Kernel.format(MASK_DECIMAL, input_value)
       end
 
       # ------------------------ ENC TO X ------------------------ #
 
+      ERROR_CHAR_LENGTH = 'Character length is greater than one byte!'.freeze
+
       def encoded_to_decimal(char)
-        raise EncodingError, 'Character length is greater than one byte!' if char.length > 1
+        raise EncodingError, ERROR_CHAR_LENGTH if char.length > 1
         char.getbyte(0)
       end
 
@@ -146,23 +149,24 @@ module Wilhelm
 
       def to_binary(input_value, nibbles = false, prefix = false)
         # prefix 0b
-        mask = prefix ? "%#.8b" : "%.8b"
+        mask = prefix ? MASK_HEX_PREFIXED : MASK_HEX
         str_buffer = Kernel.format(mask, input_value)
         # nibbles
         if nibbles && !prefix
           index = prefix ? 6 : 4
           str_buffer = str_buffer.insert(index, ' ')
         end
-        return str_buffer
+        str_buffer
       end
 
-      def base16(n, output = [])
-        nibble = n.modulo(16)
-        n -= nibble
-        n = n.div(16)
+      # @deprecated
+      def base16(num, output = [])
+        nibble = num.modulo(16)
+        num -= nibble
+        num = num.div(16)
 
         output.unshift(HEX[nibble])
-        base16(n, output) if n > 0
+        base16(num, output) if num.positive?
         return *output
       end
     end
