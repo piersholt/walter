@@ -14,6 +14,14 @@ module Wilhelm
           # end
 
           def to_s
+            # Issue with change_state notification
+            # State classes use Logging from service,
+            # but have no state variable.. causing #stateful to error
+            return stateful if self.respond_to?(:state)
+            super()
+          end
+
+          def stateful
             "Service (#{state_string})"
           end
 

@@ -9,7 +9,11 @@ module Wilhelm
         include LogActually::ErrorOutput
 
         def to_s
-          stateful
+          # Issue with change_state notification
+          # State classes use Logging from service,
+          # but have no state variable.. causing #stateful to error
+          return stateful if self.respond_to?(:state)
+          super()
         end
 
         def nickname
