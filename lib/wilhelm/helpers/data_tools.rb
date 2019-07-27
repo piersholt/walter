@@ -66,8 +66,8 @@ module Wilhelm
         # ------------------------ CHECKSUM ------------------------ #
 
         def fcs(*integers)
-          integers.reduce(0) do |c,d|
-            c^= d
+          integers.reduce(0) do |c, d|
+            c ^ d
           end
         end
 
