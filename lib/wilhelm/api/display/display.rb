@@ -44,10 +44,6 @@ module Wilhelm
 
       # RENDER ------------------------------------------------
 
-      def render_header(view)
-        @state.render_header(self, view)
-      end
-
       def render_new_header(view)
         @state.render_new_header(self, view)
       end

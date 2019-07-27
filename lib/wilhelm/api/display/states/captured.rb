@@ -14,14 +14,10 @@ module Wilhelm
           context.menu.public_send(method, properties)
         end
 
-        def render_header(context, view)
-          # context.header = view
-          # context.bus.rad.build_header(view.layout, view.fields_with_index, view.title)
-          # context.change_state(Captured.new)
-        end
-
         def input_menu(context)
           LOGGER.info(DISPLAY_CAPTURED) { "#input_menu" }
+          context.changed
+          context.notify_observers(:destroy)
           context.change_state(Enabled.new)
         end
 
