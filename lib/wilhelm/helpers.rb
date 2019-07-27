@@ -12,6 +12,7 @@ require_relative 'helpers/bitwise'
 require_relative 'helpers/positional'
 require_relative 'helpers/object'
 require_relative 'helpers/inspect'
+require_relative 'helpers/observation'
 
 module Wilhelm
   # Comment

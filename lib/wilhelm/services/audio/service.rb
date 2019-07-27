@@ -4,7 +4,7 @@ module Wilhelm
   module Services
     # Bluetooth Audio Streaming
     class Audio
-      include Observable
+      include Helpers::Observation
       include Logging
       include Properties
       include State

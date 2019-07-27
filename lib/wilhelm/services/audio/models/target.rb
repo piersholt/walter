@@ -10,6 +10,7 @@ module Wilhelm
     class Audio
       # Audio::Target
       class Target
+        include Helpers::Observation
         include Logging
         include Constants
         include Attributes

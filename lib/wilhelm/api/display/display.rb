@@ -8,6 +8,7 @@ module Wilhelm
     # When active, will listen for overwrite vents, which will re-draw
     class Display
       include Singleton
+      include Helpers::Observation
       include Listener
       include CacheHandler
       include ControlHandler

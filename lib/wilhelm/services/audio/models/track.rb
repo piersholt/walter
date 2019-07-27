@@ -7,7 +7,7 @@ module Wilhelm
     class Audio
       # Audio::Track
       class Track
-        include Observable
+        include Helpers::Observation
         include Constants
 
         def initialize(attributes = EMPTY_ATTRIBUTES.dup)

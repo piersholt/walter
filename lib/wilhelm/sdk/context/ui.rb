@@ -10,6 +10,7 @@ module Wilhelm
     class Context
       # SDK::Context::UserInterface
       class UserInterface
+        include Helpers::Observation
         attr_accessor :application_context, :header, :service
         attr_reader :renderer
         alias context application_context

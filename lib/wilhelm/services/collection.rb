@@ -5,7 +5,7 @@ module Wilhelm
     # Services::Collection
     class Collection
       extend Forwardable
-      include Observable
+      include Helpers::Observation
 
       def logger
         LOGGER
