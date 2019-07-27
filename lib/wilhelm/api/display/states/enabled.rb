@@ -56,14 +56,6 @@ module Wilhelm
           LOGGER.debug(DISPLAY_ENABLED) { "#obc_request" }
           context.change_state(Busy.new)
         end
-
-        def overwritten_header!(___)
-          return false
-        end
-
-        def overwritten!(___)
-          return false
-        end
       end
     end
   end

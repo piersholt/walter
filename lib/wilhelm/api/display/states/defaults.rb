@@ -4,53 +4,29 @@ module Wilhelm
   module API
     class Display
       module Defaults
-        def ping(context)
-          false
-        end
+        def ping(*); end
 
-        def announce(context)
-          false
-        end
+        def announce(*); end
 
-        def monitor_on(context)
-          false
-        end
+        def monitor_on(*); end
 
-        def monitor_off(context)
-          false
-        end
+        def monitor_off(*); end
 
-        def obc_request(context)
-          false
-        end
+        def obc_request(*); end
 
-        def input_menu(context)
-          false
-        end
+        def input_menu(*); end
 
-        def user_input(context, method, properties)
-          false
-        end
+        def user_input(*); end
 
-        def input_next(context, method, properties)
-          false
-        end
+        def input_next(*); end
 
-        def input_prev(context, method, properties)
-          false
-        end
+        def input_prev(*); end
 
-        def overwritten!(context)
-          false
-        end
+        def overwritten!(*); end
 
-        def input_aux_heat(context)
-          false
-        end
+        def input_aux_heat(*); end
 
-        def input_overlay(context)
-          false
-        end
+        def input_overlay(*); end
 
         # Default Display Rendering
 
@@ -70,13 +46,7 @@ module Wilhelm
           true
         end
 
-        def overwritten_header!(context)
-          false
-        end
-
-        def overwritten!(context)
-          false
-        end
+        def overwritten_header!(*); end
       end
     end
   end

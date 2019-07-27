@@ -10,14 +10,6 @@ module Wilhelm
 
         DISPLAY_BUSY = 'Display (Busy)'
 
-        def user_input(context, method, properties)
-          return false
-        end
-
-        def render_menu(context, view)
-          return false
-        end
-
         def input_menu(context)
           LOGGER.debug(DISPLAY_BUSY) { "#input_menu" }
           LOGGER.info(DISPLAY_BUSY) { '[MENU] pressed. Setting Display to Enabled.'  }

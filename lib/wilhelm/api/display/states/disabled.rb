@@ -10,11 +10,6 @@ module Wilhelm
 
         DISPLAY_DISABLED = 'Disable (Disabled)'
 
-        def ping(context)
-          # context.change_state(Enabled.new)
-          false
-        end
-
         def announce(context)
           LOGGER.info(DISPLAY_DISABLED) { "#announce" }
           context.change_state(Enabled.new)

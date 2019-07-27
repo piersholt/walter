@@ -25,14 +25,6 @@ module Wilhelm
           # context.cache.digital.cache!(context.header.indexed_chars)
           # context.bus.rad.build_new_header(view.layout, view.fields_with_index, view.title)
         end
-
-        def user_input(context, method, properties)
-          return false
-        end
-
-        def overwritten!(context)
-          return false
-        end
       end
     end
   end
