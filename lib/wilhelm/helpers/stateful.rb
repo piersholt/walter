@@ -1,9 +1,11 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Helpers
     # Attribute helpers used for building state
     module Stateful
+      NO_DEFAULT_STATE = 'Inheriting class has not implemented default state!'
+
       def state
         @state ||= default_state
       end
@@ -21,7 +23,7 @@ module Wilhelm
       end
 
       def default_state
-        raise StandardError, 'Inheriting class has not implemented default state!'
+        raise(StandardError, NO_DEFAULT_STATE)
       end
     end
   end

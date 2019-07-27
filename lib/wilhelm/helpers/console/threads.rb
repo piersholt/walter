@@ -2,9 +2,8 @@
 
 module Wilhelm
   module Helpers
-    # DebugTools
-    # Helpers for common tasks on CLI
     module Console
+      # Console::Threads
       module Threads
         def news
           print_status(true)

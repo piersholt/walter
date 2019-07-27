@@ -2,9 +2,8 @@
 
 module Wilhelm
   module Helpers
-    # DebugTools
-    # Helpers for common tasks on CLI
     module Console
+      # Console::Sessions
       module Session
         def messages
           Virtual::SessionHandler.i.messages

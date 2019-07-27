@@ -10,25 +10,26 @@ require_relative 'console/threads'
 
 module Wilhelm
   module Helpers
-    # DebugTools
-    # Helpers for common tasks on CLI
+    # Helpers::Console
+    # Helpers for common tasks in console mode (pry).
     module Console
       include Delayable
       include Session
       include Threads
       # include Yabber
 
+      PROC_MOD = 'Console'.freeze
+      NEW_LINE = 'New Line'
+
       def command_map
         Wilhelm::Virtual::CommandMap.instance
       end
 
-      PROC_MOD = 'Console'.freeze
-
       def nl
         new_line_thread = Thread.new do
-          Thread.current[:name] = 'New Line'
+          Thread.current[:name] = NEW_LINE
           Kernel.sleep(0.5)
-          LOGGER.unknown('Walter') { 'New Line' }
+          LOGGER.unknown(PROC_MOD) { NEW_LINE }
         end
         add_thread(new_line_thread)
       end

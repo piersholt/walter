@@ -2,9 +2,8 @@
 
 module Wilhelm
   module Helpers
-    # DebugTools
-    # Helpers for common tasks on CLI
     module Console
+      # Console::Delayable
       module Delayable
         def interface_read_thread
           @core.interface.read_thread

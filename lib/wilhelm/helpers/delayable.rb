@@ -5,7 +5,7 @@ module Wilhelm
     # Thread safe timing control for loops.
     module Delayable
       DEFAULT_ENABLED = true
-      DEFAULT_TIME = 5
+      DEFAULT_DELAY = 5
 
       def log
         LOGGER.id
@@ -53,8 +53,8 @@ module Wilhelm
       end
 
       def sleep_time!
-        LogActually.send(log).debug(Thread.current[:name]) { ":sleep_time = #{DEFAULT_TIME}" }
-        Thread.current.thread_variable_set(:sleep_time, DEFAULT_TIME)
+        LogActually.send(log).debug(Thread.current[:name]) { ":sleep_time = #{DEFAULT_DELAY}" }
+        Thread.current.thread_variable_set(:sleep_time, DEFAULT_DELAY)
       end
     end
   end
