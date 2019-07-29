@@ -24,7 +24,7 @@ module Wilhelm
 
           DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
 
-          CCM = [TXT_CCM, CCM_END, CCM_TBC, IKE_BTN, KEY_REP, IGNITION_REP].freeze
+          CCM = [TXT_CCM, CCM_END, CCM_TBC, IKE_BTN].freeze
 
           NAVIGATION = [COORDINATES, ADDRESS, REAR, CELL, UTC].freeze
 
