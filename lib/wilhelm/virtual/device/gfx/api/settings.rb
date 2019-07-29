@@ -10,13 +10,12 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
-            # 0x40 OBC_VAR
+            # 0x40 OBC-VAR
             def obc_var(from: :gfx, to: :ike, **arguments)
-              # LOGGER.unknown('API::Settings#obc_var') { "#{from}, #{to}, #{arguments}" }
               try(from, to, OBC_VAR, arguments)
             end
 
-            # 0x41 OBC_BOOL
+            # 0x41 OBC-BOOL
             def obc_bool(from: :gfx, to: :ike, **arguments)
               try(from, to, OBC_BOOL, arguments)
             end

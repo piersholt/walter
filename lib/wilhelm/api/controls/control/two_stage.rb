@@ -23,7 +23,8 @@ module Wilhelm
             context.notify_observers(
               :control,
               control: context.button,
-              state: notify_state)
+              state: notify_state
+            )
           end
 
           def upgrade

@@ -16,7 +16,8 @@ module Wilhelm
             context.notify_observers(
               :control,
               control: context.button,
-              state: :run)
+              state: :run
+            )
           end
 
           def name

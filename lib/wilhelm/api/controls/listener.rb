@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Controls
-      # Comment
+      # API::Controls::Listener
       module Listener
         # it's technicall not BMBT_BUTTON, as MFL sends it too
         include Constants::Controls::BMBT
@@ -46,6 +46,7 @@ module Wilhelm
           result
         end
 
+        # @todo I can't remember what I had intended here?
         def listeners?
           true
         end

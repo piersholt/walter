@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Controls
-      # Comment
+      # API::Controls::Control
       class Control
         include Observable
 

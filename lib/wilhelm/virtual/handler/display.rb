@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module Handler
-      # Comment
+      # Handler::DisplayHandler
       class DisplayHandler < Core::BaseHandler
         include Constants::Command::Aliases
         include Singleton

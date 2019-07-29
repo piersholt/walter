@@ -2,6 +2,7 @@
 
 module Wilhelm
   module Virtual
+    # Virtual::BitArrayParameter
     class BitArrayParameter < BaseParameter
       PROC = 'BitArrayParam'.freeze
 

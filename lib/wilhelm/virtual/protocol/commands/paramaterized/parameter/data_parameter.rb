@@ -7,7 +7,6 @@ module Wilhelm
 
       PROC = 'DataParameter'
       def initialize(configuration, bytes)
-        LOGGER.unknown(PROC) { bytes }
         super(configuration, bytes)
       end
 

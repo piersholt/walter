@@ -57,10 +57,10 @@ module Wilhelm
 
               MENUS_VALID = %i[basic titled static].freeze
 
-              MENU_BASIC = 0x60
-              MENU_TITLED = 0x61
+              MENU_BASIC     = 0x60
+              MENU_TITLED    = 0x61
               HEADER_DIGITAL = 0x62
-              MENU_STATIC = 0x63
+              MENU_STATIC    = 0x63
 
               RADIO_ALT = 0x37
 

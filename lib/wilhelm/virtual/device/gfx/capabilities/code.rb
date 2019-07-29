@@ -21,6 +21,7 @@ module Wilhelm
             def input_code(*digits)
               validate_digits(*digits)
               number = parse_base_10_digits(*digits)
+              # @note may need padding like OBC
               code_byte_array = base_256_digits(number)
 
               obc_var(field: FIELD_CODE, input: code_byte_array)

@@ -20,11 +20,13 @@ module Wilhelm
             display_handler.instance.disable
           end
 
-          # display_handler FILTERING
+          # FILTERING
 
           def c
             display_handler.i.clear_filter
           end
+
+          # HIDE
 
           def shutup!(set = NOISEY_NG)
             display_handler.i.hide_command_set(set)
@@ -39,6 +41,8 @@ module Wilhelm
           end
 
           alias shh! shutup!
+
+          # FILTER
 
           def ready
             display_handler.i.filter_commands(*READY)
