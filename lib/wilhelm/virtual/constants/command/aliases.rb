@@ -32,7 +32,6 @@ module Wilhelm
           TXT_CCM = 0x1A
           HUD_STATUS = 0x1B
 
-
           TEL_OPEN = 0x20
 
           TXT_MID    = 0x21
@@ -56,9 +55,9 @@ module Wilhelm
           CDC_REP = 0x39
           # CDC_REP = CDC
 
+          # GFX to IKE
           OBC_VAR = 0x40
           OBC_BOOL = 0x41
-          # OBC_REP = 0x24 = TXT_24
 
           MFL_VOL  = 0x32
           MFL_FUNC = 0x3B
