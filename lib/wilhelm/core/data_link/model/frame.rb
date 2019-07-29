@@ -97,11 +97,11 @@ module Wilhelm
 
           checksum == tail.checksum
         rescue TypeError => e
-          LOGGER.error(name) { e.class }
-          LOGGER.error(name) { e }
+          LOGGER.error(NAME) { e.class }
+          LOGGER.error(NAME) { e }
           e.backtrace.each { |l| LOGGER.warn(l) }
           binding.pry
-          LOGGER.warn(name) { 'Debug end...'}
+          LOGGER.warn(NAME) { 'Debug end...'}
         end
       end
     end
