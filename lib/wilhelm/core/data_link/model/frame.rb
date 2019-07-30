@@ -89,8 +89,8 @@ module Wilhelm
           LOGGER.debug(NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
 
           frame_bytes = @header + @tail.no_fcs
-          checksum = frame_bytes.reduce(0) do |c,d|
-            c^= d.to_d
+          checksum = frame_bytes.reduce(0) do |c, d|
+            c ^ d.to_d
           end
 
           LOGGER.debug(NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }
