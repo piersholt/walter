@@ -88,7 +88,7 @@ module Wilhelm
 
         def clear_filter
           LOGGER.info(name) { "Clearing filter..." }
-          @filtered_commands = populate
+          @filtered_commands = populate_commands
           @filtered_recipients = populate_devices
           @filtered_senders = populate_devices
           true
@@ -96,27 +96,29 @@ module Wilhelm
 
         # ------------------------------ RECIPIENT ------------------------------ #
 
-        def f_t(*to_idents)
+        def filter_to(*to_idents)
+          LOGGER.info(name) { "Filter Recipients: #{to_idents}" }
           filtered_recipients.clear if filtered_recipients.size >= 5
           return false if filtered_recipients.any?  { |to_ident| @filtered_recipients.include?(to_ident) }
           to_idents.each { |to_ident| @filtered_recipients << to_ident }
           true
         end
 
+        alias f_t filter_to
+
         # ------------------------------ SENDER ------------------------------ #
 
-        def f_f(*from_idents)
+        def filter_from(*from_idents)
+          LOGGER.info(name) { "Filter Senders: #{from_idents}" }
           filtered_senders.clear if filtered_senders.size >= 5
           return false if filtered_senders.any? { |from_ident| @filtered_senders.include?(from_ident) }
           from_idents.each { |from_ident| @filtered_senders << from_ident  }
           true
         end
 
-        # ------------------------------ COMMANDS ------------------------------ #
+        alias f_f filter_from
 
-        def f_c(*command_ids)
-          filter_commands(*command_ids)
-        end
+        # ------------------------------ COMMANDS ------------------------------ #
 
         def filter_commands(*command_ids)
           LOGGER.info(name) { "Filtering commands: #{command_ids}" }
@@ -126,15 +128,13 @@ module Wilhelm
           true
         end
 
-        def h_c(*command_ids)
-          hide_commands(*command_ids)
-        end
+        alias f_c filter_commands
 
         def hide_command_set(set)
           LOGGER.info(name) { 'Hiding command set...' }
           set.each do |group, command_ids|
             LOGGER.info(name) { "Hide: #{group} => #{command_ids}" }
-            h_c(*command_ids)
+            hide_commands(*command_ids)
           end
         end
 
@@ -143,6 +143,8 @@ module Wilhelm
           command_ids.each { |command_id| filtered_commands.delete(command_id) }
           true
         end
+
+        alias h_c hide_commands
 
         private
 
@@ -176,7 +178,7 @@ module Wilhelm
         # ------------------------------ HELPERS ------------------------------ #
 
         def filtered_commands
-          @filtered_commands ||= populate
+          @filtered_commands ||= populate_commands
         end
 
         def filtered_recipients
@@ -187,7 +189,7 @@ module Wilhelm
           @filtered_senders ||= populate_devices
         end
 
-        def populate
+        def populate_commands
           Array.new(256) { |i| i }
         end
 
