@@ -12,9 +12,6 @@ module Wilhelm
             # 0x02 PONG
             # Piggyback off the radio announce to annunce
             def handle_announce(message)
-              # logger.warn('SimulatedTEL') { "handling pong: #{message.from}" }
-              # logger.warn('SimulatedTEL') { "message.from?(:rad) => #{message.from?(:rad)}" }
-
               return false unless message.from?(:gfx)
               return false unless message.command.status.value == ANNOUNCE
               logger.info(PROC) { "GFX has announced. Piggybacking (sic)" }
@@ -26,7 +23,6 @@ module Wilhelm
             def handle_tel_open(message)
               logger.debug(PROC) { "Mock: handling telephone tel open request..." }
               open_dial
-              # draw_21(layout: LAYOUT_DIAL, m2: M2_DEFAULT, m3: 0x00, chars: [])
             end
 
             # 0x22 CACHE
