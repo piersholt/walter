@@ -2,9 +2,9 @@
 
 module Wilhelm
   module Virtual
+    # Virtual::IndexedBitArray
     class IndexedBitArray < BitArray
       PROG = 'IndexedBitArray'.freeze
-      BASE_2 = 2
 
       def initialize(bit_array = nil, index = nil)
         super(bit_array)
