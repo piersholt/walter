@@ -74,6 +74,14 @@ module Wilhelm
               action.parameters[:button_id].value
             end
 
+            def button_state(action)
+              action.parameters[:button_state].value
+            end
+
+            def press?(command)
+              button_state(command.action) == INPUT_PRESS
+            end
+
             def delegate_contact(source, action)
               logger.unknown(PROC) { "#delegate_contact(#{action})" }
               index = button_id(action)
