@@ -11,7 +11,7 @@ module Wilhelm
             include Constants
             include Helpers::Contacts
 
-            TOP_8 = 'Top 8'
+            MOD_PROG = 'Top 8'
             LIMIT_TOP_8 = 8
 
             def top_8_name(name = 'MUM')
@@ -21,13 +21,13 @@ module Wilhelm
             def top_8_number(number = '98764321')
               draw_23(gfx: TOP_8_NUMBER, chars: number)
             end
-            
+
             def top_8_clear
-              draw_23(gfx: TOP_8_CLEAR, chars: EMPTY_STRING)
+              draw_23(gfx: TOP_8_NAME, chars: EMPTY_STRING)
             end
 
             def generate_top_8
-              LOGGER.unknown(TOP_8) { '#generate_top_8()' }
+              LOGGER.unknown(MOD_PROG) { '#generate_top_8()' }
               contacts =
                 LIMIT_TOP_8.times.map do |i|
                   generate_contact(i)
@@ -36,10 +36,10 @@ module Wilhelm
             end
 
             def top_8_contact_list(*contacts)
-              LOGGER.unknown(TOP_8) { "#top_8_contact_list(#{contacts})" }
+              LOGGER.unknown(MOD_PROG) { "#top_8_contact_list(#{contacts})" }
               contacts.each do |contact|
                 delimitered_contact = delimiter_contact(contact)
-                LOGGER.unknown(TOP_8) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
+                LOGGER.unknown(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
                 draw_21(layout: LAYOUT_TOP_8, m3: M3_BLOCK, chars: delimitered_contact)
               end
               render_top_8

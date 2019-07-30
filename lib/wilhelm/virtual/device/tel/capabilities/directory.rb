@@ -11,6 +11,7 @@ module Wilhelm
             include Constants
             include Helpers::Contacts
 
+            MOD_PROG = 'Directory'
             LIMIT_DIRECTORY = 8
 
             def directory_name(name = 'MUM')
@@ -26,7 +27,7 @@ module Wilhelm
             end
 
             def generate_directory
-              logger.unknown(PROC) { '#generate_directory()' }
+              logger.unknown(MOD_PROG) { '#generate_directory()' }
               contacts =
                 LIMIT_DIRECTORY.times.map do |i|
                   generate_contact(i)
@@ -35,10 +36,10 @@ module Wilhelm
             end
 
             def directory_contact_list(*contacts)
-              logger.unknown(PROC) { "#directory_contact_list(#{contacts})" }
+              logger.unknown(MOD_PROG) { "#directory_contact_list(#{contacts})" }
               contacts.each do |contact|
                 delimitered_contact = delimiter_contact(contact)
-                logger.unknown(PROC) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
+                logger.unknown(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
                 draw_21(layout: LAYOUT_DIRECTORY, m3: M3_BLOCK, chars: delimitered_contact)
               end
               render_directory
