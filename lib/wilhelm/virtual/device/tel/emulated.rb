@@ -20,13 +20,13 @@ module Wilhelm
             # LOGGER.debug(PROC) { "handle message id: #{command_id}" }
             case command_id
             when PONG
-              logger.debug(PROC) { "Rx: Handling: PONG" }
+              logger.debug(PROC) { "Rx: PONG 0x#{d2h(PONG)}" }
               handle_announce(message)
             when INPUT
-              logger.debug(PROC) { "Rx: Handling: INPUT" }
+              logger.debug(PROC) { "Rx: INPUT 0x#{d2h(INPUT)}" }
               handle_input(message.command)
             when TEL_OPEN
-              logger.debug(PROC) { "Rx: Handling: TEL_OPEN" }
+              logger.debug(PROC) { "Rx: TEL_OPEN 0x#{d2h(TEL_OPEN)}" }
               handle_tel_open(message)
             end
 
