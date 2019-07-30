@@ -31,8 +31,8 @@ module Wilhelm
               def evaluate_input(command)
                 case command.source.value
                 when RADIO_LAYOUTS
-                  index = command.action.parameters[:button_id].value
-                  state = command.action.parameters[:button_state].state
+                  index = button_id(command.action)
+                  state = button_state(command.action)
                   changed
                   notify_observers(GFX_DATA_SELECT, index: index, state: state)
                 end
@@ -67,6 +67,16 @@ module Wilhelm
                   device: moi,
                   menu: :on_board_computer
                 )
+              end
+
+              private
+
+              def button_id(action)
+                action.parameters[:button_id].value
+              end
+
+              def button_state(action)
+                action.parameters[:button_state].value
               end
             end
           end
