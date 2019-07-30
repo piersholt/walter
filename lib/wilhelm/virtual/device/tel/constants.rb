@@ -6,21 +6,30 @@ module Wilhelm
       module Telephone
         # Radio related command constants
         module Constants
+          # -------------------------------------------------------------------
           # PONG 0x02
+          # -------------------------------------------------------------------
           ANNOUNCE = 0x01
 
+          # -------------------------------------------------------------------
           # TXT-MID 0X21
+          # -------------------------------------------------------------------
+
+          # Parameter :layout
           LAYOUT_DIAL      = 0x42
           LAYOUT_DIRECTORY = 0x43
           LAYOUT_TOP_8     = 0x80
 
+          # Parameter :m2
           M2_DEFAULT = 0b0000_0001
 
+          # Parameter :m3
           M3_FLUSH     = 0b0010_0000
           M3_BLOCK     = 0b0100_0000
           M3_SOMETHING = 0b0011_0010
           M3_NIL       = 0x00
 
+          # Parameter :chars
           CHARS_EMPTY = [].freeze
           STRING_EMPTY = ''
 
@@ -56,17 +65,27 @@ module Wilhelm
           #          2 => 0b0101_0000,
           #          3 => 0b0001_0100 }.freeze
 
+          # -------------------------------------------------------------------
           # GFX STATUS 0x22
+          # -------------------------------------------------------------------
+
           STATUS_CLEAR        = 0x00
           STATUS_HOME_SUCCESS = 0x02
           STATUS_SUCCESS      = 0x03
           STATUS_ERROR        = 0xFF
 
+          # -------------------------------------------------------------------
           # TXT-23 0x23
+          # -------------------------------------------------------------------
+
+          # Parameter :gfx
+          # IKE via MFL
           MFL_CLEAR                = 0x40
           MFL_RADIO_MODE           = 0x41
           MFL_CONTACT              = 0x42 # "TEL1-MessageBank"
           MFL_CONTACT_CALL         = 0x43 # "TEL    98272742"
+
+          # GFX via BMBT
           DIRECTORY_CONTACT_NAME   = 0x52 # "MUM"
           DIRECTORY_CONTACT_NUMBER = 0x53 # "98272742"
           DIRECTORY_CLEAR          = 0x53
@@ -77,11 +96,17 @@ module Wilhelm
           TOP_8_NUMBER             = 0x82 # "98272742"
           INFO_HEADER              = 0x90
 
+          # Parameter :ike
           IKE_DEFAULT = 0x20
 
+          # Parameter :chars
           EMPTY_STRING = ''
 
+          # -------------------------------------------------------------------
           # ANZV-TEL-VAR* 0x24
+          # -------------------------------------------------------------------
+
+          # Parameter :gfx
           STRENGTH          = 0x91 # Array.new(7) { 0xb8 }.join
           CALL_COST_CURRENT = 0x93 # "     0"
           CALL_COST_TOTAL   = 0x94 # "      0"
@@ -89,14 +114,21 @@ module Wilhelm
           CALL_TIME_SECONDS = 0x97 # " 0"
 
           NIL = 0x00
+          # Parameter :ike
 
+          # -------------------------------------------------------------------
           # TEL-DATA 0x31
+          # -------------------------------------------------------------------
+
+          # BYTE 1 SOURCE
           SOURCE_RECENT    = 0x00
+          SOURCE_PIN       = 0x05
           SOURCE_INFO      = 0x20
           SOURCE_DIAL      = 0x42
           SOURCE_DIRECTORY = 0x43
           SOURCE_TOP_8     = 0x80
 
+          # BYTE 2 FUNCTION
           FUNCTION_RECENT   = 0x00
           FUNCTION_CONTACT  = 0x01
           FUNCTION_DIGIT    = 0x02
@@ -104,6 +136,7 @@ module Wilhelm
           FUNCTION_NAVIGATE = 0x07
           FUNCTION_INFO     = 0x08
 
+          # BYTE 3 ACTION
           # Function 0x00
           ACTION_RECENT_BACK    = 0x0C
           ACTION_RECENT_FORWARD = 0x0D
