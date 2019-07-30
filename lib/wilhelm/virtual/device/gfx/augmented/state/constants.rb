@@ -18,16 +18,11 @@ module Wilhelm
 
               INPUT_TIMEOUT = 30
 
-              # BUTTON STATES ------------------------------------------------
+              # SRC-GFX 0x4F --------------------------------------------------
+              MONITOR_ON  = 0x00
+              MONITOR_OFF = 0x10
 
-              CONFIRM_PRESS = 0x05
-              CONFIRM_HOLD = 0x45
-              CONFIRM_RELEASE = 0x85
-
-              MENU_PRESS = 0x34
-              MENU_HOLD = 0x74
-              MENU_RELEASE = 0xB4
-
+              # MENU-GFX 0x45 -------------------------------------------------
               HIDE_RADIO = 0b0000_0001
               HIDE_PANEL = 0b0000_0010
               HIDE_SELECT = 0b0000_0100
@@ -38,8 +33,7 @@ module Wilhelm
               LEFT_INPUT = (0x01..0x08)
               RIGHT_INPUT = (0x81..0x88)
 
-              # RENDERING ------------------------------------------------
-
+              # TXT-RAD 0x23 --------------------------------------------------
               HEADER = {
                 service: (0x00..0x1f),
                 weather_band: (0x20..0x3f),
@@ -62,20 +56,30 @@ module Wilhelm
               HEADER_DIGITAL = 0x62
               MENU_STATIC    = 0x63
 
-              RADIO_ALT = 0x37
+              # @note technically don't include 0x62, but Range FTW
+              RADIO_LAYOUTS = (0x60..0x63)
 
+              # RAD_ALT 0x37 --------------------------------------------------
               SELECT = (0x40..0x70)
               TONE = (0x80..0xff)
 
-              # Command 0x41 OBC-REQ Parameters
+              # OBC-BOOL 0x41 -------------------------------------------------
               OUTSIDE_TEMP = 0x03
-              ECON_1 = 0x04
-              ECON_2 = 0x05
-              RANGE = 0x06
-              SPEED_LIMIT = 0x09
-              AVG_SPEED = 0x0a
-              STOPWATCH = 0x0e
-              OBC_PARAMS = [OUTSIDE_TEMP, ECON_1, ECON_2, RANGE, SPEED_LIMIT, AVG_SPEED, STOPWATCH]
+              ECON_1       = 0x04
+              ECON_2       = 0x05
+              RANGE        = 0x06
+              SPEED_LIMIT  = 0x09
+              AVG_SPEED    = 0x0a
+              STOPWATCH    = 0x0e
+              OBC_PARAMS = [
+                OUTSIDE_TEMP,
+                ECON_1,
+                ECON_2,
+                RANGE,
+                SPEED_LIMIT,
+                AVG_SPEED,
+                STOPWATCH
+              ].freeze
             end
           end
         end

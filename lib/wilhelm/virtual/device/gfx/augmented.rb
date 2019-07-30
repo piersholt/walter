@@ -42,9 +42,9 @@ module Wilhelm
             when PONG
               logger.debug(moi) { "Tx: PONG" }
               evaluate_pong(message.command)
-            when TEL_DATA
-              logger.debug(moi) { "Tx: Data (#{d2h(TEL_DATA)})" }
-              evaluate_tel_data(message.command)
+            when INPUT
+              logger.debug(moi) { "Tx: Data (#{d2h(INPUT)})" }
+              evaluate_input(message.command)
             when MENU_GFX
               logger.debug(moi) { "Tx: Menu GFX (#{d2h(MENU_GFX)})" }
               evaluate_menu_gfx(message.command)
@@ -56,7 +56,7 @@ module Wilhelm
               # evaluate_menu_gfx(message.command)
             when OBC_BOOL
               logger.debug(moi) { "Tx: OBC Req. (#{d2h(OBC_BOOL)})" }
-              evaluate_obc_req(message.command)
+              evaluate_obc_bool(message.command)
             end
           end
 
