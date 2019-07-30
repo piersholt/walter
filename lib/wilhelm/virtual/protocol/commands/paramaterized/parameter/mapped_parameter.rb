@@ -13,11 +13,12 @@ module Wilhelm
       def inspect
         "<#{PROC} @value=#{value}>"
       end
-      
+
       def to_s(width = DEFAULT_LABEL_WIDTH)
-        str_buffer = ""
-        str_buffer = str_buffer.concat("#{pretty}")
-        str_buffer
+        str_buffer = ''
+        str_buffer.concat(format("%-#{width}s", "#{label}")) if label
+        str_buffer.concat(LABEL_DELIMITER) if label
+        str_buffer.concat(pretty.to_s)
       end
 
       def ugly
