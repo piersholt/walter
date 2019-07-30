@@ -86,6 +86,7 @@ module Wilhelm
           MFL_CONTACT_CALL         = 0x43 # "TEL    98272742"
 
           # GFX via BMBT
+          SOS_TITLE                = 0x00
           DIRECTORY_CONTACT_NAME   = 0x52 # "MUM"
           DIRECTORY_CONTACT_NUMBER = 0x53 # "98272742"
           DIRECTORY_CLEAR          = 0x53

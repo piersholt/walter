@@ -106,7 +106,7 @@ module Wilhelm
             def delegate_sos
               logger.unknown(PROC) { "#delegate_sos" }
               logger.unknown(PROC) { FUNCTIONS[FUNCTION_SOS][ACTION_SOS_OPEN] }
-              draw_23(gfx: 0xc0, ike: 0x20, chars: 'SOS: 112!')
+              open_sos
             end
 
             def delegate_navigation(action)
