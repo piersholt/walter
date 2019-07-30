@@ -21,13 +21,14 @@ module Wilhelm
 
             # 0x20 TEL-OPEN
             def handle_tel_open(message)
-              logger.debug(PROC) { "Mock: handling telephone tel open request..." }
-              open_dial
+              logger.debug(PROC) { '#handle_tel_open' }
+              generate_top_8
             end
 
-            # 0x31 DATA
+            # 0x31 INPUT
             def handle_input(command)
-              return false unless command.action.parameters[:button_state].value == 0b00
+              # @note filter HOLD and RELEASE
+              return false unless press?(command)
               logger.unknown(PROC) { '#handle_input(command)' }
 
               case command.source.value
