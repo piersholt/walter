@@ -12,7 +12,7 @@ module Wilhelm
 
           PROC = 'Telephone::Emulated'
 
-          SUBSCRIBE = [PING, PONG, GFX_STATUS, TEL_DATA, TEL_OPEN].freeze
+          SUBSCRIBE = [PING, PONG, TEL_DATA, TEL_OPEN].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
@@ -22,9 +22,6 @@ module Wilhelm
             when PONG
               logger.debug(PROC) { "Rx: Handling: PONG" }
               handle_announce(message)
-            when GFX_STATUS
-              logger.debug(PROC) { "Rx: Handling: GFX_STATUS" }
-              handle_gfx_status(message)
             when INPUT
               logger.debug(PROC) { "Rx: Handling: INPUT" }
               handle_input(message.command)

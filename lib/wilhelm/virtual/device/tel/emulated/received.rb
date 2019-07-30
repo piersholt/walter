@@ -25,24 +25,6 @@ module Wilhelm
               open_dial
             end
 
-            # 0x22 CACHE
-            def handle_gfx_status(message)
-              logger.debug(PROC) { "Mock: handling GFX status..." }
-              if message.command.status.value == STATUS_CLEAR
-                logger.debug(PROC) { "Mock: GFX status clear!" }
-                release_pending_render
-              elsif message.command.status.value == STATUS_SUCCESS
-                logger.debug(PROC) { "Mock: GFX status success!" }
-                clear_retry
-              elsif message.command.status.value == STATUS_HOME_SUCCESS
-                logger.debug(PROC) { "Mock: GFX menu status success!" }
-                clear_retry
-              elsif message.command.status.value == STATUS_ERROR
-                logger.debug(PROC) { "Mock: GFX status error!" }
-                release_pending_retry
-              end
-            end
-
             # 0x31 DATA
             def handle_input(command)
               return false unless command.action.parameters[:button_state].value == 0b00
