@@ -114,8 +114,8 @@ module Wilhelm
           CALL_TIME_MINUTES = 0x96 # "  0"
           CALL_TIME_SECONDS = 0x97 # " 0"
 
-          NIL = 0x00
           # Parameter :ike
+          IKE_ZERO = 0x00
 
           # -------------------------------------------------------------------
           # TEL-DATA 0x31
@@ -143,14 +143,14 @@ module Wilhelm
           ACTION_RECENT_FORWARD = 0x0D
 
           # Function Contact 0x01
-          ACTION_SELECT_1 = 0x00
-          ACTION_SELECT_2 = 0x02
-          ACTION_SELECT_3 = 0x04
-          ACTION_SELECT_4 = 0x06
-          ACTION_SELECT_5 = 0x10
-          ACTION_SELECT_6 = 0x12
-          ACTION_SELECT_7 = 0x14
-          ACTION_SELECT_8 = 0x16
+          ACTION_CONTACT_1 = 0x00
+          ACTION_CONTACT_2 = 0x02
+          ACTION_CONTACT_3 = 0x04
+          ACTION_CONTACT_4 = 0x06
+          ACTION_CONTACT_5 = 0x10
+          ACTION_CONTACT_6 = 0x12
+          ACTION_CONTACT_7 = 0x14
+          ACTION_CONTACT_8 = 0x16
 
           # Function Dial 0x02
           ACTION_REMOVE = 0x0a
@@ -172,14 +172,14 @@ module Wilhelm
               ACTION_RECENT_FORWARD => 'Last Numbers >>'
             },
             FUNCTION_CONTACT => {
-              ACTION_SELECT_1 => 'Contact 1',
-              ACTION_SELECT_2 => 'Contact 2',
-              ACTION_SELECT_3 => 'Contact 3',
-              ACTION_SELECT_4 => 'Contact 4',
-              ACTION_SELECT_5 => 'Contact 5',
-              ACTION_SELECT_6 => 'Contact 6',
-              ACTION_SELECT_7 => 'Contact 7',
-              ACTION_SELECT_8 => 'Contact 8'
+              ACTION_CONTACT_1 => 'Contact 1',
+              ACTION_CONTACT_2 => 'Contact 2',
+              ACTION_CONTACT_3 => 'Contact 3',
+              ACTION_CONTACT_4 => 'Contact 4',
+              ACTION_CONTACT_5 => 'Contact 5',
+              ACTION_CONTACT_6 => 'Contact 6',
+              ACTION_CONTACT_7 => 'Contact 7',
+              ACTION_CONTACT_8 => 'Contact 8'
             },
             FUNCTION_DIGIT => {
               0x00 => '0',

@@ -38,7 +38,7 @@ module Wilhelm
           # 0x24 ANZV-VAR
           # Info: Sigal etc
           def anzv_var(from: :tel, to: :gfx, **arguments)
-            arguments[:ike] = NIL unless arguments[:ike]
+            arguments[:ike] = IKE_ZER0 unless arguments[:ike]
             # format_chars!(arguments)
             try(from, to, ANZV_VAR, arguments)
           end
