@@ -21,7 +21,7 @@ module Wilhelm
             case command_id
             when PONG
               logger.debug(PROC) { "Rx: PONG 0x#{d2h(PONG)}" }
-              handle_announce(message)
+              handle_pong(message)
             when INPUT
               logger.debug(PROC) { "Rx: INPUT 0x#{d2h(INPUT)}" }
               handle_input(message.command)

@@ -11,7 +11,7 @@ module Wilhelm
 
             # 0x02 PONG
             # Piggyback off the radio announce to annunce
-            def handle_announce(message)
+            def handle_pong(message)
               return false unless message.from?(:gfx)
               return false unless message.command.status.value == ANNOUNCE
               logger.info(PROC) { "GFX has announced. Piggybacking (sic)" }
