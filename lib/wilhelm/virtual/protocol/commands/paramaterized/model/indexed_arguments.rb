@@ -21,7 +21,7 @@ module Wilhelm
       end
 
       def to_s
-        "Index: #{@index}\tBytes:".concat(super)
+        "#{PROG}: Index: #{@index}, Bytes: #{super}"
       end
 
       def inspect
