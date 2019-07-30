@@ -89,9 +89,9 @@ module Wilhelm
 
               case source.value
               when SOURCE_DIRECTORY
-                directory_name('Dir. Contact.')
+                directory_name("Directory. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
               when SOURCE_TOP_8
-                top_8_name('Top 8. Contact.')
+                top_8_name("Top 8. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
               end
             end
 
