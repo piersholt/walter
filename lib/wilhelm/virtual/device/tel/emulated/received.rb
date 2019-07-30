@@ -56,7 +56,7 @@ module Wilhelm
                 # delegate_contact
               when FUNCTION_CONTACT
                 delegate_contact(command.source, command.action)
-              when FUNCTION_DIAL
+              when FUNCTION_DIGIT
                 delegate_dial(command.action)
               when FUNCTION_SOS
                 delegate_sos
@@ -89,9 +89,9 @@ module Wilhelm
             def delegate_dial(action)
               logger.unknown(PROC) { "#delegate_dial(#{action})" }
               index = button_id(action)
-              logger.unknown(PROC) { FUNCTIONS[FUNCTION_DIAL][index] }
+              logger.unknown(PROC) { FUNCTIONS[FUNCTION_DIGIT][index] }
               return dial_number_remove if index == ACTION_REMOVE
-              dial_number(FUNCTIONS[FUNCTION_DIAL][index])
+              dial_number(FUNCTIONS[FUNCTION_DIGIT][index])
             end
 
             def delegate_sos

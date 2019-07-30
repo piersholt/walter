@@ -99,7 +99,7 @@ module Wilhelm
 
           FUNCTION_RECENT   = 0x00
           FUNCTION_CONTACT  = 0x01
-          FUNCTION_DIAL     = 0x02
+          FUNCTION_DIGIT    = 0x02
           FUNCTION_SOS      = 0x05
           FUNCTION_NAVIGATE = 0x07
           FUNCTION_INFO     = 0x08
@@ -147,7 +147,7 @@ module Wilhelm
               ACTION_SELECT_7 => 'Contact 7',
               ACTION_SELECT_8 => 'Contact 8'
             },
-            FUNCTION_DIAL => {
+            FUNCTION_DIGIT => {
               0x00 => '0',
               0x01 => '1',
               0x02 => '2',
