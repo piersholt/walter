@@ -48,9 +48,9 @@ module Wilhelm
             end
 
             # 0x31 DATA
-            def handle_data_request(command)
+            def handle_input(command)
               return false unless command.action.parameters[:button_state].value == 0b00
-              logger.unknown(PROC) { '#handle_data_request(command)' }
+              logger.unknown(PROC) { '#handle_input(command)' }
 
               case command.source.value
               when SOURCE_RECENT

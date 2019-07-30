@@ -43,6 +43,7 @@ module Wilhelm
           ANZV_BOOL  = 0x2A
           TEL_LED    = 0x2B
           TEL_STATE  = 0x2C
+          INPUT      = 0x31
           SOFT_INPUT = 0x31
           TEL_DATA   = SOFT_INPUT
 

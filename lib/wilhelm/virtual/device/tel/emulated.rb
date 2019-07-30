@@ -25,9 +25,9 @@ module Wilhelm
             when GFX_STATUS
               logger.debug(PROC) { "Rx: Handling: GFX_STATUS" }
               handle_gfx_status(message)
-            when TEL_DATA
-              logger.debug(PROC) { "Rx: Handling: TEL_DATA" }
-              handle_data_request(message.command)
+            when INPUT
+              logger.debug(PROC) { "Rx: Handling: INPUT" }
+              handle_input(message.command)
             when TEL_OPEN
               logger.debug(PROC) { "Rx: Handling: TEL_OPEN" }
               handle_tel_open(message)
