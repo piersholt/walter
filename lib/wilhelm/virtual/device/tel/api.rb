@@ -15,7 +15,7 @@ module Wilhelm
           # 0x21
           # Contacts
           def draw_21(from: :tel, to: :gfx, **arguments)
-            arguments[:layout] = LAYOUT_DIRECTORY unless arguments[:m1]
+            arguments[:layout] = LAYOUT_DIRECTORY unless arguments[:layout]
             arguments[:m2] = M2_DEFAULT unless arguments[:m2]
             arguments[:m3] = M3_SOMETHING unless arguments[:m3]
             # format_chars!(arguments)
