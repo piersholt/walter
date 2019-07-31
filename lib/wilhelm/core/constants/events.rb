@@ -1,57 +1,21 @@
 # frozen_string_literal: false
 
+require_relative 'events/interface'
+require_relative 'events/receiver'
+require_relative 'events/multiplexing'
+require_relative 'events/deprecated'
+require_relative 'events/application'
+
 module Wilhelm
   module Core
     module Constants
-      # Comment
+      # Core::Constants::Events
       module Events
-        # Interface
-        module Interface
-          BUS_OFFLINE = :offline
-          BUS_ONLINE = :online
-          BUS_BUSY = :busy
-          BUS_IDLE = :idle
-          BUS_ACTIVE = :active
-          BYTE_RECEIVED = :byte_received
-        end
-
-        # Receiver
-        module Receiver
-          FRAME_RECEIVED = :frame_received
-          FRAME_FAILED = :frame_failed
-          FRAME_SENT = :frame_sent
-        end
-
-        # top layer?
-        module Multiplexing
-          MESSAGE_RECEIVED = :message_received
-          MESSAGE_SENT = :message_sent
-          PACKET_RECEIVED = :packet_received
-          PACKET_ROUTABLE = :packet_routable
-        end
-
-        # user configuration events
-        module Deprecated
-          MESSAGE_DISPLAY = :message_display
-        end
-
-        # APPLICATION
-        module Application
-          STATUS_REQUEST = :thread_status_request
-          EXIT = :exit
-        end
-
         include Interface
         include Receiver
         include Multiplexing
         include Deprecated
         include Application
-
-        INTERFACE_EVENTS = [BYTE_RECEIVED, BUS_OFFLINE, BUS_ONLINE, BUS_BUSY, BUS_IDLE, BUS_ACTIVE].freeze
-        RECEIVER_EVENTS  = [FRAME_RECEIVED, FRAME_FAILED, FRAME_SENT].freeze
-        LAYER_EVENTS     = [MESSAGE_RECEIVED, MESSAGE_SENT, PACKET_RECEIVED, PACKET_ROUTABLE].freeze
-        USER_EVENTS      = [MESSAGE_DISPLAY].freeze
-        APP_EVENTS       = [STATUS_REQUEST, EXIT].freeze
 
         ALL_EVENTS = (INTERFACE_EVENTS + RECEIVER_EVENTS + LAYER_EVENTS + USER_EVENTS + APP_EVENTS).freeze
 
