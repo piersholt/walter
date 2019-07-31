@@ -44,8 +44,8 @@ module Wilhelm
           TEL_LED    = 0x2B
           TEL_STATE  = 0x2C
           INPUT      = 0x31
-          SOFT_INPUT = 0x31
-          TEL_DATA   = SOFT_INPUT
+          SOFT_INPUT = INPUT
+          TEL_DATA   = INPUT
 
           DSP_SET = 0x34
           DSP_EQ  = DSP_SET
