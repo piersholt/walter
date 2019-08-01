@@ -552,60 +552,26 @@
       - RAD	IKE	  23	50 20
 
 # ************************************************************************* #
-#                               ANZV (VAR)
+#                                   ANZV
 # ************************************************************************* #
 
-0x24: # ANZV-IKE-VAR / ANZV-TEL-VAR*
+0x24: # ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
   :id:
     :d: 36
     :h: '0x24'
   :properties:
-    :short_name: ANZV-IKE-VAR
+    :short_name: ANZV-VAR
     :long_name: OBC Display (IKE, GFX)
-    :verbose: false
   :klass: ParameterizedCommand
   :schemas:
     - :tel
+    - :ike
+    - :rad
   :parameters:
     :gfx:
       :type: :map
       :dictionary:
-        # SETTINGS
-        0x01: Time
-        0x02: Date
-
-        # ON-BOARD COMPUTER
-        0x03: Temperature
-        0x04: Consump. 1
-        0x05: Consump. 2
-        0x06: Range
-        0x07: Distance
-        0x08: Arrival
-        0x09: Limit
-        0x0a: Avg. Speed
-        0x0e: Timer
-        0x1a: Timer (Lap)
-
-        # Aux Venting/Heating
-        0x0f: Aux. Timer 1
-        0x10: Aux. Timer 2
-
-        # Radio
-        0x40: Radio HUD
-
-        # Code
-        0x16: Emergency Disarm
-
-        # Unconfirmed
-        0x0c: Memo
-        0x0d: Memo
-        0x11: Aux Heating Off
-        0x12: Aux Heating On
-        0x13: Aux Vent. Off
-        0x14: Aux Vent. On
-        0x15: End Stellmode
-        0x1b: Aux Heat/Vent
-        0x1f: Test Mode
+        0x00: --
     :ike:
       :type: :map
       :dictionary:
@@ -621,11 +587,85 @@
               begin: 2
               end: -1
               excl: false
-  # 0x24 ANZV-TEL-VAR*
+  # 0x24 ANZV-VAR-IKE*
+  :ike:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: ANZV-VAR-IKE*
+      :long_name: OBC Display (IKE, GFX)
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          # SETTINGS
+          0x01: (Draw) Time           # "17:27  "
+          0x02: (Draw) Date           # "22.07.2019"
+
+          # ON-BOARD COMPUTER
+          0x03: (Draw) Temperature    # "+14.5"
+          0x04: (Draw) Consump. 1     # "--.- L/100"
+          0x05: (Draw) Consump. 2     # "--.- L/100"
+          0x06: (Draw) Range          # " 59 MLS"
+          0x07: (Draw) Distance       # "   5 MLS"
+          0x08: (Draw) Arrival        # "17:39  "
+          0x09: (Draw) Limit          # "--- MPH "
+          0x0a: (Draw) Avg. Speed     # "--.- MPH "
+          0x0e: (Draw) Timer          # "13.0  SEC "
+          0x1a: (Draw) Timer (Lap)    # " 6.2  SEC "
+
+          # AUX. HEAT/VENTILATION
+          0x0f: (Draw) Aux. Timer 1
+          0x10: (Draw) Aux. Timer 2
+
+          # CODE
+          # Wait X minutes.
+          0x16: '(Draw) Emergency Disarm'
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x20: Set
+          0x30: Update
+      :chars:
+        :type: :chars
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+  # 0x24 ANZV-VAR-RAD*
+  :rad:
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: ANZV-VAR-RAD*
+      :long_name: OBC Display (IKE, GFX)
+    :parameters:
+      :gfx:
+        :type: :map
+        :dictionary:
+          0x40: Radio HUD
+      :ike:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x20: Set
+          0x30: Update
+      :chars:
+        :type: :chars
+    :index:
+      :gfx: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+  # 0x24 ANZV-VAR-TEL*
   :tel:
     :klass: MediaDisplay
     :properties:
-      :short_name: ANZV-TEL-VAR*
+      :short_name: ANZV-VAR-TEL*
       :long_name: Update Info
     :index:
       :gfx: 0
@@ -638,17 +678,18 @@
       :gfx:
         :type: :map
         :dictionary:
-          0x91: Signal Strength
-          0x93: Call cost current
-          0x94: Call cost total
-          0x96: Call Time minutes
-          0x97: Call time seconds
+          0x80: (Incoming) Header 0x80
+          0x81: (Incoming) Header 0x81
+          0x82: (Incoming) Header 0x82
+          0x91: (Info) Signal Strength
+          0x93: (Info) Call cost current
+          0x94: (Info) Call cost total
+          0x96: (Info) Call Time minutes
+          0x97: (Info) Call time seconds
       :ike:
         :type: :map
         :dictionary:
           0x00: --
-          0x20: Set
-          0x30: Update
       :chars:
         :type: :chars
         # 0xB2 = 7 bars
@@ -660,21 +701,19 @@
         # 0x5F = 1 bar
         # 0xB8 = 0 bars
   :meta:
-    :examples:
-      - RAD GLO-H TXT-1 Radio HUD "102.1   "
-      - this is when it's rapidly scrolling... is the reduced chat array length because it's sneding so fast? reduced traffic or because it's a partial update to the display?
+      :rad:
+        - RAD GLO-H TXT-1 Radio HUD "102.1   "
+        - this is when it's rapidly scrolling...
+          is the reduced chat array length because it's sneding so fast?
+          reduced traffic or because it's a partial update to the display?
 
-# ************************************************************************* #
-#                               ANZV (BOOLEAN)
-# ************************************************************************* #
-
-0x2A: # ANZV-IKE-BOOL
+0x2A: # ANZV-BOOL-IKE
   :id:
     :d: 42
     :h: '0x2A'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: ANZV-IKE-BOOL
+    :short_name: ANZV-BOOL-IKE
     :long_name: IKE to ANZV OBC Display
   :index:
     :control_a: 0
@@ -683,16 +722,11 @@
     :control_a:
       :type: :bit_array
       :index:
-        :memo:  !ruby/range
-                begin: 1
-                end: 2
+        :memo:  2
         :timer: 4
-        :limit: !ruby/range
-                begin: 5
-                end: 6
+        :limit: 6
       :parameters:
         :memo:
-          # 0010 0000
           :type: :switch
           :label: 'Memo'
           :states:
@@ -701,39 +735,34 @@
             0b10: :on
             0b11: :on
         :timer:
-          # 0010 1010
           :type: :switch
           :label: 'Timer'
           :states:
             0: :off
             1: :on
         :limit:
-          # 0000 0010
           :type: :switch
           :label: 'Limit'
           :states:
-            0b00: :off
-            0b01: :on
-            0b10: :on
-            0b11: :on
+            0b0: :off
+            0b1: :on
     :control_b:
       :type: :bit_array
       :index:
-        :code:  !ruby/range
-                begin: 0
-                end: 1
-        :aux_heating: 2
-        :aux_timer_2: 3
+        :code:            1
+        # just confirm that this is direct mode...
+        :aux_heating:     2
+        :aux_timer_2:     3
+        # just confirm that this is direct mode...
         :aux_ventilation: 4
-        :aux_timer_1: 5
+        :aux_timer_1:     5
       :parameters:
         :code:
           :type: :switch
           :label: 'Code'
           :states:
-            0b00: :off
-            0b01: :enabled
-            0b10: :disabled
+            0: :off
+            1: :on
         :aux_heating:
           :type: :switch
           :label: 'Aux Heating'
@@ -765,10 +794,6 @@
       - ANZV
     :length:
       - always 2 bytes
-      - first byte 0x00 or 0x0B
-      - second byte 0x00
-      - memo on 20 00
-      - memo off 00 00
 0x2B: # ANZV-TEL-LED (TEL-LED)
   :id:
     :d: 43
