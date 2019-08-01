@@ -8,24 +8,24 @@ module Wilhelm
         module Cluster
           HUD_SIZE = 20
 
-          LEFT = :ljust
-          CENTERED = :center
-          RIGHT = :rjust
+          LEFT   = :ljust
+          CENTRE = :center
+          RIGHT  = :rjust
 
-          ALIGNMENTS = [LEFT, CENTERED, RIGHT].freeze
+          ALIGNMENTS = [LEFT, CENTRE, RIGHT].freeze
 
-          def align(chars_string, alignment = CENTERED)
-            raise ArgumentError, "Invalid alignment #{alignment}" unless ALIGNMENTS.include?(alignment)
+          def align(chars_string, alignment = CENTRE)
+            validate_alignment(alignment)
             chars_string.public_send(alignment, HUD_SIZE)
           end
 
-          def format_chars!(command_arguments, opts = { align: :center })
+          def format_chars!(command_arguments, alignment: CENTRE)
             return false unless command_arguments.key?(:chars)
             chars_string = command_arguments.fetch(:chars)
             return false if char_array?(chars_string)
             validate_chars_string(chars_string)
 
-            align(chars_string, opts[:align])
+            align(chars_string, alignment)
 
             command_arguments[:chars] = chars_string.bytes
           end
@@ -43,6 +43,15 @@ module Wilhelm
             return false unless chars_string.is_a?(Array)
             return false unless chars_string.all? { |i| i.is_a?(Integer) }
             true
+          end
+
+          def validate_alignment(alignment)
+            return true if ALIGNMENTS.include?(alignment)
+            raise(ArgumentError, error_alignment(alignment))
+          end
+
+          def error_alignment(alignment)
+            "Invalid alignment #{alignment}"
           end
         end
       end
