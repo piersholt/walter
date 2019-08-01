@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module Handler
-      # Comment
+      # Virtual::Handler::MessageHandler
       class MessageHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 
@@ -22,7 +22,7 @@ module Wilhelm
         end
 
         def message_received(properties)
-          # LOGGER.warn(self.class) { "#message_received" }
+          # LOGGER.debug(self.class) { "#message_received" }
           message = message?(properties)
           route_to_senders(message)
           route_to_receivers(message)
@@ -40,16 +40,16 @@ module Wilhelm
 
         def message?(properties)
           message = fetch(properties, :message)
-          raise RoutingError, 'Message is nil!' unless message
+          raise(RoutingError, 'Message is nil!') unless message
           message
         end
 
         def route_to_receivers(packet)
-          # LOGGER.warn(self.class) { "#route_to_receivers" }
+          # LOGGER.debug(self.class) { "#route_to_receivers" }
           recipient = packet.to
-          raise RoutingError, 'Recipient is nil!' unless recipient
+          raise(RoutingError, 'Recipient is nil!') unless recipient
           observers = subscribers[recipient]
-          raise RoutingError, "No observers of #{recipient}" if observers.nil? || observers.empty?
+          raise(RoutingError, "No observers of #{recipient}") if observers.nil? || observers.empty?
           # return true
           observers.each do |subscriber|
             subscriber.virtual_receive(packet)
@@ -59,11 +59,11 @@ module Wilhelm
         end
 
         def route_to_senders(packet)
-          # LOGGER.warn(self.class) { "#route_to_senders" }
+          # LOGGER.debug(self.class) { "#route_to_senders" }
           sender = packet.from
-          raise RoutingError, 'Recipient is nil!' unless sender
+          raise(RoutingError, 'Recipient is nil!') unless sender
           observers = publishers[sender]
-          raise RoutingError, "No observers of #{sender}" if observers.nil? || observers.empty?
+          raise(RoutingError, "No observers of #{sender}") if observers.nil? || observers.empty?
           # return true
           observers.each do |publisher|
             publisher.virtual_transmit(packet)

@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module Listener
-      # Comment
+      # CoreListener
       class CoreListener < Core::BaseHandler
         include LogActually::ErrorOutput
 
