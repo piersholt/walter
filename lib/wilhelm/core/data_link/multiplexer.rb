@@ -53,10 +53,9 @@ module Wilhelm
             Thread.current[:name] = THREAD_NAME
             begin
               loop do
-                message = packet_output_buffer.pop
-                new_frame = multiplex(message)
-                LOGGER.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
-                frame_output_buffer.push(new_frame)
+                new_message = packet_output_buffer.pop
+                new_frame = multiplex(new_message)
+                distribute(frame_output_buffer, new_frame)
               end
             rescue StandardError => e
               LOGGER.error(name) { e }
@@ -82,6 +81,11 @@ module Wilhelm
           frame = frame_builder.result
           LOGGER.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }
           frame
+        end
+
+        def distribute(frame_output_buffer, new_frame)
+          LOGGER.debug(name) { "frame_output_buffer.push(#{new_frame}) (#{Thread.current})" }
+          frame_output_buffer.push(new_frame)
         end
       end
     end

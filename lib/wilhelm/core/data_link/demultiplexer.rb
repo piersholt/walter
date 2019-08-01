@@ -56,10 +56,7 @@ module Wilhelm
               loop do
                 new_frame = input_buffer.pop
                 new_data = demultiplex(new_frame)
-                LOGGER.debug(name) { "Data: #{new_data}" }
-                LOGGER.debug(name) { "Notify: #{DATA_RECEIVED}, #{new_data}" }
-                changed
-                notify_observers(DATA_RECEIVED, data: new_data)
+                distribute(new_data)
               end
             rescue StandardError => e
               LOGGER.error(name) { e }
@@ -85,6 +82,12 @@ module Wilhelm
         rescue StandardError => e
           LOGGER.error(name) { e }
           e.backtrace.each { |line| LOGGER.error(name) { line } }
+        end
+
+        def distribute(new_data)
+          LOGGER.debug(name) { "Notify: #{DATA_RECEIVED}, #{new_data}. (#{Thread.current})" }
+          changed
+          notify_observers(DATA_RECEIVED, data: new_data)
         end
       end
     end
