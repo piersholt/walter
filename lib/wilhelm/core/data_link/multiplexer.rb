@@ -26,7 +26,7 @@ module Wilhelm
           true
         rescue StandardError => e
           LOGGER.error(e)
-          e.backtrace.each { |l| LOGGER.error(l) }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
           raise e
         end
 
@@ -60,7 +60,7 @@ module Wilhelm
               end
             rescue StandardError => e
               LOGGER.error(name) { e }
-              e.backtrace.each { |l| LOGGER.error(l) }
+              e.backtrace.each { |line| LOGGER.error(name) { line } }
             end
             LOGGER.warn(name) { LOG_WRITE_THREAD_END }
           end
