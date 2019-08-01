@@ -8,9 +8,9 @@ module Wilhelm
         include LogActually::ErrorOutput
         include Command::Parse
 
-        PROG = 'Handler::Packet'
+        PROG = 'Handler::Data'
         LOG_BUILD_COMMAND = '#build_command'
-        ERROR_PACKET_NIL = 'Packet is nil!'
+        ERROR_DATA_NIL = 'Data is nil!'
 
         def initialize(bus, address_lookup_table = AddressLookupTable.instance)
           @bus = bus
@@ -58,7 +58,7 @@ module Wilhelm
 
         def data?(properties)
           data = fetch(properties, :data)
-          raise(RoutingError, ERROR_PACKET_NIL) unless data
+          raise(RoutingError, ERROR_DATA_NIL) unless data
           data
         end
 
