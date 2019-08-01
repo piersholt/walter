@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      # Command 0x38
+      # Command 0x48
       class ButtonParameterized < ParameterizedCommand
         def button
           action.parameters[:totally_unique_variable_name].ugly

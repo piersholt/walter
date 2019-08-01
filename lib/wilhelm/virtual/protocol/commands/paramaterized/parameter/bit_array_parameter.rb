@@ -17,32 +17,25 @@ module Wilhelm
 
       def to_s
         params = aligned_parameters
-        # LOGGER.warn(params)
         params = params.compact
-        # LOGGER.warn(params)
         params = params.join(' ')
-        # LOGGER.warn(params)
 
-        str_buffer = ""
-        str_buffer = str_buffer.concat('(')
-        str_buffer = str_buffer.concat(@bit_array.to_s)
-        str_buffer = str_buffer.concat(') ')
-        str_buffer = str_buffer.concat("#{params}")
+        str_buffer = ''
+        str_buffer.concat('(')
+        str_buffer.concat(@bit_array.to_s)
+        str_buffer.concat(') ')
+        str_buffer.concat("#{params}")
       end
 
       def inspect
         params = aligned_parameters
-        # LOGGER.warn(params)
         params = params.compact
-        # LOGGER.warn(params)
         params = params.join(', ')
-        # LOGGER.warn(params)
 
         str_buffer = "<#{PROC} #{bit_array} params: #{parameter_list}"
-        str_buffer = str_buffer.concat("[#{params}]")
-        str_buffer.concat(">")
+        str_buffer.concat("[#{params}]")
+        str_buffer.concat('>')
       end
-
 
       def aligned_parameters
         parameters.values.map(&:to_s)
@@ -61,7 +54,6 @@ module Wilhelm
         @label_width = longest_label.length
         @label_width
       end
-
 
       private
 

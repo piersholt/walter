@@ -4,6 +4,7 @@ module Wilhelm
   module Virtual
     # Virtual::IndexedBitArray
     class IndexedBitArray < BitArray
+      include Wilhelm::Helpers::PositionalNotation
       PROG = 'IndexedBitArray'.freeze
 
       def initialize(bit_array = nil, index = nil)
@@ -21,7 +22,7 @@ module Wilhelm
         parameter_index = index_as_range(name)
         bits = slice(parameter_index)
         LOGGER.warn(PROG) { "bits is nil!" } unless bits
-        bits.reduce(&:+)
+        parse_base_2_digits(*bits)
         # it was fog_front!
       rescue TypeError => e
         LOGGER.error(PROG) { e }
