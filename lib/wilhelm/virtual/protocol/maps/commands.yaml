@@ -4202,54 +4202,41 @@
   :parameters:
     :field:
       :type: :map
-      :map:
-        0x00: disabled
       :dictionary:
         # SETTINGS
-        0x0c: Memo 1                  # On, Off
+        0x01: Time                    # [Variable Request]
+        0x02: Date                    # [Variable Request]
+        0x0c: Memo                    # [On, Off]
+        0x0d: TBC Memo
 
-        # ON BOARD COMPUTER
-        0x04: Consump. 1              # Recalculate/"--.- L/100"
-        0x05: Consump. 2              # Recalculate/"--.- L/100"
-        0x09: Limit                   # On, Off/"--- MPH "
-        0x0a: Avg. Speed              # Recalculate/"--.- MPH "
-        0x0e: Timer                   # On, Off/"13.0  SEC "
-        0x1a: Lap Timer               # Lap/" 6.2  SEC "
+        # ON-BOARD COMPUTER
+        0x03: Temperature             # [Variable Request]
+        0x04: Consump. 1              # [Recalculate]
+        0x05: Consump. 2              # [Recalculate]
+        0x06: Range                   # [Variable Request]
+        0x07: Distance                # [Variable Request]
+        0x08: Arrival                 # [Variable Request]
+        0x09: Limit                   # [On, Off]
+        0x0a: Avg. Speed              # [Recalculate]
+        0x0e: Timer                   # [On, Off]
+        0x1a: Timer (Lap)             # [Lap]
+        0x1b: TBC Aux/Heat?
 
-        # AUX. VENTILATION
-        0x0f: Aux. Timer 1            # On, Off/"23:00  "
-        0x10: Aux. Timer 2            # On, Off/" 0:58  "
+        # AUX. HEAT/VENTILATION
+        0x0f: Aux. Timer 1            # [On, Off]
+        0x10: Aux. Timer 2            # [On, Off]
 
-        # REQUEST
-        0x01: Time                    # "17:27  "
-        0x02: Date                    # "22.07.2019"
-        0x03: Temperature             # "+14.5"
-        0x06: Range                   # " 59 MLS"
-        0x07: Distance                # "   5 MLS"
-        0x08: Arrival                 # "17:39  "
-
-        # Unconfirmed
-        0x0d: Memo 2
-        0x11: Aux Heating Off
-        0x12: Aux Heating On
-        0x13: Aux Vent. Off
-        0x14: Aux Vent. On
-        0x15: End Stellmode
-        0x16: Code (Emergency Disarm)
-        0x1b: Aux Heat/Vent
-        0x1f: Test Mode
-        0x40: Radio HUD
     :control:
       :type: :map
       :map:
-        0x00: empty
+        0x00: --
       :dictionary:
         0b0000_0001: Lap/Variable Request
-        0b0000_0010: '?'
+        0b0000_0010: TBC
         0b0000_0100: 'On/Start'
         0b0000_1000: 'Off/Stop'
 
-        0b0001_0000: Reset/Recalculate
+        0b0001_0000: Recalculate
         0b0010_0000: Set As Current Speed
         0b0100_0000: '?'
         0b1000_0000: '?'
