@@ -27,10 +27,10 @@ module Wilhelm
           end
 
           alias online online!
-          alias offline offline!
+          alias open   online!
 
-          alias open online!
-          alias close offline!
+          alias offline offline!
+          alias close   offline!
         end
       end
     end

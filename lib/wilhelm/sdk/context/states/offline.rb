@@ -9,13 +9,16 @@ module Wilhelm
           include Defaults
           include Logging
 
-          def online!(context)
-            logger.debug(WILHELM_OFFLINE) { '#online' }
-            context.change_state(Online.new)
+          def initialize(context)
+            logger.debug(WILHELM_OFFLINE) { '#initialize' }
+            logger.info(WILHELM_OFFLINE) { 'Stop Notifications' }
+            context.notifications&.stop
+          end
 
-            context.notifications!
-            context.ui!
-            context.register_controls(Wilhelm::API::Controls.instance)
+          def online!(context)
+            logger.debug(WILHELM_OFFLINE) { '#online!' }
+            context.change_state(Online.new(context))
+
           end
         end
       end

@@ -9,29 +9,29 @@ module Wilhelm
           include Defaults
           include Logging
 
-          def online!(___)
-            logger.debug(WILHELM_ONLINE) { '#online' }
-            logger.warn(WILHELM_ONLINE) { 'State is already Online!' }
+          def initialize(context)
+            logger.debug(WILHELM_ONLINE) { '#initialize' }
+            notifications!(context)
+            ui!(context)
+            context.register_controls(Wilhelm::API::Controls.instance)
           end
 
           def offline!(context)
             logger.debug(WILHELM_ONLINE) { '#offline' }
-            context.change_state(Offline.new)
+            context.change_state(Offline.new(context))
             # Application Context
-            logger.debug(WILHELM_ONLINE) { 'Stop Notifications' }
-            context.notifications&.stop
           end
 
-          # APPLICATION CONTEXT -----------------------------------------------------
+          # APPLICATION CONTEXT -----------------------------------------------
 
           def notifications!(context)
-            logger.debug(WILHELM_ONLINE) { '#notifications' }
+            logger.debug(WILHELM_ONLINE) { '#notifications! (creating...)' }
             context.notifications = create_notifications(context)
             true
           end
 
           def ui!(context)
-            logger.debug(WILHELM_ONLINE) { '#ui' }
+            logger.debug(WILHELM_ONLINE) { '#ui! (creating...)' }
             context.ui = create_ui(context)
             true
           end
@@ -50,25 +50,25 @@ module Wilhelm
 
           private
 
-          # APPLICATION CONTEXT ---------------------------------------------------
+          # APPLICATION CONTEXT -----------------------------------------------
 
           def create_notifications(context)
             logger.debug(WILHELM_ONLINE) { '#create_notifications' }
             notifications = Context::Notifications.new(context)
+
             context.changed
             context.notify_observers(notifications)
-            # logger.debug(WILHELM_ONLINE) { '#notifications.start =>' }
+
             notifications.start
-            # logger.debug(WILHELM_ONLINE) { '#notifications' }
             notifications
           rescue StandardError => e
             with_backtrace(logger, e)
           end
 
           def create_ui(context)
-            LOGGER.debug(WILHELM_ONLINE) { "#create_ui (#{Thread.current})" }
+            logger.debug(WILHELM_ONLINE) { "#create_ui (#{Thread.current})" }
             ui_context = UserInterface.new(context)
-            register_service_controllers(ui_context)
+            register_context_controllers(ui_context)
             context.changed
             context.notify_observers(ui_context)
             ui_context
@@ -76,9 +76,9 @@ module Wilhelm
             with_backtrace(logger, e)
           end
 
-          def register_service_controllers(ui_context)
-            LOGGER.debug(WILHELM_ONLINE) do
-              "#register_service_controllers (#{Thread.current})"
+          def register_context_controllers(ui_context)
+            logger.debug(WILHELM_ONLINE) do
+              "#register_context_controllers (#{Thread.current})"
             end
             ui_context.register_service_controllers(
               header:  UserInterface::Controller::HeaderController,
@@ -86,8 +86,6 @@ module Wilhelm
               services:  UserInterface::Controller::ServicesController,
               encoding:  UserInterface::Controller::EncodingController
             )
-          rescue StandardError => e
-            with_backtrace(logger, e)
           end
         end
       end

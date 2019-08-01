@@ -31,7 +31,7 @@ module Wilhelm
         attr_accessor :commands, :notifications
 
         def initialize
-          @state = Offline.new
+          @state = Offline.new(self)
           connection_options = {
             port: ENV['client_port'],
             host: ENV['client_host']
