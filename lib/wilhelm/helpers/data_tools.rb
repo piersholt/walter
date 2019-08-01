@@ -25,9 +25,15 @@ module Wilhelm
         b: :binary
       }.freeze
 
-      MASK_DECIMAL      = '%#.d'.freeze
-      MASK_HEX          = '%.8b'.freeze
-      MASK_HEX_PREFIXED = '%#.8b'.freeze
+      MASK_DECIMAL         = '%#.d'.freeze
+      MASK_BINARY          = '%.8b'.freeze
+      MASK_BINARY_PREFIXED = '%#.8b'.freeze
+      MASK_HEX             = '%.2X'.freeze
+      MASK_HEX_PREFIXED    = '%#.2x'.freeze
+
+      ERROR_DECIMAL_NIL = 'nil byte...?'.freeze
+      ERROR_CHAR_LENGTH = 'Character length is greater than one byte!'.freeze
+      ERROR_NO_COMMON_BITS = 'No common bits!'.freeze
 
       WIDTH     = 10
       SPACE     = ' '.freeze
@@ -44,7 +50,7 @@ module Wilhelm
         puts DELIMITER.center(WIDTH) + header
         puts DELIMITER.center(WIDTH) + Array.new(header.length, DELIMITER).join(BLANK)
         numbers.map! do |each_number|
-          binary_string = Kernel.format('%.8b', each_number)
+          binary_string = Kernel.format(MASK_BINARY, each_number)
           bits_array = binary_string.split(BLANK)
           puts each_number.to_s.center(WIDTH) + bits_array.join(SPACE).to_s
           bits_array.reverse!
@@ -60,7 +66,7 @@ module Wilhelm
           end
         end
 
-        raise RangeError, 'No common bits!' unless result
+        raise(RangeError, ERROR_NO_COMMON_BITS) unless result
 
         footer = Array.new(8, PERIOD)
         footer[-1] = ASTERISK
@@ -101,42 +107,32 @@ module Wilhelm
 
       # ------------------------ DECIMAL TO X ------------------------ #
 
-      # @alias
-      def d2h(decimal, prefix = false)
-        decimal_to_hex(decimal, prefix)
-      end
-
       def decimal_to_hex(decimal, prefix = false)
-        raise EncodingError, 'nil byte...?' if decimal.nil?
-        mask = prefix ? '%#.2x' : '%.2X'
+        raise(EncodingError, ERROR_DECIMAL_NIL) if decimal.nil?
+        mask = prefix ? MASK_HEX_PREFIXED : MASK_HEX
         Kernel.format(mask, decimal)
       end
+
+      alias d2h decimal_to_hex
 
       def decimal_to_binary(decimal, nibbles = false, prefix = false)
         to_binary(decimal, nibbles, prefix)
       end
 
-      def d2b(decimal, nibbles = false, prefix = false)
-        decimal_to_binary(decimal, nibbles, prefix)
-      end
+      alias d2b decimal_to_binary
 
       # ------------------------ BINARY TO X ------------------------ #
-
-      # @alias
-      def b2d(input_value)
-        binary_to_decimal(input_value)
-      end
 
       def binary_to_decimal(input_value)
         Kernel.format(MASK_DECIMAL, input_value)
       end
 
+      alias b2d binary_to_decimal
+
       # ------------------------ ENC TO X ------------------------ #
 
-      ERROR_CHAR_LENGTH = 'Character length is greater than one byte!'.freeze
-
       def encoded_to_decimal(char)
-        raise EncodingError, ERROR_CHAR_LENGTH if char.length > 1
+        raise(EncodingError, ERROR_CHAR_LENGTH) if char.length > 1
         char.getbyte(0)
       end
 
@@ -149,7 +145,7 @@ module Wilhelm
 
       def to_binary(input_value, nibbles = false, prefix = false)
         # prefix 0b
-        mask = prefix ? MASK_HEX_PREFIXED : MASK_HEX
+        mask = prefix ? MASK_BINARY_PREFIXED : MASK_BINARY
         str_buffer = Kernel.format(mask, input_value)
         # nibbles
         if nibbles && !prefix
@@ -157,17 +153,6 @@ module Wilhelm
           str_buffer = str_buffer.insert(index, ' ')
         end
         str_buffer
-      end
-
-      # @deprecated
-      def base16(num, output = [])
-        nibble = num.modulo(16)
-        num -= nibble
-        num = num.div(16)
-
-        output.unshift(HEX[nibble])
-        base16(num, output) if num.positive?
-        return *output
       end
     end
   end
