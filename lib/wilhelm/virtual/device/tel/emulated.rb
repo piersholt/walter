@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'emulated/state'
+require_relative 'emulated/received'
+
 module Wilhelm
   module Virtual
     class Device
