@@ -27,9 +27,12 @@ module Walter
       apply_debug_defaults
 
       connection_options = {
-        port: ENV['publisher_port'], host: ENV['publisher_host']
+        port: ENV['publisher_port'],
+        host: ENV['publisher_host']
       }
-      LOGGER.debug(PROC) { "Publisher connection options: #{connection_options}" }
+      LOGGER.debug(PROC) do
+        "Publisher connection options: #{connection_options}"
+      end
       Yabber::Publisher.params(connection_options)
       Yabber::Publisher.announcement(:walter)
     end
@@ -53,18 +56,18 @@ module Walter
       rescue Interrupt
         LOGGER.debug 'Interrupt signal caught.'
       ensure
-        LOGGER.info(PROC) { "Walter is closing!" }
+        LOGGER.info(PROC) { 'Walter is closing!' }
 
         LOGGER.info(PROC) { "Publishing event: #{EXIT}" }
         changed
-        notify_observers(EXIT, {reason: 'bin'})
+        notify_observers(EXIT, reason: 'bin')
         LOGGER.info(PROC) { "Subscribers updated! #{EXIT}" }
 
-        LOGGER.info(PROC) { "Turning stack off ⛔️" }
+        LOGGER.info(PROC) { 'Turning stack off ⛔️' }
         stop
-        LOGGER.info(PROC) { "Stack is off 👍" }
+        LOGGER.info(PROC) { 'Stack is off 👍' }
 
-        LOGGER.info(PROC) { "See you anon ✌️" }
+        LOGGER.info(PROC) { 'See you anon ✌️' }
       end
     end
 

@@ -73,8 +73,16 @@ begin
 
   dir_check
 
-  Figaro::Application.new(path: 'config/application.yml', environment: options[:environment])&.load
-  Figaro.require_keys(%w[publisher_host publisher_port subscriber_host subscriber_port client_host client_port])
+  Figaro::Application.new(
+    path: 'config/application.yml',
+    environment: options[:environment]
+  )&.load
+  Figaro.require_keys(
+    %w[publisher_host publisher_port] +
+    %w[subscriber_host subscriber_port] +
+    %w[client_host client_port] +
+    %w[augmented emulated]
+  )
 
   require 'wilhelm/tools'
   require 'wilhelm'
