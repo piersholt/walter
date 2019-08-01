@@ -44,8 +44,16 @@ module Wilhelm
 
           # FILTER
 
+          def f_c(*ids)
+            display_handler.i.filter_commands(*ids)
+          end
+
           def ready
             display_handler.i.filter_commands(*READY)
+          end
+
+          def input
+            display_handler.i.filter_commands(INPUT)
           end
 
           def buttons
