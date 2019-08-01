@@ -180,16 +180,27 @@
           0x42: 'Dial'
           0x43: 'Directory'
           0x80: 'Top 8'
+          0xf0: 'SMS Index'
+          0xf1: 'SMS Show'
       :m2:
         :type: :integer
       :m3:
         :type: :bit_array
         :index:
+          :selected: 0
           :block: 1
           :flush: 2
-          :column_2: 3
-          :row_2: 5
+          :index:  !ruby/range
+                    begin: 3
+                    end: 7
+                    excl: false
         :parameters:
+          :selected:
+            :type: :switch
+            :label: Selected
+            :states:
+              0: :off
+              1: :on
           :block:
             :type: :switch
             :label: Blocking?
@@ -202,18 +213,9 @@
             :states:
               0: :off
               1: :on
-          :column_2:
-            :type: :switch
-            :label: Column 2
-            :states:
-              0: :off
-              1: :on
-          :row_2:
-            :type: :switch
-            :label: Row 2
-            :states:
-              0: :off
-              1: :on
+          :index:
+            :type: :integer
+
       :chars:
         :type: :chars
   :meta:
@@ -3550,7 +3552,7 @@
         :type: :map
         :dictionary:
           0xf0: SMS Index
-          0xf1: SMS Message
+          0xf1: SMS Show
       :padding:
         :type: :map
         :dictionary:
@@ -3576,7 +3578,6 @@
       :zone:
         :type: :bit_array
         :index:
-          # NOTE it's flash on 0xf1
           :selected: 0
           :block: 1
           :flush: 2
@@ -4029,7 +4030,7 @@
           0x43: Directory
           0x80: Top 8
           0xf0: SMS Index
-          0x81: SMS Show
+          0xf1: SMS Show
         :map:
           0x00: :no_source
           0x05: :pin
@@ -4038,7 +4039,7 @@
           0x43: :directory
           0x80: :top 8
           0xf0: :sms_index
-          0x81: :sms_show
+          0xf1: :sms_show
       :function:
         :type: :map
         :dictionary:
@@ -4069,7 +4070,7 @@
         :parameters:
           :id:
             :type: :map
-            :label: 'Index:'
+            :label: 'ID:'
             :dictionary:
               0x00: 0
               0x01: 1
@@ -4087,6 +4088,12 @@
               0x0d: 13/Forward
               0x0e: 14
               0x0f: 15
+
+              0x10: 16/Back
+              0x11: 17/Button Left
+              0x12: 18/Button Right
+              0x13: 19/Button Centre/Outlier
+
               0x1a: 26/*
               0x1b: '27/#'
 
