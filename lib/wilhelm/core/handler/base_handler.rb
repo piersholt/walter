@@ -1,11 +1,12 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::BaseHandlerError
     class BaseHandlerError < StandardError
+      MESSAGE = 'BaseHandler Error'
       def message
-        'BaseHandler Error'
+        MESSAGE
       end
     end
   end
@@ -13,11 +14,13 @@ end
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::BaseHandler
     class BaseHandler
       include Observable
       include Constants::Events
       include Helpers
+
+      PROG = 'Handler::Base'
 
       def name
         self.class.name
@@ -31,13 +34,11 @@ module Wilhelm
       end
 
       def handle(action, properties)
-        begin
-          update(action, properties)
-        rescue StandardError => e
-          LOGGER.error(PROC) { "#{e}" }
-          e.backtrace.each { |l| LOGGER.error(l) }
-          binding.pry
-        end
+        update(action, properties)
+      rescue StandardError => e
+        LOGGER.error(PROG) { e }
+        e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+        binding.pry
       end
     end
   end
