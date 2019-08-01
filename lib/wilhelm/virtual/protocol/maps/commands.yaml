@@ -1473,19 +1473,7 @@
         :door: 6
         :ignition: 7
     :bit_array_3:
-      :type: :bit_array
-      :parameters:
-        :unknown:
-          :type: :integer
-          :map:
-            0x00: unknown
-          :dictionary:
-            0x00: Unknown
-      :index:
-          :unknown: !ruby/range
-                    begin: 0
-                    end: 7
-                    excl: false
+      :type: :integer
   :index:
     :bit_array_1: 0
     :bit_array_2: 1
