@@ -18,72 +18,153 @@
   :id:
     :d: 33
     :h: '0x21'
+  :properties:
+    :short_name: MID-21
+    :long_name: MID Display
+  :klass: BaseCommand
   :schemas:
     - :tel
-  :properties:
-    :short_name: MID-RAD-21
-    :long_name: MID Display
-    :verbose: false
-  :klass: ParameterizedCommand
-  :index:
-    :layout: 0
-    :m2: 1
-    :m3: 2
-    :chars: !ruby/range
-            begin: 3
-            end: -1
-            excl: false
-  :parameters:
-    :layout:
-      :type: :map
-      :dictionary:
-        0x41: '(RAD) Presets'
-        0x43: '(RAD) Source'
-        0x60: 'Menu A' # (RDS)
-        0x61: 'Menu B' # (RDS)
-        0x62: 'Header' # (RDS)
-        0x63: 'Static' # (RDS)
-        0x83: '(TAPE) Side'
-        0xc0: '(CD) Discs?'
-    :m2:
-      :type: :integer
-    :m3:
-      :type: :bit_array
-      :parameters:
-        # no GFX-STATUS using this using MK1 GFX
-        :block:
-          :type: :switch
-          :label: Block
-          :states:
-            0: :off
-            1: :on
-        :flush:
-          :type: :switch
-          :label: Flush
-          :states:
-            0: :off
-            1: :on
+    - :rad
+  # SCHEMA 0x21 MID-RAD-21*
+  :rad:
+    :id:
+      :d: 33
+      :h: '0x21'
+    :klass: ParameterizedCommand
+    :properties:
+      :short_name: MID-RAD-21*
+      :long_name: MID Display
+    :index:
+      :layout: 0
+      :m2: 1
+      :m3: 2
+      :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0x41: 'Presets'
+          0x43: 'Source'
+          0x60: 'RDS Menu A'
+          0x61: 'RDS Menu B'
+          0x63: 'RDS Static'
+          0x83: 'Tape Side/Dolby'
+          0xc0: 'CDC Discs'
+      :m2:
+        :type: :bit_array
         :index:
-          :type: :integer
-      :index:
-        :block: 1
-        :flush: 2
-        :index:  !ruby/range
-                  begin: 3
-                  end: 7
-                  excl: false
-    :chars:
-      :type: :chars
+          :band:  !ruby/range
+                    begin: 0
+                    end: 2
+                    excl: false
+          :preset:  !ruby/range
+                    begin: 5
+                    end: 7
+                    excl: false
+        :parameters:
+          # Layout 0x43 (Source) only!
+          :band:
+            :type: :map
+            :label: 'Band (0x43):'
+            :map:
+              0b0_00: :fm_a
+              0b0_01: :fm_1
+              0b0_10: :fm_2
+
+              0b1_10: :am_a
+              0b1_11: :am_1
+            :dictionary:
+              0b0_00: 'FMA'    # " A1☐A2 ☐ A3☐A4 ☐ A5☐A6 "
+              0b0_01: 'FM1'    # " 1 ☐ 2 ☐*3 ☐ 4 ☐ 5 ☐ 6 "
+
+              0b0_10: 'FM2'    # " 7 ☐ 8 ☐ 9 ☐10 ☐ 11☐12 "
+              0b1_10: 'AMA'    # " A1☐A2 ☐*A3☐A4 ☐ A5☐A6 "
+              0b1_11: 'AM1'    # "*1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
+          # Layout 0x41 (Preset) and 0x83 (Dolby) only!
+          :preset:
+            :type: :map
+            :label: 'Preset (0x41):'
+              # 0x41: Preset
+              # 0x83: Dolby
+            :map:
+              0b000: :none
+              0b001: :p1
+              0b010: :p2
+              0b011: :p3
+              0b100: :p4
+              0b101: :p5
+              0b110: :p6
+              # 0x41:
+              #   0b000: :none
+              #   0b001: :p1
+              #   0b010: :p2
+              #   0b011: :p3
+              #   0b100: :p4
+              #   0b101: :p5
+              #   0b110: :p6
+              # 0x83:
+              #   0b000: :dolby_off
+              #   0b001: :dolby_b
+              #   0b010: :dolby_c
+            :dictionary:
+              0b000: 'No Preset'
+              0b001: 'P1'
+              0b010: 'P2'
+              0b011: 'P3'
+              0b100: 'P4'
+              0b101: 'P5'
+              0b110: 'P6'
+              # 0x41:
+              #   0b000: 'No Preset'
+              #   0b001: 'P1'
+              #   0b010: 'P2'
+              #   0b011: 'P3'
+              #   0b100: 'P4'
+              #   0b101: 'P5'
+              #   0b110: 'P6'
+              # :0x83:
+              #   0b000: 'Dolby Off'
+              #   0b001: 'Dolby B'
+              #   0b010: 'Dolby C'
+      :m3:
+        :type: :bit_array
+        :parameters:
+          # no GFX-STATUS using this using MK1 GFX
+          :block:
+            :type: :switch
+            :label: Block
+            :states:
+              0: :off
+              1: :on
+          :flush:
+            :type: :switch
+            :label: Flush
+            :states:
+              0: :off
+              1: :on
+          :index:
+            :type: :integer
+        :index:
+          :block: 1
+          :flush: 2
+          :index:  !ruby/range
+                    begin: 3
+                    end: 7
+                    excl: false
+      :chars:
+        :type: :chars
   # SCHEMA 0x21 MID-TEL-21
   :tel:
     :id:
       :d: 33
       :h: '0x21'
+    :klass: ParameterizedCommand
     :properties:
       :short_name: MID-TEL-21
       :long_name: MID Display
-      :verbose: false
-    :klass: ParameterizedCommand
     :index:
       :layout: 0
       :m2: 1
@@ -103,6 +184,11 @@
         :type: :integer
       :m3:
         :type: :bit_array
+        :index:
+          :block: 1
+          :flush: 2
+          :column_2: 3
+          :row_2: 5
         :parameters:
           :block:
             :type: :switch
@@ -128,11 +214,6 @@
             :states:
               0: :off
               1: :on
-        :index:
-          :block: 1
-          :flush: 2
-          :column_2: 3
-          :row_2: 5
       :chars:
         :type: :chars
   :meta:
@@ -140,7 +221,6 @@
     :parameters:
       - 0x41: select station present number (1-6)? another row?
       - 0x43: MID display? another row?
-
 
 0x22: # MID-22
   :id:
