@@ -8,7 +8,8 @@ module Wilhelm
 
       BASE_2 = 2
       BASE_10 = 10
-      BASE_16_BIT_SHIFT = 4
+      BASE_2_BIT_SHIFT   = 1
+      BASE_16_BIT_SHIFT  = 4
       BASE_256_BIT_SHIFT = 8
 
       # DIGITS TO NUMBER
@@ -27,6 +28,14 @@ module Wilhelm
       # @return Fixnum
       def parse_base_16_digits(*digits)
         reduce(BASE_16_BIT_SHIFT, *digits)
+      end
+
+      # Treat each element as digits in base-2 positional notation
+      # e.g. [1, 0, 1, 0] => 0b1010 = 10
+      # @param Array<Fixnum> digits
+      # @return Fixnum
+      def parse_base_2_digits(*digits)
+        reduce(BASE_2_BIT_SHIFT, *digits)
       end
 
       # Treat each element as digits in base-10 positional notation
