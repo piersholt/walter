@@ -8,7 +8,7 @@ module Wilhelm
         module Multiplexing
           MESSAGE_RECEIVED = :message_received
           MESSAGE_SENT = :message_sent
-          PACKET_RECEIVED = :packet_received
+          DATA_RECEIVED = :data_received
           PACKET_ROUTABLE = :packet_routable
 
           LAYER_EVENTS = constants.map { |c| const_get(c) }

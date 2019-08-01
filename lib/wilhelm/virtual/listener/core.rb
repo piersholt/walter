@@ -18,8 +18,8 @@ module Wilhelm
         def update(action, properties)
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action
-          when PACKET_RECEIVED
-            packet_handler&.packet_received(properties)
+          when DATA_RECEIVED
+            packet_handler&.data_received(properties)
           when BUS_ONLINE
             interface_handler&.bus_online
           when BUS_OFFLINE

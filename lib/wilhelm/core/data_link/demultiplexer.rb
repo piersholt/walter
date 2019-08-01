@@ -51,11 +51,11 @@ module Wilhelm
             begin
               loop do
                 new_frame = input_buffer.pop
-                new_packet = demultiplex(new_frame)
-                LOGGER.debug(name) { "Packet: #{new_packet}" }
-                LOGGER.debug(name) { "Notify: #{PACKET_RECEIVED}, #{new_packet}" }
+                new_data = demultiplex(new_frame)
+                LOGGER.debug(name) { "Data: #{new_data}" }
+                LOGGER.debug(name) { "Notify: #{DATA_RECEIVED}, #{new_data}" }
                 changed
-                notify_observers(PACKET_RECEIVED, packet: new_packet)
+                notify_observers(DATA_RECEIVED, data: new_data)
               end
             rescue StandardError => e
               LOGGER.error(name) { e }
@@ -71,9 +71,9 @@ module Wilhelm
           to_device   = frame.to.to_i
           payload     = frame.payload
 
-          packet = Packet.new(from_device, to_device, payload)
-          LOGGER.debug(name) { "Packet build: #{packet}" }
-          packet
+          data = Data.new(from_device, to_device, payload)
+          LOGGER.debug(name) { "Data build: #{data}" }
+          data
         rescue TypeError => e
           LOGGER.error(name) { e }
           LOGGER.error(name) { e.cause }

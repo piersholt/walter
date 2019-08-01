@@ -2,31 +2,38 @@
 
 module Wilhelm
   module Virtual
-    class PacketWrapper
-      extend Forwardable
-
-      def_delegators :@packet, :to, :from, :data
-
-      def self.wrap(packet)
-        PacketWrapper.new(packet)
+    # Virtual::DataAdapter
+    class DataAdapter
+      def self.adapt(data_object)
+        DataAdapter.new(data_object)
       end
 
-      def initialize(packet)
-        @packet = packet
+      def initialize(data_object)
+        @data_object = data_object
+      end
+
+      def from
+        @data_object.from
+      end
+
+      def to
+        @data_object.to
+      end
+
+      def payload
+        @data_object.payload
       end
 
       def command
-        data = @packet.data
-        data[0]
+        payload[0]
       end
 
       def arguments
-        data = @packet.data
-        data[1..-1]
+        payload[1..-1]
       end
 
       def to_s
-        "#{from} >\t[#{command}]\t#{arguments}"
+        "#{from}\t#{to}\t[#{command}]\t#{arguments}"
       end
     end
   end

@@ -10,35 +10,36 @@ module Wilhelm
 
         PROG = 'Handler::Packet'
         LOG_BUILD_COMMAND = '#build_command'
+        ERROR_PACKET_NIL = 'Packet is nil!'
 
         def initialize(bus, address_lookup_table = AddressLookupTable.instance)
           @bus = bus
           @address_lookup_table = address_lookup_table
         end
 
-        def packet_received(properties)
-          packet = packet?(properties)
-          resolve_addresses(packet)
-          return false unless addressable?(packet)
-          message = parse_packet(packet)
+        def data_received(properties)
+          data = data?(properties)
+          resolve_addresses(data)
+          return false unless addressable?(data)
+          message = parse_data(data)
           changed
           notify_observers(MESSAGE_RECEIVED, message: message)
         end
 
         private
 
-        def resolve_addresses(packet)
-          LOGGER.debug(PROG) { "#resolve_addresses(#{packet})" }
+        def resolve_addresses(data)
+          LOGGER.debug(PROG) { "#resolve_addresses(#{data})" }
 
-          from = @address_lookup_table.resolve_address(packet.from)
-          packet.from = from
-          LOGGER.debug(PROG) { "from_device: #{packet.sender}" }
+          from = @address_lookup_table.resolve_address(data.from)
+          data.from = from
+          LOGGER.debug(PROG) { "from_device: #{data.sender}" }
 
-          to = @address_lookup_table.resolve_address(packet.to)
-          packet.to = to
-          LOGGER.debug(PROG) { "to_device: #{packet.receiver}" }
+          to = @address_lookup_table.resolve_address(data.to)
+          data.to = to
+          LOGGER.debug(PROG) { "to_device: #{data.receiver}" }
 
-          packet
+          data
         end
 
         def resolve_idents(message)
@@ -55,17 +56,15 @@ module Wilhelm
           message
         end
 
-        ERROR_PACKET_NIL = 'Packet is nil!'
-
-        def packet?(properties)
-          packet = fetch(properties, :packet)
-          raise(RoutingError, ERROR_PACKET_NIL) unless packet
-          packet
+        def data?(properties)
+          data = fetch(properties, :data)
+          raise(RoutingError, ERROR_PACKET_NIL) unless data
+          data
         end
 
-        def addressable?(packet)
-          bus_has_sender?(packet.from)
-          bus_has_recipient?(packet.to)
+        def addressable?(data)
+          bus_has_sender?(data.from)
+          bus_has_recipient?(data.to)
           true
         rescue RoutingError
           true
@@ -85,8 +84,8 @@ module Wilhelm
           @bus.device?(device_ident)
         end
 
-        def parse_packet(packet)
-          bus_message = PacketWrapper.wrap(packet)
+        def parse_data(data)
+          bus_message = DataAdapter.adapt(data)
 
           from_ident = bus_message.from
           to_ident   = bus_message.to
