@@ -100,13 +100,13 @@ module Wilhelm
         def parse_command(from_ident, to_ident, command, arguments)
           command_config =
             CommandMap.instance.config(command, from: from_ident, to: to_ident)
-          parameter_values_hash = parse_argumets(command_config, arguments)
+          parameter_values_hash = parse_arguments(command_config, arguments)
           LOGGER.debug(PROG) { "Parameter Values: #{parameter_values_hash}" }
           command_object = build_command(command_config, parameter_values_hash)
           command_object
         end
 
-        def parse_argumets(command_config, arguments)
+        def parse_arguments(command_config, arguments)
           if command_config.has_parameters? && !command_config.is_base?
             parse_indexed_arguments(command_config, arguments)
           else
