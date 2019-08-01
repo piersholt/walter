@@ -23,14 +23,19 @@ module Wilhelm
           end
 
           def try(from, to, command_id, command_arguments = {})
-            from = resolve_ident(from)
-            to = resolve_ident(to)
+            LOGGER.debug(name) { "#try(#{from}, #{to}, #{command_arguments})" }
             command_object = to_command(
               command_id: command_id,
               command_arguments: command_arguments,
               schema_from: from,
               schema_to: to
             )
+            # HACK idents were resolved before command_object was built,
+            # so CommandMap was not loading schemas. Thus, if default
+            # command had different parameters... it would break!
+            # See BaseCommand::Raw and Multiplexer for more.
+            from = resolve_ident(from)
+            to = resolve_ident(to)
 
             send_it!(from, to, command_object)
           rescue StandardError => e

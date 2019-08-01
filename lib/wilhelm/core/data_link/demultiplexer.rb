@@ -69,7 +69,7 @@ module Wilhelm
           LOGGER.debug(name) { "#demultiplex(#{frame})" }
           from_device = frame.from.to_i
           to_device   = frame.to.to_i
-          payload   = frame.payload
+          payload     = frame.payload
 
           packet = Packet.new(from_device, to_device, payload)
           LOGGER.debug(name) { "Packet build: #{packet}" }

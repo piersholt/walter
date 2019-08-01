@@ -6,30 +6,42 @@ module Wilhelm
       # Basic device class
       class BaseCommand
         module Raw
-          def command_config
-            @config ||= get_command_config
+          PROG = 'Raw'
+
+          def command_config(from, to)
+            @config ||= get_command_config(from, to)
           end
 
-          def get_command_config
-            c = CommandMap.instance.config(id.d)
+          def get_command_config(from, to)
+            # HACK yeah this is fucking awful. See Multiplexer and API::Base.
+            c = CommandMap.instance.config(
+              id.d,
+              from: resolve_address(from),
+              to: resolve_address(to)
+            )
             raise(StandardError, "#get_command_config(#{id.d}) => No command_config #{id}") unless c
             c
           end
 
+          def resolve_address(device_id)
+            AddressLookupTable.instance.resolve_address(device_id)
+          end
+
           def raw
-            raise(StandardError, "#config() => No command_config #{id}") unless command_config
-            if command_config.has_parameters?
-              index = command_config.index
+            LOGGER.debug(PROG) { '#raw' }
+            raise(StandardError, "#config() => No command_config #{id}") unless @config
+            if @config.has_parameters?
+              index = @config.index
               Core::Bytes.new([id, *process_arguments(self, index)])
-            elsif !command_config.has_parameters? && self.arguments
+            elsif !@config.has_parameters? && self.arguments
               Core::Bytes.new([id, *arguments])
             else
               Core::Bytes.new([id])
             end
           rescue StandardError => e
-            LOGGER.error('BaseCommand') { e }
-            LOGGER.error('BaseCommand') { "ID: #{id}, ID Decimal: #{id.d}" }
-            e.backtrace.each { |l| LOGGER.error('BaseCommand') { l } }
+            LOGGER.error(PROG) { e }
+            LOGGER.error(PROG) { "ID: #{id}, ID Decimal: #{id.d}" }
+            e.backtrace.each { |l| LOGGER.error(PROG) { l } }
           end
 
           def process_arguments(command, index)
