@@ -9,10 +9,12 @@ module Wilhelm
           include Yabber::API
 
           def connect
+            return false if connected? || pending?
             connect!(id)
           end
 
           def disconnect
+            return false if disconnected? || pending?
             disconnect!(id)
           end
         end

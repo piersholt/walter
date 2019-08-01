@@ -30,13 +30,16 @@ module Wilhelm
               case view
               when :header
                 devices_object = context.manager.devices
+                audio_service = context.audio
 
                 @status_model = Model::Header::Status.new
-                @status_model.device(devices_object.connected.first) if devices_object.connected?
+                status_model.device(devices_object.connected.first) if devices_object.connected?
+                status_model.volume(audio_service.level)
 
-                devices_object.add_observer(@status_model, :devices_update)
+                devices_object.add_observer(status_model, :devices_update)
+                audio_service.add_observer(status_model, :audio_update)
 
-                @status_model.add_observer(self, :status_update)
+                status_model.add_observer(self, :status_update)
                 true
               else
                 LOGGER.warn(NAME) { "Create: #{view} view not recognised." }
@@ -51,15 +54,14 @@ module Wilhelm
             end
 
             def destroy
-              case :header
+              LOGGER.debug(NAME) { '#destroy' }
+              case loaded_view
               when :header
                 return false unless @status_model
+                LOGGER.debug(NAME) { '#destroy => :header' }
                 devices_object = context.manager.devices
-
-                devices_object&.delete_observer(@status_model)
-
-                @status_model&.delete_observer(self)
-
+                devices_object&.delete_observer(status_model)
+                status_model&.delete_observer(self)
                 @status_model = nil
                 true
               else
@@ -76,6 +78,8 @@ module Wilhelm
               when :device_name
                 header
               when :player_name
+                header
+              when :volume_level
                 header
               else
                 LOGGER.unknown(NAME) { "status_update: #{action} not implemented." }

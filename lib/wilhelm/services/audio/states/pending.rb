@@ -15,7 +15,6 @@ module Wilhelm
           logger.debug(AUDIO_PENDING) { '#initialize' }
           # Note: this is a request
           context.targets?
-          context.register_controls(Wilhelm::API::Controls.instance)
         end
       end
     end

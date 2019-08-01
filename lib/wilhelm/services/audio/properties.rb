@@ -5,6 +5,8 @@ module Wilhelm
     class Audio
       # Audio::Properties
       module Properties
+        attr_writer :level
+
         def targets
           @targets ||= setup_targets
         end
@@ -19,6 +21,10 @@ module Wilhelm
 
         def player
           target&.addressed_player
+        end
+
+        def level
+          @level ||= (32 / 8)
         end
 
         private

@@ -6,13 +6,21 @@ module Wilhelm
       module Defaults
         # Unimplemented methods fallback for actions
         module Actions
-          def connect_device(*); end
+          include Logging
 
-          def disconnect_device(*); end
+          def connect_device(*)
+            logger.warn(MANAGER) { 'State does not implement: #connect_device' }
+          end
+
+          def disconnect_device(*)
+            logger.warn(MANAGER) { 'State does not implement: #disconnect_device' }
+          end
 
           # UI
 
-          def load_manager(*); end
+          def load_manager(*)
+            logger.warn(MANAGER) { 'State does not implement: #load_manager' }
+          end
         end
       end
     end

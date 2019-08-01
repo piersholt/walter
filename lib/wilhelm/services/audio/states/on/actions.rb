@@ -11,11 +11,21 @@ module Wilhelm
           # USER CONTROL
 
           def volume_up(context)
-            context.volume_up!
+            context.level += 1
+            # context.volume_up!
+            context.volume_set(context.level)
           end
 
           def volume_down(context)
-            context.volume_down!
+            context.level -= 1
+            # context.volume_down!
+            context.volume_set(context.level)
+          end
+
+          def volume_set(context, level)
+            context.changed
+            context.notify_observers(:volume, audio: context)
+            context.volume_set!(level)
           end
 
           def power(context)

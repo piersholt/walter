@@ -33,6 +33,8 @@ module Wilhelm
         return false if new_state.class == @state.class
         logger.debug(self) { "State => #{new_state.class}" }
         @state = new_state
+        changed
+        notify_observers(state)
       end
 
       def online!

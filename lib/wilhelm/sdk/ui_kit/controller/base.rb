@@ -10,6 +10,8 @@ module Wilhelm
           alias context application_context
           attr_reader :view, :loaded_view
 
+          LOGGER = LogActually.sdk
+
           def initialize(ui_context, application_context)
             LOGGER.info(name) { "#initialize (#{Thread.current})" }
             @ui_context = ui_context
@@ -38,9 +40,11 @@ module Wilhelm
             raise("#destroy must be implemented by controllers. #{args}")
           end
 
-          def render(view)
-            ui_context.render(view)
+          def render_menu(view)
+            ui_context.render_menu(view)
           end
+
+          alias render render_menu
 
           def render_header(view)
             ui_context.render_header(view)

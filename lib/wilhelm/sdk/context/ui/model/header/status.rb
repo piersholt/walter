@@ -10,9 +10,9 @@ module Wilhelm
             class Status
               include Observable
 
-              ATTRIBUTES = %i[player_name device_name].freeze
-              ATTRIBUTE_INDEX_MAP = { player_name: 5, device_name: 6 }.freeze
-              ATTRIBUTE_DEFAULTS = { player_name: 'No Player', device_name: 'No Device' }.freeze
+              ATTRIBUTES = %i[player_name device_name volume_level].freeze
+              ATTRIBUTE_INDEX_MAP = { player_name: 5, device_name: 6, volume_level: 0}.freeze
+              ATTRIBUTE_DEFAULTS = { player_name: 'No Player', device_name: 'No Device', volume_level: '?' }.freeze
 
               ATTRIBUTES.each do |attr|
                 attr_accessor attr
@@ -56,6 +56,21 @@ module Wilhelm
                 self.player_name = default(:player_name)
                 changed
                 notify_observers(:player_name, self)
+              end
+
+              def volume(level)
+                self.volume_level = level.to_s
+                changed
+                notify_observers(:volume_level, self)
+              end
+
+              def audio_update(action, audio: nil)
+                LOGGER.unknown(self.class.name) { "#audio_update(#{action}, #{audio.class})" }
+                return false unless audio
+                case action
+                when :volume
+                  volume(audio.level)
+                end
               end
 
               def devices_update(action, device:)

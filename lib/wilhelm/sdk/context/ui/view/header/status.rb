@@ -13,7 +13,7 @@ module Wilhelm
               def initialize(status_model)
                 LOGGER.unknown(PROC) { "#initialize(#{status_model})" }
                 super(
-                  ['A', 'B', 'C', 'D', 'E', status_model.field(5), status_model.field(6)],
+                  [status_model.field(0), 'B', 'C', 'D', 'E', status_model.field(5), status_model.field(6)],
                   'Wilhelm'
                 )
               rescue StandardError => e

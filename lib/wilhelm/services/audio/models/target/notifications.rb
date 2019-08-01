@@ -6,8 +6,6 @@ module Wilhelm
       class Target
         # Audio::Target::Notifications
         module Notifications
-          include Observable
-
           include Constants
 
           def added

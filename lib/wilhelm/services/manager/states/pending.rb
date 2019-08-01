@@ -16,7 +16,6 @@ module Wilhelm
           Wilhelm::API::Telephone.instance.disconnected
           # Note: this is a request
           context.devices?
-          context.register_controls(Wilhelm::API::Controls.instance)
         end
       end
     end

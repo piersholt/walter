@@ -12,7 +12,7 @@ module Wilhelm
         # SCOPE
 
         def connected?
-          values.find_all(&:connected?).count
+          values.find_all(&:connected?).count.positive?
         end
 
         def connected

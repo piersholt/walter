@@ -10,6 +10,8 @@ module Wilhelm
 
           def volume_down(*); end
 
+          def volume_set(*); end
+
           def overlay(*); end
 
           def power(*); end

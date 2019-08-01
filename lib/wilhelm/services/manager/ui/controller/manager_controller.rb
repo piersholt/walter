@@ -54,14 +54,17 @@ module Wilhelm
             end
 
             def destroy
+              LOGGER.debug(NAME) { "#destroy(#{loaded_view})" }
               case loaded_view
               when :index
                 return false unless @devices
+                LOGGER.debug(NAME) { "#destroy => #{:index}" }
                 @devices.delete_observer(self)
                 @devices = nil
                 true
               when :device
                 return false unless @selected_device
+                LOGGER.debug(NAME) { "#destroy => #{:device}" }
                 @selected_device.delete_observer(self)
                 @selected_device = nil
                 true

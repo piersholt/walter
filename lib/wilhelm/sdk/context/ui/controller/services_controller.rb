@@ -29,7 +29,7 @@ module Wilhelm
               case view
               when :index
                 application_context.services.each do |service|
-                  service.add_observer(self, service.nickname)
+                  service.add_observer(self, "#{service.nickname}_update".to_sym)
                 end
                 @services = application_context.services
                 true
@@ -55,33 +55,33 @@ module Wilhelm
 
             # SYSTEM EVENTS ------------------------------------------------------
 
-            def manager(action)
-              LOGGER.debug(NAME) { "#manager(#{action})" }
-              case action
+            def manager_update(new_state)
+              LOGGER.debug(NAME) { "#manager_update(#{new_state})" }
+              case new_state
               when Wilhelm::Services::Manager::Disabled
                 index
-              when Wilhelm::Services::Manager::Enabled
+              when Wilhelm::Services::Manager::Pending
                 index
               when Wilhelm::Services::Manager::On
                 index
               else
-                LOGGER.debug(NAME) { "#update: #{action} not implemented." }
+                LOGGER.debug(NAME) { "#manager_update: #{new_state} not implemented." }
               end
             end
 
-            def audio(action)
-              LOGGER.debug(NAME) { "#audio(#{action})" }
-              case action
+            def audio_update(new_state)
+              LOGGER.debug(NAME) { "#audio_update(#{new_state})" }
+              case new_state
               when Wilhelm::Services::Audio::Disabled
                 index
-              when Wilhelm::Services::Audio::Enabled
+              when Wilhelm::Services::Audio::Pending
                 index
               when Wilhelm::Services::Audio::Off
                 index
               when Wilhelm::Services::Audio::On
                 index
               else
-                LOGGER.debug(NAME) { "#update: #{action} not implemented." }
+                LOGGER.debug(NAME) { "#audio_update: #{new_state} not implemented." }
               end
             end
 

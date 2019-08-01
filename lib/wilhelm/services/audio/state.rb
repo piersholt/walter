@@ -27,10 +27,16 @@ module Wilhelm
 
         def off
           @state.off(self)
+        rescue StandardError => e
+          logger.error(self.class) { e }
+          e.backtrace.each { |line| logger.error(self.class) { line } }
         end
 
         def on
           @state.on(self)
+        rescue StandardError => e
+          logger.error(self.class) { e }
+          e.backtrace.each { |line| logger.error(self.class) { line } }
         end
 
         alias disable! disable

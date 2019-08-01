@@ -5,9 +5,9 @@ module Wilhelm
     # Bluetooth Audio Streaming
     class Audio
       include Helpers::Observation
+      include State
       include Logging
       include Properties
-      include State
       include Notifications
       include Controls
       include Actions
@@ -17,6 +17,7 @@ module Wilhelm
 
       def initialize
         @state = Disabled.new
+        register_controls(Wilhelm::API::Controls.instance)
       end
     end
   end

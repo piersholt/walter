@@ -18,6 +18,7 @@ module Wilhelm
 
       def initialize
         @state = Disabled.new
+        register_controls(Wilhelm::API::Controls.instance)
       end
     end
   end

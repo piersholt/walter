@@ -18,6 +18,11 @@ module Wilhelm
           @state.volume_down(self)
         end
 
+        def volume_set(level)
+          logger.debug(stateful) { "#volume_set(#{level})" }
+          @state.volume_set(self, level)
+        end
+
         def overlay
           logger.debug(stateful) { '#overlay()' }
           @state.overlay(self)
