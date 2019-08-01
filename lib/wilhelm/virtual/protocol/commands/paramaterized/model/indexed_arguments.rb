@@ -13,7 +13,7 @@ module Wilhelm
 
       def lookup(name)
         parameter_index = @index[name]
-        d[parameter_index] || default(name, parameter_index)
+        d[parameter_index]
       end
 
       def parameters
