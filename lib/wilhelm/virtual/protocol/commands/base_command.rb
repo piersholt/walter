@@ -1,6 +1,7 @@
 # frozen_string_literal: false
 
 require_relative 'generate'
+require_relative 'parse'
 
 module Wilhelm
   module Virtual
