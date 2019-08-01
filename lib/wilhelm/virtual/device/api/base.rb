@@ -6,8 +6,9 @@ module Wilhelm
       module API
         # API::BaseAPI
         module BaseAPI
-          include Wilhelm::Core::Constants::Events
           include Observable
+          include Wilhelm::Core::Constants::Events::Multiplexing
+          include Virtual::Constants::Command::Aliases
           include Helpers::Cluster
           include LogActually::ErrorOutput
 
