@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module DataLink
-      # Comment
+      # Core::DataLink::Multiplexer
       class Multiplexer
         include ManageableThreads
         include Constants::Events
@@ -44,8 +44,11 @@ module Wilhelm
         # @override: ManageableThreads#proc_name
         alias proc_name name
 
+        LOG_WRITE_THREAD_START = 'New Thread: Frame Multiplexing'
+        LOG_WRITE_THREAD_END = 'End Thread: Frame Multiplexing'
+
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
-          LOGGER.debug(name) { 'New Thread: Frame Multiplexing' }
+          LOGGER.debug(name) { LOG_WRITE_THREAD_START }
           Thread.new do
             Thread.current[:name] = THREAD_NAME
             begin
@@ -59,7 +62,7 @@ module Wilhelm
               LOGGER.error(name) { e }
               e.backtrace.each { |l| LOGGER.error(l) }
             end
-            LOGGER.warn(name) { "End Thread: Frame Multiplexing" }
+            LOGGER.warn(name) { LOG_WRITE_THREAD_END }
           end
         end
 

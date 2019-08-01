@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module DataLink
-      # Comment
+      # Core::DataLink::Demultiplexer
       class Demultiplexer
         include Observable
         include ManageableThreads
