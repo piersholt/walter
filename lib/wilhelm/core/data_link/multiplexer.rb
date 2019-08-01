@@ -66,14 +66,18 @@ module Wilhelm
           end
         end
 
+        def message_data(message)
+          # HACK: BaseCommand::Raw has no sender/receiver in scope!
+          message.command.load_command_config(message.from, message.to)
+          message.command.generate
+        end
+
         def multiplex(message)
           LOGGER.debug(name) { "#multiplex(#{message})" }
           frame_builder = Frame::Builder.new
           frame_builder.from = message.from
           frame_builder.to = message.to
-          # HACK BaseCommand::Raw has no sender/receiver in scope!
-          message.command.load_command_config(message.from, message.to)
-          frame_builder.payload = message.command.generate
+          frame_builder.payload = message_data(message)
 
           frame = frame_builder.result
           LOGGER.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }
