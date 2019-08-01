@@ -17,7 +17,7 @@ module Wilhelm
 
             def dial_clear
               clear_digits
-              draw_23(gfx: DIAL_CLEAR, chars: STRING_EMPTY)
+              draw_23(gfx: DIAL_CLEAR, chars: STRING_BLANK)
             end
 
             def dial_number(digit = '0')
@@ -45,7 +45,7 @@ module Wilhelm
             end
 
             def digits_buffer
-              @digits_buffer ||= EMPTY_STRING.dup
+              @digits_buffer ||= STRING_BLANK.dup
             end
           end
         end

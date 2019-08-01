@@ -23,7 +23,7 @@ module Wilhelm
             end
 
             def directory_clear
-              draw_23(gfx: DIRECTORY_CLEAR, chars: EMPTY_STRING)
+              draw_23(gfx: DIRECTORY_CLEAR, chars: STRING_BLANK)
             end
 
             def generate_directory

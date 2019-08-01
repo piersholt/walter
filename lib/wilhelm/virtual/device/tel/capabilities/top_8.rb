@@ -23,7 +23,7 @@ module Wilhelm
             end
 
             def top_8_clear
-              draw_23(gfx: TOP_8_NAME, chars: EMPTY_STRING)
+              draw_23(gfx: TOP_8_CLEAR, chars: STRING_BLANK)
             end
 
             def generate_top_8

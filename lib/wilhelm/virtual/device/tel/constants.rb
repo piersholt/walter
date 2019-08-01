@@ -16,6 +16,9 @@ module Wilhelm
           # -------------------------------------------------------------------
 
           # Parameter :layout
+          LAYOUT_NONE      = 0x00
+          LAYOUT_PIN       = 0x05
+          LAYOUT_INFO      = 0x20
           LAYOUT_DIAL      = 0x42
           LAYOUT_DIRECTORY = 0x43
           LAYOUT_TOP_8     = 0x80
@@ -31,7 +34,7 @@ module Wilhelm
 
           # Parameter :chars
           CHARS_EMPTY = [].freeze
-          STRING_EMPTY = ''
+          STRING_BLANK = ''
 
           # Contacts Cell Indexing
           # - block must be set or each draw begins at cell 0
@@ -72,7 +75,7 @@ module Wilhelm
           STATUS_CLEAR        = 0x00
           STATUS_HOME_SUCCESS = 0x02
           STATUS_SUCCESS      = 0x03
-          STATUS_ERROR        = 0xFF
+          STATUS_ERROR        = 0xff
 
           # -------------------------------------------------------------------
           # TXT-23 0x23
@@ -87,12 +90,13 @@ module Wilhelm
 
           # GFX via BMBT
           SOS_TITLE                = 0x00
+          PIN_TITLE                = 0x05
           DIRECTORY_CONTACT_NAME   = 0x52 # "MUM"
           DIRECTORY_CONTACT_NUMBER = 0x53 # "98272742"
-          DIRECTORY_CLEAR          = 0x53
-          DIAL_CLEAR               = 0x61
+          DIRECTORY_CLEAR          = 0x53 # ''
+          DIAL_CLEAR               = 0x61 # ''
           DIAL_DIGIT               = 0x63 # "35_"
-          TOP_8_CLEAR              = 0x80
+          TOP_8_CLEAR              = 0x80 # ''
           TOP_8_NAME               = 0x81 # "MUM"
           TOP_8_NUMBER             = 0x82 # "98272742"
           INFO_HEADER              = 0x90
@@ -101,7 +105,8 @@ module Wilhelm
           IKE_DEFAULT = 0x20
 
           # Parameter :chars
-          EMPTY_STRING = ''
+          # @note defined in 0x21
+          # STRING_BLANK = ''
 
           # -------------------------------------------------------------------
           # ANZV-TEL-VAR* 0x24
@@ -122,12 +127,13 @@ module Wilhelm
           # -------------------------------------------------------------------
 
           # BYTE 1 SOURCE
-          SOURCE_RECENT    = 0x00
-          SOURCE_PIN       = 0x05
-          SOURCE_INFO      = 0x20
-          SOURCE_DIAL      = 0x42
-          SOURCE_DIRECTORY = 0x43
-          SOURCE_TOP_8     = 0x80
+          # @note defined in 0x21
+          # LAYOUT_NONE      = 0x00
+          # LAYOUT_PIN       = 0x05
+          # LAYOUT_INFO      = 0x20
+          # LAYOUT_DIAL      = 0x42
+          # LAYOUT_DIRECTORY = 0x43
+          # LAYOUT_TOP_8     = 0x80
 
           # BYTE 2 FUNCTION
           FUNCTION_RECENT   = 0x00
@@ -139,8 +145,8 @@ module Wilhelm
 
           # BYTE 3 ACTION
           # Function 0x00
-          ACTION_RECENT_BACK    = 0x0C
-          ACTION_RECENT_FORWARD = 0x0D
+          ACTION_RECENT_BACK    = 0x0c
+          ACTION_RECENT_FORWARD = 0x0d
 
           # Function Contact 0x01
           ACTION_CONTACT_1 = 0x00
@@ -156,15 +162,15 @@ module Wilhelm
           ACTION_REMOVE = 0x0a
 
           # Function SOS 0x05
-          ACTION_SOS_OPEN    = 0x0
+          ACTION_SOS_OPEN    = 0x08
 
           # Function Navigate 0x07
-          ACTION_SMS_OPEN    = 0x1D
-          ACTION_DIAL_OPEN   = 0x1E
-          ACTION_DIR_OPEN    = 0x1F
+          ACTION_SMS_OPEN    = 0x1d
+          ACTION_DIAL_OPEN   = 0x1e
+          ACTION_DIR_OPEN    = 0x1f
 
           # Function Navigate Info 0x08
-          ACTION_INFO_OPEN   = 0x0A
+          ACTION_INFO_OPEN   = 0x0a
 
           FUNCTIONS = {
             FUNCTION_RECENT => {
@@ -197,7 +203,7 @@ module Wilhelm
               0x1b => '#'
             },
             FUNCTION_SOS => {
-              ACTION_SOS_OPEN => 'Open Emergency'
+              ACTION_SOS_OPEN => 'Open SOS'
             },
             FUNCTION_NAVIGATE => {
               ACTION_DIAL_OPEN => 'Open Dial',
@@ -210,53 +216,6 @@ module Wilhelm
           }.freeze
 
           INPUT_PRESS = 0b00
-
-          # -----------------------------------------------------------------
-          # STATE
-          # -----------------------------------------------------------------
-
-          STATE_STATUS = :status
-          STATE_LEDS = :leds
-
-          # ANZV_BOOL_STATUS ------------------------------------------------
-
-          ON = 1
-          OFF = 0
-          NO = 0
-          YES = 1
-          DEFAULT_ZERO = NO
-
-          POWER_STATES = [ON, OFF].freeze
-
-          HFS_SHIFT = 0
-          MENU_SHIFT = 1
-          INCOMING_SHIFT = 2
-          DISPLAY_SHIFT = 3
-          POWER_SHIFT = 4
-          ACTIVE_SHIFT = 5
-
-          # ANZV_BOOL_LED ---------------------------------------------------
-
-          TEL_OFF = 0b0000_0000
-          TEL_POWERED = 0b0001_0000
-
-          LED_RED = :red
-          LED_YELLOW = :yellow
-          LED_GREEN = :green
-          LED_COLOURS = [LED_RED, LED_YELLOW, LED_GREEN].freeze
-
-          LED_OFF = :off
-          LED_ON = :on
-          LED_BLINK = :blink
-          LED_STATES = [LED_OFF, LED_ON, LED_BLINK].freeze
-
-          LED_OFF_BITS = 0b00
-          LED_ON_BITS = 0b01
-          LED_BLINK_BITS = 0b11
-
-          RED_SHIFT = 0
-          YELLOW_SHIFT = 2
-          GREEN_SHIFT = 4
         end
       end
     end
