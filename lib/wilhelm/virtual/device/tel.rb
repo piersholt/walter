@@ -6,9 +6,4 @@ require_relative 'tel/constants'
 
 require_relative 'tel/api'
 require_relative 'tel/capabilities'
-
-require_relative 'tel/emulated/state/model'
-require_relative 'tel/emulated/state/chainable'
-require_relative 'tel/emulated/state'
-require_relative 'tel/emulated/received'
 require_relative 'tel/emulated'
