@@ -1094,7 +1094,7 @@
         - 13:53:25 [INFO ] BMBT	RAD	  PING	--
         - 13:53:25 [INFO ] RAD	GLO-H	PONG	Respond
       - BMBT will continue to PING all devices every 10 seconds:
-      - GFX only awake on KL30 (makes sense given screen is off at KL15)
+      - GFX only awake on KL15 (makes sense given screen is off at KLR)
       - GFX looks for IKE?:
         - 14:01:06 [INFO ] GFX	IKE	PING	--
       - GFX looks for accessories (akin to RAD):
@@ -3335,7 +3335,7 @@
       :parameters:
         :totally_unique_variable_name:
           :type: :map
-          :label: 'Index:'
+          :label: 'Index'
           :dictionary:
             0x0_f: "[Select]"
             0x3_8: "[Info]"
@@ -3380,7 +3380,6 @@
       :parameters:
         :totally_unique_variable_name:
           :type: :map
-          :label: 'Index:'
           :dictionary:
             0x14: "[Tape Side]"
             0x24: "[Tape Eject]"
@@ -3522,10 +3521,6 @@
 #                               DISPLAYS
 # ************************************************************************* #
 
-# 0x23
-
-# 0x21 RAD-21
-
 0xA5:
   :id:
     :d: 165
@@ -3640,10 +3635,6 @@
       - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
-
-# 0x24 ANZV-IKE-VAR
-
-# 0x22 MOVED
 
 # ************************************************************************* #
 #                             CLUSTER HUD
@@ -3835,7 +3826,7 @@
     :examples:
       - from GFX 02 0C
 
-0x31:
+0x31: # INPUT 0x30
   :id:
     :d: 49
     :h: '0x31'
@@ -4044,19 +4035,14 @@
       - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
       - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 
-# 0x2C: ANZV-TEL-BOOL
-
-# 0x2b ANZV-TEL-LED
-
 # ************************************************************************* #
 #                         ON BOARD COMPUTER (OBC)
 # ************************************************************************* #
-0x40:
+0x40: # OBC-VAR
   :id:
     :d: 64
     :h: '0x40'
   :properties:
-    # :short_name: OBC-CONFIG
     :short_name: OBC-VAR
     :long_name: Set OBC Data
   :klass: ParameterizedCommand
@@ -4086,35 +4072,13 @@
               begin: 1
               end: -1
               excl: false
-  :meta:
-    # LIMIT
-    - GFX   	IKE   	OBC-VAR   	09 00 21
-    - IKE   	ANZV  	ANZV-VAR   	Limit	" 33 KM/H"
 
-    - GFX   	IKE   	OBC-VAR   	09 00 36
-    - IKE   	ANZV  	ANZV-VAR   	Limit	" 54 KM/H"
-
-    # DISTANCE
-    - GFX   	IKE   	OBC-VAR   	07 00 30
-    - IKE   	ANZV  	ANZV-VAR    07 "  48 KM "
-    - IKE   	ANZV  	ANZV-VAR   	08 "--:--  "
-
-    # AUX TIMER
-    - GFX   	IKE   	OBC-?   	0F 0C 06
-    - IKE   	ANZV  	ANZV-VAR   	Aux. Timer 1   	"--:--  "
-    - GFX   	IKE   	OBC-?   	10 03 00
-    - IKE   	ANZV  	OBC-SET   	Aux. Timer 2	"--:--  "
-
-    # DATE/TIME
-    - 11AM = d2b(0x8B, true, true) => "0b10001011"
-    - 11PM = d2b(0x0b, true, true) => "0b00001011"
-0x41:
+0x41: # OBC-BOOL
   :id:
     :d: 65
     :h: '0x41'
   :klass: ParameterizedCommand
   :properties:
-    # :short_name: OBC-REQ
     :short_name: OBC-BOOL
     :long_name: OBC Data Request
   :parameters:
@@ -4174,17 +4138,6 @@
   :index:
     :field: 0
     :control: 1
-  :meta:
-    :notes:
-      - two bytes. first byte corresponds to same code as obc
-      - GFX IKE   OBC-BOOL    08 01
-      - IKE ANZV  ANZV-VAR    08 00   "--:--  "
-      - GFX IKE   OBC-BOOL    04 01
-      - IKE ANZV  ANZV-VAR    04 00   "--.- L/100"
-    :recipients:
-      - IKE: IKE houses on board computer
-
-# 0x2A ANZV-IKE-BOOL
 
 # ************************************************************************* #
 #                                 CLIMATE?
