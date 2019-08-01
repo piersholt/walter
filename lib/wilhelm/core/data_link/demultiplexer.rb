@@ -11,6 +11,8 @@ module Wilhelm
 
         NAME = 'Demultiplexer'
         THREAD_NAME = 'wilhelm-core/data_link Demultiplexer (Input Buffer)'
+        LOG_THREAD_START = 'New Thread: Frame Demultiplexing'
+        LOG_THREAD_END = 'End Thread: Frame Demultiplexing'
 
         attr_reader :input_buffer, :output_buffer, :read_thread
 
@@ -44,9 +46,6 @@ module Wilhelm
 
         # @override: ManageableThreads#proc_name
         alias proc_name name
-
-        LOG_THREAD_START = 'New Thread: Frame Demultiplexing'
-        LOG_THREAD_END = 'End Thread: Frame Demultiplexing'
 
         def thread_read_input_frame_buffer(input_buffer, output_buffer)
           LOGGER.debug(name) { LOG_THREAD_START }

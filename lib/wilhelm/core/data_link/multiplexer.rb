@@ -10,6 +10,8 @@ module Wilhelm
 
         NAME = 'Multiplexer'
         THREAD_NAME = 'wilhelm-core/data_link Multiplexer (Output Buffer)'
+        LOG_WRITE_THREAD_START = 'New Thread: Frame Multiplexing'
+        LOG_WRITE_THREAD_END = 'End Thread: Frame Multiplexing'
 
         attr_reader :frame_output_buffer, :packet_output_buffer, :write_thread
 
@@ -43,9 +45,6 @@ module Wilhelm
 
         # @override: ManageableThreads#proc_name
         alias proc_name name
-
-        LOG_WRITE_THREAD_START = 'New Thread: Frame Multiplexing'
-        LOG_WRITE_THREAD_END = 'End Thread: Frame Multiplexing'
 
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
           LOGGER.debug(name) { LOG_WRITE_THREAD_START }
