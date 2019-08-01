@@ -6,7 +6,7 @@ module Wilhelm
       module View
         # Comment
         class CheckedItem < BaseMenuItem
-          CHECKED_MASK = "%-13.13s"
+          CHECKED_MASK = '%-13.13s'
           CHECKED_CHAR = 42.chr
 
           def initialize(checked:, label:, **base_menu_item_args)

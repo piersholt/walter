@@ -55,7 +55,7 @@ module Wilhelm
 
           # INPUT EVENTS ------------------------------------------------------
 
-          # input: denotes button (not data) event
+          # Prefix of "input_" denotes hard control (not a data command.)
           def input_confirm(*)
             false
           end
