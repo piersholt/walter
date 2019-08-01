@@ -9,13 +9,14 @@ module Wilhelm
       module Telephone
         # Telephone::Emulated
         class Emulated < Device::Emulated
+          include Wilhelm::Helpers::DataTools
           include Capabilities
           include State
           include Received
 
           PROC = 'Telephone::Emulated'
 
-          SUBSCRIBE = [PING, PONG, TEL_DATA, TEL_OPEN].freeze
+          SUBSCRIBE = [PING, PONG, INPUT, TEL_OPEN].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d

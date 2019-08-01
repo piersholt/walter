@@ -20,7 +20,7 @@ module Wilhelm
             end
 
             # 0x20 TEL-OPEN
-            def handle_tel_open(message)
+            def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
               generate_top_8
             end
@@ -31,38 +31,38 @@ module Wilhelm
               return false unless press?(command)
               logger.unknown(PROC) { '#handle_input(command)' }
 
-              case command.source.value
-              when SOURCE_RECENT
+              case command.layout.value
+              when LAYOUT_NONE
                 false
-              when SOURCE_INFO
+              when LAYOUT_INFO
                 false
-              when SOURCE_DIAL
+              when LAYOUT_DIAL
                 if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
                   dial_clear
                 end
-              when SOURCE_DIRECTORY
+              when LAYOUT_DIRECTORY
                 if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
                   directory_clear
                 end
-              when SOURCE_TOP_8
+              when LAYOUT_TOP_8
                 if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
                   top_8_clear
                 end
               end
 
-              # @todo use source to work out when to clear
+              # @todo use layout to work out when to clear
 
               case command.function.value
               when FUNCTION_RECENT
                 # delegate_contact
               when FUNCTION_CONTACT
-                delegate_contact(command.source, command.action)
+                delegate_contact(command.layout, command.button)
               when FUNCTION_DIGIT
-                delegate_dial(command.action)
+                delegate_dial(command.button)
               when FUNCTION_SOS
                 delegate_sos
               when FUNCTION_NAVIGATE
-                delegate_navigation(command.action)
+                delegate_navigation(command.button)
               when FUNCTION_INFO
                 delegate_function_info
               end
@@ -70,34 +70,34 @@ module Wilhelm
 
             private
 
-            def button_id(action)
-              action.parameters[:button_id].value
+            def button_id(button)
+              button.parameters[:id].value
             end
 
-            def button_state(action)
-              action.parameters[:button_state].value
+            def button_state(button)
+              button.parameters[:state].value
             end
 
             def press?(command)
-              button_state(command.action) == INPUT_PRESS
+              button_state(command.button) == INPUT_PRESS
             end
 
-            def delegate_contact(source, action)
-              logger.unknown(PROC) { "#delegate_contact(#{action})" }
-              index = button_id(action)
+            def delegate_contact(layout, button)
+              logger.unknown(PROC) { "#delegate_contact(#{button})" }
+              index = button_id(button)
               logger.unknown(PROC) { FUNCTIONS[FUNCTION_CONTACT][index] }
 
-              case source.value
-              when SOURCE_DIRECTORY
+              case layout.value
+              when LAYOUT_DIRECTORY
                 directory_name("Directory. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
-              when SOURCE_TOP_8
+              when LAYOUT_TOP_8
                 top_8_name("Top 8. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
               end
             end
 
-            def delegate_dial(action)
-              logger.unknown(PROC) { "#delegate_dial(#{action})" }
-              index = button_id(action)
+            def delegate_dial(button)
+              logger.unknown(PROC) { "#delegate_dial(#{button})" }
+              index = button_id(button)
               logger.unknown(PROC) { FUNCTIONS[FUNCTION_DIGIT][index] }
               return dial_number_remove if index == ACTION_REMOVE
               dial_number(FUNCTIONS[FUNCTION_DIGIT][index])
@@ -109,9 +109,9 @@ module Wilhelm
               open_sos
             end
 
-            def delegate_navigation(action)
-              logger.unknown(PROC) { "#delegate_navigation(#{action})" }
-              index = button_id(action)
+            def delegate_navigation(button)
+              logger.unknown(PROC) { "#delegate_navigation(#{button})" }
+              index = button_id(button)
               case index
               when ACTION_DIAL_OPEN
                 logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_DIAL_OPEN] }
@@ -145,12 +145,6 @@ module Wilhelm
               status!
               # tel_led(LED_ALL)
               # bluetooth_pending
-            end
-
-            # @deprecated
-            def tel_state(telephone_state = TEL_OFF)
-              logger.warn(PROC) { '#tel_state is deprecated!' }
-              status(status: telephone_state)
             end
           end
         end
