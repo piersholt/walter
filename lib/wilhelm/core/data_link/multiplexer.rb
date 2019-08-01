@@ -72,7 +72,7 @@ module Wilhelm
           frame_builder.from = message.from
           frame_builder.to = message.to
           # HACK BaseCommand::Raw has no sender/receiver in scope!
-          message.command.command_config(message.from, message.to)
+          message.command.load_command_config(message.from, message.to)
           frame_builder.payload = message.command.generate
 
           frame = frame_builder.result

@@ -1,79 +1,120 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual
     class Command
-      class BaseCommand
-        # BaseCommand::Generate
-        module Generate
-          PROG = 'Generate'
+      # Virtual::Command::Generate
+      module Generate
+        PROG = 'Generate'
+        ERROR_CONFIG_NIL = 'command_config is nil!'
 
-          def command_config(from, to)
-            @config ||= get_command_config(from, to)
+        def command_config
+          raise(StandardError, ERROR_CONFIG_NIL) unless @command_config
+          @command_config
+        end
+
+        def command_map
+          CommandMap.instance
+        end
+
+        def get_command_config(command_id, from_ident, to_ident)
+          command_map.config(command_id, from: from_ident, to: to_ident)
+        end
+
+        # HACK: yeah this is fucking awful. See Multiplexer and API::Base.
+        # Called by Multiplexer as Command has no reference to from/to
+        def load_command_config(from, to)
+          from_ident = resolve_address(from)
+          to_ident = resolve_address(to)
+          @command_config = get_command_config(id.d, from_ident, to_ident)
+          raise(StandardError, ERROR_CONFIG_NIL) unless command_config
+          true
+        end
+
+        def resolve_address(device_id)
+          AddressLookupTable.instance.resolve_address(device_id)
+        end
+
+        def generate
+          LOGGER.debug(PROG) { '#generate' }
+          # loaded by Multiplexer, so just call to trigger any errors
+          command_config
+
+          generate_arguments(command_config)
+        end
+
+        private
+
+        def generate_arguments(command_config)
+          if command_config.has_parameters?
+            generate_indexed_arguments(command_config)
+          elsif !command_config.has_parameters? && self.arguments
+            generate_base_arguments(self.arguments)
+          else
+            generate_default_arguments
+          end
+        rescue StandardError => e
+          LOGGER.error(PROG) { e }
+          e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+          binding.pry
+        end
+
+        def generate_indexed_arguments(command_config)
+          Core::Bytes.new([self.id, *process_arguments(command_config, self)])
+        end
+
+        def generate_base_arguments(arguments)
+          Core::Bytes.new([self.id, *arguments])
+        end
+
+        def generate_default_arguments
+          Core::Bytes.new([self.id])
+        end
+
+        def process_arguments(command_config, command)
+          index = command_config.index
+          args = map_arguments(command, index)
+          map_nested_arguments(args)
+        rescue StandardError => e
+          LOGGER.error(PROG) { e }
+          e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+          binding.pry
+        end
+
+        def map_arguments(command, index)
+          values_with_index = index.map do |param, i|
+            param_object = command.public_send(param)
+            param_value = param_object.respond_to?(:value) ? param_object.value : param_object
+            param_value ? [param_value, i] : nil
+          end.compact
+
+          values_with_index.sort_by! do |object|
+            index = object[1]
+            index.instance_of?(Range) ? index.first : index
           end
 
-          def get_command_config(from, to)
-            # HACK yeah this is fucking awful. See Multiplexer and API::Base.
-            c = CommandMap.instance.config(
-              id.d,
-              from: resolve_address(from),
-              to: resolve_address(to)
-            )
-            raise(StandardError, "#get_command_config(#{id.d}) => No command_config #{id}") unless c
-            c
+          values_with_index.map do |object|
+            object[0]
           end
+        rescue StandardError => e
+          LOGGER.error(PROG) { e }
+          e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+          binding.pry
+        end
 
-          def resolve_address(device_id)
-            AddressLookupTable.instance.resolve_address(device_id)
-          end
-
-          def generate
-            LOGGER.debug(PROG) { '#generate' }
-            raise(StandardError, "#config() => No command_config #{id}") unless @config
-            if @config.has_parameters?
-              index = @config.index
-              Core::Bytes.new([id, *process_arguments(self, index)])
-            elsif !@config.has_parameters? && self.arguments
-              Core::Bytes.new([id, *arguments])
+        def map_nested_arguments(args)
+          args.map do |d|
+            if d.instance_of?(Array)
+              array_of_bytes = d.map { |i| Core::Byte.new(:decimal, i) }
+              Core::Bytes.new(array_of_bytes)
             else
-              Core::Bytes.new([id])
+              Core::Byte.new(:decimal, d)
             end
-          rescue StandardError => e
-            LOGGER.error(PROG) { e }
-            LOGGER.error(PROG) { "ID: #{id}, ID Decimal: #{id.d}" }
-            e.backtrace.each { |l| LOGGER.error(PROG) { l } }
-          end
-
-          def process_arguments(command, index)
-            args = map_arguments(command, index)
-
-            nested_arguments = args.map do |d|
-              if d.instance_of?(Array)
-                array_of_bytes = d.map { |i| Core::Byte.new(:decimal, i) }
-                Core::Bytes.new(array_of_bytes)
-              else
-                Core::Byte.new(:decimal, d)
-              end
-            end
-            nested_arguments.flatten
-          end
-
-          def map_arguments(command, index)
-            values_with_index = index.map do |param, i|
-              param_object = command.public_send(param)
-              param_value = param_object.respond_to?(:value) ? param_object.value : param_object
-              param_value ? [param_value, i] : nil
-            end.compact
-
-            values_with_index.sort_by! do |object|
-              index = object[1]
-              index.instance_of?(Range) ? index.first : index
-            end
-
-            values_with_index.map do |object|
-              object[0]
-            end
-          end
+          end&.flatten
+        rescue StandardError => e
+          LOGGER.error(PROG) { e }
+          e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+          binding.pry
         end
       end
     end
