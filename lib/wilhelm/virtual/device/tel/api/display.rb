@@ -48,17 +48,6 @@ module Wilhelm
             end
 
             alias anzv_var anzv_var_tel
-
-            # HACK: draw hacks ------------------------------------------------
-
-            def build(layout, chars, zone = 0x00, padding = 0x01)
-              draw_a5(
-                layout: layout,
-                padding: padding,
-                zone: zone,
-                chars: chars
-              )
-            end
           end
         end
       end
