@@ -111,7 +111,7 @@ module Wilhelm
           end
 
           def calculate_fcs
-            checksum = all_fields.reduce(0) { |c, d| c ^= d.to_d }
+            checksum = all_fields.reduce(0) { |c, d| c ^ d.to_d }
             LOGGER.debug(NAME) { "Checksum / Calculated = #{checksum}" }
             checksum
           end
