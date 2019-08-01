@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Device
       module Helpers
-        # Device::Helpers
+        # Device::Helpers::Cluster
         module Cluster
           HUD_SIZE = 20
 
@@ -13,11 +13,6 @@ module Wilhelm
           RIGHT  = :rjust
 
           ALIGNMENTS = [LEFT, CENTRE, RIGHT].freeze
-
-          def align(chars_string, alignment = CENTRE)
-            validate_alignment(alignment)
-            chars_string.public_send(alignment, HUD_SIZE)
-          end
 
           def format_chars!(command_arguments, alignment: CENTRE)
             return false unless command_arguments.key?(:chars)
@@ -29,6 +24,8 @@ module Wilhelm
 
             command_arguments[:chars] = chars_string.bytes
           end
+
+          private
 
           def validate_chars_string(chars_string)
             return true if chars_string.is_a?(String)
@@ -43,6 +40,11 @@ module Wilhelm
             return false unless chars_string.is_a?(Array)
             return false unless chars_string.all? { |i| i.is_a?(Integer) }
             true
+          end
+
+          def align(chars_string, alignment = CENTRE)
+            validate_alignment(alignment)
+            chars_string.public_send(alignment, HUD_SIZE)
           end
 
           def validate_alignment(alignment)
