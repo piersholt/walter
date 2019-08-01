@@ -14,9 +14,11 @@ module Wilhelm
                 include Wilhelm::Helpers::DataTools
                 include Helpers::Data
 
-                def generate_menu_21(layout: LAYOUT_MENU_A,
-                                     m2: ZERO,
-                                     indices: LAYOUT_INDICES[layout])
+                def generate_menu_21(
+                  layout: LAYOUT_MENU_A,
+                  m2: ZERO,
+                  indices: LAYOUT_INDICES[layout]
+                )
                   indices.each do |index|
                     chars = generate_21(layout, m2, index, Random.rand(5..10))
                     draw_row_21(layout, m2, index, chars)

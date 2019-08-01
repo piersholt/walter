@@ -25,7 +25,7 @@ module Wilhelm
 
           # Radio::Capabilities::CDChangerDisplay
           def integer_array_to_chars(array)
-            array.map {|i| i.chr }.join
+            array.map(&:chr).join
           end
 
           def wait

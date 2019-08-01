@@ -24,7 +24,12 @@ module Wilhelm
               end
 
               def draw_row_21(layout, m2, index, chars)
-                draw_21(layout: layout, m2: m2, m3: index, chars: chars)
+                draw_21(
+                  layout: layout,
+                  m2: m2,
+                  m3: index,
+                  chars: chars
+                )
               end
 
               alias render_header render
