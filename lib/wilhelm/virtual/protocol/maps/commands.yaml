@@ -3949,14 +3949,14 @@
   :rad:
     :klass: ParameterizedCommand
     :properties:
-      :short_name: DATA-RAD
+      :short_name: INPUT-RAD*
       :long_name: Radio Menu Soft Buttom
     :index:
-      :source: 0
+      :layout: 0
       :function: 1
-      :action: 2
+      :button: 2
     :parameters:
-      :source:
+      :layout:
         :type: :map
         :dictionary:
           0x00: --
@@ -3972,34 +3972,34 @@
           0x00: --
         :map:
           0x00: :no_function
-      :action:
+      :button:
         :type: :bit_array
         :index:
-          :button_id: !ruby/range
+          :id: !ruby/range
                         begin: 3
                         end: 7
                         excl: false
-          :button_state: !ruby/range
+          :state: !ruby/range
                           begin: 1
                           end: 2
                           excl: false
         :parameters:
-          :button_id:
+          :id:
             :type: :map
             :label: 'Index:'
             :dictionary:
-              0x00: 'Index 0'
-              0x01: 'Index 1'
-              0x02: 'Index 2'
-              0x03: 'Index 3'
-              0x04: 'Index 4'
-              0x05: 'Index 5'
-              0x06: 'Index 6'
-              0x07: 'Index 7'
-              0x08: 'Index 8'
-              0x09: 'Index 9'
-              0x0a: 'Index 10'
-          :button_state:
+              0x00: '0'
+              0x01: '1'
+              0x02: '2'
+              0x03: '3'
+              0x04: '4'
+              0x05: '5'
+              0x06: '6'
+              0x07: '7'
+              0x08: '8'
+              0x09: '9'
+              0x0a: '10'
+          :state:
             :type: :switch
             :states:
               0b00: :press
@@ -4012,28 +4012,33 @@
   :tel:
     :klass: ParameterizedCommand
     :properties:
-      :short_name: DATA-TEL
+      :short_name: INPUT-TEL*
       :long_name: Telephone Menu Soft Buttom
     :index:
-      :source: 0
+      :layout: 0
       :function: 1
-      :action: 2
+      :button: 2
     :parameters:
-      :source:
+      :layout:
         :type: :map
         :dictionary:
           0x00: --
-
+          0x05: Pin
           0x20: Info
           0x42: Dial
           0x43: Directory
           0x80: Top 8
+          0xf0: SMS Index
+          0x81: SMS Show
         :map:
           0x00: :no_source
+          0x05: :pin
           0x20: :info
           0x42: :dial
           0x43: :directory
           0x80: :top 8
+          0xf0: :sms_index
+          0x81: :sms_show
       :function:
         :type: :map
         :dictionary:
@@ -4050,45 +4055,45 @@
           0x05: :sos
           0x07: :navigate
           0x08: :info
-      :action:
+      :button:
         :type: :bit_array
         :index:
-          :button_id: !ruby/range
-                        begin: 3
-                        end: 7
-                        excl: false
-          :button_state: !ruby/range
+          :state: !ruby/range
                           begin: 1
                           end: 2
                           excl: false
+          :id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
         :parameters:
-          :button_id:
+          :id:
             :type: :map
             :label: 'Index:'
             :dictionary:
-              0x00: 0x00
-              0x01: 0x01
-              0x02: 0x02
-              0x03: 0x03
-              0x04: 0x04
-              0x05: 0x05
-              0x06: 0x06
-              0x07: 0x07
-              0x08: 0x08
-              0x09: 0x09
-              0x0a: 0x0a
-              0x0b: 0x0b
-              0x0c: 0x0c
-              0x0d: 0x0d
-              0x0e: 0x0e
-              0x0f: 0x0f
-              0x1a: 0x1a
-              0x1b: 0x1b
-              0x1c: 0x1c
-              0x1d: 0x1d
-              0x1e: 0x1e
-              0x1f: 0x1f
-          :button_state:
+              0x00: 0
+              0x01: 1
+              0x02: 2
+              0x03: 3
+              0x04: 4
+              0x05: 5
+              0x06: 6
+              0x07: 7
+              0x08: 8
+              0x09: 9
+              0x0a: 10/Info/<
+              0x0b: 11
+              0x0c: 12/Back
+              0x0d: 13/Forward
+              0x0e: 14
+              0x0f: 15
+              0x1a: 26/*
+              0x1b: '27/#'
+
+              0x1d: SMS
+              0x1e: Dial
+              0x1f: Directory
+          :state:
             :type: :switch
             :states:
               0b00: :press
