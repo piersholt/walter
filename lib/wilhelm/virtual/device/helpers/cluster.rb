@@ -14,7 +14,7 @@ module Wilhelm
 
           ALIGNMENTS = [LEFT, CENTRE, RIGHT].freeze
 
-          def format_chars!(command_arguments, alignment: CENTRE)
+          def parse_string(command_arguments, alignment: CENTRE)
             return false unless command_arguments.key?(:chars)
             chars_string = command_arguments.fetch(:chars)
             return false if char_array?(chars_string)
@@ -24,6 +24,8 @@ module Wilhelm
 
             command_arguments[:chars] = chars_string.bytes
           end
+
+          alias format_chars! parse_string
 
           private
 

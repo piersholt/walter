@@ -14,7 +14,7 @@ module Wilhelm
             # Titles/Headings
             def draw_23(from: :tel, to: :gfx, **arguments)
               arguments[:ike] = IKE_DEFAULT unless arguments[:ike]
-              format_chars!(arguments)
+              parse_string(arguments)
               try(from, to, TXT_GFX, arguments)
             end
 
@@ -35,7 +35,7 @@ module Wilhelm
             # 0xA5
             # New Menus: Emergency/SOS
             def draw_a5(from: :tel, to: :gfx, **arguments)
-              format_chars!(arguments)
+              parse_string(arguments)
               try(from, to, TXT_NAV, arguments)
             end
 
