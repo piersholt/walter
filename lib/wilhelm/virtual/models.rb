@@ -4,4 +4,4 @@ puts "\tLoading wilhelm/virtual/models"
 
 require_relative 'models/message'
 require_relative 'models/messages'
-require_relative 'models/packet_wrapper'
+require_relative 'models/data_adapter'
