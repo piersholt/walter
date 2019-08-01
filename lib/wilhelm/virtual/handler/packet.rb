@@ -3,8 +3,8 @@
 module Wilhelm
   module Virtual
     module Handler
-      # Virtual::Handler::PacketHandler
-      class PacketHandler < Core::BaseHandler
+      # Virtual::Handler::DataHandler
+      class DataHandler < Core::BaseHandler
         include LogActually::ErrorOutput
         include Command::Parse
 

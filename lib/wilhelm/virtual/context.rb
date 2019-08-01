@@ -24,7 +24,7 @@ module Wilhelm
         application_listener = Listener::ApplicationListener.new
 
         interface_handler = Handler::InterfaceHandler.new(bus)
-        packet_handler = Handler::PacketHandler.new(bus)
+        packet_handler = Handler::DataHandler.new(bus)
         display_handler = Handler::DisplayHandler.instance
         message_handler =
           Handler::MessageHandler.new(bus, core_context.multiplexer.packet_output_buffer)
