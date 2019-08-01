@@ -45,10 +45,12 @@ module Wilhelm
           end
 
           def from=(device_id)
+            LOGGER.debug(NAME) { "#from=(#{device_id})" }
             @from = Byte.new(:decimal, device_id)
           end
 
           def to=(device_id)
+            LOGGER.debug(NAME) { "#to=(#{device_id})" }
             @to = Byte.new(:decimal, device_id)
           end
 
@@ -104,7 +106,7 @@ module Wilhelm
             fcs_len =      DEFAULT_LENGTH
 
             buffer = to_len + payload_len + fcs_len
-            LOGGER.debug(NAME) { "length / Calculated = #{buffer}" }
+            LOGGER.debug(NAME) { "Length / Calculated = #{buffer}" }
             buffer
           end
 
@@ -123,9 +125,10 @@ module Wilhelm
           end
 
           def all_fields
+            LOGGER.debug(NAME) { '#all_fields' }
             bytes = Bytes.new([from, length, to, *payload])
             # bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
-            LOGGER.debug("FrameBuilder") { "#{bytes}" }
+            LOGGER.debug(NAME) { "#all_fields => #{bytes}" }
             bytes
           end
 
