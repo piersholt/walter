@@ -9,10 +9,12 @@
 
 module Wilhelm
   module Virtual
+    # Virtual::BaseMap
     class BaseMap
       DEFAULT_BASE_PATH = ENV['map_path'].freeze
       DEFAULT_FILE_EXTENSSION = '.yaml'.freeze
       FORCE_RELOAD = true
+      PROG = 'BaseMap'.freeze
 
       def initialize(map_name)
         @name = map_name
@@ -21,7 +23,7 @@ module Wilhelm
 
       def find(key)
         # LOGGER.debug("#{self.class.superclass}") { "#find(#{key})" }
-        raise IndexError, "no objet with key #{key}" unless map.key?(key)
+        raise(IndexError, "no objet with key #{key}") unless map.key?(key)
         map[key]
       end
 
@@ -29,7 +31,7 @@ module Wilhelm
         @map ||= read_map
       end
 
-      # raise error if there is pending changes
+      # raise(error if there is pending changes
       def reload
       end
 
@@ -58,8 +60,8 @@ module Wilhelm
       end
 
       def read_map(map_name, force = false)
-        raise StandardError, 'map is already read' unless @map.nil? || force
-        LOGGER.debug "Reading map: #{map_name}"
+        raise(StandardError, 'map is already read') unless @map.nil? || force
+        LOGGER.debug(PROG) { "Reading map: #{map_name}" }
         file = File.open(map_name_as_path(map_name))
         parsed_yaml = parse_yaml_from_file(file)
         @map = parsed_yaml
@@ -67,48 +69,25 @@ module Wilhelm
       end
 
       def write_map(map_name)
-        raise StandardError, 'map has not been read' if @map.nil?
+        raise(StandardError, 'map has not been read') if @map.nil?
 
-        begin
-          file = File.open(map_name_as_path(map_name), 'w')
+        file = File.open(map_name_as_path(map_name), 'w')
 
-          # Reorder hash
-          # cur_reg = map
-          # new_reg = {}
-          # (0..255).each do |i|
-          #   new_reg[i] = cur_reg[i] if cur_reg.key?(i)
-          # end
-          # map = new_reg
+        yaml_buffer = YAML.dump(map)
+        file.write_nonblock(yaml_buffer)
 
-          yaml_buffer = YAML.dump(map)
-          file.write_nonblock(yaml_buffer)
-
-          return true
-        rescue Exception => e
-          LOGGER.error e.to_s
-          e.backtrace.each { |b| LOGGER.error b.to_s }
-        end
+        true
+      rescue StandardError => e
+        LOGGER.error(PROG) { e }
+        e.backtrace.each { |line| LOGGER.error(PROG) { line } }
       end
 
       def parse_yaml_from_file(file)
         yaml_buffer = file.read
         yaml_data = YAML.load(yaml_buffer)
-        raise StandardError, 'yaml_data is false' if yaml_data == false
+        raise(StandardError, 'yaml_data is false') if yaml_data == false
         yaml_data
       end
-
-      # def parse_file_from_yaml(yaml)
-      # end
-
-      # class MapItem
-      #   # Update map hash
-      #   def update
-      #   end
-      #
-      #   # Update map hash
-      #   def update!
-      #   end
-      # end
     end
   end
 end
