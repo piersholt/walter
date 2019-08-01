@@ -21,7 +21,7 @@ module Wilhelm
                   layout: layout,
                   padding: PADDING_NONE,
                   zone: INDEX_ZERO,
-                  chars: chars.map(&:chr).join
+                  chars: chars
                 )
               end
 

@@ -19,15 +19,15 @@ module Wilhelm
                 end
 
                 def generate_a5(layout, padding, index, length = 10)
-                  "a5 #{d2h(layout)} #{d2h(padding)} #{d2h(index)} #{genc(length)}".bytes
+                  "a5 #{d2h(layout)} #{d2h(padding)} #{d2h(index)} #{genc(length)}"
                 end
 
                 def generate_21(layout, m2, index, length = 10)
-                  "21 #{d2h(layout)} #{d2h(m2)} #{d2h(index)} #{genc(length)}".bytes
+                  "21 #{d2h(layout)} #{d2h(m2)} #{d2h(index)} #{genc(length)}"
                 end
 
                 def generate_23(gfx, ike, length = 10)
-                  "23 #{d2h(gfx)} #{d2h(ike)} #{genc(length)}".bytes
+                  "23 #{d2h(gfx)} #{d2h(ike)} #{genc(length)}"
                 end
               end
             end

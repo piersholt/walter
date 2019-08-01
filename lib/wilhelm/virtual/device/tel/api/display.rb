@@ -26,7 +26,7 @@ module Wilhelm
               arguments[:layout] = LAYOUT_DIRECTORY unless arguments[:layout]
               arguments[:m2] = M2_DEFAULT unless arguments[:m2]
               arguments[:m3] = M3_SOMETHING unless arguments[:m3]
-              # format_chars!(arguments)
+              parse_string(arguments)
               try(from, to, TXT_MID, arguments)
             end
 
@@ -43,7 +43,7 @@ module Wilhelm
             # Info: Sigal etc
             def anzv_var_tel(from: :tel, to: :gfx, **arguments)
               arguments[:ike] = IKE_ZERO unless arguments[:ike]
-              # format_chars!(arguments)
+              parse_string(arguments)
               try(from, to, ANZV_VAR, arguments)
             end
 
