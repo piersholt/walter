@@ -117,7 +117,7 @@ module Wilhelm
           to      = message.to
           payload = message_data(message)
 
-          Data.new(from, to, payload)
+          Core::Data.new(from, to, payload)
         end
 
         def message_data(message)
