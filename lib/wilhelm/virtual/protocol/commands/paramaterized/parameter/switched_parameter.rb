@@ -1,90 +1,97 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual
     # This needs the :state and :label property of this specific parameter
     class SwitchedParameter < BaseParameter
-      PROC = 'SwitchedParameter'.freeze
+      PROC = 'SwitchedParameter'
 
-      attr_reader :label, :states, :state
+      STATES_HIDDEN = %i[ok off closed].freeze
 
-      # @@label
-      # @@states
+      WARN_NO_PRETTY_MAP = 'Map @states is no available!'
+      ERROR_NIL_SWITCH_STATE = 'Switch State Map returned nil!'
 
-      def initialize(configuration, integer)
+      SWITCH_OFF      = 'OFF'
+      SWITCH_ON       = 'ON'
+
+      SWITCH_CLOSED   = 'CLOSED'
+      SWITCH_OPEN     = 'OPEN'
+
+      SWITCH_OK       = 'OK'
+      SWITCH_FAULT    = 'FAULT'
+
+      SWITCH_PRESS    = 'Press'
+      SWITCH_HOLD     = 'Hold'
+      SWITCH_RELEASE  = 'Release'
+
+      SWITCH_ENABLED  = 'Enabled'
+      SWITCH_DISABLED = 'Disabled'
+
+      SWITCH_BLINK    = 'Blink'
+      SWITCH_SINGLE   = 'Single'
+      SWITCH_DOUBLE   = 'Double'
+      SWITCH_TONE     = 'Tone'
+
+      SWITCH_STATE_MAP = {
+        off:       [:as_normal, SWITCH_OFF],
+        on:        [:as_good, SWITCH_ON],
+        closed:    [:as_normal, SWITCH_CLOSED],
+        open:      [:as_warn, SWITCH_OPEN],
+        ok:        [:as_good, SWITCH_OK],
+        fault:     [:as_bad, SWITCH_FAULT],
+        unpowered: [:as_warn, SWITCH_OFF],
+        powered:   [:as_good, SWITCH_ON],
+        press:     [:as_good, SWITCH_PRESS],
+        hold:      [:as_good, SWITCH_HOLD],
+        release:   [:as_good, SWITCH_RELEASE],
+        disabled:  [:as_good, SWITCH_DISABLED],
+        enabled:   [:as_good, SWITCH_ENABLED],
+        blink:     [:as_warn, SWITCH_BLINK],
+        single:    [:as_warn, SWITCH_SINGLE],
+        double:    [:as_warn, SWITCH_DOUBLE],
+        tone:      [:as_warn, SWITCH_TONE]
+      }.freeze
+
+      LIGHT_GREEN = 92
+      COLOUR_RESET = 3
+
+      attr_reader :label, :states
+
+      def initialize(_configuration, integer)
         @value = integer
         @bit_array = BitArray.from_i(integer)
-        # @label = 'Something Important'
-        # @state = :ok
       end
 
       def inspect
         "<#{PROC} @label=#{label} @value=#{value} @state=#{state}>"
       end
 
+      def hidden_state?(state)
+        STATES_HIDDEN.include?(state)
+      end
+
       # @overide
       def to_s(width = DEFAULT_LABEL_WIDTH)
-        return nil if [:ok, :off, :closed].include?(state)
-        # LOGGER.info(PROC) { "#to_s(width = #{width})" }
-        str_buffer = format("%-#{width}s", "#{label}")
-        str_buffer = str_buffer.concat(LABEL_DELIMITER)
-        str_buffer = str_buffer.concat("[#{pretty}]")
-        str_buffer
+        return nil if hidden_state?(state)
+        str_buffer = format("%-#{width}s", label)
+        str_buffer.concat(LABEL_DELIMITER)
+        str_buffer.concat("[#{pretty}]")
       end
 
       def state
         if @states.nil?
-          LOGGER.warn(PROC) { "Map @states is no available!" }
-          return "\"value\""
-        elsif !@states.key?(value)
-          return "#{d2h(value, true)} not found!"
-        else
-          @states[value]
+          LOGGER.warn(PROC) { WARN_NO_PRETTY_MAP }
+          return "\"#{value}\""
         end
+        @states.fetch(value, "#{d2h(value, true)} not found!")
       end
 
       # No output: [:off, :on, :ok]
       def pretty
-        case state
-        when :off
-          as_normal('OFF')
-        when :on
-          as_good('ON')
-        when :closed
-          as_normal('OFF')
-        when :open
-          as_warn('OPEN')
-        when :ok
-          as_good('OK')
-        when :fault
-          as_bad('FAULT')
-        when :unpowered
-          as_warn('OFF')
-        when :powered
-          as_good('ON')
-        when :press
-          as_good('Press')
-        when :hold
-          as_good('Hold')
-        when :release
-          as_good('Release')
-        when :enabled
-          as_good('Enabled')
-        when :disabled
-          as_good('Disabled')
-        when :blink
-          as_warn('Blink')
-        when :single
-          as_warn('Single')
-        when :double
-          as_warn('Double')
-        when :tone
-          as_warn('tone')
-        end
+        switch_state = SWITCH_STATE_MAP.fetch(state)
+        raise(IndexError, ERROR_NIL_SWITCH_STATE) unless switch_state
+        public_send(*switch_state)
       end
-
-      LIGHT_GREEN = 92
-      COLOUR_RESET = 3
 
       def as_bad(bit)
         as_colour(bit, LogActually::Constants::RED)
@@ -103,10 +110,9 @@ module Wilhelm
       end
 
       def as_colour(string, colour_id)
-        str_buffer = "\33[#{colour_id}m"
-        str_buffer = str_buffer.concat("#{string}")
-        str_buffer = str_buffer.concat("\33[0m")
-        str_buffer
+        "\33[#{colour_id}m" \
+        "#{string}" \
+        "\33[0m"
       end
     end
   end
