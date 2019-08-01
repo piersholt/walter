@@ -52,15 +52,10 @@ module Wilhelm
           LOGGER.debug(name) { LOG_THREAD_START }
           Thread.new do
             Thread.current[:name] = THREAD_NAME
-            begin
-              loop do
-                new_frame = input_buffer.pop
-                new_data = demultiplex(new_frame)
-                distribute(new_data)
-              end
-            rescue StandardError => e
-              LOGGER.error(name) { e }
-              e.backtrace.each { |line| LOGGER.error(name) { line } }
+            loop do
+              new_frame = input_buffer.pop
+              new_data = demultiplex(new_frame)
+              distribute(new_data)
             end
             LOGGER.warn(name) { LOG_THREAD_END }
           end
