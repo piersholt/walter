@@ -28,7 +28,7 @@ module Wilhelm
         end
 
         def inspect
-          "<#{self.class} @header=#{header} @service=#{service}>"
+          "#<#{self.class} @header=#{header} @service=#{service}>"
         end
 
         def launch(controller, action, args = nil)
@@ -67,12 +67,12 @@ module Wilhelm
           renderer.render_menu(view)
         end
 
+        alias render render_menu
+
         # Called by UIKit::Controller::BaseController
         def render_header(view)
           renderer.render_new_header(view)
         end
-
-        alias render render_menu
 
         private
 
@@ -91,16 +91,16 @@ module Wilhelm
           header&.destroy
           controller_klass = klass(:header)
           @header = controller_klass.new(self, application_context)
-          return @header.load(:header, args) if args
-          @header.load(:header)
+          return header.load(:header, args) if args
+          header.load(:header)
         end
 
         def load_service(controller, action, args = nil)
           service&.destroy
           controller_klass = klass(controller)
           @service = controller_klass.new(self, application_context)
-          return @service.load(action, args) if args
-          @service.load(action)
+          return service.load(action, args) if args
+          service.load(action)
         end
       end
     end

@@ -10,9 +10,6 @@ module Wilhelm
 
           attr_writer :ui
 
-          def alive?
-            @state.alive?(self)
-          end
 
           def ui
             semaphore.synchronize do
