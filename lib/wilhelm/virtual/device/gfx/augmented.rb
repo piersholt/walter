@@ -10,14 +10,18 @@ module Wilhelm
           include Capabilities
           include State
 
+          PROC = 'GFX::Augmented'
+
           PUBLISH = [
-            MENU_GFX,
-            SRC_SND, SRC_GFX,
-            TEL_OPEN, GFX_STATUS, TEL_DATA, DSP_EQ,
-            OBC_VAR, OBC_BOOL,
             PING, PONG,
             COUNTRY_REQ, COUNTRY_REP,
-            IGNITION_REQ, IGNITION_REP
+            IGNITION_REQ, IGNITION_REP,
+            TEL_OPEN, GFX_STATUS,
+            INPUT,
+            DSP_EQ,
+            OBC_VAR, OBC_BOOL,
+            MENU_GFX,
+            SRC_SND, SRC_GFX
           ].freeze
 
           SUBSCRIBE = [
@@ -26,13 +30,10 @@ module Wilhelm
             RAD_ALT, MENU_RAD
           ].freeze
 
-          PROC = 'GFX::Augmented'
-
           def handle_virtual_transmit(message)
             command_id = message.command.d
             return false unless publish?(command_id)
             # logger.debug(moi) { "#handle_virtual_transmit(#{command_id})" }
-
             case command_id
             when PING
               dependent = message.to
@@ -43,20 +44,20 @@ module Wilhelm
               logger.debug(moi) { "Tx: PONG" }
               evaluate_pong(message.command)
             when INPUT
-              logger.debug(moi) { "Tx: Data (#{d2h(INPUT)})" }
+              logger.debug(moi) { "Tx: Input (#{d2h(INPUT)})" }
               evaluate_input(message.command)
+            when OBC_BOOL
+              logger.debug(moi) { "Tx: OBC Boolean (#{d2h(OBC_BOOL)})" }
+              evaluate_obc_bool(message.command)
             when MENU_GFX
               logger.debug(moi) { "Tx: Menu GFX (#{d2h(MENU_GFX)})" }
               evaluate_menu_gfx(message.command)
+            when SRC_SND
+              logger.debug(moi) { "Tx: Source SND (#{d2h(SRC_SND)})" }
+              evaluate_src_snd(message.command)
             when SRC_GFX
               logger.debug(moi) { "Tx: Source GFX (#{d2h(SRC_GFX)})" }
               evaluate_src_gfx(message.command)
-            when SRC_SND
-              # logger.debug(moi) { "Tx: Source SND (#{d2h(SRC_SND)})" }
-              # evaluate_menu_gfx(message.command)
-            when OBC_BOOL
-              logger.debug(moi) { "Tx: OBC Req. (#{d2h(OBC_BOOL)})" }
-              evaluate_obc_bool(message.command)
             end
           end
 
@@ -64,7 +65,6 @@ module Wilhelm
             command_id = message.command.d
             return false unless subscribe?(command_id)
             # logger.unknown(moi) { "#handle_virtual_receive(#{command_id})" }
-
             case command_id
             when TXT_GFX
               logger.debug(moi) { "Rx: TXT_GFX 0x#{d2h(TXT_GFX)}" }

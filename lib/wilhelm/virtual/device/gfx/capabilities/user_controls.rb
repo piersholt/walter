@@ -39,11 +39,11 @@ module Wilhelm
 
             # " 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
             # "FM☐AM☐SC☐CD☐TAPE☐   "
-            
+
             def input(layout: 0x60, index: 11)
-              user_input(source: layout, function: 0x00, action: index)
+              user_input(layout: layout, function: 0x00, button: index)
               Kernel.sleep(0.05)
-              user_input(source: layout, function: 0x00, action: (index + 0x40))
+              user_input(layout: layout, function: 0x00, button: (index + 0x40))
             end
           end
         end

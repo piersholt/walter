@@ -29,31 +29,12 @@ module Wilhelm
 
               # Command 0x31 INPUT
               def evaluate_input(command)
-                case command.source.value
+                case command.layout.value
                 when RADIO_LAYOUTS
-                  index = button_id(command.action)
-                  state = button_state(command.action)
+                  index = button_id(command.button)
+                  state = button_state(command.button)
                   changed
                   notify_observers(GFX_DATA_SELECT, index: index, state: state)
-                end
-              end
-
-              # Command 0x45 MENU-GFX
-              def evaluate_menu_gfx(command)
-                case command.config.value
-                when HIDE_RADIO
-                  changed
-                  notify_observers(BMBT_MENU, device: :gfx)
-                end
-              end
-
-              # Command 0x4F SRC-GFX
-              def evaluate_src_gfx(command)
-                case command.action.value
-                when MONITOR_ON
-                  monitor_off
-                when MONITOR_OFF
-                  monitor_on
                 end
               end
 
@@ -69,14 +50,36 @@ module Wilhelm
                 )
               end
 
-              private
-
-              def button_id(action)
-                action.parameters[:button_id].value
+              # Command 0x45 MENU_GFX
+              def evaluate_menu_gfx(command)
+                case command.config.value
+                when HIDE_RADIO
+                  changed
+                  notify_observers(BMBT_MENU, device: :gfx)
+                end
               end
 
-              def button_state(action)
-                action.parameters[:button_state].value
+              # Command 0x4E SRC_SND
+              def evaluate_src_snd(*); end
+
+              # Command 0x4F SRC-GFX
+              def evaluate_src_gfx(command)
+                case command.action.value
+                when MONITOR_ON
+                  monitor_off
+                when MONITOR_OFF
+                  monitor_on
+                end
+              end
+
+              private
+
+              def button_id(button)
+                button.parameters[:id].value
+              end
+
+              def button_state(button)
+                button.parameters[:state].value
               end
             end
           end
