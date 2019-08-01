@@ -33,7 +33,7 @@ module Wilhelm
             alias mid draw_21
 
             # 0xA5
-            # New Menus: Emergency/SOS
+            # New Menus: Emergency/SOS, SMS
             def draw_a5(from: :tel, to: :gfx, **arguments)
               parse_string(arguments)
               try(from, to, TXT_NAV, arguments)

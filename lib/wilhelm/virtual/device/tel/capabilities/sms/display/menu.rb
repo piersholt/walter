@@ -14,14 +14,6 @@ module Wilhelm
                 include Wilhelm::Helpers::DataTools
                 include Helpers::Data
 
-                def generate_sms_index
-                  generate_menu_21(layout: LAYOUT_SMS_INDEX)
-                end
-
-                def generate_sms_show
-                  generate_menu_21(layout: LAYOUT_SMS_SHOW)
-                end
-
                 def generate_menu_21(
                   layout: LAYOUT_SMS_INDEX,
                   m2: ZERO,
@@ -33,6 +25,14 @@ module Wilhelm
                   end
                   header(layout: layout)
                   true
+                end
+
+                def generate_sms_index
+                  generate_menu_21(layout: LAYOUT_SMS_INDEX)
+                end
+
+                def generate_sms_show
+                  generate_menu_21(layout: LAYOUT_SMS_SHOW)
                 end
 
                 def header(
