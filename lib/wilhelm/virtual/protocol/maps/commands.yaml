@@ -794,12 +794,12 @@
       - ANZV
     :length:
       - always 2 bytes
-0x2B: # ANZV-TEL-LED (TEL-LED)
+0x2B: # ANZV-LED-TEL
   :id:
     :d: 43
     :h: '0x2b'
   :properties:
-    :short_name: ANZV-TEL-BOOL-LED
+    :short_name: ANZV-LED-TEL
     :long_name: Telephone LEDs on BMBT
   :klass: ParameterizedCommand
   :index:
@@ -856,12 +856,12 @@
       - TEL
     :recipients:
       - ANZV
-0x2C: # ANZV-TEL-BOOL (TEL-STATUS)
+0x2C: # ANZV-BOOL-TEL (TEL-STATUS)
   :id:
     :d: 44
     :h: '0x2C'
   :properties:
-    :short_name: ANZV-TEL-BOOL-STATUS
+    :short_name: ANZV-BOOL-TEL
     :long_name: Unknown
   :parameters:
     :status:
@@ -881,7 +881,7 @@
             0: :off
             1: :on
         :power:
-          :label: Telephone
+          :label: Power
           :type: :switch
           :states:
             0: :off
