@@ -18,7 +18,6 @@ module Wilhelm
         def initialize(frame_output_buffer)
           @frame_output_buffer = frame_output_buffer
           @packet_output_buffer = SizedQueue.new(32)
-          @threads = ThreadGroup.new
         end
 
         def on
