@@ -9,11 +9,11 @@ module Wilhelm
         include Command::Parse
 
         PROG = 'Handler::Data'
-        LOG_BUILD_COMMAND = '#build_command'
         ERROR_DATA_NIL = 'Data is nil!'
 
-        def initialize(bus, address_lookup_table = AddressLookupTable.instance)
+        def initialize(bus, data_output_buffer, address_lookup_table = AddressLookupTable.instance)
           @bus = bus
+          @data_output_buffer = data_output_buffer
           @address_lookup_table = address_lookup_table
         end
 
@@ -26,7 +26,15 @@ module Wilhelm
           notify_observers(MESSAGE_RECEIVED, message: message)
         end
 
+        def data_sent(properties)
+          message = data?(properties)
+          data = generate_data(message)
+          add_to_output_buffer(data)
+        end
+
         private
+
+        # RECEIVE -------------------------------------------------------------
 
         def resolve_addresses(data)
           LOGGER.debug(PROG) { "#resolve_addresses(#{data})" }
@@ -42,8 +50,9 @@ module Wilhelm
           data
         end
 
+        # @deprecated I think?
         def resolve_idents(message)
-          LOGGER.debug(PROG) { "#resolve_addresses(#{message})" }
+          LOGGER.debug(PROG) { "#resolve_idents(#{message})" }
 
           from = @address_lookup_table.resolve_ident(message.from)
           message.sender = from
@@ -84,17 +93,43 @@ module Wilhelm
           @bus.device?(device_ident)
         end
 
-        def parse_data(data)
-          bus_message = DataAdapter.adapt(data)
+        # SEND ----------------------------------------------------------------
 
-          from_ident = bus_message.from
-          to_ident   = bus_message.to
-          command    = bus_message.command
-          args       = bus_message.arguments
+        # PARSE ---------------------------------------------------------------
+
+        def parse_data(data)
+          data = DataAdapter.adapt(data)
+
+          from_ident = data.from
+          to_ident   = data.to
+          command    = data.command
+          args       = data.arguments
 
           command_object = parse(from_ident, to_ident, command.i, args)
 
           Message.new(from_ident, to_ident, command_object)
+        end
+
+        # GENERATE ------------------------------------------------------------
+
+        def generate_data(message)
+          from    = message.from
+          to      = message.to
+          payload = message_data(message)
+
+          Data.new(from, to, payload)
+        end
+
+        def message_data(message)
+          # HACK: BaseCommand::Raw has no sender/receiver in scope!
+          message.command.load_command_config(message.from, message.to)
+          message.command.generate
+        end
+
+        def add_to_output_buffer(data)
+          result = @data_output_buffer.push(data)
+          LOGGER.debug(PROG) { "#add_to_output_buffer(#{data}) => #{result}" }
+          result
         end
       end
     end

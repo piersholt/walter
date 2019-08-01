@@ -50,26 +50,21 @@ module Wilhelm
           Thread.new do
             Thread.current[:name] = THREAD_NAME
             loop do
-              new_message = packet_output_buffer.pop
-              new_frame = multiplex(new_message)
+              new_data = packet_output_buffer.pop
+              new_frame = multiplex(new_data)
               distribute(frame_output_buffer, new_frame)
             end
             LOGGER.warn(name) { LOG_WRITE_THREAD_END }
           end
         end
 
-        def message_data(message)
-          # HACK: BaseCommand::Raw has no sender/receiver in scope!
-          message.command.load_command_config(message.from, message.to)
-          message.command.generate
-        end
-
-        def multiplex(message)
-          LOGGER.debug(name) { "#multiplex(#{message})" }
+        def multiplex(data)
+          LOGGER.debug(name) { "#multiplex(#{data})" }
           frame_builder = Frame::Builder.new
-          frame_builder.from = message.from
-          frame_builder.to = message.to
-          frame_builder.payload = message_data(message)
+
+          frame_builder.from = data.from
+          frame_builder.to = data.to
+          frame_builder.payload = data.payload
 
           frame = frame_builder.result
           LOGGER.debug(name) { "Frame build: [#{frame.h.join(' ')}]" }

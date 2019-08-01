@@ -9,6 +9,7 @@ module Wilhelm
           MESSAGE_RECEIVED = :message_received
           MESSAGE_SENT = :message_sent
           DATA_RECEIVED = :data_received
+          DATA_SENT = :data_sent
           PACKET_ROUTABLE = :packet_routable
 
           LAYER_EVENTS = constants.map { |c| const_get(c) }

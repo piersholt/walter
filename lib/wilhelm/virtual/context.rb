@@ -24,15 +24,16 @@ module Wilhelm
         application_listener = Listener::ApplicationListener.new
 
         interface_handler = Handler::InterfaceHandler.new(bus)
-        packet_handler = Handler::DataHandler.new(bus)
+        data_handler = Handler::DataHandler.new(bus, core_context.multiplexer.packet_output_buffer)
         display_handler = Handler::DisplayHandler.instance
-        message_handler =
-          Handler::MessageHandler.new(bus, core_context.multiplexer.packet_output_buffer)
+        message_handler = Handler::MessageHandler.new(bus)
 
         core_listener.interface_handler = interface_handler
-        core_listener.packet_handler = packet_handler
+        core_listener.data_handler = data_handler
+
         virtual_listener.message_handler = message_handler
         virtual_listener.display_handler = display_handler
+
         application_listener.display_handler = display_handler
 
         core_context.interface.add_observer(core_listener)
@@ -40,7 +41,9 @@ module Wilhelm
         application_object.add_observer(application_listener)
 
         # Convoluted: Listening for MESSAGE_RECEIVED
-        core_listener.packet_handler.add_observer(virtual_listener)
+        core_listener.data_handler.add_observer(virtual_listener)
+        # Convoluted: Listening for DATA_SENT
+        virtual_listener.message_handler.add_observer(core_listener)
 
         # MESSAGE_RECEIVED
         # bus_handler.add_observer(session_listener)

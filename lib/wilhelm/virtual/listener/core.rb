@@ -3,13 +3,13 @@
 module Wilhelm
   module Virtual
     module Listener
-      # CoreListener
+      # Listener::Core
       class CoreListener < Core::BaseHandler
         include LogActually::ErrorOutput
 
-        attr_accessor :packet_handler, :interface_handler
+        attr_accessor :data_handler, :interface_handler
 
-        NAME = 'CoreListener'
+        NAME = 'Listener::Core'
 
         def name
           NAME
@@ -19,7 +19,9 @@ module Wilhelm
           LOGGER.debug(name) { "#update(#{action}, #{properties})" }
           case action
           when DATA_RECEIVED
-            packet_handler&.data_received(properties)
+            data_handler&.data_received(properties)
+          when DATA_SENT
+            data_handler&.data_sent(properties)
           when BUS_ONLINE
             interface_handler&.bus_online
           when BUS_OFFLINE

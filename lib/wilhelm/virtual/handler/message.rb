@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual
@@ -7,15 +7,16 @@ module Wilhelm
       class MessageHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 
-        NAME = 'MessageHandler'.freeze
+        NAME = 'MessageHandler'
+        ERROR_RECIPIENT_NIL = 'Recipient is nil!'
+        ERROR_MESSAGE_NIL = 'Message is nil!'
 
         def name
           NAME
         end
 
-        def initialize(bus, packet_output_buffer)
+        def initialize(bus)
           @bus = bus
-          @packet_output_buffer = packet_output_buffer
           register_devices(@bus.devices)
           register_tx_devices(@bus.dynamic)
           register_for_broadcast(@bus.emulated)
@@ -31,7 +32,8 @@ module Wilhelm
         def message_sent(properties)
           # LOGGER.debug(name) { "#message_sent(#{action}, #{properties})" }
           message = message?(properties)
-          add_to_output_buffer(message)
+          changed
+          notify_observers(DATA_SENT, data: message)
         rescue StandardError => e
           with_backtrace(LOGGER, e)
         end
@@ -40,14 +42,14 @@ module Wilhelm
 
         def message?(properties)
           message = fetch(properties, :message)
-          raise(RoutingError, 'Message is nil!') unless message
+          raise(RoutingError, ERROR_MESSAGE_NIL) unless message
           message
         end
 
         def route_to_receivers(packet)
           # LOGGER.debug(self.class) { "#route_to_receivers" }
           recipient = packet.to
-          raise(RoutingError, 'Recipient is nil!') unless recipient
+          raise(RoutingError, ERROR_RECIPIENT_NIL) unless recipient
           observers = subscribers[recipient]
           raise(RoutingError, "No observers of #{recipient}") if observers.nil? || observers.empty?
           # return true
@@ -61,7 +63,7 @@ module Wilhelm
         def route_to_senders(packet)
           # LOGGER.debug(self.class) { "#route_to_senders" }
           sender = packet.from
-          raise(RoutingError, 'Recipient is nil!') unless sender
+          raise(RoutingError, ERROR_RECIPIENT_NIL) unless sender
           observers = publishers[sender]
           raise(RoutingError, "No observers of #{sender}") if observers.nil? || observers.empty?
           # return true
@@ -70,12 +72,6 @@ module Wilhelm
           end
         rescue RoutingError
           false
-        end
-
-        def add_to_output_buffer(message)
-          result = @packet_output_buffer.push(message)
-          LOGGER.debug(name) { "#add_to_output_buffer(#{message}) => #{result}" }
-          result
         end
 
         def register_devices(devices)
