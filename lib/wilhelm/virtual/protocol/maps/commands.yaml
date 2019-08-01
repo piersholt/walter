@@ -3529,100 +3529,213 @@
     :short_name: TXT-A5
     :long_name: Unknown
   :klass: ParameterizedCommand
-  :index:
-    :layout: 0
-    :padding: 1
-    :zone: 2
-    :chars: !ruby/range
-              begin: 3
-              end: -1
-              excl: false
-  :parameters:
-    :layout:
-      :type: :map
-      :dictionary:
-        0x60: Menu A
-        0x61: Menu B
-        0x62: Header
-        0x63: Static
-    :padding:
-      :type: :map
-      :dictionary:
-        0: Do nothing?
-        1: No Padding
-        2: Pad 1
-        3: Pad 2
-        4: Pad 3
-        5: Pad 4
-        6: Pad 5
-        7: Pad 6
-        8: Pad 7
-        9: Pad 8
-        10: Pad 9
-        11: Pad 10
-        12: Pad 11
-        13: Pad 12
-        14: Pad 13
-        15: Pad 14
-        16: Pad 15
-        17: Pad 16
-        18: Pad 17
-    :zone:
-      :type: :bit_array
-      :index:
-        :flash: 0
-        :block: 1
-        :flush: 2
-        :zone: !ruby/range
-          begin: 5
-          end: 7
-          excl: false
-      :parameters:
-        :flash:
-          :type: :switch
-          :label: 'Flash'
-          :states:
-            0: :off
-            1: :on
-        :block:
-          :type: :switch
-          :label: 'Block'
-          :states:
-            0: :off
-            1: :on
-        :flush:
-          :type: :switch
-          :label: 'Flush'
-          :states:
-            0: :off
-            1: :on
-        :zone:
-          :type: :map
-          :label: 'Zone'
-          :map:
-            0b000: :none
+  :schemas:
+    - :tel
+    - :rad
+  :tel: # TXT-A5-TEL*
+    :properties:
+      :short_name: TXT-A5-TEL*
+      :long_name: Unknown
+    :klass: ParameterizedCommand
+    :index:
+      :layout: 0
+      :padding: 1
+      :zone: 2
+      :chars: !ruby/range
+                begin: 3
+                end: -1
+                excl: false
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0xf0: SMS Index
+          0xf1: SMS Message
+      :padding:
+        :type: :map
+        :dictionary:
+          0: Do nothing?
+          1: No Padding
+          2: Pad 1
+          3: Pad 2
+          4: Pad 3
+          5: Pad 4
+          6: Pad 5
+          7: Pad 6
+          8: Pad 7
+          9: Pad 8
+          10: Pad 9
+          11: Pad 10
+          12: Pad 11
+          13: Pad 12
+          14: Pad 13
+          15: Pad 14
+          16: Pad 15
+          17: Pad 16
+          18: Pad 17
+      :zone:
+        :type: :bit_array
+        :index:
+          # NOTE it's flash on 0xf1
+          :selected: 0
+          :block: 1
+          :flush: 2
+          :zone: !ruby/range
+            begin: 3
+            end: 7
+            excl: false
+        :parameters:
+          :selected:
+            :type: :switch
+            :label: 'Default'
+            :states:
+              0: :off
+              1: :on
+          :block:
+            :type: :switch
+            :label: 'Block'
+            :states:
+              0: :off
+              1: :on
+          :flush:
+            :type: :switch
+            :label: 'Flush'
+            :states:
+              0: :off
+              1: :on
+          :zone:
+            :type: :map
+            :label: 'Zone'
+            :map:
+              0b000: :none
 
-            0b001: :a
-            0b010: :b
-            0b011: :c
-            0b100: :d
-            0b101: :e
+              0b001: :a
+              0b010: :b
+              0b011: :c
+              0b100: :d
+              0b101: :e
 
-            0b110: :h2
-            0b111: :h3
-          :dictionary:
-            0b0_0000: '0'
+              0b110: :h2
+              0b111: :h3
+            :dictionary:
+              0b0_0000: '0'
 
-            0b001: 'A/1'
-            0b010: 'B/2'
-            0b011: 'C/3'
-            0b100: 'D/4'
-            0b101: 'E/5'
+              0b001: 'A/1'
+              0b010: 'B/2'
+              0b011: 'C/3'
+              0b100: 'D/4'
+              0b101: 'E/5'
 
-            0b110: 'H2/6'
-            0b111: 'H3/7'
-    :chars:
-      :type: :chars
+              0b110: 'H2/6'
+              0b111: 'H3/7'
+      :chars:
+        :type: :chars
+  :rad: # TXT-A5-RAD*
+    :properties:
+      :short_name: TXT-A5-TEL*
+      :long_name: Unknown
+    :klass: ParameterizedCommand
+    :index:
+      :layout: 0
+      :padding: 1
+      :zone: 2
+      :chars: !ruby/range
+                begin: 3
+                end: -1
+                excl: false
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0x60: Menu A
+          0x61: Menu B
+          0x62: Header
+          0x63: Static
+      :padding:
+        :type: :map
+        :dictionary:
+          0: Do nothing?
+          1: No Padding
+          2: Pad 1
+          3: Pad 2
+          4: Pad 3
+          5: Pad 4
+          6: Pad 5
+          7: Pad 6
+          8: Pad 7
+          9: Pad 8
+          10: Pad 9
+          11: Pad 10
+          12: Pad 11
+          13: Pad 12
+          14: Pad 13
+          15: Pad 14
+          16: Pad 15
+          17: Pad 16
+          18: Pad 17
+      :zone:
+        :type: :bit_array
+        :index:
+          :default: 0
+          :block: 1
+          :flush: 2
+          :back: 3
+          :zone: !ruby/range
+            begin: 5
+            end: 7
+            excl: false
+        :parameters:
+          :back:
+            :type: :switch
+            :label: 'Back'
+            :states:
+              0: :off
+              1: :on
+          :default:
+            :type: :switch
+            :label: 'Default'
+            :states:
+              0: :off
+              1: :on
+          :block:
+            :type: :switch
+            :label: 'Block'
+            :states:
+              0: :off
+              1: :on
+          :flush:
+            :type: :switch
+            :label: 'Flush'
+            :states:
+              0: :off
+              1: :on
+          :zone:
+            :type: :map
+            :label: 'Zone'
+            :map:
+              0b000: :none
+
+              0b001: :a
+              0b010: :b
+              0b011: :c
+              0b100: :d
+              0b101: :e
+
+              0b110: :h2
+              0b111: :h3
+            :dictionary:
+              0b0_0000: '0'
+
+              0b001: 'A/1'
+              0b010: 'B/2'
+              0b011: 'C/3'
+              0b100: 'D/4'
+              0b101: 'E/5'
+
+              0b110: 'H2/6'
+              0b111: 'H3/7'
+      :chars:
+        :type: :chars
   :meta:
     :notes:
       - 540 RAD sending this to GFX
