@@ -22,6 +22,8 @@ module Wilhelm
                   "a5 #{d2h(layout)} #{d2h(padding)} #{d2h(index)} #{genc(length)}"
                 end
 
+                alias g_a5 generate_a5
+
                 def generate_21(layout, m2, index, length = 10)
                   "21 #{d2h(layout)} #{d2h(m2)} #{d2h(index)} #{genc(length)}"
                 end

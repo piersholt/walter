@@ -14,9 +14,7 @@ module Wilhelm
               include Generate
               include Menu
 
-              def render(layout, chars = nil)
-                LOGGER.unknown('SMS') { "#render(#{layout}, #{chars})" }
-                chars = generate_a5(layout, PADDING_NONE, INDEX_ZERO, Random.rand(5..10)) unless chars
+              def render(layout)
                 draw_a5(
                   layout: layout,
                   padding: PADDING_NONE,
