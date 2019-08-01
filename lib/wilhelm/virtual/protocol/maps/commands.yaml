@@ -249,7 +249,7 @@
       - 0x10: Unrecognised command?
 
 
-0x23: # LCD-RAD-23 / LCD-TEL-23
+0x23: # TXT-23 / TEL-23*
   :id:
     :d: 35
     :h: '0x23'
@@ -467,10 +467,10 @@
               begin: 2
               end: -1
               excl: false
-  :tel: # LCD-TEL-23
+  :tel: # TEL-23*
     :klass: MediaDisplay
     :properties:
-      :short_name: TEL-23
+      :short_name: TEL-23*
       :long_name: Update Text Display (BMBT, IKE)
     :index:
       :gfx: 0
@@ -488,12 +488,14 @@
           0x0_2: '[ANZV] On Call HFS [🔊]' # [197]
 
           # to: IKE
-          0x4_0: '[IKE] Clear Post Call?'  # ""
-          0x4_1: '[IKE] Radio Mode On'     # ""
+          0x4_0: '[IKE] Clear End Call?'  # ""
+          0x4_1: '[IKE] Clear (R/T Radio Mode)'     # ""
           0x4_2: '[IKE] Contact'           # "TEL1-MessageBank"
           0x4_3: '[IKE] Contact Call'      # "TEL    98272742"
 
           # to: GFX
+          0x0_5: '[Pin] Number Add'
+
           0x5_2: '[Directory] Contact Name'         # "MUM"
           0x5_3: '[Directory] Contact Number/Clear' # "98272742"
 
@@ -508,7 +510,6 @@
           # This is used when there was no SIM card inserted.
           # It just had emergency button from memory
           0x0_0: '[Telephone] Title?'
-          0x0_5: '[Pin] Title?'
           0x9_0: '[Info] Title?'
           # This might have been "SOS: 112!"?
           0xc_0: '[SOS] Title?'
