@@ -54,6 +54,8 @@ module Wilhelm
           binding.pry
         end
 
+        LOG_BUILD_COMMAND = '#build_command'
+
         def build_command(command_config, parameter_values_hash)
           LOGGER.debug(PROG) { LOG_BUILD_COMMAND }
           command_builder = command_config.builder
