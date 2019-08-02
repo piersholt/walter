@@ -570,7 +570,7 @@
     - :ike
     - :rad
   :parameters:
-    :gfx:
+    :field:
       :type: :map
       :dictionary:
         0x00: --
@@ -583,7 +583,7 @@
     :chars:
       :type: :chars
   :index:
-    :gfx: 0
+    :field: 0
     :ike: 1
     :chars: !ruby/range
               begin: 2
@@ -596,7 +596,7 @@
       :short_name: ANZV-VAR-IKE*
       :long_name: OBC Display (IKE, GFX)
     :parameters:
-      :gfx:
+      :field:
         :type: :map
         :dictionary:
           # SETTINGS
@@ -631,7 +631,7 @@
       :chars:
         :type: :chars
     :index:
-      :gfx: 0
+      :field: 0
       :ike: 1
       :chars: !ruby/range
                 begin: 2
@@ -644,7 +644,7 @@
       :short_name: ANZV-VAR-RAD*
       :long_name: OBC Display (IKE, GFX)
     :parameters:
-      :gfx:
+      :field:
         :type: :map
         :dictionary:
           0x40: Radio HUD
@@ -657,7 +657,7 @@
       :chars:
         :type: :chars
     :index:
-      :gfx: 0
+      :field: 0
       :ike: 1
       :chars: !ruby/range
                 begin: 2
@@ -670,14 +670,14 @@
       :short_name: ANZV-VAR-TEL*
       :long_name: Update Info
     :index:
-      :gfx: 0
+      :field: 0
       :ike: 1
       :chars: !ruby/range
                 begin: 2
                 end: -1
                 excl: false
     :parameters:
-      :gfx:
+      :field:
         :type: :map
         :dictionary:
           0x80: (Incoming) Header 0x80
