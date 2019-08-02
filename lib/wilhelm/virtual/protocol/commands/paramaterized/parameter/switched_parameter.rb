@@ -32,27 +32,31 @@ module Wilhelm
       SWITCH_DOUBLE   = 'Double'
       SWITCH_TONE     = 'Tone'
 
+      SWITCH_INACTIVE = 'OFF'
+
       SWITCH_STATE_MAP = {
         off:       [:as_normal, SWITCH_OFF],
-        on:        [:as_good, SWITCH_ON],
+        on:        [:as_green,  SWITCH_ON],
         closed:    [:as_normal, SWITCH_CLOSED],
-        open:      [:as_warn, SWITCH_OPEN],
-        ok:        [:as_good, SWITCH_OK],
-        fault:     [:as_bad, SWITCH_FAULT],
-        unpowered: [:as_warn, SWITCH_OFF],
-        powered:   [:as_good, SWITCH_ON],
-        press:     [:as_good, SWITCH_PRESS],
-        hold:      [:as_good, SWITCH_HOLD],
-        release:   [:as_good, SWITCH_RELEASE],
-        disabled:  [:as_good, SWITCH_DISABLED],
-        enabled:   [:as_good, SWITCH_ENABLED],
-        blink:     [:as_warn, SWITCH_BLINK],
-        single:    [:as_warn, SWITCH_SINGLE],
-        double:    [:as_warn, SWITCH_DOUBLE],
-        tone:      [:as_warn, SWITCH_TONE]
+        open:      [:as_yellow, SWITCH_OPEN],
+        ok:        [:as_green,  SWITCH_OK],
+        fault:     [:as_red,    SWITCH_FAULT],
+        unpowered: [:as_yellow, SWITCH_OFF],
+        powered:   [:as_green,  SWITCH_ON],
+        press:     [:as_green,  SWITCH_PRESS],
+        hold:      [:as_green,  SWITCH_HOLD],
+        release:   [:as_green,  SWITCH_RELEASE],
+        disabled:  [:as_green,  SWITCH_DISABLED],
+        enabled:   [:as_green,  SWITCH_ENABLED],
+        blink:     [:as_yellow, SWITCH_BLINK],
+        single:    [:as_yellow, SWITCH_SINGLE],
+        double:    [:as_yellow, SWITCH_DOUBLE],
+        tone:      [:as_yellow, SWITCH_TONE],
+        inactive:  [:as_blue,   SWITCH_INACTIVE]
       }.freeze
 
-      LIGHT_GREEN = 92
+      LIGHT_GREEN  = 92
+      BLUE         = 34
       COLOUR_RESET = 3
 
       attr_reader :label, :states
@@ -93,20 +97,30 @@ module Wilhelm
         public_send(*switch_state)
       end
 
-      def as_bad(bit)
+      def as_red(bit)
         as_colour(bit, LogActually::Constants::RED)
       end
 
-      def as_warn(bit)
+      alias as_bad as_red
+
+      def as_yellow(bit)
         as_colour(bit, LogActually::Constants::YELLOW)
       end
 
-      def as_good(bit)
+      alias as_warn as_yellow
+
+      def as_green(bit)
         as_colour(bit, LIGHT_GREEN)
       end
 
+      alias as_good as_green
+
       def as_normal(bit)
         as_colour(bit, COLOUR_RESET)
+      end
+
+      def as_blue(bit)
+        as_colour(bit, BLUE)
       end
 
       def as_colour(string, colour_id)

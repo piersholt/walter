@@ -600,28 +600,28 @@
         :type: :map
         :dictionary:
           # SETTINGS
-          0x01: (Draw) Time           # "17:27  "
-          0x02: (Draw) Date           # "22.07.2019"
+          0x01: (Settings) Time           # "17:27  "
+          0x02: (Settings) Date           # "22.07.2019"
 
           # ON-BOARD COMPUTER
-          0x03: (Draw) Temperature    # "+14.5"
-          0x04: (Draw) Consump. 1     # "--.- L/100"
-          0x05: (Draw) Consump. 2     # "--.- L/100"
-          0x06: (Draw) Range          # " 59 MLS"
-          0x07: (Draw) Distance       # "   5 MLS"
-          0x08: (Draw) Arrival        # "17:39  "
-          0x09: (Draw) Limit          # "--- MPH "
-          0x0a: (Draw) Avg. Speed     # "--.- MPH "
-          0x0e: (Draw) Timer          # "13.0  SEC "
-          0x1a: (Draw) Timer (Lap)    # " 6.2  SEC "
+          0x03: (OBC) Temperature    # "+14.5"
+          0x04: (OBC) Consump. 1     # "--.- L/100"
+          0x05: (OBC) Consump. 2     # "--.- L/100"
+          0x06: (OBC) Range          # " 59 MLS"
+          0x07: (OBC) Distance       # "   5 MLS"
+          0x08: (OBC) Arrival        # "17:39  "
+          0x09: (OBC) Limit          # "--- MPH "
+          0x0a: (OBC) Avg. Speed     # "--.- MPH "
+          0x0e: (OBC) Timer          # "13.0  SEC "
+          0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
 
           # AUX. HEAT/VENTILATION
-          0x0f: (Draw) Aux. Timer 1
-          0x10: (Draw) Aux. Timer 2
+          0x0f: (Heat/Vent) Aux. Timer 1
+          0x10: (Heat/Vent) Aux. Timer 2
 
           # CODE
           # Wait X minutes.
-          0x16: '(Draw) Emergency Disarm'
+          0x16: '(Code) Emergency Disarm'
       :ike:
         :type: :map
         :dictionary:
@@ -665,7 +665,7 @@
                 excl: false
   # 0x24 ANZV-VAR-TEL*
   :tel:
-    :klass: MediaDisplay
+    :klass: ParameterizedCommand
     :properties:
       :short_name: ANZV-VAR-TEL*
       :long_name: Update Info
@@ -730,23 +730,23 @@
       :parameters:
         :memo:
           :type: :switch
-          :label: 'Memo'
+          :label: '(Settings) Memo'
           :states:
-            0b00: :off
+            0b00: :inactive
             0b01: :on
             0b10: :on
             0b11: :on
         :timer:
           :type: :switch
-          :label: 'Timer'
+          :label: '(OBC) Timer'
           :states:
-            0: :off
+            0: :inactive
             1: :on
         :limit:
           :type: :switch
-          :label: 'Limit'
+          :label: '(OBC) Limit'
           :states:
-            0b0: :off
+            0b0: :inactive
             0b1: :on
     :control_b:
       :type: :bit_array
@@ -761,33 +761,33 @@
       :parameters:
         :code:
           :type: :switch
-          :label: 'Code'
+          :label: '[Code] Lock'
           :states:
-            0: :off
+            0: :inactive
             1: :on
         :aux_heating:
           :type: :switch
-          :label: 'Aux Heating'
+          :label: '(Aux) Heating'
           :states:
-            0: :off
+            0: :inactive
             1: :on
         :aux_timer_2:
           :type: :switch
-          :label: 'Aux Timer 2'
+          :label: '(Aux) Timer 2'
           :states:
-            0: :off
+            0: :inactive
             1: :on
         :aux_ventilation:
           :type: :switch
-          :label: 'Aux Ventilation'
+          :label: '(Aux) Ventilation'
           :states:
-            0: :off
+            0: :inactive
             1: :on
         :aux_timer_1:
           :type: :switch
-          :label: 'Aux Timer 1'
+          :label: '(Aux) Timer 1'
           :states:
-            0: :off
+            0: :inactive
             1: :on
   :meta:
     :senders:
@@ -4141,27 +4141,27 @@
     :d: 64
     :h: '0x40'
   :properties:
-    :short_name: OBC-VAR
-    :long_name: Set OBC Data
+    :short_name: CONF-VAR
+    :long_name: Configuration variables.
   :klass: ParameterizedCommand
   :parameters:
     :field:
       :type: :map
       :dictionary:
         # SETTINGS
-        0x01: Input Time
-        0x02: Input Date
+        0x01: (Settings) Time
+        0x02: (Settings) Date
 
         # ON-BOARD COMPUTER
-        0x07: Input Distance
-        0x09: Input Limit
+        0x07: (OBC) Distance
+        0x09: (OBC) Limit
 
         # CODE
-        0x0D: Input Code
+        0x0D: (Code) Code
 
         # AUX. VENTILATION
-        0x0F: Input Aux. Timer 1
-        0x10: Input Aux. Timer 2
+        0x0F: (Aux.) Timer 1
+        0x10: (Aux.) Timer 2
     :input:
       :type: :data
   :index:
@@ -4177,34 +4177,34 @@
     :h: '0x41'
   :klass: ParameterizedCommand
   :properties:
-    :short_name: OBC-BOOL
-    :long_name: OBC Data Request
+    :short_name: CONF-BOOL
+    :long_name: Configuration discrete.
   :parameters:
     :field:
       :type: :map
       :dictionary:
         # SETTINGS
-        0x01: Time                    # [Variable Request]
-        0x02: Date                    # [Variable Request]
-        0x0c: Memo                    # [On, Off]
-        0x0d: TBC Memo
+        0x01: (Settings) Time               # [Variable Request]
+        0x02: (Settings) Date               # [Variable Request]
+        0x0c: (Settings) Memo               # [On, Off]
+        0x0d: (Settings) TBC Memo
 
         # ON-BOARD COMPUTER
-        0x03: Temperature             # [Variable Request]
-        0x04: Consump. 1              # [Recalculate]
-        0x05: Consump. 2              # [Recalculate]
-        0x06: Range                   # [Variable Request]
-        0x07: Distance                # [Variable Request]
-        0x08: Arrival                 # [Variable Request]
-        0x09: Limit                   # [On, Off]
-        0x0a: Avg. Speed              # [Recalculate]
-        0x0e: Timer                   # [On, Off]
-        0x1a: Timer (Lap)             # [Lap]
-        0x1b: TBC Aux/Heat?
+        0x03: (OBC) Temperature             # [Variable Request]
+        0x04: (OBC) Consump. 1              # [Recalculate]
+        0x05: (OBC) Consump. 2              # [Recalculate]
+        0x06: (OBC) Range                   # [Variable Request]
+        0x07: (OBC) Distance                # [Variable Request]
+        0x08: (OBC) Arrival                 # [Variable Request]
+        0x09: (OBC) Limit                   # [On, Off]
+        0x0a: (OBC) Avg. Speed              # [Recalculate]
+        0x0e: (OBC) Timer                   # [On, Off]
+        0x1a: (OBC) Timer (Lap)             # [Lap]
+        0x1b: (OBC) TBC Aux/Heat?
 
         # AUX. HEAT/VENTILATION
-        0x0f: Aux. Timer 1            # [On, Off]
-        0x10: Aux. Timer 2            # [On, Off]
+        0x0f: (Aux.) Timer 1                # [On, Off]
+        0x10: (Aux.) Timer 2                # [On, Off]
 
     :control:
       :type: :map
