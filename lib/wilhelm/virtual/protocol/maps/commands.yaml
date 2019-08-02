@@ -3203,6 +3203,7 @@
             0b0000: :mfl_null
         :button_state:
           :type: :switch
+          :label: 'State:'
           :states:
             0b00: :press
             0b01: :hold
@@ -3337,7 +3338,7 @@
       :parameters:
         :totally_unique_variable_name:
           :type: :map
-          :label: 'Index'
+          :label: 'Index:'
           :dictionary:
             0x0_f: "[Select]"
             0x3_8: "[Info]"
@@ -3500,6 +3501,15 @@
                         end: 2
                         excl: false
       :parameters:
+        :button_id:
+          :type: :map
+          :label: 'Index:'
+          :states:
+            0x01: :check_control
+            0x02: :unknown
+          :dictionary:
+            0x01: Check Control
+            0x02: 'Not Check button?'
         :button_state:
           :type: :switch
           :label: 'State:'
@@ -3511,12 +3521,6 @@
             0b00: Press
             0b01: Hold
             0b10: Release
-        :button_id:
-          :type: :map
-          :label: 'Index:'
-          :dictionary:
-            0x01: Check Control
-            0x02: 'Not Check button?'
   :notes:
     - only press and relea
 # ************************************************************************* #
@@ -4002,6 +4006,7 @@
               0x0a: '10'
           :state:
             :type: :switch
+            :label: 'State:'
             :states:
               0b00: :press
               0b01: :hold
@@ -4070,7 +4075,7 @@
         :parameters:
           :id:
             :type: :map
-            :label: 'ID:'
+            :label: 'Index:'
             :dictionary:
               0x00: 0
               0x01: 1
@@ -4102,6 +4107,7 @@
               0x1f: Directory
           :state:
             :type: :switch
+            :label: 'State:'
             :states:
               0b00: :press
               0b01: :hold
