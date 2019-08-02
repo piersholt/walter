@@ -4117,54 +4117,12 @@
               0b01: Hold
               0b10: Release
   :meta:
-    :commands:
-      - 00 00 0D Directory Forward Page Start
-      - 00 00 2D Directory Forward Page Scroll
-      - 00 00 4D Directory Forward Page Stop
-      - 00 00 0C Directory Back Page Start
-      - 00 00 2C Directory Back Page Start
-      - 00 00 4C Directory Back Page Start
-
-      # TOP 8 (MAIN SCREEN) ---------------------------------------------------
-
-      # Navigation
-      - 80 07 1F Directory
-      - 80 07 1E Dial
-      - 80 08 0A Info
-
-      # Function
-      - 80 01 00 Select Top 8 Contact 1
-      - 80 01 02 Select Top 8 Contact 2
-
-      # INFO ------------------------------------------------------------------
-
-      # Navigation
-      - 20 07 1F Directory Index (from Info)
-      - 20 07 1E Dial (from Info)
-
-      # DIAL ------------------------------------------------------------------
-
-      # Navigation
-      - 42 08 0A Info (from Dial)
-      - 42 07 1F Directory Index (from Dial)
-
-      # DIRECTORY -------------------------------------------------------------
-
-      # Navigation
-      - 43 07 1E Dial (from Directory)
-      - 43 08 0A Info (from Directory)
-
-      # Function
-      - 43 01 00 Select Directory Contact 1
-      - 43 01 02 Select Directory Contact 2
-      - 43 01 04 Select Directory Contact 3
-
-
-    :examples:
-      - 17:43:00 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
-      - 17:43:01 [INFO ] GFX   	TEL   	TEL-DATA      	00 05 08
-      - 17:43:01 [INFO ] TEL   	GFX   	TXT-MEDIA 	C0 | Set IKE	"SOS: 112!"
-      - 17:43:01 [INFO ] BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
+    :sos:
+      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
+      - Open SOS from default layout ->
+      - GFX   	TEL   	TEL-DATA    00 05 08
+      - 'TEL   	GFX   	TXT-MEDIA 	C0 20	"SOS: 112!"'
+      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 
 # ************************************************************************* #
 #                         ON BOARD COMPUTER (OBC)
