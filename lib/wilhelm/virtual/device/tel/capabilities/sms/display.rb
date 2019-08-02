@@ -19,9 +19,12 @@ module Wilhelm
                   layout: layout,
                   padding: PADDING_NONE,
                   zone: INDEX_ZERO,
-                  chars: chars
+                  chars: STRING_BLANK
                 )
               end
+
+              alias render_header render
+              alias render_menu render
 
               def draw_row_21(layout, m2, index, chars)
                 draw_21(
@@ -32,8 +35,30 @@ module Wilhelm
                 )
               end
 
-              alias render_header render
-              alias render_menu render
+              def draw_row_a5(layout, padding, zone, chars)
+                draw_a5(
+                  layout: layout,
+                  padding: padding,
+                  zone: zone,
+                  chars: chars
+                )
+              end
+
+              def draw_row_23(layout, ike, chars)
+                draw_23(
+                  gfx: layout,
+                  ike: ike,
+                  chars: chars
+                )
+              end
+
+              def draw_row_24(layout, ike, chars)
+                anzv_var_tel(
+                  field: layout,
+                  ike: ike,
+                  chars: chars
+                )
+              end
             end
           end
         end

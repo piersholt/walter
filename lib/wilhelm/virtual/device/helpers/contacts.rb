@@ -28,6 +28,7 @@ module Wilhelm
           CONTACT_PAGE_SIZE = 2
           CONTACT_DELIMITER = 6
 
+          # @deprecated
           def generate_contacts(number_of_contacts = 1, contacts_per_group = CONTACT_PAGE_SIZE, inversed = false)
             group_count = number_of_contacts.fdiv(contacts_per_group).ceil
 

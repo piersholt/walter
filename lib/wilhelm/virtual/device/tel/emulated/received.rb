@@ -29,10 +29,10 @@ module Wilhelm
             def handle_input(command)
               # @note filter HOLD and RELEASE
               return false unless press?(command)
-              logger.unknown(PROC) { '#handle_input(command)' }
+              logger.debug(PROC) { '#handle_input(command)' }
 
               case command.layout.value
-              when LAYOUT_NONE
+              when LAYOUT_DEFAULT
                 false
               when LAYOUT_INFO
                 false
@@ -53,18 +53,18 @@ module Wilhelm
               # @todo use layout to work out when to clear
 
               case command.function.value
-              when FUNCTION_RECENT
-                # delegate_contact
+              when FUNCTION_DEFAULT
+                delegate_default(command.layout, command.button)
               when FUNCTION_CONTACT
                 delegate_contact(command.layout, command.button)
               when FUNCTION_DIGIT
-                delegate_dial(command.button)
+                delegate_digit(command.layout, command.button)
               when FUNCTION_SOS
-                delegate_sos
+                delegate_sos(command.layout)
               when FUNCTION_NAVIGATE
-                delegate_navigation(command.button)
+                delegate_navigation(command.layout, command.button)
               when FUNCTION_INFO
-                delegate_function_info
+                delegate_info(command.layout)
               end
             end
 
@@ -78,56 +78,114 @@ module Wilhelm
               button.parameters[:state].value
             end
 
+            def layout_id(layout)
+              layout.value
+            end
+
             def press?(command)
               button_state(command.button) == INPUT_PRESS
             end
 
-            def delegate_contact(layout, button)
-              logger.unknown(PROC) { "#delegate_contact(#{button})" }
+            def delegate_default(layout, button)
+              logger.unknown(PROC) { "#delegate_default(#{layout}, #{button})" }
               index = button_id(button)
-              logger.unknown(PROC) { FUNCTIONS[FUNCTION_CONTACT][index] }
+              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_DEFAULT][index] }
 
               case layout.value
-              when LAYOUT_DIRECTORY
-                directory_name("Directory. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
-              when LAYOUT_TOP_8
-                top_8_name("Top 8. #{FUNCTIONS[FUNCTION_CONTACT][index]}")
+              when LAYOUT_DEFAULT
+                case index
+                when RECENT_BACK
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][RECENT_BACK] }
+                when RECENT_FORWARD
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][RECENT_FORWARD] }
+                end
+              when LAYOUT_SMS_INDEX
+                case index
+                when (ACTION_SMS_1..ACTION_SMS_10)
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][index] }
+                  generate_sms_show
+                when ACTION_SMS_11
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_11] }
+                when ACTION_SMS_BACK
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_BACK] }
+                  open_dial
+                when ACTION_SMS_LEFT
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_LEFT] }
+                when ACTION_SMS_RIGHT
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_RIGHT] }
+                when ACTION_SMS_CENTRE
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_CENTRE] }
+                end
+              when LAYOUT_SMS_SHOW
+                case index
+                when ACTION_SMS_BACK
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_BACK] }
+                  generate_sms_index
+                when ACTION_SMS_LEFT
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_LEFT] }
+                when ACTION_SMS_RIGHT
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_RIGHT] }
+                when ACTION_SMS_CENTRE
+                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_CENTRE] }
+                end
               end
             end
 
-            def delegate_dial(button)
-              logger.unknown(PROC) { "#delegate_dial(#{button})" }
+            def delegate_contact(layout, button)
+              logger.unknown(PROC) { "#delegate_contact(#{layout}, #{button})" }
               index = button_id(button)
-              logger.unknown(PROC) { FUNCTIONS[FUNCTION_DIGIT][index] }
-              return dial_number_remove if index == ACTION_REMOVE
-              dial_number(FUNCTIONS[FUNCTION_DIGIT][index])
+              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_CONTACT][index] }
+
+              case layout.value
+              when LAYOUT_DIRECTORY
+                directory_name(INPUT_MAP[layout.value][FUNCTION_CONTACT][index])
+              when LAYOUT_TOP_8
+                top_8_name(INPUT_MAP[layout.value][FUNCTION_CONTACT][index])
+              end
             end
 
-            def delegate_sos
-              logger.unknown(PROC) { "#delegate_sos" }
-              logger.unknown(PROC) { FUNCTIONS[FUNCTION_SOS][ACTION_SOS_OPEN] }
+            def delegate_digit(layout, button)
+              logger.unknown(PROC) { "#delegate_digit(#{layout}, #{button})" }
+              index = button_id(button)
+              case layout.value
+              when LAYOUT_PIN
+                logger.unknown(PROC) { "Pin: #{INPUT_MAP[layout.value][FUNCTION_DIGIT][index]}" }
+                return pin_delete if index == ACTION_PIN_DELETE
+                return pin_flush & open_dial if index == ACTION_PIN_OK
+                pin_number(INPUT_MAP[LAYOUT_PIN][FUNCTION_DIGIT][index])
+              when LAYOUT_DIAL
+                logger.unknown(PROC) { "Dial: #{INPUT_MAP[layout.value][FUNCTION_DIGIT][index]}" }
+                return dial_delete if index == ACTION_DIAL_DELETE
+                dial_number(INPUT_MAP[LAYOUT_DIAL][FUNCTION_DIGIT][index])
+              end
+            end
+
+            def delegate_sos(layout)
+              logger.unknown(PROC) { "#delegate_sos(#{layout})" }
+              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_SOS][ACTION_SOS_OPEN] }
               open_sos
             end
 
-            def delegate_navigation(button)
-              logger.unknown(PROC) { "#delegate_navigation(#{button})" }
+            def delegate_navigation(layout, button)
+              logger.unknown(PROC) { "#delegate_navigation(#{layout}, #{button})" }
               index = button_id(button)
               case index
               when ACTION_DIAL_OPEN
-                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_DIAL_OPEN] }
+                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_DIAL_OPEN] }
                 open_dial
               when ACTION_SMS_OPEN
-                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_SMS_OPEN] }
+                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_SMS_OPEN] }
+                generate_sms_index
               when ACTION_DIR_OPEN
-                logger.unknown(PROC) { FUNCTIONS[FUNCTION_NAVIGATE][ACTION_DIR_OPEN] }
+                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_DIR_OPEN] }
                 generate_directory
               else
               end
             end
 
-            def delegate_function_info
-              logger.unknown(PROC) { "#delegate_function_info" }
-              logger.unknown(PROC) { FUNCTIONS[FUNCTION_INFO][ACTION_INFO_OPEN] }
+            def delegate_info(layout)
+              logger.unknown(PROC) { "#delegate_info" }
+              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_INFO][ACTION_INFO_OPEN] }
               open_info
             end
 

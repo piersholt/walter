@@ -39,7 +39,7 @@ module Wilhelm
               logger.unknown(MOD_PROG) { "#directory_contact_list(#{contacts})" }
               contacts.each do |contact|
                 delimitered_contact = delimiter_contact(contact)
-                logger.unknown(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
+                logger.debug(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
                 draw_21(layout: LAYOUT_DIRECTORY, m3: M3_BLOCK, chars: delimitered_contact)
               end
               render_directory
