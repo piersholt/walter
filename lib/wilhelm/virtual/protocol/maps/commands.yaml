@@ -3504,7 +3504,7 @@
         :button_id:
           :type: :map
           :label: 'Index:'
-          :states:
+          :map:
             0x01: :check_control
             0x02: :unknown
           :dictionary:
@@ -3521,8 +3521,8 @@
             0b00: Press
             0b01: Hold
             0b10: Release
-  :notes:
-    - only press and relea
+  :meta:
+    - only press and release
 # ************************************************************************* #
 #                               DISPLAYS
 # ************************************************************************* #
@@ -3557,6 +3557,9 @@
         :dictionary:
           0xf0: SMS Index
           0xf1: SMS Show
+        :map:
+          0xf0: :sms_index
+          0xf1: :sms_show
       :padding:
         :type: :map
         :dictionary:
@@ -3592,7 +3595,7 @@
         :parameters:
           :selected:
             :type: :switch
-            :label: 'Default'
+            :label: 'Selected'
             :states:
               0: :off
               1: :on
@@ -3637,7 +3640,7 @@
         :type: :chars
   :rad: # TXT-A5-RAD*
     :properties:
-      :short_name: TXT-A5-TEL*
+      :short_name: TXT-A5-RAD*
       :long_name: Unknown
     :klass: ParameterizedCommand
     :index:
@@ -3656,6 +3659,12 @@
           0x61: Menu B
           0x62: Header
           0x63: Static
+        :map:
+          0x00: :no_source
+          0x60: :rds_1
+          0x61: :rds_2
+          0x62: :rds_title
+          0x63: :rds_static
       :padding:
         :type: :map
         :dictionary:
@@ -4042,7 +4051,7 @@
           0x20: :info
           0x42: :dial
           0x43: :directory
-          0x80: :top 8
+          0x80: :top_8
           0xf0: :sms_index
           0xf1: :sms_show
       :function:
