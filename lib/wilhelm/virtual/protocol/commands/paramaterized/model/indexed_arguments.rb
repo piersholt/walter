@@ -13,7 +13,8 @@ module Wilhelm
 
       def lookup(name)
         parameter_index = @index[name]
-        d[parameter_index]
+        # @note DSP-SET does not always have second arg...
+        d[parameter_index] || default(name, parameter_index)
       end
 
       def parameters
