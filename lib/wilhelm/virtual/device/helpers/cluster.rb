@@ -38,7 +38,7 @@ module Wilhelm
             "format_chars!: chars must be String, but is #{chars_string.class}"
           end
 
-          def chars_array?(chars_string)
+          def char_array?(chars_string)
             return false unless chars_string.is_a?(Array)
             return false unless chars_string.all? { |i| i.is_a?(Integer) }
             true
