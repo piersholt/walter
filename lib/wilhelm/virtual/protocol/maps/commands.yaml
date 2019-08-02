@@ -1072,6 +1072,7 @@
   :index:
     :status: 0
   :meta:
+    # - 0x41 will cause IGN reply
     :desc: ''
     :recipients:
       0xFF: GLO-H
@@ -2119,6 +2120,9 @@
     :short_name: DSP-SET
     :long_name: DSP EQ. Button
   :klass: ParameterizedCommand
+  :index:
+    :mode: 0
+    :adjustment: 1
   :parameters:
     :mode:
       :type: :map
@@ -2137,176 +2141,41 @@
         0x2e: Memo 3
 
         0x90: Room
-    :level:
-      :type: :map
-      :dictionary:
-        0x00: Neutral/Room Level 0
-        0x01: Room Level 1
-        0x02: Room Level 2
-        0x03: Room Level 3
-        0x04: Room Level 4
-        0x05: Room Level 5
-        0x06: Room Level 6
-        0x07: Room Level 7
 
-        0x20: Echo Level 0
-        0x21: Echo Level 1
-        0x22: Echo Level 2
-        0x23: Echo Level 3
-        0x24: Echo Level 4
-        0x25: Echo Level 5
-        0x26: Echo Level 6
-        0x27: Echo Level 7
-
-        0x01: 80hz +1
-        0x02: 80hz +2
-        0x03: 80hz +3
-        0x04: 80hz +4
-        0x05: 80hz +5
-        0x06: 80hz +6
-        0x07: 80hz +7
-        0x08: 80hz +8
-        0x09: 80hz +9
-        0x0a: 80hz +10
-        0x11: 80hz -1
-        0x12: 80hz -2
-        0x13: 80hz -3
-        0x14: 80hz -4
-        0x15: 80hz -5
-        0x16: 80hz -6
-        0x17: 80hz -7
-        0x18: 80hz -8
-        0x19: 80hz -9
-        0x1a: 80hz -10
-
-        0x21: 200hz +1
-        0x22: 200hz +2
-        0x23: 200hz +3
-        0x24: 200hz +4
-        0x25: 200hz +5
-        0x26: 200hz +6
-        0x27: 200hz +7
-        0x28: 200hz +8
-        0x29: 200hz +9
-        0x2a: 200hz +10
-        0x31: 200hz -1
-        0x32: 200hz -2
-        0x33: 200hz -3
-        0x34: 200hz -4
-        0x35: 200hz -5
-        0x36: 200hz -6
-        0x37: 200hz -7
-        0x38: 200hz -8
-        0x39: 200hz -9
-        0x3a: 200hz -10
-
-        0x41: 500hz +1
-        0x42: 500hz +2
-        0x43: 500hz +3
-        0x44: 500hz +4
-        0x45: 500hz +5
-        0x46: 500hz +6
-        0x47: 500hz +7
-        0x48: 500hz +8
-        0x49: 500hz +9
-        0x4a: 500hz +10
-        0x51: 500hz -1
-        0x52: 500hz -2
-        0x53: 500hz -3
-        0x54: 500hz -4
-        0x55: 500hz -5
-        0x56: 500hz -6
-        0x57: 500hz -7
-        0x58: 500hz -8
-        0x59: 500hz -9
-        0x5a: 500hz -10
-
-        0x61: 1khz +1
-        0x62: 1khz +2
-        0x63: 1khz +3
-        0x64: 1khz +4
-        0x65: 1khz +5
-        0x66: 1khz +6
-        0x67: 1khz +7
-        0x68: 1khz +8
-        0x69: 1khz +9
-        0x6a: 1khz +10
-        0x71: 1khz -1
-        0x72: 1khz -2
-        0x73: 1khz -3
-        0x74: 1khz -4
-        0x75: 1khz -5
-        0x76: 1khz -6
-        0x77: 1khz -7
-        0x78: 1khz -8
-        0x79: 1khz -9
-        0x7a: 1khz -10
-
-        0x81: 2khz +1
-        0x82: 2khz +2
-        0x83: 2khz +3
-        0x84: 2khz +4
-        0x85: 2khz +5
-        0x86: 2khz +6
-        0x87: 2khz +7
-        0x88: 2khz +8
-        0x89: 2khz +9
-        0x8a: 2khz +10
-        0x91: 2khz -1
-        0x92: 2khz -2
-        0x93: 2khz -3
-        0x94: 2khz -4
-        0x95: 2khz -5
-        0x96: 2khz -6
-        0x97: 2khz -7
-        0x98: 2khz -8
-        0x99: 2khz -9
-        0x9a: 2khz -10
-
-        0xa1: 5khz +1
-        0xa2: 5khz +2
-        0xa3: 5khz +3
-        0xa4: 5khz +4
-        0xa5: 5khz +5
-        0xa6: 5khz +6
-        0xa7: 5khz +7
-        0xa8: 5khz +8
-        0xa9: 5khz +9
-        0xaa: 5khz +10
-        0xb1: 5khz -1
-        0xb2: 5khz -2
-        0xb3: 5khz -3
-        0xb4: 5khz -4
-        0xb5: 5khz -5
-        0xb6: 5khz -6
-        0xb7: 5khz -7
-        0xb8: 5khz -8
-        0xb9: 5khz -9
-        0xba: 5khz -10
-
-        0xc1: 12khz +1
-        0xc2: 12khz +2
-        0xc3: 12khz +3
-        0xc4: 12khz +4
-        0xc5: 12khz +5
-        0xc6: 12khz +6
-        0xc7: 12khz +7
-        0xc8: 12khz +8
-        0xc9: 12khz +9
-        0xca: 12khz +10
-        0xd1: 12khz -1
-        0xd2: 12khz -2
-        0xd3: 12khz -3
-        0xd4: 12khz -4
-        0xd5: 12khz -5
-        0xd6: 12khz -6
-        0xd7: 12khz -7
-        0xd8: 12khz -8
-        0xd9: 12khz -9
-        0xda: 12khz -10
-  :index:
-    :mode: 0
-    :level: 1
+        0xff: 'Unsure?'
+    :adjustment:
+      :type: :bit_array
+      :index:
+        :frequency: !ruby/range
+                  begin: 0
+                  end: 2
+                  excl: false
+        :sign: 3
+        :magnitude: !ruby/range
+                  begin: 4
+                  end: 7
+                  excl: false
+      :parameters:
+        :frequency:
+          :type: :map
+          :label: 'Band:'
+          :dictionary:
+            0b000: 80hz
+            0b001: 200hz
+            0b010: 500hz
+            0b011: 1khz
+            0b100: 2khz
+            0b101: 5khz
+            0b110: 12khz
+        :sign:
+          :type: :map
+          :label: '±:'
+          :dictionary:
+            0b0: '+'
+            0b1: '-'
+        :magnitude:
+          :label: 'Magnitude:'
+          :type: :integer
 0x35:
   :id:
     :d: 53
@@ -2315,6 +2184,9 @@
     :short_name: DSP-REP
     :long_name: DSP Reply
   :klass: ParameterizedCommand
+  :index:
+    :mode: 0
+    :adjustment: 1
   :parameters:
     :mode:
       :type: :map
@@ -2333,176 +2205,39 @@
         0x2e: Memo 3
 
         0x90: Room
-    :level:
-      :type: :map
-      :dictionary:
-        0x00: Neutral/Room Level 0
-        0x01: Room Level 1
-        0x02: Room Level 2
-        0x03: Room Level 3
-        0x04: Room Level 4
-        0x05: Room Level 5
-        0x06: Room Level 6
-        0x07: Room Level 7
-
-        0x20: Echo Level 0
-        0x21: Echo Level 1
-        0x22: Echo Level 2
-        0x23: Echo Level 3
-        0x24: Echo Level 4
-        0x25: Echo Level 5
-        0x26: Echo Level 6
-        0x27: Echo Level 7
-
-        0x01: 80hz +1
-        0x02: 80hz +2
-        0x03: 80hz +3
-        0x04: 80hz +4
-        0x05: 80hz +5
-        0x06: 80hz +6
-        0x07: 80hz +7
-        0x08: 80hz +8
-        0x09: 80hz +9
-        0x0a: 80hz +10
-        0x11: 80hz -1
-        0x12: 80hz -2
-        0x13: 80hz -3
-        0x14: 80hz -4
-        0x15: 80hz -5
-        0x16: 80hz -6
-        0x17: 80hz -7
-        0x18: 80hz -8
-        0x19: 80hz -9
-        0x1a: 80hz -10
-
-        0x21: 200hz +1
-        0x22: 200hz +2
-        0x23: 200hz +3
-        0x24: 200hz +4
-        0x25: 200hz +5
-        0x26: 200hz +6
-        0x27: 200hz +7
-        0x28: 200hz +8
-        0x29: 200hz +9
-        0x2a: 200hz +10
-        0x31: 200hz -1
-        0x32: 200hz -2
-        0x33: 200hz -3
-        0x34: 200hz -4
-        0x35: 200hz -5
-        0x36: 200hz -6
-        0x37: 200hz -7
-        0x38: 200hz -8
-        0x39: 200hz -9
-        0x3a: 200hz -10
-
-        0x41: 500hz +1
-        0x42: 500hz +2
-        0x43: 500hz +3
-        0x44: 500hz +4
-        0x45: 500hz +5
-        0x46: 500hz +6
-        0x47: 500hz +7
-        0x48: 500hz +8
-        0x49: 500hz +9
-        0x4a: 500hz +10
-        0x51: 500hz -1
-        0x52: 500hz -2
-        0x53: 500hz -3
-        0x54: 500hz -4
-        0x55: 500hz -5
-        0x56: 500hz -6
-        0x57: 500hz -7
-        0x58: 500hz -8
-        0x59: 500hz -9
-        0x5a: 500hz -10
-
-        0x61: 1khz +1
-        0x62: 1khz +2
-        0x63: 1khz +3
-        0x64: 1khz +4
-        0x65: 1khz +5
-        0x66: 1khz +6
-        0x67: 1khz +7
-        0x68: 1khz +8
-        0x69: 1khz +9
-        0x6a: 1khz +10
-        0x71: 1khz -1
-        0x72: 1khz -2
-        0x73: 1khz -3
-        0x74: 1khz -4
-        0x75: 1khz -5
-        0x76: 1khz -6
-        0x77: 1khz -7
-        0x78: 1khz -8
-        0x79: 1khz -9
-        0x7a: 1khz -10
-
-        0x81: 2khz +1
-        0x82: 2khz +2
-        0x83: 2khz +3
-        0x84: 2khz +4
-        0x85: 2khz +5
-        0x86: 2khz +6
-        0x87: 2khz +7
-        0x88: 2khz +8
-        0x89: 2khz +9
-        0x8a: 2khz +10
-        0x91: 2khz -1
-        0x92: 2khz -2
-        0x93: 2khz -3
-        0x94: 2khz -4
-        0x95: 2khz -5
-        0x96: 2khz -6
-        0x97: 2khz -7
-        0x98: 2khz -8
-        0x99: 2khz -9
-        0x9a: 2khz -10
-
-        0xa1: 5khz +1
-        0xa2: 5khz +2
-        0xa3: 5khz +3
-        0xa4: 5khz +4
-        0xa5: 5khz +5
-        0xa6: 5khz +6
-        0xa7: 5khz +7
-        0xa8: 5khz +8
-        0xa9: 5khz +9
-        0xaa: 5khz +10
-        0xb1: 5khz -1
-        0xb2: 5khz -2
-        0xb3: 5khz -3
-        0xb4: 5khz -4
-        0xb5: 5khz -5
-        0xb6: 5khz -6
-        0xb7: 5khz -7
-        0xb8: 5khz -8
-        0xb9: 5khz -9
-        0xba: 5khz -10
-
-        0xc1: 12khz +1
-        0xc2: 12khz +2
-        0xc3: 12khz +3
-        0xc4: 12khz +4
-        0xc5: 12khz +5
-        0xc6: 12khz +6
-        0xc7: 12khz +7
-        0xc8: 12khz +8
-        0xc9: 12khz +9
-        0xca: 12khz +10
-        0xd1: 12khz -1
-        0xd2: 12khz -2
-        0xd3: 12khz -3
-        0xd4: 12khz -4
-        0xd5: 12khz -5
-        0xd6: 12khz -6
-        0xd7: 12khz -7
-        0xd8: 12khz -8
-        0xd9: 12khz -9
-        0xda: 12khz -10
-  :index:
-    :mode: 0
-    :level: 1
+    :adjustment:
+      :type: :bit_array
+      :index:
+        :frequency: !ruby/range
+                  begin: 0
+                  end: 2
+                  excl: false
+        :sign: 3
+        :magnitude: !ruby/range
+                  begin: 4
+                  end: 7
+                  excl: false
+      :parameters:
+        :frequency:
+          :type: :map
+          :label: 'Band:'
+          :dictionary:
+            0b000: 80hz
+            0b001: 200hz
+            0b010: 500hz
+            0b011: 1khz
+            0b100: 2khz
+            0b101: 5khz
+            0b110: 12khz
+        :sign:
+          :type: :map
+          :label: '±:'
+          :dictionary:
+            0b0: '+'
+            0b1: '-'
+        :magnitude:
+          :label: 'Magnitude:'
+          :type: :integer
 0x36:
   :id:
     :d: 54
@@ -3534,7 +3269,6 @@
   :properties:
     :short_name: TXT-A5
     :long_name: Unknown
-  :klass: ParameterizedCommand
   :schemas:
     - :tel
     - :rad
@@ -4046,7 +3780,7 @@
           0xf0: SMS Index
           0xf1: SMS Show
         :map:
-          0x00: :no_source
+          0x00: :default
           0x05: :pin
           0x20: :info
           0x42: :dial
@@ -4547,22 +4281,6 @@
   :id:
     :d: 88
     :h: '0x58'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-53:
-  :id:
-    :d: 53
-    :h: '0x35'
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: BaseCommand
-53:
-  :id:
-    :d: 53
-    :h: '0x35'
   :properties:
     :short_name: "???"
     :long_name: Unknown

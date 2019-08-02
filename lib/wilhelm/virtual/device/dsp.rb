@@ -2,4 +2,5 @@
 
 puts "\tLoading wilhelm/virtual/device/dsp"
 
+require_relative 'dsp/api'
 require_relative 'dsp/emulated'
