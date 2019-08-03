@@ -8,7 +8,7 @@ module Wilhelm
         module Parse
           def integers_to_byte_array(*integers)
             byte_array = integers.map do |i|
-              Wilhelm::Core::Byte.new(:decimal, i)
+              Wilhelm::Core::Byte.new(i)
             end
             Core::Bytes.new(byte_array)
           end

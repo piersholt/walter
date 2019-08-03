@@ -105,10 +105,10 @@ module Wilhelm
         def map_nested_arguments(args)
           args.map do |d|
             if d.instance_of?(Array)
-              array_of_bytes = d.map { |i| Core::Byte.new(:decimal, i) }
+              array_of_bytes = d.map { |i| Core::Byte.new(i) }
               Core::Bytes.new(array_of_bytes)
             else
-              Core::Byte.new(:decimal, d)
+              Core::Byte.new(d)
             end
           end&.flatten
         rescue StandardError => e

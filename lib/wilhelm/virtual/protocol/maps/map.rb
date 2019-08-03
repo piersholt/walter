@@ -22,9 +22,10 @@ module Wilhelm
       end
 
       def find(key)
-        # LOGGER.debug("#{self.class.superclass}") { "#find(#{key})" }
-        raise(IndexError, "no objet with key #{key}") unless map.key?(key)
-        map[key]
+        LOGGER.debug(self.class.name) { "#find(#{key}) => #{key.class}" }
+        search_key = key.respond_to?(:magnitude) ? key.magnitude : key
+        raise(IndexError, "no objet with key #{key}") unless map.key?(search_key)
+        map.fetch[search_key]
       end
 
       def map

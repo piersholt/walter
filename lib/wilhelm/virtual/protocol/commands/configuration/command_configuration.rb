@@ -93,7 +93,7 @@ module Wilhelm
 
       def parse_command(mapped_command)
         command_id = @command_hash[:default_id]
-        id_byte = Core::Byte.new(:decimal, command_id)
+        id_byte = Core::Byte.new(command_id)
         @command_hash[:id] = id_byte
         @id = id_byte
         @normal_fucking_decimal = command_id

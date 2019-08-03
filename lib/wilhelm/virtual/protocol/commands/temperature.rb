@@ -52,7 +52,7 @@ module Wilhelm
           end
 
           def parse_reading(reading)
-            reading.d
+            reading
           end
         end
       end

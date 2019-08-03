@@ -12,6 +12,8 @@ module Wilhelm
         include Helpers
         include Generate
 
+        MASK_BINARY    = '%8.8b'
+        MASK_HEX       = '%2.2x'
         PADDED_DEFAULT = true
 
         attr_accessor :id, :short_name, :long_name, :arguments, :verbose
@@ -27,11 +29,11 @@ module Wilhelm
         end
 
         def normal_fucking_decimal
-          id.d
+          id
         end
 
         def ==(other_command)
-          self.d == other_command.d
+          id == other.id
         end
 
         # -------------------------------- OBJECT ------------------------------- #
@@ -56,16 +58,14 @@ module Wilhelm
 
         # ----------------------------- PROPERTIES ------------------------------ #
 
-        def d
-          @id.d
-        end
+        alias d id
 
         def b
-          @id.b
+          @b ||= format(MASK_BINARY, @id)
         end
 
         def h
-          @id.h
+          @h ||= format(MASK_HEX, @id)
         end
 
         def sn(padded = PADDED_DEFAULT)

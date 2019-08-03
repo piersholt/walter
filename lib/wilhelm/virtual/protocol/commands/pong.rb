@@ -31,7 +31,7 @@ module Wilhelm
         end
 
         def alt?
-          @argument_map[:status].d >= '0x40'.hex
+          @argument_map[:status] >= 0x40
         end
 
         private

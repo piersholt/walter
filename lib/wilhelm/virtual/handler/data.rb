@@ -105,7 +105,7 @@ module Wilhelm
           command    = data.command
           args       = data.arguments
 
-          command_object = parse(from_ident, to_ident, command.i, args)
+          command_object = parse(from_ident, to_ident, command, args)
 
           Message.new(from_ident, to_ident, command_object)
         end

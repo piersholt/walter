@@ -42,7 +42,7 @@ module Wilhelm
           LOGGER.unknown(PROC) { instance_variable_get(:@leds) }
           LOGGER.unknown(PROC) { public_methods(false) }
 
-          @pretty_leds ||= parse_led_state(ByteBasic.new(@leds.value, :integer))
+          @pretty_leds ||= parse_led_state(@leds.value)
         end
 
         # def map_arguments(arguments)
@@ -51,7 +51,7 @@ module Wilhelm
 
         # @return String "◼︎ ◼︎ ◼︎"
         def parse_led_state(state_byte)
-          state_key = state_byte.d
+          state_key = state_byte
           state_map = lookup_state_map(state_key)
           led_states = parse_state_map(state_map)
           led_states.join(' ')
