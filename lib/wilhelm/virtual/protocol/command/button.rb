@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class Button < BaseCommand
+      class Button < Base
         attr_reader :button_state, :totally_unique_variable_name
 
         def initialize(id, props)

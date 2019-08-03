@@ -5,7 +5,7 @@
       :short_name: NEW
       :long_name: Unknown
       :verbose: true
-    :klass: BaseCommand
+    :klass: Base
 
 
 # ************************************************************************* #
@@ -17,14 +17,14 @@
   :properties:
     :short_name: MID-21
     :long_name: MID Display
-  :klass: BaseCommand
+  :klass: Base
   :schemas:
     - :tel
     - :rad
   # SCHEMA 0x21 MID-RAD-21*
   :rad:
     :id: 33
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: MID-RAD-21*
       :long_name: MID Display
@@ -153,7 +153,7 @@
   # SCHEMA 0x21 MID-TEL-21
   :tel:
     :id: 33
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: MID-TEL-21
       :long_name: MID Display
@@ -221,7 +221,7 @@
   :properties:
     :short_name: GFX-CACHE
     :long_name: GFX Cache
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :status:
       :type: :integer
@@ -550,7 +550,7 @@
   :properties:
     :short_name: ANZV-VAR
     :long_name: OBC Display (IKE, GFX)
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :schemas:
     - :tel
     - :ike
@@ -577,7 +577,7 @@
               excl: false
   # 0x24 ANZV-VAR-IKE*
   :ike:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: ANZV-VAR-IKE*
       :long_name: OBC Display (IKE, GFX)
@@ -625,7 +625,7 @@
                 excl: false
   # 0x24 ANZV-VAR-RAD*
   :rad:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: ANZV-VAR-RAD*
       :long_name: OBC Display (IKE, GFX)
@@ -651,7 +651,7 @@
                 excl: false
   # 0x24 ANZV-VAR-TEL*
   :tel:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: ANZV-VAR-TEL*
       :long_name: Update Info
@@ -697,7 +697,7 @@
 
 0x2A: # ANZV-BOOL-IKE
   :id: 42
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :properties:
     :short_name: ANZV-BOOL-IKE
     :long_name: IKE to ANZV OBC Display
@@ -785,7 +785,7 @@
   :properties:
     :short_name: ANZV-LED-TEL
     :long_name: Telephone LEDs on BMBT
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :leds: 0
   :parameters:
@@ -894,7 +894,7 @@
             1: :on
   :index:
     :status: 0
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :meta:
     :status:
       - 0: messages?
@@ -921,7 +921,7 @@
     :verbose: true
     :short_name: LATLONG
     :long_name: GPS Coordinates
-  :klass: BaseCommand
+  :klass: Base
   :index:
     :signal: 0
     :latitude_hours: !ruby/range
@@ -959,7 +959,7 @@
   :schemas:
     - :dia
   :dia:
-    :klass: BaseCommand
+    :klass: Base
     :properties:
       :short_name: EWS-END
       :long_name: Diagnostics Control
@@ -969,35 +969,35 @@
   :properties:
     :short_name: ADDR
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 0xA7:
   :id: 167
   :properties:
     :short_name: A7-SRC-GFX
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 0xA9:
   :id: 169
   :properties:
     :short_name: NAV-A9
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 0xAB:
   :id: 171
   :properties:
     :short_name: AB-UI?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 0xAF:
   :id: 175
   :properties:
     :short_name: AF-SES?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 # ************************************************************************* #
 #                             BUS DEVICE STATUS
@@ -1008,7 +1008,7 @@
     :short_name: PING
     :long_name: Status Request
     :verbose: false
-  :klass: BaseCommand
+  :klass: Base
 0x02:
   :id: 2
   :properties:
@@ -1021,7 +1021,7 @@
       0x31: 'External Offline Reset'
       0x40: 'Alt. Reply'
       0x41: 'Alt. Announce'
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :status:
       :type: :map
@@ -1115,7 +1115,7 @@
   :properties:
     :short_name: B-PING
     :long_name: BUS Status Request
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     - only a single message
     - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
@@ -1127,13 +1127,13 @@
   :properties:
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
-  :klass: BaseCommand
+  :klass: Base
 0x11:
   :id: 17
   :properties:
     :short_name: IGN
     :long_name: Ignition Status Response
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :position:
       :type: :bit_array
@@ -1188,7 +1188,7 @@
   :properties:
     :short_name: REMOTE
     :long_name: Remote Central Locking
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :b1:
       :type: :bit_array
@@ -1236,7 +1236,7 @@
   :properties:
     :short_name: KEY-REQ
     :long_name: Key Status Request
-  :klass: BaseCommand
+  :klass: Base
 0x74:
   :properties:
     :short_name: KEY
@@ -1293,7 +1293,7 @@
   :properties:
     :short_name: MEM-LOAD
     :long_name: Memory
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :status: 0
   :parameters:
@@ -1330,7 +1330,7 @@
   :properties:
     :short_name: SEN-REQ
     :long_name: IKE Sensor Status REQ
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :senders:
       - CCM
@@ -1505,13 +1505,13 @@
   :properties:
     :short_name: CNTRY-REQ
     :long_name: Country Coding Status Request
-  :klass: BaseCommand
+  :klass: Base
 0x15:
   :id: 21
   :properties:
     :short_name: CNTRY
     :long_name: Country Coding Status Response
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :language:
       :type: :map
@@ -1590,7 +1590,7 @@
   :properties:
     :short_name: LIGHT-SEN
     :long_name: Luminosity Reading?
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :lum:
       :type: :integer
@@ -1607,13 +1607,13 @@
   :properties:
     :short_name: ODO-REQ
     :long_name: Odometer Request
-  :klass: BaseCommand
+  :klass: Base
 0x17:
   :id: 23
   :properties:
     :short_name: ODO
     :long_name: Odometer Response
-  :klass: BaseCommand
+  :klass: Base
   :meta:
       :senders:
         - IKE
@@ -1641,7 +1641,7 @@
   :properties:
     :short_name: LAMP-REQ
     :long_name: Lamp Status Request
-  :klass: BaseCommand
+  :klass: Base
 0x5B:
   :id: 91
   :properties:
@@ -1738,7 +1738,7 @@
   :properties:
     :short_name: CLSTR
     :long_name: Cluster Backlight
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :light: 0
   :parameters:
@@ -1759,7 +1759,7 @@
   :properties:
     :short_name: CLSTR-REQ?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :notes:
       - always from IKE 0x80 to LCM 0xD0
@@ -1781,13 +1781,13 @@
   :properties:
     :short_name: DOOR-REQ
     :long_name: Door/Flag Request Status
-  :klass: BaseCommand
+  :klass: Base
 0x7A:
   :id: 122
   :properties:
     :short_name: DOOR
     :long_name: Door/Flap Status
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :byte1:
       :type: :bit_array
@@ -1908,7 +1908,7 @@
   :properties:
     :short_name: VEH-REQ
     :long_name: Vehicle Status Request
-  :klass: BaseCommand
+  :klass: Base
 0x54:
   :id: 84
   :schemas:
@@ -1916,7 +1916,7 @@
   :properties:
     :short_name: VEH
     :long_name: Vehicle Status
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :vin:
       :type: :chars
@@ -1944,7 +1944,7 @@
                   end: 12
                   excl: false
   :dia:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: VEH*
       :long_name: Diagnostics Control
@@ -1973,7 +1973,7 @@
   :properties:
     :short_name: SI
     :long_name: Service Interval Usage
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :odometer: !ruby/range
                 begin: 0
@@ -2002,7 +2002,7 @@
   :properties:
     :short_name: TEMP-REQ
     :long_name: Temperature Request
-  :klass: BaseCommand
+  :klass: Base
 0x19:
   :id: 25
   :properties:
@@ -2019,7 +2019,7 @@
   :properties:
     :short_name: UTC
     :long_name: UTC time and date
-  :klass: BaseCommand
+  :klass: Base
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
@@ -2028,7 +2028,7 @@
   :properties:
     :short_name: DSP-SET
     :long_name: DSP EQ. Button
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :mode: 0
     :adjustment: 1
@@ -2090,7 +2090,7 @@
   :properties:
     :short_name: DSP-REP
     :long_name: DSP Reply
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :mode: 0
     :adjustment: 1
@@ -2150,7 +2150,7 @@
   :properties:
     :short_name: RAD-EQ
     :long_name: Radio EQ Control
-  :klass: BaseCommand
+  :klass: Base
   # TODO: this should be a bit array
   :parameters:
     :setting:
@@ -2262,7 +2262,7 @@
   :properties:
     :short_name: RAD-ALT
     :long_name: Radio Alternative Function
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :mode:
       :type: :map
@@ -2311,7 +2311,7 @@
   :properties:
     :short_name: UI-CFG
     :long_name: Radio UI Config.
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :config:
       :type: :bit_array
@@ -2357,7 +2357,7 @@
   :properties:
     :short_name: UI-RAD
     :long_name: Radio UI Requests
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :state:
       :type: :bit_array
@@ -2437,7 +2437,7 @@
       - BMBT
 0x4B:
   :id: 75
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :properties:
     :short_name: SRC?
     :long_name: Audio Device Control
@@ -2475,7 +2475,7 @@
   :properties:
     :short_name: SRC-SND
     :long_name: Select external audio input for tv?
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :source: 0
     :b2: 1
@@ -2503,14 +2503,14 @@
   :properties:
     :short_name: RDS?
     :long_name: Channel list?
-  :klass: BaseCommand
+  :klass: Base
 
 0x38:
   :id: 56
   :properties:
     :short_name: CDC-REQ
     :long_name: CD Status Request
-  :klass: CDChangerRequest
+  :klass: Parameterized::CDChangerRequest
   :parameters:
     :control:
       :type: :map
@@ -2536,7 +2536,7 @@
   :properties:
     :short_name: CDC
     :long_name: CDC Status
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :control: 0
     :status: 1
@@ -2662,7 +2662,7 @@
   :index:
     :action: 0
     :nav: 1
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :meta:
     :senders:
       - GFX (0x3B)
@@ -2690,7 +2690,7 @@
         0x00: No Warnings
   :index:
     :status: 0
-  :klass: BaseCommand
+  :klass: Base
   :notes:
     - only ever from CCM
     - followed by 0x52 from
@@ -2699,7 +2699,7 @@
   :properties:
     :short_name: CCM-?
     :long_name: Unknown
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :b1: 0
     :b2: 1
@@ -2769,7 +2769,7 @@
   :properties:
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
-  :klass: MFLFunction
+  :klass: Parameterized::MFLFunction
   :index:
     :action: 0
   :parameters:
@@ -2833,7 +2833,7 @@
   :properties:
     :short_name: MLF-VOL
     :long_name: Multifunction Steering Wheel (Volume)
-  :klass: MFLVolume
+  :klass: Parameterized::MFLVolume
   :index:
     :action: 0
   :parameters:
@@ -2901,7 +2901,7 @@
     :properties:
       :short_name: BMBT-VOL*
       :long_name: BMBT Volume Control
-    :klass: MFLVolume
+    :klass: Parameterized::MFLVolume
     :index:
       :action: 0
     :parameters:
@@ -2929,7 +2929,7 @@
   :properties:
     :short_name: BMBT-INFO
     :long_name: Unknown
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :button: 1
   :parameters:
@@ -2972,7 +2972,7 @@
   :properties:
     :short_name: BMBT-BTN-1
     :long_name: BMBT Buttons
-  :klass: ButtonParameterized
+  :klass: Parameterized::Button
   :index:
     :action: 0
   :parameters:
@@ -3060,7 +3060,7 @@
   :properties:
     :short_name: BMBT-BTN-2
     :long_name: BMBT Buttons
-  :klass: MFLVolume
+  :klass: Parameterized::MFLVolume
   :index:
     :action: 0
   :parameters:
@@ -3088,7 +3088,7 @@
   :properties:
     :short_name: IKE-BTN
     :long_name: IKE Check Control
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :index:
     :action: 0
   :parameters:
@@ -3135,7 +3135,7 @@
   :properties:
     :short_name: TXT-A5
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :schemas:
     - :tel
     - :rad
@@ -3143,7 +3143,7 @@
     :properties:
       :short_name: TXT-A5-TEL*
       :long_name: Unknown
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :index:
       :layout: 0
       :padding: 1
@@ -3243,7 +3243,7 @@
     :properties:
       :short_name: TXT-A5-RAD*
       :long_name: Unknown
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :index:
       :layout: 0
       :padding: 1
@@ -3494,7 +3494,7 @@
   :properties:
     :short_name: HUD-STATUS
     :long_name: IKE Text Status?
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :hud_status:
       :type: :map
@@ -3512,7 +3512,7 @@
     :properties:
       :short_name: DIA-PDC
       :long_name: Test PDC Sensors
-    :klass: BaseCommand
+    :klass: Base
   :meta:
     :examples:
       - TEL   	IKE   	23        40 20,
@@ -3542,7 +3542,7 @@
   :properties:
     :short_name: TEL-OPEN
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :examples:
       - from GFX 02 0C
@@ -3553,7 +3553,7 @@
     - :tel
     - :rad
   :rad:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: INPUT-RAD*
       :long_name: Radio Menu Soft Buttom
@@ -3617,7 +3617,7 @@
               0b01: Hold
               0b10: Release
   :tel:
-    :klass: ParameterizedCommand
+    :klass: Parameterized::Base
     :properties:
       :short_name: INPUT-TEL*
       :long_name: Telephone Menu Soft Buttom
@@ -3733,7 +3733,7 @@
   :properties:
     :short_name: CONF-VAR
     :long_name: Configuration variables.
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :parameters:
     :field:
       :type: :map
@@ -3763,7 +3763,7 @@
 
 0x41: # OBC-BOOL
   :id: 65
-  :klass: ParameterizedCommand
+  :klass: Parameterized::Base
   :properties:
     :short_name: CONF-BOOL
     :long_name: Configuration discrete.
@@ -3820,7 +3820,7 @@
   :properties:
     :short_name: NAV-IHKA-REQ
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :notes:
       - send by :nav_eu???? to IKHA
@@ -3829,7 +3829,7 @@
   :properties:
     :short_name: NAV-IHKA-REP
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :notes:
       - reply from IHKA to nav_eu
@@ -3846,7 +3846,7 @@
   :properties:
     :short_name: DIA-HELLO
     :long_name: Module General Information (and Ping)
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :senders:
       - DIA
@@ -3869,14 +3869,14 @@
   :properties:
     :short_name: DIA-IDENT?
     :long_name: Diagnostics?
-  :klass: BaseCommand
+  :klass: Base
 # ------------------------------ ERRORS ------------------------------ #
 4:
   :id: 4
   :properties:
     :short_name: DIA-ERR-READ
     :long_name: BUS Status Reponse
-  :klass: BaseCommand
+  :klass: Base
   :meta:
   :notes:
     - send when reading error memory
@@ -3900,11 +3900,11 @@
   :properties:
     :short_name: DIA-ERR-DEL
     :long_name: Diagnostics Clear Error Memeory?
-  :klass: BaseCommand
+  :klass: Base
   :schemas:
     - :gfx
   :gfx:
-    :klass: BaseCommand
+    :klass: Base
     :properties:
       :short_name: LCD-SET
       :long_name: LCD Brightness
@@ -3931,14 +3931,14 @@
   :properties:
     :short_name: DIA-COD-READ
     :long_name: Diagnostics READ Coding Data Universal
-  :klass: BaseCommand
+  :klass: Base
 
 11:
   :id: 11
   :properties:
     :short_name: DIA-STATUS
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :notes:
       - radio got an error after this
@@ -3956,7 +3956,7 @@
     :short_name: DIA-VEH-CTRL
     :long_name: Vehicle Control
     :verbose: true
-  :klass: BaseCommand
+  :klass: Base
   # :parameters:
   #   :action:
   #     :type: :map
@@ -3978,48 +3978,48 @@
   :properties:
     :short_name: SLF_CHK
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 63:
   :id: 63
   :properties:
     :short_name: EHC-DIG
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 0x60:
   :id: 96
   :properties:
     :short_name: EWS-ISN?
     :long_name: Diagnostics?
-  :klass: BaseCommand
+  :klass: Base
 0x6B:
   :id: 107
   :properties:
     :short_name: EWS-INT
     :long_name: EWS Internal State
-  :klass: BaseCommand
+  :klass: Base
 
 0x69:
   :id: 105
   :properties:
     :short_name: EWS-COD?
     :long_name: Diagnostics?
-  :klass: BaseCommand
+  :klass: Base
 
 0x65:
   :id: 101
   :properties:
     :short_name: EWS-KEY
     :long_name: Diagnostics?
-  :klass: BaseCommand
+  :klass: Base
 
 0x9c:
   :id: 156
   :properties:
     :short_name: DIA-TRANS
     :long_name: Diagnostics Transport Mode?
-  :klass: BaseCommand
+  :klass: Base
   :parameters:
     :mode:
       :type: :switch
@@ -4038,7 +4038,7 @@
   :properties:
     :short_name: EWS-X?
     :long_name: Unknown?
-  :klass: BaseCommand
+  :klass: Base
 
 # ************************************************************************* #
 #                               MODULE RESPONSES
@@ -4049,7 +4049,7 @@
   :properties:
     :short_name: DIA-DATA
     :long_name: Diagnostics Data
-  :klass: BaseCommand
+  :klass: Base
 
 # ************************************************************************* #
 #                                  NOT SEEN YET
@@ -4059,11 +4059,11 @@
   :properties:
     :short_name: DIA-MEM-READ
     :long_name: Diagnostics Read Memory
-  :klass: BaseCommand
+  :klass: Base
   :schemas:
     - :bmbt
   :bmbt:
-    :klass: BaseCommand
+    :klass: Base
     :properties:
       :short_name: LCD-REP
       :long_name: LCD Brightness
@@ -4075,7 +4075,7 @@
   :properties:
     :short_name: DIA-MEM-WRITE
     :long_name: Diagnostics Write Memory
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     - if above is correct, then presumably the write...
 0x09:
@@ -4083,7 +4083,7 @@
   :properties:
     :short_name: DIA-COD-WRITE
     :long_name: Diagnostics WRITE Coding Data
-  :klass: BaseCommand
+  :klass: Base
 
 
 # ************************************************************************* #
@@ -4094,19 +4094,19 @@
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 51:
   :id: 51
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 131:
   :id: 131
   :properties:
     :short_name: IHK-?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :senders:
       - IHK
@@ -4115,44 +4115,44 @@
   :properties:
     :short_name: GM3-?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 66:
   :id: 66
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 67:
   :id: 67
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 68:
   :id: 68
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 97:
   :id: 97
   :properties:
     :short_name: EHC-STAT?
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 0x70:
   :id: 112
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
 
 118:
   :id: 118
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :senders:
       - LCM
@@ -4162,13 +4162,13 @@
     :properties:
       :short_name: "???"
       :long_name: Unknown
-    :klass: BaseCommand
+    :klass: Base
 191:
   :id: 191
   :properties:
     :short_name: "???"
     :long_name: Unknown
-  :klass: BaseCommand
+  :klass: Base
   :meta:
     :senders:
       0xD0: LCM

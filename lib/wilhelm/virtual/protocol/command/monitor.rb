@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class Monitor < BaseCommand
+      class Monitor < Base
 
         def initialize(id, props)
           super(id, props)

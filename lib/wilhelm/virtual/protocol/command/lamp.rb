@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class Lamp < BaseCommand
+      class Lamp < Base
         include Wilhelm::Helpers::DataTools
 
         def initialize(id, props)

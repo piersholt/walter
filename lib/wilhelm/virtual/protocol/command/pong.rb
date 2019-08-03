@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: 26 0x1A
-      class Pong < BaseCommand
+      class Pong < Base
 
         attr_accessor :status
 

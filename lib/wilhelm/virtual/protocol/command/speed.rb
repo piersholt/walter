@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: 25 0x19
-      class Speed < BaseCommand
+      class Speed < Base
 
         SPEED_UNIT = 'kmph'.freeze
         REV_UNIT = 'rpm'.freeze

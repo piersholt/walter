@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class IKESensors < BaseCommand
+      class IKESensors < Base
         include Wilhelm::Helpers::DataTools
         PROC = 'IKESensors'
         def initialize(id, props)

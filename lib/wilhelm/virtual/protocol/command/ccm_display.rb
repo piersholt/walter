@@ -24,7 +24,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: 26 0x1A
-      class CCMDisplay < BaseCommand
+      class CCMDisplay < Base
         include Helpers::DataTools
         attr_accessor :mode, :control, :chars
 

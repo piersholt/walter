@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: DECIMAL? HEX?
-      class OBCDisplay < BaseCommand
+      class OBCDisplay < Base
         # Arguments Map
         # 0: Mode
         # 1: Control

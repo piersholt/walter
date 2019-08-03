@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: 17 0x11
-      class Ignition < BaseCommand
+      class Ignition < Base
         attr_accessor :v1
 
         VALUE_MAP = { ignition: :v1 }.freeze

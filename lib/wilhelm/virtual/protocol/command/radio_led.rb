@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class RadioLED < BaseCommand
+      class RadioLED < Base
 
         def initialize(id, props)
           super(id, props)

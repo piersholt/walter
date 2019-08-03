@@ -7,7 +7,7 @@ module Wilhelm
   module Virtual
     class Command
       # Basic device class
-      class BaseCommand
+      class Base
         include Wilhelm::Helpers::DataTools
         include Helpers
         include Generate

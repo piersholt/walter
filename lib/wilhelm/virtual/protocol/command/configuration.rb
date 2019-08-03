@@ -19,10 +19,9 @@ module Wilhelm
         BIT_ARRAY = :bit_array
         TYPES     = [MAP, BIT_ARRAY, SWITCH].freeze
 
-        SCOPE                 = 'Wilhelm::Virtual'.freeze
-        NAMESPACE             = 'Command'.freeze
-        BASE                  = 'BaseCommand'.freeze
-        PARAMETERIZED         = 'ParameterizedCommand'.freeze
+        NAMESPACE             = 'Wilhelm::Virtual::Command'.freeze
+        BASE                  = 'Base'.freeze
+        PARAMETERIZED         = 'Parameterized::Base'.freeze
 
         BUILDER_BASE          = 'Builder'.freeze
         BUILDER_PARAMETERIZED = 'Builder::Parameterized'.freeze
@@ -97,11 +96,15 @@ module Wilhelm
         end
 
         def klass_constant
-          get_class(join_namespaces(SCOPE, NAMESPACE, klass))
+          get_class(join_namespaces(NAMESPACE, klass))
+        end
+
+        def base_command
+          get_class(join_namespaces(NAMESPACE, BASE))
         end
 
         def parameterized_command
-          get_class(join_namespaces(SCOPE, NAMESPACE, PARAMETERIZED))
+          get_class(join_namespaces(NAMESPACE, PARAMETERIZED))
         end
 
         def parameterized?
@@ -126,11 +129,11 @@ module Wilhelm
 
         def builder
           if parameters? && base?
-            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_BASE))
+            get_class(join_namespaces(NAMESPACE, BUILDER_BASE))
           elsif parameters?
-            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_PARAMETERIZED))
+            get_class(join_namespaces(NAMESPACE, BUILDER_PARAMETERIZED))
           else
-            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_BASE))
+            get_class(join_namespaces(NAMESPACE, BUILDER_BASE))
           end
         end
 

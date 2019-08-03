@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class Key < BaseCommand
+      class Key < Base
 
         def initialize(id, props)
           super(id, props)

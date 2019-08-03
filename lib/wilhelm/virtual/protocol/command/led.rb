@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
-      class LED < BaseCommand
+      class LED < Base
         # attr_reader :led_state
 
         # LEDS = %i{yellow red green}

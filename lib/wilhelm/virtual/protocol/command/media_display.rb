@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # 35 / 0x24
-      class MediaDisplay < BaseCommand
+      class MediaDisplay < Base
         attr_accessor :text, :chars, :gfx, :ike
 
         def initialize(id, props)

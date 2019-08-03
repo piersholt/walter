@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     class Command
       # ID: 25 0x19
-      class Temperature < BaseCommand
+      class Temperature < Base
         attr_accessor :a1, :a2, :a3
 
         TEMP_UNIT = '°C'.freeze
