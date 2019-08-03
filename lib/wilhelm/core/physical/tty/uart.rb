@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
@@ -12,8 +12,13 @@ module Wilhelm
           include Capture
           include State
 
-          NAME = 'UART'.freeze
-          THREAD_NAME = 'wilhelm-core/physical UART (Input Buffer)'
+          NAME    = 'UART'
+          LOG_ON  = '#on'
+          LOG_OFF = '#off'
+
+          THREAD_NAME      = 'wilhelm-core/physical UART (Input Buffer)'
+          LOG_THREAD_START = 'New Thread: Byte Read'
+          LOG_THREAD_END   = "#{THREAD_NAME} thread is ending."
 
           def name
             NAME
@@ -22,9 +27,12 @@ module Wilhelm
           # @override: ManageableThreads#proc_name
           alias proc_name name
 
-          def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
-          def_delegators :private_input_buffer, *Buffer::InputBuffer.instance_methods(false)
-          def_delegator :private_input_buffer, :size
+          def_delegators(
+            :private_input_buffer,
+            *SizedQueue.instance_methods(false),
+            *Buffer::InputBuffer.instance_methods(false),
+            :size
+          )
 
           def initialize(path)
             super(path)
@@ -33,7 +41,7 @@ module Wilhelm
           end
 
           def on
-            LOGGER.debug(NAME) { '#on' }
+            LOGGER.debug(NAME) { LOG_ON }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             online!
@@ -41,7 +49,7 @@ module Wilhelm
           end
 
           def off
-            LOGGER.debug(NAME) { '#off' }
+            LOGGER.debug(NAME) { LOG_OFF }
             close_threads
             close_capture
           end
@@ -55,13 +63,8 @@ module Wilhelm
           end
 
           # Backwards compatibility
-          def input_buffer
-            self
-          end
-
-          def output_buffer
-            self
-          end
+          alias input_buffer  itself
+          alias output_buffer itself
 
           private
 
@@ -70,7 +73,7 @@ module Wilhelm
           end
 
           def thread_populate_input_buffer
-            LOGGER.debug(NAME) { 'New Thread: Byte Read' }
+            LOGGER.debug(NAME) { LOG_THREAD_START }
             Thread.new do
               Thread.current[:name] = THREAD_NAME
               begin
@@ -84,7 +87,7 @@ module Wilhelm
                 LOGGER.error(NAME) { "#{THREAD_NAME}: #{e}" }
                 e.backtrace.each { |line| LOGGER.error(NAME) { line } }
               end
-              LOGGER.warn(NAME) { "#{THREAD_NAME} thread is ending." }
+              LOGGER.warn(NAME) { LOG_THREAD_END }
             end
           end
         end
