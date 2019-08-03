@@ -17,7 +17,6 @@ module Wilhelm
             case command_id
             when DSP_SET
               logger.debug(PROC) { "Rx: DSP_SET 0x#{d2h(DSP_SET)}" }
-              handle_dsp_set(message.command)
             end
 
             super(message)
