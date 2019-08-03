@@ -73,18 +73,10 @@ module Wilhelm
             LOGGER.debug(NAME) { 'New Thread: Byte Read' }
             Thread.new do
               Thread.current[:name] = THREAD_NAME
-              read_byte = nil
               begin
-                loop do
-                  begin
-                    read_byte = nil
-                    read_byte = readpartial(1)
-                    LOGGER.debug(name) { "Byte: #{read_byte}" }
-                    private_input_buffer.push(ByteBasic.new(read_byte))
-                    capture_byte(read_byte)
-                  rescue EncodingError
-                    LOGGER.error(THREAD_NAME) { '#readpartial returned nil!' }
-                  end
+                each_byte do |byte|
+                  private_input_buffer.push(byte)
+                  capture_byte(byte.chr(Encoding::ASCII_8BIT))
                 end
               rescue EOFError
                 LOGGER.warn(NAME) { "#{THREAD_NAME}: Stream reached EOF!" }

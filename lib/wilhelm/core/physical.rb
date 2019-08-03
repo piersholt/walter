@@ -4,9 +4,8 @@ require_relative 'physical/buffer'
 
 puts "\tLoading wilhelm/core/physical/model"
 
-require_relative 'physical/model/byte'
-require_relative 'physical/model/byte_basic'
-require_relative 'physical/model/bytes'
+require_relative 'physical/model/new_byte'
+require_relative 'physical/model/new_bytes'
 
 puts "\tLoading wilhelm/core/physical"
 

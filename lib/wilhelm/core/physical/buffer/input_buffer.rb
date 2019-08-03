@@ -36,7 +36,7 @@ module Wilhelm
             # raise ::ArgumentError, 'InputBuffer does not support single object shift' if
             #   number_of_bytes <= 1
 
-            shift_result = Bytes.new
+            shift_result = []
 
             # Empty unshift buffer before reading IO
             take_unshifted_bytes(shift_result, number_of_bytes) unless @unshift_buffer.empty?

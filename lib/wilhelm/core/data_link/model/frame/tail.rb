@@ -32,7 +32,7 @@ module Wilhelm
           end
 
           def payload
-            Bytes.new(self[1..-2])
+            self[1..-2]
           end
 
           # a command may not have any arguments
@@ -53,7 +53,7 @@ module Wilhelm
           # ************************************************************************* #
 
           def checksum
-            fcs.d
+            fcs
           end
 
           private

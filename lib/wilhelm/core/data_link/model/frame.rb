@@ -31,10 +31,6 @@ module Wilhelm
           super(bytes)
         end
 
-        def to_s
-          map(&:h).join(' ').to_s
-        end
-
         def inspect
           "<Frame> #{to_s}"
         end
@@ -44,18 +40,26 @@ module Wilhelm
         # ************************************************************************* #
 
         def header
-          @header ||= Bytes.new
+          @header ||= create_header
+        end
+
+        def create_header
+          Bytes.new
         end
 
         def tail
-          @tail ||= Bytes.new
+          @tail ||= create_tail
+        end
+
+        def create_tail
+          Bytes.new
         end
 
         def set_header(new_header)
           LOGGER.debug(NAME) { "#set_header(#{new_header})." }
 
           # LOGGER.debug(NAME) { "Updating self with bytes." }
-          wholesale(new_header + tail)
+          wholesale(@tail ? new_header + tail : new_header)
           # LOGGER.debug(NAME) { self }
 
           # LOGGER.debug(NAME) { "Setting @header." }
@@ -90,7 +94,7 @@ module Wilhelm
 
           frame_bytes = @header + @tail.no_fcs
           checksum = frame_bytes.reduce(0) do |c, d|
-            c ^ d.to_d
+            c ^ d
           end
 
           LOGGER.debug(NAME) { "Checksum / #{tail.checksum} == #{checksum} => #{checksum == tail.checksum}" }

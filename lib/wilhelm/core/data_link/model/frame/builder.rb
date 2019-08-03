@@ -46,12 +46,12 @@ module Wilhelm
 
           def from=(device_id)
             LOGGER.debug(NAME) { "#from=(#{device_id})" }
-            @from = Byte.new(:decimal, device_id)
+            @from = device_id
           end
 
           def to=(device_id)
             LOGGER.debug(NAME) { "#to=(#{device_id})" }
-            @to = Byte.new(:decimal, device_id)
+            @to = device_id
           end
 
           def result
@@ -76,11 +76,11 @@ module Wilhelm
           end
 
           def generate_header
-            Bytes.new([from, length])
+            [from, length]
           end
 
           def generate_tail
-            bytes = Bytes.new([to, *payload, fcs])
+            bytes = [to, *payload, fcs]
             # bytes.insert(ARGS_INDEX, *arguments) unless no_arguments?
             bytes
           end
@@ -111,22 +111,22 @@ module Wilhelm
           end
 
           def calculate_fcs
-            checksum = all_fields.reduce(0) { |c, d| c ^ d.to_d }
+            checksum = all_fields.reduce(0) { |c, d| c ^ d }
             LOGGER.debug(NAME) { "Checksum / Calculated = #{checksum}" }
             checksum
           end
 
           def generate_fcs
-            @fcs = Byte.new(:decimal, calculate_fcs)
+            @fcs = calculate_fcs
           end
 
           def generate_length
-            @length = Byte.new(:decimal, calculate_length)
+            @length = calculate_length
           end
 
           def all_fields
             LOGGER.debug(NAME) { '#all_fields' }
-            bytes = Bytes.new([from, length, to, *payload])
+            bytes = [from, length, to, *payload]
             # bytes.insert(ARGS_TAIL_INDEX, *arguments) unless no_arguments?
             LOGGER.debug(NAME) { "#all_fields => #{bytes}" }
             bytes

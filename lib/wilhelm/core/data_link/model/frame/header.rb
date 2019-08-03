@@ -35,14 +35,14 @@ module Wilhelm
           # ************************************************************************* #
 
           def tail_length
-            self[1].d
+            self[1]
           end
 
           private
 
           def validate_args(bytes)
             raise HeaderValidationError, 'invalid header length'  unless VALID_SIZE.include?(bytes.length)
-            tail_length_value = bytes[LENGTH_INDEX].d
+            tail_length_value = bytes[LENGTH_INDEX]
             raise HeaderImplausibleError, 'invalid frame length' unless MIN_LENGTH_VALUE.include?(tail_length_value)
           end
         end

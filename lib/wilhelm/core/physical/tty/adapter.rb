@@ -8,7 +8,7 @@ module Wilhelm
         class SerialPortAdapter
           extend Forwardable
 
-          def_delegators :serial_port, :readpartial, :write, :write_nonblock
+          def_delegators :serial_port, *IO.instance_methods(false)
           def_delegators :serial_port, *SerialPort.instance_methods(false)
 
           attr_reader :serial_port

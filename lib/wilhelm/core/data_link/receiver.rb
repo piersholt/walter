@@ -96,7 +96,6 @@ module Wilhelm
           LOGGER.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
 
           bytes_to_unshift = new_frame[1..-1]
-          bytes_to_unshift = Bytes.new(bytes_to_unshift)
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
 
@@ -104,6 +103,7 @@ module Wilhelm
           buffer.unshift(*bytes_to_unshift)
         end
 
+        # @note remove!
         IGNORE = [0x40, 0xA0]
 
         def output(new_frame)
