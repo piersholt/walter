@@ -4,6 +4,8 @@ module Wilhelm
   module Virtual
     # Virtual::BitArrayParameter
     class BitArrayParameter < BaseParameter
+      include Command::Builder::Parameterized::Delegated
+
       PROC = 'BitArrayParam'.freeze
 
       attr_reader :parameters, :index, :bit_array
@@ -69,7 +71,7 @@ module Wilhelm
             param_value = @bit_array.lookup(bit_array_param_name)
             param_type  = bit_array_param_config.type
 
-            param_object = DelegatedCommandParameter.create(bit_array_param_config, param_type, param_value)
+            param_object = delegate(bit_array_param_config, param_type, param_value)
             bit_array_param_config.configure(param_object)
 
             param_object.instance_variable_set(var_name, param_object)

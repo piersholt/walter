@@ -24,8 +24,8 @@ module Wilhelm
         BASE                  = 'BaseCommand'.freeze
         PARAMETERIZED         = 'ParameterizedCommand'.freeze
 
-        BUILDER_BASE          = 'BaseCommandBuilder'.freeze
-        BUILDER_PARAMETERIZED = 'ParameterizedCommandBuilder'.freeze
+        BUILDER_BASE          = 'Builder'.freeze
+        BUILDER_PARAMETERIZED = 'Builder::Parameterized'.freeze
         WRAPPER               = Configuration::Parameter
 
         LOG_METHOD_INITIALIZE = '#initialize'.freeze
@@ -126,11 +126,11 @@ module Wilhelm
 
         def builder
           if parameters? && base?
-            get_class(join_namespaces(SCOPE, BUILDER_BASE))
+            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_BASE))
           elsif parameters?
-            get_class(join_namespaces(SCOPE, BUILDER_PARAMETERIZED))
+            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_PARAMETERIZED))
           else
-            get_class(join_namespaces(SCOPE, BUILDER_BASE))
+            get_class(join_namespaces(SCOPE, NAMESPACE, BUILDER_BASE))
           end
         end
 

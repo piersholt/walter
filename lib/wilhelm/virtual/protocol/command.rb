@@ -23,10 +23,7 @@ puts "\tLoading wilhelm/virtual/protocol/command/configuration"
 require_relative 'command/configuration'
 
 puts "\tLoading wilhelm/virtual/protocol/command/builder"
-
-require_relative 'command/builder/base_command_builder'
-require_relative 'command/builder/paramaterized_command_builder'
-require_relative 'command/builder/delegated_command_parameter'
+require_relative 'command/builder'
 
 puts "\tLoading wilhelm/virtual/protocol/command/paramaterized/model"
 
