@@ -22,7 +22,7 @@ module Wilhelm
       NEW_LINE = 'New Line'
 
       def command_map
-        Wilhelm::Virtual::CommandMap.instance
+        Wilhelm::Virtual::Map::Command.instance
       end
 
       def nl

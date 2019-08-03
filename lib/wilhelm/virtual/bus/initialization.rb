@@ -26,7 +26,7 @@ module Wilhelm
         end
 
         def lookup_devices
-          idents = AddressLookupTable.instance.idents
+          idents = Map::AddressLookupTable.instance.idents
           LOGGER.debug(PROC) { "Idents: #{idents}|" }
           idents
         end

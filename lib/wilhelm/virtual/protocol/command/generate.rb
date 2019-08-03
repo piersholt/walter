@@ -14,7 +14,7 @@ module Wilhelm
         end
 
         def command_map
-          CommandMap.instance
+          Map::Command.instance
         end
 
         def get_command_config(command_id, from_ident, to_ident)
@@ -32,7 +32,7 @@ module Wilhelm
         end
 
         def resolve_address(device_id)
-          AddressLookupTable.instance.resolve_address(device_id)
+          Map::AddressLookupTable.instance.resolve_address(device_id)
         end
 
         def generate

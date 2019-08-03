@@ -2,60 +2,51 @@
 
 module Wilhelm
   module Virtual
-    # Comment
-    class AddressLookupTable < BaseMap
-      include Singleton
-      include Wilhelm::Helpers::DataTools
+    module Map
+      # Virtual::Map::AddressLookupTable
+      class AddressLookupTable < Base
+        include Singleton
+        include Wilhelm::Helpers::DataTools
 
-      PROC = 'AddressLookupTable'
-      SOURCE_PATH = 'address_lookup_table'.freeze
+        PROC = 'AddressLookupTable'.freeze
+        ADDDRESSES_MAP_NAME = 'address_lookup_table'.freeze
 
-      def initialize
-        super(SOURCE_PATH)
-        # create_device_constants
-      end
+        def initialize(map = ADDDRESSES_MAP_NAME)
+          super(map)
+        end
 
-      def find(device_id)
-        LOGGER.debug(PROC) { "#find(#{device_id})" }
-        mapped_result = super(device_id)
-      rescue IndexError => e
-        LOGGER.warn(PROC) {"Device #{decimal_to_hex(device_id, true)} not found!" }
-        mapped_result = :universal
-      end
+        def resolve_address(device_id)
+          LOGGER.debug(PROC) { "#resolve_address(#{device_id})" }
+          find(device_id)
+        rescue IndexError
+          LOGGER.warn(PROC) { "Device: #{d2h(device_id, true)} not found!" }
+          :universal
+        end
 
-      alias resolve_address find
+        def resolve_ident(ident)
+          LOGGER.debug(PROC) { "#resolve_ident(#{ident})" }
+          found_id, _found_ident = map.find do |_, i|
+            i == ident
+          end
+          raise(IndexError) unless found_id
+          found_id
+        rescue IndexError
+          LOGGER.warn(PROC) { "Device: #{ident} not found!" }
+          :universal
+        end
 
-      def down(ident)
-        # LOGGER.debug(PROC) { "#down(#{ident})" }
-        mapped_result = nil
-        map.each { |k, v|  mapped_result = k if v == ident }
-        raise IndexError unless mapped_result
-        mapped_result
-      rescue IndexError => e
-        LOGGER.warn(PROC) {"#{ident} not found!" }
-        mapped_result = :universal
-        mapped_result
-      end
+        alias get_address resolve_ident
+        alias get_ident   resolve_address
 
-      alias resolve_ident down
+        def idents
+          @map.values
+        end
 
-      def get_ident(device_id)
-        find(device_id)
-      end
+        def addresses
+          @map.keys
+        end
 
-      def get_address(ident)
-        # LOGGER.debug(PROC) { "#get_address(#{ident})" }
-        address = down(ident)
-        # LOGGER.debug(PROC) { "#get_address(#{ident}) => address" }
-        address
-      end
-
-      def idents
-        @map.values
-      end
-
-      def ids
-        @map.keys
+        alias ids addresses
       end
     end
   end

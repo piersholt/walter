@@ -2,5 +2,5 @@
 
 puts "\tLoading wilhelm/virtual/protocol"
 
-require_relative 'protocol/commands'
-require_relative 'protocol/maps'
+require_relative 'protocol/command'
+require_relative 'protocol/map'

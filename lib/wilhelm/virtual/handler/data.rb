@@ -15,7 +15,7 @@ module Wilhelm
         PROG = 'Handler::Data'
         ERROR_DATA_NIL = 'Data is nil!'
 
-        def initialize(bus, data_output_buffer, address_lookup_table = AddressLookupTable.instance)
+        def initialize(bus, data_output_buffer, address_lookup_table = Map::AddressLookupTable.instance)
           @bus = bus
           @data_output_buffer = data_output_buffer
           @address_lookup_table = address_lookup_table

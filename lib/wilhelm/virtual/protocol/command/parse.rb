@@ -22,7 +22,7 @@ module Wilhelm
         private
 
         def get_command_config(command_id, from_ident, to_ident)
-          CommandMap.instance.config(
+          Map::Command.instance.config(
             command_id,
             from: from_ident,
             to: to_ident

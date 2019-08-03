@@ -142,7 +142,7 @@ module Wilhelm
         end
 
         def command_name(hex_string)
-          result = CommandMap.instance.find(hex_string.hex)
+          result = Map::Command.instance.find(hex_string.hex)
           result[:properties][:short_name]
         rescue IndexError
           'No Result'
@@ -150,7 +150,7 @@ module Wilhelm
 
         def device_name(hex_string)
           # LOGGER.info('#device_name') { hex_string }
-          device_ident = AddressLookupTable.instance.resolve_address(hex_string.hex)
+          device_ident = Map::AddressLookupTable.instance.resolve_address(hex_string.hex)
           return 'Error' unless device_ident
           device_ident
         end

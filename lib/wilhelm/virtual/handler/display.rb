@@ -194,7 +194,7 @@ module Wilhelm
         end
 
         def populate_devices
-          AddressLookupTable.instance.idents
+          Map::AddressLookupTable.instance.idents
         end
       end
     end
