@@ -46,9 +46,9 @@ module Wilhelm
         private
 
         def generate_arguments(command_config)
-          if command_config.has_parameters?
+          if command_config.parameters?
             generate_indexed_arguments(command_config)
-          elsif !command_config.has_parameters? && self.arguments
+          elsif !command_config.parameters? && self.arguments
             generate_base_arguments(self.arguments)
           else
             generate_default_arguments

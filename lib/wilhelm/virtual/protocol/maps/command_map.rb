@@ -6,10 +6,9 @@ module Wilhelm
     class CommandMap < BaseMap
       include Singleton
       include Wilhelm::Helpers::DataTools
-      PROC = 'CommandMap'.freeze
 
+      PROC = 'CommandMap'.freeze
       COMMANDS_MAP_NAME = 'commands'.freeze
-      DEFAULT_COMMAND_NAMESPACE = 'Command'.freeze
 
       def initialize(map = COMMANDS_MAP_NAME)
         super(map)
@@ -30,7 +29,7 @@ module Wilhelm
             "Command ID: #{command_id}, #{d2h(command_id, true)} not found!"
           end
           mapped_result = find(:default)
-          mapped_result[:id][:d] = command_id
+          mapped_result[:id] = command_id
         end
 
         if from || to
@@ -41,10 +40,7 @@ module Wilhelm
           end
         end
 
-        mapped_result[:default_id] = command_id
-
-        command_configuration = CommandConfiguration.new(mapped_result)
-        command_configuration
+        CommandConfiguration.new(mapped_result)
       end
 
       alias config find_or_default

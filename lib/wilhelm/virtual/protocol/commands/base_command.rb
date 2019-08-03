@@ -32,9 +32,7 @@ module Wilhelm
           set_properties(props)
         end
 
-        def normal_fucking_decimal
-          id
-        end
+        alias normal_fucking_decimal id
 
         def ==(other)
           id == other.id

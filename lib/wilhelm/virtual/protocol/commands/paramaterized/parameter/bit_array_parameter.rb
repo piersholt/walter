@@ -60,7 +60,7 @@ module Wilhelm
       def parse_bit_array_parameters(parameter_config, numeric)
         begin
           @bit_array = BitArray.from_i(numeric)
-          return false unless parameter_config.has_parameters?
+          return false unless parameter_config.parameters?
           @bit_array.add_index(parameter_config.index)
           @parameters = {}
 

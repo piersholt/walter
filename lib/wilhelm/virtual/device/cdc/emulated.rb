@@ -21,7 +21,7 @@ module Wilhelm
           end
 
           def handle_virtual_receive(message)
-            id = message.command.normal_fucking_decimal
+            id = message.command.id
             case id
             when CDC_REQ
               LOGGER.debug(ident) { "#handle_message => CDC_REQ (#{CDC_REQ})" }
