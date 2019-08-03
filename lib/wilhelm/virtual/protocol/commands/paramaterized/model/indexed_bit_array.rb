@@ -20,13 +20,12 @@ module Wilhelm
         LOGGER.debug(PROG) { "#lookup(#{name})" }
         LOGGER.warn(PROG) { "name is nil!" } unless name
         parameter_index = index_as_range(name)
-        bits = slice(parameter_index)
+        bits = @bits.slice(parameter_index)
         LOGGER.warn(PROG) { "bits is nil!" } unless bits
         parse_base_2_digits(*bits)
         # it was fog_front!
       rescue TypeError => e
         LOGGER.error(PROG) { e }
-        LOGGER.error(PROG) { e.cause }
         e.backtrace.each { |line| LOGGER.error(PROG) { line } }
         binding.pry
       end
