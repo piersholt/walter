@@ -3269,6 +3269,7 @@
   :properties:
     :short_name: TXT-A5
     :long_name: Unknown
+  :klass: BaseCommand
   :schemas:
     - :tel
     - :rad
