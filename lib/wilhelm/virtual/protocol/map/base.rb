@@ -1,12 +1,5 @@
 # frozen_string_literal: false
 
-# what's the point of the map?
-# it alows me to dynamically instantiate a class
-# that represents a given ibus model (device, command..)
-
-# fuck.. am i.. loading the specific class type MappedCommand...
-# Map is generic.. but there's no reason the results
-
 module Wilhelm
   module Virtual
     module Map
