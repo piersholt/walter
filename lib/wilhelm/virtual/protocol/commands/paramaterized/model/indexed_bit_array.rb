@@ -3,44 +3,72 @@
 module Wilhelm
   module Virtual
     # Virtual::IndexedBitArray
-    class IndexedBitArray < BitArray
+    class BitArray
+    module Indexed
       include Wilhelm::Helpers::PositionalNotation
-      PROG = 'IndexedBitArray'.freeze
 
-      def initialize(bit_array = nil, index = nil)
-        super(bit_array)
-        @index = index
-      end
+      PROG = 'BitArray::Indexed'.freeze
 
-      def add_index(index)
-        @index = index
-      end
+      ERROR_INDEX_NIL   = 'index is nil!'.freeze
+      ERROR_NAME        = 'name is nil!'.freeze
+      ERROR_INDEX_RANGE = 'param_range is nil!'.freeze
+      ERROR_BITS        = 'bits is nil!'.freeze
+
+      attr_reader :index
 
       def lookup(name)
-        LOGGER.debug(PROG) { "#lookup(#{name})" }
-        LOGGER.warn(PROG) { "name is nil!" } unless name
-        parameter_index = index_as_range(name)
-        bits = @bits.slice(parameter_index)
-        LOGGER.warn(PROG) { "bits is nil!" } unless bits
+        LOGGER.debug(PROG) { "#lookup(#{name})"}
+        index? & name?(name)
+
+        param_range = index_as_range(name)
+        param_range?(param_range)
+
+        bits = @bits.slice(param_range)
+        bits?(bits)
+
         parse_base_2_digits(*bits)
-        # it was fog_front!
       rescue TypeError => e
         LOGGER.error(PROG) { e }
         e.backtrace.each { |line| LOGGER.error(PROG) { line } }
         binding.pry
       end
 
+      def add_index(index)
+        @index = index
+      end
+
       def parameters
         @index.keys
+      end
+
+      def index?
+        return true if @index
+        raise(ArgumentError, ERROR_INDEX_NIL)
+      end
+
+      def name?(name)
+        return true if name
+        raise(ArgumentError, ERROR_NAME)
+      end
+
+      def param_range?(param_range)
+        return true if param_range
+        raise(StandardError, ERROR_INDEX_RANGE)
+      end
+
+      def bits?(bits)
+        return true if bits
+        raise(StandardError, ERROR_BITS)
       end
 
       private
 
       def index_as_range(name)
-        parameter_index = @index[name]
-        return parameter_index if parameter_index.instance_of?(Range)
-        Range.new(parameter_index, parameter_index)
+        param_range = @index[name]
+        return param_range if param_range.instance_of?(Range)
+        Range.new(param_range, param_range)
       end
+    end
     end
   end
 end

@@ -33,8 +33,8 @@ require_relative 'commands/builder/delegated_command_parameter'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/model"
 
-require_relative 'commands/paramaterized/model/bit_array'
 require_relative 'commands/paramaterized/model/indexed_bit_array'
+require_relative 'commands/paramaterized/model/bit_array'
 require_relative 'commands/paramaterized/model/indexed_arguments'
 
 puts "\tLoading wilhelm/virtual/protocol/commands/paramaterized/parameter"

@@ -6,7 +6,7 @@ module Wilhelm
     class BitArrayParameter < BaseParameter
       PROC = 'BitArrayParam'.freeze
 
-      attr_reader :parameters, :index, :bit_array, :indexed_bit_array
+      attr_reader :parameters, :index, :bit_array
 
       def initialize(config, numeric)
         LOGGER.debug(PROC) { "#initialize(#{config}, #{numeric})" }
@@ -61,12 +61,12 @@ module Wilhelm
         begin
           @bit_array = BitArray.from_i(numeric)
           return false unless parameter_config.has_parameters?
-          @indexed_bit_array = IndexedBitArray.new(@bit_array, parameter_config.index)
+          @bit_array.add_index(parameter_config.index)
           @parameters = {}
 
           parameter_config.parameters.each do |bit_array_param_name, bit_array_param_config|
             var_name = inst_var(bit_array_param_name)
-            param_value = @indexed_bit_array.lookup(bit_array_param_name)
+            param_value = @bit_array.lookup(bit_array_param_name)
             param_type  = bit_array_param_config.type
 
             param_object = DelegatedCommandParameter.create(bit_array_param_config, param_type, param_value)

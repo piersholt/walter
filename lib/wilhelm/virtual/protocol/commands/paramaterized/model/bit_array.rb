@@ -2,21 +2,6 @@
 
 module Wilhelm
   module Virtual
-    class BitArray
-      # Virtual::BitArray::DataError
-      class DataError < StandardError
-        ERROR_MESSAGE = 'Binary data failure'.freeze
-
-        def message
-          ERROR_MESSAGE
-        end
-      end
-    end
-  end
-end
-
-module Wilhelm
-  module Virtual
     # Virtual::BitArray
     class BitArray
       extend Forwardable
@@ -29,11 +14,11 @@ module Wilhelm
       ASCII_RED = 2
       ASCII_GREEN = 92
 
-      forward_messages = Array.instance_methods(false)
-      forward_messages << :reduce
-      forward_messages.each do |fwrd_message|
-        def_delegator :@bits, fwrd_message
-      end
+      ERROR_LENGTH = 'Binary data failure'.freeze
+
+      def_delegators(:@bits, *Array.instance_methods(false))
+
+      include Indexed
 
       def initialize(bit_array = Array.new(8, 0))
         @bits = bit_array
@@ -53,7 +38,7 @@ module Wilhelm
 
       # @param String binary_string Binary bit in String format i.e. "01100010"
       def parse_string(binary_string)
-        raise DataError if binary_string.length > 8
+        raise(RangeError, ERROR_LENGTH) if binary_string.length > 8
         bit_chars = binary_string.chars
         bit_integers = bit_chars.map(&:to_i)
         @bits = bit_integers
@@ -73,6 +58,8 @@ module Wilhelm
 
         "#{nibble_1_string} #{nibble_2_string}"
       end
+
+      private
 
       def as_false(bit)
         as_colour(bit, ASCII_RED)
