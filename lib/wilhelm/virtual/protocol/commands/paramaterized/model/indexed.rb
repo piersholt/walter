@@ -13,6 +13,7 @@ module Wilhelm
         ERROR_NAME        = 'name is nil!'.freeze
         ERROR_INDEX_RANGE = 'param_range is nil!'.freeze
         ERROR_BITS        = 'bits is nil!'.freeze
+        ERROR_INDEX_NAME  = 'index does not contain '.freeze
 
         attr_reader :index
 
@@ -61,9 +62,19 @@ module Wilhelm
           raise(StandardError, ERROR_BITS)
         end
 
+        def index_name?(name)
+          return true if @index.key?(name)
+          raise(ArgumentError, error_index_name(name))
+        end
+
+        def error_index_name(name)
+          "#{ERROR_INDEX_NAME} #{name}! (#{@index.keys})"
+        end
+
         private
 
         def index_as_range(name)
+          index_name?(name)
           param_range = @index[name]
           return param_range if param_range.instance_of?(Range)
           Range.new(param_range, param_range)
