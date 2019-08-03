@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 require_relative 'generate'
 require_relative 'parse'
@@ -12,18 +12,22 @@ module Wilhelm
         include Helpers
         include Generate
 
+        NAME           = 'Command::Base'
+        DEVICE_UNKNOWN = '???'
+        ARGS_EMPTY     = '--'
+        MASK_NAME      = '%-10s'
         MASK_BINARY    = '%8.8b'
         MASK_HEX       = '%2.2x'
         PADDED_DEFAULT = true
 
         attr_accessor :id, :short_name, :long_name, :arguments, :verbose
 
-        alias :address :id
-        alias :ln :long_name
-        alias :args :arguments
+        alias address id
+        alias ln      long_name
+        alias args    arguments
 
         def initialize(id, props)
-          LOGGER.debug("BaseCommand") { "#initialize(#{id}, #{props})" }
+          LOGGER.debug(NAME) { "#initialize(#{id}, #{props})" }
           @id = id
           set_properties(props)
         end
@@ -32,31 +36,29 @@ module Wilhelm
           id
         end
 
-        def ==(other_command)
+        def ==(other)
           id == other.id
         end
 
-        # -------------------------------- OBJECT ------------------------------- #
+        # ------------------------------ OBJECT ----------------------------- #
 
         def to_s
           return inspect if @verbose
-          abvr = short_name == '???' ? h : short_name
-          str_buffer = sprintf("%-10s", abvr)
-          args_str_buffer = @arguments.map(&:h).join(' ')
-          str_buffer.concat("\t#{args_str_buffer}") unless args_str_buffer.empty?
-          str_buffer.concat("\t--") if args_str_buffer.empty?
+          abvr = short_name == DEVICE_UNKNOWN ? h : short_name
+          str_buffer = format(MASK_NAME, abvr)
+          str_buffer.concat("\t#{@arguments}") unless @arguments.empty?
+          str_buffer.concat("\t#{ARGS_EMPTY}") if @arguments.empty?
           str_buffer
         end
 
         def inspect
-          str_buffer = sprintf("%-10s", sn)
-          args_str_buffer = @arguments.map(&:h).join(' ')
-          str_buffer.concat("\t#{args_str_buffer}") unless args_str_buffer.empty?
-          str_buffer.concat("--") if args_str_buffer.empty?
+          str_buffer = format(MASK_NAME, sn)
+          str_buffer.concat("\t#{@arguments}") unless @arguments.empty?
+          str_buffer.concat(ARGS_EMPTY) if @arguments.empty?
           str_buffer
         end
 
-        # ----------------------------- PROPERTIES ------------------------------ #
+        # --------------------------- PROPERTIES ---------------------------- #
 
         alias d id
 
@@ -69,20 +71,17 @@ module Wilhelm
         end
 
         def sn(padded = PADDED_DEFAULT)
-          padded ? sprintf("%-10s", short_name) : short_name
+          padded ? format(MASK_NAME, short_name) : short_name
         end
 
-        def set_parameters(params)
-          set_properties(params)
-        end
-
-        private
-
-        def set_properties(props)
+        def add_properties(props)
           props.each do |name, value|
             instance_variable_set(inst_var(name), value)
           end
         end
+
+        alias set_parameters add_properties
+        alias set_properties add_properties
       end
     end
   end

@@ -47,9 +47,7 @@ module Wilhelm
         command_configuration
       end
 
-      def config(command_id, from: nil, to: nil)
-        find_or_default(command_id, from: from, to: to)
-      end
+      alias config find_or_default
     end
   end
 end
