@@ -12,7 +12,7 @@ module Wilhelm
           include Helpers::Cluster
           include LogActually::ErrorOutput
 
-          NAME = 'BaseAPI'.freeze
+          NAME = 'API::Base'.freeze
 
           def resolve_ident(ident)
             AddressLookupTable.instance.resolve_ident(ident)
@@ -22,15 +22,14 @@ module Wilhelm
             NAME
           end
 
-          def try(from, to, command_id, command_arguments = {})
-            LOGGER.debug(name) { "#try(#{from}, #{to}, #{command_arguments})" }
-            command_object = to_command(
-              command_id: command_id,
-              command_arguments: command_arguments,
-              schema_from: from,
-              schema_to: to
-            )
-            # HACK idents were resolved before command_object was built,
+          def try(from, to, command_id, command_args = {})
+            LOGGER.debug(name) { "#try(#{from}, #{to}, #{command_args})" }
+            config = get_command_config(command_id, from, to)
+
+            # 2. Arguments Hash to Command ----------------------------------------
+            command_object = build_command(config, command_args)
+
+            # HACK: idents were resolved before command_object was built,
             # so CommandMap was not loading schemas. Thus, if default
             # command had different parameters... it would break!
             # See BaseCommand::Raw and Multiplexer for more.
@@ -39,8 +38,8 @@ module Wilhelm
 
             send_it!(from, to, command_object)
           rescue StandardError => e
-            LOGGER.error("#{self.class} StandardError: #{e}")
-            e.backtrace.each { |l| LOGGER.error(l) }
+            LOGGER.error(name) { e }
+            e.backtrace.each { |line| LOGGER.error(name) { line }  }
             binding.pry
           end
 
@@ -51,8 +50,8 @@ module Wilhelm
             notify_observers(MESSAGE_SENT, message: message)
             true
           rescue StandardError => e
-            LOGGER.error("#{self.class} StandardError: #{e}")
-            e.backtrace.each { |l| LOGGER.error(l) }
+            LOGGER.error(name) { e }
+            e.backtrace.each { |line| LOGGER.error(name) { line }  }
             binding.pry
           end
 
@@ -60,12 +59,20 @@ module Wilhelm
 
           private
 
-          def to_command(command_id:, command_arguments:, schema_from:, schema_to:)
-            command_config = CommandMap.instance.config(
+          def get_command_config(command_id, from_ident, to_ident)
+            CommandMap.instance.config(
               command_id,
-              from: schema_from,
-              to: schema_to
+              from: from_ident,
+              to: to_ident
             )
+          end
+
+          # 2. Arguments Hash to Command ----------------------------------------
+
+          LOG_BUILD_COMMAND = '#build_command'
+
+          def build_command(command_config, parameter_values_hash)
+            LOGGER.debug(name) { LOG_BUILD_COMMAND }
             command_builder = command_config.builder
             command_builder = command_builder.new(command_config)
             command_builder.add_parameters(command_arguments)

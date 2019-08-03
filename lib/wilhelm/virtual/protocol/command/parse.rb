@@ -7,6 +7,20 @@ module Wilhelm
       module Parse
         PROG = 'Parse'
 
+        def parse(from_ident, to_ident, command, arguments)
+          LOGGER.debug(PROG) { '#parse' }
+          config = get_command_config(command, from_ident, to_ident)
+
+          # 1. Byte Stream to Arguments Hash
+          parameter_values_hash = parse_arguments(config, arguments)
+          LOGGER.debug(PROG) { "Parameter Values: #{parameter_values_hash}" }
+
+          # 2. Arguments Hash to Command
+          build_command(config, parameter_values_hash)
+        end
+
+        private
+
         def get_command_config(command_id, from_ident, to_ident)
           CommandMap.instance.config(
             command_id,
@@ -14,20 +28,6 @@ module Wilhelm
             to: to_ident
           )
         end
-
-        def parse(from_ident, to_ident, command, arguments)
-          LOGGER.debug(PROG) { '#parse' }
-
-          # 1. Byte Stream to Arguments Hash
-          command_config = get_command_config(command, from_ident, to_ident)
-          parameter_values_hash = parse_arguments(command_config, arguments)
-          LOGGER.debug(PROG) { "Parameter Values: #{parameter_values_hash}" }
-
-          # 2. Arguments Hash to Command
-          build_command(command_config, parameter_values_hash)
-        end
-
-        private
 
         # 1. Byte Stream to Arguments Hash ------------------------------------
 
