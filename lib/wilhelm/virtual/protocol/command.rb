@@ -20,10 +20,7 @@ require_relative 'command/lamp'
 require_relative 'command/radio_led'
 
 puts "\tLoading wilhelm/virtual/protocol/command/configuration"
-
-require_relative 'command/configuration/parameter_configuration'
-require_relative 'command/configuration/command_configuration'
-require_relative 'command/configuration/bit_array_parameter_configuration'
+require_relative 'command/configuration'
 
 puts "\tLoading wilhelm/virtual/protocol/command/builder"
 

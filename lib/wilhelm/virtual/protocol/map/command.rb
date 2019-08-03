@@ -41,7 +41,7 @@ module Wilhelm
             end
           end
 
-          CommandConfiguration.new(mapped_result)
+          Virtual::Command::Configuration.new(mapped_result)
         end
 
         alias config find_or_default
