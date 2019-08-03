@@ -21,11 +21,9 @@ module Wilhelm
 
         NAMESPACE             = 'Wilhelm::Virtual::Command'.freeze
         BASE                  = 'Base'.freeze
+        BASE_BUILDER          = 'Builder'.freeze
         PARAMETERIZED         = 'Parameterized::Base'.freeze
-
-        BUILDER_BASE          = 'Builder'.freeze
-        BUILDER_PARAMETERIZED = 'Builder::Parameterized'.freeze
-        WRAPPER               = Configuration::Parameter
+        PARAMETERIZED_BUILDER = 'Parameterized::Builder'.freeze
 
         LOG_METHOD_INITIALIZE = '#initialize'.freeze
 
@@ -129,11 +127,11 @@ module Wilhelm
 
         def builder
           if parameters? && base?
-            get_class(join_namespaces(NAMESPACE, BUILDER_BASE))
+            get_class(join_namespaces(NAMESPACE, BASE_BUILDER))
           elsif parameters?
-            get_class(join_namespaces(NAMESPACE, BUILDER_PARAMETERIZED))
+            get_class(join_namespaces(NAMESPACE, PARAMETERIZED_BUILDER))
           else
-            get_class(join_namespaces(NAMESPACE, BUILDER_BASE))
+            get_class(join_namespaces(NAMESPACE, BASE_BUILDER))
           end
         end
 

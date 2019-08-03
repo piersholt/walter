@@ -1,16 +1,16 @@
 # frozen_string_literal: false
 
-require_relative 'parameterized/delegated'
+require_relative 'builder/delegated'
 
 module Wilhelm
   module Virtual
     class Command
-      class Builder
+      module Parameterized
         # For command classes that have parameters
-        class Parameterized < Builder
+        class Builder < Command::Builder
           include Delegated
 
-          PROG = 'Builder::Parameterized'.freeze
+          PROG = 'Parameterized::Builder'.freeze
 
           # @override Builder.add_parameters
           def add_parameters(parameter_value_hash)

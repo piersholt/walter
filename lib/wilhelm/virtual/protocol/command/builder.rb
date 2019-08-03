@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require_relative 'builder/parameterized'
-
 module Wilhelm
   module Virtual
     class Command

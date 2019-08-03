@@ -30,6 +30,9 @@ require_relative 'command/paramaterized/model/indexed'
 require_relative 'command/paramaterized/model/bit_array'
 require_relative 'command/paramaterized/model/indexed_arguments'
 
+puts "\tLoading wilhelm/virtual/protocol/command/paramaterized"
+require_relative 'command/paramaterized'
+
 puts "\tLoading wilhelm/virtual/protocol/command/paramaterized/parameter"
 require_relative 'command/paramaterized/parameter/base_parameter'
 require_relative 'command/paramaterized/parameter/bit_array_parameter'
@@ -37,6 +40,3 @@ require_relative 'command/paramaterized/parameter/switched_parameter'
 require_relative 'command/paramaterized/parameter/mapped_parameter'
 require_relative 'command/paramaterized/parameter/chars_parameter'
 require_relative 'command/paramaterized/parameter/data_parameter'
-
-puts "\tLoading wilhelm/virtual/protocol/command/paramaterized"
-require_relative 'command/paramaterized'

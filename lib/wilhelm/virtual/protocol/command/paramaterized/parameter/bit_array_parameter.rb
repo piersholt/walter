@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     # Virtual::BitArrayParameter
     class BitArrayParameter < BaseParameter
-      include Command::Builder::Parameterized::Delegated
+      include Command::Parameterized::Builder::Delegated
 
       PROC = 'BitArrayParam'.freeze
 

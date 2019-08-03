@@ -3,13 +3,13 @@
 module Wilhelm
   module Virtual
     class Command
-      class Builder
-        class Parameterized < Builder
-          # Virtual::Command::Builder::Parameterized::Delegated
+      module Parameterized
+        class Builder < Command::Builder
+          # Virtual::Command::Parameterized::Builder::Delegated
           module Delegated
             include Helpers
 
-            PROG = 'Builder::Parameterized::Delegated'.freeze
+            PROG = 'Parameterized::Builder::Delegated'.freeze
 
             TYPE_CLASS_MAP = {
               switch:    'Wilhelm::Virtual::SwitchedParameter',
