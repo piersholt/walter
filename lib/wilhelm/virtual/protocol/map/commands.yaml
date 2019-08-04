@@ -1238,9 +1238,11 @@
     :long_name: Key Status Request
   :klass: Base
 0x74:
+  :id: 0x74
   :properties:
     :short_name: KEY
     :long_name: Key Status
+  :klass: Command::Parameterized
   :parameters:
     :status:
       :type: :map
@@ -3552,6 +3554,7 @@
   :schemas:
     - :tel
     - :rad
+  :klass: Base
   :rad:
     :klass: Parameterized::Base
     :properties:
@@ -4159,6 +4162,7 @@
   :notes:
     - GM can sent 0x76 to control lights..?
 0x82:
+    :id: 0x82
     :properties:
       :short_name: "???"
       :long_name: Unknown
