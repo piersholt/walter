@@ -11,6 +11,9 @@ module Wilhelm
         PROC = 'Map::Command'.freeze
         COMMANDS_MAP_NAME = 'commands'.freeze
 
+        INVALID_ID    = ':id missing!'.freeze
+        INVALID_KLASS = ':klass missing!'.freeze
+
         def initialize(map = COMMANDS_MAP_NAME)
           super(map)
         end
@@ -45,6 +48,34 @@ module Wilhelm
         end
 
         alias config find_or_default
+
+        def valid?
+          valid_ids?
+          valid_klasses?
+          true
+        end
+
+        private
+
+        def valid_ids?
+          return true if map.values.all? { |c| c.key?(:id) }
+          errors = map.find_all { |_, v| !v.key?(:id) }&.map { |k, _| k }
+          raise(IOError, invalid_id(errors))
+        end
+
+        def valid_klasses?
+          return true if map.values.all? { |c| c.key?(:klass) }
+          errors = map.find_all { |_, v| !v.key?(:klass) }&.map { |k, _| k }
+          raise(IOError, invalid_klass(errors))
+        end
+
+        def invalid_id(errors)
+          INVALID_ID + errors.to_s
+        end
+
+        def invalid_klass(errors)
+          INVALID_KLASS + errors.to_s
+        end
       end
     end
   end
