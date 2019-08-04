@@ -1,6 +1,6 @@
 ---
-:default:
-    :id: nil
+0x00:
+    :id: 0
     :properties:
       :short_name: NEW
       :long_name: Unknown

@@ -29,7 +29,7 @@ module Wilhelm
             LOGGER.error(PROC) do
               "Command ID: #{command_id}, #{d2h(command_id, true)} not found!"
             end
-            mapped_result = find(:default)
+            mapped_result = find(0)
             mapped_result[:id] = command_id
           end
 
