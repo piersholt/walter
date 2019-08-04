@@ -26,9 +26,9 @@ puts "\tLoading wilhelm/virtual/protocol/command/builder"
 require_relative 'command/builder'
 
 puts "\tLoading wilhelm/virtual/protocol/command/paramaterized/model"
-require_relative 'command/paramaterized/model/indexed'
-require_relative 'command/paramaterized/model/bit_array'
-require_relative 'command/paramaterized/model/indexed_arguments'
+# require_relative 'command/paramaterized/model/indexed'
+# require_relative 'command/paramaterized/model/bit_array'
+# require_relative 'command/paramaterized/model/indexed_arguments'
 
 puts "\tLoading wilhelm/virtual/protocol/command/paramaterized"
 require_relative 'command/paramaterized'
