@@ -16,9 +16,7 @@ module Wilhelm
           def add_parameters(parameter_value_hash)
             LOGGER.debug(PROG) { "#add_parameters(#{parameter_value_hash})" }
             @command_config.parameters.each do |param_name, param_config|
-              param_value = parameter_value_hash[param_name]
-              param_object = parse_parameter(param_name, param_config, param_value)
-              add_parameter(param_name, param_object)
+              @parameter_objects[param_name] = parse_parameter(param_name, param_config, parameter_value_hash[param_name])
             end
           end
 
@@ -49,11 +47,6 @@ module Wilhelm
             param_config.configure(param_object)
 
             param_object
-          end
-
-          def add_parameter(param_name, param_object)
-            LOGGER.debug(PROG) { "#add_parameter(#{param_name}, #{param_object})" }
-            @parameter_objects[param_name] = param_object
           end
         end
       end
