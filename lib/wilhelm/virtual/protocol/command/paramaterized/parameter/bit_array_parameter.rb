@@ -12,9 +12,9 @@ module Wilhelm
 
       def initialize(config, numeric)
         LOGGER.debug(PROC) { "#initialize(#{config}, #{numeric})" }
-        super(config, numeric)
+        super(config, *numeric)
 
-        parse_bit_array_parameters(config, numeric)
+        parse_bit_array_parameters(config, value)
       end
 
       def to_s
@@ -59,9 +59,9 @@ module Wilhelm
 
       private
 
-      def parse_bit_array_parameters(parameter_config, numeric)
+      def parse_bit_array_parameters(parameter_config, value)
         begin
-          @bit_array = Core::BitArray.from_i(numeric)
+          @bit_array = Core::BitArray.from_i(value)
           return false unless parameter_config.parameters?
           @bit_array.add_index(parameter_config.index)
           @parameters = {}

@@ -17,7 +17,7 @@ module Wilhelm
 
       attr_accessor :map, :dictionary, :label
       def initialize(configuration, integer)
-        super(configuration, integer)
+        super(configuration, *integer)
       end
 
       def inspect
