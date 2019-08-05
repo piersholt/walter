@@ -56,6 +56,28 @@ module Wilhelm
           true
         end
 
+        def thing
+          map.map do |k, v|
+            r = v.fetch(:parameters, nil)&.map do |pk, pv|
+              [pk, pv[:type]]
+            end&.to_h
+            next unless r
+            # g = r.group_by do |pk, pv|
+            #   pv
+            # end
+
+            # u = r.values.uniq
+
+            { k => r }
+          end&.compact
+        end
+
+        def group
+          map.group_by do |_, v|
+            v.fetch(:parameters, nil)&.fetch(:type, nil)
+          end
+        end
+
         private
 
         def valid_ids?
