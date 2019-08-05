@@ -28,7 +28,8 @@ module Wilhelm
         end
 
         def parse_string(binary_string)
-          raise(RangeError, ERROR_LENGTH) if binary_string.length > 8
+          # TODO: pad to bytes
+          # raise(RangeError, ERROR_LENGTH) if binary_string.length > 8
           @bits = binary_string.each_char.map(&:to_i)
         end
       end
