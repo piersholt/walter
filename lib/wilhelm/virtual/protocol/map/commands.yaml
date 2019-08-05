@@ -1379,16 +1379,16 @@
           :type: :map
           :label: Selected Gear
           :map:
-            0b0000: gear_na
-            0b1011: gear_p
-            0b0001: gear_r
-            0b0111: gear_n
-            0b1000: gear_d
-            0b0010: gear_1
-            0b0110: gear_2
-            0b1101: gear_3
-            0b1100: gear_4
-            0b1110: gear_5
+            0b0000: :gear_na
+            0b1011: :gear_p
+            0b0001: :gear_r
+            0b0111: :gear_n
+            0b1000: :gear_d
+            0b0010: :gear_1
+            0b0110: :gear_2
+            0b1101: :gear_3
+            0b1100: :gear_4
+            0b1110: :gear_5
           :dictionary:
             0b0000: No Gear
             0b1011: Park
