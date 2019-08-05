@@ -34,7 +34,7 @@ module Wilhelm
           @command_hash = mapped_command.dup
 
           parse_parameters(parameters_hash) if parameters?
-          configure_class unless configured?
+          configure_class
         end
 
         def inspect
@@ -61,10 +61,14 @@ module Wilhelm
           end
         end
 
-        # Command Hash ----------------------------------------------------------
+        # Command Hash --------------------------------------------------------
 
         def id
           @command_hash[:id]
+        end
+
+        def schemas_array
+          @command_hash[:schemas]
         end
 
         def properties_hash
@@ -75,23 +79,33 @@ module Wilhelm
           @command_hash[:klass]
         end
 
-        def index
+        def parameters_index
           @command_hash[:index]
         end
+
+        alias index parameters_index
 
         def parameters_hash
           @command_hash[:parameters]
         end
 
-        # Configuration ---------------------------------------------------------
+        # Configuration -------------------------------------------------------
 
-        def sn
+        def schemas
+          return [] unless schemas?
+          schemas_array
+        end
+
+        def schemas?
+          return false unless schemas_array
+          true
+        end
+
+        def short_name
           properties_hash[:short_name]
         end
 
-        def base?
-          klass == BASE
-        end
+        alias sn short_name
 
         def klass_constant
           get_class(join_namespaces(NAMESPACE, klass))
@@ -101,16 +115,24 @@ module Wilhelm
           get_class(join_namespaces(NAMESPACE, BASE))
         end
 
+        def base_command?
+          klass == BASE
+        end
+
+        alias base? base_command?
+
         def parameterized_command
           get_class(join_namespaces(NAMESPACE, PARAMETERIZED))
         end
 
-        def parameterized?
+        def parameterized_command?
           result = klass_constant <= parameterized_command
           result = result.nil? ? false : result
           LOGGER.debug(PROC) { "#{klass_constant} <= #{parameterized_command} => #{result}" }
           result
         end
+
+        alias parameterized? parameterized_command?
 
         def parameters?
           parameters_hash.nil? ? false : true
@@ -133,13 +155,6 @@ module Wilhelm
           else
             get_class(join_namespaces(NAMESPACE, BASE_BUILDER))
           end
-        end
-
-        # Object Configuration --------------------------------------------------
-
-        def configure(command_object)
-          LOGGER.debug(PROC) { "Configure command #{command_object.class}" }
-          command_object.instance_variable_set(inst_var(:parameters), parameter_list)
         end
       end
     end
