@@ -5,7 +5,6 @@ module Wilhelm
     class Command
       # ID: 25 0x19
       class Speed < Base
-
         SPEED_UNIT = 'kmph'.freeze
         REV_UNIT = 'rpm'.freeze
 
@@ -17,8 +16,8 @@ module Wilhelm
 
         # @override
         def to_s
-          fast = parse_reading(speed.value, 2, SPEED_UNIT)
-          rev = parse_reading(rpm.value, 100, REV_UNIT)
+          fast = parse_reading(*speed.value, 2, SPEED_UNIT)
+          rev = parse_reading(*rpm.value, 100, REV_UNIT)
 
           str_buffer = sprintf("%-10s", sn)
           str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")
