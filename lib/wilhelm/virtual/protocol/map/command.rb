@@ -33,7 +33,6 @@ module Wilhelm
               "Command ID: #{command_id}, #{d2h(command_id, true)} not found!"
             end
             mapped_result = find(0)
-            mapped_result[:id] = command_id
           end
 
           if from || to
@@ -43,6 +42,8 @@ module Wilhelm
               mapped_result = mapped_result[to] if schemas.include?(to)
             end
           end
+
+          mapped_result[:id] = command_id
 
           Virtual::Command::Configuration.new(mapped_result)
         end
