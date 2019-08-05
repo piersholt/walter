@@ -210,11 +210,6 @@
 
       :chars:
         :type: :chars
-  :meta:
-    :notes: always RAD to GFX
-    :parameters:
-      - 0x41: select station present number (1-6)? another row?
-      - 0x43: MID display? another row?
 
 0x22: # MID-22
   :id: 34

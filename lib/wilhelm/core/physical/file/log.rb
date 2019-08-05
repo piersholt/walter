@@ -25,9 +25,12 @@ module Wilhelm
 
           attr_reader :read_thread
 
-          def_delegators :private_input_buffer, *SizedQueue.instance_methods(false)
-          def_delegators :private_input_buffer, *Buffer::InputBuffer.instance_methods(false)
-          def_delegator :private_input_buffer, :size
+          def_delegators(
+            :private_input_buffer,
+            *SizedQueue.instance_methods(false),
+            *Buffer::InputBuffer.instance_methods(false),
+            :size
+          )
 
           def initialize(path)
             super(path, MODE)

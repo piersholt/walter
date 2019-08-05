@@ -18,7 +18,7 @@ module Wilhelm
         attr_reader :index
 
         def lookup(name)
-          LOGGER.debug(PROG) { "#lookup(#{name})"}
+          LOGGER.debug(PROG) { "#lookup(#{name})" }
           index? & name?(name)
 
           param_range = index_as_range(name)
