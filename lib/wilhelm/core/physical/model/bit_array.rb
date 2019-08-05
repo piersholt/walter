@@ -1,11 +1,15 @@
 # frozen_string_literal: false
 
+require_relative 'bit_array/parse'
+
 module Wilhelm
   module Core
     # Virtual::BitArray
     class BitArray
       extend Forwardable
       include Wilhelm::Helpers::DataTools
+      include Parse
+
 
       NIBBLE_1 = (0..3)
       NIBBLE_2 = (4..7)
@@ -14,7 +18,9 @@ module Wilhelm
       ASCII_RED = 2
       ASCII_GREEN = 92
 
-      ERROR_LENGTH = 'Binary data failure'.freeze
+      def self.from_i(object)
+        Parse.from_i(object)
+      end
 
       def_delegators(:@bits, *Array.instance_methods(false))
 
@@ -22,26 +28,6 @@ module Wilhelm
 
       def initialize(bit_array = Array.new(8, 0))
         @bits = bit_array
-      end
-
-      # @param value : Integer
-      def parse_integer(integer)
-        binary_string = d2b(integer)
-        parse_string(binary_string)
-      end
-
-      def self.from_i(int)
-        bit_array = BitArray.new
-        bit_array.parse_integer(int)
-        bit_array
-      end
-
-      # @param String binary_string Binary bit in String format i.e. "01100010"
-      def parse_string(binary_string)
-        raise(RangeError, ERROR_LENGTH) if binary_string.length > 8
-        bit_chars = binary_string.chars
-        bit_integers = bit_chars.map(&:to_i)
-        @bits = bit_integers
       end
 
       def to_s
