@@ -5,7 +5,7 @@ module Wilhelm
     class Command
       # Virtual::Command::Parse
       module Parse
-        PROG = 'Parse'
+        PROG = 'Command::Parse'
 
         def parse(from_ident, to_ident, command, arguments)
           LOGGER.debug(PROG) { '#parse' }
