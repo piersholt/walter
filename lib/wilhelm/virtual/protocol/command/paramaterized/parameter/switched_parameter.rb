@@ -63,7 +63,7 @@ module Wilhelm
 
       def initialize(_configuration, integer)
         @value = integer
-        @bit_array = BitArray.from_i(integer)
+        @bit_array = Core::BitArray.from_i(integer)
       end
 
       def inspect

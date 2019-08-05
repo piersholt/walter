@@ -40,12 +40,12 @@ module Wilhelm
         end
 
         def parse_indexed_arguments(command_config, arguments)
+          arguments = Core::Bytes.new(arguments) if arguments.is_a?(Array)
+          arguments.add_index(command_config.index)
           parameter_values_hash = {}
-          argument_index = command_config.index
 
-          indexed_arguments = IndexedArguments.new(arguments, argument_index)
-          indexed_arguments.parameters.each do |name|
-            param_value = indexed_arguments.lookup(name)
+          command_config.parameters.each do |name, conf|
+            param_value = arguments.lookup(name)
             parameter_values_hash[name] = param_value
           end
 

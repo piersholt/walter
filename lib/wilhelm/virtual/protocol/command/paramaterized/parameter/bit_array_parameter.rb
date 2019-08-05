@@ -61,7 +61,7 @@ module Wilhelm
 
       def parse_bit_array_parameters(parameter_config, numeric)
         begin
-          @bit_array = BitArray.from_i(numeric)
+          @bit_array = Core::BitArray.from_i(numeric)
           return false unless parameter_config.parameters?
           @bit_array.add_index(parameter_config.index)
           @parameters = {}

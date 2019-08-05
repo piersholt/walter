@@ -13,10 +13,12 @@ module Wilhelm
 
       def_delegators(
         :array,
-        *Array.instance_methods(false),
-        *Enumerable.instance_methods
+        *Array.instance_methods(false)
+        # *Enumerable.instance_methods
       )
       alias wholesale replace
+
+      include Indexed
 
       attr_reader :array
 

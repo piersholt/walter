@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 module Wilhelm
-  module Virtual
+  module Core
     class BitArray
       # Virtual::BitArray::Indexed
       module Indexed
