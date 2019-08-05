@@ -4,6 +4,7 @@ module Wilhelm
   module Virtual
     # Virtual::BitArrayParameter
     class BitArrayParameter < BaseParameter
+      include Helpers::PositionalNotation
       include Command::Parameterized::Builder::Delegated
 
       PROC = 'BitArrayParam'.freeze
@@ -12,21 +13,16 @@ module Wilhelm
 
       def initialize(config, numeric)
         LOGGER.debug(PROC) { "#initialize(#{config}, #{numeric})" }
-        super(config, *numeric)
+        super(config, parse_base_256_digits(*numeric))
 
         parse_bit_array_parameters(config, value)
       end
 
       def to_s
-        params = aligned_parameters
-        params = params.compact
-        params = params.join(' ')
-
-        str_buffer = ''
-        str_buffer.concat('(')
-        str_buffer.concat(@bit_array.to_s)
-        str_buffer.concat(') ')
-        str_buffer.concat("#{params}")
+        '(' \
+        "#{@bit_array}" \
+        ') ' \
+        "#{aligned_parameters_string}"
       end
 
       def inspect
@@ -40,11 +36,15 @@ module Wilhelm
       end
 
       def aligned_parameters
-        parameters.values.map(&:to_s)
+        parameters&.values&.map(&:to_s)
+      end
+
+      def aligned_parameters_string
+        aligned_parameters&.compact&.join(' ')
       end
 
       def labels
-        parameters.values.map(&:label).compact
+        parameters&.values&.map(&:label).compact
       end
 
       def label_width
