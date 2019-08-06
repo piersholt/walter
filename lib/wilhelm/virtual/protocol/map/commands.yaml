@@ -1,5 +1,5 @@
 ---
-0x00:
+0x00: # DEFAULT
     :id: 0
     :properties:
       :short_name: NEW
@@ -8,7 +8,7 @@
     :klass: Base
 
 # ************************************************************************* #
-#                                  DISPLAY
+#                              BMBT/MID DISPLAY
 # ************************************************************************* #
 
 0x21: # MID-21 / RAD-21* / TEL-21*
@@ -955,7 +955,7 @@
       - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 
 # ************************************************************************* #
-#                                   ANZV
+#                                  ANZV
 # ************************************************************************* #
 
 0x24: # ANZV-VAR / ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
@@ -1534,16 +1534,6 @@
       - BMBT  RAD	  PING	--
       - RAD	  GLO-H	PONG	Respond
 
-0x03:
-  :id: 3
-  :properties:
-    :short_name: B-PING
-    :long_name: BUS Status Request
-  :klass: Base
-  :meta:
-    - only a single message
-    - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
-
 # ************************************************************************* #
 #                               IGNITION
 # ************************************************************************* #
@@ -1607,14 +1597,6 @@
       - 0b00000000
       - 0b00000011
       - 0b00000111
-
-# ************************************************************************* #
-#                               KEY/REMOTE
-# ************************************************************************* #
-
-# ************************************************************************* #
-#                               IKE SENSORS
-# ************************************************************************* #
 
 0x12: # SEN-REQ
   :id: 18
@@ -3757,7 +3739,7 @@
       - from GFX 02 0C
 
 # ************************************************************************* #
-#                         ON BOARD COMPUTER (OBC)
+#                           CONFIG VIA BMBT/MID
 # ************************************************************************* #
 
 0x40: # CONG-VAR
@@ -3848,16 +3830,6 @@
 #                                 CLIMATE?
 # ************************************************************************* #
 
-0x87: # NAV-IHKA-REQ
-  :id: 135
-  :properties:
-    :short_name: NAV-IHKA-REQ
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :notes:
-      - send by :nav_eu???? to IKHA
-
 0x86: # NAV-IHKA-REP
   :id: 134
   :properties:
@@ -3869,13 +3841,21 @@
       - reply from IHKA to nav_eu
       - it's not addressed to global? very specific?
 
+0x87: # NAV-IHKA-REQ
+  :id: 135
+  :properties:
+    :short_name: NAV-IHKA-REQ
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    :notes:
+      - send by :nav_eu???? to IKHA
+
 # ************************************************************************* #
 #                          DIAGNOSTICS/INPA
 # ************************************************************************* #
 
-# ------------------------------ INPA COMMANDS ------------------------------ #
-
-0:
+0x00: # DIA-HELLO
   :id: 0
   :properties:
     :short_name: DIA-HELLO
@@ -3898,20 +3878,18 @@
       - PDC	  (0x60):	63
       - 0x9A	(0x9A):	3
 
-0x63:
-  :id: 99
+0x03: # B-PING?
+  :id: 3
   :properties:
-    :short_name: DIA-IDENT?
-    :long_name: Diagnostics?
+    :short_name: B-PING
+    :long_name: BUS Status Request?
   :klass: Base
 
-# ------------------------------ ERRORS ------------------------------ #
-
-0x04:
+0x04: # B-PONG? / DIA-ERR-READ
   :id: 0x04
   :properties:
     :short_name: DIA-ERR-READ
-    :long_name: BUS Status Reponse
+    :long_name: BUS Status Reponse?
   :klass: Base
   :meta:
   :notes:
@@ -3931,7 +3909,7 @@
     - RAD    	01
     - RAD    	01
 
-0x05: # LCD-SET
+0x05: # DIA-ERR-DEL / LCD-SET*
   :id: 0x05
   :properties:
     :short_name: DIA-ERR-DEL
@@ -3960,16 +3938,47 @@
       - DIA     RAD     DIA-ERR-DEL     --
       - RAD     DIA     DIA-D           --
 
-# ------------------------------ ? ------------------------------ #
+0x06: # DIA-MEM-READ / LCD-REP*
+  :id: 0x06
+  :properties:
+    :short_name: DIA-MEM-READ
+    :long_name: Diagnostics Read Memory
+  :klass: Base
+  :schemas:
+    - :bmbt
+  :bmbt:
+    :klass: Base
+    :properties:
+      :short_name: LCD-REP
+      :long_name: LCD Brightness
+  :meta:
+    - the read memory function in INPA?
+    - used to populate BMBT service mode displays
 
-0x08:
+0x07: # DIA-MEM-WRITE
+  :id: 7
+  :properties:
+    :short_name: DIA-MEM-WRITE
+    :long_name: Diagnostics Write Memory
+  :klass: Base
+  :meta:
+    - if above is correct, then presumably the write...
+
+0x08: # DIA-COD-READ
   :id: 0x08
   :properties:
     :short_name: DIA-COD-READ
     :long_name: Diagnostics READ Coding Data Universal
   :klass: Base
 
-0x0b:
+0x09: # DIA-COD-WRITE
+  :id: 9
+  :properties:
+    :short_name: DIA-COD-WRITE
+    :long_name: Diagnostics WRITE Coding Data
+  :klass: Base
+
+0x0b: # DIA-STATUS
   :id: 0x0b
   :properties:
     :short_name: DIA-STATUS
@@ -3984,9 +3993,7 @@
       - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
       - another error and the next field was STATUS AUX ADAPTER
 
-# ------------------------------ GENERAL FUNCTIONS ------------------------------ #
-
-0x0C:
+0x0C: # DIA-VEH-CTRL
   :id: 12
   :properties:
     :short_name: DIA-VEH-CTRL
@@ -4007,54 +4014,59 @@
   :meta:
     :notes:
 
-# ------------------------------ SPECIFIC FUNCTIONS ------------------------------ #
-
-0x30:
+0x30: # SLF-CHK
   :id: 0x30
   :properties:
-    :short_name: SLF_CHK
+    :short_name: SLF-CHK
     :long_name: Unknown
   :klass: Base
 
-0x3f:
+0x3f: # SLS-DIG
   :id: 0x3f
   :properties:
-    :short_name: EHC-DIG
+    :short_name: SLS-DIG
     :long_name: Unknown
   :klass: Base
 
-0x60:
+0x60: # EWS-ISN?
   :id: 0x60
   :properties:
     :short_name: EWS-ISN?
     :long_name: Diagnostics?
   :klass: Base
 
-0x6B:
-  :id: 0x6B
+0x63: # DIA-IDENT
+  :id: 99
   :properties:
-    :short_name: EWS-INT
-    :long_name: EWS Internal State
-  :klass: Base
-
-0x69:
-  :id: 0x69
-  :properties:
-    :short_name: EWS-COD?
+    :short_name: DIA-IDENT?
     :long_name: Diagnostics?
   :klass: Base
 
-0x65:
+0x65: # EWS-KEY
   :id: 0x65
   :properties:
     :short_name: EWS-KEY
     :long_name: Diagnostics?
   :klass: Base
 
-0x9c:
+0x69: # EWS-COD?
+  :id: 0x69
+  :properties:
+    :short_name: EWS-COD?
+    :long_name: Diagnostics?
+  :klass: Base
+
+0x6B: # EWS-INT
+  :id: 0x6B
+  :properties:
+    :short_name: EWS-INT
+    :long_name: EWS Internal State
+  :klass: Base
+
+0x9c: # SLS-TRAN
   :id: 0x9c
   :properties:
-    :short_name: DIA-TRANS
+    :short_name: SLS-TRAN
     :long_name: Diagnostics Transport Mode?
   :klass: Base
   :parameters:
@@ -4070,18 +4082,14 @@
     - DIA	LCM	9C 00
     - DIA	LCM	9C 00
 
-0x9F:
+0x9F: # EWS-X?
   :id: 159
   :properties:
     :short_name: EWS-X?
     :long_name: Unknown?
   :klass: Base
 
-# ************************************************************************* #
-#                               MODULE RESPONSES
-# ************************************************************************* #
-
-0xA0:
+0xA0: # DIA-DATA
   :id: 160
   :properties:
     :short_name: DIA-DATA
@@ -4089,82 +4097,13 @@
   :klass: Base
 
 # ************************************************************************* #
-#                                  NOT SEEN YET
+#                                  UNKNOWN
 # ************************************************************************* #
-
-0x06: # LCD-REP*
-  :id: 6
-  :properties:
-    :short_name: DIA-MEM-READ
-    :long_name: Diagnostics Read Memory
-  :klass: Base
-  :schemas:
-    - :bmbt
-  :bmbt:
-    :klass: Base
-    :properties:
-      :short_name: LCD-REP
-      :long_name: LCD Brightness
-  :meta:
-    - the read memory function in INPA?
-    - used to populate BMBT service mode displays
-
-0x07:
-  :id: 7
-  :properties:
-    :short_name: DIA-MEM-WRITE
-    :long_name: Diagnostics Write Memory
-  :klass: Base
-  :meta:
-    - if above is correct, then presumably the write...
-
-0x09:
-  :id: 9
-  :properties:
-    :short_name: DIA-COD-WRITE
-    :long_name: Diagnostics WRITE Coding Data
-  :klass: Base
-
-
-# ************************************************************************* #
-#                             SEEN BUT UNCONFIRMED!
-# ************************************************************************* #
-
-0xd4:
-  :id: 0xd4
-  :properties:
-    :short_name: RDS?
-    :long_name: Channel list?
-  :klass: Base
-
-0x58:
-  :id: 0x58
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
 
 0x33:
   :id: 0x33
   :properties:
     :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-
-0x83:
-  :id: 0x83
-  :properties:
-    :short_name: IHK-?
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :senders:
-      - IHK
-
-0x7d:
-  :id: 0x7d
-  :properties:
-    :short_name: GM3-?
     :long_name: Unknown
   :klass: Base
 
@@ -4184,6 +4123,13 @@
 
 0x44:
   :id: 0x44
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: Base
+
+0x58:
+  :id: 0x58
   :properties:
     :short_name: "???"
     :long_name: Unknown
@@ -4215,12 +4161,29 @@
   :notes:
     - GM can sent 0x76 to control lights..?
 
+0x7d:
+  :id: 0x7d
+  :properties:
+    :short_name: GM3-?
+    :long_name: Unknown
+  :klass: Base
+
 0x82:
     :id: 0x82
     :properties:
       :short_name: "???"
       :long_name: Unknown
     :klass: Base
+
+0x83:
+  :id: 0x83
+  :properties:
+    :short_name: IHK-?
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    :senders:
+      - IHK
 
 0xbf:
   :id: 0xbf
@@ -4247,3 +4210,10 @@
         +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
         |     |     |     |  R  |  A  |  N  |  G  |  E  |     |     |  2  |  7  |     |  K  |  M  |     |     |     |     |     |
         +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+
+0xd4:
+  :id: 0xd4
+  :properties:
+    :short_name: RDS?
+    :long_name: Channel list?
+  :klass: Base
