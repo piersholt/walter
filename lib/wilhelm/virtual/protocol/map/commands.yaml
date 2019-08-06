@@ -1150,6 +1150,13 @@
 #                                 NAVIGATION
 # ************************************************************************* #
 
+0x1F: # UTC Time
+  :id: 0x1F
+  :properties:
+    :short_name: UTC
+    :long_name: UTC time and date
+  :klass: Base
+
 0xA2: # LATLONG
   :id: 0xA2
   :properties:
@@ -2266,14 +2273,14 @@
 #                               TEMPERATURE
 # ************************************************************************* #
 
-0x1D:
-  :id: 29
+0x1D: # TEMP-REQ
+  :id: 0x1D
   :properties:
     :short_name: TEMP-REQ
     :long_name: Temperature Request
   :klass: Base
 
-0x19:
+0x19: # TEMP
   :id: 25
   :properties:
     :short_name: TEMP
@@ -2285,18 +2292,11 @@
     :recipients:
       - GLO-L
 
-0x1F:
-  :id: 31
-  :properties:
-    :short_name: UTC
-    :long_name: UTC time and date
-  :klass: Base
-
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
 
-0x34:
+0x34: # DSP-SET
   :id: 52
   :properties:
     :short_name: DSP-SET
@@ -2359,7 +2359,7 @@
           :label: 'Magnitude:'
           :type: :integer
 
-0x35:
+0x35: # DSP-REP
   :id: 53
   :properties:
     :short_name: DSP-REP
@@ -2420,7 +2420,7 @@
           :label: 'Magnitude:'
           :type: :integer
 
-0x36:
+0x36: # RAD-EQ
   :id: 54
   :properties:
     :short_name: RAD-EQ
@@ -2533,7 +2533,7 @@
         0xd_a: TREBLE -5
         0xd_c: TREBLE -6
 
-0x37:
+0x37: # RAD-ALT
   :id: 55
   :properties:
     :short_name: RAD-ALT
@@ -2583,8 +2583,8 @@
   :index:
     :mode: 0
 
-0x45:
-  :id: 69
+0x45: # UI-GFX
+  :id: 0x45
   :properties:
     :short_name: UI-CFG
     :long_name: Radio UI Config.
@@ -2630,8 +2630,8 @@
     - used when audio disply is requested/falls back to
     - used when switching back from TV?
 
-0x46:
-  :id: 70
+0x46: # UI-RAD
+  :id: 0x46
   :properties:
     :short_name: UI-RAD
     :long_name: Radio UI Requests
@@ -2674,8 +2674,8 @@
   :meta:
     - 01: confirm switch?
 
-0x4A:
-  :id: 74
+0x4A: # RAD-LED
+  :id: 0x4a
   :properties:
     :short_name: RAD-LED
     :long_name: Radio LED
@@ -2715,7 +2715,7 @@
     :recipients:
       - BMBT
 
-0x4B:
+0x4B: # SRC?
   :id: 75
   :klass: Parameterized::Base
   :properties:
@@ -2751,8 +2751,8 @@
     :control: 0
     :mode: 1
 
-0x4E:
-  :id: 78
+0x4E: # SRC-SND
+  :id: 0x4e
   :properties:
     :short_name: SRC-SND
     :long_name: Select external audio input for tv?
@@ -2779,14 +2779,7 @@
     - 00 = 1496
     - 01 = 19
 
-0xd4:
-  :id: 0xd4
-  :properties:
-    :short_name: RDS?
-    :long_name: Channel list?
-  :klass: Base
-
-0x38:
+0x38: # CDC-REQ
   :id: 0x38
   :properties:
     :short_name: CDC-REQ
@@ -2812,7 +2805,7 @@
     :control: 0
     :mode: 1
 
-0x39:
+0x39: # CDC
   :id: 0x39
   :properties:
     :short_name: CDC
@@ -2915,7 +2908,7 @@
 #                               NAV/TV?
 # ************************************************************************* #
 
-0x4F:
+0x4F: # SRC-GFX
   :id: 79
   :properties:
     :short_name: SRC-GFX
@@ -2960,7 +2953,7 @@
 #                           CHECK CONTROL MODULE
 # ************************************************************************* #
 
-0x51:
+0x51: # CCM-END
   :id: 0x51
   :properties:
     :short_name: CCM-END
@@ -2979,7 +2972,7 @@
     - only ever from CCM
     - followed by 0x52 from
 
-0x52:
+0x52: # CCM-?
   :id: 0x52
   :properties:
     :short_name: CCM-?
@@ -3049,7 +3042,8 @@
 # ************************************************************************* #
 #                               BUTTONS
 # ************************************************************************* #
-0x3B:
+
+0x3B: # MFL-FUNC
   :id: 59
   :properties:
     :short_name: MFL-FUNC
@@ -3112,10 +3106,10 @@
             0b01: Hold
             0b10: Release
 
-0x32:
+0x32: # MLF-VOL
   :schemas:
     - :bmbt
-  :id: 50
+  :id: 0x32
   :properties:
     :short_name: MLF-VOL
     :long_name: Multifunction Steering Wheel (Volume)
@@ -3211,7 +3205,7 @@
           :magnitude:
             :type: :integer
 
-0x47:
+0x47: # BMBT-INFO
   :id: 71
   :properties:
     :short_name: BMBT-INFO
@@ -3255,7 +3249,7 @@
     - F0 05 FF 47 00 38 75
     - F0 05 FF 47 00 B8 F5
 
-0x48:
+0x48: # BMBT-BTN-1
   :id: 72
   :properties:
     :short_name: BMBT-BTN-1
@@ -3344,7 +3338,7 @@
             0b01: Hold
             0b10: Release
 
-0x49:
+0x49: # BMBT-BTN-2
   :id: 73
   :properties:
     :short_name: BMBT-BTN-2
@@ -3373,8 +3367,8 @@
         :magnitude:
           :type: :integer
 
-0x57:
-  :id: 87
+0x57: # IKE-BTN
+  :id: 0x57
   :properties:
     :short_name: IKE-BTN
     :long_name: IKE Check Control
@@ -3416,11 +3410,6 @@
             0b10: Release
   :meta:
     - only press and release
-
-# ************************************************************************* #
-#                               DISPLAYS
-# ************************************************************************* #
-
 
 # ************************************************************************* #
 #                             CLUSTER HUD
@@ -3598,7 +3587,7 @@
 #                               TELEPHONE
 # ************************************************************************* #
 
-0x20:
+0x20: # TEL-OPEN
   :id: 32
   :properties:
     :short_name: TEL-OPEN
@@ -4160,6 +4149,13 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
+
+0xd4:
+  :id: 0xd4
+  :properties:
+    :short_name: RDS?
+    :long_name: Channel list?
+  :klass: Base
 
 0x58:
   :id: 0x58
