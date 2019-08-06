@@ -775,6 +775,185 @@
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
 
+0x31: # INPUT / INPUT-RAD* / INPUT-TEL*
+  :id: 0x31
+  :schemas:
+    - :tel
+    - :rad
+  :klass: Base
+  :rad:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: INPUT-RAD*
+      :long_name: Radio Menu Soft Buttom
+    :index:
+      :layout: 0
+      :function: 1
+      :button: 2
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x60: Menu A # RDS
+          0x61: Menu B # RDS
+        :map:
+          0x00: :no_source
+          0x60: :rds_1
+          0x61: :rds_2
+      :function:
+        :type: :map
+        :dictionary:
+          0x00: --
+        :map:
+          0x00: :no_function
+      :button:
+        :type: :bit_array
+        :index:
+          :id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
+          :state: !ruby/range
+                          begin: 1
+                          end: 2
+                          excl: false
+        :parameters:
+          :id:
+            :type: :map
+            :label: 'Index:'
+            :dictionary:
+              0x00: '0'
+              0x01: '1'
+              0x02: '2'
+              0x03: '3'
+              0x04: '4'
+              0x05: '5'
+              0x06: '6'
+              0x07: '7'
+              0x08: '8'
+              0x09: '9'
+              0x0a: '10'
+          :state:
+            :type: :switch
+            :label: 'State:'
+            :states:
+              0b00: :press
+              0b01: :hold
+              0b10: :release
+            :dictionary:
+              0b00: Press
+              0b01: Hold
+              0b10: Release
+  :tel:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: INPUT-TEL*
+      :long_name: Telephone Menu Soft Buttom
+    :index:
+      :layout: 0
+      :function: 1
+      :button: 2
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x05: Pin
+          0x20: Info
+          0x42: Dial
+          0x43: Directory
+          0x80: Top 8
+          0xf0: SMS Index
+          0xf1: SMS Show
+        :map:
+          0x00: :default
+          0x05: :pin
+          0x20: :info
+          0x42: :dial
+          0x43: :directory
+          0x80: :top_8
+          0xf0: :sms_index
+          0xf1: :sms_show
+      :function:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x01: Contact
+          0x02: Digit
+          0x05: SOS
+          0x07: Navigate
+          0x08: Info
+        :map:
+          0x00: :no_function
+          0x01: :contact
+          0x02: :digit
+          0x05: :sos
+          0x07: :navigate
+          0x08: :info
+      :button:
+        :type: :bit_array
+        :index:
+          :state: !ruby/range
+                          begin: 1
+                          end: 2
+                          excl: false
+          :id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
+        :parameters:
+          :id:
+            :type: :map
+            :label: 'Index:'
+            :dictionary:
+              0x00: 0
+              0x01: 1
+              0x02: 2
+              0x03: 3
+              0x04: 4
+              0x05: 5
+              0x06: 6
+              0x07: 7
+              0x08: 8
+              0x09: 9
+              0x0a: 10/Info/<
+              0x0b: 11
+              0x0c: 12/Back
+              0x0d: 13/Forward
+              0x0e: 14
+              0x0f: 15
+
+              0x10: 16/Back
+              0x11: 17/Button Left
+              0x12: 18/Button Right
+              0x13: 19/Button Centre/Outlier
+
+              0x1a: 26/*
+              0x1b: '27/#'
+
+              0x1d: SMS
+              0x1e: Dial
+              0x1f: Directory
+          :state:
+            :type: :switch
+            :label: 'State:'
+            :states:
+              0b00: :press
+              0b01: :hold
+              0b10: :release
+            :dictionary:
+              0b00: Press
+              0b01: Hold
+              0b10: Release
+  :meta:
+    :sos:
+      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
+      - Open SOS from default layout ->
+      - GFX   	TEL   	TEL-DATA    00 05 08
+      - 'TEL   	GFX   	TXT-MEDIA 	C0 20	"SOS: 112!"'
+      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
+
 # ************************************************************************* #
 #                                   ANZV
 # ************************************************************************* #
@@ -1433,152 +1612,6 @@
 #                               KEY/REMOTE
 # ************************************************************************* #
 
-0x72: # REMOTE
-  :id: 114
-  :properties:
-    :short_name: REMOTE
-    :long_name: Remote Central Locking
-  :klass: Parameterized::Base
-  :parameters:
-    :b1:
-      :type: :bit_array
-      :parameters:
-        :boot:
-          :type: :switch
-          :label: Boot Unlock
-          :states:
-            0: :off
-            1: :on
-        :unlock:
-          :type: :switch
-          :label: Remote Unlock
-          :states:
-            0: :off
-            1: :on
-        :lock:
-          :type: :switch
-          :label: Remote Lock
-          :states:
-            0: :off
-            1: :on
-        :coding1:
-          :type: :switch
-          :label: Two-Stage Unlock?
-          :states:
-            0: :off
-            1: :ok
-        :coding2:
-          :type: :switch
-          :label: Two-Stage Unlock?
-          :states:
-            0: :off
-            1: :ok
-      :index:
-        :boot: 1
-        :unlock: 2
-        :lock: 3
-        :coding1: 5
-        :coding2: 6
-  :index:
-    :b1: 0
-
-0x73: # KEY-REQ
-  :id: 115
-  :properties:
-    :short_name: KEY-REQ
-    :long_name: Key Status Request
-  :klass: Base
-
-0x74: # KEY
-  :id: 0x74
-  :properties:
-    :short_name: KEY
-    :long_name: Key Status
-  :klass: Command::Parameterized
-  :parameters:
-    :status:
-      :type: :map
-      :map:
-        0x00: unrecognised
-        0x01: unauthenticated
-        0x04: valid
-        0x05: authenticated
-      :dictionary:
-        0x00: No Longer Recognised
-        0x04: Valid and/or Enabled
-        0x01: Unauthenticated (Immobilizer Renabled)
-        0x05: Authenticated (Immobilizer Disabled)
-        0x0C: When old key was unhappy in INPA
-        0x08: When old key was unhappy in INPA
-    :key:
-      :type: :map
-      :map:
-        0x00: key_1
-        0x01: key_2
-        0x02: key_3
-        0x03: key_4
-        0x04: key_5
-        0xFF: "off"
-      :dictionary:
-        0x00: Key 1
-        0x01: Key 2
-        0x02: Key 3
-        0x03: Key 4
-        0x04: Key 5
-        0xFF: Ignition Ring Off?
-  :index:
-    :status: 0
-    :key: 1
-  :klass: Key
-  :meta:
-    :senders:
-      - EWS
-    :notes:
-      - invalid reasons:
-        - changing code
-        - identification
-        - password
-        - disabled
-
-# ************************************************************************* #
-#                                 MEMORY?
-# ************************************************************************* #
-
-0x78: # MEM-LOAD
-  :id: 0x78
-  :properties:
-    :short_name: MEM-LOAD
-    :long_name: Memory
-  :klass: Parameterized::Base
-  :index:
-    :status: 0
-  :parameters:
-    :status:
-      :type: :map
-      :map:
-        0x00: complete
-        0x01: preset_1
-        0x02: preset_2
-        0x03: preset_3
-      :dictionary:
-        0x00: Complete
-        0x01: Preset 1
-        0x02: Preset 2
-        0x03: Preset 2
-  :meta:
-    :notes:
-      - 504 messages sent to date
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	01
-      - GM3   	GLO-L 	78       	02
-      - GM3   	GLO-L 	78       	04
-      - GM3   	GLO-L 	78       	04
-      - this was being sent after DIA request memory preset
-      - argument seemingly correlated with preset number/ID
-
 # ************************************************************************* #
 #                               IKE SENSORS
 # ************************************************************************* #
@@ -1847,25 +1880,6 @@
     :b3: 2
     :b4: 3
 
-0x59: # SEN-LUM
-  :id: 89
-  :properties:
-    :short_name: SEN-LUM
-    :long_name: Luminosity Reading?
-  :klass: Parameterized::Base
-  :parameters:
-    :lum:
-      :type: :integer
-    :tbc:
-      :type: :integer
-  :index:
-    :lum: 0
-    :tbc: 1
-
-# ************************************************************************* #
-#                               VEHICLE STATUS
-# ************************************************************************* #
-
 0x16: # ODO-REQ
   :id: 22
   :properties:
@@ -1902,6 +1916,220 @@
       - IKE
     :recipients:
       - GLO-L (0xBF)
+
+0x19: # TEMP
+  :id: 25
+  :properties:
+    :short_name: TEMP
+    :long_name: Temperature
+  :klass: Temperature
+  :meta:
+    :senders:
+      - IKE
+    :recipients:
+      - GLO-L
+
+0x1D: # TEMP-REQ
+  :id: 0x1D
+  :properties:
+    :short_name: TEMP-REQ
+    :long_name: Temperature Request
+  :klass: Base
+
+0x51: # CCM-END
+  :id: 0x51
+  :klass: Base
+  :properties:
+    :short_name: CCM-END
+    :long_name: Ignition off CCM update?
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: NO_WARNINGS
+      :dictionary:
+        0x00: No Warnings
+  :index:
+    :status: 0
+  :notes:
+    - CCM to IKE (always)
+    - IKE responds with 0x52
+
+0x52: # CCM-?
+  :id: 0x52
+  :properties:
+    :short_name: CCM-?
+    :long_name: Unknown
+  :klass: Parameterized::Base
+  :index:
+    :b1: 0
+    :b2: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :parameters:
+    :b1:
+      :type: :integer
+    :b2:
+      :type: :integer
+  :chars:
+      :type: :chars
+  :meta:
+    :notes:
+      - IKE to CCM (always)
+      - commands to date
+      - "   RANGE  50 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  41 KM     "
+      - "   RANGE  40 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "      CODE ----     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+
+0x53: # VEH-REQ
+  :id: 0x53
+  :properties:
+    :short_name: VEH-REQ
+    :long_name: Vehicle Status Request
+  :klass: Base
+
+0x54: # VEH
+  :id: 0x54
+  :schemas:
+    - :dia
+  :properties:
+    :short_name: VEH
+    :long_name: Vehicle Status
+  :klass: Parameterized::Base
+  :parameters:
+    :vin:
+      :type: :chars
+    :odometer:
+      :type: :data
+    :consumed_fuel_quantity:
+      :type: :data
+    :time_inspection_counter:
+      :type: :data
+  :index:
+      :vin: !ruby/range
+              begin: 0
+              end: 4
+              excl: false
+      :odometer: !ruby/range
+                  begin: 5
+                  end: 6
+                  excl: false
+      :consumed_fuel_quantity: !ruby/range
+                      begin: 7
+                      end: 8
+                      excl: false
+      :time_inspection_counter: !ruby/range
+                  begin: 11
+                  end: 12
+                  excl: false
+  :dia:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: VEH*
+      :long_name: Diagnostics Control
+    :parameters:
+      :b1:
+        :type: :map
+        :dictionary:
+          0x05: Seat Memory
+      :b2:
+        :type: :map
+        :dictionary:
+          0x04: Angle Up
+          0x05: Angle Down
+      :b3:
+        :label: Unknown
+        :type: :integer
+    :index:
+      :b1: 0
+      :b2: 1
+      :b3: 2
+  :examples:
+    - "IKE   	LCM   	53        --"
+    - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
+
+0x55: # SI
+  :id: 0x55
+  :properties:
+    :short_name: SI
+    :long_name: Service Interval Usage
+  :klass: Parameterized::Base
+  :index:
+    :odometer: !ruby/range
+                begin: 0
+                end: 1
+                excl: false
+    :liters: !ruby/range
+                    begin: 2
+                    end: 3
+                    excl: false
+    :days: !ruby/range
+                begin: 6
+                end: 7
+                excl: false
+  :parameters:
+    :odometer:
+      :type: :data
+    :liters:
+      :type: :data
+    :days:
+      :type: :data
+
+0x59: # RLS-LUM
+  :id: 0x59
+  :properties:
+    :short_name: SEN-LUM
+    :long_name: Luminosity Reading?
+  :klass: Parameterized::Base
+  :parameters:
+    :lum:
+      :type: :integer
+    :tbc:
+      :type: :integer
+  :index:
+    :lum: 0
+    :tbc: 1
 
 0x5A: # LAMP-REQ
   :id: 0x5A
@@ -2001,11 +2229,11 @@
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
 
-0x5C: # CLSTR
+0x5C: # 58G
   :id: 92
   :properties:
-    :short_name: CLSTR
-    :long_name: Cluster Backlight
+    :short_name: '58G'
+    :long_name: Instrument Lighting
   :klass: Parameterized::Base
   :index:
     :light: 0
@@ -2023,11 +2251,11 @@
     :recipients:
       - GLO-L
 
-0x5D: # CLSTR-REQ?
+0x5D: # 58G-REQ
   :id: 0x5D
   :properties:
-    :short_name: CLSTR-REQ?
-    :long_name: Unknown
+    :short_name: '58G-REQ'
+    :long_name: Instrument Lighting
   :klass: Base
   :meta:
     :notes:
@@ -2045,6 +2273,148 @@
       - LCM 05 BF   5C FF 00 C9
       - IKE 03 LCM  5D 0E
       - LCM 05 BF   5C FF 00 C9
+
+0x72: # REMOTE
+  :id: 114
+  :properties:
+    :short_name: REMOTE
+    :long_name: Remote Central Locking
+  :klass: Parameterized::Base
+  :parameters:
+    :b1:
+      :type: :bit_array
+      :parameters:
+        :boot:
+          :type: :switch
+          :label: Boot Unlock
+          :states:
+            0: :off
+            1: :on
+        :unlock:
+          :type: :switch
+          :label: Remote Unlock
+          :states:
+            0: :off
+            1: :on
+        :lock:
+          :type: :switch
+          :label: Remote Lock
+          :states:
+            0: :off
+            1: :on
+        :coding1:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
+        :coding2:
+          :type: :switch
+          :label: Two-Stage Unlock?
+          :states:
+            0: :off
+            1: :ok
+      :index:
+        :boot: 1
+        :unlock: 2
+        :lock: 3
+        :coding1: 5
+        :coding2: 6
+  :index:
+    :b1: 0
+
+0x73: # KEY-REQ
+  :id: 115
+  :properties:
+    :short_name: KEY-REQ
+    :long_name: Key Status Request
+  :klass: Base
+
+0x74: # KEY
+  :id: 0x74
+  :properties:
+    :short_name: KEY
+    :long_name: Key Status
+  :klass: Command::Parameterized
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: unrecognised
+        0x01: unauthenticated
+        0x04: valid
+        0x05: authenticated
+      :dictionary:
+        0x00: No Longer Recognised
+        0x04: Valid and/or Enabled
+        0x01: Unauthenticated (Immobilizer Renabled)
+        0x05: Authenticated (Immobilizer Disabled)
+        0x0C: When old key was unhappy in INPA
+        0x08: When old key was unhappy in INPA
+    :key:
+      :type: :map
+      :map:
+        0x00: key_1
+        0x01: key_2
+        0x02: key_3
+        0x03: key_4
+        0x04: key_5
+        0xFF: "off"
+      :dictionary:
+        0x00: Key 1
+        0x01: Key 2
+        0x02: Key 3
+        0x03: Key 4
+        0x04: Key 5
+        0xFF: Ignition Ring Off?
+  :index:
+    :status: 0
+    :key: 1
+  :klass: Key
+  :meta:
+    :senders:
+      - EWS
+    :notes:
+      - invalid reasons:
+        - changing code
+        - identification
+        - password
+        - disabled
+
+0x78: # MEM-LOAD
+  :id: 0x78
+  :properties:
+    :short_name: MEM-LOAD
+    :long_name: Control unit, seat/steering column memory
+  :klass: Parameterized::Base
+  :index:
+    :status: 0
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: complete
+        0x01: preset_1
+        0x02: preset_2
+        0x03: preset_3
+      :dictionary:
+        0x00: Complete
+        0x01: Preset 1
+        0x02: Preset 2
+        0x03: Preset 2
+  :meta:
+    :notes:
+      - 504 messages sent to date
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	00
+      - GM3   	GLO-L 	78       	01
+      - GM3   	GLO-L 	78       	02
+      - GM3   	GLO-L 	78       	04
+      - GM3   	GLO-L 	78       	04
+      - this was being sent after DIA request memory preset
+      - argument seemingly correlated with preset number/ID
 
 0x79: # DOOR-REQ
   :id: 0x79
@@ -2172,123 +2542,6 @@
   :meta:
     :senders:
       - GM3
-    :recipients:
-      - GLO-L
-
-0x53: # VEH-REQ
-  :id: 0x53
-  :properties:
-    :short_name: VEH-REQ
-    :long_name: Vehicle Status Request
-  :klass: Base
-
-0x54: # VEH
-  :id: 0x54
-  :schemas:
-    - :dia
-  :properties:
-    :short_name: VEH
-    :long_name: Vehicle Status
-  :klass: Parameterized::Base
-  :parameters:
-    :vin:
-      :type: :chars
-    :odometer:
-      :type: :data
-    :consumed_fuel_quantity:
-      :type: :data
-    :time_inspection_counter:
-      :type: :data
-  :index:
-      :vin: !ruby/range
-              begin: 0
-              end: 4
-              excl: false
-      :odometer: !ruby/range
-                  begin: 5
-                  end: 6
-                  excl: false
-      :consumed_fuel_quantity: !ruby/range
-                      begin: 7
-                      end: 8
-                      excl: false
-      :time_inspection_counter: !ruby/range
-                  begin: 11
-                  end: 12
-                  excl: false
-  :dia:
-    :klass: Parameterized::Base
-    :properties:
-      :short_name: VEH*
-      :long_name: Diagnostics Control
-    :parameters:
-      :b1:
-        :type: :map
-        :dictionary:
-          0x05: Seat Memory
-      :b2:
-        :type: :map
-        :dictionary:
-          0x04: Angle Up
-          0x05: Angle Down
-      :b3:
-        :label: Unknown
-        :type: :integer
-    :index:
-      :b1: 0
-      :b2: 1
-      :b3: 2
-  :examples:
-    - "IKE   	LCM   	53        --"
-    - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
-
-0x55: # SI
-  :id: 0x55
-  :properties:
-    :short_name: SI
-    :long_name: Service Interval Usage
-  :klass: Parameterized::Base
-  :index:
-    :odometer: !ruby/range
-                begin: 0
-                end: 1
-                excl: false
-    :liters: !ruby/range
-                    begin: 2
-                    end: 3
-                    excl: false
-    :days: !ruby/range
-                begin: 6
-                end: 7
-                excl: false
-  :parameters:
-    :odometer:
-      :type: :data
-    :liters:
-      :type: :data
-    :days:
-      :type: :data
-
-# ************************************************************************* #
-#                               TEMPERATURE
-# ************************************************************************* #
-
-0x1D: # TEMP-REQ
-  :id: 0x1D
-  :properties:
-    :short_name: TEMP-REQ
-    :long_name: Temperature Request
-  :klass: Base
-
-0x19: # TEMP
-  :id: 25
-  :properties:
-    :short_name: TEMP
-    :long_name: Temperature
-  :klass: Temperature
-  :meta:
-    :senders:
-      - IKE
     :recipients:
       - GLO-L
 
@@ -2583,6 +2836,131 @@
   :index:
     :mode: 0
 
+0x38: # CDC-REQ
+  :id: 0x38
+  :properties:
+    :short_name: CDC-REQ
+    :long_name: CD Status Request
+  :klass: Parameterized::CDChangerRequest
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: Status!
+        0x01: Stop!
+        0x02: Resume!?
+        0x03: Play!
+        0x04: Scan! (RWD/FFD)
+        0x05: Seek! (Previous/Next)
+        0x06: Change Disc!
+        0x07: Scan Mode!
+        0x08: Random Mode!
+        0x0A: Change Track!
+    :mode:
+      :type: :integer
+  :index:
+    :control: 0
+    :mode: 1
+
+0x39: # CDC
+  :id: 0x39
+  :properties:
+    :short_name: CDC
+    :long_name: CDC Status
+  :klass: Parameterized::Base
+  :index:
+    :control: 0
+    :status: 1
+    :magazine: 2
+    :loader: 3
+    :b4: 4
+    :cd: 5
+    :track: 6
+  :parameters:
+    :control:
+      :type: :map
+      :dictionary:
+        0x00: Stopped
+        0x01: (BM53) Ready?
+        0x02: Playing
+        0x03: FFW
+        0x04: RWD
+        0x05: Next Track
+        0x06: Previous Track
+        0x07: Pending
+        0x08: CDs Ready
+        0x09: CD Check
+        0x0a: Eject!
+      :notes:
+        - when CD play is first requested, CDC sends back 0x00
+        - it's not until it responds with 0x02 that the audio is routed
+    :status:
+      :type: :map
+      :label: Playing
+      :dictionary:
+        0x02: Stopped
+        0x09: Playing
+        0x82: (BM53) Stopped
+        0x89: (BM53) Playing
+        0x8c: (BM53) Ready?
+    :magazine:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x08: Slot Empty!
+    :loader:
+      :type: :bit_array
+      :parameters:
+        :cd1:
+          :type: :switch
+          :label: CD6
+          :states:
+            0: :off
+            1: :on
+        :cd2:
+          :type: :switch
+          :label: CD5
+          :states:
+            0: :off
+            1: :on
+        :cd3:
+          :type: :switch
+          :label: CD4
+          :states:
+            0: :off
+            1: :on
+        :cd4:
+          :type: :switch
+          :label: CD3
+          :states:
+            0: :off
+            1: :on
+        :cd5:
+          :type: :switch
+          :label: CD2
+          :states:
+            0: :off
+            1: :on
+        :cd6:
+          :type: :switch
+          :label: CD1
+          :states:
+            0: :off
+            1: :on
+      :index:
+        :cd1: 2
+        :cd2: 3
+        :cd3: 4
+        :cd4: 5
+        :cd5: 6
+        :cd6: 7
+    :b4:
+      :type: :integer
+    :cd:
+      :type: :integer
+    :track:
+      :type: :integer
+
 0x45: # UI-GFX
   :id: 0x45
   :properties:
@@ -2779,135 +3157,6 @@
     - 00 = 1496
     - 01 = 19
 
-0x38: # CDC-REQ
-  :id: 0x38
-  :properties:
-    :short_name: CDC-REQ
-    :long_name: CD Status Request
-  :klass: Parameterized::CDChangerRequest
-  :parameters:
-    :control:
-      :type: :map
-      :dictionary:
-        0x00: Status!
-        0x01: Stop!
-        0x02: Resume!?
-        0x03: Play!
-        0x04: Scan! (RWD/FFD)
-        0x05: Seek! (Previous/Next)
-        0x06: Change Disc!
-        0x07: Scan Mode!
-        0x08: Random Mode!
-        0x0A: Change Track!
-    :mode:
-      :type: :integer
-  :index:
-    :control: 0
-    :mode: 1
-
-0x39: # CDC
-  :id: 0x39
-  :properties:
-    :short_name: CDC
-    :long_name: CDC Status
-  :klass: Parameterized::Base
-  :index:
-    :control: 0
-    :status: 1
-    :magazine: 2
-    :loader: 3
-    :b4: 4
-    :cd: 5
-    :track: 6
-  :parameters:
-    :control:
-      :type: :map
-      :dictionary:
-        0x00: Stopped
-        0x01: (BM53) Ready?
-        0x02: Playing
-        0x03: FFW
-        0x04: RWD
-        0x05: Next Track
-        0x06: Previous Track
-        0x07: Pending
-        0x08: CDs Ready
-        0x09: CD Check
-        0x0a: Eject!
-      :notes:
-        - when CD play is first requested, CDC sends back 0x00
-        - it's not until it responds with 0x02 that the audio is routed
-    :status:
-      :type: :map
-      :label: Playing
-      :dictionary:
-        0x02: Stopped
-        0x09: Playing
-        0x82: (BM53) Stopped
-        0x89: (BM53) Playing
-        0x8c: (BM53) Ready?
-    :magazine:
-      :type: :map
-      :dictionary:
-        0x00: --
-        0x08: Slot Empty!
-    :loader:
-      :type: :bit_array
-      :parameters:
-        :cd1:
-          :type: :switch
-          :label: CD6
-          :states:
-            0: :off
-            1: :on
-        :cd2:
-          :type: :switch
-          :label: CD5
-          :states:
-            0: :off
-            1: :on
-        :cd3:
-          :type: :switch
-          :label: CD4
-          :states:
-            0: :off
-            1: :on
-        :cd4:
-          :type: :switch
-          :label: CD3
-          :states:
-            0: :off
-            1: :on
-        :cd5:
-          :type: :switch
-          :label: CD2
-          :states:
-            0: :off
-            1: :on
-        :cd6:
-          :type: :switch
-          :label: CD1
-          :states:
-            0: :off
-            1: :on
-      :index:
-        :cd1: 2
-        :cd2: 3
-        :cd3: 4
-        :cd4: 5
-        :cd5: 6
-        :cd6: 7
-    :b4:
-      :type: :integer
-    :cd:
-      :type: :integer
-    :track:
-      :type: :integer
-
-# ************************************************************************* #
-#                               NAV/TV?
-# ************************************************************************* #
-
 0x4F: # SRC-GFX
   :id: 79
   :properties:
@@ -2948,96 +3197,6 @@
       :bmbt:
         - 00 (Monitor Off)
         - 10 (Monitor On)
-
-# ************************************************************************* #
-#                           CHECK CONTROL MODULE
-# ************************************************************************* #
-
-0x51: # CCM-END
-  :id: 0x51
-  :properties:
-    :short_name: CCM-END
-    :long_name: Ignition off CCM update?
-  :parameters:
-    :status:
-      :type: :map
-      :map:
-        0x00: NO_WARNINGS
-      :dictionary:
-        0x00: No Warnings
-  :index:
-    :status: 0
-  :klass: Base
-  :notes:
-    - only ever from CCM
-    - followed by 0x52 from
-
-0x52: # CCM-?
-  :id: 0x52
-  :properties:
-    :short_name: CCM-?
-    :long_name: Unknown
-  :klass: Parameterized::Base
-  :index:
-    :b1: 0
-    :b2: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false
-  :parameters:
-    :b1:
-      :type: :integer
-    :b2:
-      :type: :integer
-  :chars:
-      :type: :chars
-  :meta:
-    :notes:
-      - every 0x52 command to date
-      - always from IKE 0x80 to CCM 0x30?
-      - "   RANGE  50 KM     "
-      - "   RANGE  50 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  41 KM     "
-      - "   RANGE  40 KM     "
-      - "   RANGE  50 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "      CODE ----     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
 
 # ************************************************************************* #
 #                               BUTTONS
@@ -3597,190 +3756,11 @@
     :examples:
       - from GFX 02 0C
 
-0x31: # INPUT 0x30
-  :id: 49
-  :schemas:
-    - :tel
-    - :rad
-  :klass: Base
-  :rad:
-    :klass: Parameterized::Base
-    :properties:
-      :short_name: INPUT-RAD*
-      :long_name: Radio Menu Soft Buttom
-    :index:
-      :layout: 0
-      :function: 1
-      :button: 2
-    :parameters:
-      :layout:
-        :type: :map
-        :dictionary:
-          0x00: --
-          0x60: Menu A # RDS
-          0x61: Menu B # RDS
-        :map:
-          0x00: :no_source
-          0x60: :rds_1
-          0x61: :rds_2
-      :function:
-        :type: :map
-        :dictionary:
-          0x00: --
-        :map:
-          0x00: :no_function
-      :button:
-        :type: :bit_array
-        :index:
-          :id: !ruby/range
-                        begin: 3
-                        end: 7
-                        excl: false
-          :state: !ruby/range
-                          begin: 1
-                          end: 2
-                          excl: false
-        :parameters:
-          :id:
-            :type: :map
-            :label: 'Index:'
-            :dictionary:
-              0x00: '0'
-              0x01: '1'
-              0x02: '2'
-              0x03: '3'
-              0x04: '4'
-              0x05: '5'
-              0x06: '6'
-              0x07: '7'
-              0x08: '8'
-              0x09: '9'
-              0x0a: '10'
-          :state:
-            :type: :switch
-            :label: 'State:'
-            :states:
-              0b00: :press
-              0b01: :hold
-              0b10: :release
-            :dictionary:
-              0b00: Press
-              0b01: Hold
-              0b10: Release
-  :tel:
-    :klass: Parameterized::Base
-    :properties:
-      :short_name: INPUT-TEL*
-      :long_name: Telephone Menu Soft Buttom
-    :index:
-      :layout: 0
-      :function: 1
-      :button: 2
-    :parameters:
-      :layout:
-        :type: :map
-        :dictionary:
-          0x00: --
-          0x05: Pin
-          0x20: Info
-          0x42: Dial
-          0x43: Directory
-          0x80: Top 8
-          0xf0: SMS Index
-          0xf1: SMS Show
-        :map:
-          0x00: :default
-          0x05: :pin
-          0x20: :info
-          0x42: :dial
-          0x43: :directory
-          0x80: :top_8
-          0xf0: :sms_index
-          0xf1: :sms_show
-      :function:
-        :type: :map
-        :dictionary:
-          0x00: --
-          0x01: Contact
-          0x02: Digit
-          0x05: SOS
-          0x07: Navigate
-          0x08: Info
-        :map:
-          0x00: :no_function
-          0x01: :contact
-          0x02: :digit
-          0x05: :sos
-          0x07: :navigate
-          0x08: :info
-      :button:
-        :type: :bit_array
-        :index:
-          :state: !ruby/range
-                          begin: 1
-                          end: 2
-                          excl: false
-          :id: !ruby/range
-                        begin: 3
-                        end: 7
-                        excl: false
-        :parameters:
-          :id:
-            :type: :map
-            :label: 'Index:'
-            :dictionary:
-              0x00: 0
-              0x01: 1
-              0x02: 2
-              0x03: 3
-              0x04: 4
-              0x05: 5
-              0x06: 6
-              0x07: 7
-              0x08: 8
-              0x09: 9
-              0x0a: 10/Info/<
-              0x0b: 11
-              0x0c: 12/Back
-              0x0d: 13/Forward
-              0x0e: 14
-              0x0f: 15
-
-              0x10: 16/Back
-              0x11: 17/Button Left
-              0x12: 18/Button Right
-              0x13: 19/Button Centre/Outlier
-
-              0x1a: 26/*
-              0x1b: '27/#'
-
-              0x1d: SMS
-              0x1e: Dial
-              0x1f: Directory
-          :state:
-            :type: :switch
-            :label: 'State:'
-            :states:
-              0b00: :press
-              0b01: :hold
-              0b10: :release
-            :dictionary:
-              0b00: Press
-              0b01: Hold
-              0b10: Release
-  :meta:
-    :sos:
-      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
-      - Open SOS from default layout ->
-      - GFX   	TEL   	TEL-DATA    00 05 08
-      - 'TEL   	GFX   	TXT-MEDIA 	C0 20	"SOS: 112!"'
-      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
-
 # ************************************************************************* #
 #                         ON BOARD COMPUTER (OBC)
 # ************************************************************************* #
 
-0x40: # OBC-VAR
+0x40: # CONG-VAR
   :id: 64
   :properties:
     :short_name: CONF-VAR
@@ -3813,7 +3793,7 @@
               end: -1
               excl: false
 
-0x41: # OBC-BOOL
+0x41: # CONF-BOOL
   :id: 65
   :klass: Parameterized::Base
   :properties:
@@ -3868,7 +3848,7 @@
 #                                 CLIMATE?
 # ************************************************************************* #
 
-0x87:
+0x87: # NAV-IHKA-REQ
   :id: 135
   :properties:
     :short_name: NAV-IHKA-REQ
@@ -3878,7 +3858,7 @@
     :notes:
       - send by :nav_eu???? to IKHA
 
-0x86:
+0x86: # NAV-IHKA-REP
   :id: 134
   :properties:
     :short_name: NAV-IHKA-REP
