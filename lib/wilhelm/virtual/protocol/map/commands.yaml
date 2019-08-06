@@ -7,13 +7,12 @@
       :verbose: true
     :klass: Base
 
-
 # ************************************************************************* #
-#                               ANZV (BOOLEAN)
+#                                  DISPLAY
 # ************************************************************************* #
 
-0x21: # MID-RAD-21 / MID-TEL-21
-  :id: 33
+0x21: # MID-21 / RAD-21* / TEL-21*
+  :id: 0x21
   :properties:
     :short_name: MID-21
     :long_name: MID Display
@@ -21,12 +20,12 @@
   :schemas:
     - :tel
     - :rad
-  # SCHEMA 0x21 MID-RAD-21*
+  # SCHEMA 0x21 RAD-21*
   :rad:
     :id: 33
     :klass: Parameterized::Base
     :properties:
-      :short_name: MID-RAD-21*
+      :short_name: RAD-21*
       :long_name: MID Display
     :index:
       :layout: 0
@@ -150,12 +149,12 @@
                     excl: false
       :chars:
         :type: :chars
-  # SCHEMA 0x21 MID-TEL-21
+  # SCHEMA 0x21 TEL-21
   :tel:
     :id: 33
     :klass: Parameterized::Base
     :properties:
-      :short_name: MID-TEL-21
+      :short_name: TEL-21*
       :long_name: MID Display
     :index:
       :layout: 0
@@ -234,7 +233,6 @@
       - 0x03: Done?
       - 0x07: unknown?
       - 0x10: Unrecognised command?
-
 
 0x23: # TXT-23 / RAD-23* / TEL-23*
   :id: 35
@@ -547,8 +545,8 @@
 #                                   ANZV
 # ************************************************************************* #
 
-0x24: # ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
-  :id: 36
+0x24: # ANZV-VAR / ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
+  :id: 0x24
   :properties:
     :short_name: ANZV-VAR
     :long_name: OBC Display (IKE, GFX)
@@ -782,6 +780,7 @@
       - ANZV
     :length:
       - always 2 bytes
+
 0x2B: # ANZV-LED-TEL
   :id: 43
   :properties:
@@ -842,8 +841,9 @@
       - TEL
     :recipients:
       - ANZV
+
 0x2C: # ANZV-BOOL-TEL (TEL-STATUS)
-  :id: 44
+  :id: 0x2C
   :properties:
     :short_name: ANZV-BOOL-TEL
     :long_name: Unknown
@@ -912,13 +912,12 @@
     :recipients:
       - ANZV
 
-
 # ************************************************************************* #
 #                                 NAVIGATION
 # ************************************************************************* #
 
-0xA2:
-  :id: 162
+0xA2: # LATLONG
+  :id: 0xA2
   :properties:
     :verbose: true
     :short_name: LATLONG
@@ -966,7 +965,7 @@
       :short_name: EWS-END
       :long_name: Diagnostics Control
 
-0xA4:
+0xA4: # ADDR
   :id: 164
   :properties:
     :short_name: ADDR
@@ -974,14 +973,14 @@
   :klass: Base
 
 0xA7:
-  :id: 167
+  :id: 0xA7
   :properties:
     :short_name: A7-SRC-GFX
     :long_name: Unknown
   :klass: Base
 
 0xA9:
-  :id: 169
+  :id: 0xA9
   :properties:
     :short_name: NAV-A9
     :long_name: Unknown
@@ -1004,6 +1003,7 @@
 # ************************************************************************* #
 #                             BUS DEVICE STATUS
 # ************************************************************************* #
+
 0x01:
   :id: 1
   :properties:
@@ -1011,6 +1011,7 @@
     :long_name: Status Request
     :verbose: false
   :klass: Base
+
 0x02:
   :id: 2
   :properties:
@@ -1112,6 +1113,7 @@
     :examples:
       - BMBT  RAD	  PING	--
       - RAD	  GLO-H	PONG	Respond
+
 0x03:
   :id: 3
   :properties:
@@ -1121,16 +1123,19 @@
   :meta:
     - only a single message
     - GLO-H 	PDC   	B-PING    	80 12 F1 80 06 BF 13 02 28 3B 03 80 14 AC 3B 05 80 41 02 F1 80 07 BF 15 08 81 60 42 86 80 05 E7 2A 48 3B 05 80 41 0E 02 F3 80 05 E7 2A 48 80 0F E7 24 0E 30 2E 30 53 45 43 39 3B 05 80 41 0E 01 F0 80 0F E7 24 0E 30 2E 30 53 45 43 39 80 05 BF 18 22 3B 05 80 41 1A 01 E4 80 0F E7 24 1A 30 2E 30 53 45 43 2D 3B 05 80 41 01 F7 AC 04 BF 61 01 77 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 02 F4 80 05 E7 2A 48 80 E7 24 2D 2D 2D 4B 4D 2F 48 2B 3B 05 80 41 07 01 F9 80 E7 24 07 2D 2D 2D 2D 4B 4D 4F 3B 05 80 41 1B 02 E6 80 05 E7 2A 48 3B 05 80 41 0F 02 F2 80 05 E7 2A 48 80 E7 24 0F 2D 2D 3A 2D 2D 7A
+
 # ************************************************************************* #
 #                               IGNITION
 # ************************************************************************* #
-0x10:
+
+0x10: # IGN-REQ
   :id: 16
   :properties:
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
   :klass: Base
-0x11:
+
+0x11: # IGN
   :id: 17
   :properties:
     :short_name: IGN
@@ -1182,10 +1187,12 @@
       - 0b00000000
       - 0b00000011
       - 0b00000111
+
 # ************************************************************************* #
 #                               KEY/REMOTE
 # ************************************************************************* #
-0x72:
+
+0x72: # REMOTE
   :id: 114
   :properties:
     :short_name: REMOTE
@@ -1233,13 +1240,15 @@
         :coding2: 6
   :index:
     :b1: 0
-0x73:
+
+0x73: # KEY-REQ
   :id: 115
   :properties:
     :short_name: KEY-REQ
     :long_name: Key Status Request
   :klass: Base
-0x74:
+
+0x74: # KEY
   :id: 0x74
   :properties:
     :short_name: KEY
@@ -1289,11 +1298,13 @@
         - identification
         - password
         - disabled
+
 # ************************************************************************* #
 #                                 MEMORY?
 # ************************************************************************* #
-0x78:
-  :id: 120
+
+0x78: # MEM-LOAD
+  :id: 0x78
   :properties:
     :short_name: MEM-LOAD
     :long_name: Memory
@@ -1326,10 +1337,12 @@
       - GM3   	GLO-L 	78       	04
       - this was being sent after DIA request memory preset
       - argument seemingly correlated with preset number/ID
+
 # ************************************************************************* #
 #                               IKE SENSORS
 # ************************************************************************* #
-0x12:
+
+0x12: # SEN-REQ
   :id: 18
   :properties:
     :short_name: SEN-REQ
@@ -1340,7 +1353,8 @@
       - CCM
     :recipients:
       - IKE
-0x13:
+
+0x13: # SEN
   :id: 19
   :properties:
     :short_name: SEN
@@ -1504,13 +1518,15 @@
         - 0xD3: 65
       :byte3:
         # - 0x00: 1493
-0x14:
+
+0x14: # CNTRY-REQ
   :id: 20
   :properties:
     :short_name: CNTRY-REQ
     :long_name: Country Coding Status Request
   :klass: Base
-0x15:
+
+0x15: # CNTRY
   :id: 21
   :properties:
     :short_name: CNTRY
@@ -1589,10 +1605,11 @@
     :b2: 1
     :b3: 2
     :b4: 3
-0x59:
+
+0x59: # SEN-LUM
   :id: 89
   :properties:
-    :short_name: LIGHT-SEN
+    :short_name: SEN-LUM
     :long_name: Luminosity Reading?
   :klass: Parameterized::Base
   :parameters:
@@ -1603,16 +1620,19 @@
   :index:
     :lum: 0
     :tbc: 1
+
 # ************************************************************************* #
 #                               VEHICLE STATUS
 # ************************************************************************* #
-0x16:
+
+0x16: # ODO-REQ
   :id: 22
   :properties:
     :short_name: ODO-REQ
     :long_name: Odometer Request
   :klass: Base
-0x17:
+
+0x17: # ODO
   :id: 23
   :properties:
     :short_name: ODO
@@ -1621,8 +1641,9 @@
   :meta:
       :senders:
         - IKE
-0x18:
-  :id: 24
+
+0x18: # SPD
+  :id: 0x18
   :properties:
     :short_name: SPD
     :long_name: Speed & RPM
@@ -1640,14 +1661,16 @@
       - IKE
     :recipients:
       - GLO-L (0xBF)
-0x5A:
-  :id: 90
+
+0x5A: # LAMP-REQ
+  :id: 0x5A
   :properties:
     :short_name: LAMP-REQ
     :long_name: Lamp Status Request
   :klass: Base
-0x5B:
-  :id: 91
+
+0x5B: # LAMP
+  :id: 0x5B
   :properties:
     :short_name: LAMP
     :long_name: Lamp Status
@@ -1737,7 +1760,7 @@
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
 
-0x5C:
+0x5C: # CLSTR
   :id: 92
   :properties:
     :short_name: CLSTR
@@ -1758,8 +1781,9 @@
       - LCM
     :recipients:
       - GLO-L
-0x5D:
-  :id: 93
+
+0x5D: # CLSTR-REQ?
+  :id: 0x5D
   :properties:
     :short_name: CLSTR-REQ?
     :long_name: Unknown
@@ -1780,14 +1804,16 @@
       - LCM 05 BF   5C FF 00 C9
       - IKE 03 LCM  5D 0E
       - LCM 05 BF   5C FF 00 C9
-0x79:
-  :id: 121
+
+0x79: # DOOR-REQ
+  :id: 0x79
   :properties:
     :short_name: DOOR-REQ
     :long_name: Door/Flag Request Status
   :klass: Base
-0x7A:
-  :id: 122
+
+0x7A: # DOOR
+  :id: 0x7A
   :properties:
     :short_name: DOOR
     :long_name: Door/Flap Status
@@ -1907,14 +1933,16 @@
       - GM3
     :recipients:
       - GLO-L
-0x53:
-  :id: 83
+
+0x53: # VEH-REQ
+  :id: 0x53
   :properties:
     :short_name: VEH-REQ
     :long_name: Vehicle Status Request
   :klass: Base
-0x54:
-  :id: 84
+
+0x54: # VEH
+  :id: 0x54
   :schemas:
     - :dia
   :properties:
@@ -1972,8 +2000,9 @@
   :examples:
     - "IKE   	LCM   	53        --"
     - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
-0x55:
-  :id: 85
+
+0x55: # SI
+  :id: 0x55
   :properties:
     :short_name: SI
     :long_name: Service Interval Usage
@@ -1998,15 +2027,18 @@
       :type: :data
     :days:
       :type: :data
+
 # ************************************************************************* #
 #                               TEMPERATURE
 # ************************************************************************* #
+
 0x1D:
   :id: 29
   :properties:
     :short_name: TEMP-REQ
     :long_name: Temperature Request
   :klass: Base
+
 0x19:
   :id: 25
   :properties:
@@ -2018,15 +2050,18 @@
       - IKE
     :recipients:
       - GLO-L
+
 0x1F:
   :id: 31
   :properties:
     :short_name: UTC
     :long_name: UTC time and date
   :klass: Base
+
 # ************************************************************************* #
 #                               RADIO
 # ************************************************************************* #
+
 0x34:
   :id: 52
   :properties:
@@ -2089,6 +2124,7 @@
         :magnitude:
           :label: 'Magnitude:'
           :type: :integer
+
 0x35:
   :id: 53
   :properties:
@@ -2149,6 +2185,7 @@
         :magnitude:
           :label: 'Magnitude:'
           :type: :integer
+
 0x36:
   :id: 54
   :properties:
@@ -2261,6 +2298,7 @@
         0xd_8: TREBLE -4
         0xd_a: TREBLE -5
         0xd_c: TREBLE -6
+
 0x37:
   :id: 55
   :properties:
@@ -2310,6 +2348,7 @@
         0xf_0: (Tone) EQ. Balance
   :index:
     :mode: 0
+
 0x45:
   :id: 69
   :properties:
@@ -2356,6 +2395,7 @@
     - seemingly to tell the radio when and what to render
     - used when audio disply is requested/falls back to
     - used when switching back from TV?
+
 0x46:
   :id: 70
   :properties:
@@ -2399,6 +2439,7 @@
     :state: 0
   :meta:
     - 01: confirm switch?
+
 0x4A:
   :id: 74
   :properties:
@@ -2439,6 +2480,7 @@
       - RAD
     :recipients:
       - BMBT
+
 0x4B:
   :id: 75
   :klass: Parameterized::Base
@@ -2474,6 +2516,7 @@
   :index:
     :control: 0
     :mode: 1
+
 0x4E:
   :id: 78
   :properties:
@@ -2503,14 +2546,14 @@
     - 01 = 19
 
 0xd4:
-  :id: 212
+  :id: 0xd4
   :properties:
     :short_name: RDS?
     :long_name: Channel list?
   :klass: Base
 
 0x38:
-  :id: 56
+  :id: 0x38
   :properties:
     :short_name: CDC-REQ
     :long_name: CD Status Request
@@ -2536,7 +2579,7 @@
     :mode: 1
 
 0x39:
-  :id: 57
+  :id: 0x39
   :properties:
     :short_name: CDC
     :long_name: CDC Status
@@ -2637,6 +2680,7 @@
 # ************************************************************************* #
 #                               NAV/TV?
 # ************************************************************************* #
+
 0x4F:
   :id: 79
   :properties:
@@ -2677,11 +2721,13 @@
       :bmbt:
         - 00 (Monitor Off)
         - 10 (Monitor On)
+
 # ************************************************************************* #
 #                           CHECK CONTROL MODULE
 # ************************************************************************* #
+
 0x51:
-  :id: 81
+  :id: 0x51
   :properties:
     :short_name: CCM-END
     :long_name: Ignition off CCM update?
@@ -2698,8 +2744,9 @@
   :notes:
     - only ever from CCM
     - followed by 0x52 from
+
 0x52:
-  :id: 82
+  :id: 0x52
   :properties:
     :short_name: CCM-?
     :long_name: Unknown
@@ -2830,6 +2877,7 @@
             0b00: Press
             0b01: Hold
             0b10: Release
+
 0x32:
   :schemas:
     - :bmbt
@@ -2928,6 +2976,7 @@
               1: :bmbt_vol_up
           :magnitude:
             :type: :integer
+
 0x47:
   :id: 71
   :properties:
@@ -2971,6 +3020,7 @@
     - 3 of each
     - F0 05 FF 47 00 38 75
     - F0 05 FF 47 00 B8 F5
+
 0x48:
   :id: 72
   :properties:
@@ -3059,6 +3109,7 @@
             0b00: Press
             0b01: Hold
             0b10: Release
+
 0x49:
   :id: 73
   :properties:
@@ -3087,6 +3138,7 @@
             1: :bmbt_right
         :magnitude:
           :type: :integer
+
 0x57:
   :id: 87
   :properties:
@@ -3130,11 +3182,12 @@
             0b10: Release
   :meta:
     - only press and release
+
 # ************************************************************************* #
 #                               DISPLAYS
 # ************************************************************************* #
 
-0xA5:
+0xA5: # TXT-A5 / TEL-A5* / RAD-A5*
   :id: 165
   :properties:
     :short_name: TXT-A5
@@ -3143,9 +3196,9 @@
   :schemas:
     - :tel
     - :rad
-  :tel: # TXT-A5-TEL*
+  :tel: # TEL-A5*
     :properties:
-      :short_name: TXT-A5-TEL*
+      :short_name: TEL-A5*
       :long_name: Unknown
     :klass: Parameterized::Base
     :index:
@@ -3243,9 +3296,9 @@
               0b111: 'H3/7'
       :chars:
         :type: :chars
-  :rad: # TXT-A5-RAD*
+  :rad: # RAD-A5*
     :properties:
-      :short_name: TXT-A5-RAD*
+      :short_name: RAD-A5*
       :long_name: Unknown
     :klass: Parameterized::Base
     :index:
@@ -3371,7 +3424,8 @@
 # ************************************************************************* #
 #                             CLUSTER HUD
 # ************************************************************************* #
-0x1A:
+
+0x1A: # CCM-ALRT
   :id: 26
   :klass: CCMDisplay
   :properties:
@@ -3493,8 +3547,9 @@
           - LIGHTS ON
           - KEY IN IGNITION LOCK
           - CHECK ENGINE OIL LEV
-0x1B:
-  :id: 27
+
+0x1B: # HUD-STATUS
+  :id: 0x1B
   :properties:
     :short_name: HUD-STATUS
     :long_name: IKE Text Status?
@@ -3541,6 +3596,7 @@
 # ************************************************************************* #
 #                               TELEPHONE
 # ************************************************************************* #
+
 0x20:
   :id: 32
   :properties:
@@ -3733,6 +3789,7 @@
 # ************************************************************************* #
 #                         ON BOARD COMPUTER (OBC)
 # ************************************************************************* #
+
 0x40: # OBC-VAR
   :id: 64
   :properties:
@@ -3820,6 +3877,7 @@
 # ************************************************************************* #
 #                                 CLIMATE?
 # ************************************************************************* #
+
 0x87:
   :id: 135
   :properties:
@@ -3829,6 +3887,7 @@
   :meta:
     :notes:
       - send by :nav_eu???? to IKHA
+
 0x86:
   :id: 134
   :properties:
@@ -3875,9 +3934,11 @@
     :short_name: DIA-IDENT?
     :long_name: Diagnostics?
   :klass: Base
+
 # ------------------------------ ERRORS ------------------------------ #
-4:
-  :id: 4
+
+0x04:
+  :id: 0x04
   :properties:
     :short_name: DIA-ERR-READ
     :long_name: BUS Status Reponse
@@ -3900,8 +3961,8 @@
     - RAD    	01
     - RAD    	01
 
-5:
-  :id: 5
+0x05: # LCD-SET
+  :id: 0x05
   :properties:
     :short_name: DIA-ERR-DEL
     :long_name: Diagnostics Clear Error Memeory?
@@ -3931,15 +3992,15 @@
 
 # ------------------------------ ? ------------------------------ #
 
-8:
-  :id: 8
+0x08:
+  :id: 0x08
   :properties:
     :short_name: DIA-COD-READ
     :long_name: Diagnostics READ Coding Data Universal
   :klass: Base
 
-11:
-  :id: 11
+0x0b:
+  :id: 0x0b
   :properties:
     :short_name: DIA-STATUS
     :long_name: Unknown
@@ -3978,49 +4039,50 @@
 
 # ------------------------------ SPECIFIC FUNCTIONS ------------------------------ #
 
-48:
-  :id: 48
+0x30:
+  :id: 0x30
   :properties:
     :short_name: SLF_CHK
     :long_name: Unknown
   :klass: Base
 
-63:
-  :id: 63
+0x3f:
+  :id: 0x3f
   :properties:
     :short_name: EHC-DIG
     :long_name: Unknown
   :klass: Base
 
 0x60:
-  :id: 96
+  :id: 0x60
   :properties:
     :short_name: EWS-ISN?
     :long_name: Diagnostics?
   :klass: Base
+
 0x6B:
-  :id: 107
+  :id: 0x6B
   :properties:
     :short_name: EWS-INT
     :long_name: EWS Internal State
   :klass: Base
 
 0x69:
-  :id: 105
+  :id: 0x69
   :properties:
     :short_name: EWS-COD?
     :long_name: Diagnostics?
   :klass: Base
 
 0x65:
-  :id: 101
+  :id: 0x65
   :properties:
     :short_name: EWS-KEY
     :long_name: Diagnostics?
   :klass: Base
 
 0x9c:
-  :id: 156
+  :id: 0x9c
   :properties:
     :short_name: DIA-TRANS
     :long_name: Diagnostics Transport Mode?
@@ -4059,7 +4121,8 @@
 # ************************************************************************* #
 #                                  NOT SEEN YET
 # ************************************************************************* #
-0x06:
+
+0x06: # LCD-REP*
   :id: 6
   :properties:
     :short_name: DIA-MEM-READ
@@ -4075,6 +4138,7 @@
   :meta:
     - the read memory function in INPA?
     - used to populate BMBT service mode displays
+
 0x07:
   :id: 7
   :properties:
@@ -4083,6 +4147,7 @@
   :klass: Base
   :meta:
     - if above is correct, then presumably the write...
+
 0x09:
   :id: 9
   :properties:
@@ -4094,20 +4159,23 @@
 # ************************************************************************* #
 #                             SEEN BUT UNCONFIRMED!
 # ************************************************************************* #
-88:
-  :id: 88
+
+0x58:
+  :id: 0x58
   :properties:
     :short_name: "???"
     :long_name: Unknown
   :klass: Base
-51:
-  :id: 51
+
+0x33:
+  :id: 0x33
   :properties:
     :short_name: "???"
     :long_name: Unknown
   :klass: Base
-131:
-  :id: 131
+
+0x83:
+  :id: 0x83
   :properties:
     :short_name: IHK-?
     :long_name: Unknown
@@ -4115,45 +4183,51 @@
   :meta:
     :senders:
       - IHK
-125:
-  :id: 125
+
+0x7d:
+  :id: 0x7d
   :properties:
     :short_name: GM3-?
     :long_name: Unknown
   :klass: Base
-66:
-  :id: 66
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-67:
-  :id: 67
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-68:
-  :id: 68
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-97:
-  :id: 97
-  :properties:
-    :short_name: EHC-STAT?
-    :long_name: Unknown
-  :klass: Base
-0x70:
-  :id: 112
+
+0x42:
+  :id: 0x42
   :properties:
     :short_name: "???"
     :long_name: Unknown
   :klass: Base
 
-118:
-  :id: 118
+0x43:
+  :id: 0x43
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: Base
+
+0x44:
+  :id: 0x44
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: Base
+
+0x61:
+  :id: 0x61
+  :properties:
+    :short_name: EHC-STAT?
+    :long_name: Unknown
+  :klass: Base
+
+0x70:
+  :id: 0x70
+  :properties:
+    :short_name: "???"
+    :long_name: Unknown
+  :klass: Base
+
+0x76:
+  :id: 0x76
   :properties:
     :short_name: "???"
     :long_name: Unknown
@@ -4163,14 +4237,16 @@
       - LCM
   :notes:
     - GM can sent 0x76 to control lights..?
+
 0x82:
     :id: 0x82
     :properties:
       :short_name: "???"
       :long_name: Unknown
     :klass: Base
-191:
-  :id: 191
+
+0xbf:
+  :id: 0xbf
   :properties:
     :short_name: "???"
     :long_name: Unknown
