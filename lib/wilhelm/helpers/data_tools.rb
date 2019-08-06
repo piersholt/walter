@@ -52,7 +52,7 @@ module Wilhelm
         numbers.map! do |each_number|
           binary_string = Kernel.format(MASK_BINARY, each_number)
           bits_array = binary_string.split(BLANK)
-          puts each_number.to_s.center(WIDTH) + bits_array.join(SPACE).to_s
+          puts each_number.to_s(16).center(WIDTH) + bits_array.join(SPACE).to_s
           bits_array.reverse!
           bits_array.map!(&:to_i)
         end
