@@ -17,7 +17,7 @@ module Wilhelm
               def input_time(hour = hour?, minute = min?, seconds = sec?)
                 return false unless valid_time?(hour, minute)
                 hour = to_twelve_hour_time(hour)
-                obc_var(b1: FIELD_TIME, b2: hour, b3: minute, b4: seconds)
+                obc_var(field: FIELD_TIME, input: [hour, minute, seconds])
               end
 
               alias time! input_time
@@ -27,7 +27,7 @@ module Wilhelm
               def input_date(day = day?, month = month?, year = year?)
                 return false unless valid_date?(day, month, year)
                 year = to_short_year(year)
-                obc_var(b1: FIELD_DATE, b2: day, b3: month, b4: year)
+                obc_var(field: FIELD_DATE, input: [day, month, year])
               end
 
               alias date! input_date
