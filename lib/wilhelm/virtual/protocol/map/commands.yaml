@@ -125,6 +125,12 @@
       :m3:
         :type: :bit_array
         :parameters:
+          :selected:
+            :type: :switch
+            :label: Selected
+            :states:
+              0: :off
+              1: :on
           # no GFX-STATUS using this using MK1 GFX
           :block:
             :type: :switch
@@ -141,6 +147,7 @@
           :index:
             :type: :integer
         :index:
+          :selected: 0
           :block: 1
           :flush: 2
           :index:  !ruby/range

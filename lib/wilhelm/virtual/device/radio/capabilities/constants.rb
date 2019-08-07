@@ -34,6 +34,8 @@ module Wilhelm
             FLUSH = 0b0010_0000
             BLOCK = 0b0100_0000
 
+            SELECTED   = 0b1000_0000
+
             # HEADER
             HEADER_INDEXES = [
               INDEX_1 + BLOCK,
