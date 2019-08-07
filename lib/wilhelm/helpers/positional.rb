@@ -64,6 +64,15 @@ module Wilhelm
         binary_base_digits(BASE_256_BIT_SHIFT, number)
       end
 
+      # Split number into base-2 positional notation digits
+      # base-2 represents 1 bit => 2**1 => 2
+      # Example: 0x83 => [1, 0, 0, 0, 0, 0, 1, 1]
+      # @param Fixnum number
+      # @return Array<Fixnum>
+      def base_2_digits(number)
+        binary_base_digits(BASE_2_BIT_SHIFT, number)
+      end
+
       private
 
       def reduce(shift_size, *segments)
