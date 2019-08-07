@@ -10,21 +10,15 @@ module Wilhelm
 
         # @override
         def to_s
-          fast = parse_reading(*speed.value, 2, SPEED_UNIT)
-          rev = parse_reading(*rpm.value, 100, REV_UNIT)
-
-          str_buffer = sprintf("%-10s", sn)
-          str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")
-          str_buffer
+          "#{format('%-10s', sn)}\t" \
+          "Speed: #{speed!}, " \
+          "RPM: #{rpm!}"
         end
 
         def inspect
-          fast = parse_reading(*speed.value, 2, SPEED_UNIT)
-          rev = parse_reading(*rpm.value, 100, REV_UNIT)
-
-          str_buffer = sprintf("%-10s", sn)
-          str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")
-          str_buffer
+          "#{format('%-10s', sn)}\t" \
+          "Speed: #{speed!}, " \
+          "RPM: #{rpm!}"
         end
 
         private
@@ -32,6 +26,14 @@ module Wilhelm
         def parse_reading(reading, multiplier, unit)
           calculated_value = reading * multiplier
           "#{calculated_value}#{unit}"
+        end
+
+        def speed!
+          @speed ||= parse_reading(*speed.value, 2, SPEED_UNIT)
+        end
+
+        def rpm!
+          @rpm ||= parse_reading(*rpm.value, 100, REV_UNIT)
         end
       end
     end

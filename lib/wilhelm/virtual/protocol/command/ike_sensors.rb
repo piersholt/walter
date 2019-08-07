@@ -5,8 +5,7 @@ module Wilhelm
     class Command
       # Virtual::Command::IKESensors
       class IKESensors < Base
-        include Wilhelm::Helpers::DataTools
-
+        # @override
         def to_s
           "#{sn}\t" \
           "#{@bit_array_1}\t" \
@@ -15,9 +14,10 @@ module Wilhelm
         end
 
         def inspect
-          "<#{PROC} #{@bit_array_1.inspect} " \
+          "<#{self.class}\t" \
+          "#{@bit_array_1.inspect} " \
           "#{@bit_array_2.inspect} " \
-          "#{@bit_array_3.inspect}"
+          "#{@bit_array_3.inspect}>"
         end
       end
     end
