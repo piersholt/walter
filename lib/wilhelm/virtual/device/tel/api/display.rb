@@ -15,7 +15,7 @@ module Wilhelm
             def draw_23(from: :tel, to: :gfx, **arguments)
               arguments[:ike] = IKE_DEFAULT unless arguments[:ike]
               parse_string(arguments)
-              try(from, to, TXT_GFX, arguments)
+              dispatch_raw_command(from, to, TXT_GFX, arguments)
             end
 
             alias primary draw_23
@@ -27,7 +27,7 @@ module Wilhelm
               arguments[:m2] = M2_DEFAULT unless arguments[:m2]
               arguments[:m3] = M3_SOMETHING unless arguments[:m3]
               parse_string(arguments)
-              try(from, to, TXT_MID, arguments)
+              dispatch_raw_command(from, to, TXT_MID, arguments)
             end
 
             alias mid draw_21
@@ -36,7 +36,7 @@ module Wilhelm
             # New Menus: Emergency/SOS, SMS
             def draw_a5(from: :tel, to: :gfx, **arguments)
               parse_string(arguments)
-              try(from, to, TXT_NAV, arguments)
+              dispatch_raw_command(from, to, TXT_NAV, arguments)
             end
 
             # 0x24 ANZV-VAR
@@ -44,7 +44,7 @@ module Wilhelm
             def anzv_var_tel(from: :tel, to: :gfx, **arguments)
               arguments[:ike] = IKE_ZERO unless arguments[:ike]
               parse_string(arguments)
-              try(from, to, ANZV_VAR, arguments)
+              dispatch_raw_command(from, to, ANZV_VAR, arguments)
             end
 
             alias anzv_var anzv_var_tel

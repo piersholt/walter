@@ -13,6 +13,7 @@ module Wilhelm
           include LogActually::ErrorOutput
 
           NAME = 'API::Base'.freeze
+          LOG_BUILD_COMMAND = '#build_command'
 
           def resolve_ident(ident)
             Map::AddressLookupTable.instance.resolve_ident(ident)
@@ -22,8 +23,9 @@ module Wilhelm
             NAME
           end
 
-          def try(from, to, command_id, command_args = {})
-            LOGGER.debug(name) { "#try(#{from}, #{to}, #{command_args})" }
+          # Build command from arguments
+          def dispatch_raw_command(from, to, command_id, command_args = {})
+            LOGGER.debug(name) { "#dispatch_raw_command(#{from}, #{to}, #{command_args})" }
             config = get_command_config(command_id, from, to)
 
             # 2. Arguments Hash to Command ----------------------------------------
@@ -36,15 +38,18 @@ module Wilhelm
             from = resolve_ident(from)
             to = resolve_ident(to)
 
-            send_it!(from, to, command_object)
+            dispatch_command(from, to, command_object)
           rescue StandardError => e
             LOGGER.error(name) { e }
             e.backtrace.each { |line| LOGGER.error(name) { line }  }
             binding.pry
           end
 
-          def send_it!(from, to, command)
-            LOGGER.debug(name) { "#send_it!(#{from}, #{to}, #{command.inspect})" }
+          alias try dispatch_raw_command
+
+          # Dispatch message for command_object
+          def dispatch_command(from, to, command)
+            LOGGER.debug(name) { "#dispatch_command(#{from}, #{to}, #{command.inspect})" }
             message = Message.new(from, to, command)
             changed
             notify_observers(MESSAGE_SENT, message: message)
@@ -69,9 +74,7 @@ module Wilhelm
 
           # 2. Arguments Hash to Command ----------------------------------------
 
-          LOG_BUILD_COMMAND = '#build_command'
-
-          def build_command(command_config, parameter_values_hash)
+          def build_command(command_config, command_arguments)
             LOGGER.debug(name) { LOG_BUILD_COMMAND }
             command_builder = command_config.builder
             command_builder = command_builder.new(command_config)
