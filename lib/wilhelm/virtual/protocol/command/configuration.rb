@@ -1,5 +1,6 @@
 # frozen_string_literal: false
 
+require_relative 'configuration/constants'
 require_relative 'configuration/klass'
 require_relative 'configuration/parameter'
 require_relative 'configuration/bit_array'
@@ -9,40 +10,21 @@ module Wilhelm
     class Command
       # Virtual::Command::Configuration
       class Configuration
-        include Helpers
+        include Constants
         include Klass
-
-        PROC = 'Command::Configuration'.freeze
-
-        MAP       = :map
-        SWITCH    = :switch
-        BIT_ARRAY = :bit_array
-        TYPES     = [MAP, BIT_ARRAY, SWITCH].freeze
-
-        NAMESPACE             = 'Wilhelm::Virtual::Command'.freeze
-        BASE                  = 'Base'.freeze
-        BASE_BUILDER          = 'Builder'.freeze
-        PARAMETERIZED         = 'Parameterized::Base'.freeze
-        PARAMETERIZED_BUILDER = 'Parameterized::Builder'.freeze
-
-        LOG_METHOD_INITIALIZE = '#initialize'.freeze
-
-        attr_reader :parameters
 
         def initialize(mapped_command)
           LOGGER.debug(PROC) { LOG_METHOD_INITIALIZE }
           @command_hash = mapped_command.dup
 
-          parse_parameters(parameters_hash) if parameters?
+          create_param_config_map(parameters_hash) if parameters?
           configure_class
         end
 
         def inspect
-          "<#{PROC} @id=#{id} @sn=#{sn} @klass=#{klass} @has_parameters=#{parameters?} @parameter_list=#{parameter_list}>"
-        end
-
-        def logger
-          LOGGER
+          "<#{PROC} @id=#{id} @sn=#{sn} @klass=#{klass} " \
+          "index?=>#{index?} parameters?=>#{parameters?} " \
+          "index_keys=>#{index_keys} parameter_keys=#{parameter_keys}>"
         end
 
         # Initialization -------------------------------------------------------
