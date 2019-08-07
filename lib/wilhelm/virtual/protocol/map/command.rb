@@ -7,6 +7,7 @@ module Wilhelm
       class Command < Base
         include Singleton
         include Wilhelm::Helpers::DataTools
+        include Helpers
 
         PROC = 'Map::Command'.freeze
         COMMANDS_MAP_NAME = 'commands'.freeze
@@ -76,6 +77,28 @@ module Wilhelm
           map.group_by do |_, v|
             v.fetch(:parameters, nil)&.fetch(:type, nil)
           end
+        end
+
+        def types
+          t = map.map do |id, command_hash|
+            command_klasses = klasses(command_hash)
+            [id, command_klasses]
+          end
+
+          t.map do |id, klasses|
+            k = klasses.map do |klass|
+              get_class(join_namespaces('Wilhelm::Virtual::Command', klass))
+            end
+            [id, *k]
+          end
+        end
+
+        def klasses(hash)
+          klass = hash[:klass]
+          nested_klasses = hash[:schemas]&.map do |schema|
+            klasses(hash[schema])
+          end
+          [klass, *nested_klasses]
         end
 
         private
