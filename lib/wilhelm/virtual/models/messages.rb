@@ -51,7 +51,7 @@ module Wilhelm
         raise StandardError if argument_ids.empty?
         results = @messages.find_all do |message|
           arguments = message.command.arguments
-          argument_ids.any? { |argument_id| argument_id == arguments[index].d }
+          argument_ids.any? { |argument_id| argument_id == arguments[index] }
         end
         self.class.new(results)
       end
@@ -88,7 +88,7 @@ module Wilhelm
 
       def commands
         messages_with_unique_commands = @messages.uniq do |m|
-          m.command.id.d
+          m.command.id
         end
 
         messages_with_unique_commands.map do |m|
@@ -98,7 +98,7 @@ module Wilhelm
 
       def arguments(index = (0..0))
         messages_with_unique_argument_sum = @messages.uniq do |m|
-          result = m.command.arguments[index].reduce(0) { |m, arg_byte| m + arg_byte.d }
+          result = m.command.arguments[index].reduce(0) { |m, arg_byte| m + arg_byte }
           result.nil? ? -1 : result
         end
 
@@ -142,7 +142,7 @@ module Wilhelm
 
       def group_by_command
         grouped_by_command = @messages.group_by do |message|
-          message.command.d
+          message.command
         end
 
         grouped_by_command.each do |command_id, messages|
@@ -154,7 +154,7 @@ module Wilhelm
 
       def group_by_recipient
         grouped_by_recipients = @messages.group_by do |message|
-          message.to.d
+          message.to
         end
 
         grouped_by_recipients.each do |recipient_id, messages|
@@ -167,7 +167,7 @@ module Wilhelm
       def indexes(command_id)
         positions = []
         @messages.each_with_index do |m, i|
-          positions << i if m.command.d == command_id
+          positions << i if m.command == command_id
         end
 
         positions
@@ -208,7 +208,7 @@ module Wilhelm
         when :command_id
           @messages.find_all do |message|
             c = message.command
-            criteria.any? { |crit| crit == c.d }
+            criteria.any? { |crit| crit == c }
           end
         when :to_id
           @messages.find_all do |message|
