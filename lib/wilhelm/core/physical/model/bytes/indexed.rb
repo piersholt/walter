@@ -24,7 +24,7 @@ module Wilhelm
 
         bytes = array.slice(param_range)
         bytes?(bytes)
-
+        bytes = Core::Bytes.new(bytes) if bytes.is_a?(Array)
         return bytes if bytes
         default(name, param_range)
       end
@@ -91,9 +91,9 @@ module Wilhelm
 
       def default_range(param_range)
         if param_range.max.nil?
-          Array.new(1, 0)
+          Core::Bytes(Array.new(1, 0))
         else
-          Array.new(param_range.size, 0)
+          Core::Bytes(Array.new(param_range.size, 0))
         end
       end
     end
