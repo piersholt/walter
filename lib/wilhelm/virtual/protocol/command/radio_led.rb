@@ -3,20 +3,8 @@
 module Wilhelm
   module Virtual
     class Command
+      # Virtual::Command::RadioLED
       class RadioLED < Base
-
-        def initialize(id, props)
-          super(id, props)
-        end
-
-        # ---- Printable ---- #
-
-        def bytes
-          @bytes ||= {}
-        end
-
-        # ---- Core ---- #
-
         # @override
         def to_s
           str_buffer = "#{sn}\tLED: #{led}"
@@ -24,7 +12,8 @@ module Wilhelm
         end
 
         def inspect
-          "#<#{self.class} @led=#{led.value} (#{led})>"
+          "#<#{self.class} " \
+          "@led=#{led.value} (#{led})>"
         end
 
         def tape?

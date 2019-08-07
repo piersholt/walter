@@ -3,16 +3,10 @@
 module Wilhelm
   module Virtual
     class Command
-      # ID: 25 0x19
+      # Virtual::Command::Speed
       class Speed < Base
         SPEED_UNIT = 'kmph'.freeze
         REV_UNIT = 'rpm'.freeze
-
-        def initialize(id, props)
-          super(id, props)
-        end
-
-        # ---- Core ---- #
 
         # @override
         def to_s
@@ -25,8 +19,8 @@ module Wilhelm
         end
 
         def inspect
-          fast = parse_reading(speed.value, 2, SPEED_UNIT)
-          rev = parse_reading(rpm.value, 100, REV_UNIT)
+          fast = parse_reading(*speed.value, 2, SPEED_UNIT)
+          rev = parse_reading(*rpm.value, 100, REV_UNIT)
 
           str_buffer = sprintf("%-10s", sn)
           str_buffer = str_buffer.concat("\tSpeed: #{fast}, RPM: #{rev}")

@@ -3,28 +3,18 @@
 module Wilhelm
   module Virtual
     class Command
+      # Virtual::Command::Key
       class Key < Base
-
-        def initialize(id, props)
-          super(id, props)
-        end
-
-        # ---- Printable ---- #
-
-        def bytes
-          @bytes ||= {}
-        end
-
-        # ---- Core ---- #
-
         # @override
         def to_s
-          str_buffer = "#{sn}\t#{key}: #{status}"
-          str_buffer
+          "#{sn}\t" \
+          "#{key}: #{status}"
         end
 
         def inspect
-          "#<#{self.class} @key=#{key.value} (#{key.to_s}) @status=#{status.value} (#{status.to_s})>"
+          "#<#{self.class} " \
+          "@key=#{key.value} (#{key}) "\
+          "@status=#{status.value} (#{status})>"
         end
       end
     end
