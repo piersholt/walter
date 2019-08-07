@@ -65,6 +65,8 @@ module Wilhelm
                 delegate_navigation(command.layout, command.button)
               when FUNCTION_INFO
                 delegate_info(command.layout)
+              else
+                logger.warn(PROC) { "Unrecognised function! #{command.function}" }
               end
             end
 

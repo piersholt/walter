@@ -15,7 +15,7 @@ module Wilhelm
 
             def open_sos
               logger.unknown(MOD_PROG) { '#open_sos()' }
-              draw_23(gfx: SOS_TITLE, chars: DEFAULT_SOS)
+              draw_23(gfx: DEFAULT_TITLE, chars: DEFAULT_SOS)
             end
           end
         end
