@@ -2175,43 +2175,43 @@
             0: :off
             1: :on
         :indicate_right:
-          :label: RIGHT
+          :label: Indicate Right
           :type: :switch
           :states:
             0: :off
             1: :on
         :indicate_left:
-          :label: LEFT
+          :label: Indicate Left
           :type: :switch
           :states:
             0: :off
             1: :on
         :fog_rear:
-          :label: FOG REAR
+          :label: Fog Rear
           :type: :switch
           :states:
             0: :off
             1: :on
         :fog_front:
-          :label: FOG FRONT
+          :label: Fog Front
           :type: :switch
           :states:
             0: :off
             1: :on
         :beam_high:
-          :label: HIGH
+          :label: High Beam
           :type: :switch
           :states:
             0: :off
             1: :on
         :beam_low:
-          :label: LOW
+          :label: Low Beam (Dipped)
           :type: :switch
           :states:
             0: :off
             1: :on
         :parking:
-          :label: Parking
+          :label: Parking Lights
           :type: :switch
           :states:
             0: :off
@@ -2224,15 +2224,15 @@
       :parameters:
         :indicate_right:
           :type: :switch
-          :label: Indicator Right Globe
+          :label: Globe Indicator Right
           :states:
-            0: :off
+            0: :ok
             1: :fault
         :indicate_left:
           :type: :switch
-          :label: Indicator Left Globe
+          :label: Globe Indicator Left
           :states:
-            0: :off
+            0: :ok
             1: :fault
     :l3:
       :type: :bit_array
@@ -2248,9 +2248,9 @@
             1: :on
         :brake:
           :type: :switch
-          :label: Brake Globe
+          :label: Globe Brake
           :states:
-            0: :off
+            0: :ok
             1: :fault
     :l4:
       :type: :bit_array
@@ -2267,13 +2267,13 @@
             1: :on
         :brake_left:
           :type: :switch
-          :label: Brake Left Globe
+          :label: Globe Brake Left?
           :states:
             0: :off
             1: :fault
         :brake_right:
           :type: :switch
-          :label: Brake Right Globe
+          :label: Globe Brake Right?
           :states:
             0: :off
             1: :fault
@@ -2284,14 +2284,14 @@
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
       - byte2:
-        1: right indicator glove out
-        2: left indicator glove out
+        1: right indicator globe out
+        2: left indicator globe out
       - byte3:
         5: indicating/hazards
         6: brake light out, i think this drives CCM
       - byte4:
         1: rear fog switched on (stays on regardless of lights)
-        6: left break glove out (not hatch)
+        6: left break globe out (not hatch)
         7: right break globe out (not hatch)
 
 0x5C: # 58G
