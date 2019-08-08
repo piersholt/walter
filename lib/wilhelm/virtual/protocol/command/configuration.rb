@@ -17,7 +17,7 @@ module Wilhelm
           LOGGER.debug(PROC) { LOG_METHOD_INITIALIZE }
           @command_hash = mapped_command.dup
 
-          create_param_config_map(parameters_hash) if parameters?
+          parse_parameters(parameters_hash) if parameters?
           configure_class
         end
 
@@ -93,19 +93,11 @@ module Wilhelm
           get_class(join_namespaces(NAMESPACE, klass))
         end
 
-        def base_command
-          get_class(join_namespaces(NAMESPACE, BASE))
-        end
-
         def base_command?
           klass == BASE
         end
 
         alias base? base_command?
-
-        def parameterized_command
-          get_class(join_namespaces(NAMESPACE, PARAMETERIZED))
-        end
 
         def parameterized_command?
           result = klass_constant <= parameterized_command
@@ -135,7 +127,7 @@ module Wilhelm
           elsif parameters?
             get_class(join_namespaces(NAMESPACE, PARAMETERIZED_BUILDER))
           else
-            get_class(join_namespaces(NAMESPACE, BASE_BUILDER))
+            default_builder
           end
         end
       end
