@@ -29,7 +29,7 @@ module Wilhelm
         def initialize(id, props)
           LOGGER.debug(NAME) { "#initialize(#{id}, #{props})" }
           @id = id
-          set_properties(props)
+          add_properties(props)
         end
 
         alias normal_fucking_decimal id
@@ -72,14 +72,13 @@ module Wilhelm
           padded ? format(MASK_NAME, short_name) : short_name
         end
 
-        def add_properties(props)
-          props.each do |name, value|
+        def var_set(hash)
+          hash.each do |name, value|
             instance_variable_set(inst_var(name), value)
           end
         end
 
-        alias set_parameters add_properties
-        alias set_properties add_properties
+        alias add_properties var_set
       end
     end
   end
