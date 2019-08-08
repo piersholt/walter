@@ -240,12 +240,12 @@
   :properties:
     :short_name: TXT-23
     :long_name: Update Text Display (BMBT, IKE)
-  :klass: Base
+  :klass: Parameterized::Base
   :schemas:
     - :tel
     - :rad
   :rad: # RAD-23*
-    :klass: MediaDisplay
+    :klass: Parameterized::Base
     :properties:
       :short_name: RAD-23
       :long_name: Update Text Display (BMBT, IKE)
@@ -459,7 +459,7 @@
       :chars:
         :type: :chars
   :tel: # TEL-23*
-    :klass: MediaDisplay
+    :klass: Parameterized::Base
     :properties:
       :short_name: TEL-23*
       :long_name: Update Text Display (BMBT, IKE)
@@ -1600,7 +1600,7 @@
   :properties:
     :short_name: SEN
     :long_name: IKE Sensors
-  :klass: IKESensors
+  :klass: Parameterized::Base
   :parameters:
     :s1:
       :type: :bit_array
@@ -1974,7 +1974,7 @@
   :index:
     :speed: 0
     :rpm: 1
-  :klass: Speed
+  :klass: Parameterized::Base
   :meta:
     :senders:
       - IKE
@@ -1985,7 +1985,7 @@
   :properties:
     :short_name: TEMP
     :long_name: Temperature
-  :klass: Temperature
+  :klass: Parameterized::Base
   :meta:
     :senders:
       - IKE
@@ -2123,7 +2123,7 @@
   :properties:
     :short_name: LAMP
     :long_name: Lamp Status
-  :klass: Lamp
+  :klass: Parameterized::Base
   :index:
     :l1: 0
     :l2: 1
@@ -2404,7 +2404,7 @@
   :index:
     :status: 0
     :key: 1
-  :klass: Key
+  :klass: Parameterized::Base
   :meta:
     :senders:
       - EWS
