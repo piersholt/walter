@@ -10,7 +10,7 @@ module Wilhelm
       ERROR_INDEX_NIL   = 'index is nil!'.freeze
       ERROR_NAME        = 'name is nil!'.freeze
       ERROR_INDEX_RANGE = 'param_range is nil!'.freeze
-      ERROR_BYTES       = 'bits is nil!'.freeze
+      ERROR_BYTES       = 'bytes is nil!'.freeze
       ERROR_INDEX_NAME  = 'index does not contain '.freeze
 
       attr_reader :index
