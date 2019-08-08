@@ -1924,118 +1924,7 @@
     :short_name: TEMP-REQ
     :long_name: Temperature Request
   :klass: Base
-
-0x51: # CCM-END
-  :id: 0x51
-  :klass: Base
-  :properties:
-    :short_name: CCM-END
-    :long_name: Ignition off CCM update?
-  :parameters:
-    :status:
-      :type: :map
-      :map:
-        0x00: NO_WARNINGS
-      :dictionary:
-        0x00: No Warnings
-  :index:
-    :status: 0
-  :notes:
-    - CCM to IKE (always)
-    - IKE responds with 0x52
-
-0x52: # CCM-RLY
-  :id: 0x52
-  :properties:
-    :short_name: CCM-RLY
-    :long_name: IKE CCM Forward?
-  :klass: Parameterized::Base
-  :index:
-    :layout: 0
-    :options: 1
-    :chars: !ruby/range
-              begin: 2
-              end: -1
-              excl: false
-  :parameters:
-    :layout:
-      :type: :map
-      :dictionary:
-        0b0001_0001: 'Range Set'
-        0b0001_0000: 'Range Clear?'
-        0b0011_0001: 'Code'
-        0b0011_0011: 'Code Clear?'
-    :options:
-      :type: :bit_array
-      :index:
-        :gong: !ruby/range
-                  begin: 5
-                  end: 7
-                  excl: false
-      :parameters:
-        :gong:
-          :type: :map
-          :label: 'Gong:'
-          :map:
-            0b000: :off
-            0b001: :high_single
-            0b010: :high_continuous
-            0b011: :high_double
-            0b100: :low_single
-          :dictionary:
-            0b000: 'None'
-            0b001: '[High] Single'
-            0b010: '[High] Continuous'
-            0b011: '[High] Double'
-            0b100: '[Low] Single'
-    :chars:
-      :type: :chars
   :meta:
-    :notes:
-      - IKE to CCM (always)
-      - commands to date
-      - "   RANGE  50 KM     "
-      - "   RANGE  50 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  24 KM     "
-      - "   RANGE  41 KM     "
-      - "   RANGE  40 KM     "
-      - "   RANGE  50 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "   RANGE  34 KM     "
-      - "      CODE ----     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
-      - "   RANGE  47 KM     "
 
 0x53: # VEH-REQ
   :id: 0x53
@@ -3589,6 +3478,8 @@
 #                             CLUSTER HUD
 # ************************************************************************* #
 
+# NOTE I'm not sure if this is exclusively CC warnings...
+# Why does IKE forward a warning on?
 0x1A: # CCM-ALRT
   :id: 0x1A
   :klass: Parameterized::Base
@@ -3760,6 +3651,118 @@
       0x30: CCM
       0x68: RAD
       0xC8: TEL
+
+0x51: # CCM-END
+  :id: 0x51
+  :klass: Base
+  :properties:
+    :short_name: CCM-END
+    :long_name: Ignition off CCM update?
+  :parameters:
+    :status:
+      :type: :map
+      :map:
+        0x00: NO_WARNINGS
+      :dictionary:
+        0x00: No Warnings
+  :index:
+    :status: 0
+  :notes:
+    - CCM to IKE (always)
+    - IKE responds with 0x52
+
+0x52: # CCM-RLY
+  :id: 0x52
+  :properties:
+    :short_name: CCM-RLY
+    :long_name: IKE CCM Forward?
+  :klass: Parameterized::Base
+  :index:
+    :layout: 0
+    :options: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :parameters:
+    :layout:
+      :type: :map
+      :dictionary:
+        0b0001_0001: 'Range Set'
+        0b0001_0000: 'Range Clear?'
+        0b0011_0001: 'Code'
+        0b0011_0011: 'Code Clear?'
+    :options:
+      :type: :bit_array
+      :index:
+        :gong: !ruby/range
+                  begin: 5
+                  end: 7
+                  excl: false
+      :parameters:
+        :gong:
+          :type: :map
+          :label: 'Gong:'
+          :map:
+            0b000: :off
+            0b001: :high_single
+            0b010: :high_continuous
+            0b011: :high_double
+            0b100: :low_single
+          :dictionary:
+            0b000: 'None'
+            0b001: '[High] Single'
+            0b010: '[High] Continuous'
+            0b011: '[High] Double'
+            0b100: '[Low] Single'
+    :chars:
+      :type: :chars
+  :meta:
+    :notes:
+      - IKE to CCM (always)
+      - commands to date
+      - "   RANGE  50 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  24 KM     "
+      - "   RANGE  41 KM     "
+      - "   RANGE  40 KM     "
+      - "   RANGE  50 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "   RANGE  34 KM     "
+      - "      CODE ----     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
+      - "   RANGE  47 KM     "
 
 # ************************************************************************* #
 #                               TELEPHONE
