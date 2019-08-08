@@ -12,6 +12,22 @@ module Wilhelm
             include API
             include Constants
 
+            def warn_code(
+              layout  = LAYOUT_CODE_SET,
+              options = OPTS_CODE_SET,
+              chars   = CHARS_CODE_DEFAULT
+            )
+              ccm_relay(layout: layout, options: options, chars: chars)
+            end
+
+            def warn_code_clear(
+              layout  = LAYOUT_CODE_CLEAR,
+              options = OPTS_CODE_CLEAR,
+              chars   = CHARS_EMPTY_STRING
+            )
+              ccm_relay(layout: layout, options: options, chars: chars)
+            end
+
             def warn_range(
               layout  = LAYOUT_RANGE_SET,
               options = OPTS_RANGE_SET,
