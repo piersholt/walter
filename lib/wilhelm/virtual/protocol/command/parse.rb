@@ -31,20 +31,49 @@ module Wilhelm
 
         # 1. Byte Stream to Arguments Hash ------------------------------------
 
-        def parse_arguments(command_config, arguments)
-          if command_config.parameters? && !command_config.base?
-            parse_indexed_arguments(command_config, arguments)
+        def parse_arguments(conf, arguments)
+          if conf.base?
+            parse_chunk_arguments(arguments)
+          elsif conf.indexed_command? && conf.index? && !conf.parameters?
+            parse_indexed_arguments(conf, arguments)
+          elsif conf.parameterized_command? && conf.parameters?
+            parse_parameterized_arguments(conf, arguments)
           else
-            arguments
+            parse_chunk_arguments(arguments)
           end
         end
 
+        # Command::Base
+        def parse_chunk_arguments(arguments)
+          return Core::Bytes.new(arguments) if arguments.is_a?(Array)
+          arguments
+        end
+
+        # Command::Indexed
         def parse_indexed_arguments(command_config, arguments)
           arguments = Core::Bytes.new(arguments) if arguments.is_a?(Array)
           arguments.add_index(command_config.index)
           parameter_values_hash = {}
 
-          command_config.parameters.each do |name, conf|
+          command_config.index_keys.each do |name|
+            param_value = arguments.lookup(name)
+            parameter_values_hash[name] = param_value
+          end
+
+          parameter_values_hash
+        rescue StandardError => e
+          LOGGER.error(PROG) { e }
+          e.backtrace.each { |line| LOGGER.error(PROG) { line } }
+          binding.pry
+        end
+
+        # Command::Parameterized
+        def parse_parameterized_arguments(command_config, arguments)
+          arguments = Core::Bytes.new(arguments) if arguments.is_a?(Array)
+          arguments.add_index(command_config.index)
+          parameter_values_hash = {}
+
+          command_config.parameter_keys.each do |name|
             param_value = arguments.lookup(name)
             parameter_values_hash[name] = param_value
           end

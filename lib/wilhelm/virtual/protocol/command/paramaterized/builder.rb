@@ -22,17 +22,10 @@ module Wilhelm
 
           def result
             LOGGER.debug(PROG) { "#result" }
-            command_klass = @command_config.klass_constant
+            command_object = create_command_object
 
-            command_id  = @command_config.id
-            properties  = @command_config.properties_hash
-
-            command_object = command_klass.new(command_id, properties)
             @command_config.configure(command_object)
-            # command_object.set_parameters(@parameter_objects)
-            @parameter_objects.each do |k, v|
-              command_object.instance_variable_set(inst_var(k), v)
-            end
+            command_object.add_properties(@parameter_objects)
 
             command_object
           end
@@ -41,7 +34,7 @@ module Wilhelm
 
           def parse_parameter(param_name, param_config, param_value)
             LOGGER.debug(PROG) { "#parse_parameter(#{param_name}, #{param_config}, #{param_value})" }
-            param_type  = param_config.type
+            param_type = param_config.type
 
             param_object = delegate(param_config, param_type, param_value)
             param_config.configure(param_object)

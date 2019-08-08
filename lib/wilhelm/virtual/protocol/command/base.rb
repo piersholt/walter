@@ -26,10 +26,11 @@ module Wilhelm
         alias ln      long_name
         alias args    arguments
 
-        def initialize(id, props)
+        def initialize(id, props, args)
           LOGGER.debug(NAME) { "#initialize(#{id}, #{props})" }
           @id = id
           add_properties(props)
+          add_arguments(args)
         end
 
         alias normal_fucking_decimal id
@@ -79,6 +80,7 @@ module Wilhelm
         end
 
         alias add_properties var_set
+        alias add_arguments  var_set
       end
     end
   end

@@ -77,8 +77,9 @@ module Wilhelm
       # @overide
       def to_s(width = DEFAULT_LABEL_WIDTH)
         return nil if hidden_state?(state)
-        str_buffer = format("%-#{width}s", label)
-        str_buffer.concat(LABEL_DELIMITER)
+        return "[#{pretty}]" unless label
+        str_buffer = format("%-#{width}s", label) if label
+        str_buffer.concat(LABEL_DELIMITER) if label
         str_buffer.concat("[#{pretty}]")
       end
 
@@ -89,6 +90,8 @@ module Wilhelm
         end
         @states.fetch(value, "#{d2h(value, true)} not found!")
       end
+
+      alias ugly state
 
       # No output: [:off, :on, :ok]
       def pretty

@@ -20,16 +20,18 @@ module Wilhelm
 
         def result
           LOGGER.debug(PROG) { '#result' }
+          create_command_object(arguments: @arguments)
+        end
+
+        protected
+
+        def create_command_object(arguments = {})
           command_klass = @command_config.klass_constant
 
           command_id  = @command_config.id
           properties  = @command_config.properties_hash
-          properties[:arguments] = @arguments
 
-          command_object = command_klass.new(command_id, properties)
-          # command_object.set_parameters(@parameter_objects)
-
-          command_object
+          command_klass.new(command_id, properties, arguments)
         end
       end
     end

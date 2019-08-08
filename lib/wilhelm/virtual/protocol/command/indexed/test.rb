@@ -1,0 +1,61 @@
+# frozen_string_literal: false
+
+# SENDER
+SENDER_RAD = 0b0110_1000
+SENDER_TEL = 0b1100_1000
+
+# COMMAND
+COMMAND_DRAW = 0b0010 << 4
+
+COMMAND_MID = 0b0001 << 0
+COMMAND_GFX = 0b0011 << 0
+
+# BYTE 1
+SOURCE_SERVICE  = 0b000 << 5 # 0000_0000
+SOURCE_WEATHER  = 0b001 << 5 # 0010_0000
+SOURCE_ANALOGUE = 0b010 << 5 # 0100_0000
+SOURCE_RDS      = 0b011 << 5 # 0110_0000
+SOURCE_TAPE     = 0b100 << 5 # 1000_0000
+SOURCE_TRAFFIC  = 0b101 << 5 # 1010_0000
+SOURCE_CDC      = 0b110 << 5 # 1100_0000
+
+SERVICE_SERIAL_NUMBER    = SOURCE_SERVICE | 0b0010 << 0 # 0000_0010
+SERVICE_SOFTWARE_VERSION = SOURCE_SERVICE | 0b0011 << 0 # 0000_0011
+SERVICE_GAL              = SOURCE_SERVICE | 0b0100 << 0 # 0000_0100
+SERVICE_FQ               = SOURCE_SERVICE | 0b0101 << 0 # 0000_0101
+SERVICE_DSP              = SOURCE_SERVICE | 0b0110 << 0 # 0000_0110
+SERVICE_SEEK_LEVEL       = SOURCE_SERVICE | 0b0111 << 0 # 0000_0111
+SERVICE_TP_VOLUME        = SOURCE_SERVICE | 0b1000 << 0 # 0000_1000
+SERVICE_AF               = SOURCE_SERVICE | 0b1001 << 0 # 0000_1001
+SERVICE_REGION           = SOURCE_SERVICE | 0b1010 << 0 # 0000_1010
+
+# 0x40
+RADIO_TRAFFIC_OFF = 0b0 << 3
+RADIO_TRAFFIC_ON  = 0b1 << 3
+
+RADIO_UPDATE             = 0b000 << 0
+RADIO_MODE_MANUAL        = 0b001 << 0
+RADIO_MODE_SCAN          = 0b010 << 0
+RADIO_MODE_SENSITIVE     = 0b011 << 0
+RADIO_MODE_NON_SENSITIVE = 0b100 << 0
+RADIO_TRAFFIC            = 0b110 << 0
+RADIO_TRAFFIC_PROGRAM    = 0b111 << 0
+
+# 0x60
+
+# 0x80
+TAPE_SIDE_A = SOURCE_TAPE | 0b0 << 4 # 1000_0000
+TAPE_SIDE_B = SOURCE_TAPE | 0b1 << 4 # 1001_0000
+
+module Wilhelm
+  module Virtual
+    class Command
+      # Command 0x21
+      class Draw < Base
+        def initialize(id = [0x68], command = [0x21], opts = [0x214320], render = [0x06], chars = 'Test'.bytes)
+
+        end
+      end
+    end
+  end
+end

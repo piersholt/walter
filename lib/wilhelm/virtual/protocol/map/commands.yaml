@@ -1968,9 +1968,15 @@
     :long_name: Speed & RPM
   :parameters:
     :speed:
-      :type: :integer
+      :type: :data
+      :multiplier: 2
+      :label: Speed
+      :suffix: 'kmph'
     :rpm:
-      :type: :integer
+      :type: :data
+      :multiplier: 100
+      :label: RPM
+      :suffix: 'rpm'
   :index:
     :speed: 0
     :rpm: 1
@@ -1986,6 +1992,22 @@
     :short_name: TEMP
     :long_name: Temperature
   :klass: Parameterized::Base
+  :index:
+    :ambient: 0
+    :coolant: 1
+    :unknown: 2
+  :parameters:
+    :ambient:
+      :type: :data
+      :label: Ambient
+      :suffix: '°C'
+    :coolant:
+      :type: :data
+      :label: Coolant
+      :suffix: '°C'
+    :unknown:
+      :type: :data
+      :label: Unknown
   :meta:
     :senders:
       - IKE
@@ -2027,9 +2049,11 @@
     :mileage:
       :label: Mileage Indicator [km]
       :type: :data
+      :multiplier: 1000
     :fuel:
       :label: Consumed Fuel Quantity
       :type: :data
+      :multiplier: 10
     :time:
       :label: Time Inspection Counter
       :type: :data
@@ -2092,9 +2116,11 @@
     :mileage:
       :label: Mileage Indicator (km)
       :type: :data
+      :multiplier: 1000
     :fuel:
       :label: Consumed Fuel Quantity (litre)
       :type: :data
+      :multiplier: 10
     :time:
       :label: Time Inspection Counter (days)
       :type: :data
@@ -3079,7 +3105,7 @@
   :properties:
     :short_name: RAD-LED
     :long_name: Radio LED
-  :klass: RadioLED
+  :klass: Parameterized::RadioLED
   :parameters:
     :led:
       :type: :map

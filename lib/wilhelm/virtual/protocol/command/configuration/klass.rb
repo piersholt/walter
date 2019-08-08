@@ -31,7 +31,12 @@ module Wilhelm
           # initialize =>
           def configured?
             LOGGER.debug(PROC) { LOG_METHOD_CONFIGURED }
-            if !parameters?
+            if indexed_command? && index? && !parameters?
+              LOGGER.unknown(PROC) do
+                "#{sn} has index! Alt. Configuration required."
+              end
+              false
+            elsif !parameters?
               LOGGER.debug(PROC) do
                 "#{sn} has no parameters! Configuration not required."
               end

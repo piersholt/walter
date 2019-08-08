@@ -46,11 +46,14 @@ module Wilhelm
         private
 
         def generate_arguments(command_config)
-          if command_config.parameters?
+          if command_config.indexed_command? && command_config.index?
+            generate_indexed_arguments(command_config)
+          elsif command_config.parameters?
             generate_indexed_arguments(command_config)
           elsif !command_config.parameters? && self.arguments
             generate_base_arguments(self.arguments)
           else
+            LOGGER.warn(PROG) { '#generate_arguments -> fallback!' }
             generate_default_arguments
           end
         rescue StandardError => e

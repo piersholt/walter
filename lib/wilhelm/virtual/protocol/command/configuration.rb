@@ -98,22 +98,47 @@ module Wilhelm
           get_class(join_namespaces(NAMESPACE, klass))
         end
 
+        alias config_command klass_constant
+
         def base_command?
           klass == BASE
         end
 
         alias base? base_command?
 
+        def indexed_command?
+          !base_command? && !parameterized_command?
+        end
+
         def parameterized_command?
-          result = klass_constant <= parameterized_command
-          result = result.nil? ? false : result
-          LOGGER.debug(PROC) do
-            "#{klass_constant} <= #{parameterized_command} => #{result}"
-          end
-          result
+          r = config_command <= parameterized_command
+          return r if r
+          LOGGER.warn(PROC) { 'parameterized_command? => nil!' }
+          false
         end
 
         alias parameterized? parameterized_command?
+
+        # Index
+
+        def index?
+          index_hash.nil? ? false : true
+        end
+
+        def index_list
+          return [] unless index?
+          index_hash.keys
+        end
+
+        alias index_keys index_list
+
+        # Parameters
+
+        def param_config_map
+          @parameters || {}
+        end
+
+        alias parameters param_config_map
 
         def parameters?
           parameters_hash.nil? ? false : true
@@ -134,10 +159,15 @@ module Wilhelm
         end
 
         def builder
-          if parameters? && base?
-            get_class(join_namespaces(NAMESPACE, BASE_BUILDER))
-          elsif parameters?
-            get_class(join_namespaces(NAMESPACE, PARAMETERIZED_BUILDER))
+          if base_command?
+            base_builder
+          elsif indexed_command? && index? && !parameters?
+            indexed_builder
+          elsif indexed_command? && index? && parameters?
+            LOGGER.warn(PROC) { "#{sn}: Indexed, but has paramters!" }
+            parameterized_builder
+          elsif parameterized_command? && parameters?
+            parameterized_builder
           else
             default_builder
           end

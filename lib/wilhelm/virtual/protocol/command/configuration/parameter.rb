@@ -25,7 +25,7 @@ module Wilhelm
             SWITCH    => [:label, :states],
             BIT_ARRAY => NO_PROPERTIES,
             CHARS     => NO_PROPERTIES,
-            DATA      => NO_PROPERTIES,
+            DATA      => [:multiplier, :label, :suffix],
             INTEGER   => NO_PROPERTIES
           }.freeze
 
