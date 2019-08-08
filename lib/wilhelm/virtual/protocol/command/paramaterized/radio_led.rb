@@ -22,19 +22,26 @@ module Wilhelm
             led? == :on
           end
 
+          OFF    = 0x00
+          TAPE_A = (0x40..0x45)
+          RADIO  = 0x48
+          TAPE_B = (0x5a..0x5f)
+          RESET  = 0x90
+          ON     = 0xff
+
           def led?
             case led.value
-            when (0x40..0x45)
+            when TAPE_A
               :tape
-            when 0x48
+            when RADIO
               :radio
-            when 0x00
+            when OFF
               :off
-            when (0x5a..0x5f)
+            when TAPE_B
               :tape
-            when 0x90
+            when RESET
               :reset
-            when 0xff
+            when ON
               :on
             end
           end
