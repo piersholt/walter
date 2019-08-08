@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
+require_relative 'api/check_control'
 require_relative 'api/settings'
 
 module Wilhelm
   module Virtual
     class Device
       module IKE
-        # API for command related to keys
+        # Device::IKE::API
         module API
+          include CheckControl
           include Settings
         end
       end

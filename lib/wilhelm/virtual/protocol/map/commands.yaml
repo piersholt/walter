@@ -1944,25 +1944,51 @@
     - CCM to IKE (always)
     - IKE responds with 0x52
 
-0x52: # CCM-?
+0x52: # CCM-RLY
   :id: 0x52
   :properties:
-    :short_name: CCM-?
-    :long_name: Unknown
+    :short_name: CCM-RLY
+    :long_name: IKE CCM Forward?
   :klass: Parameterized::Base
   :index:
-    :b1: 0
-    :b2: 1
+    :layout: 0
+    :options: 1
     :chars: !ruby/range
               begin: 2
               end: -1
               excl: false
   :parameters:
-    :b1:
-      :type: :integer
-    :b2:
-      :type: :integer
-  :chars:
+    :layout:
+      :type: :map
+      :dictionary:
+        0b0001_0001: 'Range Set'
+        0b0001_0000: 'Range Clear?'
+        0b0011_0001: 'Code'
+        0b0011_0011: 'Code Clear?'
+    :options:
+      :type: :bit_array
+      :index:
+        :gong: !ruby/range
+                  begin: 5
+                  end: 7
+                  excl: false
+      :parameters:
+        :gong:
+          :type: :map
+          :label: 'Gong:'
+          :map:
+            0b000: :off
+            0b001: :high_single
+            0b010: :high_continuous
+            0b011: :high_double
+            0b100: :low_single
+          :dictionary:
+            0b000: 'None'
+            0b001: '[High] Single'
+            0b010: '[High] Continuous'
+            0b011: '[High] Double'
+            0b100: '[Low] Single'
+    :chars:
       :type: :chars
   :meta:
     :notes:
@@ -3564,8 +3590,8 @@
 # ************************************************************************* #
 
 0x1A: # CCM-ALRT
-  :id: 26
-  :klass: CCMDisplay
+  :id: 0x1A
+  :klass: Parameterized::Base
   :properties:
     :short_name: CCM-ALRT
     :long_name: CCM Cluster Warning
@@ -3581,20 +3607,22 @@
     :mode:
       :type: :map
       :map:
-        0x30: clear
-        0x35: request
-        0x36: persist
-        0x37: alert
+        0b0011_0000: :clear
+        0b0011_0101: :request
+        0b0011_0110: :persist
+        0b0011_0111: :alert
+        0b0011_1111: :unknown
       :dictionary:
-        0x30: Clear
-        0x35: Recall
-        0x36: Persist Indicators
-        0x37: Alert
+        0b0011_0000: CCM Clear
+        0b0011_0101: CCM Recall
+        0b0011_0110: CCM Persist Indicators
+        0b0011_0111: CCM Alert
+        0b0011_1111: Unknown
     :control:
       :type: :bit_array
       :index:
         :gong: !ruby/range
-                  begin: 4
+                  begin: 3
                   end: 5
                   excl: false
         :chevron: !ruby/range
@@ -3606,15 +3634,17 @@
           :type: :switch
           :label: 'Gong'
           :states:
-            0b0_0: :off
-            0b0_1: :single
-            0b1_0: :tone
-            0b1_1: :double
+            0b000: :off
+            0b001: :single
+            0b010: :tone
+            0b011: :double
+            0b100: :single
           :dictionary:
-            0b0_0: 'Off'
-            0b0_1: 'Single'
-            0b1_0: 'Tone'
-            0b1_1: 'Double'
+            0b000: 'Off'
+            0b001: 'Single'
+            0b010: 'Tone'
+            0b011: 'Double'
+            0b100: 'Single (Low)'
         :chevron:
           :type: :switch
           :label: 'Chevron'

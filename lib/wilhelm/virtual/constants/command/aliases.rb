@@ -79,7 +79,7 @@ module Wilhelm
           SRC_GFX = 0x4F
 
           CCM_END = 0x51
-          CCM_TBC = 0x52
+          CCM_RLY = 0x52
           IKE_BTN = 0x57
 
           VEH_REQ   = 0x53
