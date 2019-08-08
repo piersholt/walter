@@ -2501,6 +2501,16 @@
         - password
         - disabled
 
+0x76: # REMOTE2
+  :properties:
+    :short_name: REMOTE2
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - send following keyless entry/lock
+    - gm	glo_l	76 02
+    - gm	glo_l	76 00
+
 0x78: # MEM-LOAD
   :properties:
     :short_name: MEM-LOAD
@@ -4351,17 +4361,6 @@
     :short_name: "???"
     :long_name: Unknown
   :klass: Base
-
-0x76:
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :senders:
-      - LCM
-  :notes:
-    - GM can sent 0x76 to control lights..?
 
 0x7d:
   :properties:
