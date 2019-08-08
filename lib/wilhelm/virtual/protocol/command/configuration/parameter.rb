@@ -67,8 +67,8 @@ module Wilhelm
             PROPERTIES[type].each do |property|
               var = inst_var(property)
               value = try_and_grab(property)
-              LOGGER.debug(PROC) { "Setting #{object.class}: #{var} = #{value}" }
               next if value.nil?
+              LOGGER.debug(PROC) { "Setting #{object.class}: #{var} = #{value}" }
               object.instance_variable_set(var, value)
             end
           end

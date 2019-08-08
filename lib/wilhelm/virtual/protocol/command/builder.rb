@@ -9,17 +9,20 @@ module Wilhelm
 
         PROG = 'Builder'.freeze
 
+        LOG_RESULT = '#result'.freeze
+
         def initialize(command_config)
           @command_config = command_config
           @parameter_objects = {}
         end
 
         def add_parameters(byte_stream)
+          LOGGER.debug(PROG) { "#add_parameters(#{byte_stream})" }
           @arguments = byte_stream
         end
 
         def result
-          LOGGER.debug(PROG) { '#result' }
+          LOGGER.debug(PROG) { LOG_RESULT }
           create_command_object(arguments: @arguments)
         end
 

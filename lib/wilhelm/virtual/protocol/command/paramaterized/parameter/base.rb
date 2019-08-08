@@ -21,7 +21,7 @@ module Wilhelm
       end
 
       def inspect
-        "<#{PROC} @value=#{value}>"
+        "<#{PROC} @name=#{name} @value=#{value}>"
       end
 
       def to_s

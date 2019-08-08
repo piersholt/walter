@@ -12,6 +12,8 @@ module Wilhelm
 
           PROG = 'Parameterized::Builder'.freeze
 
+          LOG_RESULT = '#result'.freeze
+
           # @override Builder.add_parameters
           def add_parameters(parameter_value_hash)
             LOGGER.debug(PROG) { "#add_parameters(#{parameter_value_hash})" }
@@ -21,7 +23,7 @@ module Wilhelm
           end
 
           def result
-            LOGGER.debug(PROG) { "#result" }
+            LOGGER.debug(PROG) { LOG_RESULT }
             command_object = create_command_object
 
             @command_config.configure(command_object)

@@ -6,8 +6,10 @@ module Wilhelm
       class Configuration
         # Virtual::Command::Configuration::Klass
         module Klass
+          include Constants
           LOG_METHOD_CONFIGURED = '#configured?'.freeze
 
+          # command_object.parameters => [:layout, :m1, :m2, :m3, :chars]
           def configure(command_object)
             LOGGER.debug(PROC) { "Configure command #{command_object.class}" }
             command_object.instance_variable_set(
@@ -75,7 +77,7 @@ module Wilhelm
 
           def setup_klass_parameters
             LOGGER.debug(PROC) { "#{sn} #{klass_constant}: Create parameter accessors: #{parameter_list}..." }
-            parameters.each do |name, _|
+            index_keys.each do |name|
               setup_parameter_accessor(name)
             end
           end
