@@ -61,11 +61,12 @@ module Wilhelm
           @command_hash[:klass]
         end
 
-        def parameters_index
+        def index_hash
           @command_hash[:index]
         end
 
-        alias index parameters_index
+        alias index index_hash
+        alias parameters_index index_hash
 
         def parameters_hash
           @command_hash[:parameters]
@@ -83,11 +84,15 @@ module Wilhelm
           true
         end
 
+        # Properties
+
         def short_name
           properties_hash[:short_name]
         end
 
         alias sn short_name
+
+        # Klass
 
         def klass_constant
           get_class(join_namespaces(NAMESPACE, klass))
@@ -102,7 +107,9 @@ module Wilhelm
         def parameterized_command?
           result = klass_constant <= parameterized_command
           result = result.nil? ? false : result
-          LOGGER.debug(PROC) { "#{klass_constant} <= #{parameterized_command} => #{result}" }
+          LOGGER.debug(PROC) do
+            "#{klass_constant} <= #{parameterized_command} => #{result}"
+          end
           result
         end
 
@@ -113,8 +120,13 @@ module Wilhelm
         end
 
         def parameter_list
+          return [] unless parameters?
           parameters_hash.keys
         end
+
+        alias parameter_keys parameter_list
+
+        # Parameters: BitArray
 
         def bit_arrays?
           return false unless parameters?
