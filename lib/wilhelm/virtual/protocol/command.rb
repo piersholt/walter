@@ -2,8 +2,6 @@
 
 puts "\tLoading wilhelm/virtual/protocol/command"
 
-require_relative 'command/chars'
-
 require_relative 'command/base'
 
 require_relative 'command/configuration'

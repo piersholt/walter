@@ -3,6 +3,7 @@
 module Wilhelm
   module Virtual
     class Command
+      # Virtual::Command::Chars
       class Chars
         # COLUMN_COUNT = 3
         COLUMN_MAP = { integer: 0, hex: 1, char: 2, control: 3 }
