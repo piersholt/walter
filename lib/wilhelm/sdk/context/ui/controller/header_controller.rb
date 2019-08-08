@@ -48,9 +48,6 @@ module Wilhelm
             rescue StandardError => e
               LOGGER.error(NAME) { e }
               e.backtrace.each { |line| LOGGER.error(NAME) { line } }
-              LOGGER.error(NAME) { 'binding.pry start' }
-              binding.pry
-              LOGGER.error(NAME) { 'binding.pry end' }
             end
 
             def destroy
@@ -60,7 +57,10 @@ module Wilhelm
                 return false unless @status_model
                 LOGGER.debug(NAME) { '#destroy => :header' }
                 devices_object = context.manager.devices
+                audio_service = context.audio
+
                 devices_object&.delete_observer(status_model)
+                audio_service&.delete_observer(status_model)
                 status_model&.delete_observer(self)
                 @status_model = nil
                 true
