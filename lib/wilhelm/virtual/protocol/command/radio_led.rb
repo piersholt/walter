@@ -3,19 +3,9 @@
 module Wilhelm
   module Virtual
     class Command
+      module Parameterized
       # Virtual::Command::RadioLED
       class RadioLED < Base
-        # @override
-        def to_s
-          str_buffer = "#{sn}\tLED: #{led}"
-          str_buffer
-        end
-
-        def inspect
-          "#<#{self.class} " \
-          "@led=#{led.value} (#{led})>"
-        end
-
         def tape?
           led? == :tape
         end
@@ -47,6 +37,7 @@ module Wilhelm
           when 0xff
             :on
           end
+        end
         end
       end
     end
