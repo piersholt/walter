@@ -4,130 +4,68 @@ module Wilhelm
   module Virtual
     module Helpers
       module Console
-        # Comment
+        # Virtual::Helpers::Console::Filter
         module Filter
           include Constants::Command::Groups
 
-          def display_handler
-            Handler::DisplayHandler
-          end
-
-          def s
-            display_handler.instance.enable
-          end
-
-          def h
-            display_handler.instance.disable
-          end
-
-          # FILTERING
-
           def c
-            display_handler.i.clear_filter
+            dh.clear_filter
           end
-
-          # HIDE
-
-          def shutup!(set = NOISEY_NG)
-            display_handler.i.hide_command_set(set)
-          end
-
-          def touch!
-            display_handler.i.h_c(*BUTTON)
-          end
-
-          def mid!
-            display_handler.i.h_c(*MID)
-          end
-
-          alias shh! shutup!
-
-          # FILTER
 
           def f_c(*ids)
-            display_handler.i.filter_commands(*ids)
+            dh.f_c(*ids)
           end
 
           def ready
-            display_handler.i.filter_commands(*READY)
+            dh.f_c(*READY)
           end
 
           def input
-            display_handler.i.filter_commands(INPUT)
+            dh.f_c(INPUT)
           end
 
           def buttons
-            display_handler.i.filter_commands(*BUTTON)
+            dh.f_c(*BUTTON)
           end
 
           def volume
-            display_handler.i.filter_commands(*VOLUME)
+            dh.f_c(*VOLUME)
           end
 
           def menus
-            display_handler.i.filter_commands(*MENUS)
+            dh.f_c(*MENUS)
           end
 
           def diag
-            display_handler.i.filter_commands(*DIAGNOSTICS)
+            dh.f_c(*DIAGNOSTICS)
           end
 
           def obc
-            display_handler.i.filter_commands(*OBC)
+            dh.f_c(*OBC)
           end
 
           def ign
-            display_handler.i.filter_commands(*IGNITION)
+            dh.f_c(*IGNITION)
           end
 
           def tel
-            display_handler.i.filter_commands(*TELEPHONE)
+            dh.f_c(*TELEPHONE)
           end
 
           def odo
-            display_handler.i.filter_commands(*ODOMETER)
+            dh.f_c(*ODOMETER)
           end
 
-          def veh
-            display_handler.i.filter_commands(*VEHICLE)
+          def si
+            dh.f_c(*VEHICLE, *ODOMETER)
           end
 
           def ccm
-            display_handler.i.filter_commands(*CCM)
+            dh.f_c(*CCM)
           end
 
-          def nav
-            display_handler.i.f_t(*Device::Groups::NAV)
-            display_handler.i.f_f(*Device::Groups::NAV)
-            display_handler.i.h_c(
-              *SPEED, *TEMPERATURE, *VEHICLE, *LAMP,
-              *SENSORS, *OBC, *IGNITION
-            )
-          end
-
-          def cdc
-            display_handler.i.f_t(*Device::Groups::CD)
-            display_handler.i.f_f(*Device::Groups::CD)
-            display_handler.i.h_c(
-              *READY, *SPEED, *TEMPERATURE, *COUNTRY,
-              *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
-            )
-          end
-
-          def cdc!
-            display_handler.i.f_t(*Device::Groups::CD)
-            display_handler.i.f_f(*Device::Groups::CD)
-            display_handler.i.h_c(
-              *READY, *SPEED, *TEMPERATURE, *COUNTRY,
-              *VEHICLE, *LAMP, *SENSORS, *OBC, *IGNITION
-            )
-
-            display_handler.i.h_c(*DISPLAY, *BUTTON)
-          end
-
-          def media
-            display_handler.i.f_t(*Device::Groups::MEDIA + BROADCAST)
-            display_handler.i.f_f(*Device::Groups::MEDIA)
+          def lamp
+            dh.f_c(*LAMP)
           end
         end
       end

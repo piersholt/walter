@@ -19,13 +19,15 @@ module Wilhelm
       # include Yabber
 
       PROC_MOD = 'Console'.freeze
-      NEW_LINE = 'New Line'
+      NEW_LINE = 'New Line'.freeze
 
       def command_map
         Wilhelm::Virtual::Map::Command.instance
       end
 
-      def nl
+      alias cm command_map
+
+      def new_line
         new_line_thread = Thread.new do
           Thread.current[:name] = NEW_LINE
           Kernel.sleep(0.5)
@@ -33,6 +35,8 @@ module Wilhelm
         end
         add_thread(new_line_thread)
       end
+
+      alias nl new_line
     end
   end
 end

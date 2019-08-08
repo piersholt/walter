@@ -4,26 +4,29 @@ module Wilhelm
   module Virtual
     module Constants
       module Command
-        # Comment
+        # Virtual::Constants::Command::Groups
         module Groups
           include Aliases
 
           READY = [PING, PONG].freeze
 
-          SPEED = [SPEED_STATUS].freeze
+          SPEED       = [SPEED_STATUS].freeze
           TEMPERATURE = [TEMP_REQ, TEMP_REP].freeze
-          IGNITION = [IGNITION_REQ, IGNITION_REP].freeze
-          SENSORS = [SENSORS_REQ, SENSORS_REP].freeze
-          COUNTRY = [COUNTRY_REQ, COUNTRY_REP].freeze
-          ODOMETER = [ODO_REQ, ODO_REP].freeze
-          VEHICLE = [VEH_REQ, VEH_REP].freeze
-          LAMP = [LAMP_REQ, LAMP_REP].freeze
-          DOOR = [DOOR_REQ, DOOR_REP].freeze
+          IGNITION    = [IGNITION_REQ, IGNITION_REP].freeze
+          SENSORS     = [SENSORS_REQ, SENSORS_REP].freeze
+          COUNTRY     = [COUNTRY_REQ, COUNTRY_REP].freeze
+          ODOMETER    = [ODO_REQ, ODO_REP].freeze
+          VEHICLE     = [VEH_REQ, VEH_REP].freeze
+          # 0x5A, 0x5B
+          LAMP        = [LAMP_REQ, LAMP_REP].freeze
+          # 0x79, 0x7A
+          DOOR        = [DOOR_REQ, DOOR_REP].freeze
 
           OBC = [ANZV_BOOL, ANZV_VAR,  OBC_VAR, OBC_BOOL].freeze
 
           DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
 
+          # 0x1a, 0x51, 0x52, 0x57
           CCM = [TXT_CCM, CCM_END, CCM_RLY, IKE_BTN].freeze
 
           NAVIGATION = [COORDINATES, ADDRESS, REAR, CELL, UTC].freeze
@@ -32,14 +35,16 @@ module Wilhelm
 
           MID = [TXT_MID, GFX_STATUS].freeze
 
-          MFL = [MFL_VOL, MFL_FUNC].freeze
+          MFL  = [MFL_VOL, MFL_FUNC].freeze
           BMBT = [BMBT_I, BMBT_A, BMBT_B].freeze
+          BUTTON = [*MFL, *BMBT].freeze
 
-          VOLUME = [MFL_VOL, BMBT_B]
+          VOLUME = [MFL_VOL, BMBT_B].freeze
 
-          BUTTON = MFL + BMBT
+          TELEPHONE = [
+            TEL_LED, TEL_STATE, TEL_DATA, TXT_MID, TXT_GFX, ANZV_VAR
+          ].freeze
 
-          TELEPHONE = [TEL_LED, TEL_STATE, TEL_DATA, TXT_MID, TXT_GFX, ANZV_VAR].freeze
           CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 
           DIAGNOSTICS = [

@@ -18,7 +18,7 @@ module Wilhelm
             IGNITION_REQ, IGNITION_REP,
             TEL_OPEN, GFX_STATUS,
             INPUT,
-            DSP_EQ,
+            DSP_SET,
             OBC_VAR, OBC_BOOL,
             MENU_GFX,
             SRC_SND, SRC_GFX

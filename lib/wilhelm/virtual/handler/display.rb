@@ -138,6 +138,8 @@ module Wilhelm
           end
         end
 
+        alias h_c_s hide_command_set
+
         def hide_commands(*command_ids)
           LOGGER.debug(name) { "Hiding commands: #{command_ids}" }
           command_ids.each { |command_id| filtered_commands.delete(command_id) }

@@ -11,7 +11,7 @@ module Wilhelm
           def handle_virtual_receive(message)
             command_id = message.command.d
             case command_id
-            when DSP_EQ
+            when DSP_SET
               true
             end
 
