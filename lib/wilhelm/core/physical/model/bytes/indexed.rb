@@ -23,10 +23,11 @@ module Wilhelm
         param_range?(param_range)
 
         bytes = array.slice(param_range)
-        bytes?(bytes)
-        bytes = Core::Bytes.new(bytes) if bytes.is_a?(Array)
-        return bytes if bytes
-        default(name, param_range)
+        # HACK: need to deal with variable length commands...
+        # bytes?(bytes)
+        return default(name, param_range) unless bytes
+        Core::Bytes.new(bytes) if bytes.is_a?(Array)
+        # return bytes if bytes
       end
 
       def add_index(index)
