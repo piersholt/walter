@@ -26,7 +26,7 @@ module Wilhelm
         def load_command_config(from, to)
           from_ident = resolve_address(from)
           to_ident = resolve_address(to)
-          @command_config = get_command_config(id.d, from_ident, to_ident)
+          @command_config = get_command_config(id, from_ident, to_ident)
           raise(StandardError, ERROR_CONFIG_NIL) unless command_config
           true
         end

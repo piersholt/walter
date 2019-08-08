@@ -35,7 +35,7 @@ module Wilhelm
         alias normal_fucking_decimal id
 
         def ==(other)
-          id == other.id
+          id == other
         end
 
         # ------------------------------ OBJECT ----------------------------- #
