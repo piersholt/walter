@@ -79,7 +79,7 @@ module Wilhelm
               end
 
               def button_state(button)
-                button.parameters[:state].value
+                button.parameters[:state].ugly
               end
             end
           end
