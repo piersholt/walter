@@ -11,6 +11,8 @@ module Wilhelm
 
       attr_reader :parameters, :index, :bit_array
 
+      PARAM_DELIM = ', '
+
       def initialize(config, numeric)
         LOGGER.debug(PROC) { "#initialize(#{config}, #{numeric})" }
         super(config, parse_base_256_digits(*numeric))
@@ -28,7 +30,7 @@ module Wilhelm
       def inspect
         params = aligned_parameters
         params = params.compact
-        params = params.join(', ')
+        params = params.join(PARAM_DELIM)
 
         str_buffer = "<#{PROC} #{bit_array} params: #{parameter_list}"
         str_buffer.concat("[#{params}]")
@@ -40,7 +42,7 @@ module Wilhelm
       end
 
       def aligned_parameters_string
-        aligned_parameters&.compact&.join(' ')
+        aligned_parameters&.compact&.join(PARAM_DELIM)
       end
 
       def labels
@@ -88,7 +90,7 @@ module Wilhelm
       def parameter_list
         if @parameters.nil?
           LOGGER.debug(PROC) { "@parameters not set! @parameters=#{@parameters}" }
-          # .map { |p| instance_variable_get(inst_var(p)) }.join(', ')
+          # .map { |p| instance_variable_get(inst_var(p)) }.join(PARAM_DELIM)
           return []
         end
         @parameters.keys

@@ -58,7 +58,7 @@
           # Layout 0x43 (Source) only!
           :band:
             :type: :map
-            :label: 'Band (0x43):'
+            :label: 'Band (0x43)'
             :map:
               0b0_00: :fm_a
               0b0_01: :fm_1
@@ -76,7 +76,7 @@
           # Layout 0x41 (Preset) and 0x83 (Dolby) only!
           :preset:
             :type: :map
-            :label: 'Preset (0x41):'
+            :label: 'Preset (0x41)'
               # 0x41: Preset
               # 0x83: Dolby
             :map:
@@ -820,7 +820,7 @@
         :parameters:
           :id:
             :type: :map
-            :label: 'Index:'
+            :label: 'Index'
             :dictionary:
               0x00: '0'
               0x01: '1'
@@ -835,7 +835,7 @@
               0x0a: '10'
           :state:
             :type: :switch
-            :label: 'State:'
+            :label: 'State'
             :states:
               0b00: :press
               0b01: :hold
@@ -904,7 +904,7 @@
         :parameters:
           :id:
             :type: :map
-            :label: 'Index:'
+            :label: 'Index'
             :dictionary:
               0x00: 0
               0x01: 1
@@ -939,7 +939,7 @@
               0x1f: Directory
           :state:
             :type: :switch
-            :label: 'State:'
+            :label: 'State'
             :states:
               0b00: :press
               0b01: :hold
@@ -2623,7 +2623,7 @@
       :parameters:
         :frequency:
           :type: :map
-          :label: 'Band:'
+          :label: 'Band'
           :dictionary:
             0b000: 80hz
             0b001: 200hz
@@ -2634,12 +2634,12 @@
             0b110: 12khz
         :sign:
           :type: :map
-          :label: '±:'
+          :label: '±'
           :dictionary:
             0b0: '+'
             0b1: '-'
         :magnitude:
-          :label: 'Magnitude:'
+          :label: 'Magnitude'
           :type: :integer
 
 0x35: # DSP-REP
@@ -2683,7 +2683,7 @@
       :parameters:
         :frequency:
           :type: :map
-          :label: 'Band:'
+          :label: 'Band'
           :dictionary:
             0b000: 80hz
             0b001: 200hz
@@ -2694,12 +2694,12 @@
             0b110: 12khz
         :sign:
           :type: :map
-          :label: '±:'
+          :label: '±'
           :dictionary:
             0b0: '+'
             0b1: '-'
         :magnitude:
-          :label: 'Magnitude:'
+          :label: 'Magnitude'
           :type: :integer
 
 0x36: # RAD-EQ
@@ -3272,7 +3272,7 @@
             0b0000: :mfl_null
         :button_state:
           :type: :switch
-          :label: 'State:'
+          :label: 'State'
           :states:
             0b00: :press
             0b01: :hold
@@ -3402,13 +3402,13 @@
       :parameters:
         :totally_unique_variable_name:
           :type: :map
-          :label: 'Index:'
+          :label: 'Index'
           :dictionary:
             0x0_f: "[Select]"
             0x3_8: "[Info]"
         :button_state:
           :type: :switch
-          :label: 'State:'
+          :label: 'State'
           :states:
             0b00: :press
             0b01: :hold
@@ -3501,7 +3501,7 @@
             0x05: :bmbt_confirm
         :button_state:
           :type: :switch
-          :label: 'State:'
+          :label: 'State'
           :states:
             0b00: :press
             0b01: :hold
@@ -3561,7 +3561,7 @@
       :parameters:
         :button_id:
           :type: :map
-          :label: 'Index:'
+          :label: 'Index'
           :map:
             0x01: :check_control
             0x02: :unknown
@@ -3570,7 +3570,7 @@
             0x02: 'Not Check button?'
         :button_state:
           :type: :switch
-          :label: 'State:'
+          :label: 'State'
           :states:
             0b00: :press
             0b01: :hold
@@ -3806,7 +3806,7 @@
       :parameters:
         :gong:
           :type: :map
-          :label: 'Gong:'
+          :label: 'Gong'
           :map:
             0b000: :off
             0b001: :high_single

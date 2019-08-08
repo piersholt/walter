@@ -10,7 +10,7 @@ module Wilhelm
       include Wilhelm::Helpers::DataTools
 
       DEFAULT_LABEL_WIDTH = 0
-      LABEL_DELIMITER = ' '
+      LABEL_DELIMITER = ': '
       PROC = 'CommandParam'
 
       attr_reader :value, :name
