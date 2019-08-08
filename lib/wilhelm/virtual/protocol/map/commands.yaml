@@ -3278,7 +3278,7 @@
 
 0x4F: # SRC-GFX
   # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Base
+  :klass: Paramaterized::Base
   :properties:
     :short_name: SRC-GFX
     :long_name: Display Output
