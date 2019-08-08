@@ -2844,7 +2844,8 @@
   :properties:
     :short_name: RAD-ALT
     :long_name: Radio Alternative Function
-  :klass: Parameterized::Base
+  # NOTE: defaulted to Base to due to Parameterized parsing issues
+  :klass: Base
   :index:
     :mode: 0
   :parameters:
@@ -2918,7 +2919,8 @@
   :properties:
     :short_name: CDC
     :long_name: CDC Status
-  :klass: Parameterized::Base
+  # NOTE: defaulted to Base to due to Parameterized parsing issues
+  :klass: Base
   :index:
     :control: 0
     :status: 1
@@ -3142,7 +3144,8 @@
       - BMBT
 
 0x4B: # SRC?
-  :klass: Parameterized::Base
+  # NOTE: defaulted to Base to due to Parameterized parsing issues
+  :klass: Base
   :properties:
     :short_name: SRC?
     :long_name: Audio Device Control
@@ -3204,6 +3207,8 @@
     - 01 = 19
 
 0x4F: # SRC-GFX
+  # NOTE: defaulted to Base to due to Parameterized parsing issues
+  :klass: Base
   :properties:
     :short_name: SRC-GFX
     :long_name: Display Output
