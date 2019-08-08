@@ -12,20 +12,20 @@ module Wilhelm
 
           def volume_up(context)
             context.level += 1
-            # context.volume_up!
-            context.volume_set(context.level)
+            context.volume_up!
+            # context.volume_set(context.level)
           end
 
           def volume_down(context)
             context.level -= 1
-            # context.volume_down!
-            context.volume_set(context.level)
+            context.volume_down!
+            # context.volume_set(context.level)
           end
 
           def volume_set(context, level)
+            context.volume_set!(level)
             context.changed
             context.notify_observers(:volume, audio: context)
-            context.volume_set!(level)
           end
 
           def power(context)
