@@ -44,6 +44,27 @@
           0x83: 'Tape Side/Dolby'
           0xc0: 'CDC Discs'
       :m2:
+        :meta:
+          - 0x41:
+            - applies to radio source
+            - presumably affects MID only
+            - lowest 3 bits is the selected preset
+          - 0x43:
+            - unsure of purpose of the bits
+            - likely to only affect MID
+            - applies when source is Radio
+            - highest 3 bits are the selected freq. band
+          - 0x83:
+            - applies to Tape
+            - Tape is only source to which Dolby B/C applies
+            - lowest 3 bits are dolby off, B, or C
+          - 0x60:
+            - value of m2 will be returned by command INPUT 0x30
+            - each cell can be set to an different value value
+            - the checkbox icon only works on this layout
+          - 0x61:
+            - as per 0x60, the value for an index is returned by INPUT 0x30
+            - likely due to layout also being used by SOS
         :type: :bit_array
         :index:
           :band:  !ruby/range
@@ -76,9 +97,7 @@
           # Layout 0x41 (Preset) and 0x83 (Dolby) only!
           :preset:
             :type: :map
-            :label: 'Preset (0x41)'
-              # 0x41: Preset
-              # 0x83: Dolby
+            :label: 'Preset (0x41), Dolby: (0x83)'
             :map:
               0b000: :none
               0b001: :p1
@@ -120,6 +139,13 @@
               #   0b001: 'Dolby B'
               #   0b010: 'Dolby C'
       :m3:
+        :meta:
+          - 0x60:
+            - highest bit will render display with preselected cell
+          - 0x61:
+            - highest bit will render display with preselected cell
+            - highest bit can be used to preselect one of the four buttons
+            - calling 0x21 for a given button index will render it
         :type: :bit_array
         :parameters:
           :selected:
@@ -169,6 +195,11 @@
               excl: false
     :parameters:
       :layout:
+        :meta:
+          - 0xf0 and 0xf1 appear to be the basis for SMS
+          - I suspect this is only supposed by wide nav.
+          - so too do they appear to be used for Bluetooth pairing (header only)
+          - similarly for SOS/Emergency
         :type: :map
         :dictionary:
           0x42: 'Dial'
@@ -177,8 +208,37 @@
           0xf0: 'SMS Index'
           0xf1: 'SMS Show'
       :m2:
+        :meta:
+          - 0x42:
+            - i've been unable to change the behaviour of
+          - 0xf0:
+            - used for SMS Message index
+            - value of m2 will be returned by command INPUT 0x30
+            - each cell can be set to an different value value
+            - does not work on back button which is always navigate (0x07)
+            - it's possible to add item to top right cell via higher index
+            - i've not been able to find any special control chars/icons
+          - 0xf1:
+            - the layout used for SMS view
+            - looks to also be the SOS display
+            - as per 0x60, the value for an index is returned by INPUT 0x30
+            - likely due to layout also being used by SOS
+            - no icons available via control characters
         :type: :integer
       :m3:
+        :meta:
+          - 0x42, 0x43, 0x80:
+            - these appear to be backwards compatible MID layouts
+            - use of index has no bearing on the BMBT
+            - contacts must be delimitered in order to render multiple
+          - 0xf0:
+            - highest bit will render display with preselected cell
+            - highest index bit will render back and top right cell
+          - 0xf1:
+            - highest bit can be used to preselect one of the four buttons
+            - it's possible to render any combition of buttons
+            - calling 0x21 at the given index will render it
+            - highest index bit will render back and three buttons
         :type: :bit_array
         :index:
           :selected: 0
