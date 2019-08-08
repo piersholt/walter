@@ -8,14 +8,14 @@ module Wilhelm
         class MFLFunction < Button
           # @override
           def button
-            return button_rt if rt?
+            return mode_tel if mode_tel?
             return button_tel if tel?
             button_rad
           end
 
           # @override
           def pretty
-            return pretty_button_rt if rt?
+            return pretty_mode_tel if mode_tel?
             return pretty_button_tel if tel?
             pretty_button_rad
           end
@@ -35,8 +35,8 @@ module Wilhelm
 
           # private
 
-          def mode?
-            case button_rt
+          def mode
+            case mode_tel
             when :mfl_rt_rad
               :rad
             when :mfl_rt_tel
@@ -44,40 +44,47 @@ module Wilhelm
             end
           end
 
-          def rt?
-            button_rad == :mfl_null && button_tel == :mfl_null
+          alias mode? mode
+
+          def mode_tel?
+            button_rad == :mfl_rad_null && button_tel == :mfl_tel_null
           end
 
+          alias rt? mode_tel?
+
           def tel?
-            button_rad == :mfl_null && button_tel != :mfl_null
+            button_rad == :mfl_rad_null && button_tel != :mfl_tel_null
           end
 
           def rad?
-            button_tel == :mfl_null && button_rad != :mfl_null
+            button_tel == :mfl_tel_null && button_rad != :mfl_rad_null
           end
 
-          def button_rt
-            action.parameters[:button_rt].ugly
+          # R/T
+          def mode_tel
+            action.parameters[:mode_tel].ugly
           end
 
+          def pretty_mode_tel
+            action.parameters[:mode_tel].pretty
+          end
+
+          # FORWARD/BACK
           def button_rad
             action.parameters[:button_rad].ugly
           end
 
+          def pretty_button_rad
+            action.parameters[:button_rad].pretty
+          end
+
+          # TELEPHONE
           def button_tel
             action.parameters[:button_tel].ugly
           end
 
-          def pretty_button_rt
-            action.parameters[:button_rt].pretty
-          end
-
           def pretty_button_tel
             action.parameters[:button_tel].pretty
-          end
-
-          def pretty_button_rad
-            action.parameters[:button_rad].pretty
           end
         end
       end

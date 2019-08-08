@@ -3258,7 +3258,7 @@
       :type: :bit_array
       :index:
         :button_tel: 0
-        :button_rt: 1
+        :mode_tel: 1
         :button_rad: !ruby/range
                       begin: 4
                       end: 7
@@ -3275,13 +3275,13 @@
             0b0: '-'
             0b1: "[Tel]"
           :map:
-            0b0: :mfl_null
+            0b0: :mfl_tel_null
             0b1: :mfl_tel
-        :button_rt:
+        :mode_tel:
           :type: :map
           :dictionary:
-            0x00: '-'
-            0b01: '[R/T] Mode: Telephone'
+            0x0: '[R/T] Radio'
+            0b1: '[R/T] Telephone'
           :map:
             0b0: :mfl_rt_rad
             0b1: :mfl_rt_tel
@@ -3289,13 +3289,13 @@
           :type: :map
           :dictionary:
             # To Radio
+            0b0000: '-'
             0b0001: "[Next]"
             0b1000: "[Prev]"
-            0b0000: '-'
           :map:
+            0b0000: :mfl_rad_null
             0b0001: :mfl_next
             0b1000: :mfl_prev
-            0b0000: :mfl_null
         :button_state:
           :type: :switch
           :label: 'State'
