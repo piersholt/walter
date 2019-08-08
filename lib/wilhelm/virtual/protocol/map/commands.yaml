@@ -22,7 +22,7 @@
     - :rad
   # SCHEMA 0x21 RAD-21*
   :rad:
-    :id: 33
+    :id: 0x21
     :klass: Parameterized::Base
     :properties:
       :short_name: RAD-21*
@@ -158,7 +158,7 @@
         :type: :chars
   # SCHEMA 0x21 TEL-21
   :tel:
-    :id: 33
+    :id: 0x21
     :klass: Parameterized::Base
     :properties:
       :short_name: TEL-21*
@@ -935,6 +935,9 @@
               0x11: 17/Button Left
               0x12: 18/Button Right
               0x13: 19/Button Centre/Outlier
+              0x14: 20
+              0x15: 21
+              0x16: 22
 
               0x1a: 26/*
               0x1b: '27/#'
@@ -1546,14 +1549,14 @@
 # ************************************************************************* #
 
 0x10: # IGN-REQ
-  :id: 16
+  :id: 0x10
   :properties:
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
   :klass: Base
 
 0x11: # IGN
-  :id: 17
+  :id: 0x11
   :properties:
     :short_name: IGN
     :long_name: Ignition Status Response
@@ -1562,28 +1565,28 @@
     :position:
       :type: :bit_array
       :parameters:
-        :KLR:
-          :label: KL R (Pos. I)
+        :klr:
+          :label: KL-R (Pos. I)
           :type: :switch
           :states:
             0: :unpowered
             1: :powered
-        :KL15:
-          :label: KL 15 (Pos. II)
+        :kl15:
+          :label: KL-15 (Pos. II)
           :type: :switch
           :states:
             0: :unpowered
             1: :powered
-        :KL50:
-          :label: KL 50 (Start)
+        :kl50:
+          :label: KL-50 (Start)
           :type: :switch
           :states:
             0: :unpowered
             1: :powered
       :index:
-        :KL50: 5
-        :KL15: 6
-        :KLR: 7
+        :kl50: 5
+        :kl15: 6
+        :klr: 7
   :index:
     :position: 0
   :meta:
@@ -1606,7 +1609,7 @@
       - 0b00000111
 
 0x12: # SEN-REQ
-  :id: 18
+  :id: 0x12
   :properties:
     :short_name: SEN-REQ
     :long_name: IKE Sensor Status REQ
@@ -1618,13 +1621,13 @@
       - IKE
 
 0x13: # SEN
-  :id: 19
+  :id: 0x13
   :properties:
     :short_name: SEN
     :long_name: IKE Sensors
   :klass: IKESensors
   :parameters:
-    :bit_array_1:
+    :s1:
       :type: :bit_array
       :parameters:
         :transmission:
@@ -1656,7 +1659,7 @@
         :brakes: 5
         :oil: 6
         :handbrake: 7
-    :bit_array_2:
+    :s2:
       :type: :bit_array
       :parameters:
         :gear:
@@ -1703,12 +1706,12 @@
                   excl: false
         :door: 6
         :ignition: 7
-    :bit_array_3:
+    :s3:
       :type: :integer
   :index:
-    :bit_array_1: 0
-    :bit_array_2: 1
-    :bit_array_3: 2
+    :s1: 0
+    :s2: 1
+    :s3: 2
   :meta:
     :notes:
       - the IKE has a number of various inputs (via analogue signals, or CAN
@@ -1870,21 +1873,123 @@
     :b4: 3
 
 0x16: # ODO-REQ
-  :id: 22
+  :id: 0x16
   :properties:
     :short_name: ODO-REQ
     :long_name: Odometer Request
   :klass: Base
+  :meta:
+    - from EWS 0x44
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
+    - 44 03 80 16 D1
 
 0x17: # ODO
-  :id: 23
+  :id: 0x17
   :properties:
     :short_name: ODO
     :long_name: Odometer Response
   :klass: Base
   :meta:
-      :senders:
-        - IKE
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
+    - 80 06 BF 17 8E B7 03 14
 
 0x18: # SPD
   :id: 0x18
@@ -1907,7 +2012,7 @@
       - GLO-L (0xBF)
 
 0x19: # TEMP
-  :id: 25
+  :id: 0x19
   :properties:
     :short_name: TEMP
     :long_name: Temperature
@@ -1925,6 +2030,15 @@
     :long_name: Temperature Request
   :klass: Base
   :meta:
+    - from IHKA
+    - 5B 03 80 1D C5
+    - 5B 03 80 1D C5
+    - 5B 03 80 1D C5
+    - 5B 03 80 1D C5
+    - 5B 03 80 1D C5
+    - from LCM
+    - D0 03 80 1D 4E
+    - D0 03 80 1D 4E
 
 0x53: # VEH-REQ
   :id: 0x53
@@ -1944,26 +2058,26 @@
   :parameters:
     :vin:
       :type: :chars
-    :odometer:
+    :mileage:
+      :label: Mileage Indicator [km]
       :type: :data
-    :consumed_fuel_quantity:
+    :fuel:
+      :label: Consumed Fuel Quantity
       :type: :data
-    :time_inspection_counter:
+    :time:
+      :label: Time Inspection Counter
       :type: :data
   :index:
       :vin: !ruby/range
               begin: 0
               end: 4
               excl: false
-      :odometer: !ruby/range
+      :mileage: !ruby/range
                   begin: 5
                   end: 6
                   excl: false
-      :consumed_fuel_quantity: !ruby/range
-                      begin: 7
-                      end: 8
-                      excl: false
-      :time_inspection_counter: !ruby/range
+      :fuel: 8
+      :time: !ruby/range
                   begin: 11
                   end: 12
                   excl: false
@@ -2000,30 +2114,30 @@
     :long_name: Service Interval Usage
   :klass: Parameterized::Base
   :index:
-    :odometer: !ruby/range
+    :mileage: !ruby/range
                 begin: 0
                 end: 1
                 excl: false
-    :liters: !ruby/range
-                    begin: 2
-                    end: 3
-                    excl: false
-    :days: !ruby/range
+    :fuel: 3
+    :time: !ruby/range
                 begin: 6
                 end: 7
                 excl: false
   :parameters:
-    :odometer:
+    :mileage:
+      :label: Mileage Indicator (km)
       :type: :data
-    :liters:
+    :fuel:
+      :label: Consumed Fuel Quantity (litre)
       :type: :data
-    :days:
+    :time:
+      :label: Time Inspection Counter (days)
       :type: :data
 
 0x59: # RLS-LUM
   :id: 0x59
   :properties:
-    :short_name: SEN-LUM
+    :short_name: RLS-LUM
     :long_name: Luminosity Reading?
   :klass: Parameterized::Base
   :parameters:
@@ -2049,10 +2163,22 @@
     :long_name: Lamp Status
   :klass: Lamp
   :index:
-    :byte1: 0
+    :l1: 0
+    :l2: 1
+    :l3: 2
+    :l4: 3
   :parameters:
-    :byte1:
+    :l1:
       :type: :bit_array
+      :index:
+        :rapid: 0
+        :indicate_right: 1
+        :indicate_left: 2
+        :fog_rear: 3
+        :fog_front: 4
+        :beam_high: 5
+        :beam_low: 6
+        :parking: 7
       :parameters:
         :rapid:
           :label: Rapid.
@@ -2102,36 +2228,83 @@
           :states:
             0: :off
             1: :on
+    :l2:
+      :type: :bit_array
       :index:
-        :rapid: 0
         :indicate_right: 1
         :indicate_left: 2
-        :fog_rear: 3
-        :fog_front: 4
-        :beam_high: 5
-        :beam_low: 6
-        :parking: 7
-    # :byte2:
-    #   # :type: :bit_array
-    #   :bits:
-    #     1: right indicator glove out
-    #     2: left indicator glove out
-    # :byte3:
-    #   # :type: :bit_array
-    #   :bits:
-    #     5: indicating/hazards
-    #     6: brake light out, i think this drives CCM
-    # :byte4:
-    #   # :type: :bit_array
-    #   :bits:
-    #     1: rear fog switched on (stays on regardless of lights)
-    #     6: left break glove out (not hatch)
-    #     7: right break globe out (not hatch)
+      :parameters:
+        :indicate_right:
+          :type: :switch
+          :label: Indicator Right Globe
+          :states:
+            0: :off
+            1: :fault
+        :indicate_left:
+          :type: :switch
+          :label: Indicator Left Globe
+          :states:
+            0: :off
+            1: :fault
+    :l3:
+      :type: :bit_array
+      :index:
+        :hazard: 5
+        :brake: 6
+      :parameters:
+        :hazard:
+          :type: :switch
+          :label: Indicator/Hazard
+          :states:
+            0: :off
+            1: :on
+        :brake:
+          :type: :switch
+          :label: Brake Globe
+          :states:
+            0: :off
+            1: :fault
+    :l4:
+      :type: :bit_array
+      :index:
+        :fog_rear: 1
+        :brake_left: 6
+        :brake_right: 7
+      :parameters:
+        :fog_rear:
+          :type: :switch
+          :label: Fog Rear
+          :states:
+            0: :off
+            1: :on
+        :brake_left:
+          :type: :switch
+          :label: Brake Left Globe
+          :states:
+            0: :off
+            1: :fault
+        :brake_right:
+          :type: :switch
+          :label: Brake Right Globe
+          :states:
+            0: :off
+            1: :fault
+
   :meta:
     :notes:
       - lamp drives the night mode on BMBT
       - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
       - but i can't get the CCM to fire warning
+      - byte2:
+        1: right indicator glove out
+        2: left indicator glove out
+      - byte3:
+        5: indicating/hazards
+        6: brake light out, i think this drives CCM
+      - byte4:
+        1: rear fog switched on (stays on regardless of lights)
+        6: left break glove out (not hatch)
+        7: right break globe out (not hatch)
 
 0x5C: # 58G
   :id: 92
@@ -2696,6 +2869,8 @@
     :short_name: RAD-ALT
     :long_name: Radio Alternative Function
   :klass: Parameterized::Base
+  :index:
+    :mode: 0
   :parameters:
     :mode:
       :type: :map
@@ -2737,8 +2912,6 @@
         0xd_0: (Tone) EQ. Treble
         0xe_0: (Tone) EQ. Fader
         0xf_0: (Tone) EQ. Balance
-  :index:
-    :mode: 0
 
 0x38: # CDC-REQ
   :id: 0x38
