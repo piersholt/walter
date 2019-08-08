@@ -6,14 +6,21 @@ module Wilhelm
       module GFX
         module Capabilities
           module Settings
-            # Settings: Date and Time
-            module DateTime
+            # Settings::Time
+            module Time
               include API
               include Constants
 
-              CENTURY = 100
               PM_OFFSET = 0b1000_0000
 
+              # Time 0x01 [Request]
+              def time?
+                obc_bool(field: FIELD_TIME, control: CONTROL_REQUEST)
+              end
+
+              alias t? time?
+
+              # Time 0x01 Input
               def input_time(hour = hour?, minute = min?, seconds = sec?)
                 return false unless valid_time?(hour, minute)
                 hour = to_twelve_hour_time(hour)
@@ -22,17 +29,15 @@ module Wilhelm
 
               alias time! input_time
 
-              # @note IKE default century of 2000 for (00..92)
-              # @note IKE default century of 1900 for (93..99)
-              def input_date(day = day?, month = month?, year = year?)
-                return false unless valid_date?(day, month, year)
-                year = to_short_year(year)
-                obc_var(field: FIELD_DATE, input: [day, month, year])
-              end
-
-              alias date! input_date
-
               private
+
+              def validate_time(hour, minute)
+                return true if valid_time?(hour, minute)
+                raise(
+                  ArgumentError,
+                  "Invalid time! Hour: #{hour}, Minute: #{minute}"
+                )
+              end
 
               def valid_time?(hour, minute)
                 return false unless integers?(hour, minute)
@@ -41,38 +46,12 @@ module Wilhelm
                 true
               end
 
-              def valid_date?(day, month, year)
-                return false unless integers?(day, month, year)
-                return false if negative?(day, month, year)
-                true
-              end
-
-              def integers?(*integers)
-                integers.all? { |i| i.is_a?(Integer) }
-              end
-
               def valid_hour?(hour)
                 (0..23).cover?(hour)
               end
 
               def valid_minute?(minute)
                 (0..59).cover?(minute)
-              end
-
-              def negative?(*integers)
-                integers.any?(&:negative?)
-              end
-
-              def year?
-                Time.now.year
-              end
-
-              def month?
-                Time.now.month
-              end
-
-              def day?
-                Time.now.day
               end
 
               def hour?
@@ -91,10 +70,6 @@ module Wilhelm
                 return hour unless hour > 12
                 hour -= 12
                 hour + PM_OFFSET
-              end
-
-              def to_short_year(year)
-                year - year.div(CENTURY) * CENTURY
               end
             end
           end
