@@ -15,7 +15,7 @@ module Wilhelm
               # Command 0x01 PING
               def evaluate_ping(*)
                 changed
-                notify_observers(GFX_PING, device: moi)
+                notify_observers(GFX_PING, device: ident)
               end
 
               # Command 0x02 PONG
@@ -23,7 +23,7 @@ module Wilhelm
                 case command.status.value
                 when 0x40
                   changed
-                  notify_observers(GFX_ANNOUNCE, device: moi)
+                  notify_observers(GFX_ANNOUNCE, device: ident)
                 end
               end
 
@@ -45,7 +45,7 @@ module Wilhelm
                 changed
                 notify_observers(
                   GFX_OBC_BOOL,
-                  device: moi,
+                  device: ident,
                   menu: :on_board_computer
                 )
               end
@@ -55,7 +55,7 @@ module Wilhelm
                 case command.config.value
                 when HIDE_RADIO
                   changed
-                  notify_observers(BMBT_MENU, device: :gfx)
+                  notify_observers(BMBT_MENU, device: ident)
                 end
               end
 
