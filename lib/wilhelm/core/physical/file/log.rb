@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Core
@@ -13,8 +13,13 @@ module Wilhelm
           include State
           include Errors
 
-          NAME = 'Interface'.freeze
-          THREAD_NAME = 'wilhelm-core/physical Log (Input Buffer)'
+          NAME             = 'File::Log'
+          THREAD_NAME      = 'wilhelm-core/physical Log (Input Buffer)'
+          LOG_ON           = '#on'
+          LOG_OFF          = '#off'
+          LOG_THREAD_START = 'New Thread: Log byte read.'
+          LOG_THREAD_END   = "#{THREAD_NAME} thread is ending."
+          ERROR_WRITE_NA   = 'Device is log file. Cannot write to bus.'
 
           def name
             NAME
@@ -37,19 +42,19 @@ module Wilhelm
           end
 
           def on
-            LOGGER.debug(NAME) { '#on' }
+            LOGGER.debug(NAME) { LOG_ON }
             @read_thread = thread_populate_input_buffer
             add_thread(@read_thread)
             offline!
           end
 
           def off
-            LOGGER.debug(NAME) { '#off' }
+            LOGGER.debug(NAME) { LOG_OFF }
             close_threads
           end
 
           def write(*)
-            raise TransmissionError, 'Device is log file. Cannot write to bus.'
+            raise(TransmissionError, ERROR_WRITE_NA)
           rescue TransmissionError => e
             LOGGER.warn(NAME) { e }
           end
@@ -57,13 +62,8 @@ module Wilhelm
           alias write_nonblock write
 
           # Backwards compatibility
-          def input_buffer
-            self
-          end
-
-          def output_buffer
-            self
-          end
+          alias input_buffer  itself
+          alias output_buffer itself
 
           private
 
@@ -76,7 +76,7 @@ module Wilhelm
           end
 
           def thread_populate_input_buffer
-            LOGGER.debug(name) { 'New Thread: Byte Read.' }
+            LOGGER.debug(NAME) { LOG_THREAD_START }
             Thread.new do
               Thread.current[:name] = THREAD_NAME
               begin
@@ -86,12 +86,12 @@ module Wilhelm
                   delay
                 end
               rescue EOFError
-                LOGGER.warn(name) { "#{THREAD_NAME}: Stream reached EOF!" }
+                LOGGER.warn(NAME) { "#{THREAD_NAME}: Stream reached EOF!" }
               rescue StandardError => e
-                LOGGER.error(name) { "#{THREAD_NAME}: #{e}" }
-                e.backtrace.each { |line| LOGGER.error(name) { line } }
+                LOGGER.error(NAME) { "#{THREAD_NAME}: #{e}" }
+                e.backtrace.each { |line| LOGGER.error(NAME) { line } }
               end
-              LOGGER.warn(name) { "#{THREAD_NAME} thread is ending." }
+              LOGGER.warn(NAME) { LOG_THREAD_END }
             end
           end
         end

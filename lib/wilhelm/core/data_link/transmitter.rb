@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module DataLink
-      # Comment
+      # Core::DataLink::Transmitter
       class Transmitter
         include Observable
         include ManageableThreads

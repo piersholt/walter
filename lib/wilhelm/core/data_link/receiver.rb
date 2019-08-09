@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module DataLink
-      # Comment
+      # Core::DataLink::Receiver
       class Receiver
         include Observable
         include ManageableThreads

@@ -12,12 +12,11 @@ module Wilhelm
           include Capture
           include State
 
-          NAME    = 'UART'
-          LOG_ON  = '#on'
-          LOG_OFF = '#off'
-
+          NAME             = 'Interface::UART'
           THREAD_NAME      = 'wilhelm-core/physical UART (Input Buffer)'
-          LOG_THREAD_START = 'New Thread: Byte Read'
+          LOG_ON           = '#on'
+          LOG_OFF          = '#off'
+          LOG_THREAD_START = 'New Thread: UART byte read.'
           LOG_THREAD_END   = "#{THREAD_NAME} thread is ending."
 
           def name
