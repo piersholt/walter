@@ -1,4 +1,4 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module API
@@ -9,6 +9,8 @@ module Wilhelm
 
       include LED
 
+      PROG = 'Telephone'
+
       attr_accessor :bus
 
       def logger
@@ -16,7 +18,7 @@ module Wilhelm
       end
 
       def to_s
-        'Telephone'
+        PROG
       end
 
       # TODO: module

@@ -5,7 +5,6 @@ module Wilhelm
     class Display
       # Comment
       module Listener
-        # TODO add BMBT_BUTTON and MFL_BUTTON (even though they're both == :control)
         include Constants::Events
 
         NAME = 'Display Listener'
