@@ -47,21 +47,22 @@
         :meta:
           - 0x41:
             - applies to radio source
-            - presumably affects MID only
             - lowest 3 bits is the selected preset
+            - presumably affects MID only
           - 0x43:
-            - unsure of purpose of the bits
-            - likely to only affect MID
             - applies when source is Radio
             - highest 3 bits are the selected freq. band
+            - likely to only affect MID
+            - unsure of what effect they have?
           - 0x83:
-            - applies to Tape
-            - Tape is only source to which Dolby B/C applies
-            - lowest 3 bits are dolby off, B, or C
+            - tape is the only source to which Dolby B/C applies
+            - presumably then, this applies to source tape
+            - 'lowest 3 bits are dolby: off, B, or C'
           - 0x60:
             - value of m2 will be returned by command INPUT 0x30
+            - this applies from 0x00..0xff, so no other use for byte
             - each cell can be set to an different value value
-            - the checkbox icon only works on this layout
+            - I believe this is the only layout in which checkbox works
           - 0x61:
             - as per 0x60, the value for an index is returned by INPUT 0x30
             - likely due to layout also being used by SOS
@@ -154,7 +155,7 @@
             :states:
               0: :off
               1: :on
-          # no GFX-STATUS using this using MK1 GFX
+          # no GFX-CACHE using this using MK1 GFX
           :block:
             :type: :switch
             :label: Block
@@ -196,10 +197,12 @@
     :parameters:
       :layout:
         :meta:
-          - 0xf0 and 0xf1 appear to be the basis for SMS
-          - I suspect this is only supposed by wide nav.
+          - I suspect 0xf0, and 0xf1 are only supported by MK3/4
+          - 0xf0 and 0xf1 appear to be the basis for:
+            - SMS
+            - SOS/Emergency
+            - Bluetooth pairing (title only)
           - so too do they appear to be used for Bluetooth pairing (header only)
-          - similarly for SOS/Emergency
         :type: :map
         :dictionary:
           0x42: 'Dial'
@@ -210,7 +213,11 @@
       :m2:
         :meta:
           - 0x42:
-            - i've been unable to change the behaviour of
+            - the MK1/2 dial, or MK3/4 'home' telephone layout
+            - I have tried setting m2 for Top 8, Recent, etc with no luck
+          - 0x43 and 0x80:
+            - directory and top 8 respectively
+            - no luck setting m2 to change value returned by 0x30
           - 0xf0:
             - used for SMS Message index
             - value of m2 will be returned by command INPUT 0x30
@@ -257,7 +264,7 @@
               1: :on
           :block:
             :type: :switch
-            :label: Blocking?
+            :label: Block
             :states:
               0: :off
               1: :on
@@ -275,8 +282,8 @@
 
 0x22: # MID-22
   :properties:
-    :short_name: GFX-CACHE
-    :long_name: GFX Cache
+    :short_name: TXT-CACHE
+    :long_name: Cached Write Count
   :klass: Parameterized::Base
   :parameters:
     :status:
@@ -284,17 +291,9 @@
   :index:
     :status: 0
   :meta:
-    :notes:
-      - I _think_ this is.... cache/buffered count....?
-      - 00: Dial Function
-      - 01 FF: Radio On?
-      - [0, 1, 2, 3, 4, 7, 16]
-      - 0x00: Available always after screen has been cleared
-      - 0x01: Done? (always preceded by 0x21 and 0x23 AND which is when loading a screen)
-      - 0x02: (only preceded by 0x21) when... manually navigating to a screen
-      - 0x03: Done?
-      - 0x07: unknown?
-      - 0x10: Unrecognised command?
+    - when 0x21 is sent without block flag, all cached writes are rendered
+    - the value returned is the number of cells written
+    - i.e. 3 writes with block, 1 write without block => 3
 
 0x23: # TXT-23 / RAD-23* / TEL-23*
   :properties:
@@ -1222,6 +1221,10 @@
           :states:
             0: :inactive
             1: :on
+          :meta:
+            - the dialogue displayed when Code feature has been set.
+            - it cannot be overwritten or dismissed by the user.
+            - the emergency disarm variant is set via 0x24.
         :aux_heating:
           :type: :switch
           :label: '(Aux) Heating'
@@ -2510,6 +2513,7 @@
     - send following keyless entry/lock
     - gm	glo_l	76 02
     - gm	glo_l	76 00
+    - I believe GM is too old for car/key memory
 
 0x78: # MEM-LOAD
   :properties:
@@ -3278,7 +3282,7 @@
 
 0x4F: # SRC-GFX
   # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Paramaterized::Base
+  :klass: Parameterized::Base
   :properties:
     :short_name: SRC-GFX
     :long_name: Display Output
