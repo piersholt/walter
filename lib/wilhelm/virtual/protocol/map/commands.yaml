@@ -2523,19 +2523,19 @@
     :key:
       :type: :map
       :map:
-        0x00: key_1
-        0x01: key_2
-        0x02: key_3
-        0x03: key_4
-        0x04: key_5
-        0xFF: "off"
+        0x00: :key_1
+        0x01: :key_2
+        0x02: :key_3
+        0x03: :key_4
+        0x04: :key_5
+        0xFF: :no_key
       :dictionary:
         0x00: Key 1
         0x01: Key 2
         0x02: Key 3
         0x03: Key 4
         0x04: Key 5
-        0xFF: Ignition Ring Off?
+        0xFF: No Key
   :index:
     :status: 0
     :key: 1
