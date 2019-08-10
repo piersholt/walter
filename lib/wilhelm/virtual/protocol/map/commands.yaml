@@ -1390,26 +1390,62 @@
 #                                 NAVIGATION
 # ************************************************************************* #
 
-0x1F: # UTC Time
+0x1F: # TIME
   :properties:
-    :short_name: UTC
+    :short_name: TIME
     :long_name: UTC time and date
-  :klass: Base
-
-0xA2: # LATLONG
-  :properties:
-    :verbose: true
-    :short_name: LATLONG
-    :long_name: GPS Coordinates
-  :klass: Base
+  :klass: Parameterized::GPS::Time
   :index:
+    :tz: 0
+    :hour: 1
+    :minute: 2
+    :day: 3
+    :second: 4
+    :month: 5
+    :year:  !ruby/range
+              begin: 6
+              end: 7
+  :parameters:
+    :tz:
+      :type: :data
+    :hour:
+      :type: :data
+    :minute:
+      :type: :data
+    :day:
+      :type: :data
+    :second:
+      :type: :data
+    :month:
+      :type: :data
+    :year:
+      :type: :data
+
+0xA2: # COORD
+  :properties:
+    :short_name: COORD
+    :long_name: GPS Coordinates
+  :klass: Parameterized::GPS::Coordinates
+  :index:
+    # Signal
     :signal: 0
-    :latitude_hours: !ruby/range
-                      begin: 1
-                      end: 2
-    :latitude_minutes: 3
-    :latitude_seconds: 4
-    :altitude: 12
+    # Latitude
+    :lat_d: !ruby/range
+              begin: 1
+              end: 2
+    :lat_m: 3
+    :lat_s: 4
+    :lat_sf: 5
+    # Longitude
+    :long_d: !ruby/range
+              begin: 6
+              end: 7
+    :long_m: 8
+    :long_s: 9
+    :long_sf: 10
+    # Vertical
+    :vertical: 12
+    # Time
     :hour: 14
     :minute: 15
     :second: 16
@@ -1417,25 +1453,35 @@
     :signal:
       :type: :map
       :map:
-        0x00: disconnected
-        0x01: connected
+        0x00: :disconnected
+        0x01: :connected
       :dictionary:
         0x00: 'No Signal'
         0x01: 'Signal'
-    :latitude_hours:
-      :type: :integer
-    :latitude_minutes:
-      :type: :integer
-    :latitude_seconds:
-      :type: :integer
-    :altitude:
-      :type: :integer
+    :lat_d:
+      :type: :data
+    :lat_m:
+      :type: :data
+    :lat_s:
+      :type: :data
+    :lat_sf:
+      :type: :data
+    :long_d:
+      :type: :data
+    :long_m:
+      :type: :data
+    :long_s:
+      :type: :data
+    :long_sf:
+      :type: :data
+    :vertical:
+      :type: :data
     :hour:
-      :type: :integer
+      :type: :data
     :minute:
-      :type: :integer
+      :type: :data
     :second:
-      :type: :integer
+      :type: :data
   :schemas:
     - :dia
   :dia:

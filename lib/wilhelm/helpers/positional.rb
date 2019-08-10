@@ -50,13 +50,14 @@ module Wilhelm
       end
 
       alias base256 parse_base_256_digits
-      alias base16 parse_base_16_digits
-      alias base10 parse_base_10_digits
+      alias base16  parse_base_16_digits
+      alias base2   parse_base_2_digits
+      alias base10  parse_base_10_digits
 
       # NUMBER TO DIGITS
 
       # Split number into base-256 positional notation digits
-      # base-256 represents 1 byte, or 8 bits => 2**8 = 256
+      # base-256 represents 1 byte, or 8 bits => 2^8 = 256
       # Example: 0x2706 => [0x27, 0x06]
       # @param Fixnum number
       # @return Array<Fixnum>
@@ -64,8 +65,22 @@ module Wilhelm
         binary_base_digits(BASE_256_BIT_SHIFT, number)
       end
 
+      # NOTE: base 16 is required for GPS coordinates,and time which
+      # are transmitted as base 16. A byte is used to represent two
+      # base 10 numbers (a nibble each).
+      # i.e. 145° is transmitted as bytes [0x01, 0x45]
+      # The returned digits are then parsed as base 10.
+      # e.g. [0x01, 0x45] => [0x1, 0x4, 0x5] => 145
+
+      # Split number into base-16 positional notation digits
+      # base-16 represents 1 nibble, or 4 bits => 2^4 = 16
+      # Example: 0x2706 => [0x2, 0x7, 0x0, 0x6]
+      def base_16_digits(number)
+        binary_base_digits(BASE_16_BIT_SHIFT, number)
+      end
+
       # Split number into base-2 positional notation digits
-      # base-2 represents 1 bit => 2**1 => 2
+      # base-2 represents 1 bit => 2^1 => 2
       # Example: 0x83 => [1, 0, 0, 0, 0, 0, 1, 1]
       # @param Fixnum number
       # @return Array<Fixnum>
@@ -75,8 +90,8 @@ module Wilhelm
 
       private
 
-      def reduce(shift_size, *segments)
-        segments.reduce(0) { |m, o| (m << shift_size) + o }
+      def reduce(shift_size, *digits)
+        digits.reduce(0) { |m, o| (m << shift_size) + o }
       end
 
       # Split number into base-256 positional notation digits
