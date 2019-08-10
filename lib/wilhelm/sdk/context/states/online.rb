@@ -82,7 +82,7 @@ module Wilhelm
             end
             ui_context.register_service_controllers(
               header:  UserInterface::Controller::HeaderController,
-              debug:  UserInterface::Controller::DebugController,
+              debug:  UserInterface::Controller::ContextController,
               services:  UserInterface::Controller::ServicesController,
               encoding:  UserInterface::Controller::EncodingController
             )

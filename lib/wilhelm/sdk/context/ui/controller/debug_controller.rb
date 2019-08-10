@@ -5,9 +5,9 @@ module Wilhelm
     class Context
       class UserInterface
         module Controller
-          # DebugController
-          class DebugController < UIKit::Controller::BaseController
-            NAME = 'DebugController'
+          # ContextController
+          class ContextController < UIKit::Controller::BaseController
+            NAME = 'ContextController'
 
             attr_reader :container
 
