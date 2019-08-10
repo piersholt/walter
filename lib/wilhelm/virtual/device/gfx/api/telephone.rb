@@ -10,9 +10,9 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
-            # 0x31 TEL_DATA
+            # 0x31 INPUT
             def user_input(from: :gfx, to: :rad, **arguments)
-              try(from, to, TEL_DATA, arguments)
+              try(from, to, INPUT, arguments)
             end
           end
         end

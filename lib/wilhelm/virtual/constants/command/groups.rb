@@ -17,8 +17,6 @@ module Wilhelm
           COUNTRY     = [COUNTRY_REQ, COUNTRY_REP].freeze
           # 0x16, 0x17
           ODOMETER    = [ODO_REQ, ODO_REP].freeze
-          # 0x18
-          SPEED       = [SPEED_STATUS].freeze
           # 0x19, 0x1d
           TEMPERATURE = [TEMP_REQ, TEMP_REP].freeze
           # 0x53, 0x54, 0x55
@@ -80,7 +78,7 @@ module Wilhelm
 
           NOISEY_NG = {
             ready: READY,
-            speed: SPEED,
+            speed: [SPEED],
             temperature: TEMPERATURE,
             ignition: IGNITION,
             sensors: SENSORS,
@@ -96,7 +94,7 @@ module Wilhelm
 
           NOISEY = {
             ready: READY,
-            speed: SPEED,
+            speed: [SPEED],
             temperature: TEMPERATURE,
             ignition: IGNITION,
             sensors: SENSORS,

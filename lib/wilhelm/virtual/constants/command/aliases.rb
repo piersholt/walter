@@ -24,7 +24,7 @@ module Wilhelm
           ODO_REQ       = 0x16
           ODO_REP       = 0x17
 
-          SPEED_STATUS  = 0x18
+          SPEED         = 0x18
 
           TEMP_REQ      = 0x1d
           TEMP_REP      = 0x19
@@ -45,8 +45,6 @@ module Wilhelm
           TEL_STATE     = 0x2c
 
           INPUT         = 0x31
-          SOFT_INPUT    = INPUT
-          TEL_DATA      = INPUT
 
           MFL_VOL       = 0x32
           MFL_FUNC      = 0x3b
@@ -62,10 +60,8 @@ module Wilhelm
           OBC_VAR       = 0x40
           OBC_BOOL      = 0x41
 
-          UI_CONFIG     = 0x45
-          MENU_GFX      = UI_CONFIG
-          UI_RADIO      = 0x46
-          MENU_RAD      = UI_RADIO
+          MENU_GFX      = 0x45
+          MENU_RAD      = 0x46
 
           BMBT_I        = 0x47
           BMBT_A        = 0x48

@@ -15,7 +15,7 @@ module Wilhelm
           PROC = 'Radio::Augmented'
 
           PUBLISH   = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
-          SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, TEL_DATA]
+          SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, INPUT]
 
           def handle_virtual_transmit(message)
             command_id = message.command.d
@@ -82,8 +82,8 @@ module Wilhelm
             when MENU_GFX
               logger.debug(PROC) { "Rx: Handling: MENU_GFX"  }
               handle_menu_gfx(message.command)
-            when TEL_DATA
-              # logger.debug(PROC) { "Rx: Handling: TEL_DATA"  }
+            when INPUT
+              # logger.debug(PROC) { "Rx: Handling: INPUT"  }
               # handle_tel_data(message.command)
             end
           rescue StandardError => e
