@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     module Listener
-      # Comment
+      # SDK::Listener::CoreListener
       class CoreListener < Core::BaseHandler
         include LogActually::ErrorOutput
 

@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     module Constants
       module Device
-        # Comment
+        # Virtual::Constants::Device::Groups
         module Groups
           include Aliases
 

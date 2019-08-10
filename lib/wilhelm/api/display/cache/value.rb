@@ -3,9 +3,8 @@
 module Wilhelm
   module API
     class Display
-      # Comment
       class Cache
-        # Comment
+        # API::Display::Cache::Value
         class Value
           extend Forwardable
           attr_reader :char_array, :dirty

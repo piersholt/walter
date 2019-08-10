@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Display
-      # Comment
+      # API::Display::Listener
       module Listener
         include Constants::Events
 

@@ -15,7 +15,7 @@ require_relative 'helpers/inspect'
 require_relative 'helpers/observation'
 
 module Wilhelm
-  # Comment
+  # Helpers
   module Helpers
     include Module
     extend Module

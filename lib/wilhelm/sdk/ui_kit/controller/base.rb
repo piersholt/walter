@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module Controller
-        # Comment
+        # SDK::UIKit::Controller::BaseController
         class BaseController
           attr_accessor :application_context, :ui_context
           alias context application_context

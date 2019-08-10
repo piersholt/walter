@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module Listener
-      # Comment
+      # Core::Listener::CoreListener
       class CoreListener < BaseListener
         attr_accessor :interface_handler
 

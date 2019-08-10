@@ -6,7 +6,7 @@ module Wilhelm
       class UserInterface
         module Model
           module Header
-            # Comment
+            # SDK::Context::UserInterface::Model::Header
             class Status
               include Observable
 

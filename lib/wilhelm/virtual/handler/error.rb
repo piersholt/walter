@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module Handler
-      # Comment
+      # Virtual::Handler::RoutingError
       class RoutingError < StandardError
         def message
           'A routing error has occured!'

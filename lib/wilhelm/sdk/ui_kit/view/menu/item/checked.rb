@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module View
-        # Comment
+        # SDK::UIKit::View::CheckedItem
         class CheckedItem < BaseMenuItem
           CHECKED_MASK = '%-13.13s'
           CHECKED_CHAR = 42.chr

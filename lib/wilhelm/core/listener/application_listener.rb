@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     module Listener
-      # Comment
+      # Core::Listener::ApplicationListener
       class ApplicationListener < BaseListener
         include LogActually::ErrorOutput
 

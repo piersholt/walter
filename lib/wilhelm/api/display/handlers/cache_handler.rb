@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Display
-      # Comment
+      # API::Display::CacheHandler
       module CacheHandler
         NAME = 'CacheHandler'
 

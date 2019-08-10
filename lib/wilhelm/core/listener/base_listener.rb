@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::BaseListener
     class BaseListener
       include Observable
       include Constants::Events

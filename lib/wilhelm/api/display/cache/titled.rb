@@ -3,9 +3,8 @@
 module Wilhelm
   module API
     class Display
-      # Comment
       class Cache
-        # Comment
+        # API::Display::Cache::Titled
         class Titled < BaseCache
           INDEX_START = 0
           LENGTH = 11

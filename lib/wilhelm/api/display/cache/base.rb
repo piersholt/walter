@@ -3,8 +3,8 @@
 module Wilhelm
   module API
     class Display
-      # Comment
       class Cache
+        # API::Display::Cache::Base
         class BaseCache
           include Attributes
           attr_reader :attributes

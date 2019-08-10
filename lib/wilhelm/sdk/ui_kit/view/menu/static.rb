@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module View
-        # Comment
+        # SDK::UIKit::View::StaticMenu
         class StaticMenu < BaseMenu
           COLUMN_ONE_MAX = 5
           # COLUMN_TWO_MAX = 4

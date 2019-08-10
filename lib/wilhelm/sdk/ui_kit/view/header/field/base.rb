@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module View
-        # Comment
+        # SDK::UIKit::View::BaseField
         class BaseField
           attr_reader :id, :label, :arguments
           NO_PROPERTIES = {}.freeze

@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module View
-        # Comment
+        # SDK::UIKit::View::BaseMenuItem
         class BaseMenuItem
           DEFAULT_ACTION = :no_action
           attr_reader :id, :label, :action, :properties

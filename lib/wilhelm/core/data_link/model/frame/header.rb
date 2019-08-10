@@ -3,9 +3,8 @@
 module Wilhelm
   module Core
     module DataLink
-      # Comment
       class Frame < Bytes
-        # Comment
+        # Core::DataLink::Frame::Header
         class Header < Bytes
           include Errors
           VALID_SIZE = (2..2)

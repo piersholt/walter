@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Display
-      # Comment
+      # API::Display::ControlHandler
       module ControlHandler
         include Constants::Controls::BMBT
         include Constants::Controls::MFL

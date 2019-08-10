@@ -4,7 +4,7 @@ module Wilhelm
   module SDK
     module UIKit
       module View
-        # Comment
+        # SDK::UIKit::View::TitledMenu
         class TitledMenu < BaseMenu
           COLUMN_ONE_MAX = 4
           COLUMN_TWO_MAX = 4

@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::Interface::Buffer::OutputBuffer
     class Interface
       module Buffer
         class OutputBuffer

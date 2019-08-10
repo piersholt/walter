@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     module Handler
-      # Comment
+      # Virtual::Handler::InterfaceHandler
       class InterfaceHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 

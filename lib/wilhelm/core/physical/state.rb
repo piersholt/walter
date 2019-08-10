@@ -3,7 +3,7 @@
 module Wilhelm
   module Core
     class Interface
-      # Comment
+      # Core::Interface::State
       module State
         include Observable
 

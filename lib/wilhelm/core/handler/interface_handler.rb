@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::InterfaceHandler
     class InterfaceHandler < BaseHandler
       attr_accessor :transmitter
 

@@ -2,7 +2,7 @@
 
 module Wilhelm
   module Core
-    # Comment
+    # Core::Interface::Buffer
     class Interface
       module Buffer
         # An extension of a Queue to support multi shifts, and unshifting

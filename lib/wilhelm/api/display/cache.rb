@@ -3,7 +3,7 @@
 module Wilhelm
   module API
     class Display
-      # Comment
+      # API::Display::Cache
       class Cache
         def header
           @header ||= { digital: Digital.new }

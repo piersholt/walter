@@ -3,7 +3,7 @@
 module Wilhelm
   module Virtual
     class Bus
-      # Comment
+      # Virtual::Bus::Initialization
       class Initialization
         PROC = 'Initialization'.freeze
 

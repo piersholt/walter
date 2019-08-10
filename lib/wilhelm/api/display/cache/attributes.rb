@@ -4,7 +4,7 @@ module Wilhelm
   module API
     class Display
       class Cache
-        # Comment
+        # API::Display::Cache
         module Attributes
           extend Forwardable
 

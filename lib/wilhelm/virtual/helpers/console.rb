@@ -7,7 +7,7 @@ require_relative 'console/hide'
 module Wilhelm
   module Virtual
     module Helpers
-      # Comment
+      # Virtual::Helpers::Console
       module Console
         include Wilhelm::Helpers::Console
         include Filter

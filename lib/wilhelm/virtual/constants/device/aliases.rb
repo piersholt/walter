@@ -4,7 +4,7 @@ module Wilhelm
   module Virtual
     module Constants
       module Device
-        # Comment
+        # Virtual::Constants::Device::Aliases
         module Aliases
           CDC = :cdc
           CD = :cd

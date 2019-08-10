@@ -4,7 +4,7 @@ module Wilhelm
   module API
     class Controls
       class Control
-        # Comment
+        # API::Controls::Control::Base
         class Base
           attr_reader :control_id
           def initialize(control_id)

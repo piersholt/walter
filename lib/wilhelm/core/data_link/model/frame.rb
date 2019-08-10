@@ -9,7 +9,7 @@ require_relative 'frame/builder'
 module Wilhelm
   module Core
     module DataLink
-      # Comment
+      # Core::DataLink::Frame
       class Frame < Bytes
         NAME = 'Frame'.freeze
         HEADER_LENGTH = 2

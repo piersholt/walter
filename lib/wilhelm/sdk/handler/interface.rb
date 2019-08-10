@@ -3,7 +3,7 @@
 module Wilhelm
   module SDK
     module Handler
-      # Comment
+      # SDK::Handler::InterfaceHandler
       class InterfaceHandler < Core::BaseHandler
         include LogActually::ErrorOutput
 
