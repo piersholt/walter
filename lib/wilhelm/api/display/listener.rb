@@ -11,9 +11,9 @@ module Wilhelm
 
         def update(event, properties = {})
           # logger.debug(NAME) { "#update(#{event}, #{properties})" }
-          return update_cache(event, properties) if cache?(event)
-          return update_state(event, properties) if state?(event)
           return update_control(event, properties) if control?(event)
+          return update_state(event, properties) if state?(event)
+          return update_cache(event, properties) if cache?(event)
         end
 
         private

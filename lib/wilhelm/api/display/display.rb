@@ -13,14 +13,11 @@ module Wilhelm
       include CacheHandler
       include ControlHandler
 
-      TIMEOUT = 5
-
       attr_accessor :bus, :menu, :header, :notification_header, :default_header
       attr_reader :state
       alias view menu
 
       def initialize
-        # @state = Available.new
         @state = Unknown.new
       end
 
@@ -58,6 +55,7 @@ module Wilhelm
 
       # EVENTS ------------------------------------------------
 
+      # Events: State
       def ping
         @state.ping(self)
       end
@@ -78,15 +76,7 @@ module Wilhelm
         @state.obc_request(self)
       end
 
-      def input_menu
-        @state.input_menu(self)
-      end
-
-      def input_aux_heat
-        # LOGGER.unknown(self) { '#input_aux_heat' }
-        @state.input_aux_heat(self)
-      end
-
+      # Events: Cache
       def overwritten!
         @state.overwritten!(self)
       end
@@ -95,7 +85,11 @@ module Wilhelm
         @state.overwritten_header!(self)
       end
 
-      # Basically discard in all states but InUse/Walter
+      # Events: Control
+      def input_menu
+        @state.input_menu(self)
+      end
+
       def user_input(method, properties = {})
         @state.user_input(self, method, properties)
       end
@@ -104,15 +98,6 @@ module Wilhelm
 
       def logger
         LOGGER
-      end
-
-      def timeout
-        TIMEOUT
-      end
-
-      def resume
-        bus.rad.render(0x62)
-        bus.rad.render(view.layout)
       end
 
       def cache
