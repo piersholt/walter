@@ -9,8 +9,8 @@ module Wilhelm
           include Wilhelm::Helpers::DataTools
           include API
 
-          PUBLISH   = [ODO_REQ, VEH_REP, LAMP_REP, CLUSTER_REP].freeze
-          SUBSCRIBE = [ODO_REP, VEH_REQ, LAMP_REQ, CLUSTER_REQ].freeze
+          PUBLISH   = [ODO_REQ, VEH_LCM, LAMP_REP, CLUSTER_REP].freeze
+          SUBSCRIBE = [ODO_REP, VEH_LCM_REQ, LAMP_REQ, CLUSTER_REQ].freeze
 
           PROC = 'LCM::Augmented'
 
@@ -20,8 +20,8 @@ module Wilhelm
             case command_id
             when ODO_REQ
               logger.unknown(moi) { "Tx: ODO_REQ #{d2h(command_id)}" }
-            when VEH_REP
-              logger.unknown(moi) { "Tx: VEH_REP #{d2h(command_id)}" }
+            when VEH_LCM
+              logger.unknown(moi) { "Tx: VEH_LCM #{d2h(command_id)}" }
             when LAMP_REP
               logger.debug(moi) { "Tx: LAMP_REP #{d2h(command_id)}" }
               return false
@@ -36,8 +36,8 @@ module Wilhelm
             case command_id
             when ODO_REP
               logger.unknown(moi) { "Rx: ODO_REP #{d2h(command_id)}" }
-            when VEH_REQ
-              logger.unknown(moi) { "Rx: VEH_REQ #{d2h(command_id)}" }
+            when VEH_LCM_REQ
+              logger.unknown(moi) { "Rx: VEH_LCM_REQ #{d2h(command_id)}" }
             when LAMP_REQ
               logger.unknown(moi) { "Rx: LAMP_REQ #{d2h(command_id)}" }
             when CLUSTER_REQ

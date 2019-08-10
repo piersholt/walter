@@ -16,7 +16,7 @@ module Wilhelm
           SENSORS     = [SENSORS_REQ, SENSORS_REP].freeze
           COUNTRY     = [COUNTRY_REQ, COUNTRY_REP].freeze
           ODOMETER    = [ODO_REQ, ODO_REP].freeze
-          VEHICLE     = [VEH_REQ, VEH_REP].freeze
+          VEHICLE     = [VEH_LCM_REQ, VEH_LCM, VEH_IKE].freeze
           # 0x5A, 0x5B
           LAMP        = [LAMP_REQ, LAMP_REP].freeze
           # 0x79, 0x7A

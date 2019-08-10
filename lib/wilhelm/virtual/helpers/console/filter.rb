@@ -57,7 +57,7 @@ module Wilhelm
           end
 
           def si
-            dh.f_c(*VEHICLE, *ODOMETER)
+            dh.f_c(*VEHICLE)
           end
 
           def ccm

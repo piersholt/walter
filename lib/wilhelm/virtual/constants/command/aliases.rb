@@ -79,9 +79,9 @@ module Wilhelm
           CCM_RLY = 0x52
           IKE_BTN = 0x57
 
-          VEH_REQ   = 0x53
-          VEH_REP   = 0x54
-          SI        = 0x55
+          VEH_LCM_REQ   = 0x53
+          VEH_LCM       = 0x54
+          VEH_IKE       = 0x55
 
           LAMP_REQ  = 0x5a
           LAMP_REP  = 0x5b

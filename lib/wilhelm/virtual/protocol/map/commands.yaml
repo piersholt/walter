@@ -2139,32 +2139,32 @@
     - D0 03 80 1D 4E
     - D0 03 80 1D 4E
 
-0x53: # VEH-REQ
+0x53: # VEH-LCM-REQ
   :properties:
-    :short_name: VEH-REQ
-    :long_name: Vehicle Status Request
+    :short_name: VEH-LCM-REQ
+    :long_name: Request LCM Redundant Data Storage
   :klass: Base
 
-0x54: # VEH
+0x54: # VEH-LCM
   :schemas:
     - :dia
   :properties:
-    :short_name: VEH
-    :long_name: Vehicle Status
+    :short_name: VEH-LCM
+    :long_name: Redundant Total Ddometer Mileage/Service Interval
   :klass: Parameterized::Base
   :parameters:
     :vin:
       :type: :chars
     :mileage:
-      :label: Mileage Indicator [km]
+      :label: Mileage Indicator (km)
       :type: :data
       :multiplier: 1000
     :fuel:
-      :label: Consumed Fuel Quantity
+      :label: Consumed Fuel Quantity (litre)
       :type: :data
       :multiplier: 10
     :time:
-      :label: Time Inspection Counter
+      :label: Time Inspection Counter (days)
       :type: :data
   :index:
       :vin: !ruby/range
@@ -2206,10 +2206,10 @@
     - "IKE   	LCM   	53        --"
     - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
 
-0x55: # SI
+0x55: # VEH-IKE
   :properties:
-    :short_name: SI
-    :long_name: Service Interval Usage
+    :short_name: VEH-IKE
+    :long_name: Total Ddometer Mileage/Service Interval
   :klass: Parameterized::Base
   :index:
     :mileage: !ruby/range
