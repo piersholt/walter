@@ -27,7 +27,7 @@ module Wilhelm
           dh.disable
         end
 
-        def apply_debug_defaults
+        def apply_console_defaults
           LOGGER.info(PROC_MOD) { 'Applying console defaults.' }
           shutup!
         end

@@ -24,7 +24,7 @@ module Walter
       @sdk = Wilhelm::SDK.context(@core)
       setup_services(@sdk)
 
-      apply_debug_defaults
+      apply_console_defaults
 
       connection_options = {
         port: ENV['publisher_port'],
