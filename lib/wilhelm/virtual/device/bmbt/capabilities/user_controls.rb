@@ -9,6 +9,7 @@ module Wilhelm
           module UserControls
             include API
             include Constants
+            include Helpers::Parse
 
             def power
               press_and_release(press: POWER_PRESS, release: POWER_RELEASE)
