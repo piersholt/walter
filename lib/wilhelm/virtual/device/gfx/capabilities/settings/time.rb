@@ -55,15 +55,15 @@ module Wilhelm
               end
 
               def hour?
-                Time.now.hour
+                ::Time.now.hour
               end
 
               def min?
-                Time.now.min
+                ::Time.now.min
               end
 
               def sec?
-                Time.now.sec
+                ::Time.now.sec
               end
 
               def to_twelve_hour_time(hour)

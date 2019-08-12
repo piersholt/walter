@@ -48,15 +48,15 @@ module Wilhelm
               end
 
               def year?
-                Time.now.year
+                ::Time.now.year
               end
 
               def month?
-                Time.now.month
+                ::Time.now.month
               end
 
               def day?
-                Time.now.day
+                ::Time.now.day
               end
 
               def to_short_year(year)
