@@ -92,9 +92,9 @@ module Wilhelm
 
       def default_range(param_range)
         if param_range.max.nil?
-          Core::Bytes(Array.new(1, 0))
+          Core::Bytes.new(Array.new(1, 0))
         else
-          Core::Bytes(Array.new(param_range.size, 0))
+          Core::Bytes.new(Array.new(param_range.size, 0))
         end
       end
     end
