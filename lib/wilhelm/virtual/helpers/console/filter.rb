@@ -60,12 +60,23 @@ module Wilhelm
             dh.f_c(*VEHICLE)
           end
 
+          alias vehicle si
+          alias veh     si
+
           def ccm
             dh.f_c(*CCM)
           end
 
           def lamp
             dh.f_c(*LAMP)
+          end
+
+          def nav
+            dh.f_c(*NAVIGATION)
+          end
+
+          def temp
+            dh.f_c(*TEMPERATURE)
           end
         end
       end
