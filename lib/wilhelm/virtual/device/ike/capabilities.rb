@@ -2,6 +2,7 @@
 
 require_relative 'capabilities/auxiliary'
 require_relative 'capabilities/check_control'
+require_relative 'capabilities/ignition'
 require_relative 'capabilities/settings'
 
 module Wilhelm
@@ -12,6 +13,7 @@ module Wilhelm
         module Capabilities
           include AuxiliaryVentilation
           include CheckControl
+          include Ignition
           include Settings
 
           def boolean!
