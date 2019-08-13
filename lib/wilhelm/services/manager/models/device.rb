@@ -26,6 +26,10 @@ module Wilhelm
 
         alias id path
 
+        def to_s
+          "<#{id} #{name}>"
+        end
+
         def self.parse_device_path(path_string)
           matches = path_string.match(%r{[0-9A-F]{2,2}_[0-9A-F_]+\Z})
           raise StandardError, 'Many matches!' if matches.length > 1

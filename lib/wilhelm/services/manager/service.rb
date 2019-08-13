@@ -4,7 +4,7 @@ module Wilhelm
   module Services
     # Bluetooth Device Manager
     class Manager
-      include Observable
+      include Wilhelm::Helpers::Observation
       include Logging
       include State
       include Properties

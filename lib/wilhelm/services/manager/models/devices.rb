@@ -25,6 +25,14 @@ module Wilhelm
 
         # HANDLER
 
+        def update_all(reply_properties)
+          reply_properties.each do |path, device_state|
+            update(device_state[:properties])
+          end
+          changed
+          notify_observers(:status, connected: connected, disconnected: disconnected)
+        end
+
         def update(device_attributes_hash, notification = nil)
           device = create_or_update(device_attributes_hash)
           device.public_send(notification) if notification
