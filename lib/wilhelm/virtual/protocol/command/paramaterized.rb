@@ -9,6 +9,5 @@ require_relative 'paramaterized/gps'
 require_relative 'paramaterized/mfl_button'
 require_relative 'paramaterized/mfl_volume'
 require_relative 'paramaterized/radio_led'
-require_relative 'paramaterized/utc'
 
 require_relative 'paramaterized/parameter'
