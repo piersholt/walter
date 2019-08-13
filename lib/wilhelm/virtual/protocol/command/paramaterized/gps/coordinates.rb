@@ -24,7 +24,7 @@ module Wilhelm
             end
 
             def to_s
-              format_coordinates
+              "#{sn}\t#{format_coordinates}"
             end
 
             # https://en.wikipedia.org/wiki/ISO_6709

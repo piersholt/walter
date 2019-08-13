@@ -21,7 +21,7 @@ module Wilhelm
             end
 
             def to_s
-              format_date_time
+              "#{sn}\t#{format_date_time}"
             end
 
             # https://en.wikipedia.org/wiki/ISO_8601
