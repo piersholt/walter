@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'capabilities/constants'
+require_relative 'capabilities/default'
 require_relative 'capabilities/dial'
 require_relative 'capabilities/directory'
 require_relative 'capabilities/info'
@@ -19,6 +20,7 @@ module Wilhelm
         module Capabilities
           include Helpers
           include Constants
+          include Default
           include Dial
           include Directory
           include Info
