@@ -12,7 +12,7 @@ module Wilhelm
 
             def open_dial
               logger.unknown(PROC) { '#open_dial()' }
-              draw_21(layout: LAYOUT_DIAL, m2: M2_DEFAULT, m3: M3_NIL, chars: CHARS_EMPTY)
+              draw_21(layout: LAYOUT_DIAL, m2: FUNCTION_DIGIT, m3: M3_FLUSH, chars: CHARS_EMPTY)
               # @note redraw dial buffer if available?
               # draw_23(gfx: DIAL_DIGIT, chars: dial_buffer) if dial_buffer?
             end

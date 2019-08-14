@@ -14,6 +14,10 @@ module Wilhelm
             MOD_PROG = 'Directory'
             LIMIT_DIRECTORY = 8
 
+            def open_directory
+              draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: M3_FLUSH, chars: CHARS_EMPTY)
+            end
+
             def directory_name(name = 'MUM')
               draw_23(gfx: DIRECTORY_CONTACT_NAME, chars: name)
             end
@@ -29,24 +33,25 @@ module Wilhelm
             def generate_directory
               logger.unknown(MOD_PROG) { '#generate_directory()' }
               contacts =
-                LIMIT_DIRECTORY.times.map do |i|
-                  generate_contact(i)
+                LIMIT_DIRECTORY.times.map do |index|
+                  generate_contact(index)
                 end
               directory_contact_list(*contacts)
             end
 
             def directory_contact_list(*contacts)
               logger.unknown(MOD_PROG) { "#directory_contact_list(#{contacts})" }
-              contacts.each do |contact|
+              contacts.each.with_index do |contact, index|
                 delimitered_contact = delimiter_contact(contact)
                 logger.debug(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
-                draw_21(layout: LAYOUT_DIRECTORY, m3: M3_BLOCK, chars: delimitered_contact)
+                m3 = index.zero? ? M3_BLOCK | M3_FLUSH : M3_BLOCK
+                draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: m3, chars: delimitered_contact)
               end
               render_directory
             end
 
             def render_directory
-              draw_21(layout: LAYOUT_DIRECTORY, m3: M3_NIL, chars: CHARS_EMPTY)
+              draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: M3_NIL, chars: CHARS_EMPTY)
             end
 
             alias gd generate_directory
