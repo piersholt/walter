@@ -57,11 +57,11 @@ module Wilhelm
           end
         end
 
+        TRUE = true
+
         def synchronisation(input_buffer)
           LOGGER.debug(name) { 'Entering byte shift loop.' }
-          loop do
-            synchronise_frame(input_buffer)
-          end
+          synchronise_frame(input_buffer) while TRUE
         rescue StandardError => e
           LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
           e.backtrace.each { |l| LOGGER.error(l) }

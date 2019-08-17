@@ -63,10 +63,10 @@ module Wilhelm
           end
         end
 
+        TRUE = true
+
         def transmission(write_queue, output_buffer)
-          loop do
-            more_transmission(write_queue, output_buffer)
-          end
+          more_transmission(write_queue, output_buffer) while TRUE
         rescue StandardError => e
           LOGGER.error(name) { "#{tn}: Exception: #{e}" }
           e.backtrace.each { |l| LOGGER.error(l) }

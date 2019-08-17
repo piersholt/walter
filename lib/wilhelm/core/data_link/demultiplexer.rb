@@ -47,11 +47,13 @@ module Wilhelm
         # @override: ManageableThreads#proc_name
         alias proc_name name
 
+        TRUE = true
+
         def thread_read_input_frame_buffer(input_buffer, output_buffer)
           LOGGER.debug(name) { LOG_THREAD_START }
           Thread.new do
             Thread.current[:name] = THREAD_NAME
-            loop do
+            while TRUE
               new_frame = input_buffer.pop
               new_data = demultiplex(new_frame)
               distribute(new_data)

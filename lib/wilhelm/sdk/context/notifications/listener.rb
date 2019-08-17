@@ -38,9 +38,11 @@ module Wilhelm
             e.backtrace.each { |line| logger.error(NOTIFICATIONS_LISTENER) { line } }
           end
 
+          TRUE = true
+
           def listen_loop
             i = 1
-            loop do
+            while TRUE
               pop_and_delegate(i)
               i += 1
             end

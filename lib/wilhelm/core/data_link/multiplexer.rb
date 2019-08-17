@@ -45,11 +45,13 @@ module Wilhelm
         # @override: ManageableThreads#proc_name
         alias proc_name name
 
+        TRUE = true
+
         def thread_write_output_frame_buffer(frame_output_buffer, packet_output_buffer)
           LOGGER.debug(name) { LOG_WRITE_THREAD_START }
           Thread.new do
             Thread.current[:name] = THREAD_NAME
-            loop do
+            while TRUE
               new_data = packet_output_buffer.pop
               new_frame = multiplex(new_data)
               distribute(frame_output_buffer, new_frame)
