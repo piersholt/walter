@@ -24,6 +24,7 @@ module Wilhelm
             lcm: 'LCM',
             mfl: 'MFL',
             rad: 'Radio',
+            ses: 'SES',
             tel: 'Telephone',
             tv: 'TV' }.freeze
 

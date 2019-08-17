@@ -98,8 +98,11 @@ module Wilhelm
           UTC           = 0x1f
           COORDINATES   = 0xa2
           ADDRESS       = 0xa4
-          CELL          = 0xa9
-          REAR          = 0xab
+          ASSIST        = 0xa9
+          CELL          = ASSIST
+          GFX2          = 0xab
+          REAR          = GFX2
+          SES           = 0xaf
 
           # Diagnostics
           DIA_HELLO     = 0x00
