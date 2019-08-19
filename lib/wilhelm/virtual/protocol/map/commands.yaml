@@ -3637,6 +3637,8 @@
     - F0 05 FF 47 00 B8 F5
 
 0x48: # BMBT-BTN-1 (BMBT-BTN)
+  :schemas:
+    - :tel
   :properties:
     :short_name: BMBT-BTN
     :long_name: BMBT Buttons
@@ -3724,6 +3726,44 @@
             0b00: Press
             0b01: Hold
             0b10: Release
+  :tel:
+    :properties:
+      :short_name: TEL-BTN*
+      :long_name: Virtual BMBT Button
+    :klass: Parameterized::Button::BMBT
+    :index:
+      :action: 0
+    :parameters:
+      :action:
+        :type: :bit_array
+        :index:
+          :state: !ruby/range
+                          begin: 0
+                          end: 1
+                          excl: false
+          :id: !ruby/range
+                        begin: 2
+                        end: 7
+                        excl: false
+        :parameters:
+          :id:
+            :type: :map
+            :label: 'ID'
+            :dictionary:
+              0x08: "[TEL]"
+            :map:
+              0x08: :bmbt_tel
+          :state:
+            :type: :switch
+            :label: 'State'
+            :states:
+              0b00: :press
+              0b01: :hold
+              0b10: :release
+            :dictionary:
+              0b00: Press
+              0b01: Hold
+              0b10: Release
 
 0x49: # BMBT-BTN-2 (BMBT-NAV)
   :properties:
