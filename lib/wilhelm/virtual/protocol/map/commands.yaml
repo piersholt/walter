@@ -20,7 +20,7 @@
     - :rad
   # SCHEMA 0x21 RAD-21*
   :rad:
-    :klass: Parameterized::Base
+    :klass: Parameterized::MID::Radio
     :properties:
       :short_name: RAD-21*
       :long_name: MID Display
@@ -182,7 +182,7 @@
         :type: :chars
   # SCHEMA 0x21 TEL-21
   :tel:
-    :klass: Parameterized::Base
+    :klass: Parameterized::MID::Telephone
     :properties:
       :short_name: TEL-21*
       :long_name: MID Display
@@ -3467,7 +3467,7 @@
   :properties:
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
-  :klass: Parameterized::MFLFunction
+  :klass: Parameterized::Button::MFL
   :index:
     :action: 0
   :parameters:
@@ -3476,11 +3476,11 @@
       :index:
         :button_tel:    0
         :mode_tel:      1
-        :button_state: !ruby/range
+        :state: !ruby/range
                         begin: 2
                         end: 3
                         excl: false
-        :button_rad: !ruby/range
+        :button_seek: !ruby/range
                       begin: 4
                       end: 7
                       excl: false
@@ -3501,7 +3501,7 @@
           :map:
             0b0: :mfl_rt_rad
             0b1: :mfl_rt_tel
-        :button_state:
+        :state:
           :type: :switch
           :label: 'State'
           :states:
@@ -3512,14 +3512,14 @@
             0b00: Press
             0b01: Hold
             0b10: Release
-        :button_rad:
+        :button_seek:
           :type: :map
           :dictionary:
             0b0000: '-'
             0b0001: "[Next]"
             0b1000: "[Prev]"
           :map:
-            0b0000: :mfl_rad_null
+            0b0000: :mfl_seek_null
             0b0001: :mfl_next
             0b1000: :mfl_prev
 
@@ -3538,84 +3538,86 @@
     :properties:
       :short_name: MLF-VOL*
       :long_name: Multifunction Steering Wheel (Volume)
-    :klass: Parameterized::MFLVolume
+    :klass: Parameterized::Rotary
     :index:
-      :action: 0
+      :rotation: 0
     :parameters:
-      :action:
+      :rotation:
         :type: :bit_array
         :index:
-          :direction: 7
-          :magnitude: !ruby/range
+          :steps: !ruby/range
                         begin: 0
                         end: 3
                         excl: false
+          :direction: 7
         :parameters:
           :direction:
             :type: :map
+            :label: Volume
             :dictionary:
-              0: Volume Down
-              1: Volume Up
+              0: Down
+              1: Up
             :map:
               0: :mfl_vol_down
               1: :mfl_vol_up
-          :magnitude:
+          :steps:
             :type: :integer
   :bmbt:
     :properties:
       :short_name: BMBT-VOL*
       :long_name: BMBT Volume Control
-    :klass: Parameterized::MFLVolume
+    :klass: Parameterized::Rotary
     :index:
-      :action: 0
+      :rotation: 0
     :parameters:
-      :action:
+      :rotation:
         :type: :bit_array
         :index:
-          :direction: 7
-          :magnitude: !ruby/range
+          :steps: !ruby/range
                         begin: 0
                         end: 3
                         excl: false
+          :direction: 7
         :parameters:
           :direction:
             :type: :map
+            :label: Volume
             :dictionary:
-              0: Volume Down
-              1: Volume Up
+              0: Down
+              1: Up
             :map:
               0: :bmbt_vol_down
               1: :bmbt_vol_up
-          :magnitude:
+          :steps:
             :type: :integer
 
-0x47: # BMBT-INFO
+0x47: # BMBT-SOFT
   :properties:
-    :short_name: BMBT-INFO
-    :long_name: Unknown
-  :klass: Parameterized::Base
+    :short_name: BMBT-SOFT
+    :long_name: BMBT 'Soft' Button
+  :klass: Parameterized::Button::BMBT
   :index:
-    :button: 1
+    :action: 1
   :parameters:
-    :button:
+    :action:
       :type: :bit_array
       :index:
-        :button_state: !ruby/range
+        :state: !ruby/range
                         begin: 0
                         end: 1
                         excl: false
-        :totally_unique_variable_name: !ruby/range
+        :id: !ruby/range
                       begin: 2
                       end: 7
                       excl: false
       :parameters:
-        :totally_unique_variable_name:
+        :id:
           :type: :map
-          :label: 'Index'
+          :label: 'ID'
           :dictionary:
             0x0_f: "[Select]"
             0x3_8: "[Info]"
-        :button_state:
+        :state:
           :type: :switch
           :label: 'State'
           :states:
@@ -3627,33 +3629,36 @@
             0b01: Hold
             0b10: Release
   :notes:
+    - replaces TP and RDS buttons
+    - also doubles up on SELECT
     - six messages in total since started logs
     - 3 of each
     - F0 05 FF 47 00 38 75
     - F0 05 FF 47 00 B8 F5
 
-0x48: # BMBT-BTN-1
+0x48: # BMBT-BTN-1 (BMBT-BTN)
   :properties:
     :short_name: BMBT-BTN
     :long_name: BMBT Buttons
-  :klass: Parameterized::Button
+  :klass: Parameterized::Button::BMBT
   :index:
     :action: 0
   :parameters:
     :action:
       :type: :bit_array
       :index:
-        :button_state: !ruby/range
+        :state: !ruby/range
                         begin: 0
                         end: 1
                         excl: false
-        :totally_unique_variable_name: !ruby/range
+        :id: !ruby/range
                       begin: 2
                       end: 7
                       excl: false
       :parameters:
-        :totally_unique_variable_name:
+        :id:
           :type: :map
+          :label: 'ID'
           :dictionary:
             0x14: "[Tape Side]"
             0x24: "[Tape Eject]"
@@ -3708,7 +3713,7 @@
             0x07: :bmbt_aux_heat
             0x34: :bmbt_menu
             0x05: :bmbt_confirm
-        :button_state:
+        :state:
           :type: :switch
           :label: 'State'
           :states:
@@ -3720,19 +3725,19 @@
             0b01: Hold
             0b10: Release
 
-0x49: # BMBT-BTN-2
+0x49: # BMBT-BTN-2 (BMBT-NAV)
   :properties:
-    :short_name: BMBT-ROTARY
+    :short_name: BMBT-NAV
     :long_name: BMBT Navigation Rotary Button
-  :klass: Parameterized::MFLVolume
+  :klass: Parameterized::Rotary
   :index:
-    :action: 0
+    :rotation: 0
   :parameters:
-    :action:
+    :rotation:
       :type: :bit_array
       :index:
         :direction: 0
-        :magnitude: !ruby/range
+        :steps: !ruby/range
                       begin: 4
                       end: 7
                       excl: false
@@ -3745,39 +3750,39 @@
           :map:
             0: :bmbt_left
             1: :bmbt_right
-        :magnitude:
+        :steps:
           :type: :integer
 
 0x57: # IKE-BTN
   :properties:
     :short_name: IKE-BTN
     :long_name: IKE Check Control
-  :klass: Parameterized::Base
+  :klass: Parameterized::Button::Base
   :index:
     :action: 0
   :parameters:
     :action:
       :type: :bit_array
       :index:
-        :button_id: !ruby/range
-                      begin: 3
-                      end: 7
-                      excl: false
-        :button_state: !ruby/range
-                        begin: 1
-                        end: 2
-                        excl: false
+        :state: !ruby/range
+                  begin: 1
+                  end: 2
+                  excl: false
+        :id: !ruby/range
+              begin: 3
+              end: 7
+              excl: false
       :parameters:
-        :button_id:
+        :id:
           :type: :map
-          :label: 'Index'
+          :label: 'ID'
           :map:
             0x01: :check_control
             0x02: :unknown
           :dictionary:
-            0x01: Check Control
-            0x02: 'Not Check button?'
-        :button_state:
+            0b00001: Check Control
+            0b00010: 'Not Check button?'
+        :state:
           :type: :switch
           :label: 'State'
           :states:

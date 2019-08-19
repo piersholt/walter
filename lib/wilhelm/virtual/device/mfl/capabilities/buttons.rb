@@ -51,7 +51,7 @@ module Wilhelm
 
             def volume(mag)
               return false if mag > MAGNITUDE_MAX
-              adjustment = mag.positive? ? (mag + VOLUME_UP) : mag.magnitude
+              adjustment = mag.positive? ? (mag + VOLUME_UP) : mag.steps
               mfl_vol_button(to: :rad, adjustment: adjustment)
             end
 
