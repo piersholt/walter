@@ -40,15 +40,9 @@ module Wilhelm
                 LOGGER.unknown(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
                 draw_21(layout: LAYOUT_TOP_8, m2: FUNCTION_CONTACT, m3: M3_BLOCK, chars: delimitered_contact)
               end
-              render_top_8
-            end
-
-            def render_top_8
-              draw_21(layout: LAYOUT_TOP_8, m2: FUNCTION_CONTACT, m3: M3_NIL, chars: CHARS_EMPTY)
             end
 
             alias g8 generate_top_8
-            alias r8 render_top_8
           end
         end
       end

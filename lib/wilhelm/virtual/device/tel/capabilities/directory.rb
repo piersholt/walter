@@ -45,15 +45,9 @@ module Wilhelm
                 m3 = index.zero? ? M3_BLOCK | M3_FLUSH : M3_BLOCK
                 draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: m3, chars: delimitered_contact)
               end
-              render_directory
-            end
-
-            def render_directory
-              draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: M3_NIL, chars: CHARS_EMPTY)
             end
 
             alias gd generate_directory
-            alias rd render_directory
           end
         end
       end
