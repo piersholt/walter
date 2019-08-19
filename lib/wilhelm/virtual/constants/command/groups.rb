@@ -31,8 +31,12 @@ module Wilhelm
           DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
           # 0x1a, 0x51, 0x52, 0x57
           CCM = [TXT_CCM, CCM_END, CCM_RLY, IKE_BTN].freeze
-          # 0x1f 0xa2 0xa4 0xa9 0xab
-          NAVIGATION = [COORDINATES, ADDRESS, REAR, CELL, UTC].freeze
+
+          # 0x1f 0xa2 0xa4
+          GPS = [UTC, COORDINATES, ADDRESS].freeze
+          # 0xa9 0xab 0xaf
+          NAVIGATION = [GFX2, ASSIST].freeze
+
           # 0x23 0x46
           MENUS = [MENU_GFX, MENU_RAD].freeze
           # 0x21 0x22
@@ -88,8 +92,10 @@ module Wilhelm
             lamp: LAMP,
             door: DOOR,
             navigation: NAVIGATION,
+            gps: GPS,
             cdc: CD_CHANGER,
-            button: BMBT_B
+            bmbt: BMBT,
+            mfl: MFL
           }.freeze
 
           NOISEY = {
@@ -103,7 +109,8 @@ module Wilhelm
             vehicle: VEHICLE,
             lamp: LAMP,
             door: DOOR,
-            navigation: NAVIGATION
+            navigation: NAVIGATION,
+            gps: GPS,
           }.freeze
         end
       end
