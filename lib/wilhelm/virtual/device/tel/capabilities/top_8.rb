@@ -13,6 +13,7 @@ module Wilhelm
 
             MOD_PROG = 'Top 8'
             LIMIT_TOP_8 = 8
+            LIMIT_TOP_8_PAGE = 2
 
             def top_8_name(name = 'MUM')
               draw_23(gfx: TOP_8_NAME, chars: name)
@@ -35,10 +36,17 @@ module Wilhelm
 
             def top_8_contact_list(*contacts)
               LOGGER.unknown(MOD_PROG) { "#top_8_contact_list(#{contacts})" }
-              contacts.each do |contact|
-                delimitered_contact = delimiter_contact(contact)
-                LOGGER.unknown(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
-                draw_21(layout: LAYOUT_TOP_8, m2: FUNCTION_CONTACT, m3: M3_BLOCK, chars: delimitered_contact)
+
+              LAYOUT_INDICES[LAYOUT_TOP_8].each do |index|
+                chars = contacts.shift(LIMIT_TOP_8_PAGE)&.map do |contact|
+                  delimiter_contact(contact)
+                end&.flatten!
+                draw_21(
+                  layout: LAYOUT_TOP_8,
+                  m2: FUNCTION_CONTACT,
+                  m3: index,
+                  chars: chars
+                )
               end
             end
 

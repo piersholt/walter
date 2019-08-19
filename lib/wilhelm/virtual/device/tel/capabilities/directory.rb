@@ -13,6 +13,7 @@ module Wilhelm
 
             MOD_PROG = 'Directory'
             LIMIT_DIRECTORY = 8
+            LIMIT_DIRECTORY_PAGE = 2
 
             def open_directory
               draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: M3_FLUSH, chars: CHARS_EMPTY)
@@ -39,11 +40,17 @@ module Wilhelm
 
             def directory_contact_list(*contacts)
               logger.unknown(MOD_PROG) { "#directory_contact_list(#{contacts})" }
-              contacts.each.with_index do |contact, index|
-                delimitered_contact = delimiter_contact(contact)
-                logger.debug(MOD_PROG) { "#delimiter_contact(#{contact}) => #{delimitered_contact}" }
-                m3 = index.zero? ? M3_BLOCK | M3_FLUSH : M3_BLOCK
-                draw_21(layout: LAYOUT_DIRECTORY, m2: FUNCTION_CONTACT, m3: m3, chars: delimitered_contact)
+
+              LAYOUT_INDICES[LAYOUT_DIRECTORY].each do |index|
+                chars = contacts.shift(LIMIT_DIRECTORY_PAGE)&.map do |contact|
+                  delimiter_contact(contact)
+                end&.flatten!
+                draw_21(
+                  layout: LAYOUT_DIRECTORY,
+                  m2: FUNCTION_CONTACT,
+                  m3: index,
+                  chars: chars
+                )
               end
             end
 
