@@ -270,7 +270,7 @@
               1: :on
           :flush:
             :type: :switch
-            :label: Flush?
+            :label: Flush
             :states:
               0: :off
               1: :on
@@ -299,7 +299,7 @@
   :properties:
     :short_name: TXT-23
     :long_name: Update Text Display (BMBT, IKE)
-  :klass: Parameterized::Base
+  :klass: Base
   :schemas:
     - :tel
     - :rad
@@ -559,7 +559,7 @@
           # TBC
           # This is used when there was no SIM card inserted.
           # It just had emergency button from memory
-          0x0_0: '[Telephone] Title?'
+          0x0_0: '[Default] Title?'
           0x9_0: '[Info] Title?'
           # This might have been "SOS: 112!"?
           0xc_0: '[SOS] Title?'
@@ -632,27 +632,42 @@
           0xf0: :sms_index
           0xf1: :sms_show
       :padding:
-        :type: :map
-        :dictionary:
-          0: Do nothing?
-          1: No Padding
-          2: Pad 1
-          3: Pad 2
-          4: Pad 3
-          5: Pad 4
-          6: Pad 5
-          7: Pad 6
-          8: Pad 7
-          9: Pad 8
-          10: Pad 9
-          11: Pad 10
-          12: Pad 11
-          13: Pad 12
-          14: Pad 13
-          15: Pad 14
-          16: Pad 15
-          17: Pad 16
-          18: Pad 17
+        :type: :bit_array
+        :index:
+          :tbc:  !ruby/range
+            begin: 0
+            end: 1
+            excl: false
+          :padding: !ruby/range
+            begin: 2
+            end: 7
+            excl: false
+        :parameters:
+          :tbc:
+            :type: :data
+            :label: TBC
+          :padding:
+            :type: :map
+            :dictionary:
+              0: Do nothing?
+              1: No Padding
+              2: Pad 1
+              3: Pad 2
+              4: Pad 3
+              5: Pad 4
+              6: Pad 5
+              7: Pad 6
+              8: Pad 7
+              9: Pad 8
+              10: Pad 9
+              11: Pad 10
+              12: Pad 11
+              13: Pad 12
+              14: Pad 13
+              15: Pad 14
+              16: Pad 15
+              17: Pad 16
+              18: Pad 17
       :zone:
         :type: :bit_array
         :index:
@@ -868,14 +883,14 @@
       :button:
         :type: :bit_array
         :index:
-          :id: !ruby/range
-                        begin: 3
-                        end: 7
-                        excl: false
           :state: !ruby/range
                           begin: 1
                           end: 2
                           excl: false
+          :id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
         :parameters:
           :id:
             :type: :map
@@ -965,30 +980,31 @@
             :type: :map
             :label: 'Index'
             :dictionary:
-              0x00: 0
-              0x01: 1
-              0x02: 2
-              0x03: 3
-              0x04: 4
-              0x05: 5
-              0x06: 6
-              0x07: 7
-              0x08: 8
-              0x09: 9
-              0x0a: 10/Info/<
-              0x0b: 11
-              0x0c: 12/Back
-              0x0d: 13/Forward
-              0x0e: 14
-              0x0f: 15
+              0x00: 0x00
+              0x01: 0x01
+              0x02: 0x02
+              0x03: 0x03
+              0x04: 0x04
+              0x05: 0x05
+              0x06: 0x06
+              0x07: 0x07
+              0x08: 0x08
+              0x09: 0x09
+              0x0a: 0x0a/Info/<
+              0x0b: 0x0b
+              0x0c: 0x0c/Back
+              0x0d: 0x0d/Forward
+              0x0e: 0x0e
+              0x0f: 0x0f
 
-              0x10: 16/Back
-              0x11: 17/Button Left
-              0x12: 18/Button Right
-              0x13: 19/Button Centre/Outlier
-              0x14: 20
-              0x15: 21
-              0x16: 22
+              0x10: 0x10/Back
+
+              0x11: 0x11/Button Left
+              0x12: 0x12/Button Right
+              0x13: 0x13/Button Centre/Outlier
+              0x14: 0x14
+              0x15: 0x15
+              0x16: 0x16
 
               0x1a: 26/*
               0x1b: '27/#'
@@ -1325,12 +1341,15 @@
     :status:
       :type: :bit_array
       :index:
-        :active: 2
-        :power: 3
-        :display: 4
+        #          0
+        #          1
+        :active:   2
+        :power:    3
+
+        :display:  4
         :incoming: 5
-        :menu: 6
-        :hfs: 7
+        :menu:     6
+        :hfs:      7
       :parameters:
         :active:
           :label: In Use
@@ -2125,6 +2144,9 @@
       - GLO-L (0xBF)
 
 0x19: # TEMP
+  :schemas:
+    - :ihka
+    - :lcm
   :properties:
     :short_name: TEMP
     :long_name: Temperature
@@ -2145,6 +2167,48 @@
     :unknown:
       :type: :data
       :label: Unknown
+  :lcm:
+    :properties:
+      :short_name: TEMP-LCM*
+      :long_name: Temperature
+    :klass: Parameterized::Base
+    :index:
+      :ambient: 0
+      :coolant: 1
+      :unknown: 2
+    :parameters:
+      :ambient:
+        :type: :data
+        :label: Ambient
+        :suffix: '°C'
+      :coolant:
+        :type: :data
+        :label: Coolant
+        :suffix: '°C'
+      :unknown:
+        :type: :data
+        :label: Unknown
+  :ihka:
+    :properties:
+      :short_name: TEMP-IHKA*
+      :long_name: Temperature
+    :klass: Parameterized::Base
+    :index:
+      :ambient: 0
+      :coolant: 1
+      :unknown: 2
+    :parameters:
+      :ambient:
+        :type: :data
+        :label: Ambient
+        :suffix: '°C'
+      :coolant:
+        :type: :data
+        :label: Coolant
+        :suffix: '°C'
+      :unknown:
+        :type: :data
+        :label: Unknown
   :meta:
     :senders:
       - IKE
@@ -3410,17 +3474,16 @@
     :action:
       :type: :bit_array
       :index:
-        :button_tel: 0
-        :mode_tel: 1
-        :button_rad: !ruby/range
-                      begin: 4
-                      end: 7
-                      excl: false
+        :button_tel:    0
+        :mode_tel:      1
         :button_state: !ruby/range
                         begin: 2
                         end: 3
                         excl: false
-
+        :button_rad: !ruby/range
+                      begin: 4
+                      end: 7
+                      excl: false
       :parameters:
         :button_tel:
           :type: :map
@@ -3438,17 +3501,6 @@
           :map:
             0b0: :mfl_rt_rad
             0b1: :mfl_rt_tel
-        :button_rad:
-          :type: :map
-          :dictionary:
-            # To Radio
-            0b0000: '-'
-            0b0001: "[Next]"
-            0b1000: "[Prev]"
-          :map:
-            0b0000: :mfl_rad_null
-            0b0001: :mfl_next
-            0b1000: :mfl_prev
         :button_state:
           :type: :switch
           :label: 'State'
@@ -3460,78 +3512,56 @@
             0b00: Press
             0b01: Hold
             0b10: Release
+        :button_rad:
+          :type: :map
+          :dictionary:
+            0b0000: '-'
+            0b0001: "[Next]"
+            0b1000: "[Prev]"
+          :map:
+            0b0000: :mfl_rad_null
+            0b0001: :mfl_next
+            0b1000: :mfl_prev
 
-0x32: # MLF-VOL
+0x32: # MLF-VOL / BMBT-VOL*
   :schemas:
     - :bmbt
+    - :mfl
   :properties:
-    :short_name: MLF-VOL
-    :long_name: Multifunction Steering Wheel (Volume)
-  :klass: Parameterized::MFLVolume
-  :index:
-    :action: 0
-  :parameters:
-    :action:
-      :type: :bit_array
-      :index:
-        :direction: 7
-        :magnitude: !ruby/range
-                      begin: 0
-                      end: 3
-                      excl: false
-      :parameters:
-        :direction:
-          :type: :map
-          :dictionary:
-            0: Volume Down
-            1: Volume Up
-          :map:
-            0: :mfl_vol_down
-            1: :mfl_vol_up
-        :magnitude:
-          :type: :map
-          :dictionary:
-            0: 0
-            1: 1
-            2: 2
-            3: 3
-            4: 4
-            5: 5
-            6: 6
-            7: 7
-            8: 8
-            9: 9
-            10: 10
-            11: 11
-            12: 12
-            13: 13
-            14: 14
-            15: 15
-            16: 16
-          :map:
-            0: 0
-            1: 1
-            2: 2
-            3: 3
-            4: 4
-            5: 5
-            6: 6
-            7: 7
-            8: 8
-            9: 9
-            10: 10
-            11: 11
-            12: 12
-            13: 13
-            14: 14
-            15: 15
-            16: 16
+    :short_name: VOL
+    :long_name: Volume Control
+  :klass: Base
   :meta:
     :notes:
       - 16x9 display issues a different command 0x49
+  :mfl:
+    :properties:
+      :short_name: MLF-VOL*
+      :long_name: Multifunction Steering Wheel (Volume)
+    :klass: Parameterized::MFLVolume
+    :index:
+      :action: 0
+    :parameters:
+      :action:
+        :type: :bit_array
+        :index:
+          :direction: 7
+          :magnitude: !ruby/range
+                        begin: 0
+                        end: 3
+                        excl: false
+        :parameters:
+          :direction:
+            :type: :map
+            :dictionary:
+              0: Volume Down
+              1: Volume Up
+            :map:
+              0: :mfl_vol_down
+              1: :mfl_vol_up
+          :magnitude:
+            :type: :integer
   :bmbt:
-    :id:
-      :d: 50
     :properties:
       :short_name: BMBT-VOL*
       :long_name: BMBT Volume Control
@@ -3570,14 +3600,14 @@
     :button:
       :type: :bit_array
       :index:
-        :totally_unique_variable_name: !ruby/range
-                      begin: 2
-                      end: 7
-                      excl: false
         :button_state: !ruby/range
                         begin: 0
                         end: 1
                         excl: false
+        :totally_unique_variable_name: !ruby/range
+                      begin: 2
+                      end: 7
+                      excl: false
       :parameters:
         :totally_unique_variable_name:
           :type: :map
@@ -3604,7 +3634,7 @@
 
 0x48: # BMBT-BTN-1
   :properties:
-    :short_name: BMBT-BTN-1
+    :short_name: BMBT-BTN
     :long_name: BMBT Buttons
   :klass: Parameterized::Button
   :index:
@@ -3613,14 +3643,14 @@
     :action:
       :type: :bit_array
       :index:
-        :totally_unique_variable_name: !ruby/range
-                      begin: 2
-                      end: 7
-                      excl: false
         :button_state: !ruby/range
                         begin: 0
                         end: 1
                         excl: false
+        :totally_unique_variable_name: !ruby/range
+                      begin: 2
+                      end: 7
+                      excl: false
       :parameters:
         :totally_unique_variable_name:
           :type: :map
@@ -3692,8 +3722,8 @@
 
 0x49: # BMBT-BTN-2
   :properties:
-    :short_name: BMBT-BTN-2
-    :long_name: BMBT Buttons
+    :short_name: BMBT-ROTARY
+    :long_name: BMBT Navigation Rotary Button
   :klass: Parameterized::MFLVolume
   :index:
     :action: 0
@@ -3703,7 +3733,7 @@
       :index:
         :direction: 0
         :magnitude: !ruby/range
-                      begin: 5
+                      begin: 4
                       end: 7
                       excl: false
       :parameters:
