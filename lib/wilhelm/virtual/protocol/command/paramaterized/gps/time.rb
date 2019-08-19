@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module Wilhelm
   module Virtual
     class Command
@@ -16,12 +18,14 @@ module Wilhelm
             DATE_DELIMITER = '-'
             TIME_DELIMITER = ':'
 
+            GPS_EPOCH = 2**10 * 7 * 24 * 60 * 60
+
             def initialize(id, props, **arguments)
               super
             end
 
             def to_s
-              "#{sn}\t#{format_date_time}"
+              "#{sn}\t#{time_object.iso8601}\t(#{::Time.now.utc})"
             end
 
             # https://en.wikipedia.org/wiki/ISO_8601
@@ -29,24 +33,39 @@ module Wilhelm
             # hh:mm:ss
             # <date>T<time>
             # 2007-04-05T14:30
-            def format_date_time
-              d = format_date(date(:year), date(:month), date(:day))
-              t = format_time(time(:hour), time(:minute), time(:second))
+            # def format_date_time
+            #   d = format_date(date(:year), date(:month), date(:day))
+            #   t = format_time(time(:hour), time(:minute), time(:second))
+            #
+            #   "#{d}#{COMBINATION_DELIMITER}#{t}"
+            # end
 
-              "#{d}#{COMBINATION_DELIMITER}#{t}"
+            def time_object
+              @time_object ||= create_time
             end
 
-            def format_date(year, month, day)
-              "#{year}#{DATE_DELIMITER}" \
-              "#{month}#{DATE_DELIMITER}" \
-              "#{day}"
+            def create_time
+              ::Time.local(
+                date(:year),
+                date(:month),
+                date(:day),
+                time(:hour),
+                time(:minute),
+                time(:second)
+              ) + GPS_EPOCH
             end
 
-            def format_time(hour, minute, second)
-              "#{hour}#{TIME_DELIMITER}" \
-              "#{minute}#{TIME_DELIMITER}" \
-              "#{second}" \
-            end
+            # def format_date(year, month, day)
+            #   "#{year}#{DATE_DELIMITER}" \
+            #   "#{month}#{DATE_DELIMITER}" \
+            #   "#{day}"
+            # end
+
+            # def format_time(hour, minute, second)
+            #   "#{hour}#{TIME_DELIMITER}" \
+            #   "#{minute}#{TIME_DELIMITER}" \
+            #   "#{second}" \
+            # end
 
             def date(element)
               case element

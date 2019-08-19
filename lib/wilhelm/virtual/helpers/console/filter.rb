@@ -71,8 +71,8 @@ module Wilhelm
             dh.f_c(*LAMP)
           end
 
-          def nav
-            dh.f_c(*NAVIGATION)
+          def gps
+            dh.f_c(*GPS)
           end
 
           def temp

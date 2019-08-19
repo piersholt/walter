@@ -1390,9 +1390,9 @@
 #                                 NAVIGATION
 # ************************************************************************* #
 
-0x1F: # TIME
+0x1F: # NAV-IKE-TIME
   :properties:
-    :short_name: TIME
+    :short_name: NAV-IKE-TIME
     :long_name: UTC time and date
   :klass: Parameterized::GPS::Time
   :index:
@@ -1421,11 +1421,12 @@
     :year:
       :type: :data
 
-0xA2: # COORD
+0xA2: # NAV-TEL-COORD
   :properties:
-    :short_name: COORD
+    :short_name: NAV-TEL-COORD
     :long_name: GPS Coordinates
   :klass: Parameterized::GPS::Coordinates
+  # :klass: Base
   :index:
     # Signal
     :signal: 0
@@ -1492,31 +1493,58 @@
 
 0xA4: # ADDR
   :properties:
-    :short_name: ADDR
+    :short_name: NAV-TEL-ADDR
+    :long_name: Unknown
+  :klass: Parameterized::Base
+  :index:
+    :a:   0
+    :b:   1
+    :chars:   !ruby/range
+              begin: 2
+              end: -1
+  :parameters:
+    :a:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x01: City
+        0x02: Street
+    :b:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x01: City
+        0x02: Street
+    :chars:
+      :type: :chars
+
+0xA7: # NAV-RAD-A7
+  :properties:
+    :short_name: NAV-RAD-A7
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - seemingly always..
+    - 7F 04 68 A7 10 A4
+    - 7F 04 68 A7 30 84
+    - 7F 05 68 A7 1F 00 AA
+    - 7F 05 68 A7 3F 00 8A
+
+0xA9: # NAV-ASSIST?
+  :properties:
+    :short_name: NAV-ASSIST?
     :long_name: Unknown
   :klass: Base
 
-0xA7:
+0xAB: # NAV-GFX-AB
   :properties:
-    :short_name: A7-SRC-GFX
+    :short_name: NAV-GFX-AB
     :long_name: Unknown
   :klass: Base
 
-0xA9:
+0xAF: # NAV-SES?
   :properties:
-    :short_name: NAV-A9
-    :long_name: Unknown
-  :klass: Base
-
-0xAB:
-  :properties:
-    :short_name: AB-UI?
-    :long_name: Unknown
-  :klass: Base
-
-0xAF:
-  :properties:
-    :short_name: AF-SES?
+    :short_name: NAV-SES?
     :long_name: Unknown
   :klass: Base
 
@@ -1524,14 +1552,14 @@
 #                             BUS DEVICE STATUS
 # ************************************************************************* #
 
-0x01:
+0x01: # PING
   :properties:
     :short_name: PING
     :long_name: Status Request
     :verbose: false
   :klass: Base
 
-0x02:
+0x02: # PONG
   :properties:
     :short_name: PONG
     :long_name: Status Response

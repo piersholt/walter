@@ -13,6 +13,8 @@ module Wilhelm
             MINUTE_MASK = '%2.2i'
             SECOND_MASK = '%2.2i'
 
+            TIME_DELIMITER = ':'
+
             MINUS   = "\u2212"
             DEGREES = "\u00b0"
             MINUTES = "\u2032"
@@ -24,7 +26,7 @@ module Wilhelm
             end
 
             def to_s
-              "#{sn}\t#{format_coordinates}"
+              "#{sn}\t#{signal}\t#{format_coordinates}\t#{format_time}\t(#{::Time.now.utc})"
             end
 
             # https://en.wikipedia.org/wiki/ISO_6709
@@ -77,6 +79,12 @@ module Wilhelm
               when :fraction
                 format(SECOND_MASK, parse(*long_sf.calculated))
               end
+            end
+
+            def format_time
+              "#{time(:hour)}#{TIME_DELIMITER}" \
+              "#{time(:minute)}#{TIME_DELIMITER}" \
+              "#{time(:second)}"
             end
 
             def time(element)
