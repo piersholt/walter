@@ -13,9 +13,9 @@ module Wilhelm
             MOD_PROG = 'PIN'
             DEFAULT_PIN = 'PIN-Code eingeben'
 
-            def open_pin
+            def open_pin(chars = DEFAULT_PIN)
               logger.unknown(MOD_PROG) { '#open_pin()' }
-              draw_23(to: :glo_h, gfx: PIN_TITLE, chars: DEFAULT_PIN)
+              draw_23(to: :glo_h, gfx: PIN_TITLE, chars: chars)
             end
 
             def pin_clear

@@ -13,9 +13,9 @@ module Wilhelm
             MOD_PROG = 'Default'
             TITLE_DEFAULT = 'Default Title'
 
-            def open_default
+            def open_default(chars = TITLE_DEFAULT)
               logger.unknown(MOD_PROG) { '#open_default()' }
-              draw_23(to: :gfx, gfx: DEFAULT_TITLE, chars: TITLE_DEFAULT)
+              draw_23(gfx: DEFAULT_TITLE, chars: chars)
             end
           end
         end
