@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'display/generate'
 require_relative 'display/menu'
 
 module Wilhelm
@@ -11,7 +10,7 @@ module Wilhelm
           module SMS
             # Telephone::Capabilities::SMS::Display
             module Display
-              include Generate
+              include Helpers::Display
               include Menu
 
               def render(layout)
