@@ -65,6 +65,21 @@ module Wilhelm
 
             INDEX_OUTLIER = 0b1_0011
 
+            INDEX_SMS_INDEX = [
+              INDEX_0,
+              INDEX_1,
+              INDEX_2,
+              INDEX_3,
+              INDEX_4,
+              INDEX_5,
+              INDEX_6,
+              INDEX_7,
+              INDEX_8,
+              INDEX_9,
+              INDEX_BACK,
+              INDEX_OUTLIER
+            ].freeze
+
             SMS_INDEX_INDICIES = [
               INDEX_0 + BLOCK + FLUSH,
               INDEX_1 + BLOCK,
@@ -82,27 +97,27 @@ module Wilhelm
 
             # Indexes for layout SMS_SHOW 0xf1
 
-            INDEX_BUTTON_LEFT = 0b1_0001
-            INDEX_BUTTON_RIGHT = 0b1_0010
+            INDEX_BUTTON_LEFT   = 0b1_0001
+            INDEX_BUTTON_RIGHT  = 0b1_0010
             INDEX_BUTTON_CENTRE = 0b1_0011
 
             INDEX_BUTTONS = [
-              INDEX_BUTTON_LEFT + BLOCK,
-              INDEX_BUTTON_RIGHT + BLOCK,
+              INDEX_BUTTON_LEFT   + BLOCK,
+              INDEX_BUTTON_RIGHT  + BLOCK,
               INDEX_BUTTON_CENTRE + BLOCK
             ].freeze
 
             SMS_SHOW_INDICIES = [
-              INDEX_0 + BLOCK + FLUSH,
-              INDEX_1 + BLOCK,
-              INDEX_2 + BLOCK,
-              INDEX_3 + BLOCK,
-              INDEX_4 + BLOCK,
-              INDEX_5 + BLOCK,
-              INDEX_BACK + BLOCK,
-              INDEX_BUTTON_LEFT + BLOCK,
-              INDEX_BUTTON_RIGHT + BLOCK,
-              INDEX_BUTTON_CENTRE + BLOCK
+              INDEX_0 | BLOCK | FLUSH,
+              INDEX_1 | BLOCK,
+              INDEX_2 | BLOCK,
+              INDEX_3 | BLOCK,
+              INDEX_4 | BLOCK,
+              INDEX_5 | BLOCK,
+              INDEX_BACK | BLOCK,
+              INDEX_BUTTON_LEFT   | BLOCK,
+              INDEX_BUTTON_RIGHT  | BLOCK,
+              INDEX_BUTTON_CENTRE | BLOCK
             ].freeze
 
             LAYOUT_INDICES = {
