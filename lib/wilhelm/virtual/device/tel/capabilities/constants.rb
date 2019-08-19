@@ -12,6 +12,8 @@ module Wilhelm
             # -----------------------------------------------------------------
             # PARAMETER 1: LAYOUT
             # -----------------------------------------------------------------
+            LAYOUT_DIRECTORY = 0x4_3
+            LAYOUT_TOP_8     = 0x8_0
             LAYOUT_SMS_INDEX = 0xf_0
             LAYOUT_SMS_SHOW  = 0xf_1
 
@@ -43,7 +45,21 @@ module Wilhelm
             INDEX_8    = 0b0000_1000
             INDEX_9    = 0b0000_1001
 
+            MID_INDEX_0      = 0b0000_0000
+            MID_INDEX_1      = 0b0000_0100
+            MID_INDEX_2      = 0b0001_0000
+            MID_INDEX_3      = 0b0001_0100
+
             INDEX_BACK = 0b0001_0000
+
+            # Indexes for layout DIRECTORY 0x43
+
+            DIRECTORY_INDICIES = [
+              MID_INDEX_0 | BLOCK | FLUSH,
+              MID_INDEX_1 | BLOCK | SELECTED,
+              MID_INDEX_2 | BLOCK,
+              MID_INDEX_3
+            ].freeze
 
             # Indexes for layout SMS_INDEX 0xf0
 
@@ -90,6 +106,8 @@ module Wilhelm
             ].freeze
 
             LAYOUT_INDICES = {
+              LAYOUT_DIRECTORY => DIRECTORY_INDICIES,
+              LAYOUT_TOP_8     => DIRECTORY_INDICIES,
               LAYOUT_SMS_INDEX => SMS_INDEX_INDICIES,
               LAYOUT_SMS_SHOW  => SMS_SHOW_INDICIES
             }.freeze
