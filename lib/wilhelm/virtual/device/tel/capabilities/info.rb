@@ -35,25 +35,25 @@ module Wilhelm
 
             # 0x93: Call cost current
             # "     0"
-            def call_costs_current(current_cost = Random.rand(0..9).to_s)
+            def call_costs_current(current_cost = Random.rand(0..9))
               anzv_var_tel(field: CALL_COST_CURRENT, chars: current_cost)
             end
 
             # 0x94: Call cost total
             # "      0"
-            def call_cost_total(total_cost = Random.rand(10..99).to_s)
+            def call_cost_total(total_cost = Random.rand(10..99))
               anzv_var_tel(field: CALL_COST_TOTAL, chars: total_cost)
             end
 
             # 0x96: Call Time minutes
             # "  0" {1,3}
-            def call_time_minutes(minutes = Random.rand(0..59).to_s)
+            def call_time_minutes(minutes = rmin)
               anzv_var_tel(field: CALL_TIME_MINUTES, chars: minutes)
             end
 
             # 0x97: Call time seconds
             # " 0" {2,2}
-            def call_time_seconds(seconds = Random.rand(0..59).to_s)
+            def call_time_seconds(seconds = rsec)
               anzv_var_tel(field: CALL_TIME_SECONDS, chars: seconds)
             end
 
@@ -66,6 +66,17 @@ module Wilhelm
 
             def bars(level)
               [STRENGTHS[level]] + Array.new(6) { 0x5a }
+            end
+
+            MASK_MIN = '%i'
+            MASK_SEC = '%.2i'
+
+            def rmin
+              format(MASK_MIN, Random.rand(0..59))
+            end
+
+            def rsec
+              format(MASK_SEC, Random.rand(0..59))
             end
           end
         end
