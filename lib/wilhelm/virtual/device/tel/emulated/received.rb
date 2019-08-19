@@ -22,172 +22,232 @@ module Wilhelm
             # 0x20 TEL-OPEN
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
-              generate_top_8
+              logger.unknown(PROC) { "@layout=#{@layout}" }
+              return top_8! && generate_top_8 if dial?
+              dial! && open_dial
             end
 
             # 0x31 INPUT
+            # Hold and Release are filtered
             def handle_input(command)
-              # @note filter HOLD and RELEASE
               return false unless press?(command)
               logger.debug(PROC) { '#handle_input(command)' }
+              logger.unknown(PROC) { "@layout=#{@layout}" }
 
-              case command.layout.value
-              when LAYOUT_DEFAULT
-                false
-              when LAYOUT_INFO
-                false
-              when LAYOUT_DIAL
-                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
-                  dial_clear
-                end
-              when LAYOUT_DIRECTORY
-                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
-                  directory_clear
-                end
-              when LAYOUT_TOP_8
-                if [FUNCTION_SOS, FUNCTION_NAVIGATE].include?(command.function.value)
-                  top_8_clear
-                end
+              # NOTE: avoid routing common functions through layouts?
+              # case command.function.value
+              # when FUNCTION_SOS
+              #   return delegate_sos(command)
+              # when FUNCTION_NAVIGATE
+              #   return delegate_navigation(command)
+              # when FUNCTION_INFO
+              #   return delegate_info(command)
+              # end
+
+              case command.layout.ugly
+              when :default
+                return handle_default(command) unless command.function.value.zero?
+                return handle_dial(command) if dial?
+                return handle_directory(command) if directory?
+                raise(ArgumentError, 'Default not Dial or Directory!')
+              when :pin
+                return handle_pin(command)
+              when :info
+                return handle_info(command)
+              when :dial
+                return handle_dial(command)
+              when :directory
+                return handle_directory(command)
+              when :top_8
+                return handle_top_8(command)
+              when :sms_index
+                return handle_sms_index(command)
+              when :sms_show
+                return handle_sms_show(command)
               end
+            end
 
-              # @todo use layout to work out when to clear
+            protected
 
+            # 0x00
+            def handle_default(command)
+              logger.unknown(PROC) { "#handle_default(#{command})" }
+              case command.function.value
+              when FUNCTION_SOS
+                delegate_sos(command)
+              else
+                unknown_function(command)
+              end
+            end
+
+            # 0x05
+            def handle_pin(command)
+              logger.unknown(PROC) { "#handle_pin(#{command})" }
+              case command.function.value
+              when FUNCTION_DIGIT
+                index = button_id(command.button)
+                branch(FUNCTION_DIGIT, FUNCTION_DIGIT, index)
+                return pin_delete if index == ACTION_PIN_DELETE
+                return pin_flush && dial! && open_dial if index == ACTION_PIN_OK
+                pin_number(twig(LAYOUT_PIN, FUNCTION_DIGIT, index))
+              when FUNCTION_SOS
+                delegate_sos(command)
+              else
+                unknown_function(command)
+              end
+            end
+
+            # 0x20
+            def handle_info(command)
+              logger.unknown(PROC) { "#handle_info(#{command})" }
+              case command.function.value
+              when FUNCTION_NAVIGATE
+                delegate_navigation(command)
+              else
+                unknown_function(command)
+              end
+            end
+
+            # 0x42
+            def handle_dial(command)
+              logger.unknown(PROC) { "#handle_dial(#{command})" }
+              dial!
               case command.function.value
               when FUNCTION_DEFAULT
-                delegate_default(command.layout, command.button)
-              when FUNCTION_CONTACT
-                delegate_contact(command.layout, command.button)
+                case command.button.value
+                when ACTION_RECENT_BACK
+                  branch(LAYOUT_DIAL, FUNCTION_DEFAULT, ACTION_RECENT_BACK)
+                  recent_contact
+                when ACTION_RECENT_FORWARD
+                  branch(LAYOUT_DIAL, FUNCTION_DEFAULT, ACTION_RECENT_FORWARD)
+                  recent_contact
+                end
               when FUNCTION_DIGIT
-                delegate_digit(command.layout, command.button)
+                index = button_id(command.button)
+                branch(LAYOUT_DIAL, FUNCTION_DIGIT, index)
+                return dial_delete if index == ACTION_DIAL_DELETE
+                dial_number(twig(LAYOUT_DIAL, FUNCTION_DIGIT, index))
               when FUNCTION_SOS
-                delegate_sos(command.layout)
+                delegate_sos(command)
               when FUNCTION_NAVIGATE
-                delegate_navigation(command.layout, command.button)
+                delegate_navigation(command)
               when FUNCTION_INFO
-                delegate_info(command.layout)
+                delegate_info(command)
               else
-                logger.warn(PROC) { "Unrecognised function! #{command.function}" }
+                unknown_function(command)
               end
+            end
+
+            # 0x43
+            def handle_directory(command)
+              logger.unknown(PROC) { "#handle_directory(#{command})" }
+              directory!
+              case command.function.value
+              when FUNCTION_DEFAULT
+                case command.button.value
+                when ACTION_DIRECTORY_BACK
+                  branch(LAYOUT_DIRECTORY, FUNCTION_DEFAULT, ACTION_DIRECTORY_BACK)
+                  directory_back
+                when ACTION_DIRECTORY_FORWARD
+                  branch(LAYOUT_DIRECTORY, FUNCTION_DEFAULT, ACTION_DIRECTORY_FORWARD)
+                  directory_forward
+                end
+              when FUNCTION_CONTACT
+                contact_name = twig(command.layout.value, FUNCTION_CONTACT, button_id(command.button))
+                directory_name(contact_name)
+              when FUNCTION_NAVIGATE
+                delegate_navigation(command)
+              else
+                unknown_function(command)
+              end
+            end
+
+            # 0x80
+            def handle_top_8(command)
+              logger.unknown(PROC) { "#handle_top_8(#{command})" }
+              top_8!
+              case command.function.value
+              when FUNCTION_CONTACT
+                contact_name = twig(LAYOUT_TOP_8, FUNCTION_CONTACT, button_id(command.button))
+                directory_name(contact_name)
+              when FUNCTION_NAVIGATE
+                delegate_navigation(command)
+              else
+                unknown_function(command)
+              end
+            end
+
+            def handle_sms_index(command)
+              logger.unknown(PROC) { "#handle_sms_index(#{command})" }
+              smses!
+              case command.function.value
+              when FUNCTION_SMS
+                true
+              end
+            end
+
+            def handle_sms_show(command)
+              logger.unknown(PROC) { "#handle_sms_show(#{command})" }
+              smses!
+              case command.function.value
+              when FUNCTION_NAVIGATE
+                delegate_navigation(command)
+              when FUNCTION_SMS
+                true
+              end
+            end
+
+            def unknown_function(command)
+              logger.warn(PROC) { "Unrecognised function! #{command.function}" }
+            end
+
+            def twig(layout, function, action)
+              INPUT_MAP.dig(layout, function, action)
+            end
+
+            def branch(layout, function, action)
+              logger.unknown(PROC) { twig(layout, function, action) }
             end
 
             private
 
-            def button_id(button)
-              button.parameters[:id].value
-            end
-
-            def button_state(button)
-              button.parameters[:state].value
-            end
-
-            def layout_id(layout)
-              layout.value
-            end
-
-            def press?(command)
-              button_state(command.button) == INPUT_PRESS
-            end
-
-            def delegate_default(layout, button)
-              logger.unknown(PROC) { "#delegate_default(#{layout}, #{button})" }
-              index = button_id(button)
-              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_DEFAULT][index] }
-
-              case layout.value
-              when LAYOUT_DEFAULT
-                case index
-                when RECENT_BACK
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][RECENT_BACK] }
-                when RECENT_FORWARD
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][RECENT_FORWARD] }
-                end
-              when LAYOUT_SMS_INDEX
-                case index
-                when (ACTION_SMS_1..ACTION_SMS_10)
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][index] }
-                  generate_sms_show
-                when ACTION_SMS_11
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_11] }
-                when ACTION_SMS_BACK
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_BACK] }
-                  open_dial
-                when ACTION_SMS_LEFT
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_LEFT] }
-                when ACTION_SMS_RIGHT
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_RIGHT] }
-                when ACTION_SMS_CENTRE
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_CENTRE] }
-                end
-              when LAYOUT_SMS_SHOW
-                case index
-                when ACTION_SMS_BACK
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_BACK] }
-                  generate_sms_index
-                when ACTION_SMS_LEFT
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_LEFT] }
-                when ACTION_SMS_RIGHT
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_RIGHT] }
-                when ACTION_SMS_CENTRE
-                  logger.unknown(PROC) { INPUT_MAP[LAYOUT_DEFAULT][FUNCTION_DEFAULT][ACTION_SMS_CENTRE] }
-                end
-              end
-            end
-
-            def delegate_contact(layout, button)
-              logger.unknown(PROC) { "#delegate_contact(#{layout}, #{button})" }
-              index = button_id(button)
-              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_CONTACT][index] }
-
-              case layout.value
-              when LAYOUT_DIRECTORY
-                directory_name(INPUT_MAP[layout.value][FUNCTION_CONTACT][index])
-              when LAYOUT_TOP_8
-                top_8_name(INPUT_MAP[layout.value][FUNCTION_CONTACT][index])
-              end
-            end
-
-            def delegate_digit(layout, button)
-              logger.unknown(PROC) { "#delegate_digit(#{layout}, #{button})" }
-              index = button_id(button)
-              case layout.value
-              when LAYOUT_PIN
-                logger.unknown(PROC) { "Pin: #{INPUT_MAP[layout.value][FUNCTION_DIGIT][index]}" }
-                return pin_delete if index == ACTION_PIN_DELETE
-                return pin_flush & open_dial if index == ACTION_PIN_OK
-                pin_number(INPUT_MAP[LAYOUT_PIN][FUNCTION_DIGIT][index])
-              when LAYOUT_DIAL
-                logger.unknown(PROC) { "Dial: #{INPUT_MAP[layout.value][FUNCTION_DIGIT][index]}" }
-                return dial_delete if index == ACTION_DIAL_DELETE
-                dial_number(INPUT_MAP[LAYOUT_DIAL][FUNCTION_DIGIT][index])
-              end
-            end
-
-            def delegate_sos(layout)
+            # Function: 0x05
+            def delegate_sos(command)
+              layout = command.layout
               logger.unknown(PROC) { "#delegate_sos(#{layout})" }
-              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_SOS][ACTION_SOS_OPEN] }
+              branch(layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
+              sos!
               open_sos
             end
 
-            def delegate_navigation(layout, button)
-              logger.unknown(PROC) { "#delegate_navigation(#{layout}, #{button})" }
-              index = button_id(button)
+            # Function: 0x07
+            def delegate_navigation(command)
+              logger.unknown(PROC) { "#delegate_navigation(#{command})" }
+              button = command.button
+              index = button_id(command.button)
               case index
-              when ACTION_DIAL_OPEN
-                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_DIAL_OPEN] }
+              when ACTION_SMS_INDEX_BACK
+                true
+              when ACTION_OPEN_DIAL
+                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
+                dial!
                 open_dial
-              when ACTION_SMS_OPEN
-                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_SMS_OPEN] }
+              when ACTION_OPEN_SMS
+                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
+                smses!
                 generate_sms_index
-              when ACTION_DIR_OPEN
-                logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_NAVIGATE][ACTION_DIR_OPEN] }
+              when ACTION_OPEN_DIR
+                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
+                directory!
                 generate_directory
-              else
               end
             end
 
-            def delegate_info(layout)
+            # Function: 0x08
+            def delegate_info(command)
               logger.unknown(PROC) { "#delegate_info" }
-              logger.unknown(PROC) { INPUT_MAP[layout.value][FUNCTION_INFO][ACTION_INFO_OPEN] }
+              branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
+              info!
               open_info
             end
 
@@ -205,6 +265,70 @@ module Wilhelm
               status!
               # tel_led(LED_ALL)
               # bluetooth_pending
+            end
+
+            def button_id(button)
+              button.parameters[:id].value
+            end
+
+            def press?(command)
+              button_state(command.button) == INPUT_PRESS
+            end
+
+            def release?(command)
+              button_state(command.button) == INPUT_RELEASE
+            end
+
+            def button_state(button)
+              button.parameters[:state].value
+            end
+
+            def dial!
+              @layout = :dial
+            end
+
+            def dial?
+              @layout == :dial
+            end
+
+            def directory!
+              @layout = :directory
+            end
+
+            def directory?
+              @layout == :directory
+            end
+
+            def top_8!
+              @layout = :top_8
+            end
+
+            def top_8?
+              @layout == :top_8
+            end
+
+            def info!
+              @layout = :info
+            end
+
+            def info?
+              @layout == :info
+            end
+
+            def sos!
+              @layout = :sos
+            end
+
+            def sos?
+              @layout == :sos
+            end
+
+            def smses!
+              @layout = :smses
+            end
+
+            def smses?
+              @layout == :smses
             end
           end
         end

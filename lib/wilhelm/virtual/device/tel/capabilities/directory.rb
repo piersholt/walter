@@ -55,6 +55,16 @@ module Wilhelm
             end
 
             alias gd generate_directory
+
+            def directory_back
+              logger.unknown(MOD_PROG) { '#directory_back' }
+              generate_directory(0)
+            end
+
+            def directory_forward
+              logger.unknown(MOD_PROG) { '#directory_forward' }
+              generate_directory(LIMIT_DIRECTORY)
+            end
           end
         end
       end

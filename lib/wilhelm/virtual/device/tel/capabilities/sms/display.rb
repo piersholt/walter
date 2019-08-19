@@ -13,12 +13,12 @@ module Wilhelm
               include Helpers::Display
               include Menu
 
-              def render(layout)
+              def render(layout, chars = STRING_BLANK)
                 draw_a5(
                   layout: layout,
                   padding: PADDING_NONE,
                   zone: INDEX_ZERO,
-                  chars: STRING_BLANK
+                  chars: chars
                 )
               end
 
