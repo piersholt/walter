@@ -33,9 +33,7 @@ module Wilhelm
             def generate_directory
               logger.unknown(MOD_PROG) { '#generate_directory()' }
               contacts =
-                LIMIT_DIRECTORY.times.map do |index|
-                  generate_contact(index)
-                end
+                Array.new(LIMIT_DIRECTORY) { |i| generate_contact(i) }
               directory_contact_list(*contacts)
             end
 

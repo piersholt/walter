@@ -29,9 +29,7 @@ module Wilhelm
             def generate_top_8
               LOGGER.unknown(MOD_PROG) { '#generate_top_8()' }
               contacts =
-                LIMIT_TOP_8.times.map do |i|
-                  generate_contact(i)
-                end
+                Array.new(LIMIT_TOP_8) { |i| generate_contact(i) }
               top_8_contact_list(*contacts)
             end
 
