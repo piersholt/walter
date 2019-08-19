@@ -16,7 +16,7 @@ module Wilhelm
 
           PROC = 'Telephone::Emulated'
 
-          SUBSCRIBE = [PING, PONG, INPUT, TEL_OPEN].freeze
+          SUBSCRIBE = [PING, PONG, INPUT, TEL_OPEN, MFL_VOL, MFL_FUNC].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
@@ -32,6 +32,12 @@ module Wilhelm
             when TEL_OPEN
               logger.debug(PROC) { "Rx: TEL_OPEN 0x#{d2h(TEL_OPEN)}" }
               handle_tel_open(message)
+            when MFL_VOL
+              logger.unknown(PROC) { "Rx: MFL_VOL 0x#{d2h(MFL_VOL)}" }
+              handle_mfl_vol(message.command)
+            when MFL_FUNC
+              logger.unknown(PROC) { "Rx: MFL_FUNC 0x#{d2h(MFL_FUNC)}" }
+              handle_mfl_func(message.command)
             end
 
             super(message)

@@ -67,6 +67,14 @@ module Wilhelm
               end
             end
 
+            def handle_mfl_vol(*)
+              true
+            end
+
+            def handle_mfl_func(*)
+              true
+            end
+
             protected
 
             # 0x00
