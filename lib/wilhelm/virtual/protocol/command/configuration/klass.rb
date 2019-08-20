@@ -33,7 +33,12 @@ module Wilhelm
           # initialize =>
           def configured?
             LOGGER.debug(PROC) { LOG_METHOD_CONFIGURED }
-            if indexed_command? && index? && !parameters?
+            if configured_defined?
+              LOGGER.debug(PROC) do
+                "#{sn}: @@configured defined. Configuration already completed."
+              end
+              true
+            elsif indexed_command? && index? && !parameters?
               LOGGER.unknown(PROC) do
                 "#{sn} has index! Alt. Configuration required."
               end
@@ -54,13 +59,8 @@ module Wilhelm
                 'Configuration always required.'
               end
               false
-            elsif configured_defined?
-              LOGGER.debug(PROC) do
-                "#{sn} @@configured defined. Configuration already completed."
-              end
-              true
             else
-              LOGGER.debug(PROC) do
+              LOGGER.warn(PROC) do
                 "#{sn} Defaulting to false. Configuration required."
               end
               false
@@ -71,6 +71,7 @@ module Wilhelm
 
           # configure_class  =>
           def setup_class_variable
+            return false
             LOGGER.debug(PROC) { "#{sn} #{klass_constant} @@configured = TRUE" }
             klass_constant.class_variable_set(:@@configured, true)
           end

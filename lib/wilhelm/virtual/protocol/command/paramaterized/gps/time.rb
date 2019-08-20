@@ -9,6 +9,9 @@ module Wilhelm
         module GPS
           # Virtual::Command::UTC
           class Time < Base
+            class_variable_set(:@@configured, true)
+            attr_accessor(:tz, :hour, :minute, :day, :second, :month, :year)
+
             include Wilhelm::Helpers::PositionalNotation
 
             DATE_MASK = '%2.2i'

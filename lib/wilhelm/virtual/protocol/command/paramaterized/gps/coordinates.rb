@@ -7,6 +7,15 @@ module Wilhelm
         module GPS
           # Virtual::Command::GPS
           class Coordinates < Base
+            class_variable_set(:@@configured, true)
+            attr_accessor(
+              :signal,
+              :lat_d,  :lat_m,  :lat_s,  :lat_sf,
+              :long_d, :long_m, :long_s, :long_sf,
+              :vertical,
+              :hour, :minute, :second
+            )
+
             include Wilhelm::Helpers::PositionalNotation
 
             TIME_MASK   = '%2.2i'
