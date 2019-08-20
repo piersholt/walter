@@ -17,7 +17,7 @@ module Wilhelm
 
           # @override Base#format_things
           def format_things
-            "#{d2h(rotation.value, true)} (#{rotation.bit_array}) #{pretty}: #{steps}"
+            "#{d2h(rotation.value, true)} (#{rotation.bit_array}) :#{format('%-15s', button)} #{pretty}: #{steps}"
           end
 
           # Map

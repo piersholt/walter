@@ -7,24 +7,6 @@ module Wilhelm
         module Button
           # Command::Parameterized::Button::MFL
           class MFL < Button::Base
-            # @override Base#to_s
-            def to_s
-              str_buffer = "#{sn}\t"
-
-              str_buffer << format_things
-            end
-
-            # @override Base#format_things
-            def format_things
-              value =
-                if action.value.kind_of?(Numeric)
-                  d2h(action.value, true)
-                else
-                  action.value
-                end
-              "#{value} (#{action.bit_array}) #{pretty}, #{state_pretty}"
-            end
-
             # Interpolated BUTTON ---------------------------------------------
 
             def button

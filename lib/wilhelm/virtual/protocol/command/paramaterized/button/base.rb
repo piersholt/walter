@@ -11,6 +11,20 @@ module Wilhelm
             class_variable_set(:@@configured, true)
             attr_accessor(:action)
 
+            def to_s
+              "#{sn}\t#{format_things}"
+            end
+
+            def format_things
+              value =
+                if action.value.kind_of?(Numeric)
+                  d2h(action.value, true)
+                else
+                  action.value
+                end
+              "#{value} (#{action.bit_array}) :#{format('%-15s', button)} / #{format('%-15s', pretty)}, #{format('%-15s', state_pretty)}"
+            end
+
             # @override PseduoObject
             def is?(another_button)
               button == another_button
