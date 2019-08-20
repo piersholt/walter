@@ -8,7 +8,7 @@ module Wilhelm
           # Command::Parameterized::MID::Telephone
           class Base < Parameterized::Base
             class_variable_set(:@@configured, true)
-            attr_accessor(:layout, :m2, :m3)
+            attr_accessor(:layout, :m2, :m3, :chars)
           end
         end
       end
