@@ -78,16 +78,12 @@ module Wilhelm
 
           def setup_klass_parameters
             LOGGER.debug(PROC) { "#{sn} #{klass_constant}: Create parameter accessors: #{parameter_list}..." }
-            index_keys.each do |name|
-              setup_parameter_accessor(name)
-            end
+            index_keys.each { |name| setup_parameter_accessor(name) }
           end
 
           def setup_parameter_accessor(parameter)
             LOGGER.debug(PROC) { "#{klass_constant}: Adding #{parameter} accessor" }
-            klass_constant.class_eval do
-              attr_accessor(parameter)
-            end
+            klass_constant.class_eval { attr_accessor(parameter) }
           end
 
           # configured? =>
