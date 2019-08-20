@@ -28,7 +28,7 @@ module Wilhelm
       end
 
       def to_s
-        array.map { |i| Kernel.format(MASK_HEX, i) }&.join(DELIMITER)
+        array.collect { |i| Kernel.format(MASK_HEX, i) }&.join(DELIMITER)
       end
 
       # For writing to IO

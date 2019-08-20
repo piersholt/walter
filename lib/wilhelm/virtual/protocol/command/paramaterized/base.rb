@@ -7,9 +7,7 @@ module Wilhelm
         # Virtual::Command::Parameterized::Base
         class Base < Base
           def to_s
-            str_buffer = "#{sn}\t"
-
-            str_buffer << format_things
+            "#{sn}\t#{format_things}"
           end
 
           def format_things
@@ -19,9 +17,8 @@ module Wilhelm
             result.join(' / ')
           end
 
-          def format_thing(param)
-            param_name = param
-            param_object = public_send(param)
+          def format_thing(param_name)
+            param_object = public_send(param_name)
             value = param_object.value
             value = value.kind_of?(Numeric) ? d2h(value, true) : value
             "#{param_name}: #{value} (#{param_object.to_s})"

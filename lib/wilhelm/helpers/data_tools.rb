@@ -28,8 +28,8 @@ module Wilhelm
       MASK_DECIMAL         = '%#.d'.freeze
       MASK_BINARY          = '%.8b'.freeze
       MASK_BINARY_PREFIXED = '%#.8b'.freeze
-      MASK_HEX             = '%.2X'.freeze
-      MASK_HEX_PREFIXED    = '%#.2x'.freeze
+      MASK_HEX             = '%2.2X'.freeze
+      MASK_HEX_PREFIXED    = '%#2.2x'.freeze
 
       ERROR_DECIMAL_NIL = 'nil byte...?'.freeze
       ERROR_CHAR_LENGTH = 'Character length is greater than one byte!'.freeze

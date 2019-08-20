@@ -15,10 +15,7 @@ module Wilhelm
           # TODO :control => BMBT_BUTTON/MFL_BUTTON
           return false unless event == :control
           logger.debug(NAME) { "#update(#{event}, #{properties})" }
-          case event
-          when :control
-            handle_control(properties)
-          end
+          handle_control(properties)
         end
 
         def handle_control(control:, state:, source:)
