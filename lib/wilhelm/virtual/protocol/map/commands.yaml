@@ -3546,33 +3546,47 @@
               0b0001: :mfl_rad_next
               0b1000: :mfl_rad_prev
 
-0x32: # MLF-VOL / BMBT-VOL*
+0x32: # VOL-RAD* / VOL-TEL*
   :schemas:
-    - :bmbt
-    - :mfl
+    - :tel
+    - :rad
   :properties:
     :short_name: VOL
     :long_name: Volume Control
   :klass: Base
-  :meta:
-    :notes:
-      - 16x9 display issues a different command 0x49
-  :mfl:
-    :properties:
-      :short_name: MLF-VOL*
-      :long_name: Multifunction Steering Wheel (Volume)
-    :klass: Parameterized::Rotary
-    :index:
+  :index: &volume_index
       :rotation: 0
+  :parameters:
+    :rotation:
+      :type: :bit_array
+      :index: &volume_rotation_index
+        :steps: !ruby/range
+                      begin: 0
+                      end: 3
+                      excl: false
+        :direction: 7
+      :parameters:
+        :direction:
+          :type: :map
+          :label: Volume
+          :dictionary:
+            0: Down
+            1: Up
+          :map:
+            0: :vol_down
+            1: :vol_up
+        :steps:
+          :type: :integer
+  :tel:
+    :properties:
+      :short_name: VOL-TEL*
+      :long_name: Telephone Volume Control
+    :klass: Parameterized::Rotary
+    :index: *volume_index
     :parameters:
       :rotation:
         :type: :bit_array
-        :index:
-          :steps: !ruby/range
-                        begin: 0
-                        end: 3
-                        excl: false
-          :direction: 7
+        :index: *volume_rotation_index
         :parameters:
           :direction:
             :type: :map
@@ -3581,26 +3595,20 @@
               0: Down
               1: Up
             :map:
-              0: :mfl_vol_down
-              1: :mfl_vol_up
+              0: :vol_tel_down
+              1: :vol_tel_up
           :steps:
             :type: :integer
-  :bmbt:
+  :rad:
     :properties:
-      :short_name: BMBT-VOL*
-      :long_name: BMBT Volume Control
+      :short_name: VOL-RAD*
+      :long_name: Radio Volume Control
     :klass: Parameterized::Rotary
-    :index:
-      :rotation: 0
+    :index: *volume_index
     :parameters:
       :rotation:
         :type: :bit_array
-        :index:
-          :steps: !ruby/range
-                        begin: 0
-                        end: 3
-                        excl: false
-          :direction: 7
+        :index: *volume_rotation_index
         :parameters:
           :direction:
             :type: :map
@@ -3609,8 +3617,8 @@
               0: Down
               1: Up
             :map:
-              0: :bmbt_vol_down
-              1: :bmbt_vol_up
+              0: :vol_rad_down
+              1: :vol_rad_up
           :steps:
             :type: :integer
 
