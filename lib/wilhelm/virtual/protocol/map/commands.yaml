@@ -497,24 +497,18 @@
           0xc_d: --
           0xc_e: --
           0xc_f: --
-      :ike:
-        :type: :bit_array
-        :parameters:
-          :set:
-            :label: IKE Display
-            :type: :switch
-            :states:
-              0: :off
-              1: :on
-          :update:
-            :label: Update Only
-            :type: :switch
-            :states:
-              0: :off
-              1: :on
-        :index:
-          :set: 2
-          :update: 3
+      :ike: &ike_options
+        :type: :map
+        :map:
+          0b0000_0000: :off
+          0b0001_0000: :overwrite
+          0b0010_0000: :flush
+          0b0011_0000: :replace
+        :dictionary:
+          0b0000_0000: --
+          0b0001_0000: Overwrite
+          0b0010_0000: Reset
+          0b0011_0000: Replace
       :chars:
         :type: :chars
   :tel: # TEL-23*
@@ -563,12 +557,7 @@
           0x9_0: '[Info] Title?'
           # This might have been "SOS: 112!"?
           0xc_0: '[SOS] Title?'
-      :ike:
-        :type: :map
-        :dictionary:
-          0x0_0: --
-          0x2_0: Set IKE
-          0x3_0: Update IKE
+      :ike: *ike_options
       :chars:
         :type: :chars
   :meta:
