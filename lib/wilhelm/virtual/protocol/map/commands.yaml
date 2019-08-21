@@ -907,7 +907,7 @@
               0x08: '8'
               0x09: '9'
               0x0a: '10'
-          :state:
+          :state: &button_state
             :type: :switch
             :label: 'State'
             :states:
@@ -1013,16 +1013,7 @@
               0x1e: Dial
               0x1f: Directory
           :state:
-            :type: :switch
-            :label: 'State'
-            :states:
-              0b00: :press
-              0b01: :hold
-              0b10: :release
-            :dictionary:
-              0b00: Press
-              0b01: Hold
-              0b10: Release
+            *button_state
   :meta:
     :sos:
       - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
@@ -3501,17 +3492,7 @@
           :map:
             0b0: :mfl_rt_rad
             0b1: :mfl_rt_tel
-        :state:
-          :type: :switch
-          :label: 'State'
-          :states:
-            0b00: :press
-            0b01: :hold
-            0b10: :release
-          :dictionary:
-            0b00: Press
-            0b01: Hold
-            0b10: Release
+        :state:       *button_state
         :button_seek:
           :type: :map
           :dictionary:
@@ -3715,17 +3696,7 @@
             0x07: :bmbt_aux_heat
             0x34: :bmbt_menu
             0x05: :bmbt_confirm
-        :state:
-          :type: :switch
-          :label: 'State'
-          :states:
-            0b00: :press
-            0b01: :hold
-            0b10: :release
-          :dictionary:
-            0b00: Press
-            0b01: Hold
-            0b10: Release
+        :state: *button_state
   :tel:
     :properties:
       :short_name: TEL-BTN*
