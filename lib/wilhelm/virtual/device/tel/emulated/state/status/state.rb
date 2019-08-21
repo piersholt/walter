@@ -38,6 +38,10 @@ module Wilhelm
                   end
                 end
 
+                def inactive?
+                  !active?
+                end
+
                 def power?
                   case state[STATE_STATUS][STATUS_POWER]
                   when STATUS_OFF
@@ -45,6 +49,12 @@ module Wilhelm
                   when STATUS_ON
                     true
                   end
+                end
+
+                alias on? power?
+
+                def off?
+                  !on?
                 end
 
                 def display?

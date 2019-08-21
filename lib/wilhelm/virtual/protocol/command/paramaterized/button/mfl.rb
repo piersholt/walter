@@ -48,6 +48,13 @@ module Wilhelm
               end
             end
 
+            def telephone_mode?
+              return false unless mode_tel?
+              return false if mode_tel == :mfl_rt_rad
+              return true if mode_tel == :mfl_rt_tel
+              true
+            end
+
             alias mode? mode
 
             # BUTTON: TEL -----------------------------------------------------

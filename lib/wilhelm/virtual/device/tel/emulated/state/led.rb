@@ -13,6 +13,15 @@ module Wilhelm
             module LED
               include State
               include Modifiers
+
+              # API
+              def leds_bit_field
+                i = 0
+                i |= red_bits    << LED_SHIFT_RED    if red?
+                i |= yellow_bits << LED_SHIFT_YELLOW if yellow?
+                i |= green_bits  << LED_SHIFT_GREEN  if green?
+                i
+              end
             end
           end
         end

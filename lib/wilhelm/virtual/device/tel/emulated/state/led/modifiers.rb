@@ -59,16 +59,8 @@ module Wilhelm
                   LED_STATES.include?(state)
                 end
 
-                def leds_bit_array
-                  i = 0
-                  i += red_bits    << LED_SHIFT_RED    if red?
-                  i += yellow_bits << LED_SHIFT_YELLOW if yellow?
-                  i += green_bits  << LED_SHIFT_GREEN  if green?
-                  i
-                end
-
                 def leds!
-                  set(leds_bit_array)
+                  set(leds_bit_field)
                 end
               end
             end
