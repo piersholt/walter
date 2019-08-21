@@ -25,6 +25,8 @@ module Wilhelm
           include BMBT::Control
           include Display::Control
           include MFL::Control
+          include Radio::Control
+          include Telephone::Control
 
           CONTROLS = constants.map { |c| const_get(c) }
         end

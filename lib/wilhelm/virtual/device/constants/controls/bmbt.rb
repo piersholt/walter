@@ -25,8 +25,12 @@ module Wilhelm
           BMBT_OVERLAY = :bmbt_overlay
 
           # Rotary Radio
-          BMBT_VOL_DOWN = :bmbt_vol_down
-          BMBT_VOL_UP   = :bmbt_vol_up
+          BMBT_VOL_DOWN     = :vol_down
+          BMBT_VOL_UP       = :vol_up
+          BMBT_VOL_RAD_DOWN = :vol_rad_down
+          BMBT_VOL_RAD_UP   = :vol_rad_up
+          BMBT_VOL_TEL_DOWN = :vol_tel_down
+          BMBT_VOL_TEL_UP   = :vol_tel_up
           BMBT_POWER = :bmbt_power
 
           BMBT_CONSTANTS = constants.map { |c| const_get(c) }
