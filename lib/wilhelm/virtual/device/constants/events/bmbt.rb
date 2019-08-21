@@ -8,7 +8,7 @@ module Wilhelm
         module BMBT
           # Control related events
           module Control
-            BMBT_BUTTON = :control
+            BMBT_CONTROL = :control
           end
 
           include Control

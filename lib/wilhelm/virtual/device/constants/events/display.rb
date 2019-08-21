@@ -16,7 +16,7 @@ module Wilhelm
 
           # Control related events
           module Control
-            GFX_DATA_SELECT = :data_select
+            GFX_CONTROL = :data_select
           end
 
           # State related events

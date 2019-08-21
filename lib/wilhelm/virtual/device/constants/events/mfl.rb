@@ -8,7 +8,7 @@ module Wilhelm
         module MFL
           # Control related events
           module Control
-            MFL_BUTTON = :control
+            MFL_CONTROL = :control
           end
 
           include Control

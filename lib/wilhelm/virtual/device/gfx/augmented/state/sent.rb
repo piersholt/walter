@@ -34,7 +34,7 @@ module Wilhelm
                   index = button_id(command.button)
                   state = button_state(command.button)
                   changed
-                  notify_observers(GFX_DATA_SELECT, index: index, state: state)
+                  notify_observers(GFX_CONTROL, index: index, state: state)
                 end
               end
 

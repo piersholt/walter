@@ -62,14 +62,14 @@ module Wilhelm
         # CONTROL
         def update_control(event, properties = {})
           case event
-          when GFX_DATA_SELECT
-            logger.debug(NAME) { "#update(#{GFX_DATA_SELECT}, #{properties})" }
+          when GFX_CONTROL
+            logger.debug(NAME) { "#update(#{GFX_CONTROL}, #{properties})" }
             data_select(properties)
-          when BMBT_BUTTON
-            logger.debug(NAME) { "#update(#{BMBT_BUTTON}, #{properties})" }
+          when BMBT_CONTROL
+            logger.debug(NAME) { "#update(#{BMBT_CONTROL}, #{properties})" }
             handle_control(properties)
-          when MFL_BUTTON
-            logger.debug(NAME) { "#update(#{MFL_BUTTON}, #{properties})" }
+          when MFL_CONTROL
+            logger.debug(NAME) { "#update(#{MFL_CONTROL}, #{properties})" }
             handle_control(properties)
           end
         end
