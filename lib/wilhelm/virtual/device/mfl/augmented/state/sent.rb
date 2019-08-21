@@ -10,14 +10,14 @@ module Wilhelm
             module Sent
               include Virtual::Constants::Events::MFL
 
-              # 0x3B
+              # 0x3B MFL-FUNC
               def handle_mfl_func_button(command)
                 logger.debug(moi) { "MFL_FUNC -> #{command.pretty}" }
                 return mode!(command.mode?) if command.rt?
                 notify_of_button(command)
               end
 
-              # 0x32
+              # 0x32 VOLUME
               def handle_mfl_vol_button(command)
                 logger.debug(moi) { "MFL_VOL -> #{command.pretty}" }
                 notify_of_button(command)

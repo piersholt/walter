@@ -45,7 +45,7 @@ module Wilhelm
                 end
               end
 
-              # Handlers?
+              # 0x48 BMBT-BTN
               def handle_bmbt_1_button(message)
                 # LOGGER.debug('Radio') { "Handling: BMBT-1" }
                 value = message.command.action.parameters[:totally_unique_variable_name].value
