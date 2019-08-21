@@ -20,12 +20,12 @@ module Wilhelm
             return false unless publish?(command_id)
 
             case command_id
-            when MFL_FUNC
-              logger.debug(moi) { "Tx: MFL_FUNC (#{d2h(MFL_FUNC)})" }
-              handle_mfl_func_button(message.command)
             when MFL_VOL
               logger.debug(moi) { "Tx: MFL_VOL (#{d2h(MFL_VOL)})" }
-              handle_mfl_vol_button(message.command)
+              evaluate_mfl_vol_button(message.command)
+            when MFL_FUNC
+              logger.debug(moi) { "Tx: MFL_FUNC (#{d2h(MFL_FUNC)})" }
+              evaluate_mfl_func_button(message.command)
             end
           end
         end
