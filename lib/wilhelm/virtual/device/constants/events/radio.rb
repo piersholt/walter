@@ -6,6 +6,11 @@ module Wilhelm
       module Events
         # Virtual::Device::Radio Events
         module Radio
+          # Control related events
+          module Control
+            RADIO_BUTTON = :control
+          end
+
           # State related events
           module State
             RADIO_BODY_CLEARED = :radio_body_cleared
@@ -13,6 +18,7 @@ module Wilhelm
             PRIORITY_GFX       = :gfx_priority_gfx
           end
 
+          include Control
           include State
         end
       end

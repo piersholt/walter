@@ -6,6 +6,7 @@ require_relative 'events/bmbt'
 require_relative 'events/display'
 require_relative 'events/mfl'
 require_relative 'events/radio'
+require_relative 'events/tel'
 
 module Wilhelm
   module Virtual
