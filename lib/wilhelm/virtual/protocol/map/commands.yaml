@@ -3443,7 +3443,10 @@
 #                               BUTTONS
 # ************************************************************************* #
 
-0x3B: # MFL-FUNC
+0x3B: # MFL-RAD* / MFL-TEL*
+  :schemas:
+    - :tel
+    - :rad
   :properties:
     :short_name: MFL-FUNC
     :long_name: Multifunction Steering Wheel (Controls)
@@ -3453,7 +3456,7 @@
   :parameters:
     :action:
       :type: :bit_array
-      :index:
+      :index: &mfl_action_index
         :button_tel:    0
         :mode_tel:      1
         :state: !ruby/range
@@ -3465,7 +3468,7 @@
                       end: 7
                       excl: false
       :parameters:
-        :button_tel:
+        :button_tel:  &mfl_action_param_button_tel
           :type: :map
           :dictionary:
             0b0: '-'
@@ -3473,7 +3476,7 @@
           :map:
             0b0: :mfl_tel_null
             0b1: :mfl_tel
-        :mode_tel:
+        :mode_tel:    &mfl_action_param_mode_tel
           :type: :map
           :dictionary:
             0x0: '[R/T] Radio'
@@ -3492,6 +3495,56 @@
             0b0000: :mfl_seek_null
             0b0001: :mfl_next
             0b1000: :mfl_prev
+  :tel:
+    :properties:
+      :short_name: MFL-TEL*
+      :long_name: Multifunction Steering Wheel Telephone Controls
+    :klass: Parameterized::Button::MFL
+    :index:
+      :action: 0
+    :parameters:
+      :action:
+        :type: :bit_array
+        :index: *mfl_action_index
+        :parameters:
+          :button_tel:  *mfl_action_param_button_tel
+          :mode_tel:    *mfl_action_param_mode_tel
+          :state:       *button_state
+          :button_seek:
+            :type: :map
+            :dictionary:
+              0b0000: '-'
+              0b0001: "[Next]"
+              0b1000: "[Prev]"
+            :map:
+              0b0000: :mfl_seek_null
+              0b0001: :mfl_tel_next
+              0b1000: :mfl_tel_prev
+  :rad:
+    :properties:
+      :short_name: MFL-RAD*
+      :long_name: Multifunction Steering Wheel Radio Controls
+    :klass: Parameterized::Button::MFL
+    :index:
+      :action: 0
+    :parameters:
+      :action:
+        :type: :bit_array
+        :index: *mfl_action_index
+        :parameters:
+          :button_tel: *mfl_action_param_button_tel
+          :mode_tel:   *mfl_action_param_mode_tel
+          :state:      *button_state
+          :button_seek:
+            :type: :map
+            :dictionary:
+              0b0000: '-'
+              0b0001: "[Next]"
+              0b1000: "[Prev]"
+            :map:
+              0b0000: :mfl_seek_null
+              0b0001: :mfl_rad_next
+              0b1000: :mfl_rad_prev
 
 0x32: # MLF-VOL / BMBT-VOL*
   :schemas:
