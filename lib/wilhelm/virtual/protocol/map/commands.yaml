@@ -528,23 +528,25 @@
         :type: :map
         :dictionary:
           # to: ANZV
-          0x0_1: '[ANZV] On Call [▷ ◁]'    # [198, 199]
-          0x0_2: '[ANZV] On Call HFS [🔊]' # [197]
+          # possible backwards compatibility with MID
+          0x0_1: '[ANZV] On Call [▷ ◁]'     # [198, 199]
+          0x0_2: '[ANZV] On Call HFS [🔊]'  # [197]
 
           # to: IKE
-          0x4_0: '[IKE] Clear End Call?'  # ""
-          0x4_1: '[IKE] Clear (R/T Radio Mode)'     # ""
-          0x4_2: '[IKE] Contact'           # "TEL1-MessageBank"
-          0x4_3: '[IKE] Contact Call'      # "TEL    98272742"
+          # 0x40 always follows 0x43 "TEL #{number}"- presumably end call
+          0x4_0: '[IKE] Clear (End Call)/Error'   # ""
+          0x4_1: '[IKE] Clear (R/T Radio Mode)'   # ""
+          0x4_2: '[IKE] Contact Name'             # "TEL1-MessageBank"
+          0x4_3: '[IKE] Contact Number/Call'      # "TEL1-101" / "TEL    98272742"
 
           # to: GFX
-          0x0_5: '[Pin] Number Add'
+          0x0_5: '[Pin] Number'
 
           0x5_2: '[Directory] Contact Name'         # "MUM"
           0x5_3: '[Directory] Contact Number/Clear' # "98272742"
 
           0x6_1: '[Dial/Recent] Clear'
-          0x6_3: '[Dial/Recent] Number Add'
+          0x6_3: '[Dial/Recent] Number'
 
           0x8_0: '[Top 8] Clear'
           0x8_1: '[Top 8] Contact Name'
