@@ -10,7 +10,7 @@ module Wilhelm
           include State
           include Capabilities
 
-          PUBLISH = [MFL_VOL, MFL_FUNC, MFL_VOL].freeze
+          PUBLISH = [MFL_VOL, MFL_FUNC].freeze
           SUBSCRIBE = [].freeze
 
           PROC = 'MFL::Augmented'

@@ -13,7 +13,7 @@ module Wilhelm
             # 0x32 VOLUME
             def evaluate_mfl_vol_button(command)
               logger.debug(moi) { "MFL VOL -> #{command.pretty}" }
-              notify_of_button(command)
+              # notify_of_button(command)
             end
 
             # 0x48 BMBT-BTN

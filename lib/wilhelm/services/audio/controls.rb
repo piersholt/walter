@@ -16,13 +16,13 @@ module Wilhelm
           BMBT_POWER => STATELESS_CONTROL,
           BMBT_NEXT => TWO_STAGE_CONTROL,
           BMBT_PREV => TWO_STAGE_CONTROL,
-          MFL_NEXT => TWO_STAGE_CONTROL,
-          MFL_PREV => TWO_STAGE_CONTROL,
+          MFL_NEXT_RAD => TWO_STAGE_CONTROL,
+          MFL_PREV_RAD => TWO_STAGE_CONTROL,
           MFL_TEL => STATELESS_CONTROL,
-          MFL_VOL_UP => STATELESS_CONTROL,
-          MFL_VOL_DOWN => STATELESS_CONTROL,
-          BMBT_VOL_UP => STATELESS_CONTROL,
-          BMBT_VOL_DOWN => STATELESS_CONTROL
+          MFL_VOL_RAD_UP => STATELESS_CONTROL,
+          MFL_VOL_RAD_DOWN => STATELESS_CONTROL,
+          BMBT_VOL_RAD_UP => STATELESS_CONTROL,
+          BMBT_VOL_RAD_DOWN => STATELESS_CONTROL
         }.freeze
 
         CONTROL_ROUTES = {
@@ -39,7 +39,7 @@ module Wilhelm
             seek_forward: STATELESS,
             scan_forward: STATEFUL
           },
-          MFL_NEXT => {
+          MFL_NEXT_RAD => {
             seek_forward: STATELESS,
             scan_forward: STATEFUL
           },
@@ -47,23 +47,23 @@ module Wilhelm
             seek_backward: STATELESS,
             scan_backward: STATEFUL
           },
-          MFL_PREV => {
+          MFL_PREV_RAD => {
             seek_backward: STATELESS,
             scan_backward: STATEFUL
           },
           MFL_TEL => {
             pause: STATELESS
           },
-          MFL_VOL_UP => {
+          MFL_VOL_RAD_UP => {
             volume_up: STATELESS
           },
-          MFL_VOL_DOWN => {
+          MFL_VOL_RAD_DOWN => {
             volume_down: STATELESS
           },
-          BMBT_VOL_UP => {
+          BMBT_VOL_RAD_UP => {
             volume_up: STATELESS
           },
-          BMBT_VOL_DOWN => {
+          BMBT_VOL_RAD_DOWN => {
             volume_down: STATELESS
           }
         }.freeze

@@ -31,7 +31,7 @@ module Wilhelm
       end
 
       def targets
-        %i[mfl bmbt]
+        %i[mfl bmbt rad tel]
       end
 
       def default_state

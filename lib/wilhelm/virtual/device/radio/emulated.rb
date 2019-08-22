@@ -1,43 +1,48 @@
 # frozen_string_literal: true
 
+require_relative 'emulated/received'
+
 module Wilhelm
   module Virtual
     class Device
       module Radio
         # Radio::Emulated
         class Emulated < Device::Emulated
+          include Wilhelm::Helpers::DataTools
           include Capabilities
+          include Received
 
           PROC = 'Radio::Emulated'
-          SUBSCRIBE = [PING, MENU_GFX].freeze
+
+
+          SUBSCRIBE = [
+            PING,
+            MENU_GFX,
+            MFL_VOL,
+            MFL_FUNC,
+            BMBT_I, BMBT_A, BMBT_B
+          ].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)
+
             case command_id
             when MENU_GFX
-              logger.debug(PROC) { 'Rx: Handling: MENU_GFX' }
+              logger.debug(PROC) { "Rx: MENU_GFX 0x#{d2h(MENU_GFX)}" }
               handle_menu_gfx(message.command)
+            when MFL_FUNC
+              logger.debug(PROC) { "Rx: MFL_FUNC 0x#{d2h(MFL_FUNC)}" }
+              handle_mfl_func(message.command)
+            when MFL_VOL
+              logger.debug(PROC) { "Rx: MFL_VOL 0x#{d2h(MFL_VOL)}" }
+              handle_mfl_vol(message.command)
+            when BMBT_A
+              logger.debug(PROC) { "Rx: BMBT_A 0x#{d2h(BMBT_A)}" }
+              handle_bmbt_button_1(message.command)
             end
 
             super(message)
-          rescue StandardError => e
-            logger.error(PROC) { e }
-            e.backtrace.each { |line| logger.error(PROC) { line } }
-          end
-
-          def handle_virtual_transmit(*)
-            false
-          end
-
-          def handle_menu_gfx(command)
-            case Kernel.format('%8.8b', command.config.value)[7]
-            when '1'
-              acknowledge_menu
-            end
-          rescue StandardError => e
-            logger.error(PROC) { e }
-            e.backtrace.each { |line| logger.error(PROC) { line } }
           end
         end
       end

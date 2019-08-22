@@ -13,14 +13,14 @@ module Wilhelm
               # 0x32 VOLUME
               def evaluate_mfl_vol_button(command)
                 logger.debug(moi) { "MFL_VOL -> #{command.pretty}" }
-                notify_of_button(command)
+                # notify_of_button(command)
               end
 
               # 0x3B MFL-FUNC
               def evaluate_mfl_func_button(command)
                 logger.debug(moi) { "MFL_FUNC -> #{command.pretty}" }
                 return mode!(command.mode?) if command.rt?
-                notify_of_button(command)
+                # notify_of_button(command)
               end
 
               private

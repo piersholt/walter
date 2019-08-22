@@ -7,6 +7,7 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Device::Telephone::Emulated::Received
           module Received
+            include Virtual::Constants::Events::Telephone
             include Constants
 
             # 0x02 PONG
@@ -67,12 +68,23 @@ module Wilhelm
               end
             end
 
-            def handle_mfl_vol(*)
-              true
+            # 0x32 MFL_VOL
+            def handle_mfl_vol(command)
+              logger.unknown(ident) { "MFL_VOL -> #{command.pretty}" }
+              notify_of_button(command)
             end
 
-            def handle_mfl_func(*)
-              true
+            # 0x3B MFL_FUNC
+            # @note R/T is has no button state!
+            def handle_mfl_func(command)
+              logger.unknown(ident) { "MFL_FUNC -> #{command.pretty} (#{command.button})" }
+              notify_of_button(command)
+            end
+
+            # 0x48 BMBT_A
+            def handle_bmbt_button_1(command)
+              logger.unknown(ident) { "BMBT_A -> #{command.pretty}" }
+              notify_of_button(command)
             end
 
             protected
@@ -337,6 +349,16 @@ module Wilhelm
 
             def smses?
               @layout == :smses
+            end
+
+            def notify_of_button(command)
+              changed
+              notify_observers(
+                TELEPHONE_BUTTON,
+                control: command.button,
+                state: command.state,
+                source: :mfl
+              )
             end
           end
         end
