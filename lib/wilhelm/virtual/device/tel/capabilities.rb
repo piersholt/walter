@@ -8,6 +8,7 @@ require_relative 'capabilities/info'
 require_relative 'capabilities/last_numbers'
 require_relative 'capabilities/led'
 require_relative 'capabilities/pin'
+require_relative 'capabilities/quick'
 require_relative 'capabilities/sos'
 require_relative 'capabilities/sms'
 require_relative 'capabilities/top_8'
@@ -26,6 +27,7 @@ module Wilhelm
           include Info
           include LastNumbers
           include LED
+          include Quick
           include Top8
           include SOS
           include PIN

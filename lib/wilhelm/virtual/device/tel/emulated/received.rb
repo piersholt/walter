@@ -79,6 +79,37 @@ module Wilhelm
             def handle_mfl_func(command)
               logger.unknown(ident) { "MFL_FUNC -> #{command.pretty} (#{command.button})" }
               notify_of_button(command)
+
+              case command.button
+              when :mfl_rt_rad
+                quick_exit
+                @quick_index = 0
+              when :mfl_rt_tel
+                on! if off?
+                quick_name(quick_index)
+              when :mfl_tel_next
+                return false unless command.release?
+                @quick_index = quick_index + 1
+                quick_name(quick_index)
+                sleep(1)
+                quick_number(quick_index)
+              when :mfl_tel_prev
+                return false unless command.release?
+                @quick_index = quick_index - 1
+                quick_name(quick_index)
+                sleep(1)
+                quick_number(quick_index)
+              when :mfl_tel
+                return false unless command.release?
+                case inactive?
+                when true
+                  active.handsfree.status!
+                  quick_call_start(quick_index)
+                when false
+                  inactive.handset.status!
+                  quick_call_end
+                end
+              end
             end
 
             # 0x48 BMBT_A
@@ -349,6 +380,10 @@ module Wilhelm
 
             def smses?
               @layout == :smses
+            end
+
+            def quick_index
+              @quick_index ||= 1
             end
 
             def notify_of_button(command)
