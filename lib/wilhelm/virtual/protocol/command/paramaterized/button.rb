@@ -3,6 +3,7 @@
 require_relative 'button/base'
 require_relative 'button/bmbt'
 require_relative 'button/mfl'
+require_relative 'button/soft'
 
 module Wilhelm
   module Virtual

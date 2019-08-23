@@ -910,14 +910,14 @@
               0b01: Hold
               0b10: Release
   :tel:
-    :klass: Parameterized::Base
+    :klass: Parameterized::Button::Soft
     :properties:
       :short_name: INPUT-TEL*
       :long_name: Telephone Menu Soft Buttom
     :index:
       :layout: 0
       :function: 1
-      :button: 2
+      :action: 2
     :parameters:
       :layout:
         :type: :map
@@ -955,7 +955,7 @@
           0x05: :sos
           0x07: :navigate
           0x08: :info
-      :button:
+      :action:
         :type: :bit_array
         :index:
           :state: !ruby/range
