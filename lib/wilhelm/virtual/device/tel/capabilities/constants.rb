@@ -7,6 +7,7 @@ module Wilhelm
         module Capabilities
           # Radio::Capabilities::Constants
           module Constants
+            include Telephone::Constants
             ZERO = 0x00
 
             # -----------------------------------------------------------------
@@ -16,6 +17,7 @@ module Wilhelm
             LAYOUT_TOP_8     = 0x8_0
             LAYOUT_SMS_INDEX = 0xf_0
             LAYOUT_SMS_SHOW  = 0xf_1
+            LAYOUT_SOS       = 0xf_1
 
             # -----------------------------------------------------------------
             # PARAMETER 2: PADDING

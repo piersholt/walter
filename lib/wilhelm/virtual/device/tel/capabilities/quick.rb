@@ -34,11 +34,11 @@ module Wilhelm
             end
 
             def quick_call_end
-              draw_23(to: :ike, gfx: 0x40, ike: 0x20, chars: '')
+              draw_23(to: :ike, gfx: 0x40, ike: 0x20, chars: STRING_BLANK)
             end
 
             def quick_exit
-              draw_23(to: :ike, gfx: 0x41, ike: 0x20, chars: '')
+              draw_23(to: :ike, gfx: 0x41, ike: 0x20, chars: STRING_BLANK)
             end
 
             def quick_error(text = QUICK_ERROR)

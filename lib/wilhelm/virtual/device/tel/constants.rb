@@ -203,6 +203,17 @@ module Wilhelm
           ACTION_CONTACT_8         = 0x16
           ACTION_OPEN_DIAL         = 0x1e
 
+          ACTION_CONTACT_INDICIES = [
+            ACTION_CONTACT_1,
+            ACTION_CONTACT_2,
+            ACTION_CONTACT_3,
+            ACTION_CONTACT_4,
+            ACTION_CONTACT_5,
+            ACTION_CONTACT_6,
+            ACTION_CONTACT_7,
+            ACTION_CONTACT_8
+          ].freeze
+
           # Info
           ACTION_INFO_OPEN_DIAL    = 0x1e
 
@@ -246,7 +257,7 @@ module Wilhelm
           PIN_DIGIT_7         = '7'
           PIN_DIGIT_8         = '8'
           PIN_DIGIT_9         = '9'
-          PIN_DIGIT_DELETE    = '<'
+          PIN_DIGIT_DELETE    = '<-'
           PIN_DIGIT_OK        = 'OK'
           # 0x05
           PIN_OPEN_SOS        = 'PIN -> SOS > Open'
@@ -268,7 +279,7 @@ module Wilhelm
           DIAL_DIGIT_9        = '9'
           DIAL_DIGIT_STAR     = '*'
           DIAL_DIGIT_HASH     = '#'
-          DIAL_DIGIT_DELETE   = '<'
+          DIAL_DIGIT_DELETE   = '<-'
           # 0x05
           DIAL_OPEN_SOS       = 'Dial -> SOS > Open'
           # 0x07

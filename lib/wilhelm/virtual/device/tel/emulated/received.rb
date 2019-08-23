@@ -24,33 +24,33 @@ module Wilhelm
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
               logger.unknown(PROC) { "@layout=#{@layout}" }
-              return top_8! && generate_top_8 if dial?
-              dial! && open_dial
+              return top_8_service_open if dial?
+              dial_service_open
             end
 
             # 0x31 INPUT
             # Hold and Release are filtered
             def handle_input(command)
-              return false unless press?(command)
+              return false unless command.press?
               logger.debug(PROC) { '#handle_input(command)' }
               logger.unknown(PROC) { "@layout=#{@layout}" }
 
               # NOTE: avoid routing common functions through layouts?
-              # case command.function.value
-              # when FUNCTION_SOS
-              #   return delegate_sos(command)
-              # when FUNCTION_NAVIGATE
-              #   return delegate_navigation(command)
-              # when FUNCTION_INFO
-              #   return delegate_info(command)
-              # end
+              case command.function.value
+              when FUNCTION_SOS
+                return delegate_sos(command)
+              when FUNCTION_NAVIGATE
+                return delegate_navigation(command)
+              when FUNCTION_INFO
+                return delegate_info(command)
+              end
 
               case command.layout.ugly
               when :default
                 return handle_default(command) unless command.function.value.zero?
                 return handle_dial(command) if dial?
                 return handle_directory(command) if directory?
-                raise(ArgumentError, 'Default not Dial or Directory!')
+                raise(ArgumentError, '0x31 has layout 0x00, but @layout is not :dial or :directory' )
               when :pin
                 return handle_pin(command)
               when :info
@@ -82,29 +82,21 @@ module Wilhelm
 
               case command.button
               when :mfl_rt_rad
-                quick_exit
-                @quick_index = 0
+                quick_disable
               when :mfl_rt_tel
-                on! if off?
-                quick_name(quick_index)
+                quick_enable
               when :mfl_tel_next
                 return false unless command.release?
-                @quick_index = quick_index + 1
-                quick_name(quick_index)
-                sleep(1)
-                quick_number(quick_index)
+                quick_forward
               when :mfl_tel_prev
                 return false unless command.release?
-                @quick_index = quick_index - 1
-                quick_name(quick_index)
-                sleep(1)
-                quick_number(quick_index)
+                quick_back
               when :mfl_tel
                 return false unless command.release?
                 case inactive?
                 when true
                   active.handsfree.status!
-                  quick_call_start(quick_index)
+                  quick_call_start
                 when false
                   inactive.handset.status!
                   quick_call_end
@@ -136,11 +128,8 @@ module Wilhelm
               logger.unknown(PROC) { "#handle_pin(#{command})" }
               case command.function.value
               when FUNCTION_DIGIT
-                index = button_id(command.button)
-                branch(FUNCTION_DIGIT, FUNCTION_DIGIT, index)
-                return pin_delete if index == ACTION_PIN_DELETE
-                return pin_flush && dial! && open_dial if index == ACTION_PIN_OK
-                pin_number(twig(LAYOUT_PIN, FUNCTION_DIGIT, index))
+                branch(LAYOUT_PIN, FUNCTION_DIGIT, button_id(command.action))
+                pin_service_input(button_id(command.action))
               when FUNCTION_SOS
                 delegate_sos(command)
               else
@@ -151,12 +140,6 @@ module Wilhelm
             # 0x20
             def handle_info(command)
               logger.unknown(PROC) { "#handle_info(#{command})" }
-              case command.function.value
-              when FUNCTION_NAVIGATE
-                delegate_navigation(command)
-              else
-                unknown_function(command)
-              end
             end
 
             # 0x42
@@ -165,7 +148,7 @@ module Wilhelm
               dial!
               case command.function.value
               when FUNCTION_DEFAULT
-                case command.button.value
+                case command.action.value
                 when ACTION_RECENT_BACK
                   branch(LAYOUT_DIAL, FUNCTION_DEFAULT, ACTION_RECENT_BACK)
                   recent_contact
@@ -174,16 +157,8 @@ module Wilhelm
                   recent_contact
                 end
               when FUNCTION_DIGIT
-                index = button_id(command.button)
-                branch(LAYOUT_DIAL, FUNCTION_DIGIT, index)
-                return dial_delete if index == ACTION_DIAL_DELETE
-                dial_number(twig(LAYOUT_DIAL, FUNCTION_DIGIT, index))
-              when FUNCTION_SOS
-                delegate_sos(command)
-              when FUNCTION_NAVIGATE
-                delegate_navigation(command)
-              when FUNCTION_INFO
-                delegate_info(command)
+                branch(LAYOUT_DIAL, FUNCTION_DIGIT, button_id(command.action))
+                dial_service_input(button_id(command.action))
               else
                 unknown_function(command)
               end
@@ -192,10 +167,9 @@ module Wilhelm
             # 0x43
             def handle_directory(command)
               logger.unknown(PROC) { "#handle_directory(#{command})" }
-              directory!
               case command.function.value
               when FUNCTION_DEFAULT
-                case command.button.value
+                case command.action.value
                 when ACTION_DIRECTORY_BACK
                   branch(LAYOUT_DIRECTORY, FUNCTION_DEFAULT, ACTION_DIRECTORY_BACK)
                   directory_back
@@ -204,10 +178,8 @@ module Wilhelm
                   directory_forward
                 end
               when FUNCTION_CONTACT
-                contact_name = twig(command.layout.value, FUNCTION_CONTACT, button_id(command.button))
-                directory_name(contact_name)
-              when FUNCTION_NAVIGATE
-                delegate_navigation(command)
+                branch(command.layout.value, FUNCTION_CONTACT, button_id(command.action))
+                directory_service_input(button_id(command.action))
               else
                 unknown_function(command)
               end
@@ -216,13 +188,10 @@ module Wilhelm
             # 0x80
             def handle_top_8(command)
               logger.unknown(PROC) { "#handle_top_8(#{command})" }
-              top_8!
               case command.function.value
               when FUNCTION_CONTACT
-                contact_name = twig(LAYOUT_TOP_8, FUNCTION_CONTACT, button_id(command.button))
-                directory_name(contact_name)
-              when FUNCTION_NAVIGATE
-                delegate_navigation(command)
+                branch(LAYOUT_TOP_8, FUNCTION_CONTACT, button_id(command.action))
+                top_8_service_input(button_id(command.action))
               else
                 unknown_function(command)
               end
@@ -233,7 +202,7 @@ module Wilhelm
               smses!
               case command.function.value
               when FUNCTION_SMS
-                true
+                generate_sms_show
               end
             end
 
@@ -241,10 +210,8 @@ module Wilhelm
               logger.unknown(PROC) { "#handle_sms_show(#{command})" }
               smses!
               case command.function.value
-              when FUNCTION_NAVIGATE
-                delegate_navigation(command)
               when FUNCTION_SMS
-                true
+                generate_sms_index
               end
             end
 
@@ -257,7 +224,7 @@ module Wilhelm
             end
 
             def branch(layout, function, action)
-              logger.unknown(PROC) { twig(layout, function, action) }
+              logger.unknown(PROC) { "\"#{twig(layout, function, action)}\"" }
             end
 
             private
@@ -267,30 +234,25 @@ module Wilhelm
               layout = command.layout
               logger.unknown(PROC) { "#delegate_sos(#{layout})" }
               branch(layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
-              sos!
-              open_sos
+              sos_service_open
             end
 
             # Function: 0x07
             def delegate_navigation(command)
               logger.unknown(PROC) { "#delegate_navigation(#{command})" }
-              button = command.button
-              index = button_id(command.button)
-              case index
+              case button_id(command.action)
               when ACTION_SMS_INDEX_BACK
                 true
               when ACTION_OPEN_DIAL
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
-                dial!
-                open_dial
+                dial_service_open
               when ACTION_OPEN_SMS
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
                 smses!
                 generate_sms_index
               when ACTION_OPEN_DIR
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
-                directory!
-                generate_directory
+                directory_service_open
               end
             end
 
@@ -298,8 +260,7 @@ module Wilhelm
             def delegate_info(command)
               logger.unknown(PROC) { "#delegate_info" }
               branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
-              info!
-              open_info
+              info_service_open
             end
 
             # @deprecated
@@ -318,72 +279,8 @@ module Wilhelm
               # bluetooth_pending
             end
 
-            def button_id(button)
-              button.parameters[:id].value
-            end
-
-            def press?(command)
-              button_state(command.button) == INPUT_PRESS
-            end
-
-            def release?(command)
-              button_state(command.button) == INPUT_RELEASE
-            end
-
-            def button_state(button)
-              button.parameters[:state].value
-            end
-
-            def dial!
-              @layout = :dial
-            end
-
-            def dial?
-              @layout == :dial
-            end
-
-            def directory!
-              @layout = :directory
-            end
-
-            def directory?
-              @layout == :directory
-            end
-
-            def top_8!
-              @layout = :top_8
-            end
-
-            def top_8?
-              @layout == :top_8
-            end
-
-            def info!
-              @layout = :info
-            end
-
-            def info?
-              @layout == :info
-            end
-
-            def sos!
-              @layout = :sos
-            end
-
-            def sos?
-              @layout == :sos
-            end
-
-            def smses!
-              @layout = :smses
-            end
-
-            def smses?
-              @layout == :smses
-            end
-
-            def quick_index
-              @quick_index ||= 1
+            def button_id(action)
+              action.parameters[:id].value
             end
 
             def notify_of_button(command)
