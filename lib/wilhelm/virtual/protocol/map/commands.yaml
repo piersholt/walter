@@ -3341,7 +3341,7 @@
   # NOTE: defaulted to Base to due to Parameterized parsing issues
   :klass: Base
   :properties:
-    :short_name: SRC?
+    :short_name: TAPE?
     :long_name: Audio Device Control
   :parameters:
     :control:
@@ -3402,7 +3402,7 @@
 
 0x4F: # SRC-GFX
   # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Parameterized::Base
+  :klass: Base
   :properties:
     :short_name: SRC-GFX
     :long_name: Display Output
