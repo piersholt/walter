@@ -10,6 +10,7 @@ module Wilhelm
         attr_reader :id, :state, :strategy
 
         DEFAULT_STRATEGY = TwoStage
+        VALID_STATES = %i[press hold release].freeze
 
         def initialize(id, strategy = DEFAULT_STRATEGY)
           @id = id
@@ -49,12 +50,12 @@ module Wilhelm
         end
 
         def valid?(state)
-          raise ArgumentError, "Invalid control state: #{state}" unless
-          validate_state(state)
+          return true if validate_state(state)
+          raise(ArgumentError, "Invalid control state: #{state}")
         end
 
         def validate_state(state)
-          %i[press hold release].any? { |s| s == state }
+          VALID_STATES.any? { |s| s == state }
         end
       end
     end

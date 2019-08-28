@@ -15,7 +15,8 @@ module Wilhelm
             context.notify_observers(
               :control,
               control: context.button,
-              state: toggle_state(context))
+              state: toggle_state(context)
+            )
           end
 
           def toggle_state(context)
