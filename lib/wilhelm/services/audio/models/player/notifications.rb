@@ -22,24 +22,38 @@ module Wilhelm
 
           def track_start!
             logger.unknown(PROG) { '#track_start!' }
+            timer.start!
             changed
             notify_observers(:track_start, player: self)
           end
 
           def track_end!
             logger.unknown(PROG) { '#track_end!' }
+            timer.stop!
+            timer.reset!
             changed
             notify_observers(:track_end, player: self)
           end
 
           def position!
             logger.unknown(PROG) { '#position!' }
+            timer.elapsed_time = position
             changed
             notify_observers(:position, player: self)
           end
 
           def status!
             logger.unknown(PROG) { '#status!' }
+            if playing?
+              timer.start!
+            elsif paused?
+              timer.stop!
+            else
+              logger.warn(PROG) { "#status! Unknown status to update timer: #{status}" }
+            end
+            changed
+            notify_observers(:status, player: self)
+          end
 
           def repeat!
             logger.unknown(PROG) { '#repeat!' }
