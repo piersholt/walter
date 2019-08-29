@@ -22,6 +22,10 @@ module Wilhelm
         def initialize(attributes = EMPTY_ATTRIBUTES.dup)
           @attributes = attributes
         end
+
+        def timer
+          @timer ||= Timer.new
+        end
       end
     end
   end
