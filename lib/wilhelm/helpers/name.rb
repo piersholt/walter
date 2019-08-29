@@ -24,6 +24,10 @@ module Wilhelm
         name_string = name.upcase
         name_string.to_sym
       end
+
+      def symbol_concat(*objects)
+        objects.join&.to_sym
+      end
     end
   end
 end
