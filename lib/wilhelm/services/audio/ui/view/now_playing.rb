@@ -54,6 +54,7 @@ module Wilhelm
 
             def line1(player)
               to_write = player.title
+              # @note base menu item label is already 40 char limit
               to_write = to_write[0,40] if to_write.length > 40
               [0, BaseMenuItem.new(label: to_write)]
             end
@@ -72,7 +73,7 @@ module Wilhelm
             end
 
             def line5(player)
-              [4, BaseMenuItem.new(label: '---------')]
+              [4, BaseMenuItem.new(label: "#{player.status} #{player.timer}")]
             end
 
             MARKER = 130
