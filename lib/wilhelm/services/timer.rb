@@ -16,7 +16,7 @@ module Wilhelm
       end
 
       def reset_interval!
-        LOGGER.unknown(self.class) { '#reset_interval!' }
+        LOGGER.unknown(self) { '#reset_interval!' }
         # return false if started?
         @start = -1
         @stop = -1
@@ -24,14 +24,14 @@ module Wilhelm
       end
 
       def start!
-        LOGGER.unknown(self.class) { '#start!' }
+        LOGGER.unknown(self) { '#start!' }
         return false if started?
         @start = clock_monotonic(TIMER_UNIT)
         accumulated_intervals
       end
 
       def stop!
-        LOGGER.unknown(self.class) { '#stop!' }
+        LOGGER.unknown(self) { '#stop!' }
         return false unless started?
         @stop = clock_monotonic(TIMER_UNIT)
         interval(@start, @stop)
@@ -58,7 +58,7 @@ module Wilhelm
       end
 
       def elapsed_time=(interval, unit = 1000)
-        LOGGER.unknown(self.class) { "#elapsed_time=(#{interval})" }
+        LOGGER.unknown(self) { "#elapsed_time=(#{interval})" }
         LOGGER.warn(self) { ELAPSED_ERROR } if started?
         @intervals = [interval.fdiv(unit).round]
       end
