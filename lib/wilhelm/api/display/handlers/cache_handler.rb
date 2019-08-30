@@ -21,7 +21,7 @@ module Wilhelm
 
         def menu_cache(layout:, index:, chars:)
           logger.debug(NAME) { "#menu_cache(#{layout}, #{index}, #{chars})" }
-          cache.public_send(layout).cache!(index => chars)
+          cache.public_send(layout).overwrite!(index => chars)
         end
 
         # This will never have text, it's purely to render.

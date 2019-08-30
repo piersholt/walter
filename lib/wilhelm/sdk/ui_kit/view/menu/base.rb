@@ -32,7 +32,7 @@ module Wilhelm
             self.class.name
           end
 
-          def menu_items_with_index
+          def menu_items_with_index(*)
             menu_items.to_h
           end
 

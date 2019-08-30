@@ -55,8 +55,15 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu(context, view)' }
           context.menu = view
 
+          LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu -> get cache object...' }
+          cache = context.cache.by_layout_id(view.layout)
+          LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu -> cache view...' }
+          cache.cache!(view.indexed_chars)
+          LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu -> get cache dirty ids...' }
+          dirty_ids = cache.dirty_ids
+
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
-          context.bus.rad.build_menu(view.layout, view.menu_items_with_index)
+          context.bus.rad.build_menu(view.layout, view.menu_items_with_index(dirty_ids))
           true
         end
 
