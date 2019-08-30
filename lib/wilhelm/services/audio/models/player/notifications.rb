@@ -76,6 +76,13 @@ module Wilhelm
           def updated!
             logger.unknown(PROG) { '#updated!' }
             timer.elapsed_time = position
+            if playing?
+              timer.start!
+            elsif paused?
+              timer.stop!
+            else
+              logger.warn(PROG) { "#status! Unknown status to update timer: #{status}" }
+            end
             changed
             notify_observers(:updated, player: self)
           end
