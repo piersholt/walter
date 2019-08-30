@@ -24,7 +24,19 @@ module Wilhelm
         end
 
         def timer
-          @timer ||= Timer.new
+          @timer ||= create_timer
+        end
+
+        def timer_update(event, object)
+          logger.unknown(PROG) { "#{event}: #{object}" }
+          changed
+          notify_observers(:position, player: self)
+        end
+
+        def create_timer
+          t = Timer.new
+          t.add_observer(self, :timer_update)
+          t
         end
       end
     end

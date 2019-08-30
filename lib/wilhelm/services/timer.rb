@@ -4,6 +4,8 @@ module Wilhelm
   module Services
     # Services::Timer
     class Timer
+      include Helpers::Observation
+
       CLOCK_ID        = Process::CLOCK_MONOTONIC
       TIMER_UNIT      = :second
       DURATION_BASES  = [60, 60, 24].freeze
@@ -24,13 +26,50 @@ module Wilhelm
       end
 
       def running?
-        @running ||= false
+        semaphore.synchronize do
+          @running ||= false
+        end
+      end
+
+      def running!
+        @running = true
+        threaded
+      end
+
+      def stopping!
+        @running = false
+      end
+
+      def semaphore
+        @semaphore ||= Mutex.new
+      end
+
+      def logger
+        LOGGER
+      end
+
+      def threaded
+        return false if @thread
+        @thread = Thread.new do
+          LOGGER.unknown(self) { 'Thread running!' }
+          last_time = elapsed_time
+          while running?
+            if elapsed_time > last_time
+              changed
+              notify_observers(:interval, self)
+              last_time = elapsed_time
+            end
+            sleep(30)
+          end
+          LOGGER.unknown(self) { 'Thread stopping!' }
+        end
+        @thread = nil
       end
 
       def start!
         LOGGER.unknown(self) { '#start!' }
         return false if running?
-        @running = true
+        running!
         @start = clock_monotonic(TIMER_UNIT)
         accumulated_intervals
       end
@@ -38,7 +77,7 @@ module Wilhelm
       def stop!
         LOGGER.unknown(self) { '#stop!' }
         return false unless running?
-        @running = false
+        stopping!
         @stop = clock_monotonic(TIMER_UNIT)
         interval(@start, @stop)
         reset_interval!
