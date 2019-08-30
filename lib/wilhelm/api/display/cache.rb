@@ -1,18 +1,25 @@
 # frozen_string_literal: true
 
+require_relative 'cache/value'
+require_relative 'cache/base'
+require_relative 'cache/header/digital'
+require_relative 'cache/menu/static'
+require_relative 'cache/menu/titled'
+require_relative 'cache/menu/basic'
+
 module Wilhelm
   module API
     class Display
       # API::Display::Cache
       class Cache
         def header
-          @header ||= { digital: Digital.new }
+          @header ||= { digital: Header::Digital.new }
         end
 
         def menu
-          @menu ||= { basic: Basic.new,
-            titled: Titled.new,
-            static: Static.new }
+          @menu ||= { basic: Menu::Basic.new,
+            titled: Menu::Titled.new,
+            static: Menu::Static.new }
           end
 
           def digital
