@@ -9,13 +9,10 @@ module Wilhelm
           class Basic < Cache::Base
             INDEX_START = 0
             LENGTH = 11
+            NAME = 'Cache::Basic'
 
             def initialize
               @attributes = generate_attributes(LENGTH, INDEX_START)
-            end
-
-            def name
-              'Cache (Basic)'
             end
           end
         end

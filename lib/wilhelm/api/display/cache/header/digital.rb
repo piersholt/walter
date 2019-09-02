@@ -9,6 +9,7 @@ module Wilhelm
           class Digital < Base
             INDEX_START = 0
             LENGTH = 9
+            NAME = 'Cache::Digital'
 
             def initialize
               @attributes = generate_attributes(LENGTH, INDEX_START)
@@ -16,10 +17,6 @@ module Wilhelm
 
             def title
               attributes[0]
-            end
-
-            def name
-              'Cache (Digital)'
             end
           end
         end

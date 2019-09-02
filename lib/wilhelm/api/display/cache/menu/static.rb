@@ -9,13 +9,10 @@ module Wilhelm
           class Static < Cache::Base
             INDEX_START = 0
             LENGTH = 6
+            NAME = 'Cache::Static'
 
             def initialize
               @attributes = generate_attributes(LENGTH, INDEX_START)
-            end
-
-            def name
-              'Cache (Static)'
             end
           end
         end

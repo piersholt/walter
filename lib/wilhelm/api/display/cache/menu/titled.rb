@@ -11,13 +11,10 @@ module Wilhelm
             LENGTH = 11
             TITLE_LEFT_INDEX = 9
             TITLE_RIGHT_INDEX = 10
+            NAME = 'Cache::Titled'
 
             def initialize
               @attributes = generate_attributes(LENGTH, INDEX_START)
-            end
-
-            def name
-              'Cache (Titled)'
             end
 
             def title_left

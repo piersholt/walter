@@ -19,6 +19,7 @@ module Wilhelm
           end
 
           BLANK_ATTRIBUTE = [].freeze
+          NAME = 'Cache::Base'
 
           attr_reader :attributes
 
@@ -27,7 +28,7 @@ module Wilhelm
           end
 
           def name
-            self.class.name
+            self.class.const_get(:NAME)
           end
 
           def generate_attributes(length = 10, offset = 0)
