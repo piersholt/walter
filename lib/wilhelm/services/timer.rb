@@ -7,17 +7,23 @@ module Wilhelm
       include Helpers::Observation
       include Helpers::Time
 
-      CLOCK_ID        = Process::CLOCK_MONOTONIC
-      TIMER_UNIT      = :second
-      ELAPSED_ERROR   = 'Unable to set elapsed time on running timer!'
-      UPDATE_RATE = 5
+      CLOCK_ID           = Process::CLOCK_MONOTONIC
+      TIMER_UNIT         = :second
+      ELAPSED_ERROR      = 'Unable to set elapsed time on running timer!'
+      UPDATE_RATE        = 5
+      MSG_TIMER_START    = '#start!'
+      MSG_TIMER_STOP     = '#stop!'
+      MSG_RESET_INTERVAL = '#reset_interval!'
+      MSG_THREAD_START   = 'Thread running!'
+      MSG_THREAD_STOP    = 'Thread stopping!'
+      PROG               = 'Services::Timer'
 
       def initialize
         reset_interval!
       end
 
       def reset_interval!
-        LOGGER.unknown(self) { '#reset_interval!' }
+        LOGGER.debug(PROG) { MSG_RESET_INTERVAL }
         return false if running?
         @start = -1
         @stop = -1
@@ -54,7 +60,7 @@ module Wilhelm
         return false if count_observers.zero?
         semaphore.synchronize do
           @thread ||= Thread.new do
-            LOGGER.warn(self) { 'Thread running!' }
+            LOGGER.warn(PROG) { MSG_THREAD_START }
             last_time = elapsed_time
             while running?
               if elapsed_time > last_time
@@ -64,13 +70,13 @@ module Wilhelm
               end
               sleep(update_rate)
             end
-            LOGGER.warn(self) { 'Thread stopping!' }
+            LOGGER.warn(PROG) { MSG_THREAD_STOP }
           end
         end
       end
 
       def start!
-        LOGGER.unknown(self) { '#start!' }
+        LOGGER.debug(PROG) { MSG_TIMER_START }
         return false if running?
         running!
         @start = clock_monotonic(TIMER_UNIT)
@@ -78,7 +84,7 @@ module Wilhelm
       end
 
       def stop!
-        LOGGER.unknown(self) { '#stop!' }
+        LOGGER.debug(PROG) { MSG_TIMER_STOP }
         return false unless running?
         stopping!
         @stop = clock_monotonic(TIMER_UNIT)
@@ -94,8 +100,7 @@ module Wilhelm
       end
 
       def elapsed_time=(interval, unit = 1000)
-        LOGGER.unknown(self) { "#elapsed_time=(#{interval})" }
-        LOGGER.warn(self) { ELAPSED_ERROR } if running?
+        LOGGER.debug(PROG) { "#elapsed_time=(#{interval})" }
         @intervals = [interval.fdiv(unit).round]
       end
 
