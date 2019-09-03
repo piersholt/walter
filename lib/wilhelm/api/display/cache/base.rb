@@ -79,7 +79,6 @@ module Wilhelm
           def merge(key, old, new)
             logger.debug(name) { "#merge(#{key},#{old.char_array},#{new})" }
             if old.char_array == new
-              logger.debug(name) { "old.char_array == new => #{old.char_array == new}" }
               logger.debug(name) { "Field #{key}: no change!" }
               old
             elsif new.is_a?(Array) || new.is_a?(Core::Bytes)
