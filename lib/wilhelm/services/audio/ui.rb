@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'ui/view/elapsed_time'
 require_relative 'ui/view/now_playing'
 require_relative 'ui/view/targets'
 require_relative 'ui/view/index'

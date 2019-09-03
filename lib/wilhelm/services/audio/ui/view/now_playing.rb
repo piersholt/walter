@@ -73,7 +73,7 @@ module Wilhelm
             end
 
             def line5(player)
-              [4, BaseMenuItem.new(label: "#{player.status} #{player.timer}")]
+              [4, View::ElapsedTime.new(player.timer.elapsed_time, player.duration)]
             end
 
             MARKER = 130

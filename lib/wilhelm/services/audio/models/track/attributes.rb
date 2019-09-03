@@ -42,7 +42,7 @@ module Wilhelm
           end
 
           def duration
-            attributes.fetch(DURATION, EMPTY_ATTRIBUTE)
+            attributes.fetch(DURATION, 0)&.fdiv(1000)&.round
           end
 
           def attributes!(track_attributes)
