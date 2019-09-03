@@ -13,6 +13,7 @@ require_relative 'helpers/positional'
 require_relative 'helpers/object'
 require_relative 'helpers/inspect'
 require_relative 'helpers/observation'
+require_relative 'helpers/time'
 
 module Wilhelm
   # Helpers

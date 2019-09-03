@@ -5,13 +5,16 @@ module Wilhelm
     class Audio
       # Audio::Players
       class Players < Collection
+        include Helpers::Name
+
         PROG = 'Audio::Players'
+        EXCLAIM = '!'
 
         # HANDLER
 
         def update(player_attributes_hash, notification = nil)
           player = create_or_update(player_attributes_hash)
-          player.public_send(notification) if notification
+          player.public_send(symbol_concat(notification, EXCLAIM)) if notification
         rescue StandardError => e
           logger.error(PROG) { e }
           e.backtrace.each { |line| logger.error(PROG) { line } }

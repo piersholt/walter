@@ -37,15 +37,26 @@ module Wilhelm
               id = notification.properties.fetch(:path, 'unknown?')
               logger.info(PLAYER_HANDLER) { ":track_change => #{id}" }
               audio.players.update(notification.properties, :track_change)
+            when :track_end
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(PLAYER_HANDLER) { ":track_end => #{id}" }
+              audio.players.update(notification.properties, :track_end)
+            when :position
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(PLAYER_HANDLER) { ":position => #{id}" }
+              audio.players.update(notification.properties, :position)
             when :status
               id = notification.properties.fetch(:path, 'unknown?')
               logger.info(PLAYER_HANDLER) { ":status => #{id}" }
-              # @todo conflict with attribute: status
               audio.players.update(notification.properties, :status)
             when :updated
               id = notification.properties.fetch(:path, 'unknown?')
               logger.info(PLAYER_HANDLER) { ":updated => #{id}" }
               audio.players.update(notification.properties, :updated)
+            when :created
+              id = notification.properties.fetch(:path, 'unknown?')
+              logger.info(PLAYER_HANDLER) { ":created => #{id}" }
+              audio.players.update(notification.properties, :created)
             else
               not_handled(notification)
             end

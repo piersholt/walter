@@ -137,6 +137,12 @@ module Wilhelm
                 now_playing
               when :track_change
                 now_playing
+              when :track_start
+                now_playing
+              when :position
+                now_playing
+              when :status
+                now_playing
               end
             end
 

@@ -26,13 +26,17 @@ module Wilhelm
           context.default_header = view
           context.header = view
 
-          # dirty_fields = context.cache.digital.dirty.to_h.keys
-          # subset of fields for dynamic write
-          # context.cache.digital.cache!({ 0 => context.header.title.to_c }, false)
-          dirty_ids = context.cache.digital.dirty_ids
-          LOGGER.debug(DISPLAY_CAPTURED) { "Get dirty field IDs => #{dirty_ids}" }
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Overwrite cache with view field values...' }
-          context.cache.digital.overwrite!(context.header.indexed_chars)
+          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
+          cache = context.cache.by_layout_id(view.layout)
+          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
+          cache.cache!(view.indexed_chars)
+          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
+          dirty_ids = cache.dirty_ids
+          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
+
+          # @note this would replace #overwrite at Display::Listener
+          # LOGGER.debug(DISPLAY_CAPTURED) { 'Overwrite cache with view field values...' }
+          # context.cache.digital.overwrite!(context.header.indexed_chars)
 
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render header...' }
           context.bus.rad.build_new_header(
@@ -55,8 +59,19 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu(context, view)' }
           context.menu = view
 
+          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
+          cache = context.cache.by_layout_id(view.layout)
+          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
+          cache.cache!(view.indexed_chars)
+          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
+          dirty_ids = cache.dirty_ids
+          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
+          # return false if dirty_ids.empty?
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
-          context.bus.rad.build_menu(view.layout, view.menu_items_with_index)
+          context.bus.rad.build_menu(
+            view.layout,
+            view.menu_items_with_index(dirty_ids)
+          )
           true
         end
 

@@ -28,8 +28,14 @@ module Wilhelm
             STATUS_OFF.one? { |s| s == status }
           end
 
+          alias pause? off?
+
+          def playing?
+            STATUS_PLAYING.one? { |s| s == status }
+          end
+
           def paused?
-            STATUS_PAUSE.one? { |s| s == status }
+            STATUS_PAUSED.one? { |s| s == status }
           end
         end
       end

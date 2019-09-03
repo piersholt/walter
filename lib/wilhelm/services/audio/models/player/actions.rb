@@ -27,10 +27,10 @@ module Wilhelm
 
           def pause
             logger.debug(PROG) { '#pause' }
-            if play?
+            if on?
               pause!(id)
               true
-            elsif paused?
+            elsif off?
               play
               false
             end

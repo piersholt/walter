@@ -17,6 +17,7 @@ module Wilhelm
 end
 
 require_relative 'services/collection'
+require_relative 'services/timer'
 
 # Audio
 print "\tLoading wilhelm/services/audio => "

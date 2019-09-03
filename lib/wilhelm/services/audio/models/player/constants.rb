@@ -33,7 +33,9 @@ module Wilhelm
 
           STATUS_ON = %w[playing forward-seek reverse-seek].freeze
           STATUS_OFF = %w[stopped paused error].freeze
-          STATUS_PAUSE = %w[stopped paused error].freeze
+
+          STATUS_PLAYING = %w[playing].freeze
+          STATUS_PAUSED = %w[paused].freeze
 
           EMPTY_ATTRIBUTES = { TRACK => nil }.freeze
 

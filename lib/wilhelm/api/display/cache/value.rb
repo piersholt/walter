@@ -14,7 +14,7 @@ module Wilhelm
           def_delegators :char_array, :empty?
 
           def initialize(char_array = EMPTY_ARRAY.dup, dirty: false)
-            raise ArgumentError, 'Argument char_array is not an Array!' unless char_array.is_a?(Array)
+            raise ArgumentError, 'Argument char_array is not an Array!' unless char_array.is_a?(Array) || char_array.is_a?(Core::Bytes)
             @char_array = char_array
             @dirty = dirty
           end

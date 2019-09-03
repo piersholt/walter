@@ -17,6 +17,24 @@ module Wilhelm
           def layout
             MENUS[:static]
           end
+
+          # @override: Base
+          # Static layout does not have index 0
+          def menu_items_with_index(dirty_indexes = nil)
+            logger.debug(self.class) { "#menu_items_with_index(#{dirty_indexes})" }
+            return menu_items.to_h unless dirty_indexes
+            @attributes.to_h.keep_if do |key, _|
+              dirty_indexes.include?(key + 1)
+            end
+          end
+
+          # @override: Base
+          # Static layout does not have index 0
+          def indexed_chars
+            menu_items.map do |index, field|
+              [index + 1, field.to_c]
+            end&.to_h
+          end
         end
       end
     end
