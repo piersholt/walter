@@ -10,6 +10,7 @@ module Wilhelm
       CLOCK_ID        = Process::CLOCK_MONOTONIC
       TIMER_UNIT      = :second
       ELAPSED_ERROR   = 'Unable to set elapsed time on running timer!'
+      UPDATE_RATE = 5
 
       def initialize
         reset_interval!
@@ -36,6 +37,9 @@ module Wilhelm
 
       def stopping!
         @running = false
+        @thread&.thread_variable_set(:running, false)
+        @thread&.exit
+        @thread = nil
       end
 
       def semaphore
@@ -47,21 +51,22 @@ module Wilhelm
       end
 
       def threaded
-        return false if @thread
-        @thread = Thread.new do
-          LOGGER.unknown(self) { 'Thread running!' }
-          last_time = elapsed_time
-          while running?
-            if elapsed_time > last_time
-              changed
-              notify_observers(:interval, self)
-              last_time = elapsed_time
+        return false if count_observers.zero?
+        semaphore.synchronize do
+          @thread ||= Thread.new do
+            LOGGER.warn(self) { 'Thread running!' }
+            last_time = elapsed_time
+            while running?
+              if elapsed_time > last_time
+                changed
+                notify_observers(:interval, self)
+                last_time = elapsed_time
+              end
+              sleep(update_rate)
             end
-            sleep(30)
+            LOGGER.warn(self) { 'Thread stopping!' }
           end
-          LOGGER.unknown(self) { 'Thread stopping!' }
         end
-        @thread = nil
       end
 
       def start!
@@ -105,6 +110,14 @@ module Wilhelm
 
       def to_s
         formatted(elapsed_time)
+      end
+
+      def update_rate
+        @thread&.thread_variable_get(:update_rate) || UPDATE_RATE
+      end
+
+      def update_rate=(value)
+        @thread&.thread_variable_set(:update_rate, value)
       end
 
       private

@@ -9,17 +9,19 @@ module Wilhelm
           class ElapsedTime
             include SDK::UIKit::View
             include Helpers::Time
-            
+
             BARS_MAX       = 24
             FILL_CHAR      = 0xb7.chr
-            EMPTY_CHAR     = 0xb7.chr
             HEAD_CHAR      = 0x82.chr
+            EMPTY_CHAR     = 0xb7.chr
             BOUNDARY_LEFT  = 0xab.chr
             BOUNDARY_RIGHT = 0xbb.chr
 
             attr_reader :label
 
             def initialize(elapsed_time = 0, duration = 10)
+              duration = 1 if duration.zero?
+              elapsed_time = 0 if elapsed_time >= b
               @label = generate(elapsed_time, duration)
             end
 
@@ -41,8 +43,10 @@ module Wilhelm
               empty = BARS_MAX - fill
               empty_chars = Array.new(empty.negative? ? 0 : empty, EMPTY_CHAR)
 
-              total_chars = fill_chars + empty_chars
-              "#{ftime(a, 2)}\t#{BOUNDARY_LEFT}#{total_chars.join}#{BOUNDARY_RIGHT}\t#{ftime(b, 2)}"
+              "#{BOUNDARY_LEFT}#{(fill_chars + empty_chars).join}#{BOUNDARY_RIGHT}"
+            rescue StandardError => e
+              LogActually.services.error(self.class) { "#{e}: a=#{a}, b=#{b}" }
+              raise e
             end
 
             def proportion(a, b, precision = 2)
