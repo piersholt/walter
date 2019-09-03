@@ -5,12 +5,10 @@ module Wilhelm
     # Services::Timer
     class Timer
       include Helpers::Observation
+      include Helpers::Time
 
       CLOCK_ID        = Process::CLOCK_MONOTONIC
       TIMER_UNIT      = :second
-      DURATION_BASES  = [60, 60, 24].freeze
-      TIMER_MASK      = '%.2i'
-      TIMER_DELIMITER = ':'
       ELAPSED_ERROR   = 'Unable to set elapsed time on running timer!'
 
       def initialize
@@ -101,18 +99,12 @@ module Wilhelm
         accumulated_intervals + (clock_monotonic(TIMER_UNIT) - @start)
       end
 
-      def duration
-        n = elapsed_time
-        DURATION_BASES.collect do |b|
-          n, d = n.divmod(b)
-          d
-        end
+      def periods
+        time(elapsed_time)
       end
 
       def to_s
-        duration.reverse.collect do |i|
-          format(TIMER_MASK, i)
-        end&.join(TIMER_DELIMITER)
+        formatted(elapsed_time)
       end
 
       private
