@@ -25,7 +25,6 @@ module Wilhelm
             header_cache(properties)
           when HEADER_WRITE
             header_write(properties)
-            overwritten_header!
           when MENU_CACHE
             menu_cache(properties)
           when MENU_WRITE
