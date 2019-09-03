@@ -66,7 +66,7 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
           dirty_ids = cache.dirty_ids
           LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
-
+          return false if dirty_ids.empty?
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
           context.bus.rad.build_menu(
             view.layout,

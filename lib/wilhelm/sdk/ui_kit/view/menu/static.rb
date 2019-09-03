@@ -20,9 +20,9 @@ module Wilhelm
 
           # @override: Base
           # Static layout does not have index 0
-          def menu_items_with_index(dirty_indexes = [])
+          def menu_items_with_index(dirty_indexes = nil)
             logger.debug(self.class) { "#menu_items_with_index(#{dirty_indexes})" }
-            return menu_items.to_h if dirty_indexes.empty?
+            return menu_items.to_h unless dirty_indexes
             @attributes.to_h.keep_if do |key, _|
               dirty_indexes.include?(key + 1)
             end
