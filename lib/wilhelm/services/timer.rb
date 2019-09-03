@@ -22,57 +22,8 @@ module Wilhelm
         reset_interval!
       end
 
-      def reset_interval!
-        LOGGER.debug(PROG) { MSG_RESET_INTERVAL }
-        return false if running?
-        @start = -1
-        @stop = -1
-        true
-      end
-
-      def running?
-        semaphore.synchronize do
-          @running ||= false
-        end
-      end
-
-      def running!
-        @running = true
-        threaded
-      end
-
-      def stopping!
-        @running = false
-        @thread&.thread_variable_set(:running, false)
-        @thread&.exit
-        @thread = nil
-      end
-
-      def semaphore
-        @semaphore ||= Mutex.new
-      end
-
-      def logger
-        LOGGER
-      end
-
-      def threaded
-        return false if count_observers.zero?
-        semaphore.synchronize do
-          @thread ||= Thread.new do
-            LOGGER.warn(PROG) { MSG_THREAD_START }
-            last_time = elapsed_time
-            while running?
-              if elapsed_time > last_time
-                changed
-                notify_observers(:interval, self)
-                last_time = elapsed_time
-              end
-              sleep(update_rate)
-            end
-            LOGGER.warn(PROG) { MSG_THREAD_STOP }
-          end
-        end
+      def to_s
+        formatted(elapsed_time)
       end
 
       def start!
@@ -99,22 +50,18 @@ module Wilhelm
         elapsed_time
       end
 
-      def elapsed_time=(interval, unit = 1000)
-        LOGGER.debug(PROG) { "#elapsed_time=(#{interval})" }
-        @intervals = [interval.fdiv(unit).round]
-      end
-
       def elapsed_time
         return accumulated_intervals unless running?
         accumulated_intervals + (clock_monotonic(TIMER_UNIT) - @start)
       end
 
-      def periods
-        time(elapsed_time)
+      def elapsed_time=(interval, unit = 1000)
+        LOGGER.debug(PROG) { "#elapsed_time=(#{interval})" }
+        @intervals = [interval.fdiv(unit).round]
       end
 
-      def to_s
-        formatted(elapsed_time)
+      def periods
+        time(elapsed_time)
       end
 
       def update_rate
@@ -126,6 +73,32 @@ module Wilhelm
       end
 
       private
+
+      def running!
+        @running = true
+        threaded
+      end
+
+      def running?
+        semaphore.synchronize do
+          @running ||= false
+        end
+      end
+
+      def stopping!
+        @running = false
+        @thread&.thread_variable_set(:running, false)
+        @thread&.exit
+        @thread = nil
+      end
+
+      def reset_interval!
+        LOGGER.debug(PROG) { MSG_RESET_INTERVAL }
+        return false if running?
+        @start = -1
+        @stop = -1
+        true
+      end
 
       def interval(time_start, time_stop)
         intervals << time_stop - time_start
@@ -141,6 +114,29 @@ module Wilhelm
 
       def clock_monotonic(unit = TIMER_UNIT)
         Process.clock_gettime(CLOCK_ID, unit)
+      end
+
+      def semaphore
+        @semaphore ||= Mutex.new
+      end
+
+      def threaded
+        return false if count_observers.zero?
+        semaphore.synchronize do
+          @thread ||= Thread.new do
+            LOGGER.warn(PROG) { MSG_THREAD_START }
+            last_time = elapsed_time
+            while running?
+              if elapsed_time > last_time
+                changed
+                notify_observers(:interval, self)
+                last_time = elapsed_time
+              end
+              sleep(update_rate)
+            end
+            LOGGER.warn(PROG) { MSG_THREAD_STOP }
+          end
+        end
       end
     end
   end
