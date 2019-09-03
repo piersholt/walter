@@ -50,6 +50,8 @@ module Wilhelm
             basic
           when 0x61
             titled
+          when 0x62
+            digital
           when 0x63
             static
           end
