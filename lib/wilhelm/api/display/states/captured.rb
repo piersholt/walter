@@ -21,8 +21,8 @@ module Wilhelm
           context.change_state(Enabled.new)
         end
 
-        def render_new_header(context, view)
-          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_new_header(context, view)' }
+        def render_header(context, view)
+          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_header(context, view)' }
           context.default_header = view
           context.header = view
 
@@ -64,7 +64,7 @@ module Wilhelm
           context.logger.warn(DISPLAY_CAPTURED) { '#overwritten_header!(context)' }
           dirty_ids = context.cache.digital.dirty_ids
           context.logger.warn(DISPLAY_CAPTURED) { "dirty_ids => #{dirty_ids}" }
-          context.render_new_header(context.header) unless dirty_ids.empty?
+          context.render_header(context.header) unless dirty_ids.empty?
         end
 
         def overwritten!(context)
