@@ -106,8 +106,8 @@ module Wilhelm
 
             # 0x48 BMBT_A
             def handle_bmbt_button_1(command)
-              logger.unknown(ident) { "BMBT_A -> #{command.pretty}" }
-              notify_of_button(command)
+              logger.debug(ident) { "BMBT_A -> #{command.pretty}" }
+              # notify_of_button(command)
             end
 
             protected
