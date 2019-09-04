@@ -39,15 +39,6 @@ module Wilhelm
           LOGGER.debug(DISPLAY_ENABLED) { '#render_header' }
           context.change_state(Captured.new)
           context.render_header(view)
-          # context.header = view
-          # dirty_ids = context.cache.digital.dirty_ids
-          # LOGGER.debug(DISPLAY_CAPTURED) { "Get dirty field IDs => #{dirty_ids}" }
-
-          # LOGGER.debug(DISPLAY_CAPTURED) { "Overwrite cache with view field values..." }
-          # context.cache.digital.overwrite!(context.header.indexed_chars)
-
-          # LOGGER.debug(DISPLAY_CAPTURED) { "Render header..." }
-          # context.bus.rad.build_header(view.layout, view.indexed_items, view.title)
         end
 
         def obc_request(context)
