@@ -26,13 +26,9 @@ module Wilhelm
           context.default_header = view
           context.header = view
 
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
           cache = context.cache.by_layout_id(view.layout)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
           cache.cache!(view.indexed_chars)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
           dirty_ids = cache.dirty_ids
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
 
           # @note this would replace #overwrite at Display::Listener
           # LOGGER.debug(DISPLAY_CAPTURED) { 'Overwrite cache with view field values...' }
@@ -51,14 +47,11 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu(context, view)' }
           context.menu = view
 
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
           cache = context.cache.by_layout_id(view.layout)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
           cache.cache!(view.indexed_chars)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
           dirty_ids = cache.dirty_ids
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
           # return false if dirty_ids.empty?
+
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
           context.bus.rad.build_menu(
             view.layout,
