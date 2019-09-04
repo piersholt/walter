@@ -41,7 +41,7 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render header...' }
           context.bus.rad.build_header(
             view.layout,
-            view.fields_with_index(dirty_ids),
+            view.indexed_items(dirty_ids),
             view.title
           )
           true
@@ -62,7 +62,7 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
           context.bus.rad.build_menu(
             view.layout,
-            view.menu_items_with_index(dirty_ids)
+            view.indexed_items(dirty_ids)
           )
           true
         end

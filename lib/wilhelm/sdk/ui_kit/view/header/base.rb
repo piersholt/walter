@@ -39,7 +39,7 @@ module Wilhelm
             self.class.const_get(:TYPE)
           end
 
-          def fields_with_index(dirty_indexes = [])
+          def indexed_items(dirty_indexes = [])
             return fields.to_h if dirty_indexes.empty?
 
             fields.to_h.keep_if do |key, _|

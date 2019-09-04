@@ -32,7 +32,7 @@ module Wilhelm
             self.class.name
           end
 
-          def menu_items_with_index(*)
+          def indexed_items(*)
             menu_items.to_h
           end
 
@@ -74,9 +74,9 @@ module Wilhelm
             # Non-stateful buttons for the moment
             return false unless state == :release
             # Ignore data requests for an index that doesn't exist
-            return false unless menu_items_with_index.key?(index)
+            return false unless indexed_items.key?(index)
 
-            selected_item = menu_items_with_index[index]
+            selected_item = indexed_items[index]
             changed
             notify_observers(selected_item.action, selected_item)
           end

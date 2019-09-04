@@ -31,7 +31,7 @@ module Wilhelm
           LOGGER.debug(DISPLAY_ENABLED) { '#render_menu' }
           context.render_new_header(context.header)
           context.menu = view
-          context.bus.rad.build_menu(view.layout, view.menu_items_with_index)
+          context.bus.rad.build_menu(view.layout, view.indexed_items)
           context.change_state(Captured.new)
         end
 
@@ -47,7 +47,7 @@ module Wilhelm
           # context.cache.digital.overwrite!(context.header.indexed_chars)
 
           # LOGGER.debug(DISPLAY_CAPTURED) { "Render header..." }
-          # context.bus.rad.build_header(view.layout, view.fields_with_index, view.title)
+          # context.bus.rad.build_header(view.layout, view.indexed_items, view.title)
         end
 
         def obc_request(context)
