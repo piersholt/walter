@@ -9,7 +9,7 @@ module Wilhelm
           extend Forwardable
 
           FORWARD_MESSAGES = %i[
-            << push first last each empty? size sort_by length
+            << push first last each empty? size sort_by
             to_s count [] find_all find each_with_index find_index
             map group_by delete_at
           ].freeze
@@ -95,6 +95,18 @@ module Wilhelm
             e.backtrace.each do |line|
               LOGGER.error(name) { line }
             end
+          end
+
+          def clear!
+            @attributes = generate_attributes(length, index_start)
+          end
+
+          def length
+            self.class.const_get(:LENGTH)
+          end
+
+          def index_start
+            self.class.const_get(:INDEX_START)
           end
         end
       end
