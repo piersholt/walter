@@ -39,10 +39,6 @@ module Wilhelm
             Array.new(length) { |i| [i+offset, Value.new] }.to_h
           end
 
-          def [](index)
-            attributes[index]
-          end
-
           def cache!(delta_hash)
             logger.debug(name) { "#cache!(#{delta_hash})" }
             attributes.merge!(delta_hash) do |existing_key, old_value, new_value|
