@@ -21,7 +21,7 @@ module Wilhelm
 
             def initialize(elapsed_time = 0, duration = 10)
               duration = 1 if duration.zero?
-              elapsed_time = 0 if elapsed_time >= b
+              elapsed_time = 0 if elapsed_time >= duration
               @label = generate(elapsed_time, duration)
             end
 
