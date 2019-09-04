@@ -16,20 +16,28 @@ module Wilhelm
                   LAYOUT_INDICES[LAYOUT_HEADER].each_with_index do |zone_index, index|
                     item = indexed_items.fetch(index, false)
                     next unless item
-                    draw_row_a5(layout, PADDING_NONE, zone_index, item.to_s)
+                    draw_row_a5(
+                      layout,
+                      PADDING_NONE,
+                      zone_index,
+                      item.to_s
+                    )
                   end
                   return title(gfx: layout, chars: title.to_s) if title
-                  render(layout) unless title
+                  render(layout)
                   true
                 end
-
 
                 def build_menu(layout, indexed_items)
                   LAYOUT_INDICES[layout].each_with_index do |zone_index, index|
                     item = indexed_items.fetch(index, false)
                     next unless item
-                    draw_row_21(layout, ZERO, zone_index, item.to_s)
-                    # draw_row_a5(layout, ZERO, zone_index, item.to_s)
+                    draw_row_21(
+                      layout,
+                      ZERO,
+                      zone_index,
+                      item.to_s
+                    )
                   end
                   render(layout)
                   true
