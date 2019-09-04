@@ -14,7 +14,7 @@ module Wilhelm
             NAME = 'Cache::Titled'
 
             def initialize
-              @attributes = generate_attributes(LENGTH, INDEX_START)
+              super(LENGTH, INDEX_START)
             end
 
             def title_left

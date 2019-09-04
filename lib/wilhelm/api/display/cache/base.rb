@@ -23,6 +23,10 @@ module Wilhelm
 
           attr_reader :attributes
 
+          def initialize(length, offset)
+            @attributes = generate_attributes(length, offset)
+          end
+
           def logger
             LOGGER
           end

@@ -12,7 +12,7 @@ module Wilhelm
             NAME = 'Cache::Basic'
 
             def initialize
-              @attributes = generate_attributes(LENGTH, INDEX_START)
+              super(LENGTH, INDEX_START)
             end
           end
         end
