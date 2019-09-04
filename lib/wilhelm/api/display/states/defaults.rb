@@ -35,7 +35,7 @@ module Wilhelm
         # Default Display Rendering
 
         def render_header(context, view)
-          LOGGER.debug(self.class.name) { "DEFAULT #render_header" }
+          LOGGER.warn(self.class.name) { "#{self.class.name}#render_header" }
           case view.type
           when :default
             context.default_header = view
