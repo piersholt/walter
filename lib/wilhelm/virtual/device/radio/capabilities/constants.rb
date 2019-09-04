@@ -37,7 +37,7 @@ module Wilhelm
             SELECTED   = 0b1000_0000
 
             # HEADER
-            HEADER_INDEXES = [
+            HEADER_INDICES = [
               INDEX_1 + BLOCK,
               INDEX_2 + BLOCK,
               INDEX_3 + BLOCK,
@@ -48,7 +48,7 @@ module Wilhelm
             ].freeze
 
             # MENU
-            MENU_INDEXES = [
+            MENU_INDICES = [
               INDEX_0 + BLOCK + FLUSH,
               INDEX_1 + BLOCK,
               INDEX_2 + BLOCK,
@@ -63,7 +63,7 @@ module Wilhelm
             ].freeze
 
             # MENU (Static)
-            LINE_INDEXES = [
+            LINE_INDICES = [
               INDEX_1 + BLOCK + FLUSH,
               INDEX_2 + BLOCK,
               INDEX_3 + BLOCK,
@@ -72,10 +72,10 @@ module Wilhelm
             ].freeze
 
             LAYOUT_INDICES = {
-              LAYOUT_MENU_A => MENU_INDEXES,
-              LAYOUT_MENU_B => MENU_INDEXES,
-              LAYOUT_HEADER => HEADER_INDEXES,
-              LAYOUT_STATIC => LINE_INDEXES
+              LAYOUT_MENU_A => MENU_INDICES,
+              LAYOUT_MENU_B => MENU_INDICES,
+              LAYOUT_HEADER => HEADER_INDICES,
+              LAYOUT_STATIC => LINE_INDICES
             }.freeze
           end
         end
