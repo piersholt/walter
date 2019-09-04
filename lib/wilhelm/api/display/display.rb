@@ -47,10 +47,6 @@ module Wilhelm
         @state.render_new_header(self, view)
       end
 
-      def dismiss(view)
-        @state.dismiss(self, view)
-      end
-
       def render_menu(view)
         @state.render_menu(self, view)
       end

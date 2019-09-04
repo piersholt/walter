@@ -23,7 +23,6 @@ module Wilhelm
                   true
                 end
 
-                alias build_new_header build_header
 
                 def build_menu(layout, menu_items_with_index)
                   LAYOUT_INDICES[layout].each_with_index do |item_index, index|

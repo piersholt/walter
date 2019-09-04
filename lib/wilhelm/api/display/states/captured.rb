@@ -39,19 +39,11 @@ module Wilhelm
           # context.cache.digital.overwrite!(context.header.indexed_chars)
 
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render header...' }
-          context.bus.rad.build_new_header(
+          context.bus.rad.build_header(
             view.layout,
             view.fields_with_index(dirty_ids),
             view.title
           )
-          true
-        end
-
-        def dismiss(context, view)
-          return false unless context.notification_header == view
-          context.render_new_header(context.default_header)
-          context.header = context.default_header
-          context.notification_header = nil
           true
         end
 

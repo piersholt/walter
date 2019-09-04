@@ -47,7 +47,7 @@ module Wilhelm
           # context.cache.digital.overwrite!(context.header.indexed_chars)
 
           # LOGGER.debug(DISPLAY_CAPTURED) { "Render header..." }
-          # context.bus.rad.build_new_header(view.layout, view.fields_with_index, view.title)
+          # context.bus.rad.build_header(view.layout, view.fields_with_index, view.title)
         end
 
         def obc_request(context)

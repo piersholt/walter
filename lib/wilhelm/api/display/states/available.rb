@@ -23,7 +23,7 @@ module Wilhelm
           context.render_new_header(view)
           # context.header = view
           # context.cache.digital.cache!(context.header.indexed_chars)
-          # context.bus.rad.build_new_header(view.layout, view.fields_with_index, view.title)
+          # context.bus.rad.build_header(view.layout, view.fields_with_index, view.title)
         end
       end
     end
