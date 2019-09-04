@@ -7,8 +7,8 @@ module Wilhelm
         module Menu
           # API::Display::Cache::Static
           class Static < Cache::Base
-            INDEX_START = 0
-            LENGTH = 6
+            INDEX_START = 1
+            LENGTH = 5
             NAME = 'Cache::Static'
 
             def initialize
