@@ -19,7 +19,7 @@ module Wilhelm
                     draw_row_a5(
                       layout,
                       PADDING_NONE,
-                      zone_index,
+                      zone_index | BLOCK,
                       item.to_s
                     )
                   end
@@ -35,7 +35,7 @@ module Wilhelm
                     draw_row_21(
                       layout,
                       ZERO,
-                      zone_index,
+                      zone_index | BLOCK | index.zero? ? FLUSH : 0,
                       item.to_s
                     )
                   end

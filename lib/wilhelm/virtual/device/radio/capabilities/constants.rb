@@ -38,37 +38,37 @@ module Wilhelm
 
             # HEADER
             HEADER_INDICES = [
-              INDEX_1 + BLOCK,
-              INDEX_2 + BLOCK,
-              INDEX_3 + BLOCK,
-              INDEX_4 + BLOCK,
-              INDEX_5 + BLOCK,
-              INDEX_6 + BLOCK,
-              INDEX_7 + BLOCK
+              INDEX_1,
+              INDEX_2,
+              INDEX_3,
+              INDEX_4,
+              INDEX_5,
+              INDEX_6,
+              INDEX_7
             ].freeze
 
             # MENU
             MENU_INDICES = [
-              INDEX_0 + BLOCK + FLUSH,
-              INDEX_1 + BLOCK,
-              INDEX_2 + BLOCK,
-              INDEX_3 + BLOCK,
-              INDEX_4 + BLOCK,
-              INDEX_5 + BLOCK,
-              INDEX_6 + BLOCK,
-              INDEX_7 + BLOCK,
-              INDEX_8 + BLOCK,
-              INDEX_9 + BLOCK,
-              INDEX_10 + BLOCK
+              INDEX_0,
+              INDEX_1,
+              INDEX_2,
+              INDEX_3,
+              INDEX_4,
+              INDEX_5,
+              INDEX_6,
+              INDEX_7,
+              INDEX_8,
+              INDEX_9,
+              INDEX_10
             ].freeze
 
             # MENU (Static)
             LINE_INDICES = [
-              INDEX_1 + BLOCK + FLUSH,
-              INDEX_2 + BLOCK,
-              INDEX_3 + BLOCK,
-              INDEX_4 + BLOCK,
-              INDEX_5 + BLOCK
+              INDEX_1,
+              INDEX_2,
+              INDEX_3,
+              INDEX_4,
+              INDEX_5
             ].freeze
 
             LAYOUT_INDICES = {
