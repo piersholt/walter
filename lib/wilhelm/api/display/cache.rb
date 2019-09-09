@@ -12,49 +12,92 @@ module Wilhelm
     class Display
       # API::Display::Cache
       class Cache
-        def header
-          @header ||= { digital: Header::Digital.new }
+        LAYOUT_CLASS_MAP = {
+          0x60 => Menu::Basic.new,
+          0x61 => Menu::Titled.new,
+          0x62 => Header::Digital.new,
+          0x63 => Menu::Static.new
+        }.freeze
+
+        SYMBOL_TO_ID_MAP = {
+          basic: 0x60,
+          titled: 0x61,
+          digital: 0x62,
+          static: 0x63
+        }.freeze
+
+        def validate_layout(layout)
+          return true if SYMBOL_TO_ID_MAP.key?(layout)
+          return true if LAYOUT_CLASS_MAP.key?(layout)
+          raise(ArgumentError, "Invalid layout! #{layout}") unless objects.key?(layout)
         end
 
-        def menu
-          @menu ||= {
-            basic: Menu::Basic.new,
-            titled: Menu::Titled.new,
-            static: Menu::Static.new
+        def pending!(layout, data, flush: false)
+          validate_layout(layout)
+          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
+          # LOGGER.debug(self.class) { "#pending! (#{Thread.current})" }
+          objects[layout]&.clear if flush
+          objects[layout]&.pending!(data)
+        end
+
+        def write!(layout, data, flush: false)
+          validate_layout(layout)
+          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
+          # LOGGER.debug(self.class) { "#write! (#{Thread.current})" }
+          objects[layout]&.clear if flush
+          objects[layout]&.write!(data)
+        end
+
+        def dirty_ids(layout)
+          validate_layout(layout)
+          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
+          # LOGGER.debug(self.class) { "#dirty_ids (#{Thread.current})" }
+          objects[layout]&.dirty_ids
+        end
+
+        def expired?(layout)
+          validate_layout(layout)
+          # LOGGER.debug(self.class) { "#expired? (#{Thread.current})" }
+          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
+          objects[layout]&.expired?
+        end
+
+        def objects
+          @objects ||= create_objects
+        end
+
+        def create_objects
+          LOGGER.debug(self.class) { "#create_objects (#{Thread.current})" }
+          {
+            0x60 => Menu::Basic.new,
+            0x61 => Menu::Titled.new,
+            0x62 => Header::Digital.new,
+            0x63 => Menu::Static.new
           }
-        end
-
-        # 0x62
-        def digital
-          header[:digital]
         end
 
         # 0x60
         def basic
-          menu[:basic]
+          objects[0x60]
         end
 
         # 0x61
         def titled
-          menu[:titled]
+          objects[0x61]
+        end
+
+        # 0x62
+        def digital
+          objects[0x62]
         end
 
         # 0x63
         def static
-          menu[:static]
+          objects[0x63]
         end
 
         def by_layout_id(id)
-          case id
-          when 0x60
-            basic
-          when 0x61
-            titled
-          when 0x62
-            digital
-          when 0x63
-            static
-          end
+          return false unless objects.key?(id)
         end
 
         alias layout by_layout_id

@@ -39,28 +39,6 @@ module Wilhelm
             Array.new(length) { |i| [i+offset, Value.new] }.to_h
           end
 
-          def cache!(delta_hash)
-            logger.debug(name) { "#cache!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |existing_key, old_value, new_value|
-              merge(existing_key, old_value, new_value)
-            end
-          rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each do |line|
-              LOGGER.error(name) { line }
-            end
-          end
-
-          def overwrite!(delta_hash)
-            LOGGER.debug(name) { "#overwrite!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |_, _, new_value|
-              Value.new(new_value, dirty: false)
-            end
-          end
-
-          alias attributes! cache!
-          alias write! cache!
-
           # Only applies to menus
           def show!
             # dirty
@@ -107,6 +85,30 @@ module Wilhelm
 
           def index_start
             self.class.const_get(:INDEX_START)
+          end
+
+          def expired?
+            result = attributes.all? { |_, value| value.dirty }
+            logger.debug(name) { "#expired? => #{result} (#{attributes.map { |k, v| "#{k}: #{v.dirty}" }})" }
+            result
+          end
+
+          def pending!(delta_hash)
+            logger.debug(name) { "#pending!(_delta_hash_)" }
+            attributes.merge!(delta_hash) do |existing_key, old_value, new_value|
+              merge(existing_key, old_value, new_value)
+            end
+          end
+
+          def write!(delta_hash)
+            LOGGER.debug(name) { "#write!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |_, _, new_value|
+              Value.new(new_value, dirty: false)
+            end
+            delta_hash.keys.each do |key|
+              next unless attributes.key?(key)
+              logger.debug(name) { "Field #{key}: written! (\"#{attributes[key]}\")" }
+            end
           end
         end
       end

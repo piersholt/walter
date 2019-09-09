@@ -40,7 +40,7 @@ module Wilhelm
           when :default
             context.default_header = view
             context.header = view
-            context.cache.digital.overwrite!(context.header.indexed_chars)
+            context.cache.write!(view.layout, context.header.indexed_chars)
           end
           true
         end
