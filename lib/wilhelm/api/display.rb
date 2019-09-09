@@ -2,6 +2,18 @@
 
 puts "\tLoading wilhelm/api/display"
 
+LogActually.is_all_around(:display)
+
+LogActually.display.d
+
+module Wilhelm
+  module API
+    class Display
+      LOGGER = LogActually.display
+    end
+  end
+end
+
 require_relative 'display/states/defaults'
 require_relative 'display/states/unknown'
 require_relative 'display/states/disabled'
