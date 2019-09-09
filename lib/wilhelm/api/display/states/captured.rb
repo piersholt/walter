@@ -26,10 +26,10 @@ module Wilhelm
           context.default_header = view
           context.header = view
 
-          cache = context.cache.by_layout_id(view.layout)
-          cache.cache!(view.indexed_chars)
-          dirty_ids = cache.dirty_ids
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
 
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
 
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render header...' }
           context.bus.rad.build_header(
@@ -44,12 +44,19 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu(context, view)' }
           context.menu = view
 
-          cache = context.cache.by_layout_id(view.layout)
-          cache.cache!(view.indexed_chars)
-          dirty_ids = cache.dirty_ids
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
+          expired = context.cache.expired?(view.layout)
 
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
-          context.bus.rad.build_menu(
+          context.cache.write!(view.layout, view.indexed_chars)
+
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
+
+          method = expired ? :build_menu : :update_menu
+
+          LOGGER.debug(DISPLAY_CAPTURED) { "Render menu... Method: #{method}, Dirty IDs: #{dirty_ids} (#{Thread.current})" }
+          context.bus.rad.public_send(
+            method,
             view.layout,
             view.indexed_items(dirty_ids)
           )
