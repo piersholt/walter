@@ -8,7 +8,7 @@ module Wilhelm
           # API::Display::Cache::Basic
           class Basic < Cache::Base
             INDEX_START = 0
-            LENGTH = 11
+            LENGTH = 10
             NAME = 'Cache::Basic'
 
             def initialize

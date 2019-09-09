@@ -8,7 +8,7 @@ module Wilhelm
           # API::Display::Cache::Titled
           class Titled < Cache::Base
             INDEX_START = 0
-            LENGTH = 11
+            LENGTH = 10
             TITLE_LEFT_INDEX = 9
             TITLE_RIGHT_INDEX = 10
             NAME = 'Cache::Titled'
