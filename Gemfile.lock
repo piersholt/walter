@@ -38,6 +38,7 @@ GEM
       byebug (~> 10.0)
       pry (~> 0.10)
     rake (12.3.2)
+    rb-readline (0.5.5)
     rbczmq (1.7.9)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
@@ -66,6 +67,7 @@ DEPENDENCIES
   capistrano-rbenv
   figaro
   pry-byebug
+  rb-readline
   rspec
   serialport
   wilhelm-tools!
