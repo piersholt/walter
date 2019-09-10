@@ -46,6 +46,10 @@ module Wilhelm
 
           alias render render_menu
 
+          def update_menu(view)
+            ui_context.update_menu(view)
+          end
+
           def render_header(view)
             ui_context.render_header(view)
           end

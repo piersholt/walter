@@ -97,6 +97,10 @@ module Wilhelm
           renderer.render_header(view)
         end
 
+        def update_menu(view)
+          renderer.update_menu(view)
+        end
+
         private
 
         def header?(controller = nil)

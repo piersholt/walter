@@ -18,14 +18,18 @@ module Wilhelm
 
           LABEL_RETURN = 'Back'
 
-          def indexed_items(*)
-            menu_items.to_h
-          end
-
           def indexed_chars
             menu_items.map do |index, field|
               [index, field.to_c]
             end&.to_h
+          end
+
+          def indexed_items(dirty_indexes = nil)
+            logger.debug(self.class) { "#indexed_items(#{dirty_indexes})" }
+            return menu_items.to_h unless dirty_indexes
+            menu_items.to_h.keep_if do |key, _|
+              dirty_indexes.include?(key)
+            end
           end
 
           # Helpers
