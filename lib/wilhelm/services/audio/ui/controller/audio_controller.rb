@@ -22,21 +22,21 @@ module Wilhelm
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              view = View::Index.new(@target)
+              @view = View::Index.new(@target)
               view.add_observer(self)
               render(view)
             end
 
             def targets
               LOGGER.debug(NAME) { '#targets' }
-              view = View::Targets.new(@targets)
+              @view = View::Targets.new(@targets)
               view.add_observer(self)
               render(view)
             end
 
             def now_playing
               LOGGER.debug(NAME) { '#now_playing' }
-              view = View::NowPlaying.new(@player)
+              @view = View::NowPlaying.new(@player)
               view.add_observer(self)
               render(view)
             end
