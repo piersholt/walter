@@ -5,9 +5,7 @@ module Wilhelm
     module UIKit
       module View
         # SDK::UIKit::View::BaseMenu
-        class BaseMenu
-          include Observable
-
+        class BaseMenu < Base
           MENU_BASIC  = 0x60
           MENU_TITLED = 0x61
           MENU_STATIC = 0x63
@@ -19,18 +17,6 @@ module Wilhelm
           }.freeze
 
           LABEL_RETURN = 'Back'
-
-          def logger
-            LOGGER
-          end
-
-          def layout
-            self.class.const_get(:LAYOUT)
-          end
-
-          def moi
-            self.class.name
-          end
 
           def indexed_items(*)
             menu_items.to_h
