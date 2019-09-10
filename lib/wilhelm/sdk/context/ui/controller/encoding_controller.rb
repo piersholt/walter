@@ -117,11 +117,13 @@ module Wilhelm
               when :page_previous
                 result = @code_model.backward
                 LOGGER.debug(NAME) { "backward => #{result}" }
-                codelist
+                @view&.reinitialize(@code_model)
+                update_menu(view)
               when :page_next
                 result = @code_model.forward
                 LOGGER.debug(NAME) { "forward => #{result}" }
-                codelist
+                @view&.reinitialize(@code_model)
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end
@@ -133,19 +135,23 @@ module Wilhelm
               when :weight_left
                 result = @weight_model.shift(-1)
                 LOGGER.debug(NAME) { "shift(-1) => #{result}" }
-                weight
+                @view&.reinitialize(@weight_model)
+                update_menu(view)
               when :weight_right
                 result = @weight_model.shift(1)
                 LOGGER.debug(NAME) { "shift(1) => #{result}" }
-                weight
+                @view&.reinitialize(@weight_model)
+                update_menu(view)
               when :weight_less
                 result = @weight_model.less!
                 LOGGER.debug(NAME) { "less! => #{result}" }
-                weight
+                @view&.reinitialize(@weight_model)
+                update_menu(view)
               when :weight_more
                 result = @weight_model.more!
                 LOGGER.debug(NAME) { "more! => #{result}" }
-                weight
+                @view&.reinitialize(@weight_model)
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end
@@ -157,11 +163,13 @@ module Wilhelm
               when :control_left
                 result = @control_model.backward
                 LOGGER.debug(NAME) { "backward => #{result}" }
-                control
+                @view&.reinitialize(@control_model)
+                update_menu(view)
               when :control_right
                 result = @control_model.forward
                 LOGGER.debug(NAME) { "forward => #{result}" }
-                control
+                @view&.reinitialize(@control_model)
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

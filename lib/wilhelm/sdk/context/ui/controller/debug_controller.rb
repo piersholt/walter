@@ -55,9 +55,9 @@ module Wilhelm
               LOGGER.debug(NAME) { "#environment(#{action})" }
               case action
               when Context::ServicesContext::Online
-                index
+                update_menu(view)
               when Context::ServicesContext::Offline
-                index
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

@@ -122,11 +122,14 @@ module Wilhelm
               LOGGER.debug(NAME) { "#target_update(#{action}, #{target})" }
               case action
               when :added
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               when :changed
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               when :removed
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               end
             end
 
@@ -134,15 +137,20 @@ module Wilhelm
               LOGGER.debug(NAME) { "#player_update(#{action}, #{player})" }
               case action
               when :track_pending
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :track_change
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :track_start
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :position
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :status
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               end
             end
 
