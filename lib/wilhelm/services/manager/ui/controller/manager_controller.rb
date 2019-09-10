@@ -80,28 +80,15 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
               case action
               when :bluetooth_index
-                # destroy(:device)
-                # create(:index)
-                # index
                 ui_context.launch(:manager, :index)
               when :bluetooth_device
-                # destroy(:index)
-                # create(:device, selected_menu_item: selected_menu_item)
                 selected_device = device_from_menu_item(selected_menu_item)
                 ui_context.launch(:manager, :device, selected_device)
-                # device(@selected_device)
               when :main_menu_index
-                # destroy(:index)
-                # destroy(:device)
-                # context.ui.root.load(:index)
                 ui_context.launch(:services, :index)
               when :bluetooth_connect
-                # LOGGER.debug(NAME) { @selected_device }
-                # selected_device = device_from_menu_item(selected_menu_item)
                 context.manager.connect_device(@selected_device)
               when :bluetooth_disconnect
-                # LOGGER.debug(NAME) { @selected_device }
-                # selected_device = device_from_menu_item(selected_menu_item)
                 context.manager.disconnect_device(@selected_device)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
