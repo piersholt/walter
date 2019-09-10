@@ -25,6 +25,10 @@ module Wilhelm
                 @services + @titles + navigation_item
               end
 
+              def reinitialize(services)
+                @services = indexed_services(services)
+              end
+
               private
 
               def navigation_item

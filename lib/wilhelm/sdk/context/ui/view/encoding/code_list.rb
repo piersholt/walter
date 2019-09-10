@@ -20,6 +20,10 @@ module Wilhelm
                 @characters + navigation_previous + navigation_next
               end
 
+              def reinitialize(characters_model)
+                @characters = parse_model(characters_model)
+              end
+
               private
 
               def navigation_previous
