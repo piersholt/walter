@@ -49,6 +49,8 @@ module Wilhelm
           context.menu = view
           true
         end
+
+        def update_menu(*); end
       end
     end
   end

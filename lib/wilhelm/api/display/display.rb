@@ -51,6 +51,10 @@ module Wilhelm
         @state.render_menu(self, view)
       end
 
+      def update_menu(view)
+        @state.update_menu(self, view)
+      end
+
       # EVENTS ------------------------------------------------
 
       # Events: State

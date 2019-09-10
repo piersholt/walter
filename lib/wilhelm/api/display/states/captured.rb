@@ -53,10 +53,32 @@ module Wilhelm
           return context.bus.rad.render(view.layout) if dirty_ids.empty?
 
           method = expired ? :build_menu : :update_menu
+          dirty_ids = nil
+          method = :build_menu
 
           LOGGER.debug(DISPLAY_CAPTURED) { "Render menu... Method: #{method}, Dirty IDs: #{dirty_ids} (#{Thread.current})" }
           context.bus.rad.public_send(
             method,
+            view.layout,
+            view.indexed_items(dirty_ids)
+          )
+          true
+        end
+
+        def update_menu(context, view)
+          LOGGER.debug(DISPLAY_CAPTURED) { '#update_menu(context, view)' }
+          context.menu = view
+
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
+          # expired = context.cache.expired?(view.layout)
+
+          context.cache.write!(view.layout, view.indexed_chars)
+
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
+
+          LOGGER.debug(DISPLAY_CAPTURED) { "Update menu... Dirty IDs: #{dirty_ids} (#{Thread.current})" }
+          context.bus.rad.update_menu(
             view.layout,
             view.indexed_items(dirty_ids)
           )
