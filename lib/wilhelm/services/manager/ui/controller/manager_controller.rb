@@ -101,13 +101,17 @@ module Wilhelm
               LOGGER.debug(NAME) { "#device_update(#{action}, #{device})" }
               case action
               when :connecting
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :disconnecting
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :connected
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :disconnected
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               else
                 LOGGER.warn(NAME) { "#device_update: #{action} not implemented." }
               end
@@ -117,13 +121,17 @@ module Wilhelm
               LOGGER.debug(NAME) { "#devices_update(#{action}, #{device})" }
               case action
               when :connected
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :disconnected
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :devices_created
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :devices_updated
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               else
                 LOGGER.warn(NAME) { "devices_update: #{action} not implemented." }
               end

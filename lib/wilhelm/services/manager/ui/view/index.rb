@@ -22,6 +22,10 @@ module Wilhelm
               @devices + @options + navigation_item
             end
 
+            def reinitialize(devices)
+              @devices = indexed_devices(devices)
+            end
+
             private
 
             def navigation_item

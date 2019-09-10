@@ -31,6 +31,11 @@ module Wilhelm
               )
             end
 
+            def reinitialize(device)
+              @properties = indexed_values(device)
+              @options = indexed_booleans(device)
+            end
+
             private
 
             def indexed_values(device)
