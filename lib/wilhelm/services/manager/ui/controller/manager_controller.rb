@@ -72,6 +72,8 @@ module Wilhelm
                 LOGGER.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
                 false
               end
+              @view&.delete_observer(self)
+              @view = nil
             end
 
             # USER EVENTS ------------------------------------------------------
