@@ -8,15 +8,11 @@ module Wilhelm
         class Base
           extend Forwardable
 
-          FORWARD_MESSAGES = %i[
-            << push first last each empty? size sort_by
-            to_s count [] find_all find each_with_index find_index
-            map group_by delete_at
-          ].freeze
-
-          FORWARD_MESSAGES.each do |fwrd_message|
-            def_delegator :attributes, fwrd_message
-          end
+          def_delegators(
+            :attributes, :<<, :push, :first, :last, :each, :empty?, :size,
+            :sort_by, :to_s, :count, :[], :find_all, :find, :each_with_index,
+            :find_index, :map, :group_by, :delete_at
+          )
 
           BLANK_ATTRIBUTE = [].freeze
           NAME = 'Cache::Base'
@@ -36,7 +32,7 @@ module Wilhelm
           end
 
           def generate_attributes(length = 10, offset = 0)
-            Array.new(length) { |i| [i+offset, Value.new] }.to_h
+            Array.new(length) { |i| [i + offset, Value.new] }.to_h
           end
 
           # Only applies to menus
@@ -62,7 +58,9 @@ module Wilhelm
             elsif new.is_a?(Array) || new.is_a?(Core::Bytes)
               return old if new.empty?
               new_value = Value.new(new, dirty: true)
-              logger.debug(name) { "Field #{key}: modified! (\"#{old}\" -> \"#{new_value}\")" }
+              logger.debug(name) do
+                "Field #{key}: modified! (\"#{old}\" -> \"#{new_value}\")"
+              end
               new_value
             else
               logger.warn(name) { "#merge: I don't like: #{new.class}: #{new}" }
@@ -89,14 +87,14 @@ module Wilhelm
 
           def expired?
             result = attributes.all? { |_, value| value.dirty }
-            logger.debug(name) { "#expired? => #{result} (#{attributes.map { |k, v| "#{k}: #{v.dirty}" }})" }
+            logger.debug(name) { "#expired? => #{result}" }
             result
           end
 
           def pending!(delta_hash)
-            logger.debug(name) { "#pending!(_delta_hash_)" }
-            attributes.merge!(delta_hash) do |existing_key, old_value, new_value|
-              merge(existing_key, old_value, new_value)
+            logger.debug(name) { "#pending!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |key, old_value, new_value|
+              merge(key, old_value, new_value)
             end
           end
 
@@ -107,7 +105,9 @@ module Wilhelm
             end
             delta_hash.keys.each do |key|
               next unless attributes.key?(key)
-              logger.debug(name) { "Field #{key}: written! (\"#{attributes[key]}\")" }
+              logger.debug(name) do
+                "Field #{key}: written! (\"#{attributes[key]}\")"
+              end
             end
           end
         end
