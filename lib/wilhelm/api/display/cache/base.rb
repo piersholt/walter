@@ -23,32 +23,45 @@ module Wilhelm
             @attributes = generate_attributes(length, offset)
           end
 
-          def logger
-            LOGGER
-          end
-
-          def name
-            self.class.const_get(:NAME)
-          end
-
-          def generate_attributes(length = 10, offset = 0)
-            Array.new(length) { |i| [i + offset, Value.new] }.to_h
-          end
-
-          # Only applies to menus
-          def show!
-            # dirty
-          end
-
           def dirty
-            result = attributes.find_all { |_, value| value.dirty }
-            # logger.debug(name) { "#dirty => #{result.to_h.keys}" }
-            result.to_h
+            attributes.find_all { |_, value| value.dirty }&.to_h
           end
 
           def dirty_ids
             dirty.keys
           end
+
+          def expired?
+            result = attributes.all? { |_, value| value.dirty }
+            logger.debug(name) { "#expired? => #{result}" }
+            result
+          end
+
+          def clear!
+            @attributes = generate_attributes(length, index_start)
+          end
+
+          def pending!(delta_hash)
+            logger.debug(name) { "#pending!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |key, old_value, new_value|
+              merge(key, old_value, new_value)
+            end
+          end
+
+          def write!(delta_hash)
+            logger.debug(name) { "#write!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |_, _, new_value|
+              Value.new(new_value, dirty: false)
+            end
+            delta_hash.keys.each do |key|
+              next unless attributes.key?(key)
+              logger.debug(name) do
+                "Field #{key}: written! (\"#{attributes[key]}\")"
+              end
+            end
+          end
+
+          private
 
           def merge(key, old, new)
             logger.debug(name) { "#merge(#{key},#{old.char_array},#{new})" }
@@ -67,14 +80,22 @@ module Wilhelm
               old
             end
           rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each do |line|
-              LOGGER.error(name) { line }
-            end
+            logger.error(name) { e }
+            e.backtrace.each { |line| logger.error(name) { line } }
           end
 
-          def clear!
-            @attributes = generate_attributes(length, index_start)
+          protected
+
+          def generate_attributes(length = 10, offset = 0)
+            Array.new(length) { |i| [i + offset, Value.new] }.to_h
+          end
+
+          def logger
+            LOGGER
+          end
+
+          def name
+            self.class.const_get(:NAME)
           end
 
           def length
@@ -83,32 +104,6 @@ module Wilhelm
 
           def index_start
             self.class.const_get(:INDEX_START)
-          end
-
-          def expired?
-            result = attributes.all? { |_, value| value.dirty }
-            logger.debug(name) { "#expired? => #{result}" }
-            result
-          end
-
-          def pending!(delta_hash)
-            logger.debug(name) { "#pending!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |key, old_value, new_value|
-              merge(key, old_value, new_value)
-            end
-          end
-
-          def write!(delta_hash)
-            LOGGER.debug(name) { "#write!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |_, _, new_value|
-              Value.new(new_value, dirty: false)
-            end
-            delta_hash.keys.each do |key|
-              next unless attributes.key?(key)
-              logger.debug(name) do
-                "Field #{key}: written! (\"#{attributes[key]}\")"
-              end
-            end
           end
         end
       end
