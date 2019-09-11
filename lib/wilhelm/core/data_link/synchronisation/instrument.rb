@@ -24,7 +24,7 @@ module Wilhelm
             validate_frame
             frame
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
-            LOGGER.debug(name) { "#{e}!" }
+            LOGGER.debug(name) { e }
             LOGGER.debug(name) { "Rasing: #{e}" }
             raise e
           end
@@ -48,10 +48,11 @@ module Wilhelm
 
             frame.set_header(header)
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
+            # Frame errors must be rescued to mitigate rescue StandardError
             raise e
           rescue StandardError => e
             LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-            e.backtrace.each { |l| LOGGER.warn(l) }
+            e.backtrace.each { |line| LOGGER.warn(name) { line } }
           end
 
           def fetch_frame_tail
@@ -64,10 +65,11 @@ module Wilhelm
 
             frame.set_tail(tail)
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
+            # Frame errors must be rescued to mitigate rescue StandardError
             raise e
           rescue StandardError => e
             LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-            e.backtrace.each { |l| LOGGER.warn(l) }
+            e.backtrace.each { |line| LOGGER.warn(name) { line } }
           end
 
           def read_length_from_header
@@ -76,10 +78,11 @@ module Wilhelm
             LOGGER.debug(name) { "#{SYNC_HEADER} Remaining frame bytes: #{outstanding}" }
             outstanding
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
+            # Frame errors must be rescued to mitigate rescue StandardError
             raise e
           rescue StandardError => e
             LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-            e.backtrace.each { |l| LOGGER.warn(l) }
+            e.backtrace.each { |line| LOGGER.warn(name) { line } }
           end
 
           def validate_frame
@@ -87,12 +90,11 @@ module Wilhelm
             raise ChecksumError unless frame.valid?
             LOGGER.debug(name) { "#{SYNC} Valid! #{frame}" }
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
-            # Need to rescue and raise this again otherwise StandardError rescue buggers it up
-            # LogActuall
+            # Frame errors must be rescued to mitigate rescue StandardError
             raise e
           rescue StandardError => e
             LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-            e.backtrace.each { |l| LOGGER.warn(l) }
+            e.backtrace.each { |line| LOGGER.warn(name) { line } }
           end
         end
       end

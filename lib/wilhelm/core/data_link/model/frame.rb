@@ -32,7 +32,7 @@ module Wilhelm
         end
 
         def inspect
-          "<Frame> #{to_s}"
+          "<Frame> #{self}"
         end
 
         # ************************************************************************* #
@@ -91,7 +91,7 @@ module Wilhelm
         rescue TypeError => e
           LOGGER.error(NAME) { e.class }
           LOGGER.error(NAME) { e }
-          e.backtrace.each { |l| LOGGER.warn(l) }
+          e.backtrace.each { |line| LOGGER.warn(NAME) { line } }
           binding.pry
           LOGGER.warn(NAME) { 'Debug end...'}
         end

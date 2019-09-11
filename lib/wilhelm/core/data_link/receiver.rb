@@ -74,7 +74,7 @@ module Wilhelm
           LOGGER.debug(name) { "Frame: #{new_frame}" }
           output_buffer.push(new_frame)
         rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
-          LOGGER.warn(name) { "#{e}!" }
+          LOGGER.debug(name) { e }
           clean_up(input_buffer, synchronisation.frame)
         rescue StandardError => e
           LOGGER.error(name) { e }
