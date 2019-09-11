@@ -5,9 +5,7 @@ module Wilhelm
     module UIKit
       module View
         # SDK::UIKit::View::BaseHeader
-        class BaseHeader
-          include Observable
-
+        class BaseHeader < Base
           attr_reader :fields, :title
 
           LAYOUT = 0x62
@@ -23,23 +21,11 @@ module Wilhelm
           #   @title = parse_title(title)
           # end
 
-          def logger
-            LOGGER
-          end
-
-          def moi
-            self.class.name
-          end
-
-          def layout
-            self.class.const_get(:LAYOUT)
-          end
-
           def type
             self.class.const_get(:TYPE)
           end
 
-          def fields_with_index(dirty_indexes = [])
+          def indexed_items(dirty_indexes = [])
             return fields.to_h if dirty_indexes.empty?
 
             fields.to_h.keep_if do |key, _|

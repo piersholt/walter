@@ -21,27 +21,20 @@ module Wilhelm
           context.change_state(Enabled.new)
         end
 
-        def render_new_header(context, view)
-          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_new_header(context, view)' }
+        def render_header(context, view)
+          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_header(context, view)' }
           context.default_header = view
           context.header = view
 
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
-          cache = context.cache.by_layout_id(view.layout)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
-          cache.cache!(view.indexed_chars)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
-          dirty_ids = cache.dirty_ids
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
 
-          # @note this would replace #overwrite at Display::Listener
-          # LOGGER.debug(DISPLAY_CAPTURED) { 'Overwrite cache with view field values...' }
-          # context.cache.digital.overwrite!(context.header.indexed_chars)
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
 
           LOGGER.debug(DISPLAY_CAPTURED) { 'Render header...' }
           context.bus.rad.build_header(
             view.layout,
-            view.fields_with_index(dirty_ids),
+            view.indexed_items(dirty_ids),
             view.title
           )
           true
@@ -51,32 +44,45 @@ module Wilhelm
           LOGGER.debug(DISPLAY_CAPTURED) { '#render_menu(context, view)' }
           context.menu = view
 
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: from layout_id: #{view.layout}..." }
-          cache = context.cache.by_layout_id(view.layout)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: update cache!' }
-          cache.cache!(view.indexed_chars)
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Cache: get dirty IDs...' }
-          dirty_ids = cache.dirty_ids
-          LOGGER.debug(DISPLAY_CAPTURED) { "Cache: Dirty IDs => #{dirty_ids}" }
-          # return false if dirty_ids.empty?
-          LOGGER.debug(DISPLAY_CAPTURED) { 'Render menu...' }
-          context.bus.rad.build_menu(
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
+          expired = context.cache.expired?(view.layout)
+
+          context.cache.write!(view.layout, view.indexed_chars)
+
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
+
+          method = expired ? :build_menu : :update_menu
+          dirty_ids = nil
+          method = :build_menu
+
+          LOGGER.debug(DISPLAY_CAPTURED) { "Render menu... Method: #{method}, Dirty IDs: #{dirty_ids} (#{Thread.current})" }
+          context.bus.rad.public_send(
+            method,
             view.layout,
-            view.menu_items_with_index(dirty_ids)
+            view.indexed_items(dirty_ids)
           )
           true
         end
 
-        def overwritten_header!(context)
-          context.logger.warn(DISPLAY_CAPTURED) { '#overwritten_header!(context)' }
-          dirty_ids = context.cache.digital.dirty_ids
-          context.logger.warn(DISPLAY_CAPTURED) { "dirty_ids => #{dirty_ids}" }
-          context.render_new_header(context.header) unless dirty_ids.empty?
-        end
+        def update_menu(context, view)
+          LOGGER.debug(DISPLAY_CAPTURED) { '#update_menu(context, view)' }
+          context.menu = view
 
-        def overwritten!(context)
-          context.logger.warn(DISPLAY_CAPTURED) { '#overwritten!(context)' }
-          context.bus.rad.render(context.menu.layout)
+          context.cache.pending!(view.layout, view.indexed_chars)
+          dirty_ids = context.cache.dirty_ids(view.layout)
+          # expired = context.cache.expired?(view.layout)
+
+          context.cache.write!(view.layout, view.indexed_chars)
+
+          return context.bus.rad.render(view.layout) if dirty_ids.empty?
+
+          LOGGER.debug(DISPLAY_CAPTURED) { "Update menu... Dirty IDs: #{dirty_ids} (#{Thread.current})" }
+          context.bus.rad.update_menu(
+            view.layout,
+            view.indexed_items(dirty_ids)
+          )
+          true
         end
       end
     end

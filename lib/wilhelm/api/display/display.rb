@@ -43,12 +43,16 @@ module Wilhelm
 
       # RENDER ------------------------------------------------
 
-      def render_new_header(view)
-        @state.render_new_header(self, view)
+      def render_header(view)
+        @state.render_header(self, view)
       end
 
       def render_menu(view)
         @state.render_menu(self, view)
+      end
+
+      def update_menu(view)
+        @state.update_menu(self, view)
       end
 
       # EVENTS ------------------------------------------------

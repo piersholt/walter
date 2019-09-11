@@ -19,6 +19,10 @@ module Wilhelm
                 @attributes
               end
 
+              def reinitialize(weight_model)
+                @attributes = parse_model(weight_model)
+              end
+
               # @override View::BaseMenu::input_left
               def input_left(*)
                 changed

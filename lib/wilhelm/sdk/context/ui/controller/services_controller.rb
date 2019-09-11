@@ -51,6 +51,8 @@ module Wilhelm
                 LOGGER.warn(NAME) { "Destroy: #{view} view not recognised." }
                 false
               end
+              @view&.delete_observer(self)
+              @view = nil
             end
 
             # SYSTEM EVENTS ------------------------------------------------------
@@ -59,11 +61,14 @@ module Wilhelm
               LOGGER.debug(NAME) { "#manager_update(#{new_state})" }
               case new_state
               when Wilhelm::Services::Manager::Disabled
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               when Wilhelm::Services::Manager::Pending
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               when Wilhelm::Services::Manager::On
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#manager_update: #{new_state} not implemented." }
               end
@@ -73,13 +78,17 @@ module Wilhelm
               LOGGER.debug(NAME) { "#audio_update(#{new_state})" }
               case new_state
               when Wilhelm::Services::Audio::Disabled
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               when Wilhelm::Services::Audio::Pending
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               when Wilhelm::Services::Audio::Off
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               when Wilhelm::Services::Audio::On
-                index
+                @view&.reinitialize(services)
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#audio_update: #{new_state} not implemented." }
               end

@@ -94,7 +94,11 @@ module Wilhelm
 
         # Called by UIKit::Controller::BaseController
         def render_header(view)
-          renderer.render_new_header(view)
+          renderer.render_header(view)
+        end
+
+        def update_menu(view)
+          renderer.update_menu(view)
         end
 
         private

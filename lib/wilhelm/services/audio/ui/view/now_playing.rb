@@ -40,6 +40,10 @@ module Wilhelm
               end
             end
 
+            def reinitialize(player)
+              @attributes = indexed_attributes(player)
+            end
+
             private
 
             def indexed_attributes(player)

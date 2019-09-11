@@ -34,13 +34,13 @@ module Wilhelm
 
         # Default Display Rendering
 
-        def render_new_header(context, view)
-          LOGGER.debug(self.class.name) { "DEFAULT #render_new_header" }
+        def render_header(context, view)
+          LOGGER.warn(self.class.name) { "#{self.class.name}#render_header" }
           case view.type
           when :default
             context.default_header = view
             context.header = view
-            context.cache.digital.overwrite!(context.header.indexed_chars)
+            context.cache.write!(view.layout, context.header.indexed_chars)
           end
           true
         end
@@ -49,6 +49,8 @@ module Wilhelm
           context.menu = view
           true
         end
+
+        def update_menu(*); end
       end
     end
   end

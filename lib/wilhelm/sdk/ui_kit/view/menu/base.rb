@@ -5,9 +5,7 @@ module Wilhelm
     module UIKit
       module View
         # SDK::UIKit::View::BaseMenu
-        class BaseMenu
-          include Observable
-
+        class BaseMenu < Base
           MENU_BASIC  = 0x60
           MENU_TITLED = 0x61
           MENU_STATIC = 0x63
@@ -20,26 +18,18 @@ module Wilhelm
 
           LABEL_RETURN = 'Back'
 
-          def logger
-            LOGGER
-          end
-
-          def layout
-            self.class.const_get(:LAYOUT)
-          end
-
-          def moi
-            self.class.name
-          end
-
-          def menu_items_with_index(*)
-            menu_items.to_h
-          end
-
           def indexed_chars
             menu_items.map do |index, field|
               [index, field.to_c]
             end&.to_h
+          end
+
+          def indexed_items(dirty_indexes = nil)
+            logger.debug(self.class) { "#indexed_items(#{dirty_indexes})" }
+            return menu_items.to_h unless dirty_indexes
+            menu_items.to_h.keep_if do |key, _|
+              dirty_indexes.include?(key)
+            end
           end
 
           # Helpers
@@ -74,9 +64,9 @@ module Wilhelm
             # Non-stateful buttons for the moment
             return false unless state == :release
             # Ignore data requests for an index that doesn't exist
-            return false unless menu_items_with_index.key?(index)
+            return false unless indexed_items.key?(index)
 
-            selected_item = menu_items_with_index[index]
+            selected_item = indexed_items[index]
             changed
             notify_observers(selected_item.action, selected_item)
           end

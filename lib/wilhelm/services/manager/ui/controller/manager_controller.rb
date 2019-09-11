@@ -72,6 +72,8 @@ module Wilhelm
                 LOGGER.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
                 false
               end
+              @view&.delete_observer(self)
+              @view = nil
             end
 
             # USER EVENTS ------------------------------------------------------
@@ -80,28 +82,15 @@ module Wilhelm
               LOGGER.debug(NAME) { "#update(#{action}, #{selected_menu_item.id || selected_menu_item})" }
               case action
               when :bluetooth_index
-                # destroy(:device)
-                # create(:index)
-                # index
                 ui_context.launch(:manager, :index)
               when :bluetooth_device
-                # destroy(:index)
-                # create(:device, selected_menu_item: selected_menu_item)
                 selected_device = device_from_menu_item(selected_menu_item)
                 ui_context.launch(:manager, :device, selected_device)
-                # device(@selected_device)
               when :main_menu_index
-                # destroy(:index)
-                # destroy(:device)
-                # context.ui.root.load(:index)
                 ui_context.launch(:services, :index)
               when :bluetooth_connect
-                # LOGGER.debug(NAME) { @selected_device }
-                # selected_device = device_from_menu_item(selected_menu_item)
                 context.manager.connect_device(@selected_device)
               when :bluetooth_disconnect
-                # LOGGER.debug(NAME) { @selected_device }
-                # selected_device = device_from_menu_item(selected_menu_item)
                 context.manager.disconnect_device(@selected_device)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
@@ -114,13 +103,17 @@ module Wilhelm
               LOGGER.debug(NAME) { "#device_update(#{action}, #{device})" }
               case action
               when :connecting
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :disconnecting
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :connected
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               when :disconnected
-                device(device)
+                @view.reinitialize(device)
+                update_menu(view)
               else
                 LOGGER.warn(NAME) { "#device_update: #{action} not implemented." }
               end
@@ -130,13 +123,17 @@ module Wilhelm
               LOGGER.debug(NAME) { "#devices_update(#{action}, #{device})" }
               case action
               when :connected
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :disconnected
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :devices_created
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               when :devices_updated
-                index
+                @view.reinitialize(@devices)
+                update_menu(view)
               else
                 LOGGER.warn(NAME) { "devices_update: #{action} not implemented." }
               end

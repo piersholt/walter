@@ -22,6 +22,10 @@ module Wilhelm
         reset_interval!
       end
 
+      def logger
+        LOGGER
+      end
+
       def to_s
         formatted(elapsed_time)
       end

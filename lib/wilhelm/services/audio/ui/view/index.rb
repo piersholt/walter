@@ -44,6 +44,10 @@ module Wilhelm
               ]
             end
 
+            def reinitialize(target)
+              @titles = indexed_titles(titles(target))
+            end
+
             private
 
             def navigation_item

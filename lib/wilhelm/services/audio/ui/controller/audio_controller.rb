@@ -22,21 +22,21 @@ module Wilhelm
 
             def index
               LOGGER.debug(NAME) { '#index' }
-              view = View::Index.new(@target)
+              @view = View::Index.new(@target)
               view.add_observer(self)
               render(view)
             end
 
             def targets
               LOGGER.debug(NAME) { '#targets' }
-              view = View::Targets.new(@targets)
+              @view = View::Targets.new(@targets)
               view.add_observer(self)
               render(view)
             end
 
             def now_playing
               LOGGER.debug(NAME) { '#now_playing' }
-              view = View::NowPlaying.new(@player)
+              @view = View::NowPlaying.new(@player)
               view.add_observer(self)
               render(view)
             end
@@ -85,6 +85,8 @@ module Wilhelm
                 LOGGER.warn(NAME) { "Destroy: #{loaded_view} view not recognised." }
                 false
               end
+              @view&.delete_observer(self)
+              @view = nil
             end
 
             # USER EVENTS ------------------------------------------------------
@@ -122,11 +124,14 @@ module Wilhelm
               LOGGER.debug(NAME) { "#target_update(#{action}, #{target})" }
               case action
               when :added
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               when :changed
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               when :removed
-                index
+                @view&.reinitialize(@target)
+                update_menu(view)
               end
             end
 
@@ -134,15 +139,20 @@ module Wilhelm
               LOGGER.debug(NAME) { "#player_update(#{action}, #{player})" }
               case action
               when :track_pending
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :track_change
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :track_start
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :position
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               when :status
-                now_playing
+                @view&.reinitialize(@player)
+                update_view(view)
               end
             end
 

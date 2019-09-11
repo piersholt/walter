@@ -47,6 +47,8 @@ module Wilhelm
                 LOGGER.warn(NAME) { "Destroy: #{view} view not recognised." }
                 false
               end
+              @view&.delete_observer(self)
+              @view = nil
             end
 
             # SYSTEM EVENTS ------------------------------------------------------
@@ -55,9 +57,9 @@ module Wilhelm
               LOGGER.debug(NAME) { "#environment(#{action})" }
               case action
               when Context::ServicesContext::Online
-                index
+                update_menu(view)
               when Context::ServicesContext::Offline
-                index
+                update_menu(view)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

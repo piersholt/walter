@@ -8,73 +8,60 @@ module Wilhelm
         class Base
           extend Forwardable
 
-          FORWARD_MESSAGES = %i[
-            << push first last each empty? size sort_by length
-            to_s count [] find_all find each_with_index find_index
-            map group_by delete_at
-          ].freeze
-
-          FORWARD_MESSAGES.each do |fwrd_message|
-            def_delegator :attributes, fwrd_message
-          end
+          def_delegators(
+            :attributes, :<<, :push, :first, :last, :each, :empty?, :size,
+            :sort_by, :to_s, :count, :[], :find_all, :find, :each_with_index,
+            :find_index, :map, :group_by, :delete_at
+          )
 
           BLANK_ATTRIBUTE = [].freeze
           NAME = 'Cache::Base'
 
           attr_reader :attributes
 
-          def logger
-            LOGGER
-          end
-
-          def name
-            self.class.const_get(:NAME)
-          end
-
-          def generate_attributes(length = 10, offset = 0)
-            Array.new(length) { |i| [i+offset, Value.new] }.to_h
-          end
-
-          def [](index)
-            attributes[index]
-          end
-
-          def cache!(delta_hash)
-            logger.debug(name) { "#cache!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |existing_key, old_value, new_value|
-              merge(existing_key, old_value, new_value)
-            end
-          rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each do |line|
-              LOGGER.error(name) { line }
-            end
-          end
-
-          def overwrite!(delta_hash)
-            LOGGER.debug(name) { "#overwrite!(#{delta_hash})" }
-            attributes.merge!(delta_hash) do |_, _, new_value|
-              Value.new(new_value, dirty: false)
-            end
-          end
-
-          alias attributes! cache!
-          alias write! cache!
-
-          # Only applies to menus
-          def show!
-            # dirty
+          def initialize(length, offset)
+            @attributes = generate_attributes(length, offset)
           end
 
           def dirty
-            result = attributes.find_all { |_, value| value.dirty }
-            # logger.debug(name) { "#dirty => #{result.to_h.keys}" }
-            result.to_h
+            attributes.find_all { |_, value| value.dirty }&.to_h
           end
 
           def dirty_ids
             dirty.keys
           end
+
+          def expired?
+            result = attributes.all? { |_, value| value.dirty }
+            logger.debug(name) { "#expired? => #{result}" }
+            result
+          end
+
+          def clear!
+            @attributes = generate_attributes(length, index_start)
+          end
+
+          def pending!(delta_hash)
+            logger.debug(name) { "#pending!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |key, old_value, new_value|
+              merge(key, old_value, new_value)
+            end
+          end
+
+          def write!(delta_hash)
+            logger.debug(name) { "#write!(#{delta_hash})" }
+            attributes.merge!(delta_hash) do |_, _, new_value|
+              Value.new(new_value, dirty: false)
+            end
+            delta_hash.keys.each do |key|
+              next unless attributes.key?(key)
+              logger.debug(name) do
+                "Field #{key}: written! (\"#{attributes[key]}\")"
+              end
+            end
+          end
+
+          private
 
           def merge(key, old, new)
             logger.debug(name) { "#merge(#{key},#{old.char_array},#{new})" }
@@ -84,17 +71,39 @@ module Wilhelm
             elsif new.is_a?(Array) || new.is_a?(Core::Bytes)
               return old if new.empty?
               new_value = Value.new(new, dirty: true)
-              logger.debug(name) { "Field #{key}: modified! (\"#{old}\" -> \"#{new_value}\")" }
+              logger.debug(name) do
+                "Field #{key}: modified! (\"#{old}\" -> \"#{new_value}\")"
+              end
               new_value
             else
               logger.warn(name) { "#merge: I don't like: #{new.class}: #{new}" }
               old
             end
           rescue StandardError => e
-            LOGGER.error(name) { e }
-            e.backtrace.each do |line|
-              LOGGER.error(name) { line }
-            end
+            logger.error(name) { e }
+            e.backtrace.each { |line| logger.error(name) { line } }
+          end
+
+          protected
+
+          def generate_attributes(length = 10, offset = 0)
+            Array.new(length) { |i| [i + offset, Value.new] }.to_h
+          end
+
+          def logger
+            LOGGER
+          end
+
+          def name
+            self.class.const_get(:NAME)
+          end
+
+          def length
+            self.class.const_get(:LENGTH)
+          end
+
+          def index_start
+            self.class.const_get(:INDEX_START)
           end
         end
       end
