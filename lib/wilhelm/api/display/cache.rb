@@ -35,7 +35,6 @@ module Wilhelm
         def pending!(layout, data, flush: false)
           validate_layout(layout)
           layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          # LOGGER.debug(self.class) { "#pending! (#{Thread.current})" }
           objects[layout]&.clear if flush
           objects[layout]&.pending!(data)
         end
@@ -43,7 +42,6 @@ module Wilhelm
         def write!(layout, data, flush: false)
           validate_layout(layout)
           layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          # LOGGER.debug(self.class) { "#write! (#{Thread.current})" }
           objects[layout]&.clear if flush
           objects[layout]&.write!(data)
         end
@@ -51,13 +49,11 @@ module Wilhelm
         def dirty_ids(layout)
           validate_layout(layout)
           layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          # LOGGER.debug(self.class) { "#dirty_ids (#{Thread.current})" }
           objects[layout]&.dirty_ids
         end
 
         def expired?(layout)
           validate_layout(layout)
-          # LOGGER.debug(self.class) { "#expired? (#{Thread.current})" }
           layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
           objects[layout]&.expired?
         end
