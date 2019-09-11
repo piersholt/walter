@@ -10,7 +10,7 @@ module Wilhelm
             include SDK::UIKit::View
             include Helpers::Time
 
-            BARS_MAX       = 24
+            BARS_MAX       = 16
             FILL_CHAR      = 0x09.chr
             HEAD_CHAR      = 0x82.chr
             EMPTY_CHAR     = 0x09.chr

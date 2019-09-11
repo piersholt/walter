@@ -42,6 +42,10 @@ module Wilhelm
           objects[id]&.clear if flush
           objects[id]&.write!(data)
         end
+        
+        def reset!
+          @objects = create_objects
+        end
 
         def dirty_ids(layout)
           id = sym_to_id(layout)

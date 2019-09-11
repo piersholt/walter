@@ -140,19 +140,19 @@ module Wilhelm
               case action
               when :track_pending
                 @view&.reinitialize(@player)
-                update_view(view)
+                update_menu(view)
               when :track_change
                 @view&.reinitialize(@player)
-                update_view(view)
+                update_menu(view)
               when :track_start
                 @view&.reinitialize(@player)
-                update_view(view)
+                update_menu(view)
               when :position
                 @view&.reinitialize(@player)
-                update_view(view)
+                update_menu(view)
               when :status
                 @view&.reinitialize(@player)
-                update_view(view)
+                update_menu(view)
               end
             end
 
