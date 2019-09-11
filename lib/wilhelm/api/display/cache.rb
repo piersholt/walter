@@ -39,32 +39,37 @@ module Wilhelm
 
         def pending!(layout, data, flush: false)
           validate_layout(layout)
-          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          objects[layout]&.clear if flush
-          objects[layout]&.pending!(data)
+          id = sym_to_id(layout)
+          objects[id]&.clear if flush
+          objects[id]&.pending!(data)
         end
 
         def write!(layout, data, flush: false)
           validate_layout(layout)
-          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          objects[layout]&.clear if flush
-          objects[layout]&.write!(data)
+          id = sym_to_id(layout)
+          objects[id]&.clear if flush
+          objects[id]&.write!(data)
         end
 
         def dirty_ids(layout)
           validate_layout(layout)
-          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          objects[layout]&.dirty_ids
+          id = sym_to_id(layout)
+          objects[id]&.dirty_ids
         end
 
         def expired?(layout)
           validate_layout(layout)
-          layout = SYMBOL_TO_ID_MAP[layout] if layout.is_a?(Symbol)
-          objects[layout]&.expired?
+          id = sym_to_id(layout)
+          objects[id]&.expired?
         end
 
         def objects
           @objects ||= create_objects
+        end
+
+        def sym_to_id(layout)
+          return layout unless layout.is_a?(Symbol)
+          SYMBOL_TO_ID_MAP[layout]
         end
 
         def create_objects
