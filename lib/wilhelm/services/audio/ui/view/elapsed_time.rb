@@ -11,9 +11,9 @@ module Wilhelm
             include Helpers::Time
 
             BARS_MAX       = 24
-            FILL_CHAR      = 0xb7.chr
+            FILL_CHAR      = 0x09.chr
             HEAD_CHAR      = 0x82.chr
-            EMPTY_CHAR     = 0xb7.chr
+            EMPTY_CHAR     = 0x09.chr
             BOUNDARY_LEFT  = 0xab.chr
             BOUNDARY_RIGHT = 0xbb.chr
 

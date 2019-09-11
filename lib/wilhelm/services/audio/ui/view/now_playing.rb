@@ -57,10 +57,7 @@ module Wilhelm
             end
 
             def line1(player)
-              to_write = player.title
-              # @note base menu item label is already 40 char limit
-              to_write = to_write[0,40] if to_write.length > 40
-              [0, BaseMenuItem.new(label: to_write)]
+              [0, BaseMenuItem.new(label: player.title)]
             end
 
             def line2(player)
@@ -72,17 +69,15 @@ module Wilhelm
             end
 
             def line4(player)
-              xxx = "#{player.track_number} of #{player.number_of_tracks}"
-              [3, BaseMenuItem.new(label: xxx)]
+              [3, BaseMenuItem.new(label: track_numbers(player))]
             end
 
             def line5(player)
               [4, View::ElapsedTime.new(player.timer.elapsed_time, player.duration)]
             end
 
-            MARKER = 130
-            def bar
-              '[' + Array.new(28) { |i| '-' }.join + MARKER.chr + Array.new(9) {|i| ' ' }.join + ']'
+            def track_numbers(player)
+              "#{player.track_number} of #{player.number_of_tracks}"
             end
           end
         end
