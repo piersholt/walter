@@ -46,9 +46,7 @@ module Wilhelm
             header = buffer.shift(Frame::HEADER_LENGTH)
             LOGGER.debug(name) { "#{SYNC_HEADER} Shifted bytes: #{header}" }
 
-            # LOGGER.debug(SYNC_HEADER) { "Setting new frame header." }
             frame.set_header(header)
-            # LOGGER.debug(name) { "#{SYNC_HEADER} New frame header set: #{frame.header}" }
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             raise e
           rescue StandardError => e
@@ -64,9 +62,7 @@ module Wilhelm
             tail = buffer.shift(remaining_bytes)
             LOGGER.debug(name) { "#{SYNC_TAIL} Shifted bytes: #{tail}" }
 
-            # LOGGER.debug(SYNC_TAIL) { "Setting new frame tail." }
             frame.set_tail(tail)
-            # LOGGER.debug(name) { "#{SYNC_TAIL} New frame tail set: #{frame.tail}" }
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             raise e
           rescue StandardError => e

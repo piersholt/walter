@@ -57,27 +57,15 @@ module Wilhelm
 
         def set_header(new_header)
           LOGGER.debug(NAME) { "#set_header(#{new_header})." }
-
-          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(@tail ? new_header + tail : new_header)
-          # LOGGER.debug(NAME) { self }
-
-          # LOGGER.debug(NAME) { "Setting @header." }
           @header = Header.new(new_header)
-
           true
         end
 
         def set_tail(new_tail)
           LOGGER.debug(NAME) { "#set_tail(#{new_tail})." }
-
-          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(header + new_tail)
-          # LOGGER.debug(NAME) { self }
-
-          # LOGGER.debug(NAME) { "Setting @tail." }
           @tail = Tail.new(new_tail)
-
           true
         end
 

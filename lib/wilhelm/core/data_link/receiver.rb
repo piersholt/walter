@@ -85,13 +85,6 @@ module Wilhelm
 
         def clean_up(buffer, new_frame)
           LOGGER.debug(name) { "#{SYNC_ERROR} #clean_up" }
-
-          # LOGGER.debug(SYNC_ERROR) { "Publishing event: #{Constants::Events::FRAME_FAILED}" }
-          # changed
-          # notify_observers(Constants::Events::FRAME_FAILED, frame: new_frame)
-
-          # LOGGER.debug(name) { "#{SYNC_SHIFT} Shifting one byte." }
-
           byte_to_discard = new_frame[0]
           LOGGER.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
 
@@ -99,16 +92,7 @@ module Wilhelm
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
 
-          # LOGGER.debug(name) { "#{SYNC_SHIFT} ..." }
           buffer.unshift(*bytes_to_unshift)
-        end
-
-        # @note remove!
-        IGNORE = [0x40, 0xA0]
-
-        def output(new_frame)
-          wrapped_frame = PBus::Frame::Adapter.wrap(new_frame)
-          LOGGER.info(name) { "#{wrapped_frame}" } unless IGNORE.any? { |i| i == new_frame[0].d }
         end
       end
     end
