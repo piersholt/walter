@@ -31,12 +31,6 @@ module Wilhelm
           static: LAYOUT_63
         }.freeze
 
-        def validate_layout(layout)
-          return true if SYMBOL_TO_ID_MAP.key?(layout)
-          return true if LAYOUT_CLASS_MAP.key?(layout)
-          raise(ArgumentError, "Invalid layout! #{layout}") unless objects.key?(layout)
-        end
-
         def pending!(layout, data, flush: false)
           id = sym_to_id(layout)
           objects[id]&.clear if flush
@@ -59,14 +53,10 @@ module Wilhelm
           objects[id]&.expired?
         end
 
+        private
+
         def objects
           @objects ||= create_objects
-        end
-
-        def sym_to_id(layout)
-          validate_layout(layout)
-          return layout unless layout.is_a?(Symbol)
-          SYMBOL_TO_ID_MAP[layout]
         end
 
         def create_objects
@@ -77,6 +67,18 @@ module Wilhelm
             LAYOUT_62 => LAYOUT_CLASS_MAP[LAYOUT_62]&.new,
             LAYOUT_63 => LAYOUT_CLASS_MAP[LAYOUT_63]&.new
           }
+        end
+
+        def sym_to_id(layout)
+          validate_layout(layout)
+          return layout unless layout.is_a?(Symbol)
+          SYMBOL_TO_ID_MAP[layout]
+        end
+
+        def validate_layout(layout)
+          return true if SYMBOL_TO_ID_MAP.key?(layout)
+          return true if LAYOUT_CLASS_MAP.key?(layout)
+          raise(ArgumentError, "Invalid layout! #{layout}") unless objects.key?(layout)
         end
 
         # 0x60
