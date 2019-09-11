@@ -9,6 +9,7 @@ module Wilhelm
         include ManageableThreads
         include Constants
         include Errors
+        include Wilhelm::Helpers::DataTools
 
         NAME = 'Receiver'
         THREAD_NAME = 'wilhelm-core/data_link Receiver (Input Buffer)'
@@ -85,14 +86,10 @@ module Wilhelm
 
         def clean_up(buffer, new_frame)
           LOGGER.debug(name) { "#{SYNC_ERROR} #clean_up" }
-          byte_to_discard = new_frame[0]
-          LOGGER.warn(name) { "#{SYNC_SHIFT} Drop: #{byte_to_discard}." }
-
-          bytes_to_unshift = new_frame[1..-1]
-          LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.length} bytes." }
-          LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{bytes_to_unshift.first(10)}....." }
-
-          buffer.unshift(*bytes_to_unshift)
+          LOGGER.warn(name) { "#{SYNC_ERROR} Drop: #{d2h(new_frame[0])} (#{new_frame[0].class})." }
+          LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{new_frame[1..-1].length} bytes." }
+          LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{new_frame[1..-1].first(10)}....." }
+          buffer.unshift(*new_frame[1..-1])
         end
       end
     end

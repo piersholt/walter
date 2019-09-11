@@ -80,8 +80,7 @@ module Wilhelm
           LOGGER.debug(NAME) { "@header => #{@header}" }
           LOGGER.debug(NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
 
-          frame_bytes = @header + @tail.no_fcs
-          checksum = frame_bytes.reduce(0) do |c, d|
+          checksum = (@header + @tail.no_fcs).reduce(0) do |c, d|
             c ^ d
           end
 

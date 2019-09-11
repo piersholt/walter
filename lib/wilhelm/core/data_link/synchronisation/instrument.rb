@@ -8,7 +8,7 @@ module Wilhelm
         class Instrument
           include Constants
           include Errors
-          
+
           NAME = 'Sync::I/K_Bus'
 
           attr_reader :buffer, :frame
@@ -57,10 +57,8 @@ module Wilhelm
 
           def fetch_frame_tail
             buffer?(SYNC_TAIL)
-            remaining_bytes = read_length_from_header
-
-            LOGGER.debug(name) { "#{SYNC_TAIL} Shifting #{remaining_bytes} bytes." }
-            tail = buffer.shift(remaining_bytes)
+            LOGGER.debug(name) { "#{SYNC_TAIL} Shifting #{read_length_from_header} bytes." }
+            tail = buffer.shift(read_length_from_header)
             LOGGER.debug(name) { "#{SYNC_TAIL} Shifted bytes: #{tail}" }
 
             frame.set_tail(tail)
@@ -74,9 +72,8 @@ module Wilhelm
 
           def read_length_from_header
             LOGGER.debug(name) { "#{SYNC_HEADER} Reading frame length from header." }
-            outstanding = frame.header.tail_length
-            LOGGER.debug(name) { "#{SYNC_HEADER} Remaining frame bytes: #{outstanding}" }
-            outstanding
+            LOGGER.debug(name) { "#{SYNC_HEADER} Remaining frame bytes: #{frame.header.tail_length}" }
+            frame.header.tail_length
           rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
             # Frame errors must be rescued to mitigate rescue StandardError
             raise e
