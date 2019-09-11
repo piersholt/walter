@@ -32,7 +32,7 @@ module Wilhelm
         end
 
         def inspect
-          "<Frame> #{to_s}"
+          "<Frame> #{self}"
         end
 
         # ************************************************************************* #
@@ -57,27 +57,15 @@ module Wilhelm
 
         def set_header(new_header)
           LOGGER.debug(NAME) { "#set_header(#{new_header})." }
-
-          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(@tail ? new_header + tail : new_header)
-          # LOGGER.debug(NAME) { self }
-
-          # LOGGER.debug(NAME) { "Setting @header." }
           @header = Header.new(new_header)
-
           true
         end
 
         def set_tail(new_tail)
           LOGGER.debug(NAME) { "#set_tail(#{new_tail})." }
-
-          # LOGGER.debug(NAME) { "Updating self with bytes." }
           wholesale(header + new_tail)
-          # LOGGER.debug(NAME) { self }
-
-          # LOGGER.debug(NAME) { "Setting @tail." }
           @tail = Tail.new(new_tail)
-
           true
         end
 
@@ -87,13 +75,12 @@ module Wilhelm
 
         def valid?
           LOGGER.debug(NAME) { "#valid?" }
-          raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
+          raise(ArgumentError, '@header or @tail is empty!') if header.empty? || tail.empty?
 
           LOGGER.debug(NAME) { "@header => #{@header}" }
           LOGGER.debug(NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
 
-          frame_bytes = @header + @tail.no_fcs
-          checksum = frame_bytes.reduce(0) do |c, d|
+          checksum = (@header + @tail.no_fcs).reduce(0) do |c, d|
             c ^ d
           end
 
@@ -103,7 +90,7 @@ module Wilhelm
         rescue TypeError => e
           LOGGER.error(NAME) { e.class }
           LOGGER.error(NAME) { e }
-          e.backtrace.each { |l| LOGGER.warn(l) }
+          e.backtrace.each { |line| LOGGER.warn(NAME) { line } }
           binding.pry
           LOGGER.warn(NAME) { 'Debug end...'}
         end

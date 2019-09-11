@@ -9,6 +9,8 @@ module Wilhelm
           include Errors
           VALID_SIZE = (3..255)
 
+          MSG_INVALID_SIZE = 'invalid tail length'.freeze
+
           def initialize(bytes)
             validate_args(bytes)
             super(bytes)
@@ -58,7 +60,7 @@ module Wilhelm
           private
 
           def validate_args(bytes)
-            raise TailValidationError, 'invalid tail length'  unless VALID_SIZE.include?(bytes.length)
+            raise(TailValidationError, MSG_INVALID_SIZE) unless VALID_SIZE.include?(bytes.length)
           end
         end
       end
