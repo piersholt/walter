@@ -87,7 +87,7 @@ module Wilhelm
 
         def valid?
           LOGGER.debug(NAME) { "#valid?" }
-          raise ArgumentError, '@header or @tail is empty!' if header.empty? || tail.empty?
+          raise(ArgumentError, '@header or @tail is empty!') if header.empty? || tail.empty?
 
           LOGGER.debug(NAME) { "@header => #{@header}" }
           LOGGER.debug(NAME) { "@tail.no_fcs => #{@tail.no_fcs}" }
