@@ -53,6 +53,26 @@ module Wilhelm
           objects[id]&.expired?
         end
 
+        # 0x60
+        def basic
+          objects[LAYOUT_60]
+        end
+
+        # 0x61
+        def titled
+          objects[LAYOUT_61]
+        end
+
+        # 0x62
+        def digital
+          objects[LAYOUT_62]
+        end
+
+        # 0x63
+        def static
+          objects[LAYOUT_63]
+        end
+
         private
 
         def objects
@@ -79,27 +99,7 @@ module Wilhelm
           return true if SYMBOL_TO_ID_MAP.key?(layout)
           return true if LAYOUT_CLASS_MAP.key?(layout)
           return true if objects.key?(layout)
-          raise(ArgumentError, "Invalid layout! #{layout}") 
-        end
-
-        # 0x60
-        def basic
-          objects[LAYOUT_60]
-        end
-
-        # 0x61
-        def titled
-          objects[LAYOUT_61]
-        end
-
-        # 0x62
-        def digital
-          objects[LAYOUT_62]
-        end
-
-        # 0x63
-        def static
-          objects[LAYOUT_63]
+          raise(ArgumentError, "Invalid layout! #{layout}")
         end
 
         def by_layout_id(id)
