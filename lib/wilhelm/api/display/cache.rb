@@ -12,18 +12,23 @@ module Wilhelm
     class Display
       # API::Display::Cache
       class Cache
+        LAYOUT_60 = 0x60
+        LAYOUT_61 = 0x61
+        LAYOUT_62 = 0x62
+        LAYOUT_63 = 0x63
+
         LAYOUT_CLASS_MAP = {
-          0x60 => Menu::Basic.new,
-          0x61 => Menu::Titled.new,
-          0x62 => Header::Digital.new,
-          0x63 => Menu::Static.new
+          LAYOUT_60 => Menu::Basic,
+          LAYOUT_61 => Menu::Titled,
+          LAYOUT_62 => Header::Digital,
+          LAYOUT_63 => Menu::Static
         }.freeze
 
         SYMBOL_TO_ID_MAP = {
-          basic: 0x60,
-          titled: 0x61,
-          digital: 0x62,
-          static: 0x63
+          basic: LAYOUT_60,
+          titled: LAYOUT_61,
+          digital: LAYOUT_62,
+          static: LAYOUT_63
         }.freeze
 
         def validate_layout(layout)
@@ -65,31 +70,31 @@ module Wilhelm
         def create_objects
           LOGGER.debug(self.class) { "#create_objects (#{Thread.current})" }
           {
-            0x60 => Menu::Basic.new,
-            0x61 => Menu::Titled.new,
-            0x62 => Header::Digital.new,
-            0x63 => Menu::Static.new
+            LAYOUT_60 => LAYOUT_CLASS_MAP[LAYOUT_60]&.new,
+            LAYOUT_61 => LAYOUT_CLASS_MAP[LAYOUT_61]&.new,
+            LAYOUT_62 => LAYOUT_CLASS_MAP[LAYOUT_62]&.new,
+            LAYOUT_63 => LAYOUT_CLASS_MAP[LAYOUT_63]&.new
           }
         end
 
         # 0x60
         def basic
-          objects[0x60]
+          objects[LAYOUT_60]
         end
 
         # 0x61
         def titled
-          objects[0x61]
+          objects[LAYOUT_61]
         end
 
         # 0x62
         def digital
-          objects[0x62]
+          objects[LAYOUT_62]
         end
 
         # 0x63
         def static
-          objects[0x63]
+          objects[LAYOUT_63]
         end
 
         def by_layout_id(id)
