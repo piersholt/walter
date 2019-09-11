@@ -78,7 +78,8 @@ module Wilhelm
         def validate_layout(layout)
           return true if SYMBOL_TO_ID_MAP.key?(layout)
           return true if LAYOUT_CLASS_MAP.key?(layout)
-          raise(ArgumentError, "Invalid layout! #{layout}") unless objects.key?(layout)
+          return true if objects.key?(layout)
+          raise(ArgumentError, "Invalid layout! #{layout}") 
         end
 
         # 0x60
