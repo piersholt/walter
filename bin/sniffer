@@ -1,0 +1,134 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: false
+
+puts "BMW Bus Sniffer Copyright (C) 2019 Piers Holt\n"\
+     "This program comes with ABSOLUTELY NO WARRANTY.\n"\
+     "This is free software, and you are welcome to redistribute it\n"\
+     "under certain conditions.\n"
+
+# *************************************************************************** #
+#                                  LOAD PATHS                                 #
+# *************************************************************************** #
+begin
+  # Bundler dependencies
+  require 'bundler/setup'
+
+  require 'pry-byebug'
+  require 'figaro'
+  require 'wilhelm/tools'
+
+  require 'observer'
+  require 'optparse'
+  require 'ostruct'
+  require 'matrix'
+
+  def setup_path(dir)
+    load_path = File.expand_path(File.dirname(__FILE__) + "/../#{dir}")
+    $LOAD_PATH.unshift(load_path) unless $LOAD_PATH.include?(load_path)
+  rescue StandardError => e
+    puts e
+    e.backtrace.each { |line| puts line }
+    exit
+  end
+
+# *************************************************************************** #
+#                              CLI OPTIONS                                    #
+# *************************************************************************** #
+
+  options = OpenStruct.new
+  options.environment = 'development'
+  options.console = false
+  options.file = '/dev/cu.SLAB_USBtoUART'
+
+  OptionParser.new do |opts|
+    opts.banner = 'Usage: run -f /dev/cu.SLAB_USBtoUART -e development -c'
+
+    opts.on('-f FILE', '--file FILE', 'Device file or capture log') do |f|
+      options.file = f
+    end
+
+    opts.on('-c', '--console', 'Open Walter console') do |c|
+      options.console = c
+    end
+
+    opts.on('-e ENVIRONMENT', '--envrionment= ENVIRONMENT', 'Runtime environment') do |e|
+      options.environment = e
+    end
+  end.parse!
+
+  LOG_PATH = 'log'.freeze
+  LOG_BIN_PATH = LOG_PATH + '/bin'
+  LOG_FRAME_PATH = LOG_PATH + '/frame'
+
+  def dir_check
+    setup_log_path unless File.exist?(LOG_PATH)
+  end
+
+  def setup_log_path
+    FileUtils.mkdir_p(LOG_BIN_PATH, verbose: true)
+    FileUtils.mkdir_p(LOG_FRAME_PATH, verbose: true)
+  end
+
+  setup_path('lib')
+
+  dir_check
+
+  Figaro::Application.new(
+    path: 'config/application.yml',
+    environment: options[:environment]
+  )&.load
+  # Figaro.require_keys(
+  #   %w[publisher_host publisher_port] +
+  #   %w[subscriber_host subscriber_port] +
+  #   %w[client_host client_port] +
+  #   %w[augmented emulated]
+  # )
+
+  require 'wilhelm'
+
+  LOGGER = LogActually.is_all_around(:default)
+  LOGGER.i
+rescue LoadError => e
+  puts e
+  e.backtrace.each { |line| puts line }
+  $LOAD_PATH.each { |line| puts line }
+  exit
+rescue StandardError => e
+  puts e
+  e.backtrace.each { |line| puts line }
+  exit
+end
+
+# *************************************************************************** #
+#                                 APPLICATION                                 #
+# *************************************************************************** #
+
+PROC = 'BMW Bus Sniffer'.freeze
+
+LOGGER.info(PROC) { 'BMW Bus Sniffer' }
+
+begin
+  app = Wilhelm::Tools::Sniffer::Application.new(options)
+  app.launch
+rescue Interrupt
+  Signal.trap(0, proc { puts "Terminating: #{$$}" })
+  LOGGER.close
+  return 1
+rescue LoadError => e
+  LOGGER.error('run') { 'Application LoadError' }
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.warn('run') { line } }
+  # $LOAD_PATH.each { |line| LOGGER.warn('run') { line } }
+  exit(false)
+rescue StandardError => e
+  LOGGER.error('run') { 'Rescued at bin/run' }
+  LOGGER.error('run') { e }
+  e.backtrace.each { |line| LOGGER.error('run') { line } }
+  LOGGER.close
+  exit(false)
+rescue SystemExit
+  puts "rescued a SystemExit exception"
+end
+
+return 0
