@@ -17,6 +17,8 @@ begin
   require 'pry-byebug'
   require 'figaro'
 
+  require 'wilhelm/tools'
+
   require 'observer'
   require 'optparse'
   require 'ostruct'
@@ -84,7 +86,6 @@ begin
     %w[augmented emulated]
   )
 
-  require 'wilhelm/tools'
   require 'wilhelm'
   require 'walter'
 
