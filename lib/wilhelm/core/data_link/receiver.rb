@@ -11,6 +11,8 @@ module Wilhelm
         include Errors
         include Wilhelm::Helpers::DataTools
 
+        Segment = Struct.new(:id, :valid, :stream)
+
         NAME = 'Receiver'
         THREAD_NAME = 'wilhelm-core/data_link Receiver (Input Buffer)'
 
@@ -72,7 +74,16 @@ module Wilhelm
         def synchronise_frame(input_buffer)
           synchronisation = @synchronisation.new(input_buffer)
           new_frame = synchronisation.run
-          LOGGER.debug(name) { "Frame: #{new_frame}" }
+          unless dropped_bytes.empty?
+            # dropped_segment = Bytes.new(dropped_bytes.dup)
+            # segments << Segment.new(iteration, false, dropped_segment)
+            # increment!
+            LOGGER.warn(name) { "❌\t#{Bytes.new(dropped_bytes.dup)}" }
+            dropped_bytes.clear
+          end
+          # segments << Segment.new(iteration, true, Bytes.new(new_frame[0..-1]))
+          # increment!
+          LOGGER.debug(name) { "✅\t#{new_frame}" }
           output_buffer.push(new_frame)
         rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
           LOGGER.debug(name) { e }
@@ -86,10 +97,26 @@ module Wilhelm
 
         def clean_up(buffer, new_frame)
           LOGGER.debug(name) { "#{SYNC_ERROR} #clean_up" }
-          LOGGER.warn(name) { "#{SYNC_ERROR} Drop: #{d2h(new_frame[0])} (#{new_frame[0].class})." }
+          dropped_bytes << new_frame[0]
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{new_frame[1..-1].length} bytes." }
           LOGGER.debug(name) { "#{SYNC_SHIFT} Returning to buffer: #{new_frame[1..-1].first(10)}....." }
           buffer.unshift(*new_frame[1..-1])
+        end
+
+        def dropped_bytes
+          @dropped_bytes ||= []
+        end
+
+        def segments
+          @segments ||= []
+        end
+
+        def iteration
+          @iteration ||= 0
+        end
+
+        def increment!
+          @iteration = iteration + 1
         end
       end
     end
