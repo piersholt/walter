@@ -7,6 +7,9 @@ module Wilhelm
       include DataTools
       include Bitwise
 
+      NAME = 'Checksum'.freeze
+      SPACE = ' '.freeze
+
       def parity(*bytes)
         xor(*bytes)
       end
@@ -16,15 +19,17 @@ module Wilhelm
       end
 
       def pretty_parity?(*bytes, checksum)
-        puts "#pretty_parity?(#{bytes}, #{checksum})"
+        LOGGER.debug(NAME) { "#pretty_parity?(#{bytes}, #{checksum})" }
         if bytes.any? { |b| b.is_a?(String) } || checksum.is_a?(String)
           bytes = s2i(checksum)[0..-2]
           checksum = s2i(checksum)[-1]
         end
-        puts "#{i2s(*bytes)} " \
-             "[#{i2s(checksum)}] " \
-             "== #{i2s(parity(*bytes))} " \
-             "=> #{parity?(*bytes, checksum)}"
+        LOGGER.info(NAME) do
+          "#{i2s(*bytes)} " \
+          "[#{i2s(checksum)}] " \
+          "== #{i2s(parity(*bytes))} " \
+          "=> #{parity?(*bytes, checksum)}"
+        end
         parity?(*bytes, checksum)
       end
 
@@ -39,8 +44,6 @@ module Wilhelm
       end
 
       alias s2i hex_string_to_ints
-
-      SPACE = ' '.freeze
 
       # @param Array<Integer> ints [0xC8, 0x04, 0xBF, 0x02, 0x38, 0x49]
       # Valid hex representations: C8, 0xC8, C8H

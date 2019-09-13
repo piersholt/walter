@@ -15,6 +15,7 @@ require_relative 'helpers/inspect'
 require_relative 'helpers/observation'
 require_relative 'helpers/time'
 require_relative 'helpers/checksum'
+require_relative 'helpers/recovery'
 
 module Wilhelm
   # Helpers
