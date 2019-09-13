@@ -11,6 +11,7 @@ begin
   require_relative 'wilhelm/api'
   require_relative 'wilhelm/sdk'
   require_relative 'wilhelm/services'
+  require_relative 'wilhelm/tools'
 rescue LoadError => e
   puts "#{e.class}: #{e}"
   e.backtrace.each { |line| puts "\t#{line}" }

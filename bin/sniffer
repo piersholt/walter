@@ -2,7 +2,7 @@
 
 # frozen_string_literal: false
 
-puts "Walter Copyright (C) 2019 Piers Holt\n"\
+puts "BMW Bus Sniffer Copyright (C) 2019 Piers Holt\n"\
      "This program comes with ABSOLUTELY NO WARRANTY.\n"\
      "This is free software, and you are welcome to redistribute it\n"\
      "under certain conditions.\n"
@@ -16,7 +16,6 @@ begin
 
   require 'pry-byebug'
   require 'figaro'
-
   require 'wilhelm/tools'
 
   require 'observer'
@@ -79,15 +78,14 @@ begin
     path: 'config/application.yml',
     environment: options[:environment]
   )&.load
-  Figaro.require_keys(
-    %w[publisher_host publisher_port] +
-    %w[subscriber_host subscriber_port] +
-    %w[client_host client_port] +
-    %w[augmented emulated]
-  )
+  # Figaro.require_keys(
+  #   %w[publisher_host publisher_port] +
+  #   %w[subscriber_host subscriber_port] +
+  #   %w[client_host client_port] +
+  #   %w[augmented emulated]
+  # )
 
   require 'wilhelm'
-  require 'walter'
 
   LOGGER = LogActually.is_all_around(:default)
   LOGGER.i
@@ -106,12 +104,12 @@ end
 #                                 APPLICATION                                 #
 # *************************************************************************** #
 
-PROC = 'Walter'.freeze
+PROC = 'BMW Bus Sniffer'.freeze
 
-LOGGER.info(PROC) { 'BMW I/K-BUS Interface' }
+LOGGER.info(PROC) { 'BMW Bus Sniffer' }
 
 begin
-  app = Walter::Application.new(file: options.file, console: options.console)
+  app = Wilhelm::Tools::Sniffer::Application.new(options)
   app.launch
 rescue Interrupt
   Signal.trap(0, proc { puts "Terminating: #{$$}" })
