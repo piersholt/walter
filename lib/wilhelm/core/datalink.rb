@@ -13,6 +13,7 @@ end
 require_relative 'data_link/constants'
 require_relative 'data_link/model'
 require_relative 'data_link/synchronisation'
+require_relative 'data_link/capture'
 require_relative 'data_link/receiver'
 require_relative 'data_link/transmitter'
 require_relative 'data_link/multiplexer'

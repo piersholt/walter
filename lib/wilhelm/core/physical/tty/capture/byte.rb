@@ -17,15 +17,6 @@ module Wilhelm
               super("#{PATH}/#{Time.now.public_send(*TIME_STAMP)}#{EXTENTION}", MODE)
             end
           end
-
-          class FrameStream < ::File
-            PATH = LOG_FRAME_PATH
-            EXTENTION = '.log'
-
-            def initialize
-              super("#{PATH}/#{Time.now.public_send(*TIME_STAMP)}#{EXTENTION}", MODE)
-            end
-          end
         end
       end
     end
