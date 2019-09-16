@@ -9,6 +9,7 @@ module Wilhelm
         include ManageableThreads
         include Constants
         include Errors
+        include Capture
         include Wilhelm::Helpers::DataTools
 
         Segment = Struct.new(:id, :valid, :stream)
@@ -34,12 +35,14 @@ module Wilhelm
         def off
           LOGGER.debug(name) { "#{self.class}#off" }
           close_threads
+          close_capture
         end
 
         def on
           LOGGER.debug(name) { "#{self.class}#on" }
           @read_thread = thread_read_buffer(@input_buffer, @output_buffer)
           add_thread(@read_thread)
+          capture!
           true
         rescue StandardError => e
           LOGGER.error(e)
@@ -85,6 +88,7 @@ module Wilhelm
           # increment!
           LOGGER.debug(name) { "✅\t#{new_frame}" }
           output_buffer.push(new_frame)
+          capture_frame(new_frame)
         rescue HeaderValidationError, HeaderImplausibleError, TailValidationError, ChecksumError => e
           LOGGER.debug(name) { e }
           clean_up(input_buffer, synchronisation.frame)

@@ -44,14 +44,16 @@ module Wilhelm
           end
 
           def close_byte_capture
+            return false unless @byte_log
             LOGGER.debug(name) { "Closing binary stream log #{byte_log.path}." }
-            result = byte_log.close
+            result = byte_log&.close
             LOGGER.info(name) { "#{byte_log.path} closed => #{result}" }
           end
 
           def close_frame_capture
+            return false unless @frame_log
             LOGGER.debug(name) { "Closing frame log #{frame_log.path}." }
-            result = frame_log.close
+            result = frame_log&.close
             LOGGER.info(name) { "#{frame_log.path} closed => #{result}" }
           end
 
