@@ -4168,7 +4168,7 @@
 #                           CONFIG VIA BMBT/MID
 # ************************************************************************* #
 
-0x40: # CONG-VAR
+0x40: # CONF-VAR
   :properties:
     :short_name: CONF-VAR
     :long_name: Configuration variables.
