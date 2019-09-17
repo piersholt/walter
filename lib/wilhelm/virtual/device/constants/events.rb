@@ -13,6 +13,12 @@ module Wilhelm
     module Constants
       # Virtual::Constants::Events
       module Events
+        # Action
+        module Action
+          include Telephone::Action
+
+          ACTIONS = constants.map { |c| const_get(c) }
+        end
         # Cache
         module Cache
           include Display::Cache

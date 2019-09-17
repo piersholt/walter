@@ -9,6 +9,7 @@ module Wilhelm
           module Received
             include Virtual::Constants::Events::Telephone
             include Constants
+            include Action
 
             # 0x02 PONG
             # Piggyback off the radio announce to annunce

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'emulated/state'
+require_relative 'emulated/action'
 require_relative 'emulated/received'
 
 module Wilhelm
