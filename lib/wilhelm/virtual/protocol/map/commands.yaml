@@ -3847,10 +3847,10 @@
           :label: 'ID'
           :map:
             0x01: :check_control
-            0x02: :unknown
+            0x02: :bc_remote
           :dictionary:
             0b00001: Check Control
-            0b00010: 'Not Check button?'
+            0b00010: BC Remote
         :state:
           :type: :switch
           :label: 'State'
