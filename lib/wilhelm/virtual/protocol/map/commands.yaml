@@ -4075,10 +4075,12 @@
     :layout:
       :type: :map
       :dictionary:
-        0b0001_0001: 'Range Set'
-        0b0001_0000: 'Range Clear?'
-        0b0011_0001: 'Code'
-        0b0011_0011: 'Code Clear?'
+        0b0001_0001: '[Range] Set'
+        0b0001_0000: '[Range] Clear?'
+        0b0010_0001: '[Prog] Set'
+        0b0010_0000: '[Prog] Clear'
+        0b0011_0001: '[Code] Set'
+        0b0011_0011: '[Code] Clear?'
     :options:
       :type: :bit_array
       :index:
