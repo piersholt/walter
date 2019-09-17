@@ -2644,17 +2644,33 @@
     :status: 0
   :parameters:
     :status:
-      :type: :map
-      :map:
-        0x00: complete
-        0x01: preset_1
-        0x02: preset_2
-        0x03: preset_3
-      :dictionary:
-        0x00: Complete
-        0x01: Preset 1
-        0x02: Preset 2
-        0x03: Preset 2
+      :type: :bit_array
+      :index:
+        :save: 4
+        :preset: !ruby/range
+                begin: 5
+                end: 7
+                excl: false
+      :parameters:
+        :save:
+          :type: :switch
+          :label: Save
+          :states:
+            0: :off
+            1: :on
+        :preset:
+          :type: :map
+          :label: Preset
+          :map:
+            0b000: :preset_nil
+            0b001: :preset_1
+            0b010: :preset_2
+            0b100: :preset_3
+          :dictionary:
+            0b000: --
+            0b001: '1'
+            0b010: '2'
+            0b100: '3'
   :meta:
     :notes:
       - 504 messages sent to date
