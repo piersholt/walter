@@ -4232,6 +4232,11 @@
         0x0f: (Aux.) Timer 1                # [On, Off]
         0x10: (Aux.) Timer 2                # [On, Off]
 
+        0x11: (Aux.) Heat (Off)
+        0x12: (Aux.) Heat (On)
+        0x13: (Aux.) Vent (Off)
+        0x14: (Aux.) Vent (On)
+
     :control:
       :type: :map
       :map:
