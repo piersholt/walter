@@ -4254,9 +4254,9 @@
 #                                 CLIMATE?
 # ************************************************************************* #
 
-0x86: # NAV-IHKA-REP
+0x86: # IHKA-NAV-86
   :properties:
-    :short_name: NAV-IHKA-REP
+    :short_name: NAV-IHKA-86
     :long_name: Unknown
   :klass: Base
   :meta:
@@ -4264,14 +4264,29 @@
       - reply from IHKA to nav_eu
       - it's not addressed to global? very specific?
 
-0x87: # NAV-IHKA-REQ
+0x87: # NAV-IHKA-87
   :properties:
-    :short_name: NAV-IHKA-REQ
+    :short_name: NAV-IHKA-87
     :long_name: Unknown
   :klass: Base
   :meta:
     :notes:
       - send by :nav_eu???? to IKHA
+
+0x82: # IHKA-GLO-82
+  :properties:
+    :short_name: IHKA-82
+    :long_name: Unknown
+  :klass: Base
+
+0x83: # IHKA-83
+  :properties:
+    :short_name: IHKA-83
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    :senders:
+      - IHKA
 
 # ************************************************************************* #
 #                          DIAGNOSTICS/INPA
@@ -4549,21 +4564,6 @@
     :short_name: GM3-?
     :long_name: Unknown
   :klass: Base
-
-0x82: # IHKA-82
-  :properties:
-    :short_name: IHKA-82
-    :long_name: Unknown
-  :klass: Base
-
-0x83: # IHKA-83
-  :properties:
-    :short_name: IHKA-83
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :senders:
-      - IHK
 
 0xbf:
   :properties:
