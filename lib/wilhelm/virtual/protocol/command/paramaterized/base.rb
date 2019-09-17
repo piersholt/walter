@@ -12,9 +12,10 @@ module Wilhelm
 
           def format_things
             result = parameters.map do |param|
+              next nil if public_send(param).nil?
               format_thing(param)
             end
-            result.join(' / ')
+            result&.compact&.join(' / ')
           end
 
           def format_thing(param_name)
