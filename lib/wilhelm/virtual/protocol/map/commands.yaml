@@ -4550,15 +4550,15 @@
     :long_name: Unknown
   :klass: Base
 
-0x82:
+0x82: # IHKA-82
   :properties:
-    :short_name: "???"
+    :short_name: IHKA-82
     :long_name: Unknown
   :klass: Base
 
-0x83:
+0x83: # IHKA-83
   :properties:
-    :short_name: IHK-?
+    :short_name: IHKA-83
     :long_name: Unknown
   :klass: Base
   :meta:
