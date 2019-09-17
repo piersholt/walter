@@ -1422,6 +1422,8 @@
     :year:
       :type: :data
 
+# TELEMATICS
+
 0xA2: # NAV-TEL-COORD
   :properties:
     :short_name: NAV-TEL-COORD
@@ -1492,7 +1494,7 @@
       :short_name: EWS-END
       :long_name: Diagnostics Control
 
-0xA4: # ADDR
+0xA4: # NAV-TEL-ADDR
   :properties:
     :short_name: NAV-TEL-ADDR
     :long_name: Unknown
@@ -1531,9 +1533,9 @@
     - 7F 05 68 A7 1F 00 AA
     - 7F 05 68 A7 3F 00 8A
 
-0xA9: # NAV-ASSIST?
+0xA9: # NAV-TEL-A9
   :properties:
-    :short_name: NAV-ASSIST?
+    :short_name: NAV-TEL-A9
     :long_name: Unknown
   :klass: Base
 
