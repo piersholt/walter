@@ -17,14 +17,14 @@ module Wilhelm
         module Capabilities
           # Telephone::Capabilities::Mock
           module Mock
-            include Dial
-            include Directory
-            include Info
-            include PIN
-            include Quick
-            include Top8
-            include SMS
-            include SOS
+            # include Dial
+            # include Directory
+            # include Info
+            # include PIN
+            # include Quick
+            # include Top8
+            # include SMS
+            # include SOS
           end
         end
       end

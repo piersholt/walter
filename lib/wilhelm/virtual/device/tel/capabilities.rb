@@ -2,7 +2,6 @@
 
 require_relative 'capabilities/constants'
 require_relative 'capabilities/display'
-require_relative 'capabilities/mock'
 require_relative 'capabilities/default'
 require_relative 'capabilities/dial'
 require_relative 'capabilities/directory'
@@ -24,7 +23,6 @@ module Wilhelm
           include Helpers
           include Constants
           include Display
-          include Mock
           include Default
           include Dial
           include Directory
