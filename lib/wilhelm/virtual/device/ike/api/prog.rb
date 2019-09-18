@@ -11,7 +11,7 @@ module Wilhelm
 
             # 0x42 PROG
             def prog(from: :ike, to: :gfx, **arguments)
-              dispatch_raw_command(from, to, 0x42, arguments)
+              dispatch_raw_command(from, to, PROG, arguments)
             end
           end
         end
