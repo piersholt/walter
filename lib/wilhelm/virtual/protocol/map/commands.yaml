@@ -4062,22 +4062,22 @@
         :func:
           :type: :map
           :dictionary:
-            0b0001: 'Range'
-            0b0010: 'Prog'
-            0b0011: 'Code'
+            0b0001: 'RANGE'
+            0b0010: 'PROG'
+            0b0011: 'CODE'
         :opts:
           :type: :map
           :dictionary:
             0b0000: '0b0000'
             0b0000: 'Clear'
             0b0001: 'Set__'
-            0b0011: '0b0011'
+            0b0011: 'Override'
     :b2:
       :type: :bit_array
       :index:
         :tbc: !ruby/range
                   begin: 0
-                  end: 4
+                  end: 3
                   excl: false
         :gong: !ruby/range
                   begin: 5
@@ -4087,8 +4087,10 @@
         :tbc:
           :type: :map
           :dictionary:
-            0b0100_0: 'Clear?'
-            0b0110_0: 'Set?__'
+            0b0100: 'Clear?'
+            0b1000: 'Ignition Off?'
+            0b0110: 'Set?__'
+            0b1010: 'Range at KL-15'
         :gong:
           :type: :map
           :label: 'Gong'
