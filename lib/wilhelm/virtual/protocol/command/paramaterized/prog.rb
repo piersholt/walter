@@ -34,8 +34,8 @@ module Wilhelm
             LIMIT       => 'Limit',
             AVG_SPEED   => 'Avg. Speed',
             TIMER       => 'Timer',
-            TIMER_1     => 'Timer 1?',
-            TIMER_2     => 'Timer 2?',
+            TIMER_1     => 'Timer 1',
+            TIMER_2     => 'Timer 2',
             NO_FUNCTION => nil
           }.freeze
 
