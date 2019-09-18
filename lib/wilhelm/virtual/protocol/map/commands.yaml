@@ -4040,30 +4040,55 @@
     :long_name: IKE CCM Forward?
   :klass: Parameterized::Base
   :index:
-    :layout: 0
-    :options: 1
+    :b1: 0
+    :b2: 1
     :chars: !ruby/range
               begin: 2
               end: -1
               excl: false
   :parameters:
-    :layout:
-      :type: :map
-      :dictionary:
-        0b0001_0001: '[Range] Set'
-        0b0001_0000: '[Range] Clear?'
-        0b0010_0001: '[Prog] Set'
-        0b0010_0000: '[Prog] Clear'
-        0b0011_0001: '[Code] Set'
-        0b0011_0011: '[Code] Clear?'
-    :options:
+    :b1:
       :type: :bit_array
       :index:
+        :func:  !ruby/range
+                  begin: 0
+                  end: 3
+                  excl: false
+        :opts:  !ruby/range
+                  begin: 4
+                  end: 7
+                  excl: false
+      :parameters:
+        :func:
+          :type: :map
+          :dictionary:
+            0b0001: 'Range'
+            0b0010: 'Prog'
+            0b0011: 'Code'
+        :opts:
+          :type: :map
+          :dictionary:
+            0b0000: '0b0000'
+            0b0000: 'Clear'
+            0b0001: 'Set__'
+            0b0011: '0b0011'
+    :b2:
+      :type: :bit_array
+      :index:
+        :tbc: !ruby/range
+                  begin: 0
+                  end: 4
+                  excl: false
         :gong: !ruby/range
                   begin: 5
                   end: 7
                   excl: false
       :parameters:
+        :tbc:
+          :type: :map
+          :dictionary:
+            0b0100_0: 'Clear?'
+            0b0110_0: 'Set?__'
         :gong:
           :type: :map
           :label: 'Gong'
