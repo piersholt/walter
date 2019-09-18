@@ -2,7 +2,7 @@
 
 require_relative 'api/check_control'
 require_relative 'api/ignition'
-require_relative 'api/remote'
+require_relative 'api/prog'
 require_relative 'api/settings'
 
 module Wilhelm
@@ -13,7 +13,7 @@ module Wilhelm
         module API
           include CheckControl
           include Ignition
-          include Remote
+          include Prog
           include Settings
         end
       end

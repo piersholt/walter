@@ -5,8 +5,8 @@ module Wilhelm
     class Device
       module IKE
         module API
-          # Device::IKE::API::Remote
-          module Remote
+          # Device::IKE::API::Prog
+          module Prog
             include Device::API::BaseAPI
 
             # 0x42 PROG
