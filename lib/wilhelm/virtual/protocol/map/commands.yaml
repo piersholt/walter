@@ -2585,17 +2585,17 @@
     :status:
       :type: :map
       :map:
-        0x00: unrecognised
-        0x01: unauthenticated
-        0x04: valid
-        0x05: authenticated
+        0b0000_0000: :unrecognised
+        0b0000_0001: :unauthenticated
+        0b0000_0100: :valid
+        0b0000_0101: :authenticated
       :dictionary:
-        0x00: No Longer Recognised
-        0x04: Valid and/or Enabled
-        0x01: Unauthenticated (Immobilizer Renabled)
-        0x05: Authenticated (Immobilizer Disabled)
-        0x0C: When old key was unhappy in INPA
-        0x08: When old key was unhappy in INPA
+        0b0000_0000: No Longer Recognised
+        0b0000_0001: Unauthenticated (Immobilizer Renabled)
+        0b0000_0100: Valid and/or Enabled
+        0b0000_0101: Authenticated (Immobilizer Disabled)
+        0b0000_1000: When old key was unhappy in INPA
+        0b0000_1100: When old key was unhappy in INPA
     :key:
       :type: :map
       :map:
@@ -2673,19 +2673,6 @@
             0b001: '1'
             0b010: '2'
             0b100: '3'
-  :meta:
-    :notes:
-      - 504 messages sent to date
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	01
-      - GM3   	GLO-L 	78       	02
-      - GM3   	GLO-L 	78       	04
-      - GM3   	GLO-L 	78       	04
-      - this was being sent after DIA request memory preset
-      - argument seemingly correlated with preset number/ID
 
 0x79: # DOOR-REQ
   :properties:
