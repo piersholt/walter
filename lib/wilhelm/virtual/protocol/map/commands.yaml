@@ -1537,7 +1537,7 @@
     :long_name: Unknown
   :klass: Base
 
-0xAF: # NAV-SES?
+0xAF: # NAV-SES-AF
   :properties:
     :short_name: NAV-SES?
     :long_name: Unknown
@@ -3846,8 +3846,6 @@
 
 # CLUSTER/HUD -----------------------------------------------------------------
 
-# NOTE I'm not sure if this is exclusively CC warnings...
-# Why does IKE forward a warning on?
 0x1A: # CCM-ALRT
   :klass: Parameterized::Base
   :properties:
@@ -4230,7 +4228,7 @@
     :field: 0
     :control: 1
 
-0x42: # PROG (OBC Remote)
+0x42: # PROG
   :properties:
     :short_name: PROG
     :long_name: OBC Remote
