@@ -4295,6 +4295,8 @@
     :short_name: IHKA-82
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - ihka to glo_l 01 when Aux. vent. turned OFF
 
 0x83: # IHKA-83
   :properties:
