@@ -22,7 +22,7 @@ module Wilhelm
           when FRAME_RECEIVED
             false
           when BUS_ONLINE
-            false
+            interface_handler&.bus_online
           when BUS_OFFLINE
             interface_handler&.bus_offline
           end

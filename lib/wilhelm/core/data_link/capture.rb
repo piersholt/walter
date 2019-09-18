@@ -22,12 +22,12 @@ module Wilhelm
         end
 
         def capture!
-          LOGGER.info(name) { 'Bus Online! Enable logging.' }
+          LOGGER.info(name) { 'Capture enabled.' }
           @capture = true
         end
 
         def release!
-          LOGGER.info(name) { 'Bus Offline! Disabling logging.' }
+          LOGGER.info(name) { 'Capture disabled.' }
           @capture = false
         end
 
