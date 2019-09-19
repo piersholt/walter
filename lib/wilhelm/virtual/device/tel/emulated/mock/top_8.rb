@@ -9,7 +9,7 @@ module Wilhelm
             # Telephone Top 8 Contacts
             module Top8
               include Constants
-              include Mock::Contacts
+              # include Mock::Contacts
 
               MOD_PROG = 'Mock::Top 8'
 

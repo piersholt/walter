@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'emulated/state'
+require_relative 'emulated/mock'
 require_relative 'emulated/action'
 require_relative 'emulated/received'
 
@@ -13,6 +14,7 @@ module Wilhelm
           include Wilhelm::Helpers::DataTools
           include Capabilities
           include State
+          include Mock
           include Received
 
           PROC = 'Telephone::Emulated'
