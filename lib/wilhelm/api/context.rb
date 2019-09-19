@@ -37,6 +37,11 @@ module Wilhelm
           device = virtual_context.public_send(target)
           device.add_observer(display)
         end
+
+        telephone.targets.each do |target|
+          device = virtual_context.public_send(target)
+          device.add_observer(telephone)
+        end
       end
     end
   end

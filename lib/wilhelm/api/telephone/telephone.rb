@@ -5,8 +5,10 @@ module Wilhelm
     # Telephone object for vehicle API
     class Telephone
       include Singleton
-      include Observable
+      include Helpers::Observation
 
+      include Listener
+      include Directory
       include LED
 
       PROG = 'Telephone'
@@ -21,10 +23,8 @@ module Wilhelm
         PROG
       end
 
-      # TODO: module
-      def incoming(caller_id = nil)
-        caller_id unless caller_id.nil?
-        false
+      def targets
+        %i[tel]
       end
     end
   end
