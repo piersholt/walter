@@ -6,9 +6,7 @@
       :verbose: true
     :klass: Base
 
-# ************************************************************************* #
-#                               BMBT/MID
-# ************************************************************************* #
+# BMBT/MID --------------------------------------------------------------------
 
 0x21: # MID-21 / RAD-21* / TEL-21*
   :properties:
@@ -1013,9 +1011,7 @@
       - 'TEL   	GFX   	TXT-MEDIA 	C0 20	"SOS: 112!"'
       - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
 
-# ************************************************************************* #
-#                                  ANZV
-# ************************************************************************* #
+# ANZV ------------------------------------------------------------------------
 
 0x24: # ANZV-VAR / ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
   :properties:
@@ -1387,9 +1383,7 @@
     :recipients:
       - ANZV
 
-# ************************************************************************* #
-#                                 NAVIGATION
-# ************************************************************************* #
+# TELEMATICS ------------------------------------------------------------------
 
 0x1F: # NAV-IKE-TIME
   :properties:
@@ -1492,7 +1486,7 @@
       :short_name: EWS-END
       :long_name: Diagnostics Control
 
-0xA4: # ADDR
+0xA4: # NAV-TEL-ADDR
   :properties:
     :short_name: NAV-TEL-ADDR
     :long_name: Unknown
@@ -1531,9 +1525,9 @@
     - 7F 05 68 A7 1F 00 AA
     - 7F 05 68 A7 3F 00 8A
 
-0xA9: # NAV-ASSIST?
+0xA9: # NAV-TEL-A9
   :properties:
-    :short_name: NAV-ASSIST?
+    :short_name: NAV-TEL-A9
     :long_name: Unknown
   :klass: Base
 
@@ -1543,15 +1537,13 @@
     :long_name: Unknown
   :klass: Base
 
-0xAF: # NAV-SES?
+0xAF: # NAV-SES-AF
   :properties:
     :short_name: NAV-SES?
     :long_name: Unknown
   :klass: Base
 
-# ************************************************************************* #
-#                             BUS DEVICE STATUS
-# ************************************************************************* #
+# PING/PONG -------------------------------------------------------------------
 
 0x01: # PING
   :properties:
@@ -1661,9 +1653,7 @@
       - BMBT  RAD	  PING	--
       - RAD	  GLO-H	PONG	Respond
 
-# ************************************************************************* #
-#                               IGNITION
-# ************************************************************************* #
+# SENSORS ---------------------------------------------------------------------
 
 0x10: # IGN-REQ
   :properties:
@@ -2213,6 +2203,8 @@
     - D0 03 80 1D 4E
     - D0 03 80 1D 4E
 
+# VEHICLE DATA ----------------------------------------------------------------
+
 0x53: # VEH-LCM-REQ
   :properties:
     :short_name: VEH-LCM-REQ
@@ -2307,6 +2299,8 @@
     :time:
       :label: Time Inspection Counter (days)
       :type: :data
+
+# LIGHTING --------------------------------------------------------------------
 
 0x59: # RLS-LUM
   :properties:
@@ -2520,6 +2514,8 @@
       - IKE 03 LCM  5D 0E
       - LCM 05 BF   5C FF 00 C9
 
+# KEY -------------------------------------------------------------------------
+
 0x72: # REMOTE
   :properties:
     :short_name: REMOTE
@@ -2583,17 +2579,17 @@
     :status:
       :type: :map
       :map:
-        0x00: unrecognised
-        0x01: unauthenticated
-        0x04: valid
-        0x05: authenticated
+        0b0000_0000: :unrecognised
+        0b0000_0001: :unauthenticated
+        0b0000_0100: :valid
+        0b0000_0101: :authenticated
       :dictionary:
-        0x00: No Longer Recognised
-        0x04: Valid and/or Enabled
-        0x01: Unauthenticated (Immobilizer Renabled)
-        0x05: Authenticated (Immobilizer Disabled)
-        0x0C: When old key was unhappy in INPA
-        0x08: When old key was unhappy in INPA
+        0b0000_0000: No Longer Recognised
+        0b0000_0001: Unauthenticated (Immobilizer Renabled)
+        0b0000_0100: Valid and/or Enabled
+        0b0000_0101: Authenticated (Immobilizer Disabled)
+        0b0000_1000: When old key was unhappy in INPA
+        0b0000_1100: When old key was unhappy in INPA
     :key:
       :type: :map
       :map:
@@ -2644,30 +2640,35 @@
     :status: 0
   :parameters:
     :status:
-      :type: :map
-      :map:
-        0x00: complete
-        0x01: preset_1
-        0x02: preset_2
-        0x03: preset_3
-      :dictionary:
-        0x00: Complete
-        0x01: Preset 1
-        0x02: Preset 2
-        0x03: Preset 2
-  :meta:
-    :notes:
-      - 504 messages sent to date
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	00
-      - GM3   	GLO-L 	78       	01
-      - GM3   	GLO-L 	78       	02
-      - GM3   	GLO-L 	78       	04
-      - GM3   	GLO-L 	78       	04
-      - this was being sent after DIA request memory preset
-      - argument seemingly correlated with preset number/ID
+      :type: :bit_array
+      :index:
+        :save: 4
+        :preset: !ruby/range
+                begin: 5
+                end: 7
+                excl: false
+      :parameters:
+        :save:
+          :type: :switch
+          :label: Save
+          :states:
+            0: :off
+            1: :on
+        :preset:
+          :type: :map
+          :label: Preset
+          :map:
+            0b000: :preset_nil
+            0b001: :preset_1
+            0b010: :preset_2
+            0b100: :preset_3
+          :dictionary:
+            0b000: --
+            0b001: '1'
+            0b010: '2'
+            0b100: '3'
+
+# DOORS/WINDOWS ---------------------------------------------------------------
 
 0x79: # DOOR-REQ
   :properties:
@@ -2796,9 +2797,7 @@
     :recipients:
       - GLO-L
 
-# ************************************************************************* #
-#                               RADIO
-# ************************************************************************* #
+# RADIO -----------------------------------------------------------------------
 
 0x34: # DSP-SET
   :properties:
@@ -3402,7 +3401,7 @@
 
 0x4F: # SRC-GFX
   # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Base
+  :klass: Parameterized::Base
   :properties:
     :short_name: SRC-GFX
     :long_name: Display Output
@@ -3441,9 +3440,7 @@
         - 00 (Monitor Off)
         - 10 (Monitor On)
 
-# ************************************************************************* #
-#                               BUTTONS
-# ************************************************************************* #
+# CONTROLS --------------------------------------------------------------------
 
 0x3B: # MFL-RAD* / MFL-TEL*
   :schemas:
@@ -3829,10 +3826,10 @@
           :label: 'ID'
           :map:
             0x01: :check_control
-            0x02: :unknown
+            0x02: :bc_remote
           :dictionary:
             0b00001: Check Control
-            0b00010: 'Not Check button?'
+            0b00010: BC Remote
         :state:
           :type: :switch
           :label: 'State'
@@ -3847,12 +3844,8 @@
   :meta:
     - only press and release
 
-# ************************************************************************* #
-#                             CLUSTER HUD
-# ************************************************************************* #
+# CLUSTER/HUD -----------------------------------------------------------------
 
-# NOTE I'm not sure if this is exclusively CC warnings...
-# Why does IKE forward a warning on?
 0x1A: # CCM-ALRT
   :klass: Parameterized::Base
   :properties:
@@ -4047,28 +4040,57 @@
     :long_name: IKE CCM Forward?
   :klass: Parameterized::Base
   :index:
-    :layout: 0
-    :options: 1
+    :b1: 0
+    :b2: 1
     :chars: !ruby/range
               begin: 2
               end: -1
               excl: false
   :parameters:
-    :layout:
-      :type: :map
-      :dictionary:
-        0b0001_0001: 'Range Set'
-        0b0001_0000: 'Range Clear?'
-        0b0011_0001: 'Code'
-        0b0011_0011: 'Code Clear?'
-    :options:
+    :b1:
       :type: :bit_array
       :index:
+        :func:  !ruby/range
+                  begin: 0
+                  end: 3
+                  excl: false
+        :opts:  !ruby/range
+                  begin: 4
+                  end: 7
+                  excl: false
+      :parameters:
+        :func:
+          :type: :map
+          :dictionary:
+            0b0001: 'RANGE'
+            0b0010: 'PROG'
+            0b0011: 'CODE'
+        :opts:
+          :type: :map
+          :dictionary:
+            0b0000: '0b0000'
+            0b0000: 'Clear'
+            0b0001: 'Set__'
+            0b0011: 'Override'
+    :b2:
+      :type: :bit_array
+      :index:
+        :tbc: !ruby/range
+                  begin: 0
+                  end: 3
+                  excl: false
         :gong: !ruby/range
                   begin: 5
                   end: 7
                   excl: false
       :parameters:
+        :tbc:
+          :type: :map
+          :dictionary:
+            0b0100: 'Clear?'
+            0b1000: 'Ignition Off?'
+            0b0110: 'Set?__'
+            0b1010: 'Range at KL-15'
         :gong:
           :type: :map
           :label: 'Gong'
@@ -4133,9 +4155,7 @@
       - "   RANGE  47 KM     "
       - "   RANGE  47 KM     "
 
-# ************************************************************************* #
-#                               TELEPHONE
-# ************************************************************************* #
+# TELEPHONE -------------------------------------------------------------------
 
 0x20: # TEL-OPEN
   :properties:
@@ -4146,11 +4166,9 @@
     :examples:
       - from GFX 02 0C
 
-# ************************************************************************* #
-#                           CONFIG VIA BMBT/MID
-# ************************************************************************* #
+# CONFIG ----------------------------------------------------------------------
 
-0x40: # CONG-VAR
+0x40: # CONF-VAR
   :properties:
     :short_name: CONF-VAR
     :long_name: Configuration variables.
@@ -4214,6 +4232,11 @@
         0x0f: (Aux.) Timer 1                # [On, Off]
         0x10: (Aux.) Timer 2                # [On, Off]
 
+        0x11: (Aux.) Heat (Off)
+        0x12: (Aux.) Heat (On)
+        0x13: (Aux.) Vent (Off)
+        0x14: (Aux.) Vent (On)
+
     :control:
       :type: :map
       :map:
@@ -4232,13 +4255,25 @@
     :field: 0
     :control: 1
 
-# ************************************************************************* #
-#                                 CLIMATE?
-# ************************************************************************* #
-
-0x86: # NAV-IHKA-REP
+0x42: # PROG
   :properties:
-    :short_name: NAV-IHKA-REP
+    :short_name: PROG
+    :long_name: OBC Remote
+  :klass: Parameterized::Prog
+  :parameters:
+    :functions:
+      :type: :data
+      :label: Functions
+  :index:
+    :functions: !ruby/range
+                begin: 0
+                end: 11
+
+# CLIMATE CONTROL (IHKA) ------------------------------------------------------
+
+0x86: # IHKA-NAV-86
+  :properties:
+    :short_name: NAV-IHKA-86
     :long_name: Unknown
   :klass: Base
   :meta:
@@ -4246,18 +4281,33 @@
       - reply from IHKA to nav_eu
       - it's not addressed to global? very specific?
 
-0x87: # NAV-IHKA-REQ
+0x87: # NAV-IHKA-87
   :properties:
-    :short_name: NAV-IHKA-REQ
+    :short_name: NAV-IHKA-87
     :long_name: Unknown
   :klass: Base
   :meta:
     :notes:
       - send by :nav_eu???? to IKHA
 
-# ************************************************************************* #
-#                          DIAGNOSTICS/INPA
-# ************************************************************************* #
+0x82: # IHKA-GLO-82
+  :properties:
+    :short_name: IHKA-82
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - ihka to glo_l 01 when Aux. vent. turned OFF
+
+0x83: # IHKA-83
+  :properties:
+    :short_name: IHKA-83
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    :senders:
+      - IHKA
+
+# DIAGNOSTICS/INPA ------------------------------------------------------------
 
 0x00: # DIA-HELLO
   :properties:
@@ -4480,17 +4530,9 @@
     :long_name: Diagnostics Data
   :klass: Base
 
-# ************************************************************************* #
-#                                  UNKNOWN
-# ************************************************************************* #
+# UNKNOWN COMMANDS ------------------------------------------------------------
 
 0x33:
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-
-0x42:
   :properties:
     :short_name: "???"
     :long_name: Unknown
@@ -4531,21 +4573,6 @@
     :short_name: GM3-?
     :long_name: Unknown
   :klass: Base
-
-0x82:
-  :properties:
-    :short_name: "???"
-    :long_name: Unknown
-  :klass: Base
-
-0x83:
-  :properties:
-    :short_name: IHK-?
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :senders:
-      - IHK
 
 0xbf:
   :properties:

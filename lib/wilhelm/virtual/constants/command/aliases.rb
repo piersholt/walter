@@ -60,6 +60,8 @@ module Wilhelm
           OBC_VAR       = 0x40
           OBC_BOOL      = 0x41
 
+          PROG          = 0x42
+
           MENU_GFX      = 0x45
           MENU_RAD      = 0x46
 

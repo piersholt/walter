@@ -42,7 +42,6 @@ module Wilhelm
           LOGGER.debug(name) { "#{self.class}#on" }
           @read_thread = thread_read_buffer(@input_buffer, @output_buffer)
           add_thread(@read_thread)
-          capture!
           true
         rescue StandardError => e
           LOGGER.error(e)

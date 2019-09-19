@@ -18,6 +18,7 @@ module Wilhelm
           def add_parameters(parameter_value_hash)
             LOGGER.debug(PROG) { "#add_parameters(#{parameter_value_hash})" }
             @command_config.parameters.each do |param_name, param_config|
+              next if parameter_value_hash[param_name].respond_to?(:empty?) && parameter_value_hash[param_name]&.empty? && param_config.type == :map
               @parameter_objects[param_name] = parse_parameter(param_name, param_config, parameter_value_hash[param_name])
             end
           end

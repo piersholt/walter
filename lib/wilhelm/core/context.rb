@@ -61,7 +61,7 @@ module Wilhelm
         core_listener        = Listener::CoreListener.new
         application_listener = Listener::ApplicationListener.new
 
-        core_listener.interface_handler = InterfaceHandler.new(@transmitter)
+        core_listener.interface_handler = InterfaceHandler.new(@receiver, @transmitter)
 
         @interface.add_observer(core_listener)
         @receiver.add_observer(core_listener)
