@@ -180,7 +180,7 @@ module Wilhelm
                 end
               when FUNCTION_CONTACT
                 branch(command.layout.value, FUNCTION_CONTACT, button_id(command.action))
-                directory_service_input(button_id(command.action))
+                directory_select(button_id(command.action))
               else
                 unknown_function(command)
               end
@@ -253,7 +253,7 @@ module Wilhelm
                 generate_sms_index
               when ACTION_OPEN_DIR
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
-                directory_service_open
+                directory_open
               end
             end
 

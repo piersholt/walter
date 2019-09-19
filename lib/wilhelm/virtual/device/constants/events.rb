@@ -45,9 +45,14 @@ module Wilhelm
           STATES = constants.map { |c| const_get(c) }
         end
 
+        include Action
         include Cache
         include Control
         include State
+
+        def action?(event)
+          ACTIONS.include?(event)
+        end
 
         def cache?(event)
           CACHES.include?(event)

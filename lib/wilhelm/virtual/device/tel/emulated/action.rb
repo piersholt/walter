@@ -7,31 +7,43 @@ module Wilhelm
         class Emulated < Device::Emulated
           # Device::Telephone::Emulated::State
           module Action
-            def directory_service_open
-              notify_of_action(DIRECTORY_OPEN)
+            include Virtual::Constants::Events::Telephone
+
+            def directory_open!(page: 0, page_size:)
+              notify_of_action(
+                DIRECTORY_OPEN,
+                page: page, page_size: page_size
+              )
             end
 
-            def directory_back
-              notify_of_action(DIRECTORY_BACK)
+            def directory_back!(page:, page_size:)
+              notify_of_action(
+                DIRECTORY_BACK,
+                page: page, page_size: page_size
+              )
             end
 
-            def directory_forward
-              notify_of_action(DIRECTORY_FORWARD)
+            def directory_forward!(page:, page_size:)
+              notify_of_action(
+                DIRECTORY_FORWARD,
+                page: page, page_size: page_size
+              )
             end
 
             # @note might need state for input
-            def directory_service_input(index)
-              notify_of_action(DIRECTORY_SELECT, index: index)
+            def directory_select!(index:, page:, page_size:)
+              notify_of_action(
+                DIRECTORY_SELECT,
+                index: index, page: page, page_size: page_size
+              )
             end
 
             private
 
             def notify_of_action(action, **args)
+              logger.unknown(PROC) { "#notify_of_action(#{action}, #{args})" }
               changed
-              notify_observers(
-                action,
-                args
-              )
+              notify_observers(action, args)
             end
           end
         end
