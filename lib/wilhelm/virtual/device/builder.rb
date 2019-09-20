@@ -7,31 +7,35 @@ module Wilhelm
       class Builder
         include Wilhelm::Helpers::Module
 
+        NAME = 'Device::Builder'.freeze
+
         ANCESTORS = %w[Wilhelm Virtual Device].freeze
 
-        TYPES_MAP =
-          { base: 'Base',
-            emulated: 'Emulated',
-            augmented: 'Augmented' }.freeze
+        TYPES_MAP = {
+          base: 'Base',
+          emulated: 'Emulated',
+          augmented: 'Augmented'
+        }.freeze
 
-        CLASS_MAP =
-          { bmbt: 'BMBT',
-            cdc: 'CDC',
-            dia: 'Diagnostics',
-            dsp: 'DSP',
-            gfx: 'GFX',
-            ike: 'IKE',
-            lcm: 'LCM',
-            mfl: 'MFL',
-            rad: 'Radio',
-            ses: 'SES',
-            tel: 'Telephone',
-            tv: 'TV' }.freeze
+        CLASS_MAP = {
+          bmbt: 'BMBT',
+          cdc: 'CDC',
+          dia: 'Diagnostics',
+          dsp: 'DSP',
+          gfx: 'GFX',
+          ike: 'IKE',
+          lcm: 'LCM',
+          mfl: 'MFL',
+          rad: 'Radio',
+          ses: 'SES',
+          tel: 'Telephone',
+          tv: 'TV'
+        }.freeze
 
         attr_reader :ident, :klass
 
         def name
-          'Device::Builder'
+          NAME
         end
 
         def target(ident)
