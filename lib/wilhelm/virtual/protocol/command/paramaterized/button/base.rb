@@ -22,7 +22,7 @@ module Wilhelm
                 else
                   action.value
                 end
-              "#{value} (#{action.bit_array}) :#{format('%-15s', button)} / #{format('%-15s', pretty)}, #{format('%-15s', state_pretty)}"
+              "#{value} (#{action.bit_array}) :#{format('%-15s', button)}\t#{format('%-15s', pretty)}\t#{format('%-15s', state_human)}"
             end
 
             # @override PseduoObject
@@ -49,6 +49,10 @@ module Wilhelm
 
             def state
               action.parameters[:state].state
+            end
+
+            def state_human
+              action.parameters[:state].pretty
             end
 
             def state_pretty
