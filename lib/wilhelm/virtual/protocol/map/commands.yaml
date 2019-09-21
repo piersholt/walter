@@ -3267,16 +3267,16 @@
     :l1:
       :type: :bit_array
       :index:
-        :rapid: 0
+        :indicate_rapid: 0
         :indicate_right: 1
-        :indicate_left: 2
-        :fog_rear: 3
-        :fog_front: 4
-        :beam_high: 5
-        :beam_low: 6
-        :parking: 7
+        :indicate_left:  2
+        :fog_rear:       3
+        :fog_front:      4
+        :beam_high:      5
+        :beam_low:       6
+        :parking:        7
       :parameters:
-        :rapid:
+        :indicate_rapid:
           :label: Rapid.
           :type: :switch
           :states:
@@ -3313,13 +3313,13 @@
             0: :off
             1: :on
         :beam_low:
-          :label: Low Beam (Dipped)
+          :label: Low Beam
           :type: :switch
           :states:
             0: :off
             1: :on
         :parking:
-          :label: Parking Lights
+          :label: Parking
           :type: :switch
           :states:
             0: :off
@@ -3327,63 +3327,77 @@
     :l2:
       :type: :bit_array
       :index:
-        :indicate_right: 1
-        :indicate_left: 2
+        :fault_indicate_right: 1
+        :fault_indicate_left:  2
+        :fault_fog_rear:       3
       :parameters:
-        :indicate_right:
+        :fault_indicate_right:
           :type: :switch
-          :label: Globe Indicator Right
+          :label: Indicator Right
           :states:
             0: :ok
             1: :fault
-        :indicate_left:
+        :fault_indicate_left:
           :type: :switch
-          :label: Globe Indicator Left
+          :label: Indicator Left
+          :states:
+            0: :ok
+            1: :fault
+        :fault_fog_rear:
+          :type: :switch
+          :label: Fog Rear
           :states:
             0: :ok
             1: :fault
     :l3:
       :type: :bit_array
       :index:
-        :hazard: 5
-        :brake: 6
+        :fault_reverse: 2
+        :indicators:    5
+        :fault_brake:   6
       :parameters:
-        :hazard:
+        :fault_reverse:
           :type: :switch
-          :label: Indicator/Hazard
+          :label: Reverse
+          :states:
+            0: :ok
+            1: :fault
+        :indicators:
+          :type: :switch
+          :label: Indicators?
           :states:
             0: :off
             1: :on
-        :brake:
+        :fault_brake:
           :type: :switch
-          :label: Globe Brake
+          :label: Brake
           :states:
             0: :ok
             1: :fault
     :l4:
       :type: :bit_array
       :index:
-        :fog_rear: 1
-        :brake_left: 6
-        :brake_right: 7
+        :fog_rear:          1
+        :fault_brake_left:  6
+        :fault_brake_right: 7
       :parameters:
         :fog_rear:
           :type: :switch
-          :label: Fog Rear
+          :label: Fog Rear (Switch?)
           :states:
             0: :off
             1: :on
-        :brake_left:
+        :fault_brake_left:
           :type: :switch
-          :label: Globe Brake Left?
+          :label: Brake Left
           :states:
-            0: :off
+            0: :ok
             1: :fault
-        :brake_right:
+        :fault_brake_right:
           :type: :switch
-          :label: Globe Brake Right?
+          :label: Brake Right
           :states:
-            0: :off
+            0: :ok
             1: :fault
 
   :meta:
