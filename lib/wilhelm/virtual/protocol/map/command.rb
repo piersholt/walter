@@ -23,6 +23,26 @@ module Wilhelm
           instance.reload!
         end
 
+        def schema?(mapped_result, ident)
+          schema_listed?(mapped_result, ident) && schema_listed?(mapped_result, ident)
+        end
+
+        def schemas?(mapped_result)
+          mapped_result.include?(:schemas)
+        end
+
+        def schema_listed?(mapped_result, ident)
+          mapped_result[:schemas].include?(ident)
+        end
+
+        def schema_defined?(mapped_result, ident)
+          mapped_result.include?(ident)
+        end
+
+        def fetch_schema(mapped_result, ident)
+          mapped_result[ident]
+        end
+
         def find_or_default(command_id, from: nil, to: nil)
           LOGGER.debug(PROC) { "#find_or_default(#{command_id})" }
           mapped_result = nil
@@ -36,11 +56,11 @@ module Wilhelm
             mapped_result = find(0)
           end
 
-          if from || to
-            schemas = mapped_result[:schemas]
-            if schemas
-              mapped_result = mapped_result[from] if schemas.include?(from)
-              mapped_result = mapped_result[to] if schemas.include?(to)
+          if (from || to) && schemas?(mapped_result)
+            if schema?(mapped_result, from)
+              mapped_result = fetch_schema(mapped_result, from)
+            elsif schema?(mapped_result, to)
+              mapped_result = fetch_schema(mapped_result, to)
             end
           end
 
