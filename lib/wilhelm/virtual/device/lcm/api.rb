@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'api/lamp'
+
 module Wilhelm
   module Virtual
     class Device
@@ -9,9 +11,7 @@ module Wilhelm
           include Constants::Command::Aliases
           include Device::API::BaseAPI
 
-          def odometer_reqest(from: :lcm, to: :ike, arguments: [])
-            try(from, to, ODO_REQ, arguments)
-          end
+          include Lamp
         end
       end
     end
