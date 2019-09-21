@@ -18,6 +18,7 @@ module Wilhelm
       SWITCH_OPEN     = 'OPEN'
 
       SWITCH_OK       = 'OK'
+      SWITCH_WARN     = 'WARN'
       SWITCH_FAULT    = 'FAULT'
 
       SWITCH_PRESS    = 'Press'
@@ -40,6 +41,7 @@ module Wilhelm
         closed:    [:as_normal, SWITCH_CLOSED],
         open:      [:as_yellow, SWITCH_OPEN],
         ok:        [:as_green,  SWITCH_OK],
+        warn:      [:as_yellow, SWITCH_WARN],
         fault:     [:as_red,    SWITCH_FAULT],
         unpowered: [:as_yellow, SWITCH_OFF],
         powered:   [:as_green,  SWITCH_ON],

@@ -109,7 +109,7 @@
           :label: 'Handbrake'
           :states:
             0: :off
-            1: :on
+            1: :warn
       :index:
         :transmission: 3
         :brakes: 5
@@ -148,7 +148,7 @@
           :label: 'Door Open'
           :states:
             0: :ok
-            1: :fault
+            1: :warn
         :ignition:
           :type: :switch
           :label: 'Ignition'
@@ -168,78 +168,6 @@
     :s1: 0
     :s2: 1
     :s3: 2
-  :meta:
-    :notes:
-      - the IKE has a number of various inputs (via analogue signals, or CAN
-        depending on model year).
-      - the sensor status is reported via IBUS for the use by the CCM
-      - warnings:
-        - parking brake
-        - fasten seat belt
-        - engine oil level
-        - engine oil pressure
-        - low coolant level
-        - low washer fluid
-        - brake pads
-        - brake fluid
-        - remote key battery voltage
-      - other warnings are determined with data from other IBUS messages
-      - warnings:
-        - key in ignition
-        - lights on
-        - door open
-        - trunk open
-      - noted on comm.se:
-        - handbrake on
-        - oil pressure low
-        - brake pads worn
-        - transmission emergency program gearbox not in P
-        - motor running
-        - vehicle driving
-        - reverse not plausible
-        - Gear R
-        - Gear 1
-        - Gear 2
-        - Gear D
-        - alarm horn on
-        - immobiliser on
-        - Aux heating on
-        - Aux ventillation on
-        - Temp deg F
-    :senders:
-      - IKE
-    :recipients:
-      - GLO-L
-    :usage:
-      :byte1:
-        # - 0x00: 1215
-        - 0x01: 157
-        - 0x02: 56
-        - 0x03: 65
-      :byte2:
-        # - 0x00: 127
-        - 0x11: 152
-        - 0x13: 10
-        - 0x21: 53
-        - 0x23: 94
-
-        - 0x41: 44
-        - 0x43: 147
-
-        - 0x71: 77
-
-        - 0x81: 275
-        - 0x83: 208
-
-        - 0xB0: 89
-        - 0xB1: 141
-
-        - 0xC3: 4
-
-        - 0xD1: 7
-        - 0xD3: 65
-      :byte3:
-        # - 0x00: 1493
 
 0x14: # CNTRY-REQ
   :properties:
