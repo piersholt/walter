@@ -28,33 +28,38 @@ module Wilhelm
       SWITCH_ENABLED  = 'Enabled'
       SWITCH_DISABLED = 'Disabled'
 
+      # HUD Chevron
       SWITCH_BLINK    = 'Blink'
-      SWITCH_SINGLE   = 'Single'
-      SWITCH_DOUBLE   = 'Double'
-      SWITCH_TONE     = 'Tone'
+
+      # HUD Gong
+      SWITCH_HIGH_SINGLE = 'High Single'
+      SWITCH_HIGH_TONE   = 'High Continuous'
+      SWITCH_HIGH_DOUBLE = 'High Double'
+      SWITCH_LOW_SINGLE  = 'Low Single'
 
       SWITCH_INACTIVE = 'OFF'
 
       SWITCH_STATE_MAP = {
-        off:       [:as_normal, SWITCH_OFF],
-        on:        [:as_green,  SWITCH_ON],
-        closed:    [:as_normal, SWITCH_CLOSED],
-        open:      [:as_yellow, SWITCH_OPEN],
-        ok:        [:as_green,  SWITCH_OK],
-        warn:      [:as_yellow, SWITCH_WARN],
-        fault:     [:as_red,    SWITCH_FAULT],
-        unpowered: [:as_yellow, SWITCH_OFF],
-        powered:   [:as_green,  SWITCH_ON],
-        press:     [:as_green,  SWITCH_PRESS],
-        hold:      [:as_green,  SWITCH_HOLD],
-        release:   [:as_green,  SWITCH_RELEASE],
-        disabled:  [:as_green,  SWITCH_DISABLED],
-        enabled:   [:as_green,  SWITCH_ENABLED],
-        blink:     [:as_yellow, SWITCH_BLINK],
-        single:    [:as_yellow, SWITCH_SINGLE],
-        double:    [:as_yellow, SWITCH_DOUBLE],
-        tone:      [:as_yellow, SWITCH_TONE],
-        inactive:  [:as_blue,   SWITCH_INACTIVE]
+        off:          [:as_normal, SWITCH_OFF],
+        on:           [:as_green,  SWITCH_ON],
+        closed:       [:as_normal, SWITCH_CLOSED],
+        open:         [:as_yellow, SWITCH_OPEN],
+        ok:           [:as_green,  SWITCH_OK],
+        warn:         [:as_yellow, SWITCH_WARN],
+        fault:        [:as_red,    SWITCH_FAULT],
+        unpowered:    [:as_yellow, SWITCH_OFF],
+        powered:      [:as_green,  SWITCH_ON],
+        press:        [:as_green,  SWITCH_PRESS],
+        hold:         [:as_green,  SWITCH_HOLD],
+        release:      [:as_green,  SWITCH_RELEASE],
+        disabled:     [:as_green,  SWITCH_DISABLED],
+        enabled:      [:as_green,  SWITCH_ENABLED],
+        blink:        [:as_yellow, SWITCH_BLINK],
+        high_single:  [:as_yellow, SWITCH_HIGH_SINGLE],
+        high_tone:    [:as_yellow, SWITCH_HIGH_TONE],
+        high_double:  [:as_yellow, SWITCH_HIGH_DOUBLE],
+        low_single:   [:as_yellow, SWITCH_LOW_SINGLE],
+        inactive:     [:as_blue,   SWITCH_INACTIVE]
       }.freeze
 
       LIGHT_GREEN  = 92
