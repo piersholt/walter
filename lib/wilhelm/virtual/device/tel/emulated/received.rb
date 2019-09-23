@@ -24,7 +24,7 @@ module Wilhelm
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
               logger.unknown(PROC) { "@layout=#{@layout}" }
-              return top_8_service_open if dial?
+              return top_8_open if dial?
               dial_open
             end
 

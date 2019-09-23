@@ -12,8 +12,8 @@ module Wilhelm
 
               MOD_PROG = 'Mock::Top 8'
 
-              def top_8_service_open
-                LOGGER.unknown(MOD_PROG) { '#top_8_service_open' }
+              def top_8_open
+                LOGGER.unknown(MOD_PROG) { '#top_8_open' }
                 top_8!
                 top_8_open!
                 # top_8_clear
