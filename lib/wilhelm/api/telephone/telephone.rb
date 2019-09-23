@@ -9,6 +9,7 @@ module Wilhelm
 
       include Listener
       include Directory
+      include Top8
       include LED
 
       PROG = 'Telephone'
