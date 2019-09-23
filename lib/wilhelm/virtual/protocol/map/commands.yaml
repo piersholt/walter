@@ -92,13 +92,13 @@
           :states:
             0: :ok
             1: :fault
-        :brakes:
+        :brake_pads:
           :type: :switch
           :label: 'Brake Pads'
           :states:
             0: :ok
             1: :fault
-        :oil:
+        :oil_pressure:
           :type: :switch
           :label: 'Oil Pressure'
           :states:
@@ -109,11 +109,11 @@
           :label: 'Handbrake'
           :states:
             0: :off
-            1: :on
+            1: :warn
       :index:
         :transmission: 3
-        :brakes: 5
-        :oil: 6
+        :brake_pads: 5
+        :oil_pressure: 6
         :handbrake: 7
     :s2:
       :type: :bit_array
@@ -148,7 +148,7 @@
           :label: 'Door Open'
           :states:
             0: :ok
-            1: :fault
+            1: :warn
         :ignition:
           :type: :switch
           :label: 'Ignition'
@@ -168,92 +168,47 @@
     :s1: 0
     :s2: 1
     :s3: 2
-  :meta:
-    :notes:
-      - the IKE has a number of various inputs (via analogue signals, or CAN
-        depending on model year).
-      - the sensor status is reported via IBUS for the use by the CCM
-      - warnings:
-        - parking brake
-        - fasten seat belt
-        - engine oil level
-        - engine oil pressure
-        - low coolant level
-        - low washer fluid
-        - brake pads
-        - brake fluid
-        - remote key battery voltage
-      - other warnings are determined with data from other IBUS messages
-      - warnings:
-        - key in ignition
-        - lights on
-        - door open
-        - trunk open
-      - noted on comm.se:
-        - handbrake on
-        - oil pressure low
-        - brake pads worn
-        - transmission emergency program gearbox not in P
-        - motor running
-        - vehicle driving
-        - reverse not plausible
-        - Gear R
-        - Gear 1
-        - Gear 2
-        - Gear D
-        - alarm horn on
-        - immobiliser on
-        - Aux heating on
-        - Aux ventillation on
-        - Temp deg F
-    :senders:
-      - IKE
-    :recipients:
-      - GLO-L
-    :usage:
-      :byte1:
-        # - 0x00: 1215
-        - 0x01: 157
-        - 0x02: 56
-        - 0x03: 65
-      :byte2:
-        # - 0x00: 127
-        - 0x11: 152
-        - 0x13: 10
-        - 0x21: 53
-        - 0x23: 94
 
-        - 0x41: 44
-        - 0x43: 147
-
-        - 0x71: 77
-
-        - 0x81: 275
-        - 0x83: 208
-
-        - 0xB0: 89
-        - 0xB1: 141
-
-        - 0xC3: 4
-
-        - 0xD1: 7
-        - 0xD3: 65
-      :byte3:
-        # - 0x00: 1493
-
-0x14: # CNTRY-REQ
+0x14: # RGN-REQ
+  :schemas:
+    - :gfx
+    - :ccm
   :properties:
-    :short_name: CNTRY-REQ
+    :short_name: REGION?
     :long_name: Country Coding Status Request
   :klass: Base
+  :gfx:
+    :properties:
+      :short_name: REGION-GFX?
+      :long_name: Country Coding Status Request
+    :klass: Base
+  :ccm:
+    :properties:
+      :short_name: REGION-CCM?
+      :long_name: Country Coding Status Request
+    :klass: Base
 
-0x15: # CNTRY
+  :meta:
+    :senders:
+      - gfx (0x3b) settings UI?
+      - ccm (0x30) temp. and speed?
+      - rad (0x68) language? (x10)
+      - tel (0xc8) not sure? (x1)
+
+0x15: # REGION
+  :schemas:
+    - :gfx
+    - :ike
   :properties:
-    :short_name: CNTRY
-    :long_name: Country Coding Status Response
-  :klass: Parameterized::Base
-  :parameters:
-    :language:
+    :short_name: REGION
+    :long_name: Country Coding
+  :index: &region_index
+    :lang: 0
+    :b2: 1
+    :b3: 2
+    :b4: 3
+  :parameters: &region_parameters
+    :lang:
       :type: :map
       :dictionary:
         0: 'D'
@@ -261,40 +216,42 @@
         3: 'I'
     :b2:
       :type: :bit_array
+      :index:
+        :time_format: 0
+        # :miles: !ruby/range
+        #         begin: 1
+        #         end: 3
+        #         excl: false
+        :temp_format: 6
+        :date_format: 7
       :parameters:
         :time_format:
-          :label: Time Format.
+          :label: Time
           :type: :map
           :dictionary:
             0: (24h)
             1: (12h)
+        # :miles:
+        #   :label: Miles??
+        #   :type: :map
+        #   :dictionary:
+        #     0b000: 'km?'
+        #     0b111: 'mls?'
         :temp_format:
-          :label: Temp Format.
+          :label: Temp.
           :type: :map
           :dictionary:
             0: '(C.)'
             1: '(F.)'
         :date_format:
-          :label: Date Format.
+          :label: Date
           :type: :map
           :dictionary:
             0: (dd.mm)
             1: (mm/dd)
-      :index:
-        :time_format: 0
-        :temp_format: 6
-        :date_format: 7
     :b3:
       :type: :bit_array
       :parameters:
-        :conflict:
-          :label: NFI!
-          :type: :map
-          :dictionary:
-            0b00: '?'
-            0b01: '?'
-            0b10: '?'
-            0b11: 'Time/Date Incompatible?'
         :distance:
           :label: Distance
           :type: :map
@@ -302,29 +259,35 @@
             0: (km)
             1: (miles)
         :consumption:
-          :label: Consumption
+          :label: Consump.
           :type: :map
           :dictionary:
-            0b000: (l/100km)
-            0b101: (mpg)
-            0b111: (km/l)
+            0b0000: (l/100km)
+            0b0101: (mpg)
+            0b1111: (km/l)
       :index:
-        :conflict: !ruby/range
-                begin: 1
-                end: 2
-                excl: false
         :distance: 3
         :consumption: !ruby/range
-                begin: 5
+                begin: 4
                 end: 7
                 excl: false
     :b4:
       :type: :integer
-  :index:
-    :language: 0
-    :b2: 1
-    :b3: 2
-    :b4: 3
+  :klass: Base
+  :gfx:
+    :properties:
+      :short_name: REGION-SET
+      :long_name: Country Coding
+    :klass: Parameterized::Base
+    :parameters: *region_parameters
+    :index: *region_index
+  :ike:
+    :properties:
+      :short_name: REGION
+      :long_name: Country Coding Status Response
+    :klass: Parameterized::Base
+    :parameters: *region_parameters
+    :index: *region_index
 
 0x16: # ODO-REQ
   :properties:
@@ -565,11 +528,11 @@
         0b0011_0111: :alert
         0b0011_1111: :unknown
       :dictionary:
-        0b0011_0000: CCM Clear
-        0b0011_0101: CCM Recall
-        0b0011_0110: CCM Persist Indicators
-        0b0011_0111: CCM Alert
-        0b0011_1111: Unknown
+        0b0011_000_0: CCM Clear
+        0b0011_011_0: CCM Persist Indicators
+        0b0011_010_1: CCM Recall
+        0b0011_011_1: CCM Alert
+        0b0011_111_1: CCM Special?
     :control:
       :type: :bit_array
       :index:
@@ -584,41 +547,43 @@
       :parameters:
         :gong:
           :type: :switch
-          :label: 'Gong'
+          :label: Gong
           :states:
             0b000: :off
-            0b001: :single
-            0b010: :tone
-            0b011: :double
-            0b100: :single
+            0b001: :high_single
+            0b010: :high_continuous
+            0b011: :high_double
+            0b100: :low_single
           :dictionary:
-            0b000: 'Off'
-            0b001: 'Single'
-            0b010: 'Tone'
-            0b011: 'Double'
-            0b100: 'Single (Low)'
+            0b000: 'None'
+            0b001: '[High] Single'
+            0b010: '[High] Continuous'
+            0b011: '[High] Double'
+            0b100: '[Low] Single'
         :chevron:
           :type: :switch
-          :label: 'Chevron'
+          :label: Chevron
           :states:
-            0b0_0: :off
-            0b0_1: :on
-            0b1_1: :blink
+            0b00: :off
+            0b01: :on
+            0b11: :blink
           :dictionary:
-            0b0_0: 'Off'
-            0b0_1: 'On'
-            0b1_1: 'Blink'
+            0b00: 'Off'
+            0b01: 'On'
+            0b11: 'Blink'
     :chars:
       :type: :chars
   :meta:
     :notes:
       priority_1:
         :desc:
-          These defects are immediately indicated by a gong and a flashing
-          warning symbol (1). Simultaneous defects will be displayed
-          consecutively. These status reports remain in the display until the
-          defects are corrected. It is not possible to delete them by pressing
-          the CHECK button (3)
+          - These defects are immediately indicated by
+          - a gong and
+          - a flashing
+          - warning symbol (1).
+          - Simultaneous defects will be displayed consecutively.
+          - These status reports remain in the display until the defects are corrected.
+          - It is not possible to delete them by pressing the CHECK button (3)
         :warnings:
           - RELEASE PARKINGBRAKE
           - COOLANT TEMPERATURE
@@ -3074,9 +3039,8 @@
         :opts:
           :type: :map
           :dictionary:
-            0b0000: '0b0000'
-            0b0000: 'Clear'
-            0b0001: 'Set__'
+            0b0000: 'Clear   '
+            0b0001: 'Set     '
             0b0011: 'Override'
     :b2:
       :type: :bit_array
@@ -3093,14 +3057,15 @@
         :tbc:
           :type: :map
           :dictionary:
-            0b0100: 'Clear?'
-            0b1000: 'Ignition Off?'
-            0b0110: 'Set?__'
-            0b1010: 'Range at KL-15'
+            0b0100: 'Code/Prog Clear'
+            0b0110: 'Prog Set'
+            0b1000: 'Range Clear'
+            0b1001: 'Range Set (540i)'
+            0b1010: 'Range Set'
         :gong:
-          :type: :map
-          :label: 'Gong'
-          :map:
+          :type: :switch
+          :label: Gong
+          :states:
             0b000: :off
             0b001: :high_single
             0b010: :high_continuous
@@ -3339,16 +3304,16 @@
     :l1:
       :type: :bit_array
       :index:
-        :rapid: 0
+        :indicate_rapid: 0
         :indicate_right: 1
-        :indicate_left: 2
-        :fog_rear: 3
-        :fog_front: 4
-        :beam_high: 5
-        :beam_low: 6
-        :parking: 7
+        :indicate_left:  2
+        :fog_rear:       3
+        :fog_front:      4
+        :beam_high:      5
+        :beam_low:       6
+        :parking:        7
       :parameters:
-        :rapid:
+        :indicate_rapid:
           :label: Rapid.
           :type: :switch
           :states:
@@ -3385,13 +3350,13 @@
             0: :off
             1: :on
         :beam_low:
-          :label: Low Beam (Dipped)
+          :label: Low Beam
           :type: :switch
           :states:
             0: :off
             1: :on
         :parking:
-          :label: Parking Lights
+          :label: Parking
           :type: :switch
           :states:
             0: :off
@@ -3399,63 +3364,77 @@
     :l2:
       :type: :bit_array
       :index:
-        :indicate_right: 1
-        :indicate_left: 2
+        :fault_indicate_right: 1
+        :fault_indicate_left:  2
+        :fault_fog_rear:       3
       :parameters:
-        :indicate_right:
+        :fault_indicate_right:
           :type: :switch
-          :label: Globe Indicator Right
+          :label: Indicator Right
           :states:
             0: :ok
             1: :fault
-        :indicate_left:
+        :fault_indicate_left:
           :type: :switch
-          :label: Globe Indicator Left
+          :label: Indicator Left
+          :states:
+            0: :ok
+            1: :fault
+        :fault_fog_rear:
+          :type: :switch
+          :label: Fog Rear
           :states:
             0: :ok
             1: :fault
     :l3:
       :type: :bit_array
       :index:
-        :hazard: 5
-        :brake: 6
+        :fault_reverse: 2
+        :indicators:    5
+        :fault_brake:   6
       :parameters:
-        :hazard:
+        :fault_reverse:
           :type: :switch
-          :label: Indicator/Hazard
+          :label: Reverse
+          :states:
+            0: :ok
+            1: :fault
+        :indicators:
+          :type: :switch
+          :label: Indicators?
           :states:
             0: :off
             1: :on
-        :brake:
+        :fault_brake:
           :type: :switch
-          :label: Globe Brake
+          :label: Brake
           :states:
             0: :ok
             1: :fault
     :l4:
       :type: :bit_array
       :index:
-        :fog_rear: 1
-        :brake_left: 6
-        :brake_right: 7
+        :fog_rear:          1
+        :fault_brake_left:  6
+        :fault_brake_right: 7
       :parameters:
         :fog_rear:
           :type: :switch
-          :label: Fog Rear
+          :label: Fog Rear (Switch?)
           :states:
             0: :off
             1: :on
-        :brake_left:
+        :fault_brake_left:
           :type: :switch
-          :label: Globe Brake Left?
+          :label: Brake Left
           :states:
-            0: :off
+            0: :ok
             1: :fault
-        :brake_right:
+        :fault_brake_right:
           :type: :switch
-          :label: Globe Brake Right?
+          :label: Brake Right
           :states:
-            0: :off
+            0: :ok
             1: :fault
 
   :meta:

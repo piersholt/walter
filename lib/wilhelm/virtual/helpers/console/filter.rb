@@ -78,6 +78,12 @@ module Wilhelm
           def temp
             dh.f_c(*TEMPERATURE)
           end
+
+          def country
+            dh.f_c(*COUNTRY)
+          end
+
+          alias region country
         end
       end
     end
