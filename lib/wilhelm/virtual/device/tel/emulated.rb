@@ -7,6 +7,12 @@ require_relative 'emulated/directory'
 require_relative 'emulated/last_numbers'
 require_relative 'emulated/top_8'
 require_relative 'emulated/received'
+require_relative 'emulated/default'
+require_relative 'emulated/info'
+require_relative 'emulated/navigation'
+require_relative 'emulated/pin'
+require_relative 'emulated/sms'
+require_relative 'emulated/sos'
 
 module Wilhelm
   module Virtual
@@ -22,6 +28,12 @@ module Wilhelm
           include Top8
           include Dial
           include LastNumbers
+          include Default
+          include Info
+          include Navigation
+          include PIN
+          include SMS
+          include SOS
           include Received
 
           PROC = 'Telephone::Emulated'

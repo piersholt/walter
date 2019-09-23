@@ -112,54 +112,6 @@ module Wilhelm
 
             protected
 
-            # 0x00
-            def handle_default(command)
-              logger.unknown(PROC) { "#handle_default(#{command})" }
-              case command.function.value
-              when FUNCTION_SOS
-                delegate_sos(command)
-              else
-                unknown_function(command)
-              end
-            end
-
-            # 0x05
-            def handle_pin(command)
-              logger.unknown(PROC) { "#handle_pin(#{command})" }
-              case command.function.value
-              when FUNCTION_DIGIT
-                branch(LAYOUT_PIN, FUNCTION_DIGIT, button_id(command.action))
-                pin_service_input(button_id(command.action))
-              when FUNCTION_SOS
-                delegate_sos(command)
-              else
-                unknown_function(command)
-              end
-            end
-
-            # 0x20
-            def handle_info(command)
-              logger.unknown(PROC) { "#handle_info(#{command})" }
-            end
-
-            def handle_sms_index(command)
-              logger.unknown(PROC) { "#handle_sms_index(#{command})" }
-              smses!
-              case command.function.value
-              when FUNCTION_SMS
-                generate_sms_show
-              end
-            end
-
-            def handle_sms_show(command)
-              logger.unknown(PROC) { "#handle_sms_show(#{command})" }
-              smses!
-              case command.function.value
-              when FUNCTION_SMS
-                generate_sms_index
-              end
-            end
-
             def unknown_function(command)
               logger.warn(PROC) { "Unrecognised function! #{command.function}" }
             end
@@ -173,40 +125,6 @@ module Wilhelm
             end
 
             private
-
-            # Function: 0x05
-            def delegate_sos(command)
-              layout = command.layout
-              logger.unknown(PROC) { "#delegate_sos(#{layout})" }
-              branch(layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
-              sos_service_open
-            end
-
-            # Function: 0x07
-            def delegate_navigation(command)
-              logger.unknown(PROC) { "#delegate_navigation(#{command})" }
-              case button_id(command.action)
-              when ACTION_SMS_INDEX_BACK
-                true
-              when ACTION_OPEN_DIAL
-                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
-                dial_open
-              when ACTION_OPEN_SMS
-                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
-                smses!
-                generate_sms_index
-              when ACTION_OPEN_DIR
-                branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
-                directory_open
-              end
-            end
-
-            # Function: 0x08
-            def delegate_info(command)
-              logger.unknown(PROC) { "#delegate_info" }
-              branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
-              info_service_open
-            end
 
             # @deprecated
             def ready
