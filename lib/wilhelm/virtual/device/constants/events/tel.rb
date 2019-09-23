@@ -15,6 +15,9 @@ module Wilhelm
 
             TOP_8_OPEN   = :top_8_open
             TOP_8_SELECT = :top_8_select
+
+            LAST_NUMBERS_BACK    = :last_numbers_back
+            LAST_NUMBERS_FORWARD = :last_numbers_forward
           end
 
           # Control related events

@@ -4,6 +4,7 @@ require_relative 'emulated/state'
 require_relative 'emulated/mock'
 require_relative 'emulated/dial'
 require_relative 'emulated/directory'
+require_relative 'emulated/last_numbers'
 require_relative 'emulated/top_8'
 require_relative 'emulated/received'
 
@@ -20,6 +21,7 @@ module Wilhelm
           include Directory
           include Top8
           include Dial
+          include LastNumbers
           include Received
 
           PROC = 'Telephone::Emulated'
