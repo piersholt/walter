@@ -4,12 +4,10 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        module Capabilities
-          module Mock
-            # Telephone Top 8 Contacts
-            module Directory
-              include Constants
-
+        class Emulated < Device::Emulated
+          module Directory
+            # Device::Telephone::Emulated::Directory::Delegates
+            module Delegates
               MOD_PROG = 'Mock::Directory'
               DIR_PAGE_SIZE = 8
 

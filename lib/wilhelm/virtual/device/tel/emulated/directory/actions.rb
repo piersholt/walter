@@ -5,9 +5,9 @@ module Wilhelm
     class Device
       module Telephone
         class Emulated < Device::Emulated
-          module Action
-            # Device::Telephone::Emulated::Action::Directory
-            module Directory
+          module Directory
+            # Device::Telephone::Emulated::Directory::Actions
+            module Actions
               include Virtual::Constants::Events::Telephone
 
               def directory_open!(page: 0, page_size:)
@@ -37,6 +37,14 @@ module Wilhelm
                   DIRECTORY_SELECT,
                   index: index, page: page, page_size: page_size
                 )
+              end
+
+              private
+
+              def notify_of_action(action, **args)
+                logger.unknown(PROC) { "#notify_of_action(#{action}, #{args})" }
+                changed
+                notify_observers(action, args)
               end
             end
           end
