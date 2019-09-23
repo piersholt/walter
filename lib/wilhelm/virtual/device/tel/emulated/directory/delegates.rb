@@ -8,6 +8,8 @@ module Wilhelm
           module Directory
             # Device::Telephone::Emulated::Directory::Delegates
             module Delegates
+              include Constants
+
               MOD_PROG = 'Mock::Directory'
               DIR_PAGE_SIZE = 8
 
