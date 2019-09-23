@@ -6,7 +6,6 @@ require_relative 'mock/pin'
 require_relative 'mock/quick'
 require_relative 'mock/sms'
 require_relative 'mock/sos'
-require_relative 'mock/top_8'
 
 module Wilhelm
   module Virtual
@@ -19,7 +18,6 @@ module Wilhelm
             include Info
             include PIN
             include Quick
-            include Top8
             include SMS
             include SOS
           end

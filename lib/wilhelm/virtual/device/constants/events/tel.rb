@@ -12,6 +12,9 @@ module Wilhelm
             DIRECTORY_BACK     = :directory_back
             DIRECTORY_FORWARD  = :directory_forward
             DIRECTORY_SELECT   = :directory_select
+
+            TOP_8_OPEN   = :top_8_open
+            TOP_8_SELECT = :top_8_select
           end
 
           # Control related events
