@@ -68,6 +68,8 @@ module Wilhelm
               end
             end
 
+            private
+
             # 0x32 MFL_VOL
             def handle_mfl_vol(command)
               logger.unknown(ident) { "MFL_VOL -> #{command.pretty}" }
