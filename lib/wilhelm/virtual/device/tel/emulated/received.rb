@@ -25,7 +25,7 @@ module Wilhelm
               logger.debug(PROC) { '#handle_tel_open' }
               logger.unknown(PROC) { "@layout=#{@layout}" }
               return top_8_service_open if dial?
-              dial_service_open
+              dial_open
             end
 
             # 0x31 INPUT
@@ -142,28 +142,6 @@ module Wilhelm
               logger.unknown(PROC) { "#handle_info(#{command})" }
             end
 
-            # 0x42
-            def handle_dial(command)
-              logger.unknown(PROC) { "#handle_dial(#{command})" }
-              dial!
-              case command.function.value
-              when FUNCTION_DEFAULT
-                case command.action.value
-                when ACTION_RECENT_BACK
-                  branch(LAYOUT_DIAL, FUNCTION_DEFAULT, ACTION_RECENT_BACK)
-                  recent_contact
-                when ACTION_RECENT_FORWARD
-                  branch(LAYOUT_DIAL, FUNCTION_DEFAULT, ACTION_RECENT_FORWARD)
-                  recent_contact
-                end
-              when FUNCTION_DIGIT
-                branch(LAYOUT_DIAL, FUNCTION_DIGIT, button_id(command.action))
-                dial_service_input(button_id(command.action))
-              else
-                unknown_function(command)
-              end
-            end
-
             def handle_sms_index(command)
               logger.unknown(PROC) { "#handle_sms_index(#{command})" }
               smses!
@@ -212,7 +190,7 @@ module Wilhelm
                 true
               when ACTION_OPEN_DIAL
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
-                dial_service_open
+                dial_open
               when ACTION_OPEN_SMS
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
                 smses!

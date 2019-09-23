@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'mock/dial'
 require_relative 'mock/info'
 require_relative 'mock/pin'
 require_relative 'mock/quick'
@@ -14,7 +13,6 @@ module Wilhelm
         module Capabilities
           # Telephone::Capabilities::Mock
           module Mock
-            include Dial
             include Info
             include PIN
             include Quick

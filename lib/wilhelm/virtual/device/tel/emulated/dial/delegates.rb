@@ -4,23 +4,23 @@ module Wilhelm
   module Virtual
     class Device
       module Telephone
-        module Capabilities
-          module Mock
-            # Dial Telephone Number
-            module Dial
+        class Emulated < Device::Emulated
+          module Dial
+            # Device::Telephone::Emulated::Dial::Handler
+            module Delegates
               include Constants
 
               MOD_PROG = 'Mock::Dial'.freeze
               LEADING_CHAR = '_'.freeze
 
-              def dial_service_open
-                LOGGER.unknown(MOD_PROG) { '#dial_service_open()' }
+              def dial_open
+                LOGGER.unknown(MOD_PROG) { '#dial_open()' }
                 dial!
                 open_dial
-                dial_clear
+                # dial_clear
               end
 
-              def dial_service_input(index)
+              def dial_select(index)
                 return dial_service_delete if index == ACTION_DIAL_DELETE
                 indexed_string = twig(LAYOUT_DIAL, FUNCTION_DIGIT, index)
                 dial_service_number(indexed_string)
@@ -38,10 +38,14 @@ module Wilhelm
 
               def dial_service_flush
                 clear_dial_buffer
-                dial_clear
+                # dial_clear
               end
 
               private
+
+              def dial_buffer
+                @dial_buffer ||= STRING_BLANK.dup
+              end
 
               def add_dial_digit(digit)
                 dial_buffer << digit
@@ -57,10 +61,6 @@ module Wilhelm
 
               def dial_buffer?
                 !dial_buffer.empty?
-              end
-
-              def dial_buffer
-                @dial_buffer ||= STRING_BLANK.dup
               end
             end
           end

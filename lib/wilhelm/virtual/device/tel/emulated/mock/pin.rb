@@ -21,7 +21,7 @@ module Wilhelm
               def pin_service_input(index)
                 pin!
                 return pin_service_delete if index == ACTION_PIN_DELETE
-                return pin_service_flush && dial_service_open if index == ACTION_PIN_OK
+                return pin_service_flush && dial_open if index == ACTION_PIN_OK
                 indexed_string = twig(LAYOUT_PIN, FUNCTION_DIGIT, index)
                 pin_service_number(indexed_string)
               end
