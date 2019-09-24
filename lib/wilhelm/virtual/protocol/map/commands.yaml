@@ -3697,7 +3697,7 @@
             1: :on
         :hood:
           :type: :switch
-          :label: 'Hood?'
+          :label: 'Unknown'
           :states:
             0: :closed
             1: :open
@@ -3742,6 +3742,12 @@
           :states:
             0: :off
             1: :on
+        :hood:
+          :type: :switch
+          :label: 'Hood'
+          :states:
+            0: :closed
+            1: :open
         :hatch:
           :type: :switch
           :label: 'Hatch'
@@ -3780,6 +3786,7 @@
             1: :open
       :index:
         :release: 0
+        :hood: 1
         :hatch: 2
         :sunroof: 3
         :window_left: 4
