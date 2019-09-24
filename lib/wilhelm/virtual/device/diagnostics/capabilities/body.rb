@@ -22,12 +22,27 @@ module Wilhelm
             include Windows
             include Windscreen
 
-            def attempt(string)
-              mapped_integers = string.split(' ').map { |i| i.to_i(16) }
-              arguments = array(mapped_integers)
-              LOGGER.info(name) { arguments }
+            def body_diag(byte_array)
+              api_vehicle_control(to: :gm, arguments: byte_array)
+            end
 
-              api_vehicle_control(to: :gm, arguments: arguments)
+            def raw!(*bytes)
+              body_diag(bytes)
+            end
+
+            def fetch!(constant)
+              return false unless constant?(constant)
+              body_diag(get_constant(constant))
+            end
+
+            private
+
+            def constant?(constant)
+              self.class.const_defined?(constant.to_sym.upcase)
+            end
+
+            def get_constant(constant)
+              self.class.const_get(constant.to_sym.upcase)
             end
           end
         end
