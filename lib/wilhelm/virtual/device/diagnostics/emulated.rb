@@ -6,19 +6,19 @@ module Wilhelm
       module Diagnostics
         # Diagnostics::Emulated
         class Emulated < Device::Emulated
+          include Wilhelm::Virtual::Constants::Command::Groups
           include Capabilities
 
           PROC = 'Diagnostics::Emulated'
 
+          SUBSCRIBE = DIAGNOSTICS
+
           def handle_virtual_receive(message)
             command_id = message.command.d
-            # return super if command_id == PING
-            LOGGER.unknown(PROC) { "Handle? #{message.from} -> #{message.command.h}" }
+            return false unless subscribe?(command_id)
+            # LOGGER.unknown(PROC) { "#handle_virtual_receive(#{command_id})" }
 
-            if Aliases::Groups::DIAGNOSTICS.include?(command_id)
-              LOGGER.unknown(PROC) { "Diagnostic reply! #{message.command.h}" }
-            end
-
+            super(message)
           rescue StandardError => e
             LOGGER.error(PROC) { e }
             e.backtrace.each { |line| LOGGER.error(PROC) { line } }
