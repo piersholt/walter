@@ -34,15 +34,25 @@ module Wilhelm
             OUTPUT_TILT_ALARM_SENSOR      = [0x00, 0x3d, 0x01].freeze
             STARTER_ENABLE                = [0x00, 0x3e, 0x01].freeze
 
-            REAR_DOORS_LOCK               = [0x00, 0x41, 0x01].freeze
-            REAR_DOORS_UNLOCK             = [0x00, 0x42, 0x01].freeze
+            DOORS_REAR_LOCK               = [0x00, 0x41, 0x01].freeze
+            DOORS_REAR_UNLOCK             = [0x00, 0x42, 0x01].freeze
 
             WINDOW_DRIVER_REAR_CLOSE      = [0x00, 0x44, 0x01].freeze
             WINDOW_DRIVER_REAR_OPEN       = [0x00, 0x45, 0x01].freeze
             WINDOW_PASS_REAR_CLOSE        = [0x00, 0x46, 0x01].freeze
             WINDOW_PASS_REAR_OPEN         = [0x00, 0x47, 0x01].freeze
 
+            # Unverified
             IMMOBILIZER                   = [0x00, 0x51, 0x01].freeze
+
+            # Unconfirmed
+            LIGHTS_SIGNAL_ON              = [0x00, 0x63, 0x01].freeze
+
+            # Unconfirmed, but verified in old notes.
+            # Presumably windows?
+            REAR_OPEN                     = [0x00, 0x64, 0x01].freeze
+            FRONT_OPEN                    = [0x00, 0x65, 0x01].freeze
+            SUNROOF_OPEN                  = [0x00, 0x66, 0x01].freeze
 
             # Activated central locking and comfort close.
             # Possible driver key cylinder?
