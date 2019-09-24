@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'capabilities/constants'
 require_relative 'capabilities/body'
 require_relative 'capabilities/lighting'
 require_relative 'capabilities/display'
