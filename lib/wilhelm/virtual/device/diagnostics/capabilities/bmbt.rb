@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module Display
+          module BMBT
             include API
 
             def bmbt_service_mode(string)

@@ -1,18 +1,18 @@
 # frozen_string_literal: false
 
-require_relative 'body/anti_theft'
-require_relative 'body/central_locking'
-require_relative 'body/doors'
-require_relative 'body/memory'
-require_relative 'body/windows'
-require_relative 'body/windscreen'
+require_relative 'gm/anti_theft'
+require_relative 'gm/central_locking'
+require_relative 'gm/doors'
+require_relative 'gm/memory'
+require_relative 'gm/windows'
+require_relative 'gm/windscreen'
 
 module Wilhelm
   module Virtual
     class Device
       module Diagnostics
         module Capabilities
-          module Body
+          module GM
             include Helpers::Data
             include API
             include AntiTheft

@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module Body
+          module GM
             # Diagnostics::Capabilities::Body::CentralLocking
             module CentralLocking
               include Constants
