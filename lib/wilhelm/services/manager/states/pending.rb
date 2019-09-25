@@ -13,7 +13,6 @@ module Wilhelm
 
         def initialize(context)
           logger.debug(MANAGER_PENDING) { '#initialize' }
-          Wilhelm::API::Telephone.instance.disconnected
           # Note: this is a request
           context.devices?
         end
