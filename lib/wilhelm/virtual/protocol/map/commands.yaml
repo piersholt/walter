@@ -1563,6 +1563,8 @@
     :length:
       - always 2 bytes
 
+# ANZV (TELEPHONE) ------------------------------------------------------------
+
 0x2B: # ANZV-BOOL-TEL (TEL-LED)
   :properties:
     :short_name: ANZV-LED-TEL
