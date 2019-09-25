@@ -5,9 +5,9 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module Body
-            # Diagnostics::Capabilities::Body::Doors
-            module Doors
+          module GM
+            # Diagnostics::Capabilities::Body::Windscreen
+            module Windscreen
               include Constants
             end
           end

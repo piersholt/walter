@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module Lighting
+          module LCM
             include API
 
             def any(to, *args)

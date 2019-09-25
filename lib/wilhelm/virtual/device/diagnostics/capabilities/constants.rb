@@ -59,13 +59,13 @@ module Wilhelm
             DRIVER_KEY_TUMBLER_LOCK       = [0x01, 0x00, 0x01].freeze
             DRIVER_KEY_TUMBLER_UNLOCK     = [0x01, 0x03, 0x01].freeze
 
-            MEMORY_POS_1                  = [0x01, 0x08, 0x01].freeze
-            MEMORY_POS_2                  = [0x01, 0x09, 0x01].freeze
-            MEMORY_POS_3                  = [0x01, 0x0a, 0x01].freeze
+            DRIVER_MEMORY_1               = [0x01, 0x08, 0x01].freeze
+            DRIVER_MEMORY_2               = [0x01, 0x09, 0x01].freeze
+            DRIVER_MEMORY_3               = [0x01, 0x0a, 0x01].freeze
 
-            # Unconfirmed
-            DRIVER_MIRROR_FOLD_OUT        = [0x01, 0x30, 0x01].freeze
-            DRIVER_MIRROR_FOLD_IN         = [0x01, 0x31, 0x01].freeze
+            # DRIVER_MIRROR_OUT           = [0x01, 0x30, 0x01].freeze
+            # DRIVER_MIRROR_IN            = [0x01, 0x31, 0x01].freeze
+
             # Random find?
             DRIVER_WINDOW_CLOSE           = [0x01, 0x32, 0x01].freeze
             DRIVER_WINDOW_OPEN            = [0x01, 0x36, 0x01].freeze
@@ -75,16 +75,15 @@ module Wilhelm
 
             DRIVER_MIRROR_DOWN            = [0x01, 0x3b, 0x01].freeze
             DRIVER_MIRROR_UP              = [0x01, 0x3c, 0x01].freeze
-            DRIVER_MIRROR_OUT             = [0x01, 0x3d, 0x01].freeze
-            DRIVER_MIRROR_IN              = [0x01, 0x3e, 0x01].freeze
+            DRIVER_MIRROR_RIGHT           = [0x01, 0x3d, 0x01].freeze
+            DRIVER_MIRROR_LEFT            = [0x01, 0x3e, 0x01].freeze
 
-            MEMORY_SWITCH                 = [0x01, 0x44, 0x01].freeze
+            DRIVER_MEMORY_SWITCH          = [0x01, 0x44, 0x01].freeze
 
-            # Unconfirmed!
             PASS_MIRROR_DOWN              = [0x02, 0x3b, 0x01].freeze
             PASS_MIRROR_UP                = [0x02, 0x3c, 0x01].freeze
-            PASS_MIRROR_OUT               = [0x02, 0x3d, 0x01].freeze
-            PASS_MIRROR_IN                = [0x02, 0x3e, 0x01].freeze
+            PASS_MIRROR_RIGHT             = [0x02, 0x3d, 0x01].freeze
+            PASS_MIRROR_LEFT              = [0x02, 0x3e, 0x01].freeze
 
             SEAT_FORWARD                  = [0x05, 0x00, 0x01].freeze
             SEAT_BACK                     = [0x05, 0x01, 0x01].freeze
