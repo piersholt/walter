@@ -30,6 +30,12 @@ module Wilhelm
 
         def input_overlay(*); end
 
+        def kl_30(*); end
+
+        def kl_r(*); end
+
+        def kl_15(*); end
+
         # Default Display Rendering
 
         def render_header(context, view)

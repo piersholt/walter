@@ -78,6 +78,18 @@ module Wilhelm
         @state.obc_request(self)
       end
 
+      def kl_30
+        @state.kl_30(self)
+      end
+
+      def kl_r
+        @state.kl_r(self)
+      end
+
+      def kl_15
+        @state.kl_15(self)
+      end
+
       # Events: Control
       def input_menu
         @state.input_menu(self)

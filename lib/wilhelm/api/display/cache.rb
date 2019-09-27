@@ -42,7 +42,7 @@ module Wilhelm
           objects[id]&.clear if flush
           objects[id]&.write!(data)
         end
-        
+
         def reset!
           @objects = create_objects
         end

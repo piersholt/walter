@@ -24,6 +24,16 @@ module Wilhelm
           LOGGER.info(DISPLAY_DISABLED) { '#input_menu' }
           context.change_state(Enabled.new)
         end
+
+        def kl_r(context)
+          LOGGER.info(DISPLAY_DISABLED) { '#kl_r' }
+          context.change_state(Enabled.new)
+        end
+
+        def kl_15(context)
+          LOGGER.info(DISPLAY_DISABLED) { '#kl_15' }
+          context.change_state(Enabled.new)
+        end
       end
     end
   end

@@ -50,6 +50,15 @@ module Wilhelm
           when GFX_OBC_BOOL
             logger.info(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
             obc_request
+          when KL_30
+            logger.info(NAME) { "#update(#{KL_30}, #{properties})" }
+            kl_30
+          when KL_R
+            logger.info(NAME) { "#update(#{KL_R}, #{properties})" }
+            kl_r
+          when KL_15
+            logger.info(NAME) { "#update(#{KL_15}, #{properties})" }
+            kl_15
           end
         end
 

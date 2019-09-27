@@ -45,6 +45,11 @@ module Wilhelm
           LOGGER.debug(DISPLAY_ENABLED) { '#obc_request' }
           context.change_state(Busy.new)
         end
+
+        def kl_30(context)
+          LOGGER.info(DISPLAY_ENABLED) { '#kl_30' }
+          context.change_state(Off.new)
+        end
       end
     end
   end
