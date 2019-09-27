@@ -12,7 +12,7 @@ module Wilhelm
 
         def monitor_off(context)
           LOGGER.debug(DISPLAY_ENABLED) { '#monitor_off' }
-          context.change_state(Disabled.new)
+          context.change_state(Off.new)
         end
 
         def input_aux_heat(context)

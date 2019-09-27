@@ -112,7 +112,7 @@ module Wilhelm
 
       DISPLAY_UNKNOWN = 'Unknown'
       DISPLAY_ENABLED = 'Enabled'
-      DISPLAY_DISABLED = 'Disabled'
+      DISPLAY_DISABLED = 'Off'
       DISPLAY_BUSY = 'Busy'
       DISPLAY_CAPTURED = 'Captured'
       DISPLAY_OVERWRITTEN = 'Overwritten'
@@ -124,7 +124,7 @@ module Wilhelm
           DISPLAY_UNKNOWN
         when Enabled
           DISPLAY_ENABLED
-        when Disabled
+        when Off
           DISPLAY_DISABLED
         when Busy
           DISPLAY_BUSY

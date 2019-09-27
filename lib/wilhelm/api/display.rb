@@ -4,7 +4,7 @@ puts "\tLoading wilhelm/api/display"
 
 require_relative 'display/states/defaults'
 require_relative 'display/states/unknown'
-require_relative 'display/states/disabled'
+require_relative 'display/states/off'
 require_relative 'display/states/enabled'
 require_relative 'display/states/busy'
 require_relative 'display/states/available'
