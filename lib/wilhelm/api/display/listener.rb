@@ -50,9 +50,6 @@ module Wilhelm
           when GFX_OBC_BOOL
             logger.info(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
             obc_request
-          when RADIO_BODY_CLEARED
-            logger.debug(NAME) { "#update(#{RADIO_BODY_CLEARED})" }
-            overwritten!
           end
         end
 

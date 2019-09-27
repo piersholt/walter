@@ -78,15 +78,6 @@ module Wilhelm
         @state.obc_request(self)
       end
 
-      # Events: Cache
-      def overwritten!
-        @state.overwritten!(self)
-      end
-
-      def overwritten_header!
-        @state.overwritten_header!(self)
-      end
-
       # Events: Control
       def input_menu
         @state.input_menu(self)
@@ -115,7 +106,6 @@ module Wilhelm
       DISPLAY_DISABLED = 'Off'
       DISPLAY_BUSY = 'Busy'
       DISPLAY_CAPTURED = 'Captured'
-      DISPLAY_OVERWRITTEN = 'Overwritten'
 
       # @todo a Hash would be more efficient
       def state_string
@@ -130,8 +120,6 @@ module Wilhelm
           DISPLAY_BUSY
         when Captured
           DISPLAY_CAPTURED
-        when Overwritten
-          DISPLAY_OVERWRITTEN
         else
           state.class
         end

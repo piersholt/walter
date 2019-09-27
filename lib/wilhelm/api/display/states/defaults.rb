@@ -16,8 +16,6 @@ module Wilhelm
 
         def obc_request(*); end
 
-        def overwritten!(*); end
-
         def overwritten_header!(*); end
 
         def user_input(*); end
