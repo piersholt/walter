@@ -84,6 +84,11 @@ module Wilhelm
           )
           true
         end
+
+        def kl_30(context)
+          LOGGER.info(DISPLAY_CAPTURED) { '#kl_30' }
+          context.change_state(Off.new)
+        end
       end
     end
   end

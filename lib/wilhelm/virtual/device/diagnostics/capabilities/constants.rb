@@ -54,6 +54,8 @@ module Wilhelm
             FRONT_OPEN                    = [0x00, 0x65, 0x01].freeze
             SUNROOF_OPEN                  = [0x00, 0x66, 0x01].freeze
 
+            # DRIVER
+
             # Activated central locking and comfort close.
             # Possible driver key cylinder?
             DRIVER_KEY_TUMBLER_LOCK       = [0x01, 0x00, 0x01].freeze
@@ -63,8 +65,8 @@ module Wilhelm
             DRIVER_MEMORY_2               = [0x01, 0x09, 0x01].freeze
             DRIVER_MEMORY_3               = [0x01, 0x0a, 0x01].freeze
 
-            # DRIVER_MIRROR_OUT           = [0x01, 0x30, 0x01].freeze
-            # DRIVER_MIRROR_IN            = [0x01, 0x31, 0x01].freeze
+            # DRIVER_MIRROR_UNFOLD        = [0x01, 0x30, 0x01].freeze
+            # DRIVER_MIRROR_FOLD          = [0x01, 0x31, 0x01].freeze
 
             # Random find?
             DRIVER_WINDOW_CLOSE           = [0x01, 0x32, 0x01].freeze
@@ -80,10 +82,23 @@ module Wilhelm
 
             DRIVER_MEMORY_SWITCH          = [0x01, 0x44, 0x01].freeze
 
+            # PASSENGER
+
+            PASS_MIRROR_UNFOLD            = [0x02, 0x30, 0x01].freeze
+            PASS_MIRROR_FOLD              = [0x02, 0x31, 0x01].freeze
+
+            PASS_WINDOW_CLOSE             = [0x02, 0x32, 0x01].freeze
+            PASS_WINDOW_OPEN              = [0x02, 0x36, 0x01].freeze
+
+            PASS_DOOR_LOCK                = [0x02, 0x39, 0x01].freeze
+            PASS_DOOR_UNLOCK              = [0x02, 0x3a, 0x01].freeze
+
             PASS_MIRROR_DOWN              = [0x02, 0x3b, 0x01].freeze
             PASS_MIRROR_UP                = [0x02, 0x3c, 0x01].freeze
             PASS_MIRROR_RIGHT             = [0x02, 0x3d, 0x01].freeze
             PASS_MIRROR_LEFT              = [0x02, 0x3e, 0x01].freeze
+
+            # DRIVER
 
             SEAT_FORWARD                  = [0x05, 0x00, 0x01].freeze
             SEAT_BACK                     = [0x05, 0x01, 0x01].freeze

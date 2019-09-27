@@ -74,6 +74,8 @@ module Wilhelm
                 ui_context.launch(:services, :index)
               when :encoding
                 ui_context.launch(:encoding, :index)
+              when :shutdown
+                LOGGER.warn(NAME) { `/usr/bin/sudo /sbin/shutdown -h 5` }
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

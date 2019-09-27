@@ -78,13 +78,16 @@ module Wilhelm
         @state.obc_request(self)
       end
 
-      # Events: Cache
-      def overwritten!
-        @state.overwritten!(self)
+      def kl_30
+        @state.kl_30(self)
       end
 
-      def overwritten_header!
-        @state.overwritten_header!(self)
+      def kl_r
+        @state.kl_r(self)
+      end
+
+      def kl_15
+        @state.kl_15(self)
       end
 
       # Events: Control
@@ -112,10 +115,9 @@ module Wilhelm
 
       DISPLAY_UNKNOWN = 'Unknown'
       DISPLAY_ENABLED = 'Enabled'
-      DISPLAY_DISABLED = 'Disabled'
+      DISPLAY_DISABLED = 'Off'
       DISPLAY_BUSY = 'Busy'
       DISPLAY_CAPTURED = 'Captured'
-      DISPLAY_OVERWRITTEN = 'Overwritten'
 
       # @todo a Hash would be more efficient
       def state_string
@@ -124,14 +126,12 @@ module Wilhelm
           DISPLAY_UNKNOWN
         when Enabled
           DISPLAY_ENABLED
-        when Disabled
+        when Off
           DISPLAY_DISABLED
         when Busy
           DISPLAY_BUSY
         when Captured
           DISPLAY_CAPTURED
-        when Overwritten
-          DISPLAY_OVERWRITTEN
         else
           state.class
         end

@@ -12,7 +12,7 @@ module Wilhelm
 
         def monitor_off(context)
           LOGGER.debug(DISPLAY_ENABLED) { '#monitor_off' }
-          context.change_state(Disabled.new)
+          context.change_state(Off.new)
         end
 
         def input_aux_heat(context)
@@ -44,6 +44,11 @@ module Wilhelm
         def obc_request(context)
           LOGGER.debug(DISPLAY_ENABLED) { '#obc_request' }
           context.change_state(Busy.new)
+        end
+
+        def kl_30(context)
+          LOGGER.info(DISPLAY_ENABLED) { '#kl_30' }
+          context.change_state(Off.new)
         end
       end
     end

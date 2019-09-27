@@ -3,6 +3,7 @@
 puts "\tLoading wilhelm/virtual/device/constants/events"
 
 require_relative 'events/bmbt'
+require_relative 'events/cluster'
 require_relative 'events/display'
 require_relative 'events/mfl'
 require_relative 'events/radio'
@@ -29,6 +30,7 @@ module Wilhelm
         # Control
         module Control
           include BMBT::Control
+          include Cluster::Control
           include Display::Control
           include MFL::Control
           include Radio::Control
@@ -39,6 +41,7 @@ module Wilhelm
 
         # State
         module State
+          include Cluster::State
           include Display::State
           include Radio::State
 

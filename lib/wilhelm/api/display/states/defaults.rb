@@ -16,8 +16,6 @@ module Wilhelm
 
         def obc_request(*); end
 
-        def overwritten!(*); end
-
         def overwritten_header!(*); end
 
         def user_input(*); end
@@ -31,6 +29,12 @@ module Wilhelm
         def input_aux_heat(*); end
 
         def input_overlay(*); end
+
+        def kl_30(*); end
+
+        def kl_r(*); end
+
+        def kl_15(*); end
 
         # Default Display Rendering
 

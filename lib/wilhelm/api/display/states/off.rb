@@ -5,10 +5,10 @@ module Wilhelm
     class Display
       # External device has priority. Do not draw/refresh display
       # Examples are user control, i.e. 'Set', 'Aux Heating', 'Telephone'
-      class Disabled
+      class Off
         include Defaults
 
-        DISPLAY_DISABLED = 'Disable (Disabled)'
+        DISPLAY_DISABLED = 'Display (Off)'
 
         def announce(context)
           LOGGER.info(DISPLAY_DISABLED) { '#announce' }
@@ -22,6 +22,16 @@ module Wilhelm
 
         def input_menu(context)
           LOGGER.info(DISPLAY_DISABLED) { '#input_menu' }
+          context.change_state(Enabled.new)
+        end
+
+        def kl_r(context)
+          LOGGER.info(DISPLAY_DISABLED) { '#kl_r' }
+          context.change_state(Enabled.new)
+        end
+
+        def kl_15(context)
+          LOGGER.info(DISPLAY_DISABLED) { '#kl_15' }
           context.change_state(Enabled.new)
         end
       end
