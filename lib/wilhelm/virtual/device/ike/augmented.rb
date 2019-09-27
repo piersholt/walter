@@ -37,6 +37,9 @@ module Wilhelm
             when ANZV_BOOL
               logger.debug(moi) { "Tx: ANZV_BOOL (0x#{ANZV_BOOL.to_s(16)})" }
               evaluate_anzv_bool(message.command)
+            when IGNITION_REP
+              logger.debug(moi) { "Tx: IGNITION_REP (0x#{IGNITION_REP.to_s(16)})" }
+              evaluate_ignition(message.command)
             end
           end
 
