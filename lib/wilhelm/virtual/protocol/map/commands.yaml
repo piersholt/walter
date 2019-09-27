@@ -633,7 +633,7 @@
           - KEY IN IGNITION LOCK
           - CHECK ENGINE OIL LEV
 
-0x1B: # HUD-STATUS
+0x1B: # HUD-STATUS / # DIA-PDC*
   :properties:
     :short_name: HUD-STATUS
     :long_name: IKE Text Status?
@@ -4353,13 +4353,7 @@
       - PDC	  (0x60):	63
       - 0x9A	(0x9A):	3
 
-0x03: # B-PING?
-  :properties:
-    :short_name: B-PING
-    :long_name: BUS Status Request?
-  :klass: Base
-
-0x04: # B-PONG? / DIA-ERR-READ
+0x04: # DIA-ERR-READ
   :properties:
     :short_name: DIA-ERR-READ
     :long_name: BUS Status Reponse?
@@ -4552,7 +4546,7 @@
     - DIA	LCM	9C 00
     - DIA	LCM	9C 00
 
-0x9F: # EWS-X?
+0x9f: # EWS-X?
   :properties:
     :short_name: EWS-X?
     :long_name: Unknown?
@@ -4563,5 +4557,11 @@
     :short_name: DIA-DATA
     :long_name: Diagnostics Data
   :klass: Base
+
+0xA1: # DIA-DATA-NAV
+  :properties:
+    :short_name: DIA-DATA-NAV
+    :long_name: Unknown
+    :klass: Base
 
 ...
