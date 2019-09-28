@@ -6,7 +6,7 @@ module Wilhelm
     class Telephone
       include Helpers::Observation
       include Logging
-      include Contacts
+      include Mock
 
       PROG = 'Service::Telephone'
 
