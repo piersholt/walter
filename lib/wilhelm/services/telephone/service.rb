@@ -7,6 +7,7 @@ module Wilhelm
       include Helpers::Observation
       include Logging
       include Mock
+      include Virtual::Constants::Events::Telephone
 
       PROG = 'Service::Telephone'
 
@@ -18,17 +19,17 @@ module Wilhelm
       def telephone_update(event, args)
         logger.unknown(PROG) { "#telephone_update(#{event}, #{args})" }
         case event
-        when :directory_open
+        when DIRECTORY_OPEN
           generate_directory(args)
-        when :directory_back
+        when DIRECTORY_BACK
           generate_directory(args)
-        when :directory_forward
+        when DIRECTORY_FORWARD
           generate_directory(args)
-        when :directory_select
+        when DIRECTORY_SELECT
           directory_select(args)
-        when :top_8_open
+        when TOP_8_OPEN
           generate_top_8
-        when :top_8_select
+        when TOP_8_SELECT
           top_8_select(args)
         end
       end
