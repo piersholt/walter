@@ -145,6 +145,7 @@ module Wilhelm
           FUNCTION_SOS      = 0x05
           FUNCTION_NAVIGATE = 0x07
           FUNCTION_INFO     = 0x08
+          # NOTE: this is an arbitrary value.
           FUNCTION_SMS      = 0xf0
 
           # BYTE 3 ACTION
@@ -189,7 +190,7 @@ module Wilhelm
           ACTION_OPEN_SMS       = 0x1d
           ACTION_OPEN_DIR       = 0x1f
 
-          # Directory 0x43 & Top 8 0x43
+          # Directory 0x43 & Top 8 0x80
           ACTION_DIRECTORY_BACK    = 0x0c
           ACTION_DIRECTORY_FORWARD = 0x0d
 
@@ -214,10 +215,10 @@ module Wilhelm
             ACTION_CONTACT_8
           ].freeze
 
-          # Info
+          # Info 0x80
           ACTION_INFO_OPEN_DIAL    = 0x1e
 
-          # Layout 0xf0 SMS Index
+          # SMS Index 0xf0
           ACTION_SMS_1             = 0x00
           ACTION_SMS_2             = 0x01
           ACTION_SMS_3             = 0x02
@@ -228,11 +229,22 @@ module Wilhelm
           ACTION_SMS_8             = 0x07
           ACTION_SMS_9             = 0x08
           ACTION_SMS_10            = 0x09
+          ACTION_SMS_BACK          = 0x10
 
-          ACTION_SMS_INDEX_BACK    = 0x10
-          ACTION_SMS_SHOW_BACK     = 0x10
+          ACTION_SMS_INDICIES = [
+            ACTION_SMS_1,
+            ACTION_SMS_2,
+            ACTION_SMS_3,
+            ACTION_SMS_4,
+            ACTION_SMS_5,
+            ACTION_SMS_6,
+            ACTION_SMS_7,
+            ACTION_SMS_8,
+            ACTION_SMS_9,
+            ACTION_SMS_10
+          ].freeze
 
-          # Layout 0xf1 SMS Message
+          # SMS Message 0xf1
           ACTION_SMS_LEFT          = 0x11
           ACTION_SMS_RIGHT         = 0x12
           ACTION_SMS_CENTRE        = 0x13
@@ -442,7 +454,10 @@ module Wilhelm
               }
             },
             LAYOUT_SMS_INDEX => {
-              FUNCTION_DEFAULT => {
+              FUNCTION_NAVIGATE => {
+                ACTION_SMS_BACK => SMS_BACK
+              },
+              FUNCTION_SMS => {
                 ACTION_SMS_1  => SMS_1,
                 ACTION_SMS_2  => SMS_2,
                 ACTION_SMS_3  => SMS_3,
@@ -453,12 +468,15 @@ module Wilhelm
                 ACTION_SMS_8  => SMS_8,
                 ACTION_SMS_9  => SMS_9,
                 ACTION_SMS_10 => SMS_10,
-                ACTION_SMS_INDEX_BACK => SMS_BACK
+                ACTION_SMS_BACK => SMS_BACK
               }
             },
             LAYOUT_SMS_SHOW => {
-              FUNCTION_DEFAULT => {
-                ACTION_SMS_SHOW_BACK => SMS_BACK,
+              FUNCTION_NAVIGATE => {
+                ACTION_SMS_BACK => SMS_BACK
+              },
+              FUNCTION_SMS => {
+                ACTION_SMS_BACK => SMS_BACK,
                 ACTION_SMS_LEFT   => SMS_LEFT,
                 ACTION_SMS_CENTRE => SMS_CENTRE,
                 ACTION_SMS_RIGHT  => SMS_RIGHT
