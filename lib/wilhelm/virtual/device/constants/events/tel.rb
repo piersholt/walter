@@ -18,6 +18,9 @@ module Wilhelm
 
             LAST_NUMBERS_BACK    = :last_numbers_back
             LAST_NUMBERS_FORWARD = :last_numbers_forward
+
+            SMS_OPEN     = :sms_open
+            SMS_SELECT   = :sms_select
           end
 
           # Control related events

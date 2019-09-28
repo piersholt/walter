@@ -10,21 +10,35 @@ module Wilhelm
             module Handler
               include Constants
 
+              # SMS Index functions
+              # - back
+              # - message
               def handle_sms_index(command)
                 logger.unknown(PROC) { "#handle_sms_index(#{command})" }
                 smses!
                 case command.function.value
+                when FUNCTION_NAVIGATE
+                  # NOTE: for reference only. Navigation is delegated.
+                  false
                 when FUNCTION_SMS
-                  generate_sms_show
+                  branch(command.layout.value, FUNCTION_SMS, button_id(command.action))
+                  sms_select(button_id(command.action))
+                  # generate_sms_show
                 end
               end
 
+              # SMS Index functions
+              # - back
+              # - message
               def handle_sms_show(command)
                 logger.unknown(PROC) { "#handle_sms_show(#{command})" }
-                smses!
+                sms!
                 case command.function.value
-                when FUNCTION_SMS
+                when FUNCTION_NAVIGATE
+                  # NOTE: for reference only. Navigation is delegated.
                   generate_sms_index
+                when FUNCTION_SMS
+                  false
                 end
               end
             end
