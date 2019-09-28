@@ -5,10 +5,12 @@ require_relative 'mock/messages'
 
 module Wilhelm
   module Services
-    # Bluetooth Telephone
     class Telephone
-      include Contacts
-      include Messages
+      # Telephone::Mock
+      module Mock
+        include Contacts
+        include Messages
+      end
     end
   end
 end
