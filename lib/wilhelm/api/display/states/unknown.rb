@@ -37,6 +37,7 @@ module Wilhelm
 
         def kl_30(context)
           LOGGER.info(DISPLAY_UNKNOWN) { '#kl_30' }
+          context.cache.clear!
           context.change_state(Off.new)
         end
 

@@ -47,6 +47,8 @@ module Wilhelm
           @objects = create_objects
         end
 
+        alias clear! reset!
+
         def dirty_ids(layout)
           id = sym_to_id(layout)
           objects[id]&.dirty_ids
