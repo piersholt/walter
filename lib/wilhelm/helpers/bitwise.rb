@@ -4,22 +4,21 @@ module Wilhelm
   module Helpers
     # Bitwise Operations
     module Bitwise
-      def bitwise_or(*masks)
-        masks.reduce(0) do |m, o|
-          m | o
-        end
+      def bitwise_or(*bitmasks)
+        bitmasks.reduce(:|)
       end
 
-      def bitwise_xor(*masks)
-        masks.reduce(0) do |m, o|
-          m ^ o
-        end
+      def bitwise_xor(*bitmasks)
+        bitmasks.reduce(:^)
       end
 
-      alias xor bitwise_xor
+      def bitwise_and(*bitmasks)
+        bitmasks.reduce(:&)
+      end
 
-      def bitwise_on?(bitfield, bitmask)
-        bitfield & bitmask == bitmask
+      def bitwise_on?(bitfield, *bitmasks)
+        bitmask = bitwise_or(*bitmasks)
+        bitfield & bitmask != 0
       end
     end
   end
