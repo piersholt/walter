@@ -24,6 +24,9 @@ module Wilhelm
               when KL15
                 changed
                 notify_observers(KL_15, device: ident)
+              when KL50
+                changed
+                notify_observers(KL_50, device: ident)
               end
             end
 

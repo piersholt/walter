@@ -16,6 +16,7 @@ module Wilhelm
             KL_30 = :kl_30
             KL_R  = :kl_r
             KL_15 = :kl_15
+            KL_50 = :kl_50
 
             CLUSTER_STATES = constants.map { |i| const_get(i) }
           end

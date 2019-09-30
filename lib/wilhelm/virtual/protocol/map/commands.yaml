@@ -36,7 +36,7 @@
             0: :unpowered
             1: :powered
         :kl50:
-          :label: KL-50 (Start)
+          :label: KL-50 (Pos. III)
           :type: :switch
           :states:
             0: :unpowered
