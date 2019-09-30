@@ -118,6 +118,7 @@ module Wilhelm
       DISPLAY_DISABLED = 'Off'
       DISPLAY_BUSY = 'Busy'
       DISPLAY_CAPTURED = 'Captured'
+      DISPLAY_UNPOWERED = 'Unpowered'
 
       # @todo a Hash would be more efficient
       def state_string
@@ -132,6 +133,8 @@ module Wilhelm
           DISPLAY_BUSY
         when Captured
           DISPLAY_CAPTURED
+        when Unpowered
+          DISPLAY_UNPOWERED
         else
           state.class
         end

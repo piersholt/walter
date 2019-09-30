@@ -85,10 +85,15 @@ module Wilhelm
           true
         end
 
+        def monitor_off(context)
+          LOGGER.debug(DISPLAY_CAPTURED) { '#monitor_off' }
+          context.change_state(Off.new)
+        end
+
         def kl_30(context)
           LOGGER.info(DISPLAY_CAPTURED) { '#kl_30' }
           context.cache.clear!
-          context.change_state(Off.new)
+          context.change_state(Unpowered.new)
         end
       end
     end

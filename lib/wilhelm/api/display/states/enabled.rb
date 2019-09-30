@@ -49,7 +49,7 @@ module Wilhelm
         def kl_30(context)
           LOGGER.info(DISPLAY_ENABLED) { '#kl_30' }
           context.cache.clear!
-          context.change_state(Off.new)
+          context.change_state(Unpowered.new)
         end
       end
     end

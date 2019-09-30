@@ -15,6 +15,17 @@ module Wilhelm
           LOGGER.info(DISPLAY_BUSY) { '[MENU] pressed. Display -> Enabled.' }
           context.change_state(Enabled.new)
         end
+
+        def monitor_off(context)
+          LOGGER.debug(DISPLAY_BUSY) { '#monitor_off' }
+          context.change_state(Off.new)
+        end
+
+        def kl_30(context)
+          LOGGER.info(DISPLAY_BUSY) { '#kl_30' }
+          context.cache.clear!
+          context.change_state(Unpowered.new)
+        end
       end
     end
   end
