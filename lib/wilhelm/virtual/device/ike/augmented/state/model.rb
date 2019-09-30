@@ -13,14 +13,14 @@ module Wilhelm
               include Constants
 
               DEFAULT_STATE = {
-                memo:          MEMO[OFF],
-                timer:         TIMER[OFF],
-                limit:         LIMIT[OFF],
-                code:          CODE[OFF],
-                aux_heating: AUX_HEATING[OFF],
-                aux_timer_2:   AUX_TIMER_2[OFF],
-                aux_ventilation:    AUX_VENTILATION[OFF],
-                aux_timer_1:   AUX_TIMER_1[OFF]
+                memo:            0,
+                timer:           0,
+                limit:           0,
+                code:            0,
+                aux_heating:     0,
+                aux_timer_2:     0,
+                aux_ventilation: 0,
+                aux_timer_1:     0
               }.freeze
 
               def default_state
@@ -33,24 +33,24 @@ module Wilhelm
                 state[:memo]
               end
 
-              def memo?
-                bitwise_on?(memo, MEMO[:on])
-              end
-
               def timer
                 state[:timer]
-              end
-
-              def timer?
-                bitwise_on?(timer, TIMER[:on])
               end
 
               def limit
                 state[:limit]
               end
 
+              def memo?
+                bitwise_on?(memo, MASK[:memo])
+              end
+
+              def timer?
+                bitwise_on?(timer, MASK[:timer])
+              end
+
               def limit?
-                bitwise_on?(limit, LIMIT[:on])
+                bitwise_on?(limit, MASK[:limit])
               end
 
               # Control B
@@ -59,40 +59,40 @@ module Wilhelm
                 state[:code]
               end
 
-              def code?
-                bitwise_on?(code, CODE[:on])
-              end
-
               def aux_heating
                 state[:aux_heating]
-              end
-
-              def aux_heating?
-                bitwise_on?(aux_heating, AUX_HEATING[:on])
               end
 
               def aux_timer_2
                 state[:aux_timer_2]
               end
 
-              def aux_timer_2?
-                bitwise_on?(aux_timer_2, AUX_TIMER_2[:on])
-              end
-
               def aux_ventilation
                 state[:aux_ventilation]
-              end
-
-              def aux_ventilation?
-                bitwise_on?(aux_ventilation, AUX_VENTILATION[:on])
               end
 
               def aux_timer_1
                 state[:aux_timer_1]
               end
 
+              def code?
+                bitwise_on?(code, MASK[:code])
+              end
+
+              def aux_heating?
+                bitwise_on?(aux_heating, MASK[:aux_heating])
+              end
+
+              def aux_timer_2?
+                bitwise_on?(aux_timer_2, MASK[:aux_timer_2])
+              end
+
+              def aux_ventilation?
+                bitwise_on?(aux_ventilation, MASK[:aux_ventilation])
+              end
+
               def aux_timer_1?
-                bitwise_on?(aux_timer_1, AUX_TIMER_1[:on])
+                bitwise_on?(aux_timer_1, MASK[:aux_timer_1])
               end
             end
           end

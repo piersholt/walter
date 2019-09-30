@@ -15,11 +15,21 @@ module Wilhelm
             include Chainable
 
             def control_a
-              bitwise_or(memo, timer, limit)
+              bitwise_or(
+                memo,
+                timer,
+                limit
+              )
             end
 
             def control_b
-              bitwise_or(code, aux_heating, aux_timer_2, aux_ventilation, aux_timer_1)
+              bitwise_or(
+                code,
+                aux_heating,
+                aux_timer_2,
+                aux_ventilation,
+                aux_timer_1
+              )
             end
           end
         end

@@ -8,52 +8,17 @@ module Wilhelm
           module State
             # Radio related command constants
             module Constants
-              ZERO = 0b0000_0000
-              OFF = :off
-              ON = :on
-
-              # BYTE 1
-
-              MEMO = {
-                off: ZERO,
-                on: 0b0010_0000
-              }.freeze
-
-              TIMER = {
-                off: ZERO,
-                on: 0b0000_1000
-              }.freeze
-
-              LIMIT = {
-                off: ZERO,
-                on: 0b0000_0010
-              }.freeze
-
-              # BYTE 2
-
-              CODE = {
-                off: ZERO,
-                on: 0b0100_0000
-              }.freeze
-
-              AUX_HEATING = {
-                off: ZERO,
-                on: 0b0010_0000
-              }.freeze
-
-              AUX_TIMER_2 = {
-                off: ZERO,
-                on: 0b0001_0000
-              }.freeze
-
-              AUX_VENTILATION = {
-                off: ZERO,
-                on: 0b0000_1000
-              }.freeze
-
-              AUX_TIMER_1 = {
-                off: ZERO,
-                on: 0b0000_0100
+              MASK = {
+                # Control A
+                memo:  0b0010_0000,
+                timer: 0b0000_1000,
+                limit: 0b0000_0010,
+                # Control B
+                code:            0b0100_0000,
+                aux_heating:     0b0010_0000,
+                aux_timer_2:     0b0001_0000,
+                aux_ventilation: 0b0000_1000,
+                aux_timer_1:     0b0000_0100
               }.freeze
             end
           end
