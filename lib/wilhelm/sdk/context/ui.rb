@@ -51,7 +51,7 @@ module Wilhelm
             emit_destroy
           when API::Display::Busy
             emit_destroy
-          when API::Display::Disabled
+          when API::Display::Off
             emit_destroy
           end
         end

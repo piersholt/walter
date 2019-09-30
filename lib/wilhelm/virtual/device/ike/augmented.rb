@@ -15,7 +15,7 @@ module Wilhelm
           include Sent
           include Received
 
-          PUBLISH = [ANZV_BOOL, ANZV_VAR].freeze
+          PUBLISH = [IGNITION_REP, ANZV_BOOL, ANZV_VAR].freeze
           SUBSCRIBE = [OBC_BOOL, OBC_VAR].freeze
 
           LogActually.is_all_around(:ike)
