@@ -18,8 +18,8 @@ module Wilhelm
 
       alias xor bitwise_xor
 
-      def bitwise_on?(mask, mask_on)
-        mask & mask_on == mask_on
+      def bitwise_on?(bitfield, bitmask)
+        bitfield & bitmask == bitmask
       end
     end
   end
