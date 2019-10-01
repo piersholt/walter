@@ -15,8 +15,8 @@ module Wilhelm
           include Sent
           include Received
 
-          PUBLISH = [IGNITION_REP, ANZV_BOOL, ANZV_VAR].freeze
-          SUBSCRIBE = [OBC_BOOL, OBC_VAR].freeze
+          PUBLISH = [IGNITION_REP, ANZV_BOOL, ANZV_VAR, PROG].freeze
+          SUBSCRIBE = [OBC_BOOL, OBC_VAR, PROG].freeze
 
           LogActually.is_all_around(:ike)
           LogActually.ike.i
@@ -40,6 +40,9 @@ module Wilhelm
             when IGNITION_REP
               logger.debug(moi) { "Tx: IGNITION_REP (0x#{IGNITION_REP.to_s(16)})" }
               evaluate_ignition(message.command)
+            when PROG
+              logger.debug(moi) { "Tx: PROG (0x#{PROG.to_s(16)})" }
+              evaluate_prog(message.command)
             end
           end
 
@@ -53,6 +56,9 @@ module Wilhelm
             when OBC_BOOL
               logger.debug(moi) { "Rx: OBC_BOOL (0x#{OBC_BOOL.to_s(16)})" }
               handle_obc_bool(message.command)
+            when PROG
+              logger.debug(moi) { "Rx: PROG (0x#{PROG.to_s(16)})" }
+              handle_prog(message.command)
             end
           end
         end
