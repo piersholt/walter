@@ -31,7 +31,7 @@ module Wilhelm
           ].freeze
 
           def favourites
-            @favourites ||= CONTACTS.dup.reverse!.first(TOP_8_PAGE_SIZE)
+            @favourites ||= CONTACTS.dup.shuffle.reverse!.first(TOP_8_PAGE_SIZE)
           end
 
           def phone_book

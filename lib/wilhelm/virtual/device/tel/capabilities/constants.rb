@@ -107,7 +107,9 @@ module Wilhelm
               LAYOUT_SMS_SHOW  => SMS_SHOW_INDICIES
             }.freeze
 
-            # PARAMETER 4 Chars
+            # -----------------------------------------------------------------
+            # PARAMETER 4: CAHRS
+            # -----------------------------------------------------------------
 
             NO_CHARS = ''
           end
