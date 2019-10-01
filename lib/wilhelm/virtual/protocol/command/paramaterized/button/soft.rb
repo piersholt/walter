@@ -17,7 +17,7 @@ module Wilhelm
                 else
                   action.value
                 end
-              "#{layout.value}, #{function.value}, #{action_value} (#{action.bit_array}) #{format('s', pretty)}, #{format('%s', state_pretty)}"
+              "#{d2h(layout.value, true)}, #{d2h(function.value, true)}, #{action_value} (#{action.bit_array}) #{format('%s', pretty)}, #{format('%s', state_pretty)}"
             end
           end
         end
