@@ -2500,7 +2500,6 @@
         0x01: (Settings) Time               # [Variable Request]
         0x02: (Settings) Date               # [Variable Request]
         0x0c: (Settings) Memo               # [On, Off]
-        0x0d: (Settings) TBC Memo
 
         # ON-BOARD COMPUTER
         0x03: (OBC) Temperature             # [Variable Request]
