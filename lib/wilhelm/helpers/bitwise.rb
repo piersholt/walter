@@ -18,7 +18,7 @@ module Wilhelm
 
       def bitwise_on?(bitfield, *bitmasks)
         bitmask = bitwise_or(*bitmasks)
-        bitfield & bitmask != 0
+        bitwise_and(bitfield, bitmask) != 0
       end
     end
   end
