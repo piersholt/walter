@@ -21,30 +21,18 @@
   :klass: Parameterized::Base
   :parameters:
     :position:
-      :type: :bit_array
-      :parameters:
-        :klr:
-          :label: KL-R (Pos. I)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-        :kl15:
-          :label: KL-15 (Pos. II)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-        :kl50:
-          :label: KL-50 (Pos. III)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-      :index:
-        :kl50: 5
-        :kl15: 6
-        :klr: 7
+      :type: :map
+      :label: Ignition
+      :map:
+        0b000: :kl_30
+        0b001: :kl_r
+        0b011: :kl_15
+        0b111: :kl_50
+      :dictionary:
+        0b000: :KL-30 (Pos. 0)
+        0b001: :KL-R (Pos. I)
+        0b011: :KL-15 (Pos. II)
+        0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
   :meta:
