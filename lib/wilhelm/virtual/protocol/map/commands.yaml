@@ -2694,13 +2694,13 @@
     - F0 05 FF 47 00 38 75
     - F0 05 FF 47 00 B8 F5
 
-0x48: # BMBT-ALL / BMBT-RAD* / BMBT-TEL* / BMBT-GFX*
+0x48: # BMBT-GLO / BMBT-RAD* / BMBT-TEL* / BMBT-GFX*
   :schemas:
     - :tel
     - :rad
     - :gfx
   :properties:
-    :short_name: BMBT-ALL
+    :short_name: BMBT-GLO
     :long_name: BMBT Buttons
   :klass: Parameterized::Button::BMBT
   :index: &bmbt_index
@@ -2734,17 +2734,15 @@
             0x33: "[Mode Next]"
             0x21: "[AM]"
             0x31: "[FM]"
-            0x22: "[B]"
-            0x32: "[C]"
             0x10: "[Prev]"
             0x00: "[Next]"
             0x20: "[Select]"
             0x04: "[Tone]"
             0x30: "[Overlay]"
             0x06: "[Power]"
-            0x32: '[TP]'
-            0x22: '[RDS]'
-            0x08: "[TEL]"
+            0x32: '[TP/Dolby C]'
+            0x22: '[RDS/Dolby B]'
+            0x08: "[Telephone]"
             0x07: "[Aux. Heat]"
             0x34: "[Menu]"
             0x05: "[Confirm]"
@@ -2761,8 +2759,6 @@
             0x33: :bmbt_mode_next
             0x21: :bmbt_am
             0x31: :bmbt_fm
-            0x22: :bmbt_dolby_b
-            0x32: :bmbt_dolby_c
             0x10: :bmbt_prev
             0x00: :bmbt_next
             0x20: :bmbt_select
