@@ -8,23 +8,11 @@ module Wilhelm
           # Commands sent from IKE
           module Sent
             include Virtual::Constants::Events::Cluster
-            KL30 = 0b0000_0000
-            KLR  = 0b0000_0001
-            KL15 = 0b0000_0011
+            include Wilhelm::Helpers::PositionalNotation
 
             # 0x11
             def evaluate_ignition(command)
-              case command.position.value
-              when KL30
-                changed
-                notify_observers(KL_30, device: ident)
-              when KLR
-                changed
-                notify_observers(KL_R, device: ident)
-              when KL15
-                changed
-                notify_observers(KL_15, device: ident)
-              end
+              ignition!(command.position.value)
             end
 
             # 0x24
@@ -33,8 +21,19 @@ module Wilhelm
             end
 
             # 0x2A
-            def evaluate_anzv_bool(*)
-              false
+            def evaluate_anzv_bool(command)
+              anzv_bool!(
+                parse_base_256_digits(
+                  command.control_a.value,
+                  command.control_b.value
+                )
+              )
+            end
+
+            # 0x42
+            def evaluate_prog(*)
+              changed
+              notify_observers(PROG_ON, device: ident)
             end
           end
         end

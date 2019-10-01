@@ -10,49 +10,53 @@ module Wilhelm
             module Chainable
               include Constants
 
+              # Control A
+
               def memo!
-                state[:memo] = MEMO[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:memo])
                 self
               end
 
               def timer!
-                state[:timer] = TIMER[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:timer])
                 self
               end
 
               def limit!
-                state[:limit] = LIMIT[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:limit])
                 self
               end
 
+              # Control B
+
               def code!
-                state[:code] = CODE[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:code])
                 self
               end
 
               def aux_heating!
-                state[:aux_heating] = AUX_HEATING[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_heating])
                 self
               end
 
               def aux_timer_2!
-                state[:aux_timer_2] = AUX_TIMER_2[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_timer_2])
                 self
               end
 
               def aux_ventilation!
-                state[:aux_ventilation] = AUX_VENTILATION[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_ventilation])
                 self
               end
 
               def aux_timer_1!
-                state[:aux_timer_1] = AUX_TIMER_1[:on]
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_timer_1])
                 self
               end
 
               def off!(*properties)
                 properties.each do |property|
-                  state[property] = ZERO
+                  state[property] = 0b0
                 end
                 self
               end

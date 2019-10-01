@@ -10,16 +10,12 @@ module Wilhelm
             include API
             include Helpers::Data
 
-            KLR  = 0b0000_0001
-            KL15 = 0b0000_0011
-            KL50 = 0b0000_0111
-
             def klr
-              ignition(position: KLR)
+              ignition(position: 0b0000_0001)
             end
 
             def kl15
-              ignition(position: KL15)
+              ignition(position: 0b0000_0011)
             end
           end
         end

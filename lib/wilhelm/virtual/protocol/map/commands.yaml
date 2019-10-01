@@ -21,30 +21,18 @@
   :klass: Parameterized::Base
   :parameters:
     :position:
-      :type: :bit_array
-      :parameters:
-        :klr:
-          :label: KL-R (Pos. I)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-        :kl15:
-          :label: KL-15 (Pos. II)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-        :kl50:
-          :label: KL-50 (Start)
-          :type: :switch
-          :states:
-            0: :unpowered
-            1: :powered
-      :index:
-        :kl50: 5
-        :kl15: 6
-        :klr: 7
+      :type: :map
+      :label: Ignition
+      :map:
+        0b000: :kl_30
+        0b001: :kl_r
+        0b011: :kl_15
+        0b111: :kl_50
+      :dictionary:
+        0b000: :KL-30 (Pos. 0)
+        0b001: :KL-R (Pos. I)
+        0b011: :KL-15 (Pos. II)
+        0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
   :meta:
@@ -1381,8 +1369,8 @@
           0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
 
           # AUX. HEAT/VENTILATION
-          0x0f: (Heat/Vent) Aux. Timer 1
-          0x10: (Heat/Vent) Aux. Timer 2
+          0x0f: (Aux.) Timer 1       # " 1:33PM"
+          0x10: (Aux.) Timer 2       # "12:06AM"
 
           # CODE
           # Wait X minutes.
@@ -1523,7 +1511,7 @@
       :parameters:
         :code:
           :type: :switch
-          :label: '[Code] Lock'
+          :label: '(Code) Lock'
           :states:
             0: :inactive
             1: :on
@@ -1533,25 +1521,25 @@
             - the emergency disarm variant is set via 0x24.
         :aux_heating:
           :type: :switch
-          :label: '(Aux) Heating'
+          :label: '(Aux.) Heating'
           :states:
             0: :inactive
             1: :on
         :aux_timer_2:
           :type: :switch
-          :label: '(Aux) Timer 2'
+          :label: '(Aux.) Timer 2'
           :states:
             0: :inactive
             1: :on
         :aux_ventilation:
           :type: :switch
-          :label: '(Aux) Ventilation'
+          :label: '(Aux.) Vent.'
           :states:
             0: :inactive
             1: :on
         :aux_timer_1:
           :type: :switch
-          :label: '(Aux) Timer 1'
+          :label: '(Aux.) Timer 1'
           :states:
             0: :inactive
             1: :on
@@ -2525,16 +2513,14 @@
         0x0a: (OBC) Avg. Speed              # [Recalculate]
         0x0e: (OBC) Timer                   # [On, Off]
         0x1a: (OBC) Timer (Lap)             # [Lap]
-        0x1b: (OBC) TBC Aux/Heat?
 
         # AUX. HEAT/VENTILATION
         0x0f: (Aux.) Timer 1                # [On, Off]
         0x10: (Aux.) Timer 2                # [On, Off]
-
-        0x11: (Aux.) Heat (Off)
-        0x12: (Aux.) Heat (On)
-        0x13: (Aux.) Vent (Off)
-        0x14: (Aux.) Vent (On)
+        0x11: (Aux.) Heating (Off)          # --
+        0x12: (Aux.) Heating (On)           # --
+        0x13: (Aux.) Vent. (Off)            # --
+        0x14: (Aux.) Vent. (On)             # --
 
     :control:
       :type: :map
@@ -2684,6 +2670,9 @@
         :id:
           :type: :map
           :label: 'ID'
+          :map:
+            0x0_f: :bmbt_soft_select
+            0x3_8: :bmbt_soft_info
           :dictionary:
             0x0_f: "[Select]"
             0x3_8: "[Info]"
@@ -3035,15 +3024,15 @@
         :func:
           :type: :map
           :dictionary:
-            0b0001: 'RANGE'
-            0b0010: 'PROG'
-            0b0011: 'CODE'
+            0b0001: '[RANGE]'
+            0b0010: '[PROG]'
+            0b0011: '[CODE]'
         :opts:
           :type: :map
           :dictionary:
-            0b0000: 'Clear   '
-            0b0001: 'Set     '
-            0b0011: 'Override'
+            0b0000: '[Clear   ]'
+            0b0001: '[Set     ]'
+            0b0011: '[Override]'
     :b2:
       :type: :bit_array
       :index:

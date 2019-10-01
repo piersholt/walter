@@ -41,6 +41,18 @@ module Wilhelm
           when GFX_MONITOR_OFF
             logger.debug(NAME) { "#update(#{GFX_MONITOR_OFF})" }
             monitor_off
+          when CODE_ON
+            logger.debug(NAME) { "#update(#{CODE_ON})" }
+            code_on
+          when CODE_OFF
+            logger.debug(NAME) { "#update(#{CODE_OFF})" }
+            code_off
+          when PROG_ON
+            logger.unknown(NAME) { "#update(#{PROG_ON})" }
+            prog_on
+          when PROG_OFF
+            logger.unknown(NAME) { "#update(#{PROG_OFF})" }
+            prog_off
           when GFX_PING
             logger.debug(NAME) { "#update(#{GFX_PING})" }
             ping

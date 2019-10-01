@@ -27,6 +27,16 @@ module Wilhelm
                 end
               end
 
+              # Command 0x05 LCD_SET
+              def evaluate_lcd_set(*)
+                changed
+                notify_observers(
+                  GFX_OBC_BOOL,
+                  device: ident,
+                  menu: :on_board_computer
+                )
+              end
+
               # Command 0x31 INPUT
               def evaluate_input(command)
                 case command.layout.value
@@ -41,7 +51,10 @@ module Wilhelm
               # Command 0x41 OBC_BOOL
               def evaluate_obc_bool(command)
                 id = command.field.value
-                return false unless OBC_PARAMS.include?(id)
+                # Notify when a parameter is requested for render.
+                # Used to set API::Display state to Busy when
+                # display is OBC, Settings, or Aux. Heat/Vent.
+                return false unless OBC_REQUESTED_PARAMS.include?(id)
                 changed
                 notify_observers(
                   GFX_OBC_BOOL,
