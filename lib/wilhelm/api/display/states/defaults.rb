@@ -36,6 +36,14 @@ module Wilhelm
 
         def kl_15(*); end
 
+        def code_on(*); end
+
+        def code_off(*); end
+
+        def prog_on(*); end
+
+        def prog_off(*); end
+
         # Default Display Rendering
 
         def render_header(context, view)

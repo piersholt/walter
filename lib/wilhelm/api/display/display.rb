@@ -31,7 +31,7 @@ module Wilhelm
 
       def change_state(new_state)
         return false if new_state.class == @state.class
-        logger.debug(self) { "State => #{new_state.class}" }
+        logger.unknown(self) { "State => #{new_state.class}" }
         @state = new_state
         changed
         notify_observers(state)
@@ -90,6 +90,22 @@ module Wilhelm
         @state.kl_15(self)
       end
 
+      def code_on
+        @state.code_on(self)
+      end
+
+      def code_off
+        @state.code_off(self)
+      end
+
+      def prog_on
+        @state.prog_on(self)
+      end
+
+      def prog_off
+        @state.prog_off(self)
+      end
+
       # Events: Control
       def input_menu
         @state.input_menu(self)
@@ -119,6 +135,7 @@ module Wilhelm
       DISPLAY_BUSY = 'Busy'
       DISPLAY_CAPTURED = 'Captured'
       DISPLAY_UNPOWERED = 'Unpowered'
+      DISPLAY_CODE = 'Code'
 
       # @todo a Hash would be more efficient
       def state_string
@@ -135,6 +152,8 @@ module Wilhelm
           DISPLAY_CAPTURED
         when Unpowered
           DISPLAY_UNPOWERED
+        when Code
+          DISPLAY_CODE
         else
           state.class
         end

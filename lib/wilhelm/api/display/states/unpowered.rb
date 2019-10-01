@@ -24,6 +24,11 @@ module Wilhelm
           LOGGER.info(DISPLAY_UNPOWERED) { '#kl_15' }
           context.change_state(Enabled.new)
         end
+
+        def code_on(context)
+          LOGGER.info(DISPLAY_UNPOWERED) { '#code_on' }
+          context.change_state(Code.new)
+        end
       end
     end
   end

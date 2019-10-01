@@ -51,6 +51,16 @@ module Wilhelm
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
+
+        def code_on(context)
+          LOGGER.info(DISPLAY_ENABLED) { '#code_on' }
+          context.change_state(Code.new)
+        end
+
+        def prog_on(context)
+          LOGGER.info(DISPLAY_ENABLED) { '#prog_on' }
+          context.change_state(Busy.new)
+        end
       end
     end
   end
