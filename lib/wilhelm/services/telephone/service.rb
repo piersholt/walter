@@ -36,7 +36,7 @@ module Wilhelm
         when TOP_8_SELECT
           top_8_select(args)
         when SMS_OPEN
-          generate_sms
+          generate_sms(args)
         when SMS_SELECT
           sms_select(args)
         end
@@ -76,18 +76,17 @@ module Wilhelm
         @api_object.top_8_name(contact_name)
       end
 
-      def generate_sms
+      def generate_sms(page:, page_size:)
         LOGGER.unknown(PROG) { '#generate_sms' }
-        # TODO: API endpoint
-        # @api_object.sms_index(*messages)
+        entries = messages.rotate(page * page_size)&.first(page_size)
+        @api_object.messages_index(*entries.map(&:ident))
       end
 
-      def sms_select(index:)
-        LOGGER.unknown(PROG) { "#sms_select(#{index})" }
-        message = messages&.slice(index)
-        LOGGER.unknown(PROG) { "message = #{message}" }
-        # TODO: API endpoint
-        # @api_object.sms_show(message)
+      def sms_select(index:, page:, page_size:)
+        LOGGER.unknown(PROG) { "#sms_select(#{index}, #{page}, #{page_size})" }
+        entry = messages&.slice(index)
+        LOGGER.unknown(PROG) { "entry = #{entry}" }
+        @api_object.messages_show(entry)
       end
     end
   end
