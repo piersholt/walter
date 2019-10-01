@@ -14,6 +14,7 @@ module Wilhelm
 
           PUBLISH = [
             PING, PONG,
+            LCD_SET,
             COUNTRY_REQ, COUNTRY_REP,
             IGNITION_REQ, IGNITION_REP,
             TEL_OPEN, GFX_STATUS,
@@ -43,6 +44,9 @@ module Wilhelm
             when PONG
               logger.debug(moi) { "Tx: PONG" }
               evaluate_pong(message.command)
+            when LCD_SET
+              logger.debug(moi) { "Tx: LCD_SET" }
+              evaluate_lcd_set(message.command)
             when INPUT
               logger.debug(moi) { "Tx: Input (#{d2h(INPUT)})" }
               evaluate_input(message.command)

@@ -71,14 +71,19 @@ module Wilhelm
               SPEED_LIMIT  = 0x09
               AVG_SPEED    = 0x0a
               STOPWATCH    = 0x0e
-              OBC_PARAMS = [
+              AUX_TIMER_1  = 0x0f
+              AUX_TIMER_2  = 0x10
+
+              OBC_REQUESTED_PARAMS = [
                 OUTSIDE_TEMP,
                 ECON_1,
                 ECON_2,
                 RANGE,
                 SPEED_LIMIT,
                 AVG_SPEED,
-                STOPWATCH
+                STOPWATCH,
+                AUX_TIMER_1,
+                AUX_TIMER_2
               ].freeze
             end
           end
