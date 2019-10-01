@@ -13,7 +13,6 @@ module Wilhelm
 
               MOD_PROG = 'Display::Detail'
 
-              # NOTE... only worth hving different method if having a buttons parameter etc
               def macro_detail(layout, function, lines, title = '')
                 LOGGER.unknown(MOD_PROG) { "#macro_detail(#{layout}, #{function}, #{lines}, #{title})" }
                 LAYOUT_INDICES[layout].each do |index|

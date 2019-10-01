@@ -52,8 +52,6 @@ module Wilhelm
             MID_INDEX_2      = 0b0001_0000
             MID_INDEX_3      = 0b0001_0100
 
-            INDEX_BACK = 0b0001_0000
-
             # Indexes for layout DIRECTORY 0x43
 
             DIRECTORY_INDICIES = [
@@ -65,36 +63,22 @@ module Wilhelm
 
             # Indexes for layout SMS_INDEX 0xf0
 
-            INDEX_OUTLIER = 0b1_0011
-
-            INDEX_SMS_INDEX = [
-              INDEX_0,
-              INDEX_1,
-              INDEX_2,
-              INDEX_3,
-              INDEX_4,
-              INDEX_5,
-              INDEX_6,
-              INDEX_7,
-              INDEX_8,
-              INDEX_9,
-              INDEX_BACK,
-              INDEX_OUTLIER
-            ].freeze
+            INDEX_BUTTON_BACK = 0b0001_0000
+            INDEX_OUTLIER     = 0b0001_0011
 
             SMS_INDEX_INDICIES = [
-              INDEX_0 + BLOCK + FLUSH,
-              INDEX_1 + BLOCK,
-              INDEX_2 + BLOCK,
-              INDEX_3 + BLOCK,
-              INDEX_4 + BLOCK,
-              INDEX_5 + BLOCK,
-              INDEX_6 + BLOCK,
-              INDEX_7 + BLOCK,
-              INDEX_8 + BLOCK,
-              INDEX_9 + BLOCK,
-              INDEX_BACK + BLOCK,
-              INDEX_OUTLIER + BLOCK
+              INDEX_0 | BLOCK | FLUSH,
+              INDEX_1 | BLOCK,
+              INDEX_2 | BLOCK,
+              INDEX_3 | BLOCK,
+              INDEX_4 | BLOCK,
+              INDEX_5 | BLOCK,
+              INDEX_6 | BLOCK,
+              INDEX_7 | BLOCK,
+              INDEX_8 | BLOCK,
+              INDEX_9 | BLOCK,
+              INDEX_BUTTON_BACK | BLOCK,
+              INDEX_OUTLIER | BLOCK
             ].freeze
 
             # Indexes for layout SMS_SHOW 0xf1
@@ -103,12 +87,6 @@ module Wilhelm
             INDEX_BUTTON_RIGHT  = 0b1_0010
             INDEX_BUTTON_CENTRE = 0b1_0011
 
-            INDEX_BUTTONS = [
-              INDEX_BUTTON_LEFT   + BLOCK,
-              INDEX_BUTTON_RIGHT  + BLOCK,
-              INDEX_BUTTON_CENTRE + BLOCK
-            ].freeze
-
             SMS_SHOW_INDICIES = [
               INDEX_0 | BLOCK | FLUSH,
               INDEX_1 | BLOCK,
@@ -116,7 +94,7 @@ module Wilhelm
               INDEX_3 | BLOCK,
               INDEX_4 | BLOCK,
               INDEX_5 | BLOCK,
-              INDEX_BACK | BLOCK,
+              INDEX_BUTTON_BACK | BLOCK,
               INDEX_BUTTON_LEFT   | BLOCK,
               INDEX_BUTTON_RIGHT  | BLOCK,
               INDEX_BUTTON_CENTRE | BLOCK

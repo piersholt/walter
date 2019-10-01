@@ -17,9 +17,6 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_index(#{command})" }
                 smses!
                 case command.function.value
-                when FUNCTION_NAVIGATE
-                  # NOTE: for reference only. Navigation is delegated.
-                  false
                 when FUNCTION_SMS
                   branch(command.layout.value, FUNCTION_SMS, button_id(command.action))
                   sms_select(button_id(command.action))
@@ -34,9 +31,6 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_show(#{command})" }
                 sms!
                 case command.function.value
-                when FUNCTION_NAVIGATE
-                  # NOTE: for reference only. Navigation is delegated.
-                  generate_sms_index
                 when FUNCTION_SMS
                   false
                 end
