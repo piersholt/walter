@@ -12,6 +12,7 @@ module Wilhelm
       include LastNumbers
       include Top8
       include LED
+      include SMS
 
       PROG = 'Telephone'
 
