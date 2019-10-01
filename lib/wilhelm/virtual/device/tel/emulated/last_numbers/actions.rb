@@ -10,12 +10,12 @@ module Wilhelm
             module Actions
               include Virtual::Constants::Events::Telephone
 
-              def last_numbers_back!(index:)
-                notify_of_action(LAST_NUMBERS_BACK, index: index)
+              def last_numbers_back!(page:)
+                notify_of_action(LAST_NUMBERS_BACK, page: page)
               end
 
-              def last_numbers_forward!(index:)
-                notify_of_action(LAST_NUMBERS_FORWARD, index: index)
+              def last_numbers_forward!(page:)
+                notify_of_action(LAST_NUMBERS_FORWARD, page: page)
               end
 
               private

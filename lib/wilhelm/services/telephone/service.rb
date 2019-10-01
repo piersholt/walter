@@ -27,6 +27,10 @@ module Wilhelm
           generate_directory(args)
         when DIRECTORY_SELECT
           directory_select(args)
+        when LAST_NUMBERS_BACK
+          generate_last_numbers(args)
+        when LAST_NUMBERS_FORWARD
+          generate_last_numbers(args)
         when TOP_8_OPEN
           generate_top_8
         when TOP_8_SELECT
@@ -51,6 +55,12 @@ module Wilhelm
         contact_name = phone_book.rotate(page * page_size)&.slice(index)
         LOGGER.unknown(PROG) { "contact_name = #{contact_name}" }
         @api_object.directory_name(contact_name)
+      end
+
+      def generate_last_numbers(page:, page_size: 1)
+        LOGGER.unknown(PROG) { "#generate_last_numbers(#{page}, #{page_size})" }
+        entry = history.rotate(page * page_size)&.first
+        @api_object.recent_contact(entry)
       end
 
       def generate_top_8
