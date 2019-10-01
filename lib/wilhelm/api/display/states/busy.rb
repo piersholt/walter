@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'busy/aux'
+require_relative 'busy/code'
+require_relative 'busy/dsp'
+require_relative 'busy/obc'
+require_relative 'busy/prog'
+require_relative 'busy/settings'
+
 module Wilhelm
   module API
     class Display
@@ -29,12 +36,7 @@ module Wilhelm
 
         def code_on(context)
           LOGGER.info(DISPLAY_BUSY) { '#code_on' }
-          context.change_state(Code.new)
-        end
-
-        def prog_off(context)
-          LOGGER.info(DISPLAY_BUSY) { '#prog_off' }
-          context.change_state(Enabled.new)
+          context.change_state(Busy::Code.new)
         end
       end
     end

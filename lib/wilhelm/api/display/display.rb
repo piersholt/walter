@@ -78,6 +78,14 @@ module Wilhelm
         @state.obc_request(self)
       end
 
+      def aux_request
+        @state.aux_request(self)
+      end
+
+      def settings_request
+        @state.settings_request(self)
+      end
+
       def kl_30
         @state.kl_30(self)
       end
