@@ -15,10 +15,11 @@ module Wilhelm
 
               def macro_index(layout, function, items, title = '')
                 LOGGER.unknown(MOD_PROG) { "#macro_index(#{layout}, #{function}, #{items}, #{title})" }
-                LAYOUT_INDICES[layout].each do |index|
-                  chars = items.shift
-                  d21(layout, function, index, chars)
+                items.each.with_index do |item, i|
+                  index = LAYOUT_INDICES[layout].slice(i)
+                  d21(layout, function, index, item)
                 end
+                d21(layout, FUNCTION_BACK, INDEX_BUTTON_BACK, 'Back')
                 da5(layout, 0x01, 0x00, title)
               end
             end
