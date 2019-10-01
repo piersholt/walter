@@ -20,7 +20,7 @@ module Wilhelm
                 when ACTION_OPEN_SMS
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
                   smses!
-                  generate_sms_index
+                  sms_open
                 when ACTION_OPEN_DIR
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
                   directory_open

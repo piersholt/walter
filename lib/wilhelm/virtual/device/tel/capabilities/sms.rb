@@ -10,11 +10,15 @@ module Wilhelm
             include Constants
 
             def messages_index(*messages)
-              macro_index(LAYOUT_SMS_INDEX, 0xf0, messages, 'SMS Index')
+              macro_index(LAYOUT_SMS_INDEX, FUNCTION_SMS, messages, 'SMS Index')
             end
 
-            def message_detail(message)
-
+            def messages_show(message)
+              lines = []
+              while message.body.length.positive?
+                lines << message.body.slice!(0, 40)
+              end
+              macro_detail(LAYOUT_SMS_SHOW, FUNCTION_SMS, lines, message.ident)
             end
           end
         end
