@@ -43,7 +43,17 @@ module Wilhelm
 
         def obc_request(context)
           LOGGER.debug(DISPLAY_ENABLED) { '#obc_request' }
-          context.change_state(Busy.new)
+          context.change_state(Busy::OBC.new)
+        end
+
+        def aux_request(context)
+          LOGGER.debug(DISPLAY_ENABLED) { '#aux_request' }
+          context.change_state(Busy::Aux.new)
+        end
+
+        def settings_request(context)
+          LOGGER.debug(DISPLAY_ENABLED) { '#settings_request' }
+          context.change_state(Busy::Settings.new)
         end
 
         def kl_30(context)
@@ -54,7 +64,7 @@ module Wilhelm
 
         def code_on(context)
           LOGGER.info(DISPLAY_ENABLED) { '#code_on' }
-          context.change_state(Code.new)
+          context.change_state(Busy::Code.new)
         end
 
         def prog_on(context)

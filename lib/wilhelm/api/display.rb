@@ -9,7 +9,6 @@ require_relative 'display/states/enabled'
 require_relative 'display/states/busy'
 require_relative 'display/states/captured'
 require_relative 'display/states/unpowered'
-require_relative 'display/states/code'
 
 require_relative 'display/handlers/cache_handler'
 require_relative 'display/handlers/control_handler'

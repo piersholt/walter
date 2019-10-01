@@ -26,6 +26,9 @@ module Wilhelm
             GFX_PING           = :gfx_ping
             GFX_ANNOUNCE       = :gfx_announce
             GFX_OBC_BOOL       = :gfx_obc_req
+            GFX_AUX_BOOL       = :gfx_aux_req
+            GFX_SET_BOOL       = :gfx_set_req
+            GFX_CODE_BOOL      = :gfx_code_req
 
             GFX_STATES = constants.map { |i| const_get(i) }
           end

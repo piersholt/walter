@@ -53,6 +53,9 @@ module Wilhelm
             when OBC_BOOL
               logger.debug(moi) { "Tx: OBC Boolean (#{d2h(OBC_BOOL)})" }
               evaluate_obc_bool(message.command)
+            when OBC_VAR
+              logger.debug(moi) { "Tx: OBC Variable (#{d2h(OBC_VAR)})" }
+              evaluate_obc_var(message.command)
             when MENU_GFX
               logger.debug(moi) { "Tx: Menu GFX (#{d2h(MENU_GFX)})" }
               evaluate_menu_gfx(message.command)

@@ -27,7 +27,7 @@ module Wilhelm
 
         def code_on(context)
           LOGGER.info(DISPLAY_UNPOWERED) { '#code_on' }
-          context.change_state(Code.new)
+          context.change_state(Busy::Code.new)
         end
       end
     end

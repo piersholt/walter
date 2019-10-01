@@ -62,6 +62,12 @@ module Wilhelm
           when GFX_OBC_BOOL
             logger.info(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
             obc_request
+          when GFX_AUX_BOOL
+            logger.info(NAME) { "#update(#{GFX_AUX_BOOL}, #{properties})" }
+            aux_request
+          when GFX_SET_BOOL
+            logger.info(NAME) { "#update(#{GFX_SET_BOOL}, #{properties})" }
+            settings_request
           when KL_30
             logger.info(NAME) { "#update(#{KL_30}, #{properties})" }
             kl_30
