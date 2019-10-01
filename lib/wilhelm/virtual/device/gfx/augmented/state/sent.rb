@@ -31,7 +31,7 @@ module Wilhelm
               def evaluate_lcd_set(*)
                 changed
                 notify_observers(
-                  GFX_OBC_BOOL,
+                  GFX_SET_BOOL,
                   device: ident,
                   menu: :on_board_computer
                 )
@@ -48,16 +48,51 @@ module Wilhelm
                 end
               end
 
+              # Command 0x40 OBC-VAR
+              def evaluate_obc_var(command)
+                id = command.field.value
+                # Notify when a parameter is requested for render.
+                # Used to set API::Display state to Busy when
+                # display is OBC, Settings, or Aux. Heat/Vent.
+                return false unless REQUESTED_FIELDS.include?(id)
+                changed
+                event =
+                  case id
+                  when *OBC_FIELDS
+                    GFX_OBC_BOOL
+                  when *AUX_FIELDS
+                    GFX_AUX_BOOL
+                  when *SET_FIELDS
+                    GFX_SET_BOOL
+                  when *CODE_FIELDS
+                    GFX_CODE_BOOL
+                  end
+                notify_observers(
+                  event,
+                  device: ident,
+                  menu: :on_board_computer
+                )
+              end
+
               # Command 0x41 OBC_BOOL
               def evaluate_obc_bool(command)
                 id = command.field.value
                 # Notify when a parameter is requested for render.
                 # Used to set API::Display state to Busy when
                 # display is OBC, Settings, or Aux. Heat/Vent.
-                return false unless OBC_REQUESTED_PARAMS.include?(id)
+                return false unless REQUESTED_FIELDS.include?(id)
                 changed
+                event =
+                  case id
+                  when *OBC_FIELDS
+                    GFX_OBC_BOOL
+                  when *AUX_FIELDS
+                    GFX_AUX_BOOL
+                  when *SET_FIELDS
+                    GFX_SET_BOOL
+                  end
                 notify_observers(
-                  GFX_OBC_BOOL,
+                  event,
                   device: ident,
                   menu: :on_board_computer
                 )

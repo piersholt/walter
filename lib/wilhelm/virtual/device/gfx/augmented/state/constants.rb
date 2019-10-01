@@ -64,26 +64,64 @@ module Wilhelm
               TONE = (0x80..0xff)
 
               # OBC-BOOL 0x41 -------------------------------------------------
-              OUTSIDE_TEMP = 0x03
-              ECON_1       = 0x04
-              ECON_2       = 0x05
-              RANGE        = 0x06
-              SPEED_LIMIT  = 0x09
-              AVG_SPEED    = 0x0a
-              STOPWATCH    = 0x0e
+              # OBC Fields
+              OBC_OUTSIDE_TEMP = 0x03
+              OBC_ECON_1       = 0x04
+              OBC_ECON_2       = 0x05
+              OBC_RANGE        = 0x06
+              OBC_SPEED_LIMIT  = 0x09
+              OBC_AVG_SPEED    = 0x0a
+              OBC_TIMER        = 0x0e
+              OBC_TIMER_LAP    = 0x1a
+              # Aux. Heating/Vent. Fields
               AUX_TIMER_1  = 0x0f
               AUX_TIMER_2  = 0x10
+              AUX_HEAT_OFF = 0x11
+              AUX_HEAT_ON  = 0x12
+              AUX_VENT_OFF = 0x13
+              AUX_VENT_ON  = 0x14
+              # Settings Fields
+              SET_TIME     = 0x01
+              SET_DATE     = 0x02
+              SET_MEMO     = 0x0c
+              # Code
+              CODE_INPUT   = 0x0d
 
-              OBC_REQUESTED_PARAMS = [
-                OUTSIDE_TEMP,
-                ECON_1,
-                ECON_2,
-                RANGE,
-                SPEED_LIMIT,
-                AVG_SPEED,
-                STOPWATCH,
+              OBC_FIELDS = [
+                OBC_OUTSIDE_TEMP,
+                OBC_ECON_1,
+                OBC_ECON_2,
+                OBC_RANGE,
+                OBC_SPEED_LIMIT,
+                OBC_AVG_SPEED,
+                OBC_TIMER,
+                OBC_TIMER_LAP
+              ].freeze
+
+              AUX_FIELDS = [
                 AUX_TIMER_1,
-                AUX_TIMER_2
+                AUX_TIMER_2,
+                AUX_HEAT_OFF,
+                AUX_HEAT_ON,
+                AUX_VENT_OFF,
+                AUX_VENT_ON
+              ].freeze
+
+              SET_FIELDS = [
+                SET_TIME,
+                SET_DATE,
+                SET_MEMO
+              ].freeze
+
+              CODE_FIELDS = [
+                CODE_INPUT
+              ].freeze
+
+              REQUESTED_FIELDS = [
+                *OBC_FIELDS,
+                *AUX_FIELDS,
+                *SET_FIELDS,
+                *CODE_FIELDS
               ].freeze
             end
           end
