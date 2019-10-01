@@ -11,8 +11,17 @@ module Wilhelm
         class Augmented < Device::Augmented
           # Augmented IKE State
           module State
+            include Helpers::PositionalNotation
             include Model
             include Chainable
+
+            def ignition
+              state[:ignition]
+            end
+
+            def anzv_bool
+              base_256_digits(state[:anzv_bool])
+            end
 
             def control_a
               bitwise_or(

@@ -6,14 +6,19 @@ module Wilhelm
       module IKE
         class Augmented < Device::Augmented
           module State
-            # Radio related command constants
+            # Augmented::State::Constants
             module Constants
-              MASK = {
-                # Control A
-                memo:  0b0010_0000,
-                timer: 0b0000_1000,
-                limit: 0b0000_0010,
-                # Control B
+              BITMASKS = {
+                # Ignition
+                kl_30: 0b0000_0000,
+                kl_r:  0b0000_0001,
+                kl_15: 0b0000_0010,
+                kl_50: 0b0000_0100,
+                # ANZV Control A
+                memo:  0b0010_0000 << 8,
+                timer: 0b0000_1000 << 8,
+                limit: 0b0000_0010 << 8,
+                # ANZV Control B
                 code:            0b0100_0000,
                 aux_heating:     0b0010_0000,
                 aux_timer_2:     0b0001_0000,

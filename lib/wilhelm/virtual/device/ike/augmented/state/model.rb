@@ -13,86 +13,66 @@ module Wilhelm
               include Constants
 
               DEFAULT_STATE = {
-                memo:            0,
-                timer:           0,
-                limit:           0,
-                code:            0,
-                aux_heating:     0,
-                aux_timer_2:     0,
-                aux_ventilation: 0,
-                aux_timer_1:     0
+                ignition: 0b0000_0000,
+                anzv_bool: 0b0000_0000_0000_0000
               }.freeze
 
               def default_state
                 DEFAULT_STATE.dup
               end
 
+              # Ignition
+
+              def kl_30?
+                bitwise_on?(state[:ignition], BITMASKS[:kl_30])
+              end
+
+              def kl_r?
+                bitwise_on?(state[:ignition], BITMASKS[:kl_r])
+              end
+
+              def kl_15?
+                bitwise_on?(state[:ignition], BITMASKS[:kl_15])
+              end
+
+              def kl_50?
+                bitwise_on?(state[:ignition], BITMASKS[:kl_50])
+              end
+
               # Control A
 
-              def memo
-                state[:memo]
-              end
-
-              def timer
-                state[:timer]
-              end
-
-              def limit
-                state[:limit]
-              end
-
               def memo?
-                bitwise_on?(memo, MASK[:memo])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:memo])
               end
 
               def timer?
-                bitwise_on?(timer, MASK[:timer])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:timer])
               end
 
               def limit?
-                bitwise_on?(limit, MASK[:limit])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:limit])
               end
 
               # Control B
 
-              def code
-                state[:code]
-              end
-
-              def aux_heating
-                state[:aux_heating]
-              end
-
-              def aux_timer_2
-                state[:aux_timer_2]
-              end
-
-              def aux_ventilation
-                state[:aux_ventilation]
-              end
-
-              def aux_timer_1
-                state[:aux_timer_1]
-              end
-
               def code?
-                bitwise_on?(code, MASK[:code])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:code])
               end
 
               def aux_heating?
-                bitwise_on?(aux_heating, MASK[:aux_heating])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:aux_heating])
               end
 
               def aux_timer_2?
-                bitwise_on?(aux_timer_2, MASK[:aux_timer_2])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:aux_timer_2])
               end
 
               def aux_ventilation?
-                bitwise_on?(aux_ventilation, MASK[:aux_ventilation])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:aux_ventilation])
               end
 
               def aux_timer_1?
-                bitwise_on?(aux_timer_1, MASK[:aux_timer_1])
+                bitwise_on?(state[:anzv_bool], BITMASKS[:aux_timer_1])
               end
             end
           end

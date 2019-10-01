@@ -13,44 +13,44 @@ module Wilhelm
               # Control A
 
               def memo!
-                state!(memo: MASK[:memo])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:memo])
                 self
               end
 
               def timer!
-                state!(timer: MASK[:timer])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:timer])
                 self
               end
 
               def limit!
-                state!(limit: MASK[:limit])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:limit])
                 self
               end
 
               # Control B
 
               def code!
-                state!(code: MASK[:code])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:code])
                 self
               end
 
               def aux_heating!
-                state!(aux_heating: MASK[:aux_heating])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_heating])
                 self
               end
 
               def aux_timer_2!
-                state!(aux_timer_2: MASK[:aux_timer_2])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_timer_2])
                 self
               end
 
               def aux_ventilation!
-                state!(aux_ventilation: MASK[:aux_ventilation])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_ventilation])
                 self
               end
 
               def aux_timer_1!
-                state!(aux_timer_1: MASK[:aux_timer_1])
+                state!(anzv_bool: state[:anzv_bool] ^ BITMASKS[:aux_timer_1])
                 self
               end
 

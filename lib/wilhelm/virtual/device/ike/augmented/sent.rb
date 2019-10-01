@@ -8,23 +8,20 @@ module Wilhelm
           # Commands sent from IKE
           module Sent
             include Virtual::Constants::Events::Cluster
-            KL30 = 0b0000_0000
-            KLR  = 0b0000_0001
-            KL15 = 0b0000_0011
 
             # 0x11
             def evaluate_ignition(command)
               case command.position.value
-              when KL30
+              when 0b0000_0000
                 changed
                 notify_observers(KL_30, device: ident)
-              when KLR
+              when 0b0000_0001
                 changed
                 notify_observers(KL_R, device: ident)
-              when KL15
+              when 0b0000_0011
                 changed
                 notify_observers(KL_15, device: ident)
-              when KL50
+              when 0b0000_0111
                 changed
                 notify_observers(KL_50, device: ident)
               end
