@@ -35,7 +35,7 @@ module Wilhelm
         raise(ArgumentError, ERROR_VALUE_NIL) unless value
         if @map.nil?
           LOGGER.warn(PROC) { WARN_MAP_NIL }
-          DICTIONARY_NIL
+          MAP_NIL
         elsif !@map.key?(value)
           value_not_found(value)
         else
@@ -49,7 +49,7 @@ module Wilhelm
         return PRETTY_VALUE_NIL unless value
         if @dictionary.nil?
           LOGGER.warn(PROC) { WARN_DICT_NIL }
-          MAP_NIL
+          DICTIONARY_NIL
         elsif !@dictionary.key?(value)
           value_not_found(value)
         else
