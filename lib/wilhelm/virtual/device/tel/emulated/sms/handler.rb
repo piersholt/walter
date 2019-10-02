@@ -10,9 +10,7 @@ module Wilhelm
             module Handler
               include Constants
 
-              # SMS Index functions
-              # - back
-              # - message
+              # 0xf0
               def handle_sms_index(command)
                 logger.unknown(PROC) { "#handle_sms_index(#{command})" }
                 smses!
@@ -25,9 +23,7 @@ module Wilhelm
                 end
               end
 
-              # SMS Index functions
-              # - back
-              # - message
+              # 0xf1
               def handle_sms_show(command)
                 logger.unknown(PROC) { "#handle_sms_show(#{command})" }
                 sms!
