@@ -109,7 +109,11 @@ module Wilhelm
             # 0x48 BMBT_A
             def handle_bmbt_button_1(command)
               logger.debug(ident) { "BMBT_A -> #{command.pretty}" }
-              # notify_of_button(command)
+              return false unless command.press?
+              case command.button
+              when :bmbt_menu
+                background!
+              end
             end
 
             protected

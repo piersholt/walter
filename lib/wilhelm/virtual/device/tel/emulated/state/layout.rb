@@ -8,13 +8,27 @@ module Wilhelm
           module State
             # Telephone::Emulated::State::Layout
             module Layout
+              def layout
+                @layout ||= :background
+              end
+
+              # BMBT Main Menu
+              def background!
+                logger.warn(PROC) { 'Menu pressed!' }
+                @layout = :background
+              end
+
+              def background?
+                layout == :background
+              end
+
               # 0x05
               def pin!
                 @layout = :pin
               end
 
               def pin?
-                @layout == :pin
+                layout == :pin
               end
 
               # 0x20
@@ -23,7 +37,7 @@ module Wilhelm
               end
 
               def info?
-                @layout == :info
+                layout == :info
               end
 
               # 0x42
@@ -32,7 +46,7 @@ module Wilhelm
               end
 
               def dial?
-                @layout == :dial
+                layout == :dial
               end
 
               # 0x43
@@ -41,7 +55,7 @@ module Wilhelm
               end
 
               def directory?
-                @layout == :directory
+                layout == :directory
               end
 
               # 0x80
@@ -50,7 +64,7 @@ module Wilhelm
               end
 
               def top_8?
-                @layout == :top_8
+                layout == :top_8
               end
 
               # 0xf0
@@ -59,7 +73,7 @@ module Wilhelm
               end
 
               def smses?
-                @layout == :smses
+                layout == :smses
               end
 
               # 0xf1
@@ -68,7 +82,7 @@ module Wilhelm
               end
 
               def sms?
-                @layout == :sms
+                layout == :sms
               end
 
               # 0xf1
@@ -77,7 +91,7 @@ module Wilhelm
               end
 
               def sos?
-                @layout == :sos
+                layout == :sos
               end
             end
           end
