@@ -15,7 +15,10 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_default(#{command})" }
                 case command.function.value
                 when FUNCTION_SOS
+                  sos!
                   delegate_sos(command)
+                when FUNCTION_NAVIGATE
+                  delegate_navigation(command)
                 else
                   unknown_function(command)
                 end

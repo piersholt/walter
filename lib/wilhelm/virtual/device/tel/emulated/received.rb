@@ -35,16 +35,6 @@ module Wilhelm
               logger.debug(PROC) { '#handle_input(command)' }
               logger.unknown(PROC) { "@layout=#{layout}" }
 
-              # NOTE: avoid routing common functions through layouts?
-              case command.function.value
-              when FUNCTION_SOS
-                return delegate_sos(command)
-              when FUNCTION_NAVIGATE
-                return delegate_navigation(command)
-              when FUNCTION_INFO
-                return delegate_info(command)
-              end
-
               case command.layout.ugly
               when :default
                 return handle_last_numbers(command) if dial? || last_numbers?
