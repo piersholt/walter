@@ -21,6 +21,10 @@ module Wilhelm
 
             SMS_OPEN     = :sms_open
             SMS_SELECT   = :sms_select
+
+            TELEMATICS_COORD  = :telematics_coord
+            TELEMATICS_ADDR   = :telematics_addr
+            TELEMATICS_OPEN   = :telematics_open
           end
 
           # Control related events
