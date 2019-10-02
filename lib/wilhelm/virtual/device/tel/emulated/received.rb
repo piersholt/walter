@@ -116,6 +116,12 @@ module Wilhelm
               end
             end
 
+            # 0xA2 COORD
+            # def handle_telematics_coord(*); end
+
+            # 0xA4 ADDR
+            # def handle_telematics_addr(*); end
+
             protected
 
             def unknown_function(command)

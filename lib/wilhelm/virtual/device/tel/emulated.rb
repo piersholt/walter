@@ -73,6 +73,12 @@ module Wilhelm
             when BMBT_A
               logger.debug(PROC) { "Rx: BMBT_A 0x#{d2h(BMBT_A)}" }
               handle_bmbt_button_1(message.command)
+            when COORD
+              logger.debug(PROC) { "Rx: COORD 0x#{d2h(COORD)}" }
+              handle_telematics_coord(message.command)
+            when ADDR
+              logger.debug(PROC) { "Rx: ADDR 0x#{d2h(ADDR)}" }
+              handle_telematics_addr(message.command)
             end
 
             super(message)
