@@ -14,7 +14,7 @@ module Wilhelm
 
               # BMBT Main Menu
               def background!
-                logger.warn(PROC) { 'Menu pressed!' }
+                logger.warn(PROC) { 'Menu pressed! @layout -> :background' }
                 @layout = :background
               end
 

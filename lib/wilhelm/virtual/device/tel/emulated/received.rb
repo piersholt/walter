@@ -23,7 +23,7 @@ module Wilhelm
             # 0x20 TEL-OPEN
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
-              logger.unknown(PROC) { "@layout=#{@layout}" }
+              logger.unknown(PROC) { "@layout=#{layout}" }
               return top_8_open if dial?
               dial_open
             end
@@ -33,7 +33,7 @@ module Wilhelm
             def handle_input(command)
               return false unless command.press?
               logger.debug(PROC) { '#handle_input(command)' }
-              logger.unknown(PROC) { "@layout=#{@layout}" }
+              logger.unknown(PROC) { "@layout=#{layout}" }
 
               # NOTE: avoid routing common functions through layouts?
               case command.function.value
