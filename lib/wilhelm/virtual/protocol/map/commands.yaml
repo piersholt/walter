@@ -565,48 +565,65 @@
     :notes:
       priority_1:
         :desc:
-          - These defects are immediately indicated by
-          - a gong and
-          - a flashing
-          - warning symbol (1).
-          - Simultaneous defects will be displayed consecutively.
-          - These status reports remain in the display until the defects are corrected.
-          - It is not possible to delete them by pressing the CHECK button (3)
+          These defects are immediately indicated by a gong and a flashing
+          warning symbol (1). Simultaneous defects will be displayed
+          consecutively. These status reports remain in the display until the
+          defects are corrected. It is not possible to delete them by pressing
+          the CHECK button (3).
         :warnings:
-          - RELEASE PARKINGBRAKE
-          - COOLANT TEMPERATURE
-          - STOP! ENGINE OILPRESS
-          - CHECK BRAKE FLUID
-          - FLAT TIRE
-          - LOAD LEVEL INACTIVE
-          - SPEED LIMIT
+          :ike:
+            # Sensors 0x13
+            - RELEASE PARKINGBRAKE
+            - STOP! ENGINE OILPRESS
+            # Temperature 0x19
+            - COOLANT TEMPERATURE
+            # ANZV 0x24/0x2A
+            - SPEED LIMIT
+          :lcm:
+            # Direct Input
+            - CHECK BRAKE FLUID
+          :rdc:
+            - FLAT TIRE
+          :ehc:
+            - LOAD LEVEL INACTIVE
       :priority_2:
-        :desc: These displays appear for 20 seconds when the ignition key is
-          turned to position 2. The warning symbols remain after the message
-          disappears. You can display the messages again by pressing the
-          CHECK button (3)
+        :desc:
+          These displays appear for 20 seconds when the ignition key is turned
+          to position 2. The warning symbols remain after the message
+          disappears. You can display the messages again by pressing the CHECK
+          button (3).
         :warnings:
-          - TRUNKLID OPEN
-          - DOOR OPEN
-          - FASTEN SEAT BELTS*
-          - WASHER FLUID LOW
-          - CHECK ENGINE OIL LEV
-          - OUTSIDE TEMP. +207 (–56)
-          - TIRE PRESSURE SET*
-          - CHECK TIRE PRESSURE*
-          - TIRE CHECK INACTIVE*
-          - CHECK BRAKE LAMPS
-          - CHECK LOWBEAM LAMPS
-          - CHECK SIDE LAMPS
-          - CHECK REAR LAMPS
-          - CHECK FRONT FOGLAMPS
-          - CHECK LICPLATE LAMP
-          - CHECK HIGHBEAM LAMP
-          - CHECK BACK UP LAMPS
-          - TRANS. FAILSAFE PROG
-          - CHECK BRAKE LININGS
-          - CHECK COOLANT LEVEL
-          - ENGINE FAILSAFE PROG
+          :gm:
+            # Door 0x7a
+            - TRUNKLID OPEN
+            - DOOR OPEN
+            - FASTEN SEAT BELTS*
+          :lcm:
+            # Direct Input
+            - WASHER FLUID LOW
+            - CHECK ENGINE OIL LEV
+            - CHECK COOLANT LEVEL
+            # Lamps
+            - CHECK LOWBEAM LAMPS
+            - CHECK HIGHBEAM LAMP
+            - CHECK BRAKE LAMPS
+            - CHECK SIDE LAMPS
+            - CHECK REAR LAMPS
+            - CHECK FRONT FOGLAMPS
+            - CHECK LICPLATE LAMP
+            - CHECK BACK UP LAMPS
+          :ike:
+            # Sensors 0x13
+            - TRANS. FAILSAFE PROG
+            - CHECK BRAKE LININGS
+            - ENGINE FAILSAFE PROG
+            # Temperature 0x19
+            - OUTSIDE TEMP. +207 (–56)
+          :rdc:
+            - TIRE PRESSURE SET*
+            - CHECK TIRE PRESSURE*
+            - TIRE CHECK INACTIVE*
+
       :post_trip:
         :desc:
           All of the malfunctions registered during the trip appear consecutively
@@ -615,11 +632,14 @@
           Status reports remain available for a pe- riod of approx. three minutes
           after the display goes out and the key is re- moved from the ignition. Press
           the CHECK button. If there were multiple reports, press the CHECK button
-          repeatedly to view them all in sequence
+          repeatedly to view them all in sequence.
         :warnings:
-          - LIGHTS ON
-          - KEY IN IGNITION LOCK
+          # Direct Input
           - CHECK ENGINE OIL LEV
+          # Lamps
+          - LIGHTS ON
+          # Key 0x74
+          - KEY IN IGNITION LOCK
 
 0x1B: # HUD-STATUS / # DIA-PDC*
   :properties:
@@ -1502,10 +1522,8 @@
       :type: :bit_array
       :index:
         :code:            1
-        # just confirm that this is direct mode...
         :aux_heating:     2
         :aux_timer_2:     3
-        # just confirm that this is direct mode...
         :aux_ventilation: 4
         :aux_timer_1:     5
       :parameters:
@@ -3290,28 +3308,28 @@
     :l1:
       :type: :bit_array
       :index:
-        :indicate_rapid: 0
-        :indicate_right: 1
-        :indicate_left:  2
-        :fog_rear:       3
-        :fog_front:      4
-        :beam_high:      5
-        :beam_low:       6
-        :parking:        7
+        :turn_rapid: 0
+        :turn_right: 1
+        :turn_left:  2
+        :fog_rear:   3
+        :fog_front:  4
+        :beam_high:  5
+        :beam_low:   6
+        :parking:    7
       :parameters:
-        :indicate_rapid:
+        :turn_rapid:
           :label: Rapid.
           :type: :switch
           :states:
             0: :off
             1: :on
-        :indicate_right:
+        :turn_right:
           :label: Indicate Right
           :type: :switch
           :states:
             0: :off
             1: :on
-        :indicate_left:
+        :turn_left:
           :label: Indicate Left
           :type: :switch
           :states:
@@ -3350,17 +3368,17 @@
     :l2:
       :type: :bit_array
       :index:
-        :fault_indicate_right: 1
-        :fault_indicate_left:  2
-        :fault_fog_rear:       3
+        :fault_turn_right: 1
+        :fault_turn_left:  2
+        :fault_fog_rear:   3
       :parameters:
-        :fault_indicate_right:
+        :fault_turn_right:
           :type: :switch
           :label: Indicator Right
           :states:
             0: :ok
             1: :fault
-        :fault_indicate_left:
+        :fault_turn_left:
           :type: :switch
           :label: Indicator Left
           :states:
@@ -3400,11 +3418,11 @@
     :l4:
       :type: :bit_array
       :index:
-        :fog_rear:          1
+        :fog_rear_switch:   1
         :fault_brake_left:  6
         :fault_brake_right: 7
       :parameters:
-        :fog_rear:
+        :fog_rear_switch:
           :type: :switch
           :label: Fog Rear (Switch?)
           :states:
@@ -3422,22 +3440,6 @@
           :states:
             0: :ok
             1: :fault
-
-  :meta:
-    :notes:
-      - lamp drives the night mode on BMBT
-      - i think it also drivces the IKE as the signals trigger the indicators but the lamps don't actually fire
-      - but i can't get the CCM to fire warning
-      - byte2:
-        1: right indicator globe out
-        2: left indicator globe out
-      - byte3:
-        5: indicating/hazards
-        6: brake light out, i think this drives CCM
-      - byte4:
-        1: rear fog switched on (stays on regardless of lights)
-        6: left break globe out (not hatch)
-        7: right break globe out (not hatch)
 
 0x5C: # 58G
   :properties:
