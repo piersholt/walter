@@ -26,11 +26,13 @@ module Wilhelm
 
           SPEED         = 0x18
 
-          TEMP_REQ      = 0x1d
           TEMP_REP      = 0x19
+          TEMP_REQ      = 0x1d
 
           TXT_CCM       = 0x1a
           HUD_STATUS    = 0x1b
+
+          UTC           = 0x1f
 
           TEL_OPEN      = 0x20
 
@@ -97,13 +99,12 @@ module Wilhelm
           DOOR_REQ      = 0x79
           DOOR_REP      = 0x7a
 
-          UTC           = 0x1f
-          COORDINATES   = 0xa2
-          ADDRESS       = 0xa4
+          # Telematics
+          COORD         = 0xa2
+          ADDR          = 0xa4
           ASSIST        = 0xa9
-          CELL          = ASSIST
+
           GFX2          = 0xab
-          REAR          = GFX2
           SES           = 0xaf
 
           # Diagnostics

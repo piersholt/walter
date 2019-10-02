@@ -35,9 +35,11 @@ module Wilhelm
           CCM = [TXT_CCM, CCM_RLY].freeze
 
           # 0x1f 0xa2 0xa4
-          GPS = [UTC, COORDINATES, ADDRESS].freeze
+          GPS = [UTC, COORD, ADDR].freeze
           # 0xa9 0xab 0xaf
           NAVIGATION = [GFX2, ASSIST].freeze
+          # 0xA2, 0xA4
+          TELEMATICS = [COORD, ADDR].freeze
 
           # 0x23 0x46
           MENUS = [MENU_GFX, MENU_RAD].freeze
