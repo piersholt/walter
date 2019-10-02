@@ -63,7 +63,9 @@ module Wilhelm
               when :sms_index
                 return handle_sms_index(command)
               when :sms_show
-                return handle_sms_show(command)
+                return handle_sms_show(command) if smses? || sms?
+                return handle_telematics(command) if sos?
+                raise(ArgumentError, '0x31 has layout 0xf1, but @layout is not :sms, :smses, or :sos!' )
               end
             end
 

@@ -23,7 +23,7 @@ module Wilhelm
                 city, street, nil,
                 latitude, longitude
               ]
-              macro_detail(LAYOUT_SOS, FUNCTION_SOS, lines, DEFAULT_SOS)
+              macro_detail(LAYOUT_SOS, FUNCTION_TELE, lines, DEFAULT_SOS)
             end
           end
         end

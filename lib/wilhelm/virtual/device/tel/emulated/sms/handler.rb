@@ -15,7 +15,7 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_index(#{command})" }
                 smses!
                 case command.function.value
-                when FUNCTION_BACK
+                when FUNCTION_BACK | FUNCTION_SMS
                   dial_open
                 when FUNCTION_SMS
                   branch(command.layout.value, FUNCTION_SMS, button_id(command.action))
@@ -28,10 +28,16 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_show(#{command})" }
                 sms!
                 case command.function.value
-                when FUNCTION_BACK
+                when FUNCTION_BACK | FUNCTION_SMS
+                  sms_open
+                when FUNCTION_BACK | FUNCTION_TELE
+                  logger.warn(PROC) { "Stale layout cache! Expected ID: 0x#{(FUNCTION_BACK | FUNCTION_SMS).to_s(16)}. Actual ID: 0x#{command.function.value.to_s(16)}" }
                   sms_open
                 when FUNCTION_SMS
-                  false
+                  logger.unknown(PROC) { 'FUNCTION_SMS' }
+                when FUNCTION_TELE
+                  logger.warn(PROC) { "Stale layout cache! Expected ID: 0x#{(FUNCTION_SMS).to_s(16)}. Actual ID: 0x#{command.function.value.to_s(16)}" }
+                  logger.unknown(PROC) { 'FUNCTION_SMS' }
                 end
               end
             end

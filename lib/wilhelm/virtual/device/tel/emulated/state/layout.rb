@@ -101,6 +101,9 @@ module Wilhelm
               def sos?
                 layout == :sos
               end
+
+              alias telematics! sos!
+              alias telematics? sos?
             end
           end
         end

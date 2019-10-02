@@ -14,9 +14,10 @@ module Wilhelm
             end
 
             def messages_show(message)
+              message_body = message.body.dup
               lines = []
-              while message.body.length.positive?
-                lines << message.body.slice!(0, 40)
+              while message_body.length.positive?
+                lines << message_body.slice!(0, 40)
               end
               macro_detail(LAYOUT_SMS_SHOW, FUNCTION_SMS, lines, message.ident)
             end

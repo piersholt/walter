@@ -145,9 +145,11 @@ module Wilhelm
           FUNCTION_SOS      = 0x05
           FUNCTION_NAVIGATE = 0x07
           FUNCTION_INFO     = 0x08
-          # NOTE: this is an arbitrary value.
+
+          # NOTE: these are arbitrary value.
           FUNCTION_BACK     = 0x10
-          FUNCTION_SMS      = 0x11
+          FUNCTION_SMS      = 0x26
+          FUNCTION_TELE     = 0x97
 
           # BYTE 3 ACTION
 

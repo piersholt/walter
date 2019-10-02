@@ -12,7 +12,6 @@ require_relative 'emulated/info'
 require_relative 'emulated/navigation'
 require_relative 'emulated/pin'
 require_relative 'emulated/sms'
-require_relative 'emulated/sos'
 require_relative 'emulated/telematics'
 
 module Wilhelm
@@ -35,7 +34,6 @@ module Wilhelm
           include Navigation
           include PIN
           include SMS
-          include SOS
           include Telematics
           include Received
 
