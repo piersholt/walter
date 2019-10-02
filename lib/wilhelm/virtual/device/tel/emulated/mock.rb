@@ -3,7 +3,6 @@
 require_relative 'mock/info'
 require_relative 'mock/pin'
 require_relative 'mock/quick'
-require_relative 'mock/sms'
 require_relative 'mock/sos'
 
 module Wilhelm
