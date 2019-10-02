@@ -113,11 +113,6 @@ module Wilhelm
               case command.button
               when :bmbt_menu
                 background!
-              when :bmbt_confirm
-                # NOTE: no good- controls sent to GFX, not GLO/TEL
-                return false unless last_numbers?
-                last_numbers_confirm
-                dial!
               end
             end
 

@@ -24,10 +24,6 @@ module Wilhelm
                 last_numbers_forward!(page: last_numbers_page)
               end
 
-              def last_numbers_confirm
-                @last_numbers_page = -1
-              end
-
               private
 
               # Last Numbers is "opened" via number forward,

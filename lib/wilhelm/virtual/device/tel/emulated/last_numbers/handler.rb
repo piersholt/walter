@@ -13,7 +13,7 @@ module Wilhelm
               # "0x42"
               def handle_last_numbers(command)
                 logger.unknown(PROC) { "#handle_last_numbers(#{command})" }
-                dial!
+                last_numbers!
                 case command.function.value
                 when FUNCTION_DEFAULT
                   case command.action.value
