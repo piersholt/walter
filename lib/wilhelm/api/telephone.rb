@@ -7,6 +7,7 @@ require_relative 'telephone/directory'
 require_relative 'telephone/top_8'
 require_relative 'telephone/last_numbers'
 require_relative 'telephone/sms'
+require_relative 'telephone/sos'
 require_relative 'telephone/status'
 
 require_relative 'telephone/listener'

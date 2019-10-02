@@ -14,6 +14,7 @@ module Wilhelm
       include LED
       include SMS
       include Status
+      include SOS
 
       PROG = 'Telephone'
 
