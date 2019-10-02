@@ -13,8 +13,8 @@ module Wilhelm
 
               DEFAULT_STATE = {
                 STATE_STATUS => {
+                  STATUS_BIT_0    => STATUS_DEFAULT,
                   STATUS_BIT_1    => STATUS_DEFAULT,
-                  STATUS_BIT_2    => STATUS_DEFAULT,
                   STATUS_ACTIVE   => STATUS_NO,
                   STATUS_POWER    => STATUS_OFF,
                   STATUS_DISPLAY  => STATUS_DEFAULT,

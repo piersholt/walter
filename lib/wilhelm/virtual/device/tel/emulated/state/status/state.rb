@@ -11,8 +11,8 @@ module Wilhelm
               module State
                 include Constants
 
-                def bit1?
-                  case state[STATE_STATUS][STATUS_BIT_1]
+                def bit0?
+                  case state[STATE_STATUS][STATUS_BIT_0]
                   when STATUS_OFF
                     false
                   when STATUS_ON
@@ -20,8 +20,8 @@ module Wilhelm
                   end
                 end
 
-                def bit2?
-                  case state[STATE_STATUS][STATUS_BIT_2]
+                def bit1?
+                  case state[STATE_STATUS][STATUS_BIT_1]
                   when STATUS_OFF
                     false
                   when STATUS_ON

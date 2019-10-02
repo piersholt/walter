@@ -11,6 +11,18 @@ module Wilhelm
               module Modifiers
                 include Constants
 
+                # Status Bit 0 Unknown
+
+                def bit0_0
+                  state!(STATE_STATUS => { STATUS_BIT_0 => STATUS_NO })
+                  self
+                end
+
+                def bit0_1
+                  state!(STATE_STATUS => { STATUS_BIT_0 => STATUS_YES })
+                  self
+                end
+
                 # Status Bit 1 Unknown
 
                 def bit1_0
@@ -20,18 +32,6 @@ module Wilhelm
 
                 def bit1_1
                   state!(STATE_STATUS => { STATUS_BIT_1 => STATUS_YES })
-                  self
-                end
-
-                # Status Bit 2 Unknown
-
-                def bit2_0
-                  state!(STATE_STATUS => { STATUS_BIT_2 => STATUS_NO })
-                  self
-                end
-
-                def bit2_1
-                  state!(STATE_STATUS => { STATUS_BIT_2 => STATUS_YES })
                   self
                 end
 
