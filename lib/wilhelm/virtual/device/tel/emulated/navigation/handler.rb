@@ -16,6 +16,7 @@ module Wilhelm
                 case button_id(command.action)
                 when ACTION_OPEN_DIAL
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
+                  dial!
                   dial_open
                 when ACTION_OPEN_SMS
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
@@ -23,6 +24,7 @@ module Wilhelm
                   sms_open
                 when ACTION_OPEN_DIR
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
+                  directory!
                   directory_open
                 end
               end

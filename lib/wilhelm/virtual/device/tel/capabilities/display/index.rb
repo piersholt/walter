@@ -16,6 +16,7 @@ module Wilhelm
               def macro_index(layout, function, items, title = '')
                 LOGGER.unknown(MOD_PROG) { "#macro_index(#{layout}, #{function}, #{items}, #{title})" }
                 items.each.with_index do |item, i|
+                  next if item.nil?
                   index = LAYOUT_INDICES[layout].slice(i)
                   d21(layout, function, index, item)
                 end

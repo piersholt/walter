@@ -47,7 +47,6 @@ module Wilhelm
 
               case command.layout.ugly
               when :default
-                return handle_default(command) unless command.function.value.zero?
                 return handle_last_numbers(command) if dial? || last_numbers?
                 return handle_directory(command) if directory?
                 raise(ArgumentError, '0x31 has layout 0x00, but @layout is not :dial or :directory' )
