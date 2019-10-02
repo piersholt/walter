@@ -10,15 +10,18 @@ module Wilhelm
             module Handler
               include Constants
 
+              LOG_WARN_DEFAULT = '0x31 layout of 0x00, but not captured by Last Numbers or Directory!'.freeze
+
               # 0x00
               def handle_default(command)
                 logger.unknown(PROC) { "#handle_default(#{command})" }
                 case command.function.value
+                when FUNCTION_DEFAULT
+                  branch(LAYOUT_DEFAULT, FUNCTION_DEFAULT, button_id(command.action))
+                  raise(ArgumentError, LOG_WARN_DEFAULT)
                 when FUNCTION_SOS
                   sos!
                   delegate_sos(command)
-                when FUNCTION_NAVIGATE
-                  delegate_navigation(command)
                 else
                   unknown_function(command)
                 end

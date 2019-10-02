@@ -145,17 +145,17 @@ module Wilhelm
           FUNCTION_SOS      = 0x05
           FUNCTION_NAVIGATE = 0x07
           FUNCTION_INFO     = 0x08
-
-          # NOTE: these are arbitrary value.
-          FUNCTION_BACK     = 0x10
-          FUNCTION_SMS      = 0x26
-          FUNCTION_TELE     = 0x97
+          # NOTE: these are arbitrary values.
+          FUNCTION_SMS        = 0x09
+          FUNCTION_TELEMATICS = 0x09
 
           # BYTE 3 ACTION
 
           # Default 0x00
           # PIN and Dial
-          ACTION_SOS_OPEN       = 0x08
+          ACTION_SOS_OPEN        = 0x08
+          ACTION_DEFAULT_BACK    = 0x0c
+          ACTION_DEFAULT_FORWARD = 0x0d
 
           # PIN 0x05
           ACTION_PIN_0          = 0x00
@@ -232,7 +232,7 @@ module Wilhelm
           ACTION_SMS_8             = 0x07
           ACTION_SMS_9             = 0x08
           ACTION_SMS_10            = 0x09
-          ACTION_SMS_BACK          = 0x10
+          ACTION_SMS_OPEN_DIAL     = 0x10
 
           ACTION_SMS_INDICIES = [
             ACTION_SMS_1,
@@ -248,17 +248,24 @@ module Wilhelm
           ].freeze
 
           # SMS Message 0xf1
+          ACTION_SMS_BACK          = 0x10
           ACTION_SMS_LEFT          = 0x11
           ACTION_SMS_RIGHT         = 0x12
           ACTION_SMS_CENTRE        = 0x13
 
+          # STRINGS -----------------------------------------------------------
+
+          # Non-layout specific
           OPEN_SOS       = 'Open SOS'
           OPEN_SMS       = 'Open SMS'
           OPEN_DIAL      = 'Open Dial'
           OPEN_DIRECTORY = 'Open Directory'
 
           # Default
+          # 0x00
           DEFAULT_OPEN_SOS = 'Default -> Open SOS'
+          ACTION_BACK      = 'Warning! Default -> <<'
+          ACTION_FORWARD   = 'Warning! Default -> >>'
 
           # PIN
           # 0x02
@@ -336,32 +343,34 @@ module Wilhelm
           # 0x07
           INFO_OPEN_DIAL      = 'Info -> Shortcut > Dial'
 
-          # SMS
-          # 0x01
-          SMS_1               = 'Message 1'
-          SMS_2               = 'Message 2'
-          SMS_3               = 'Message 3'
-          SMS_4               = 'Message 4'
-          SMS_5               = 'Message 5'
-          SMS_6               = 'Message 6'
-          SMS_7               = 'Message 7'
-          SMS_8               = 'Message 8'
-          SMS_9               = 'Message 9'
-          SMS_10              = 'Message 10'
+          # SMS Index
+          # 0x?? Function SMS
+          SMS_1               = 'SMS Index: 1'
+          SMS_2               = 'SMS Index: 2'
+          SMS_3               = 'SMS Index: 3'
+          SMS_4               = 'SMS Index: 4'
+          SMS_5               = 'SMS Index: 5'
+          SMS_6               = 'SMS Index: 6'
+          SMS_7               = 'SMS Index: 7'
+          SMS_8               = 'SMS Index: 8'
+          SMS_9               = 'SMS Index: 9'
+          SMS_10              = 'SMS Index: 10'
           # 0x07
-          SMS_BACK            = 'Back'
-          # 0xFF
-          SMS_LEFT            = 'Button Left'
-          SMS_CENTRE          = 'Button Centre'
-          SMS_RIGHT           = 'Button Right'
+          SMS_OPEN_DIAL = 'SMS (0xf0) -> Shortcut > Dial'
+
+          # SMS SHOW
+          # 0x?? Function SMS
+          SMS_LEFT            = 'SMS (0xf1): Left'
+          SMS_CENTRE          = 'SMS (0xf1): Centre'
+          SMS_RIGHT           = 'SMS (0xf1): Right'
+          # 0x07 Navigation
+          SMS_BACK            = 'SMS (0xf1): Back'
 
           INPUT_MAP = {
             LAYOUT_DEFAULT => {
               FUNCTION_DEFAULT => {
-                ACTION_RECENT_BACK    => RECENT_BACK,
-                ACTION_RECENT_FORWARD => RECENT_FORWARD,
-                ACTION_DIRECTORY_BACK => DIRECTORY_BACK,
-                ACTION_DIRECTORY_FORWARD => DIRECTORY_FORWARD
+                ACTION_DEFAULT_BACK    => ACTION_BACK,
+                ACTION_DEFAULT_FORWARD => ACTION_FORWARD
               },
               FUNCTION_SOS => {
                 ACTION_SOS_OPEN => DEFAULT_OPEN_SOS
@@ -458,7 +467,7 @@ module Wilhelm
             },
             LAYOUT_SMS_INDEX => {
               FUNCTION_NAVIGATE => {
-                ACTION_SMS_BACK => SMS_BACK
+                ACTION_SMS_OPEN_DIAL => SMS_OPEN_DIAL
               },
               FUNCTION_SMS => {
                 ACTION_SMS_1  => SMS_1,
@@ -470,8 +479,7 @@ module Wilhelm
                 ACTION_SMS_7  => SMS_7,
                 ACTION_SMS_8  => SMS_8,
                 ACTION_SMS_9  => SMS_9,
-                ACTION_SMS_10 => SMS_10,
-                ACTION_SMS_BACK => SMS_BACK
+                ACTION_SMS_10 => SMS_10
               }
             },
             LAYOUT_SMS_SHOW => {
@@ -479,10 +487,9 @@ module Wilhelm
                 ACTION_SMS_BACK => SMS_BACK
               },
               FUNCTION_SMS => {
-                ACTION_SMS_BACK => SMS_BACK,
-                ACTION_SMS_LEFT   => SMS_LEFT,
-                ACTION_SMS_CENTRE => SMS_CENTRE,
-                ACTION_SMS_RIGHT  => SMS_RIGHT
+                ACTION_SMS_LEFT      => SMS_LEFT,
+                ACTION_SMS_CENTRE    => SMS_CENTRE,
+                ACTION_SMS_RIGHT     => SMS_RIGHT
               }
             }
           }.freeze

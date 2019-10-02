@@ -15,8 +15,8 @@ module Wilhelm
                 logger.debug(PROC) { "#delegate_sos(#{command})" }
                 case button_id(command.action)
                 when ACTION_SOS_OPEN
-                  branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
                   sos!
+                  branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
                   telematics_open
                 end
               end
@@ -24,18 +24,12 @@ module Wilhelm
               # 0xf1
               def handle_telematics(command)
                 logger.debug(PROC) { "#handle_telematics(#{command})" }
-                sos!
                 case command.function.value
-                when FUNCTION_BACK | FUNCTION_TELE
-                  dial_open
-                when FUNCTION_BACK | FUNCTION_SMS
-                  logger.warn(PROC) { "Stale layout cache! Expected ID: 0x#{(FUNCTION_BACK | FUNCTION_TELE).to_s(16)}. Actual ID: 0x#{command.function.value.to_s(16)}" }
-                  dial_open
-                when FUNCTION_TELE
-                  logger.unknown(PROC) { 'FUNCTION_TELE' }
-                when FUNCTION_SMS
-                  logger.warn(PROC) { "Stale layout cache! Expected ID: 0x#{(FUNCTION_TELE).to_s(16)}. Actual ID: 0x#{command.function.value.to_s(16)}" }
-                  logger.unknown(PROC) { 'FUNCTION_TELE' }
+                when FUNCTION_NAVIGATE
+                  delegate_navigation(command)
+                when FUNCTION_TELEMATICS
+                  telematics!
+                  branch(command.layout.value, FUNCTION_TELEMATICS, button_id(command.action))
                 end
               end
 

@@ -14,6 +14,10 @@ module Wilhelm
               def delegate_navigation(command)
                 logger.unknown(PROC) { "#delegate_navigation(#{command})" }
                 case button_id(command.action)
+                when ACTION_SMS_OPEN_DIAL
+                  branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_SMS_OPEN_DIAL)
+                  dial!
+                  dial_open
                 when ACTION_OPEN_DIAL
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
                   dial!

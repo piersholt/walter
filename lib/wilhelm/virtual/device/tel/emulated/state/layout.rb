@@ -22,6 +22,15 @@ module Wilhelm
                 layout == :background
               end
 
+              # 0x00
+              def default!
+                @layout = :default
+              end
+
+              def default?
+                layout == default
+              end
+
               # 0x05
               def pin!
                 @layout = :pin
@@ -84,6 +93,9 @@ module Wilhelm
                 layout == :smses
               end
 
+              alias sms_index! smses!
+              alias sms_index? smses?
+
               # 0xf1
               def sms!
                 @layout = :sms
@@ -92,6 +104,9 @@ module Wilhelm
               def sms?
                 layout == :sms
               end
+
+              alias sms_show! sms!
+              alias sms_show? sms?
 
               # 0xf1
               def sos!

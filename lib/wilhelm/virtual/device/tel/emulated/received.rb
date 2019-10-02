@@ -10,6 +10,8 @@ module Wilhelm
             include Virtual::Constants::Events::Telephone
             include Constants
 
+            LOG_ERROR_BRANCH = 'No matching branch!'
+
             # 0x02 PONG
             # Piggyback off the radio announce to annunce
             def handle_pong(message)
@@ -24,7 +26,9 @@ module Wilhelm
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
               logger.unknown(PROC) { "@layout=#{layout}" }
+              return dial_open if background?
               return top_8_open if dial? || last_numbers?
+              logger.warn(PROC) { "No state to interpret TEL-OPEN!(#{layout})" }
               dial_open
             end
 
@@ -39,7 +43,8 @@ module Wilhelm
               when :default
                 return handle_last_numbers(command) if dial? || last_numbers?
                 return handle_directory(command) if directory?
-                raise(ArgumentError, '0x31 has layout 0x00, but @layout is not :dial or :directory' )
+                logger.warn(PROC) { "No state to interpret INPUT 0x00! (#{layout})" }
+                return handle_default(command)
               when :pin
                 return handle_pin(command)
               when :info
@@ -55,6 +60,7 @@ module Wilhelm
               when :sms_show
                 return handle_sms_show(command) if smses? || sms?
                 return handle_telematics(command) if sos?
+                logger.warn(PROC) { "No state to interpret INPUT 0xf1! (#{layout})" }
                 raise(ArgumentError, '0x31 has layout 0xf1, but @layout is not :sms, :smses, or :sos!' )
               end
             end
@@ -120,7 +126,7 @@ module Wilhelm
             end
 
             def twig(layout, function, action)
-              INPUT_MAP.dig(layout, function, action)
+              INPUT_MAP.dig(layout, function, action) || raise(ArgumentError, LOG_ERROR_BRANCH)
             end
 
             def branch(layout, function, action)
