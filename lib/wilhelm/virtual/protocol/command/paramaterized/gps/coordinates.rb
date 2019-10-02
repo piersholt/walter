@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'coordinates/coordinate'
+require_relative 'coordinates/time'
+
 module Wilhelm
   module Virtual
     class Command
@@ -7,6 +10,8 @@ module Wilhelm
         module GPS
           # Virtual::Command::GPS
           class Coordinates < Base
+            Coordinates = Struct.new(:latitude, :longitude, :vertical)
+
             class_variable_set(:@@configured, true)
             attr_accessor(
               :signal,
@@ -17,81 +22,27 @@ module Wilhelm
             )
 
             include Wilhelm::Helpers::PositionalNotation
+            include Coordinate
+            include Time
 
             def initialize(id, props, **arguments)
               super
             end
 
             def to_s
-              "#{sn}\t#{signal}\t#{format_coordinates}\t#{format_time}\t(#{::Time.now.utc})"
+              "#{sn}\t#{signal}\t#{format_coordinates}\t#{format_time}\t(Now: #{::Time.now.utc})"
             end
 
-            # https://en.wikipedia.org/wiki/ISO_6709
-            # 50°03′46.461″S 125°48′26.533″E 978.90m
-            # DDD° MM' SS.S"
-            def format_coordinates
-              lat = format_coordinate(
-                latitude(:degrees),
-                latitude(:minutes),
-                latitude(:seconds),
-                latitude(:fraction)
-              )
-              long = format_coordinate(
-                longitude(:degrees),
-                longitude(:minutes),
-                longitude(:seconds),
-                longitude(:fraction)
-              )
-
-              "#{lat}\t#{long}"
+            def coordinates
+              @coordinates ||= Coordinates.new(latitude, longitude, parse(vertical.calculated))
             end
 
-            def format_coordinate(degrees, minutes, seconds, fraction)
-              "#{degrees}#{DEGREES}" \
-              "#{minutes}#{MINUTES}" \
-              "#{seconds}#{DECIMAL}#{fraction}#{SECONDS}"
-            end
-
-            def latitude(element)
-              case element
-              when :degrees
-                parse(*lat_d.calculated)
-              when :minutes
-                format(MINUTE_MASK, parse(*lat_m.calculated))
-              when :seconds
-                format(SECOND_MASK, parse(*lat_s.calculated))
-              when :fraction
-                format(SECOND_MASK, parse(*lat_sf.calculated))
-              end
-            end
-
-            def longitude(element)
-              case element
-              when :degrees
-                parse(*long_d.calculated)
-              when :minutes
-                format(MINUTE_MASK, parse(*long_m.calculated))
-              when :seconds
-                format(SECOND_MASK, parse(*long_s.calculated))
-              when :fraction
-                format(SECOND_MASK, parse(*long_sf.calculated))
-              end
-            end
-
-            def format_time
-              "#{time(:hour)}#{TIME_DELIMITER}" \
-              "#{time(:minute)}#{TIME_DELIMITER}" \
-              "#{time(:second)}"
-            end
-
-            def time(element)
-              case element
-              when :hour
-                format(TIME_MASK, parse(*hour.calculated))
-              when :minute
-                format(TIME_MASK, parse(*minute.calculated))
-              when :second
-                format(TIME_MASK, parse(*second.calculated))
+            def signal?
+              case signal.ugly
+              when :connected
+                true
+              when :disconnected
+                false
               end
             end
 

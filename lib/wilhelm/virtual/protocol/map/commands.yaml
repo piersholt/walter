@@ -3866,8 +3866,8 @@
         0x00: :disconnected
         0x01: :connected
       :dictionary:
-        0x00: 'No Signal'
-        0x01: 'Signal'
+        0x00: ❌
+        0x01: ✅
     :lat_d:
       :type: :data
     :lat_m:
@@ -3913,13 +3913,13 @@
               end: -1
   :parameters:
     :a:
-      :type: :map
-      :dictionary:
-        0x00: --
-        0x01: City
-        0x02: Street
+      :type: :integer
     :b:
       :type: :map
+      :map:
+        0x00: :none
+        0x01: :city
+        0x02: :street
       :dictionary:
         0x00: --
         0x01: City
