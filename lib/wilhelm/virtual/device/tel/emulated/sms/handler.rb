@@ -22,7 +22,6 @@ module Wilhelm
                 when FUNCTION_SMS
                   branch(command.layout.value, FUNCTION_SMS, button_id(command.action))
                   sms_select(button_id(command.action))
-                  # generate_sms_show
                 end
               end
 

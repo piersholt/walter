@@ -16,7 +16,6 @@ module Wilhelm
             include Info
             include PIN
             include Quick
-            include SMS
             include SOS
           end
         end
