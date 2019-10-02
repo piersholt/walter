@@ -13,6 +13,7 @@ module Wilhelm
       include Top8
       include LED
       include SMS
+      include Status
 
       PROG = 'Telephone'
 
