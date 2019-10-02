@@ -18,18 +18,6 @@ module Wilhelm
 
             include Wilhelm::Helpers::PositionalNotation
 
-            TIME_MASK   = '%2.2i'
-            MINUTE_MASK = '%2.2i'
-            SECOND_MASK = '%2.2i'
-
-            TIME_DELIMITER = ':'
-
-            MINUS   = "\u2212"
-            DEGREES = "\u00b0"
-            MINUTES = "\u2032"
-            SECONDS = "\u2033"
-            DECIMAL = '.'
-
             def initialize(id, props, **arguments)
               super
             end

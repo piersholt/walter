@@ -14,13 +14,6 @@ module Wilhelm
 
             include Wilhelm::Helpers::PositionalNotation
 
-            DATE_MASK = '%2.2i'
-            TIME_MASK = '%2.2i'
-
-            COMBINATION_DELIMITER = 'T'
-            DATE_DELIMITER = '-'
-            TIME_DELIMITER = ':'
-
             GPS_EPOCH = 2**10 * 7 * 24 * 60 * 60
 
             def initialize(id, props, **arguments)
