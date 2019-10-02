@@ -49,6 +49,14 @@ module Wilhelm
                 layout == :dial
               end
 
+              def last_numbers!
+                @layout = :last_numbers
+              end
+
+              def last_numbers?
+                layout == :last_numbers
+              end
+
               # 0x43
               def directory!
                 @layout = :directory

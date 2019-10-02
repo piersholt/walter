@@ -24,13 +24,13 @@ module Wilhelm
                 LOGGER.unknown(MOD_PROG) { "#sms_select(#{index})" }
                 sms!
                 i = ACTION_SMS_INDICIES.index(index)
-                sms_select!(index: i, page: page, page_size: SMS_PAGE_SIZE)
+                sms_select!(index: i, page: sms_page, page_size: SMS_PAGE_SIZE)
               end
 
               private
 
-              def page
-                @page ||= 0
+              def sms_page
+                @sms_page ||= 0
               end
             end
           end

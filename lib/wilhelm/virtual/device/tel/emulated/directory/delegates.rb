@@ -23,28 +23,28 @@ module Wilhelm
               def directory_back
                 LOGGER.unknown(MOD_PROG) { '#directory_back' }
                 directory!
-                @page = page - 1
-                directory_back!(page: page, page_size: DIR_PAGE_SIZE)
+                @directory_page = directory_page - 1
+                directory_back!(page: directory_page, page_size: DIR_PAGE_SIZE)
               end
 
               def directory_forward
                 LOGGER.unknown(MOD_PROG) { '#directory_forward' }
                 directory!
-                @page = page + 1
-                directory_forward!(page: page, page_size: DIR_PAGE_SIZE)
+                @directory_page = directory_page + 1
+                directory_forward!(page: directory_page, page_size: DIR_PAGE_SIZE)
               end
 
               def directory_select(index)
                 LOGGER.unknown(MOD_PROG) { "#directory_select(#{index})" }
                 directory!
                 i = ACTION_CONTACT_INDICIES.index(index)
-                directory_select!(index: i, page: page, page_size: DIR_PAGE_SIZE)
+                directory_select!(index: i, page: directory_page, page_size: DIR_PAGE_SIZE)
               end
 
               private
 
-              def page
-                @page ||= 0
+              def directory_page
+                @directory_page ||= 0
               end
             end
           end

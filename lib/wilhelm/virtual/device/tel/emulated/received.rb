@@ -24,7 +24,7 @@ module Wilhelm
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
               logger.unknown(PROC) { "@layout=#{layout}" }
-              return top_8_open if dial?
+              return top_8_open if dial? || last_numbers?
               dial_open
             end
 
@@ -48,7 +48,7 @@ module Wilhelm
               case command.layout.ugly
               when :default
                 return handle_default(command) unless command.function.value.zero?
-                return handle_last_numbers(command) if dial?
+                return handle_last_numbers(command) if dial? || last_numbers?
                 return handle_directory(command) if directory?
                 raise(ArgumentError, '0x31 has layout 0x00, but @layout is not :dial or :directory' )
               when :pin
@@ -113,6 +113,11 @@ module Wilhelm
               case command.button
               when :bmbt_menu
                 background!
+              when :bmbt_confirm
+                # NOTE: no good- controls sent to GFX, not GLO/TEL
+                return false unless last_numbers?
+                last_numbers_confirm
+                dial!
               end
             end
 

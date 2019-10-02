@@ -12,16 +12,20 @@ module Wilhelm
 
               def last_numbers_back
                 LOGGER.unknown(MOD_PROG) { '#last_numbers_back' }
-                dial!
-                @page = page - 1
-                last_numbers_back!(page: page)
+                last_numbers!
+                @last_numbers_page = last_numbers_page - 1
+                last_numbers_back!(page: last_numbers_page)
               end
 
               def last_numbers_forward
                 LOGGER.unknown(MOD_PROG) { '#last_numbers_forward' }
-                dial!
-                @page = page + 1
-                last_numbers_forward!(page: page)
+                last_numbers!
+                @last_numbers_page = last_numbers_page + 1
+                last_numbers_forward!(page: last_numbers_page)
+              end
+
+              def last_numbers_confirm
+                @last_numbers_page = -1
               end
 
               private
@@ -29,8 +33,8 @@ module Wilhelm
               # Last Numbers is "opened" via number forward,
               # thus seed value is -1 as first forward will
               # increment index by 1.
-              def page
-                @page ||= -1
+              def last_numbers_page
+                @last_numbers_page ||= -1
               end
             end
           end
