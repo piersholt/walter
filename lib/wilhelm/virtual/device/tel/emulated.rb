@@ -13,6 +13,7 @@ require_relative 'emulated/navigation'
 require_relative 'emulated/pin'
 require_relative 'emulated/sms'
 require_relative 'emulated/sos'
+require_relative 'emulated/telematics'
 
 module Wilhelm
   module Virtual
@@ -21,6 +22,7 @@ module Wilhelm
         # Telephone::Emulated
         class Emulated < Device::Emulated
           include Wilhelm::Helpers::DataTools
+          include Virtual::Constants::Command::Groups
           include Capabilities
           include State
           include Mock
@@ -34,6 +36,7 @@ module Wilhelm
           include PIN
           include SMS
           include SOS
+          include Telematics
           include Received
 
           PROC = 'Telephone::Emulated'
@@ -43,7 +46,8 @@ module Wilhelm
             TEL_OPEN,
             INPUT,
             MFL_VOL, MFL_FUNC,
-            BMBT_I, BMBT_A, BMBT_B
+            BMBT_I, BMBT_A, BMBT_B,
+            *TELEMATICS
           ].freeze
 
           def handle_virtual_receive(message)
