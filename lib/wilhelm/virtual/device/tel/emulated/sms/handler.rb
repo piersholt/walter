@@ -12,7 +12,7 @@ module Wilhelm
 
               # 0xf0
               def handle_sms_index(command)
-                logger.unknown(PROC) { "#handle_sms_index(#{command})" }
+                logger.debug(PROC) { "#handle_sms_index(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
                   case button_id(command.action)
@@ -30,7 +30,7 @@ module Wilhelm
 
               # 0xf1
               def handle_sms_show(command)
-                logger.unknown(PROC) { "#handle_sms_show(#{command})" }
+                logger.debug(PROC) { "#handle_sms_show(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
                   case button_id(command.action)

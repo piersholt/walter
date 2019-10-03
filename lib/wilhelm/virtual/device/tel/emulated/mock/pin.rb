@@ -13,7 +13,7 @@ module Wilhelm
               MOD_PROG = 'Mock::PIN'.freeze
 
               def service_pin_open
-                logger.unknown(PROC) { '#service_pin_open' }
+                logger.debug(PROC) { '#service_pin_open' }
                 pin!
                 open_pin
               end

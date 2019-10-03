@@ -20,7 +20,7 @@ module Wilhelm
               end
 
               def generate_info
-                logger.unknown(PROC) { '#generate_info()' }
+                logger.debug(PROC) { '#generate_info()' }
                 rstrength
                 rcall_costs_current
                 rcall_cost_total

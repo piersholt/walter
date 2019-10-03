@@ -21,7 +21,7 @@ module Wilhelm
               private
 
               def notify_of_action(action, **args)
-                logger.unknown(PROC) { "#notify_of_action(#{action}, #{args})" }
+                logger.debug(PROC) { "#notify_of_action(#{action}, #{args})" }
                 changed
                 notify_observers(action, args)
               end

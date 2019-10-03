@@ -12,7 +12,7 @@ module Wilhelm
 
               # 0x05
               def handle_pin(command)
-                logger.unknown(PROC) { "#handle_pin(#{command})" }
+                logger.debug(PROC) { "#handle_pin(#{command})" }
                 case command.function.value
                 when FUNCTION_DIGIT
                   pin!
