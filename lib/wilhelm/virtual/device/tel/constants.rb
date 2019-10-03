@@ -232,7 +232,7 @@ module Wilhelm
           ACTION_SMS_8             = 0x07
           ACTION_SMS_9             = 0x08
           ACTION_SMS_10            = 0x09
-          ACTION_SMS_INDEX_BACK     = 0x10
+          ACTION_SMS_INDEX_BACK    = 0x10
 
           ACTION_SMS_INDICIES = [
             ACTION_SMS_1,
@@ -248,7 +248,7 @@ module Wilhelm
           ].freeze
 
           # SMS Message 0xf1
-          ACTION_SMS_SHOW_BACK          = 0x10
+          ACTION_SMS_SHOW_BACK     = 0x10
           ACTION_SMS_LEFT          = 0x11
           ACTION_SMS_RIGHT         = 0x12
           ACTION_SMS_CENTRE        = 0x13
