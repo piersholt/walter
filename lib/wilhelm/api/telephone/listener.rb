@@ -14,13 +14,13 @@ module Wilhelm
         end
 
         def handle_action(event, properties)
-          logger.unknown(PROG) { "#handle_action(#{event}, #{properties})" }
+          logger.debug(PROG) { "#handle_action(#{event}, #{properties})" }
           changed
           notify_observers(event, properties)
         end
 
         def register_telephone_listener(observer)
-          logger.unknown(PROG) { "#register_telephone_listener()" }
+          logger.debug(PROG) { "#register_telephone_listener()" }
           add_observer(observer, :telephone_update)
         end
       end

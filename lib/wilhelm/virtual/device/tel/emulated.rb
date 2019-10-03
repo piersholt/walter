@@ -48,6 +48,13 @@ module Wilhelm
             COORD, ADDR
           ].freeze
 
+          LogActually.is_all_around(:tel)
+          LogActually.tel.d
+
+          def logger
+            LogActually.tel
+          end
+
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)
