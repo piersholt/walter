@@ -11,13 +11,10 @@ module Wilhelm
               include Constants
 
               # Function: 0x07
+              # @note 0xf0 and 0xf1 does not delegate navigation
               def delegate_navigation(command)
                 logger.debug(PROC) { "#delegate_navigation(#{command.layout.ugly}, #{command.pretty})" }
                 case button_id(command.action)
-                when ACTION_SMS_OPEN_DIAL
-                  branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_SMS_OPEN_DIAL)
-                  dial!
-                  dial_open
                 when ACTION_OPEN_DIAL
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
                   dial!

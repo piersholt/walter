@@ -15,7 +15,12 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_index(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
-                  delegate_navigation(command)
+                  case button_id(command.action)
+                  when ACTION_SMS_INDEX_BACK
+                    branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_SMS_INDEX_BACK)
+                    dial!
+                    dial_open
+                  end
                 when FUNCTION_SMS
                   sms_index!
                   branch(command.layout.value, FUNCTION_SMS, button_id(command.action))
@@ -28,7 +33,12 @@ module Wilhelm
                 logger.unknown(PROC) { "#handle_sms_show(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
-                  delegate_navigation(command)
+                  case button_id(command.action)
+                  when ACTION_SMS_SHOW_BACK
+                    branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_SMS_SHOW_BACK)
+                    sms_index!
+                    sms_open
+                  end
                 when FUNCTION_SMS
                   sms_show!
                   branch(command.layout.value, FUNCTION_SMS, button_id(command.action))

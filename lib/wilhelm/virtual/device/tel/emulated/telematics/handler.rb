@@ -26,7 +26,12 @@ module Wilhelm
                 logger.debug(PROC) { "#handle_telematics(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
-                  delegate_navigation(command)
+                  case button_id(command.action)
+                  when ACTION_TELEMATICS_BACK
+                    branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_TELEMATICS_BACK)
+                    dial!
+                    dial_open
+                  end
                 when FUNCTION_TELEMATICS
                   telematics!
                   branch(command.layout.value, FUNCTION_TELEMATICS, button_id(command.action))
