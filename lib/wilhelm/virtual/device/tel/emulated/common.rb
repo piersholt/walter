@@ -17,6 +17,7 @@ module Wilhelm
               when ACTION_SOS_OPEN
                 branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
                 sos_open
+                sos!
               end
             end
 
@@ -26,16 +27,16 @@ module Wilhelm
               case button_id(command.action)
               when ACTION_OPEN_DIAL
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
-                dial!
                 dial_open
+                dial!
               when ACTION_OPEN_SMS
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_SMS)
-                sms_index!
                 sms_open
+                sms_index!
               when ACTION_OPEN_DIR
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIR)
-                directory!
                 directory_open
+                directory!
               end
             end
 
@@ -44,9 +45,9 @@ module Wilhelm
               logger.debug(PROC) { "#delegate_info(#{command.layout.ugly}, #{command.pretty})" }
               case command.action.value
               when ACTION_OPEN_INFO
-                info!
                 branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
                 info_service_open
+                info!
               else
                 unknown_function(command)
               end
