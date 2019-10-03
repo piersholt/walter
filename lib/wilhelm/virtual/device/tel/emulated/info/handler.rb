@@ -12,7 +12,7 @@ module Wilhelm
 
               # 0x20
               def handle_info(command)
-                logger.unknown(PROC) { "#handle_info(#{command})" }
+                logger.debug(PROC) { "#handle_info(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
                   delegate_navigation(command)

@@ -63,10 +63,10 @@ module Wilhelm
               logger.debug(PROC) { "Rx: TEL_OPEN 0x#{d2h(TEL_OPEN)}" }
               handle_tel_open(message)
             when MFL_VOL
-              logger.unknown(PROC) { "Rx: MFL_VOL 0x#{d2h(MFL_VOL)}" }
+              logger.debug(PROC) { "Rx: MFL_VOL 0x#{d2h(MFL_VOL)}" }
               handle_mfl_vol(message.command)
             when MFL_FUNC
-              logger.unknown(PROC) { "Rx: MFL_FUNC 0x#{d2h(MFL_FUNC)}" }
+              logger.debug(PROC) { "Rx: MFL_FUNC 0x#{d2h(MFL_FUNC)}" }
               handle_mfl_func(message.command)
             when BMBT_A
               logger.debug(PROC) { "Rx: BMBT_A 0x#{d2h(BMBT_A)}" }

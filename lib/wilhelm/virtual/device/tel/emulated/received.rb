@@ -25,7 +25,7 @@ module Wilhelm
             # 0x20 TEL-OPEN
             def handle_tel_open(*)
               logger.debug(PROC) { '#handle_tel_open' }
-              logger.unknown(PROC) { "@layout=#{layout}" }
+              logger.debug(PROC) { "@layout=#{layout}" }
               return dial_open if background?
               return top_8_open if dial? || last_numbers?
               logger.warn(PROC) { "No state to interpret TEL-OPEN!(#{layout})" }
@@ -37,7 +37,7 @@ module Wilhelm
             def handle_input(command)
               return false unless command.press?
               logger.debug(PROC) { '#handle_input(command)' }
-              logger.unknown(PROC) { "@layout=#{layout}" }
+              logger.debug(PROC) { "@layout=#{layout}" }
 
               case command.layout.ugly
               when :default
@@ -69,14 +69,14 @@ module Wilhelm
 
             # 0x32 MFL_VOL
             def handle_mfl_vol(command)
-              logger.unknown(ident) { "MFL_VOL -> #{command.pretty}" }
+              logger.debug(ident) { "MFL_VOL -> #{command.pretty}" }
               notify_of_button(command)
             end
 
             # 0x3B MFL_FUNC
             # @note R/T is has no button state!
             def handle_mfl_func(command)
-              logger.unknown(ident) { "MFL_FUNC -> #{command.pretty} (#{command.button})" }
+              logger.debug(ident) { "MFL_FUNC -> #{command.pretty} (#{command.button})" }
               notify_of_button(command)
 
               case command.button
@@ -130,7 +130,7 @@ module Wilhelm
             end
 
             def branch(layout, function, action)
-              logger.unknown(PROC) { "\"#{twig(layout, function, action)}\"" }
+              logger.debug(PROC) { "\"#{twig(layout, function, action)}\"" }
             end
 
             private

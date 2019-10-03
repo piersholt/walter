@@ -14,13 +14,12 @@ module Wilhelm
 
               # 0x00
               def handle_default(command)
-                logger.unknown(PROC) { "#handle_default(#{command})" }
+                logger.debug(PROC) { "#handle_default(#{command})" }
                 case command.function.value
                 when FUNCTION_DEFAULT
                   branch(LAYOUT_DEFAULT, FUNCTION_DEFAULT, button_id(command.action))
                   raise(ArgumentError, LOG_WARN_DEFAULT)
                 when FUNCTION_SOS
-                  sos!
                   delegate_sos(command)
                 else
                   unknown_function(command)

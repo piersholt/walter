@@ -12,7 +12,7 @@ module Wilhelm
 
               # Function: 0x07
               def delegate_navigation(command)
-                logger.unknown(PROC) { "#delegate_navigation(#{command})" }
+                logger.debug(PROC) { "#delegate_navigation(#{command.layout.ugly}, #{command.pretty})" }
                 case button_id(command.action)
                 when ACTION_SMS_OPEN_DIAL
                   branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_SMS_OPEN_DIAL)

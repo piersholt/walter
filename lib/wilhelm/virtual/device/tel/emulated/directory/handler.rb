@@ -12,7 +12,7 @@ module Wilhelm
 
               # 0x43
               def handle_directory(command)
-                logger.unknown(PROC) { "#handle_directory(#{command})" }
+                logger.debug(PROC) { "#handle_directory(#{command})" }
                 case command.function.value
                 when FUNCTION_DEFAULT
                   case command.action.value
