@@ -20,19 +20,6 @@ module Wilhelm
                   unknown_function(command)
                 end
               end
-
-              # Function: 0x08
-              def delegate_info(command)
-                logger.debug(PROC) { "#delegate_info(#{command.layout.ugly}, #{command.pretty})" }
-                case command.action.value
-                when ACTION_OPEN_INFO
-                  info!
-                  branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
-                  info_service_open
-                else
-                  unknown_function(command)
-                end
-              end
             end
           end
         end

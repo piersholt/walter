@@ -10,16 +10,6 @@ module Wilhelm
             module Handler
               include Constants
 
-              # Function: 0x05
-              def delegate_sos(command)
-                logger.debug(PROC) { "#delegate_sos(#{command})" }
-                case button_id(command.action)
-                when ACTION_SOS_OPEN
-                  branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
-                  sos_open
-                end
-              end
-
               # INPUT 0x31 (Layout: 0xf1)
               def handle_sos(command)
                 logger.debug(PROC) { "#handle_sos(#{command})" }
