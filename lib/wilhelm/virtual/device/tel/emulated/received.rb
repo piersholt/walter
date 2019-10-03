@@ -122,7 +122,7 @@ module Wilhelm
             protected
 
             def unknown_function(command)
-              logger.warn(PROC) { "Unrecognised function! #{command.function}" }
+              logger.warn(PROC) { "Unrecognised function! #{command}" }
             end
 
             def twig(layout, function, action)

@@ -970,7 +970,15 @@
             - as per 0x60, the value for an index is returned by INPUT 0x30
             - likely due to layout also being used by SOS
             - no icons available via control characters
-        :type: :integer
+        :type: :map
+        :dictionary:
+          0x00: Default
+          0x01: Contact
+          0x02: Digit
+          0x05: SOS
+          0x07: Navigation
+          0x08: Info
+          0x09: SMS/Telematics
       :m3:
         :meta:
           - 0x42, 0x43, 0x80:
@@ -1846,7 +1854,7 @@
               0x07: 0x07
               0x08: 0x08
               0x09: 0x09
-              0x0a: 0x0a/Info/<
+              0x0a: 0x0a/Open Info/<
               0x0b: 0x0b
               0x0c: 0x0c/Back
               0x0d: 0x0d/Forward
@@ -1865,9 +1873,9 @@
               0x1a: 26/*
               0x1b: '27/#'
 
-              0x1d: SMS
-              0x1e: Dial
-              0x1f: Directory
+              0x1d: Open SMS
+              0x1e: Open Dial
+              0x1f: Open Directory
           :state:
             *button_state
   :meta:

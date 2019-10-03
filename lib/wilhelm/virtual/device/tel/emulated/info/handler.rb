@@ -23,9 +23,9 @@ module Wilhelm
 
               # Function: 0x08
               def delegate_info(command)
-                logger.unknown(PROC) { "#delegate_info" }
-                case command.function.value
-                when ACTION_INFO_OPEN_DIAL
+                logger.debug(PROC) { "#delegate_info(#{command.layout.ugly}, #{command.pretty})" }
+                case command.action.value
+                when ACTION_OPEN_INFO
                   info!
                   branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
                   info_service_open

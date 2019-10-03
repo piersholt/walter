@@ -44,8 +44,8 @@ module Wilhelm
             TEL_OPEN,
             INPUT,
             MFL_VOL, MFL_FUNC,
-            BMBT_I, BMBT_A, BMBT_B,
-            *TELEMATICS
+            BMBT_A,
+            COORD, ADDR
           ].freeze
 
           def handle_virtual_receive(message)
