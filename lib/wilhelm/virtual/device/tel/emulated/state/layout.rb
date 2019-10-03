@@ -85,28 +85,22 @@ module Wilhelm
               end
 
               # 0xf0
-              def smses!
-                @layout = :smses
+              def sms_index!
+                @layout = :sms_index
               end
 
-              def smses?
-                layout == :smses
+              def sms_index?
+                layout == :sms_index
               end
-
-              alias sms_index! smses!
-              alias sms_index? smses?
 
               # 0xf1
-              def sms!
-                @layout = :sms
+              def sms_show!
+                @layout = :sms_show
               end
 
-              def sms?
-                layout == :sms
+              def sms_show?
+                layout == :sms_show
               end
-
-              alias sms_show! sms!
-              alias sms_show? sms?
 
               # 0xf1
               def sos!

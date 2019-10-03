@@ -15,14 +15,14 @@ module Wilhelm
 
               def sms_open
                 LOGGER.unknown(MOD_PROG) { '#sms_open' }
-                sms!
+                sms_index!
                 sms_open!(page_size: SMS_PAGE_SIZE)
                 # sms_clear
               end
 
               def sms_select(index)
                 LOGGER.unknown(MOD_PROG) { "#sms_select(#{index})" }
-                sms!
+                sms_index!
                 i = ACTION_SMS_INDICIES.index(index)
                 sms_select!(index: i, page: sms_page, page_size: SMS_PAGE_SIZE)
               end

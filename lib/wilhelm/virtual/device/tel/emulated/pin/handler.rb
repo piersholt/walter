@@ -19,7 +19,6 @@ module Wilhelm
                   branch(LAYOUT_PIN, FUNCTION_DIGIT, button_id(command.action))
                   pin_service_input(button_id(command.action))
                 when FUNCTION_SOS
-                  sos!
                   delegate_sos(command)
                 else
                   unknown_function(command)
