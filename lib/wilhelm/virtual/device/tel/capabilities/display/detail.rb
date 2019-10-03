@@ -20,10 +20,10 @@ module Wilhelm
                   index = LAYOUT_INDICES[layout].slice(i)
                   d21(layout, function, index, item)
                 end
-                d21(layout, FUNCTION_BACK, INDEX_BUTTON_BACK, 'Back')
-                # d21(layout, FUNCTION_BACK, INDEX_BUTTON_LEFT, 'Left')
-                # d21(layout, FUNCTION_BACK, INDEX_BUTTON_RIGHT, 'Right')
-                # d21(layout, FUNCTION_BACK, INDEX_BUTTON_CENTRE, 'Centre')
+                d21(layout, FUNCTION_NAVIGATE, INDEX_BUTTON_BACK, 'Back')
+                # d21(layout, FUNCTION_NAVIGATE, INDEX_BUTTON_LEFT, 'Left')
+                # d21(layout, FUNCTION_NAVIGATE, INDEX_BUTTON_RIGHT, 'Right')
+                # d21(layout, FUNCTION_NAVIGATE, INDEX_BUTTON_CENTRE, 'Centre')
                 da5(layout, 0x01, 0x00, title)
               end
             end

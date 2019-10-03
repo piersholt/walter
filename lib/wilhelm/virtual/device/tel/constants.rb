@@ -232,7 +232,7 @@ module Wilhelm
           ACTION_SMS_8             = 0x07
           ACTION_SMS_9             = 0x08
           ACTION_SMS_10            = 0x09
-          ACTION_SMS_OPEN_DIAL     = 0x10
+          ACTION_SMS_INDEX_BACK     = 0x10
 
           ACTION_SMS_INDICIES = [
             ACTION_SMS_1,
@@ -248,10 +248,12 @@ module Wilhelm
           ].freeze
 
           # SMS Message 0xf1
-          ACTION_SMS_BACK          = 0x10
+          ACTION_SMS_SHOW_BACK          = 0x10
           ACTION_SMS_LEFT          = 0x11
           ACTION_SMS_RIGHT         = 0x12
           ACTION_SMS_CENTRE        = 0x13
+
+          ACTION_TELEMATICS_BACK   = 0x10
 
           # STRINGS -----------------------------------------------------------
 
@@ -345,26 +347,26 @@ module Wilhelm
 
           # SMS Index
           # 0x?? Function SMS
-          SMS_1               = 'SMS Index: 1'
-          SMS_2               = 'SMS Index: 2'
-          SMS_3               = 'SMS Index: 3'
-          SMS_4               = 'SMS Index: 4'
-          SMS_5               = 'SMS Index: 5'
-          SMS_6               = 'SMS Index: 6'
-          SMS_7               = 'SMS Index: 7'
-          SMS_8               = 'SMS Index: 8'
-          SMS_9               = 'SMS Index: 9'
-          SMS_10              = 'SMS Index: 10'
+          SMS_1               = 'SMS Index (0xf0): 1'
+          SMS_2               = 'SMS Index (0xf0): 2'
+          SMS_3               = 'SMS Index (0xf0): 3'
+          SMS_4               = 'SMS Index (0xf0): 4'
+          SMS_5               = 'SMS Index (0xf0): 5'
+          SMS_6               = 'SMS Index (0xf0): 6'
+          SMS_7               = 'SMS Index (0xf0): 7'
+          SMS_8               = 'SMS Index (0xf0): 8'
+          SMS_9               = 'SMS Index (0xf0): 9'
+          SMS_10              = 'SMS Index (0xf0): 10'
           # 0x07
-          SMS_OPEN_DIAL = 'SMS (0xf0) -> Shortcut > Dial'
+          SMS_OPEN_DIAL       = 'SMS (0xf0) -> Shortcut > Dial'
 
           # SMS SHOW
           # 0x?? Function SMS
-          SMS_LEFT            = 'SMS (0xf1): Left'
-          SMS_CENTRE          = 'SMS (0xf1): Centre'
-          SMS_RIGHT           = 'SMS (0xf1): Right'
+          SMS_LEFT            = 'SMS Show (0xf1): Left'
+          SMS_CENTRE          = 'SMS Show (0xf1): Centre'
+          SMS_RIGHT           = 'SMS Show (0xf1): Right'
           # 0x07 Navigation
-          SMS_BACK            = 'SMS (0xf1): Back'
+          SMS_BACK            = 'SMS Show (0xf1) -> Shortcut > SMS Index (0xf0) OR Dial'
 
           INPUT_MAP = {
             LAYOUT_DEFAULT => {
@@ -467,7 +469,7 @@ module Wilhelm
             },
             LAYOUT_SMS_INDEX => {
               FUNCTION_NAVIGATE => {
-                ACTION_SMS_OPEN_DIAL => SMS_OPEN_DIAL
+                ACTION_SMS_INDEX_BACK => SMS_OPEN_DIAL
               },
               FUNCTION_SMS => {
                 ACTION_SMS_1  => SMS_1,
@@ -484,7 +486,7 @@ module Wilhelm
             },
             LAYOUT_SMS_SHOW => {
               FUNCTION_NAVIGATE => {
-                ACTION_SMS_BACK => SMS_BACK
+                ACTION_SMS_SHOW_BACK => SMS_BACK
               },
               FUNCTION_SMS => {
                 ACTION_SMS_LEFT      => SMS_LEFT,
