@@ -52,9 +52,21 @@ module Wilhelm
 
             # DIRECT ----------------------------------------------------------
 
-            def auxiliary_heating(*); end
+            # Auxiliary Heating 0x11, 0x12
+            def auxiliary_heating(enabled = true)
+              obc_bool(
+                field: enabled ? FIELD_AUX_HEATING_ON : FIELD_AUX_HEATING_OFF,
+                control: []
+              )
+            end
 
-            def auxiliary_ventilation(*); end
+            # Auxiliary Ventilation 0x13, 0x14
+            def auxiliary_ventilation(enabled = true)
+              obc_bool(
+                field: enabled ? FIELD_AUX_VENT_ON : FIELD_AUX_VENT_OFF,
+                control: []
+              )
+            end
           end
         end
       end

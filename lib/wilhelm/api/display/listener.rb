@@ -60,22 +60,22 @@ module Wilhelm
             logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
             announce
           when GFX_OBC_BOOL
-            logger.info(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
+            logger.debug(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
             obc_request
           when GFX_AUX_BOOL
-            logger.info(NAME) { "#update(#{GFX_AUX_BOOL}, #{properties})" }
+            logger.debug(NAME) { "#update(#{GFX_AUX_BOOL}, #{properties})" }
             aux_request
           when GFX_SET_BOOL
-            logger.info(NAME) { "#update(#{GFX_SET_BOOL}, #{properties})" }
+            logger.debug(NAME) { "#update(#{GFX_SET_BOOL}, #{properties})" }
             settings_request
           when KL_30
-            logger.info(NAME) { "#update(#{KL_30}, #{properties})" }
+            logger.debug(NAME) { "#update(#{KL_30}, #{properties})" }
             kl_30
           when KL_R
-            logger.info(NAME) { "#update(#{KL_R}, #{properties})" }
+            logger.debug(NAME) { "#update(#{KL_R}, #{properties})" }
             kl_r
           when KL_15
-            logger.info(NAME) { "#update(#{KL_15}, #{properties})" }
+            logger.debug(NAME) { "#update(#{KL_15}, #{properties})" }
             kl_15
           end
         end

@@ -9,28 +9,32 @@ module Wilhelm
           module Constants
             # FIELDS
             # Settings
-            FIELD_TIME     = 0x01
-            FIELD_DATE     = 0x02
-            FIELD_MEMO     = 0x0c
+            FIELD_TIME            = 0x01
+            FIELD_DATE            = 0x02
+            FIELD_MEMO            = 0x0c
             # On-board Computer
-            FIELD_TEMP      = 0x03
-            FIELD_CONSUMP_1 = 0x04
-            FIELD_CONSUMP_2 = 0x05
-            FIELD_RANGE     = 0x06
-            FIELD_DISTANCE  = 0x07
-            FIELD_ARRIVAL   = 0x08
-            FIELD_LIMIT     = 0x09
-            FIELD_AVG_SPEED = 0x0a
-            FIELD_TIMER     = 0x0e
-            FIELD_LAP_TIMER = 0x1a
+            FIELD_TEMP            = 0x03
+            FIELD_CONSUMP_1       = 0x04
+            FIELD_CONSUMP_2       = 0x05
+            FIELD_RANGE           = 0x06
+            FIELD_DISTANCE        = 0x07
+            FIELD_ARRIVAL         = 0x08
+            FIELD_LIMIT           = 0x09
+            FIELD_AVG_SPEED       = 0x0a
+            FIELD_TIMER           = 0x0e
+            FIELD_LAP_TIMER       = 0x1a
             # Code
-            FIELD_CODE = 0x0d
+            FIELD_CODE            = 0x0d
             # Aux. Ventilation
-            FIELD_AUX_TIMER_1  = 0x0f
-            FIELD_AUX_TIMER_2  = 0x10
+            FIELD_AUX_TIMER_1     = 0x0f
+            FIELD_AUX_TIMER_2     = 0x10
+            FIELD_AUX_HEATING_OFF = 0x11
+            FIELD_AUX_HEATING_ON  = 0x12
+            FIELD_AUX_VENT_OFF    = 0x13
+            FIELD_AUX_VENT_ON     = 0x14
 
-            # INPUTS (OBC_VAR)
-            INPUT_LIMIT_LENGTH = 2
+            # INPUTS (OBC-VAR)
+            INPUT_LIMIT_LENGTH    = 2
             INPUT_DISTANCE_LENGTH = 2
 
             # CONTROLS (OBC-BOOL)

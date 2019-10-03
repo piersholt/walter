@@ -11,6 +11,7 @@ module Wilhelm
 
           TIME        = 0x01
           DATE        = 0x02
+          # TEMPERATURE = 0x03
           CONSUMP_1   = 0x04
           CONSUMP_2   = 0x05
           RANGE       = 0x06
@@ -19,8 +20,8 @@ module Wilhelm
           LIMIT       = 0x09
           AVG_SPEED   = 0x0a
           TIMER       = 0x0e
-          TIMER_1     = 0x0f
-          TIMER_2     = 0x10
+          AUX_TIMER_1 = 0x0f
+          AUX_TIMER_2 = 0x10
           NO_FUNCTION = 0xff
 
           DICTIONARY = {
@@ -33,9 +34,9 @@ module Wilhelm
             ARRIVAL     => 'Arrival',
             LIMIT       => 'Limit',
             AVG_SPEED   => 'Avg. Speed',
-            TIMER       => 'Timer',
-            TIMER_1     => 'Timer 1',
-            TIMER_2     => 'Timer 2',
+            TIMER       => 'Stopwatch ("Timer")',
+            AUX_TIMER_1 => 'Aux. Timer 1',
+            AUX_TIMER_2 => 'Aux. Timer 2',
             NO_FUNCTION => nil
           }.freeze
 
@@ -49,9 +50,9 @@ module Wilhelm
             ARRIVAL     => :arrival,
             LIMIT       => :limit,
             AVG_SPEED   => :avg_speed,
-            TIMER       => :timer,
-            TIMER_1     => :timer_1,
-            TIMER_2     => :timer_2,
+            TIMER       => :stopwatch,
+            AUX_TIMER_1 => :aux_timer_1,
+            AUX_TIMER_2 => :aux_timer_2,
             NO_FUNCTION => nil
           }.freeze
 

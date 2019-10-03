@@ -28,7 +28,7 @@ module Wilhelm
         end
 
         def timer_update(event, object)
-          logger.unknown(PROG) { "#{event}: #{object}" }
+          logger.debug(PROG) { "#{event}: #{object}" }
           changed
           notify_observers(:position, player: self)
         end

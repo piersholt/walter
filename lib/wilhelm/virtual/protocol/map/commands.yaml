@@ -2494,15 +2494,19 @@
         0x01: (Settings) Time
         0x02: (Settings) Date
 
+        # NAVIGATION
+        0x05: (NAV) Arrival Time [Consump. 2]
+        0x06: (NAV) Distance to Destination [Range]
+
         # ON-BOARD COMPUTER
         0x07: (OBC) Distance
         0x09: (OBC) Limit
 
         # CODE
-        0x0D: (Code) Code
+        0x0d: (Code) Code
 
         # AUX. VENTILATION
-        0x0F: (Aux.) Timer 1
+        0x0f: (Aux.) Timer 1
         0x10: (Aux.) Timer 2
     :input:
       :type: :data
@@ -2591,11 +2595,14 @@
       :type: :bit_array
       :parameters:
         :unknown:
-          :type: :switch
-          :label: Split Screen?
-          :states:
+          :type: :map
+          :label: Screen
+          :map:
             0: :off
             1: :on
+          :dictionary:
+            0: Split
+            1: Full
         :audio_obc:
           :type: :switch
           :label: Audio+OBC (BM23)
@@ -2863,28 +2870,25 @@
       :type: :map
       # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
       :dictionary:
-        0x00: "Off"
+        0x00: (LED) Off
+        0x90: (LED) Off (Reset)
+        0xff: (LED) On
 
-        0x40: Tape Eject
-        0x41: Tape Play
-        0x42: Tape FFF
-        0x43: Tape RWW
-        0x44: Tape FF
-        0x45: Tape RW
+        0x40: (Tape) Eject
+        0x41: (Tape) ▶︎
+        0x42: (Tape) ▷▷▷
+        0x43: (Tape) ◁◁◁
+        0x44: (Tape) ▷▷
+        0x45: (Tape) ◁◁
+        0x48: (Tape) Stop
+        0x5a: (Tape) ▶︎ 1/A
+        0x5b: (Tape) ▶︎ 2/B
+        0x5d: (Tape) Dolby B
+        0x5e: (Tape) Dolby C
+        0x5f: (Tape) Dolby OFF
 
-        0x48: Radio
-
-        0x5a: Tape 1
-        0x5b: Tape 2
-        0x5d: Tape Dolby B
-        0x5e: Tape Dolby C
-        0x5f: Tape Dolby OFF
-
-        0x80: Unknown Mode
-
-        0x90: "Off (Reset)"
-
-        0xFF: "On"
+        0x4a: something? (reply => 0xe2)
+        0x4b: something? (reply => 0xe1)
   :index:
     :led: 0
   :meta:
@@ -2903,28 +2907,24 @@
     :control:
       :type: :map
       :dictionary:
-        0x05: (16x9) Set Mode?
-        0x06: (4x3) Set Mode?
+        0x05: No Tape!
+        0x06: Tape
     :mode:
       :type: :map
       :dictionary:
-        0xE1: Unmute/Telephone Non-Priority (Handset)
-        0xE2: Mute/Telephone Priority (Handsfree)
-
-        0x30: Radio
-
         0x12: Tape / (1/A) ▶︎
         0x11: Tape / (2/B) ▶︎
-        0x51: Tape / ▷▷
-        0x42: Tape / ▷▷▷
-        0x61: Tape / ◁◁
+        0x30: Tape / Stopped
         0x41: Tape / ◁◁◁
-
+        0x42: Tape / ▷▷▷
+        0x51: Tape / ▷▷
+        0x61: Tape / ◁◁
         0x81: Tape / Dolby Off
-        0x82: Tape / Dolby C
         0x84: Tape / Dolby B
-
-        0xF0: ERROR!
+        0x82: Tape / Dolby C
+        0xe1: Tape / 0xe1
+        0xe2: Tape / 0xe2
+        0xF0: Error
   :index:
     :control: 0
     :mode: 1
@@ -2935,26 +2935,35 @@
     :long_name: Select external audio input for tv?
   :klass: Parameterized::Base
   :index:
-    :source: 0
-    :b2: 1
+    :volume: 0
+    :source: 1
   :parameters:
+    :volume:
+      :type: :map
+      :dictionary:
+        0x64: Navi. volume 1
+        0x54: Navi. volume 2
+        0x44: Navi. volume 3
+        0x34: Navi. volume 4
+        0x24: Navi. volume 5
+        0x14: Navi. volume 6
+        0x04: Navi. volume 7
+        0x1c: Navi. volume 8
+        0x2c: Navi. volume 9
+        0x3c: Navi. volume 10
+        0x5c: Navi. volume 11
+        0x6c: Navi. volume 12
+        0x7c: Navi. volume 13
+        0x9c: Navi. volume 14
+        0xac: Navi. volume 15
+        0xbc: Navi. volume 16
+        0xdc: Navi. volume 17
+        0xec: Navi. volume 18
+        0xfc: Navi. volume 19
     :source:
       :type: :map
       :dictionary:
-        0b0000_0000: Radio
-        0b0000_0001: TV
-    :b2:
-      :type: :integer
-  :meta:
-    - 01 00: select TV
-    - 00 00: go back to radio
-    - 1500 messages to date 24 December 2018
-    - from 0x3B GFX (exclusive)
-    - to 0x68 RAD (exclusive)
-    - argument 1 0x00 or 0x01
-    - argument 2 always 0x00
-    - 00 = 1496
-    - 01 = 19
+        0x3f: Navigation
 
 0x4F: # SRC-GFX
   # NOTE: defaulted to Base to due to Parameterized parsing issues
