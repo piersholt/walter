@@ -112,12 +112,14 @@ module Wilhelm
             lamp: LAMP,
             door: DOOR,
             navigation: NAVIGATION,
-            gps: GPS,
+            gps: GPS
           }.freeze
 
           UI = [
             RAD_EQ,
             RAD_ALT,
+            OBC_VAR,
+            OBC_BOOL,
             MENU_GFX,
             MENU_RAD,
             RAD_LED,
