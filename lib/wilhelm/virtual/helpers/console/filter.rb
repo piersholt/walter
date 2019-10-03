@@ -84,6 +84,10 @@ module Wilhelm
           end
 
           alias region country
+
+          def ui
+            dh.f_c(*UI)
+          end
         end
       end
     end

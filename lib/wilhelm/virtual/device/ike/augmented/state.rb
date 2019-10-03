@@ -36,7 +36,7 @@ module Wilhelm
                 BITMASKS[:aux_ventilation],
                 BITMASKS[:aux_timer_1]
               )
-              logger.unknown(ident) { "ANZV-BOOL modified? #{modified} (#{d2b(xor, true, true)})" }
+              logger.debug(ident) { "ANZV-BOOL modified? #{modified} (#{d2b(xor, true, true)})" }
               state[:anzv_bool] = value
               return state[:anzv_bool] unless modified
               if bitwise_on?(xor, BITMASKS[:code])
@@ -60,13 +60,13 @@ module Wilhelm
               # NOTE: case might have multiple bits... I only allow for single modified!
               # case xor
               # when BITMASKS[:kl_50]
-              #   logger.unknown(ident) { "#{bitwise_on?(value, BITMASKS[:kl_50]) ? 'Added:' : 'Removed:'} :kl_50" }
+              #   logger.debug(ident) { "#{bitwise_on?(value, BITMASKS[:kl_50]) ? 'Added:' : 'Removed:'} :kl_50" }
               # when BITMASKS[:kl_15]
-              #   logger.unknown(ident) { "#{bitwise_on?(value, BITMASKS[:kl_15]) ? 'Added:' : 'Removed:'} :kl_15" }
+              #   logger.debug(ident) { "#{bitwise_on?(value, BITMASKS[:kl_15]) ? 'Added:' : 'Removed:'} :kl_15" }
               # when BITMASKS[:kl_r]
-              #   logger.unknown(ident) { "#{bitwise_on?(value, BITMASKS[:kl_r]) ? 'Added:' : 'Removed:'} :kl_r" }
+              #   logger.debug(ident) { "#{bitwise_on?(value, BITMASKS[:kl_r]) ? 'Added:' : 'Removed:'} :kl_r" }
               # when BITMASKS[:kl_30]
-              #   logger.unknown(ident) { "#{bitwise_on?(value, BITMASKS[:kl_30]) ? 'Added:' : 'Removed:'} :kl_30" }
+              #   logger.debug(ident) { "#{bitwise_on?(value, BITMASKS[:kl_30]) ? 'Added:' : 'Removed:'} :kl_30" }
               # end if modified
               state[:ignition] = value
               return state[:ignition] unless modified

@@ -116,6 +116,17 @@ module Wilhelm
             navigation: NAVIGATION,
             gps: GPS,
           }.freeze
+
+          UI = [
+            RAD_EQ,
+            RAD_ALT,
+            MENU_GFX,
+            MENU_RAD,
+            RAD_LED,
+            SRC_CTL,
+            SRC_SND,
+            SRC_GFX
+          ].freeze
         end
       end
     end
