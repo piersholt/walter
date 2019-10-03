@@ -5,8 +5,8 @@ module Wilhelm
     class Device
       module Telephone
         class Emulated < Device::Emulated
-          module Telematics
-            # Device::Telephone::Emulated::Telematics::Handler
+          module SOS
+            # Device::Telephone::Emulated::SOS::Handler
             module Handler
               include Constants
 
@@ -15,15 +15,14 @@ module Wilhelm
                 logger.debug(PROC) { "#delegate_sos(#{command})" }
                 case button_id(command.action)
                 when ACTION_SOS_OPEN
-                  sos!
                   branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
-                  telematics_open
+                  sos_open
                 end
               end
 
-              # 0xf1
-              def handle_telematics(command)
-                logger.debug(PROC) { "#handle_telematics(#{command})" }
+              # INPUT 0x31 (Layout: 0xf1)
+              def handle_sos(command)
+                logger.debug(PROC) { "#handle_sos(#{command})" }
                 case command.function.value
                 when FUNCTION_NAVIGATE
                   case button_id(command.action)
@@ -33,7 +32,7 @@ module Wilhelm
                     dial_open
                   end
                 when FUNCTION_TELEMATICS
-                  telematics!
+                  sos!
                   branch(command.layout.value, FUNCTION_TELEMATICS, button_id(command.action))
                 end
               end

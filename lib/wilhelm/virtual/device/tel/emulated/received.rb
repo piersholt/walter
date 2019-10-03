@@ -59,7 +59,7 @@ module Wilhelm
                 return handle_sms_index(command)
               when :sms_show
                 return handle_sms_show(command) if sms_index? || sms_show?
-                return handle_telematics(command) if sos?
+                return handle_sos(command) if sos?
                 logger.warn(PROC) { "No state to interpret INPUT 0xf1! (#{layout})" }
                 raise(ArgumentError, '0x31 has layout 0xf1, but @layout is not :sms, :smses, or :sos!' )
               end
@@ -115,9 +115,11 @@ module Wilhelm
 
             # 0xA2 COORD
             # def handle_telematics_coord(*); end
+            # see SOS::Handler
 
             # 0xA4 ADDR
             # def handle_telematics_addr(*); end
+            # see SOS::Handler
 
             protected
 

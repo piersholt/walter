@@ -5,8 +5,8 @@ module Wilhelm
     class Device
       module Telephone
         class Emulated < Device::Emulated
-          module Telematics
-            # Device::Telephone::Emulated::Telematics::Actions
+          module SOS
+            # Device::Telephone::Emulated::SOS::Actions
             module Actions
               include Virtual::Constants::Events::Telephone
 
@@ -33,8 +33,8 @@ module Wilhelm
                 )
               end
 
-              def telematics_open!
-                notify_of_action(TELEMATICS_OPEN)
+              def sos_open!
+                notify_of_action(SOS_OPEN)
               end
 
               private

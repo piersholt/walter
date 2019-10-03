@@ -5,21 +5,22 @@ module Wilhelm
     class Device
       module Telephone
         class Emulated < Device::Emulated
-          module Telematics
-            # Device::Telephone::Emulated::Telematics::Delegates
+          module SOS
+            # Device::Telephone::Emulated::SOS::Delegates
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::Telematics'
+              MOD_PROG = 'Mock::SOS'
 
-              def telematics_open
-                LOGGER.debug(MOD_PROG) { '#telematics_open' }
-                telematics!
-                telematics_open!
+              def sos_open
+                LOGGER.debug(MOD_PROG) { '#sos_open' }
+                sos!
+                sos_open!
               end
 
               # UPDATES -------------------------------------------------------
 
+              # 0xA2 COORD
               def telematics_signal(command)
                 case command.signal?
                 when true
@@ -31,21 +32,24 @@ module Wilhelm
                 end
               end
 
+              # 0xA2 COORD
               def telematics_coordinates(latitude:, longitude:, vertical:)
                 telematics_coordinates!(latitude.to_h, longitude.to_h, vertical)
               end
 
+              # 0xA4 ADDR
               def telematics_city(city)
                 telematics_city!(city)
               end
 
+              # 0xA4 ADDR
               def telematics_street(street)
                 telematics_street!(street)
               end
 
               # def telematics_select(index)
               #   LOGGER.debug(MOD_PROG) { "#telematics_select(#{index})" }
-              #   telematics!
+              #   sos!
               #   telematics_select!(index: i)
               # end
             end

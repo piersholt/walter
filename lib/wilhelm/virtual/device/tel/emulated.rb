@@ -12,7 +12,7 @@ require_relative 'emulated/info'
 require_relative 'emulated/navigation'
 require_relative 'emulated/pin'
 require_relative 'emulated/sms'
-require_relative 'emulated/telematics'
+require_relative 'emulated/sos'
 
 module Wilhelm
   module Virtual
@@ -34,7 +34,7 @@ module Wilhelm
           include Navigation
           include PIN
           include SMS
-          include Telematics
+          include SOS
           include Received
 
           PROC = 'Telephone::Emulated'
