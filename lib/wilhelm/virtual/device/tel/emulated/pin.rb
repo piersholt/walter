@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'pin/handler'
+require_relative 'pin/delegates'
 
 module Wilhelm
   module Virtual
@@ -10,6 +11,7 @@ module Wilhelm
           # Device::Telephone::Emulated::PIN
           module PIN
             include Handler
+            include Delegates
           end
         end
       end
