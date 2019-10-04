@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'info/handler'
+require_relative 'info/delegates'
 
 module Wilhelm
   module Virtual
@@ -10,6 +11,8 @@ module Wilhelm
           # Device::Telephone::Emulated::Info
           module Info
             include Handler
+            include Delegates
+            include Actions
           end
         end
       end

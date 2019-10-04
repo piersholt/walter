@@ -25,6 +25,8 @@ module Wilhelm
             SOS_OPEN          = :sos_open
             TELEMATICS_COORD  = :telematics_coord
             TELEMATICS_ADDR   = :telematics_addr
+
+            INFO_OPEN = :info_open
           end
 
           # Control related events

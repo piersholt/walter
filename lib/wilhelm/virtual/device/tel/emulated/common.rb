@@ -46,7 +46,7 @@ module Wilhelm
               case command.action.value
               when ACTION_OPEN_INFO
                 branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)
-                info_service_open
+                info_open
                 info!
               else
                 unknown_function(command)
