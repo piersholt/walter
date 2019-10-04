@@ -1,50 +1,50 @@
 ---
 
-0x00: :gm
-0x04: :i_0
-0x05: :x05
-0x08: :k_0
+0x00: :gm      # 0000 0000
+0x04: :i_04    # 0000 0100
+0x05: :x05     # 0000 0101
+0x08: :k_08    # 0000 1000
 
-0x18: :cdc
+0x18: :cdc     # 0001 1000
 
-0x30: :ccm
-0x3b: :gfx
-0x3f: :dia
+0x30: :ccm     # 0011 0000
+0x3b: :gfx     # 0011 1011
+0x3f: :dia     # 0011 1111
 
-0x43: :gfx
-0x44: :ews
-0x46: :cid
+0x43: :gfx2    # 0100 0011
+0x44: :ews     # 0100 0100
+0x46: :cid     # 0100 0110
 
-0x50: :mfl
-0x5b: :ihk
+0x50: :mfl     # 0101 0000
+0x5b: :ihka    # 0101 1011
 
-0x60: :pdc
-0x65: :i_6
-0x68: :rad
-0x6a: :dsp
+0x60: :pdc     # 0110 0000
+0x65: :i_65    # 0110 0101
+0x68: :rad     # 0110 1000
+0x6a: :dsp     # 0110 1010
 
-0x76: :cd
-0x7f: :nav
+0x76: :cd      # 0111 0110
+0x7f: :nav     # 0111 1111
 
-0x80: :ike
+0x80: :ike     # 1000 0000
 
-0x9a: :i_9a
+0x9a: :i_9a    # 1001 1010
 
-0xa4: :srs
-0xac: :ehc
+0xa4: :srs     # 1010 0100
+0xac: :ehc     # 1010 1100
 
-0xb0: :ses
-0xbb: :nav_jp
-0xbf: :glo_l
+0xb0: :ses     # 1011 0000
+0xbb: :nav_jp  # 1011 1011
+0xbf: :glo_l   # 1011 1111
 
-0xc8: :tel
+0xc8: :tel     # 1100 1000
 
-0xd0: :lcm
+0xd0: :lcm     # 1101 0000
 
-0xe0: :iris
-0xe7: :anzv
-0xe8: :rls
-0xed: :tv
+0xe0: :iris    # 1110 0000
+0xe7: :anzv    # 1110 0111
+0xe8: :rls     # 1110 1000
+0xed: :tv      # 1110 1101
 
-0xf0: :bmbt
-0xff: :glo_
+0xf0: :bmbt    # 1111 0000
+0xff: :glo_h   # 1111 1111
