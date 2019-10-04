@@ -12,7 +12,7 @@ module Wilhelm
 
             # Function: 0x05
             def delegate_sos(command)
-              logger.debug(PROC) { "#delegate_sos(#{command})" }
+              logger.debug(PROC) { "#delegate_sos(:#{command.layout.ugly}, :#{command.button})" }
               case button_id(command.action)
               when ACTION_SOS_OPEN
                 branch(command.layout.value, FUNCTION_SOS, ACTION_SOS_OPEN)
@@ -23,7 +23,7 @@ module Wilhelm
 
             # Function: 0x07
             def delegate_navigation(command)
-              logger.debug(PROC) { "#delegate_navigation(#{command.layout.ugly}, #{command.pretty})" }
+              logger.debug(PROC) { "#delegate_navigation(:#{command.layout.ugly}, :#{command.button})" }
               case button_id(command.action)
               when ACTION_OPEN_DIAL
                 branch(command.layout.value, FUNCTION_NAVIGATE, ACTION_OPEN_DIAL)
@@ -42,7 +42,7 @@ module Wilhelm
 
             # Function: 0x08
             def delegate_info(command)
-              logger.debug(PROC) { "#delegate_info(#{command.layout.ugly}, #{command.pretty})" }
+              logger.debug(PROC) { "#delegate_info(:#{command.layout.ugly}, :#{command.button})" }
               case command.action.value
               when ACTION_OPEN_INFO
                 branch(command.layout.value, FUNCTION_INFO, ACTION_OPEN_INFO)

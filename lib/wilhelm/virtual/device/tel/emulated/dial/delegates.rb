@@ -14,7 +14,7 @@ module Wilhelm
               LEADING_CHAR = '_'.freeze
 
               def dial_open
-                LOGGER.unknown(MOD_PROG) { '#dial_open()' }
+                logger.debug(MOD_PROG) { '#dial_open()' }
                 dial!
                 open_dial
                 # dial_clear
@@ -25,6 +25,8 @@ module Wilhelm
                 indexed_string = twig(LAYOUT_DIAL, FUNCTION_DIGIT, index)
                 dial_service_number(indexed_string)
               end
+
+              protected
 
               def dial_service_number(digit = '0')
                 add_dial_digit(digit)
