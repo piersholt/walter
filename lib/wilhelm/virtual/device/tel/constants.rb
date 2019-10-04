@@ -121,6 +121,15 @@ module Wilhelm
           CALL_TIME_MINUTES = 0x96 # "  0"
           CALL_TIME_SECONDS = 0x97 # " 0"
 
+          # Parameter :chars
+          # 0 through 7 bars
+          # Legacy BMBT [0xb8, 0xb8, 0xb8, 0xb8, 0xb8, 0xb8, 0xb8]
+          STRENGTHS = [0xb8, 0x5f, 0xb7, 0xb6, 0xb5, 0xb4, 0xb3, 0xb2].freeze
+          MASK_CURRENT = '%6.2f'
+          MASK_TOTAL   = '%7.2f'
+          MASK_MIN     = '%i'
+          MASK_SEC     = '%.2i'
+
           # Parameter :ike
           IKE_ZERO = 0x00
 
