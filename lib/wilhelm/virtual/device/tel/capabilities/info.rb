@@ -22,25 +22,25 @@ module Wilhelm
 
             # 0x93: Call cost current
             def call_costs_current(current_cost)
-              current_cost = format_call_costs_current(current_cost)
+              current_cost = format_cost_current(current_cost)
               anzv_var_tel(field: CALL_COST_CURRENT, chars: current_cost)
             end
 
             # 0x94: Call cost total
             def call_cost_total(total_cost)
-              total_cost = format_call_cost_total(total_cost)
+              total_cost = format_cost_total(total_cost)
               anzv_var_tel(field: CALL_COST_TOTAL, chars: total_cost)
             end
 
             # 0x96: Call Time minutes
             def call_time_minutes(minutes)
-              minutes = format_call_time_minutes(minutes)
+              minutes = format_minutes(minutes)
               anzv_var_tel(field: CALL_TIME_MINUTES, chars: minutes)
             end
 
             # 0x97: Call time seconds
             def call_time_seconds(seconds)
-              seconds = format_call_time_seconds(seconds)
+              seconds = format_seconds(seconds)
               anzv_var_tel(field: CALL_TIME_SECONDS, chars: seconds)
             end
 
@@ -59,22 +59,22 @@ module Wilhelm
             end
 
             # "     0"
-            def format_call_costs_current(value)
+            def format_cost_current(value)
               format(MASK_CURRENT, value)
             end
 
             # "      0"
-            def format_call_cost_total(value)
+            def format_cost_total(value)
               format(MASK_TOTAL, value)
             end
 
             # "  0" {1,3}
-            def format_call_time_minutes(value)
+            def format_minutes(value)
               format(MASK_MIN, value)
             end
 
             # " 0" {2,2}
-            def format_call_time_seconds(value)
+            def format_seconds(value)
               format(MASK_SEC, value)
             end
           end
