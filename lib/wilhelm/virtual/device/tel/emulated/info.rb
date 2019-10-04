@@ -2,6 +2,7 @@
 
 require_relative 'info/handler'
 require_relative 'info/delegates'
+require_relative 'info/actions'
 
 module Wilhelm
   module Virtual
