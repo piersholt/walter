@@ -2,6 +2,7 @@
 
 require_relative 'mock/contacts'
 require_relative 'mock/history'
+require_relative 'mock/info'
 require_relative 'mock/messages'
 require_relative 'mock/telematics'
 
@@ -12,6 +13,7 @@ module Wilhelm
       module Mock
         include Contacts
         include History
+        include Info
         include Messages
         include Telematics
       end
