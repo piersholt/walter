@@ -8,7 +8,7 @@ module Wilhelm
           module LastNumbers
             # Device::Telephone::Emulated::LastNumbers::Delegates
             module Delegates
-              MOD_PROG = 'Mock::LastNumbers'
+              MOD_PROG = 'LastNumbers'
 
               def last_numbers_back
                 LOGGER.unknown(MOD_PROG) { '#last_numbers_back' }

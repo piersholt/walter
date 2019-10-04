@@ -10,7 +10,7 @@ module Wilhelm
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::Top 8'
+              MOD_PROG = 'Top 8'
 
               def top_8_open
                 LOGGER.unknown(MOD_PROG) { '#top_8_open' }

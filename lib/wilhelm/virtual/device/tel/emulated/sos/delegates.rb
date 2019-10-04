@@ -10,7 +10,7 @@ module Wilhelm
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::SOS'
+              MOD_PROG = 'SOS'
 
               def sos_open
                 LOGGER.debug(MOD_PROG) { '#sos_open' }

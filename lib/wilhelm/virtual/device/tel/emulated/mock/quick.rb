@@ -10,7 +10,7 @@ module Wilhelm
             module Quick
               include Constants
 
-              MOD_PROG = 'Mock::Quick'
+              MOD_PROG = 'Quick'
 
               def quick_disable
                 quick_exit

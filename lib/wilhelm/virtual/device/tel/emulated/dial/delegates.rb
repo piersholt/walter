@@ -10,7 +10,7 @@ module Wilhelm
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::Dial'.freeze
+              MOD_PROG = 'Dial'.freeze
               LEADING_CHAR = '_'.freeze
 
               def dial_open

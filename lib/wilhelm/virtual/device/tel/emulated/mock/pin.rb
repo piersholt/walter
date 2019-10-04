@@ -10,7 +10,7 @@ module Wilhelm
             module PIN
               include Constants
 
-              MOD_PROG = 'Mock::PIN'.freeze
+              MOD_PROG = 'PIN'.freeze
 
               def service_pin_open
                 logger.debug(PROC) { '#service_pin_open' }

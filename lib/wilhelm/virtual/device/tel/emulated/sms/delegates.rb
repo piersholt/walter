@@ -10,7 +10,7 @@ module Wilhelm
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::SMS'
+              MOD_PROG = 'SMS'
               SMS_PAGE_SIZE = 10
 
               def sms_open

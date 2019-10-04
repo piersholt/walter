@@ -10,7 +10,7 @@ module Wilhelm
             module Delegates
               include Constants
 
-              MOD_PROG = 'Mock::Directory'
+              MOD_PROG = 'Directory'
               DIR_PAGE_SIZE = 8
 
               def directory_open
