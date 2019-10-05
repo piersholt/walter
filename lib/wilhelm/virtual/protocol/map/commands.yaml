@@ -2550,21 +2550,21 @@
         0x12: (Aux.) Heating (On)           # --
         0x13: (Aux.) Vent. (Off)            # --
         0x14: (Aux.) Vent. (On)             # --
-
+        0x1b: (Aux.) Status                 # [Boolean Request]
     :control:
       :type: :map
       :map:
         0x00: --
       :dictionary:
-        0b0000_0001: Lap/Variable Request
-        0b0000_0010: TBC
+        0b0000_0001: Variable Request
+        0b0000_0010: Boolean Request
         0b0000_0100: 'On/Start'
         0b0000_1000: 'Off/Stop'
 
         0b0001_0000: Recalculate
         0b0010_0000: Set As Current Speed
-        0b0100_0000: '?'
-        0b1000_0000: '?'
+        0b0100_0000: '0b0100_0000'
+        0b1000_0000: '0b1000_0000'
   :index:
     :field: 0
     :control: 1

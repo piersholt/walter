@@ -6,6 +6,8 @@ module Wilhelm
       module TV
         # TV::Emulated
         class Emulated < Device::Emulated
+          include API
+
           PROC = 'TV::Emulated'
 
           def handle_virtual_receive(message)
