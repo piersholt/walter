@@ -3509,11 +3509,11 @@
     :long_name: Unknown
   :klass: Base
 
-# SES -------------------------------------------------------------------------
+# MRS -------------------------------------------------------------------------
 
-0x70: # SRS-GLO-70
+0x70: # MRS-GLO-70
   :properties:
-    :short_name: SRS-GLO-70
+    :short_name: MRS-GLO-70
     :long_name: Unknown
   :klass: Base
 
@@ -4210,16 +4210,19 @@
     :long_name: Unknown
   :klass: Base
 
-0xAB: # NAV-GFX-AB
+0xAB: # NAV-GFX2-AB
   :properties:
-    :short_name: NAV-GFX-AB
+    :short_name: NAV-GFX2-AB
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - 0x21 is sent whenever main is rendered
+    - other value is 0x11 which is sporadic
 
-0xAF: # NAV-SES-AF
+0xAF: # NAV-VOICE-AF
   :properties:
-    :short_name: NAV-SES?
-    :long_name: Unknown
+    :short_name: NAV-VOICE-AF
+    :long_name: Query if voice recognition present?
   :klass: Base
 
 # PING/PONG -------------------------------------------------------------------
