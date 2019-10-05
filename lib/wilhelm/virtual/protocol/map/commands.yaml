@@ -2860,7 +2860,7 @@
 
 # RADIO -----------------------------------------------------------------------
 
-0x4A: # RAD-LED
+0x4A: # RAD-LED (TAPE-CONTROL)
   :properties:
     :short_name: RAD-LED
     :long_name: Radio LED
@@ -2868,7 +2868,6 @@
   :parameters:
     :led:
       :type: :map
-      # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
       :dictionary:
         0x00: (LED) Off
         0x90: (LED) Off (Reset)
@@ -2897,11 +2896,11 @@
     :recipients:
       - BMBT
 
-0x4B: # SRC?
+0x4B: # TAPE
   # NOTE: defaulted to Base to due to Parameterized parsing issues
   :klass: Base
   :properties:
-    :short_name: TAPE?
+    :short_name: TAPE
     :long_name: Audio Device Control
   :parameters:
     :control:
@@ -4198,7 +4197,6 @@
     :long_name: Unknown
   :klass: Base
   :meta:
-    - seemingly always..
     - 7F 04 68 A7 10 A4
     - 7F 04 68 A7 30 84
     - 7F 05 68 A7 1F 00 AA
