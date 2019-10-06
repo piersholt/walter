@@ -12,6 +12,8 @@ module Wilhelm
         include Helpers
         include Generate
 
+        LOGGER = LogActually.virtual
+
         NAME           = 'Command::Base'
         DEVICE_UNKNOWN = '???'
         ARGS_EMPTY     = '--'
