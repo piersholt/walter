@@ -6,7 +6,7 @@ module Wilhelm
       module TV
         # TV::Emulated
         class Emulated < Device::Emulated
-          include API
+          include Capabilities
 
           PROC = 'TV::Emulated'
 
