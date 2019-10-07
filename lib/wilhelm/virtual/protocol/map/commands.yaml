@@ -746,6 +746,7 @@
   :meta:
     :examples:
       - from GFX 02 0C
+      - from VID 00 0C if 'incoming' is set!
 
 # BMBT/MID --------------------------------------------------------------------
 
@@ -1976,12 +1977,20 @@
     :mode:
       :type: :map
       :dictionary:
-        0x0f: On/Off
+        0x08: 'On'
+        0x0f: 'Off'
 
         0x10: Adjust
 
-        0x28: Demo Off
+        0x08: Demo Off
+        0x09: Concert Hall
+        0x0a: Jazz Club
+        0x0b: Cathedral
+        0x0c: Memo 1
+        0x0d: Memo 2
+        0x0e: Memo 3
 
+        0x28: Demo Off
         0x29: Concert Hall
         0x2a: Jazz Club
         0x2b: Cathedral
@@ -2605,7 +2614,7 @@
             1: Full
         :audio_obc:
           :type: :switch
-          :label: Audio+OBC (BM23)
+          :label: Audio+OBC (MK1/TV)
           :states:
             0: :off
             1: :on
@@ -4258,8 +4267,11 @@
   :meta:
     - 7F 04 68 A7 10 A4
     - 7F 04 68 A7 30 84
-    - 7F 05 68 A7 1F 00 AA
-    - 7F 05 68 A7 3F 00 8A
+    - at ignition:
+      - 7F 05 68 A7 1F 00 AA
+      - 7F 05 68 A7 3F 00 8A
+      - 3F is navi. volume on 0x4E..
+      - registration of... sources?
 
 0xA9: # NAV-TEL-A9
   :properties:
