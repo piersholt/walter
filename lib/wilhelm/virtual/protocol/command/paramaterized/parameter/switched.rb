@@ -8,8 +8,8 @@ module Wilhelm
 
       STATES_HIDDEN = %i[ok off closed].freeze
 
-      WARN_NO_PRETTY_MAP = 'Map @states is no available!'
-      ERROR_NIL_SWITCH_STATE = 'Switch State Map returned nil!'
+      WARN_NO_PRETTY_MAP = '@states is no defined!'
+      ERROR_NIL_SWITCH_STATE = '@states does not have key!'
 
       SWITCH_OFF      = 'OFF'
       SWITCH_ON       = 'ON'
@@ -27,6 +27,18 @@ module Wilhelm
 
       SWITCH_ENABLED  = 'Enabled'
       SWITCH_DISABLED = 'Disabled'
+
+      # Monitor
+      SWITCH_NAV      = 'Nav. GT'
+      SWITCH_TV       = 'Vid. TV'
+      SWITCH_VIDEO    = 'Vid. GT'
+
+      SWITCH_NTSC     = 'NTSC'
+      SWITCH_PAL      = 'PAL'
+
+      SWITCH_4_3      = '4:3'
+      SWITCH_16_9     = '16:9'
+      SWITCH_ZOOM     = 'Zoom'
 
       # HUD Chevron
       SWITCH_BLINK    = 'Blink'
@@ -59,7 +71,15 @@ module Wilhelm
         high_tone:    [:as_yellow, SWITCH_HIGH_TONE],
         high_double:  [:as_yellow, SWITCH_HIGH_DOUBLE],
         low_single:   [:as_yellow, SWITCH_LOW_SINGLE],
-        inactive:     [:as_blue,   SWITCH_INACTIVE]
+        inactive:     [:as_blue,   SWITCH_INACTIVE],
+        nav:          [:as_green,  SWITCH_NAV],
+        tv:           [:as_yellow, SWITCH_TV],
+        video:        [:as_yellow, SWITCH_VIDEO],
+        standard:     [:as_yellow, SWITCH_4_3],
+        wide:         [:as_green,  SWITCH_16_9],
+        zoom:         [:as_yellow, SWITCH_ZOOM],
+        ntsc:         [:as_green,  SWITCH_NTSC],
+        pal:          [:as_green,  SWITCH_PAL]
       }.freeze
 
       LIGHT_GREEN  = 92
