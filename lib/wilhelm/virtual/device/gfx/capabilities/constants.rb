@@ -50,6 +50,27 @@ module Wilhelm
 
             # VARS
             VAR_NIL = 0x00
+
+            # MONITOR
+
+            # Service Mode
+            BMBT_SERVICE_INFO = 0x00
+            BMBT_SERVICE_KEY  = 0x0b
+
+            # Settings: Brightness
+            BMBT_BRIGHTNESS        = 0x40
+            BMBT_BRIGHTNESS_FRONT  = 0x41
+            BMBT_BRIGHTNESS_REAR   = 0x42
+
+            # Via BMBT Service Mode: -10 through 10.
+            # 0x80 is 0. Looks like signed magnitude?
+            BRIGHTNESS_INTERVALS = [
+              0xFF, 0xEC, 0xE0, 0xD4, 0xC8, 0xBC, 0xB0, 0xA4, 0x98, 0x8C,
+              0x80,
+              0x0C, 0x18, 0x24, 0x30, 0x3C, 0x48, 0x54, 0x60, 0x6C, 0x7F
+            ].freeze
+
+            BRIGHTNESS_RANGE = (-10..10)
           end
         end
       end
