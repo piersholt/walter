@@ -10,7 +10,7 @@
 
 0x43: :gt2
 0x44: :ews
-0x46: :cid
+0x46: :tv2
 
 0x50: :mfl
 0x5b: :ihka
@@ -42,3 +42,13 @@
 
 0xf0: :bmbt
 0xff: :glo_h
+
+# 540i TBC:
+# Automatic headlight adjustment (LWR)
+# Center Console Switch Center (SZM)
+
+# UNVERIFIED
+# Tire Pressure Control/Warning (RDC/W)
+# Radio clock (RCC)
+
+# 0xa0 Multi-information display, rear passenger compartment (FID)
