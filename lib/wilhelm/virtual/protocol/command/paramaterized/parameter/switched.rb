@@ -87,6 +87,7 @@ module Wilhelm
       COLOUR_RESET = 3
 
       attr_reader :label, :states
+      alias map states
 
       def initialize(_configuration, integer)
         @value = integer
@@ -122,7 +123,7 @@ module Wilhelm
 
       # No output: [:off, :on, :ok]
       def pretty
-        switch_state = SWITCH_STATE_MAP.fetch(state)
+        switch_state = SWITCH_STATE_MAP.fetch(state, nil)
         raise(IndexError, ERROR_NIL_SWITCH_STATE) unless switch_state
         public_send(*switch_state)
       end
