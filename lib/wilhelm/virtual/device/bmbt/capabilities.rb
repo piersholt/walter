@@ -2,6 +2,7 @@
 
 require_relative 'capabilities/constants'
 require_relative 'capabilities/diagnostics'
+require_relative 'capabilities/settings'
 require_relative 'capabilities/user_controls'
 
 module Wilhelm
@@ -11,6 +12,7 @@ module Wilhelm
         # BMBT::Capabilities
         module Capabilities
           include Helpers::Button
+          include Settings
           include UserControls
           include Diagnostics
         end
