@@ -5,6 +5,7 @@ puts "\tLoading wilhelm/virtual/device/constants/events"
 require_relative 'events/bmbt'
 require_relative 'events/cluster'
 require_relative 'events/display'
+require_relative 'events/lcm'
 require_relative 'events/mfl'
 require_relative 'events/radio'
 require_relative 'events/tel'
@@ -37,6 +38,7 @@ module Wilhelm
         module State
           include Cluster::State
           include Display::State
+          include LCM::State
           include Radio::State
 
           STATES = constants.map { |c| const_get(c) }
