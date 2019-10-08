@@ -4249,6 +4249,14 @@
       - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
       - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
 
+0xA6: # TEL-ANZV-A6
+  :properties:
+    :short_name: TEL-ANZV-A6
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - A6 00 00 from Ted
+
 0xA7: # NAV-RAD-A7
   :properties:
     :short_name: NAV-RAD-A7
@@ -4263,9 +4271,9 @@
       - 3F is navi. volume on 0x4E..
       - registration of... sources?
 
-0xA9: # NAV-TEL-A9
+0xA9: # ASSIST-A9
   :properties:
-    :short_name: NAV-TEL-A9
+    :short_name: ASSIST-A9
     :long_name: Unknown
   :klass: Base
 
