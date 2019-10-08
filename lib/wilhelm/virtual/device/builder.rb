@@ -14,21 +14,22 @@ module Wilhelm
             emulated: 'Emulated',
             augmented: 'Augmented' }.freeze
 
-        CLASS_MAP =
-          { bmbt: 'BMBT',
-            cdc: 'CDC',
-            dia: 'Diagnostics',
-            dsp: 'DSP',
-            gfx: 'GFX',
-            ike: 'IKE',
-            lcm: 'LCM',
-            mid: 'MID',
-            mfl: 'MFL',
-            rad: 'Radio',
-            ses: 'SES',
-            tcu: 'TCU',
-            tel: 'Telephone',
-            tv: 'TV' }.freeze
+        CLASS_MAP = {
+          bmbt: 'BMBT',
+          cdc: 'CDC',
+          dia: 'Diagnostics',
+          dsp: 'DSP',
+          gfx: 'GFX',
+          ike: 'IKE',
+          lcm: 'LCM',
+          mid: 'MID',
+          mfl: 'MFL',
+          rad: 'Radio',
+          ses: 'SES',
+          tcu: 'TCU',
+          tel: 'Telephone',
+          tv: 'TV'
+        }.freeze
 
         attr_reader :ident, :klass
 
