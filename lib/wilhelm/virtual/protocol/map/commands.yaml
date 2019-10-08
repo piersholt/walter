@@ -3535,16 +3535,6 @@
   :parameters:
     :light:
       :type: :integer
-  :meta:
-    :notes:
-      - to date it alternates between two values 0xED and 0xFF
-      - it is triggered by the external lights being switched on
-      - 0xFF is off
-      - 0xED seems to be highest 'on' value
-    :senders:
-      - LCM
-    :recipients:
-      - GLO-L
 
 0x5D: # 58G-REQ
   :properties:
@@ -4464,10 +4454,15 @@
       :short_name: LCD-SET
       :long_name: LCD Brightness
     :meta:
-      - absence of third argument will have BMBT reply with current brightness
-      - gfx   bmbt	05  40 01
-      - bmbt  gfx	  06  7F
-      - this is what causes the bar meter value to change
+      - Request BMBT LCD Brightness:
+        - gfx bmbt 05 40 01
+        - bmbt gfx 06 7F
+        - this will update brightness value in Settings
+      - Set BMBT LCD Brightness:
+        - gfx bmbt 05 41 01 60
+        - gfx bmbt 05 42 01 60
+        - 0x41 and 0x42 may represent BMBT and RCM
+        - when in service mode, only 0x41 is sent!
 
   :meta:
     - when radio clear error memory selected
