@@ -9,6 +9,7 @@ module Wilhelm
 
       include Listener
       include Directory
+      include Info
       include LastNumbers
       include Top8
       include LED
