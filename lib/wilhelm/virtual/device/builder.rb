@@ -25,9 +25,11 @@ module Wilhelm
           gfx: 'GFX',
           ike: 'IKE',
           lcm: 'LCM',
+          mid: 'MID',
           mfl: 'MFL',
           rad: 'Radio',
           ses: 'SES',
+          tcu: 'TCU',
           tel: 'Telephone',
           tv: 'TV'
         }.freeze
