@@ -41,6 +41,8 @@ module Wilhelm
           sms_select(args)
         when SOS_OPEN
           generate_sos(args)
+        when INFO_OPEN
+          generate_info(args)
         end
       end
 
@@ -94,6 +96,11 @@ module Wilhelm
       def generate_sos(*args)
         LOGGER.debug(PROG) { "#generate_sos(#{args})" }
         @api_object.sos_open(telematics.to_h)
+      end
+
+      def generate_info(*args)
+        LOGGER.debug(PROG) { "#generate_info(#{args})" }
+        @api_object.info_open(info)
       end
     end
   end

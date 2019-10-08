@@ -16,11 +16,11 @@ module Wilhelm
 
           def info
             Info.new(
-              signal_strength(rstrength),
-              call_costs_current(rcurrent),
-              call_cost_total(rtotal),
-              call_time_minutes(rmin),
-              call_time_seconds(rsec)
+              rstrength,
+              rcurrent,
+              rtotal,
+              rmin,
+              rsec
             )
           end
 
