@@ -16,6 +16,8 @@ module Wilhelm
       MASK_LABEL = "%-#{DEFAULT_LABEL_WIDTH}s".freeze
 
       attr_accessor :map, :dictionary, :label
+      alias states map
+
       def initialize(configuration, integer)
         super(configuration, *integer)
       end

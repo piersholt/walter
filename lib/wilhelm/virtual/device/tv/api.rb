@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'api/controls'
-require_relative 'api/diagnostics'
+require_relative 'api/monitor'
 require_relative 'api/settings'
 
 module Wilhelm
   module Virtual
     class Device
-      module BMBT
-        # API for command related to keys
+      module TV
+        # Top level TV API
         module API
-          include Controls
-          include Diagnostics
+          include Monitor
           include Settings
         end
       end

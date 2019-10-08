@@ -24,6 +24,10 @@ module Wilhelm
             def negative?(*integers)
               integers.any?(&:negative?)
             end
+
+            def range?(range, *values)
+              values.all? { |i| range.cover?(i) }
+            end
           end
         end
       end

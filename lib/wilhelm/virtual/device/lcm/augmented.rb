@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'augmented/state'
+require_relative 'augmented/sent'
+
 module Wilhelm
   module Virtual
     class Device
@@ -8,6 +11,9 @@ module Wilhelm
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
           include API
+
+          include State
+          include Sent
 
           PUBLISH   = [ODO_REQ, VEH_LCM, LAMP_REP, CLUSTER_REP].freeze
           SUBSCRIBE = [ODO_REP, VEH_LCM_REQ, LAMP_REQ, CLUSTER_REQ].freeze
@@ -24,9 +30,9 @@ module Wilhelm
               logger.debug(moi) { "Tx: VEH_LCM #{d2h(command_id)}" }
             when LAMP_REP
               logger.debug(moi) { "Tx: LAMP_REP #{d2h(command_id)}" }
-              return false
             when CLUSTER_REP
               logger.debug(moi) { "Tx: CLUSTER_REP #{d2h(command_id)}" }
+              evaluate_cluster_rep(message.command)
             end
           end
 

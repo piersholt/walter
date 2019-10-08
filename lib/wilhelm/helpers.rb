@@ -16,6 +16,7 @@ require_relative 'helpers/observation'
 require_relative 'helpers/time'
 require_relative 'helpers/checksum'
 require_relative 'helpers/recovery'
+require_relative 'helpers/signed_magnitude'
 
 module Wilhelm
   # Helpers

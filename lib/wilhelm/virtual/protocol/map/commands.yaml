@@ -746,6 +746,7 @@
   :meta:
     :examples:
       - from GFX 02 0C
+      - from VID 00 0C if 'incoming' is set!
 
 # BMBT/MID --------------------------------------------------------------------
 
@@ -1976,12 +1977,20 @@
     :mode:
       :type: :map
       :dictionary:
-        0x0f: On/Off
+        0x08: 'On'
+        0x0f: 'Off'
 
         0x10: Adjust
 
-        0x28: Demo Off
+        0x08: Demo Off
+        0x09: Concert Hall
+        0x0a: Jazz Club
+        0x0b: Cathedral
+        0x0c: Memo 1
+        0x0d: Memo 2
+        0x0e: Memo 3
 
+        0x28: Demo Off
         0x29: Concert Hall
         0x2a: Jazz Club
         0x2b: Cathedral
@@ -2550,21 +2559,21 @@
         0x12: (Aux.) Heating (On)           # --
         0x13: (Aux.) Vent. (Off)            # --
         0x14: (Aux.) Vent. (On)             # --
-
+        0x1b: (Aux.) Status                 # [Boolean Request]
     :control:
       :type: :map
       :map:
         0x00: --
       :dictionary:
-        0b0000_0001: Lap/Variable Request
-        0b0000_0010: TBC
+        0b0000_0001: Variable Request
+        0b0000_0010: Boolean Request
         0b0000_0100: 'On/Start'
         0b0000_1000: 'Off/Stop'
 
         0b0001_0000: Recalculate
         0b0010_0000: Set As Current Speed
-        0b0100_0000: '?'
-        0b1000_0000: '?'
+        0b0100_0000: '0b0100_0000'
+        0b1000_0000: '0b1000_0000'
   :index:
     :field: 0
     :control: 1
@@ -2605,7 +2614,7 @@
             1: Full
         :audio_obc:
           :type: :switch
-          :label: Audio+OBC (BM23)
+          :label: Audio+OBC (MK1/TV)
           :states:
             0: :off
             1: :on
@@ -2860,7 +2869,7 @@
 
 # RADIO -----------------------------------------------------------------------
 
-0x4A: # RAD-LED
+0x4A: # RAD-LED (TAPE-CONTROL)
   :properties:
     :short_name: RAD-LED
     :long_name: Radio LED
@@ -2868,7 +2877,6 @@
   :parameters:
     :led:
       :type: :map
-      # I think this is because tape is part of the BMBT? Like the CDC, it needs status updates to know if to play audio etc?
       :dictionary:
         0x00: (LED) Off
         0x90: (LED) Off (Reset)
@@ -2897,11 +2905,11 @@
     :recipients:
       - BMBT
 
-0x4B: # SRC?
+0x4B: # TAPE
   # NOTE: defaulted to Base to due to Parameterized parsing issues
   :klass: Base
   :properties:
-    :short_name: TAPE?
+    :short_name: TAPE
     :long_name: Audio Device Control
   :parameters:
     :control:
@@ -2932,79 +2940,138 @@
 0x4E: # SRC-SND
   :properties:
     :short_name: SRC-SND
-    :long_name: Select external audio input for tv?
-  :klass: Parameterized::Base
-  :index:
-    :volume: 0
-    :source: 1
-  :parameters:
-    :volume:
-      :type: :map
-      :dictionary:
-        0x64: Navi. volume 1
-        0x54: Navi. volume 2
-        0x44: Navi. volume 3
-        0x34: Navi. volume 4
-        0x24: Navi. volume 5
-        0x14: Navi. volume 6
-        0x04: Navi. volume 7
-        0x1c: Navi. volume 8
-        0x2c: Navi. volume 9
-        0x3c: Navi. volume 10
-        0x5c: Navi. volume 11
-        0x6c: Navi. volume 12
-        0x7c: Navi. volume 13
-        0x9c: Navi. volume 14
-        0xac: Navi. volume 15
-        0xbc: Navi. volume 16
-        0xdc: Navi. volume 17
-        0xec: Navi. volume 18
-        0xfc: Navi. volume 19
-    :source:
-      :type: :map
-      :dictionary:
-        0x3f: Navigation
+    :long_name: Source volume...?
+  :klass: Base
+  :meta:
+    - 3B 05 68 4E 00 00 18 (TV off/voice command end)
+    - 3B 05 68 4E 01 00 18 (TV on) MUTE?
+    - 3B 05 68 4E XX 3F 4B (Voice command/set navi. volume)
+    - telephone mute is switched input
 
 0x4F: # SRC-GFX
-  # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Parameterized::Base
-  :properties:
-    :short_name: SRC-GFX
-    :long_name: Display Output
-  :parameters:
-    :action:
-      :type: :map
-      :map:
-        0x00: DISPLAY_OFF
-        0x10: DISPLAY_ON
-        0x01: TV
-        0x02: MENU
-      :dictionary:
-        # Sent to BMBT
-        0x00: BMBT Display Off
-        0x10: BMBT Display On
-        # Sent to NAV-JP
-        0x01: TV On- disable nav?
-        0x02: TV off- resume nav?
-    :nav:
-      :type: :map
-      :map:
-        0x00: nav
-      :dictionary:
-        0x00: unknown
-  :index:
-    :action: 0
-    :nav: 1
-  :meta:
-    :senders:
-      - GFX (0x3B)
-    :recipients:
-      :nav_jp:
-        - 01    (TV ON)
-        - 02 00 (TV OFF)
-      :bmbt:
-        - 00 (Monitor Off)
-        - 10 (Monitor On)
+  :schemas:
+    - :bmbt
+    - :tv
+    - :nav_jp
+  :bmbt:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: MON-GT*
+      :long_name: Display Output
+    :meta:
+      # Navigation Computer
+      - 00 Monitor ON
+      - 10 Monitor OFF
+      # Video Module
+      - 02 Monitor OFF
+      - 12 Monitor ON
+    :index:
+      :a: 0
+    :parameters:
+      :a: &monitor_a
+        :type: :bit_array
+        :index:
+          :power: 3
+          :source: !ruby/range
+                      begin: 6
+                      end: 7
+                      excl: false
+        :parameters:
+          :power:
+            :type: :switch
+            :label: 'Power'
+            :states:
+              0b0: :unpowered
+              0b1: :powered
+            :dictionary:
+              0b0: Off
+              0b1: On
+          :source:
+            :type: :switch
+            :label: 'Source'
+            :states:
+              0b00: :nav
+              0b01: :tv
+              0b10: :video
+              0b11: :off
+            :dictionary:
+              0b00: Navigation (GT)
+              0b01: TV
+              0b10: Video Module (GT)
+
+  :tv:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: MON-TV*
+      :long_name: Display Output
+    :index:
+      :a: 0
+      :b: 1
+    :parameters:
+      :a: *monitor_a
+      :b:
+        :type: :bit_array
+        :index:
+          :aspect: !ruby/range
+                      begin: 2
+                      end: 3
+                      excl: false
+          :encoding: !ruby/range
+                      begin: 6
+                      end: 7
+                      excl: false
+        :parameters:
+          :aspect:
+            :type: :switch
+            :label: 'Aspect Ratio'
+            :states:
+              0b00: :standard
+              0b01: :wide
+              0b10: :off
+              0b11: :zoom
+            :dictionary:
+              0b00: "4:3"
+              0b01: "16:9"
+              0b11: "Zoom"
+          :encoding:
+            :type: :switch
+            :label: 'Encoding'
+            :states:
+              0b00: :off
+              0b01: :ntsc
+              0b10: :pal
+              0b11: :off
+            :dictionary:
+              0b01: "NTSC"
+              0b10: "PAL"
+    :meta:
+      - 11 02 4:3
+      - 11 12 16:9
+      - 11 32 Zoom
+      - 11 11 NTSC (AV/Teletext)
+      - 11 01 Menu 4:3
+      - 11 11 Menu 16:19
+      - 11 31 Menu Zoom
+
+      - 11 11 (without actual RGB switch... it's darker...)
+      - 12 11 Off
+      - 14 11
+
+  :nav_jp:
+    :klass: Base
+    :properties:
+      :short_name: SRC-NAV_JP*
+      :long_name: Display Output
+    :meta:
+      # Navigation Computer
+      - 01 00 (TV on)
+      - 02 00 (TV off)
+      # Video Module
+      # - 01
+      - 02 Monitor OFF
+      - 11 TV ON
+      - 12 Monitor ON (TV OFF)
+      # - 14
 
 # CLUSTER/HUD -----------------------------------------------------------------
 
@@ -3468,16 +3535,6 @@
   :parameters:
     :light:
       :type: :integer
-  :meta:
-    :notes:
-      - to date it alternates between two values 0xED and 0xFF
-      - it is triggered by the external lights being switched on
-      - 0xFF is off
-      - 0xED seems to be highest 'on' value
-    :senders:
-      - LCM
-    :recipients:
-      - GLO-L
 
 0x5D: # 58G-REQ
   :properties:
@@ -3509,11 +3566,11 @@
     :long_name: Unknown
   :klass: Base
 
-# SES -------------------------------------------------------------------------
+# MRS -------------------------------------------------------------------------
 
-0x70: # SRS-GLO-70
+0x70: # MRS-GLO-70
   :properties:
-    :short_name: SRS-GLO-70
+    :short_name: MRS-GLO-70
     :long_name: Unknown
   :klass: Base
 
@@ -4198,11 +4255,13 @@
     :long_name: Unknown
   :klass: Base
   :meta:
-    - seemingly always..
     - 7F 04 68 A7 10 A4
     - 7F 04 68 A7 30 84
-    - 7F 05 68 A7 1F 00 AA
-    - 7F 05 68 A7 3F 00 8A
+    - at ignition:
+      - 7F 05 68 A7 1F 00 AA
+      - 7F 05 68 A7 3F 00 8A
+      - 3F is navi. volume on 0x4E..
+      - registration of... sources?
 
 0xA9: # NAV-TEL-A9
   :properties:
@@ -4210,16 +4269,19 @@
     :long_name: Unknown
   :klass: Base
 
-0xAB: # NAV-GFX-AB
+0xAB: # NAV-GFX2-AB
   :properties:
-    :short_name: NAV-GFX-AB
+    :short_name: NAV-GFX2-AB
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - 0x21 is sent whenever main is rendered
+    - other value is 0x11 which is sporadic
 
-0xAF: # NAV-SES-AF
+0xAF: # NAV-VOICE-AF
   :properties:
-    :short_name: NAV-SES?
-    :long_name: Unknown
+    :short_name: NAV-VOICE-AF
+    :long_name: Query if voice recognition present?
   :klass: Base
 
 # PING/PONG -------------------------------------------------------------------
@@ -4392,10 +4454,15 @@
       :short_name: LCD-SET
       :long_name: LCD Brightness
     :meta:
-      - absence of third argument will have BMBT reply with current brightness
-      - gfx   bmbt	05  40 01
-      - bmbt  gfx	  06  7F
-      - this is what causes the bar meter value to change
+      - Request BMBT LCD Brightness:
+        - gfx bmbt 05 40 01
+        - bmbt gfx 06 7F
+        - this will update brightness value in Settings
+      - Set BMBT LCD Brightness:
+        - gfx bmbt 05 41 01 60
+        - gfx bmbt 05 42 01 60
+        - 0x41 and 0x42 may represent BMBT and RCM
+        - when in service mode, only 0x41 is sent!
 
   :meta:
     - when radio clear error memory selected
