@@ -111,12 +111,14 @@ module Wilhelm
               def evaluate_src_snd(*); end
 
               # Command 0x4F SRC-GFX
-              def evaluate_src_gfx(command)
-                case command.action.value
-                when MONITOR_ON
-                  monitor_off
-                when MONITOR_OFF
+              def evaluate_src_gfx(message)
+                logger.debug(moi) { '#evaluate_src_gfx' }
+                return false if message.to?(:nav_jp)
+                case message.command.a.parameters[:power].ugly
+                when :powered
                   monitor_on
+                when :unpowered
+                  monitor_off
                 end
               end
 
