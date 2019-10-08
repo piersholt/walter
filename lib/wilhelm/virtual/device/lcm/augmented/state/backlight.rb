@@ -9,6 +9,7 @@ module Wilhelm
             # LCM::Augmented::State::Backlight
             module Backlight
               include Wilhelm::Helpers::DataTools
+              include Wilhelm::Helpers::Bitwise
               include Virtual::Constants::Events::LCM
               include Constants
 
