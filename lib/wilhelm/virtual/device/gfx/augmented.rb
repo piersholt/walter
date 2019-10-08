@@ -64,7 +64,7 @@ module Wilhelm
               evaluate_src_snd(message.command)
             when SRC_GFX
               logger.debug(moi) { "Tx: Source GFX (#{d2h(SRC_GFX)})" }
-              evaluate_src_gfx(message.command)
+              evaluate_src_gfx(message)
             end
           end
 
