@@ -4252,10 +4252,12 @@
 0xA6: # TEL-ANZV-A6
   :properties:
     :short_name: TEL-ANZV-A6
-    :long_name: Unknown
+    :long_name: Message/Mail Icon
   :klass: Base
   :meta:
-    - A6 00 00 from Ted
+    - tel:
+      - only second byte has effect
+      - bitfield LSB mail icom on BMBT
 
 0xA7: # NAV-RAD-A7
   :properties:
@@ -4276,6 +4278,27 @@
     :short_name: ASSIST-A9
     :long_name: Unknown
   :klass: Base
+  :meta:
+    0x01: Request / unknown
+    0x02: Reply? / unknown
+
+    0x03: Request / 'current network request'
+    0x04: Reply? / 'current network request'
+
+    0x0a: Request / 'current phone status'
+    0x0b: Reply / 'current phone status'
+
+    0x12: Request / 0x12
+    0x13: Reply / 0x13
+
+    0x1c: Request / 0x1c
+    0x1d: Reply? / 0x1d
+
+    0x31: Request / Telematics
+    0x32: Reply / VIN
+    0x33: Reply / Registration
+    0x34: Reply / Vehicle Type
+    0x35: Reply / Colour
 
 0xAB: # NAV-GFX2-AB
   :properties:

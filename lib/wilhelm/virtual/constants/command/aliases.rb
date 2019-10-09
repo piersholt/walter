@@ -102,6 +102,7 @@ module Wilhelm
           # Telematics
           COORD         = 0xa2
           ADDR          = 0xa4
+          ICON          = 0xa6
           ASSIST        = 0xa9
 
           GFX2          = 0xab
