@@ -8,7 +8,7 @@ module Wilhelm
         class Emulated < Device::Emulated
           PROC = 'TCU::Emulated'
 
-          SUBSCRIBE = [PING].freeze
+          SUBSCRIBE = [PING, 0xA9].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
