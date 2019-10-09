@@ -45,7 +45,7 @@ module Wilhelm
             INPUT,
             MFL_VOL, MFL_FUNC,
             BMBT_A,
-            COORD, ADDR
+            COORD, ADDR, ASSIST
           ].freeze
 
           LogActually.is_all_around(:tel)
@@ -84,6 +84,9 @@ module Wilhelm
             when ADDR
               logger.debug(PROC) { "Rx: ADDR 0x#{d2h(ADDR)}" }
               handle_telematics_addr(message.command)
+            when ASSIST
+              logger.debug(PROC) { "Rx: ASSIST 0x#{d2h(ASSIST)}" }
+              false
             end
 
             super(message)
