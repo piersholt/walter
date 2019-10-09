@@ -27,6 +27,7 @@ module Wilhelm
           lcm: 'LCM',
           mid: 'MID',
           mfl: 'MFL',
+          nav: 'Navigation',
           rad: 'Radio',
           ses: 'SES',
           tcu: 'TCU',
