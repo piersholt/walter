@@ -1294,7 +1294,7 @@
           0x5_3: '[Directory] Contact Number/Clear' # "98272742"
 
           0x6_1: '[Dial/Recent] Clear'
-          0x6_3: '[Dial/Recent] Number'
+          0x6_3: '[Dial/Recent/Info] Number'
 
           0x8_0: '[Top 8] Clear'
           0x8_1: '[Top 8] Contact Name'
@@ -1591,12 +1591,15 @@
     :leds:
       :type: :bit_array
       :index:
-        :red: 7
-        :red_blink: 6
-        :yellow: 5
+        # MSB          0
+        # MSB          1
+        :green_blink:  2
+        :green:        3
+
         :yellow_blink: 4
-        :green: 3
-        :green_blink: 2
+        :yellow:       5
+        :red_blink:    6
+        :red:          7
       :parameters:
         :red:
           :label: Red
