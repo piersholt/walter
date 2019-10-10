@@ -3573,6 +3573,11 @@
     :short_name: MRS-GLO-70
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - from 540
+    - A4 06 BF 70 00 00 1F 72
+    - A4 06 BF 70 03 00 0A 64
+    - A4 06 BF 70 00 00 1F 72
 
 # KEY -------------------------------------------------------------------------
 
@@ -3690,6 +3695,12 @@
     - gm	glo_l	76 02
     - gm	glo_l	76 00
     - I believe GM is too old for car/key memory
+
+0x77: # GM to RLS?
+  :meta:
+    - 2018 10 01
+    - 00 04 E8 77 01 9A
+    - 00 04 E8 77 00 9B
 
 0x78: # MEMORY
   :properties:
@@ -3873,6 +3884,7 @@
   :klass: Base
   :meta:
     - ihka to glo_l 01 when Aux. vent. turned OFF
+    - 5B 04 BF 82 01 63
 
 0x83: # IHKA-IKE-83
   :properties:
@@ -3880,8 +3892,9 @@
     :long_name: Unknown
   :klass: Base
   :meta:
-    :senders:
-      - IHKA
+    - 5B 04 80 83 80 DC
+    - 5B 04 80 83 D2 8E
+    - 5B 04 80 83 00 5C
 
 0x86: # IHKA-NAV-86
   :properties:
@@ -3889,9 +3902,8 @@
     :long_name: Unknown
   :klass: Base
   :meta:
-    :notes:
-      - reply from IHKA to nav_eu
-      - it's not addressed to global? very specific?
+    - 5B 04 7F 86 01 A7
+    - 5B 04 7F 86 00 A6
 
 0x87: # NAV-IHKA-87
   :properties:
@@ -3899,8 +3911,8 @@
     :long_name: Unknown
   :klass: Base
   :meta:
-    :notes:
-      - send by :nav_eu???? to IKHA
+    - 7F 03 5B 87 A0
+    - no arguments, presumably a request?
 
 # TELEMATICS ------------------------------------------------------------------
 
@@ -4291,6 +4303,8 @@
     :short_name: NAV-VOICE-AF
     :long_name: Query if voice recognition present?
   :klass: Base
+  :meta:
+    - 7F 04 B0 AF 04 60
 
 # PING/PONG -------------------------------------------------------------------
 
