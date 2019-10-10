@@ -3875,6 +3875,14 @@
     :recipients:
       - GLO-L
 
+0x7D: # GM-SHD-7D
+  :properties:
+    :short_name: GM-DIA-7D
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - diagnostics ping from GM
+
 # CLIMATE CONTROL (IHKA) ------------------------------------------------------
 
 0x82: # IHKA-GLO-82
@@ -4289,6 +4297,10 @@
     :long_name: Unknown
   :klass: Base
 
+0xAA: # GFX2-NAV-AA
+  :meta:
+    - control from rear display?
+
 0xAB: # NAV-GFX2-AB
   :properties:
     :short_name: NAV-GFX2-AB
@@ -4613,12 +4625,6 @@
   :klass: Base
 
 # DIAGNOSTICS: MODULE?
-
-0x7d: # GM-DIA 7D
-  :properties:
-    :short_name: GM-DIA-7D
-    :long_name: Unknown
-  :klass: Base
 
 0x9c: # SLS-TRAN
   :properties:
