@@ -3922,6 +3922,14 @@
     - 7F 03 5B 87 A0
     - no arguments, presumably a request?
 
+# TBC ------------------------------------------------------
+
+0x9E: # 0x9E
+  :properties:
+    :short_name: TBC-9E
+    :long_name: Unknown
+  :klass: Base
+
 # TELEMATICS ------------------------------------------------------------------
 
 0xA2: # NAV-TEL-COORD
@@ -4298,6 +4306,10 @@
   :klass: Base
 
 0xAA: # GFX2-NAV-AA
+  :properties:
+    :short_name: GFX2-NAV-AA
+    :long_name: Unknown
+  :klass: Base
   :meta:
     - control from rear display?
 
