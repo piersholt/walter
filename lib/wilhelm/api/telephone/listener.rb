@@ -20,7 +20,7 @@ module Wilhelm
         end
 
         def register_telephone_listener(observer)
-          logger.debug(PROG) { "#register_telephone_listener()" }
+          logger.debug(PROG) { "#register_telephone_listener(#{observer.class})" }
           add_observer(observer, :telephone_update)
         end
       end
