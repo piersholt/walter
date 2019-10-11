@@ -14,7 +14,7 @@ module Wilhelm
 
       def setup_bus
         Bus::Initialization
-          .new(augmented: %i[gfx bmbt mfl ike lcm], emulated: %i[rad tel dsp tv ses dia mid tcu])
+          .new(augmented: %i[gfx bmbt mfl ike lcm], emulated: %i[rad tel dsp tv ses dia mid tcu gt2])
           .execute
       end
 

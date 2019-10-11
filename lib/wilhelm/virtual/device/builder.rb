@@ -20,6 +20,7 @@ module Wilhelm
           dia: 'Diagnostics',
           dsp: 'DSP',
           gfx: 'GFX',
+          gt2: 'GT2',
           ike: 'IKE',
           lcm: 'LCM',
           mid: 'MID',
