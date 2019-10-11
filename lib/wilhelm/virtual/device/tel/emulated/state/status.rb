@@ -41,6 +41,12 @@ module Wilhelm
                 no_friends.status!
               end
 
+              # 6: Menu
+
+              def menu!
+                menu(1).status!
+              end
+
               # 7: Handsfree/Handset
               def handset!
                 handset.status!
