@@ -92,6 +92,7 @@ module Wilhelm
 
         def kl_30(context)
           LOGGER.info(DISPLAY_CAPTURED) { '#kl_30' }
+          LOGGER.warn(DISPLAY_CAPTURED) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
