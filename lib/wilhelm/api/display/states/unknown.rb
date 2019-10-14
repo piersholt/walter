@@ -49,7 +49,7 @@ module Wilhelm
 
         def prog_on(context)
           LOGGER.info(DISPLAY_UNKNOWN) { '#prog_on' }
-          context.change_state(Busy.new)
+          context.change_state(Busy::Prog.new)
         end
 
         # def code_off(context)

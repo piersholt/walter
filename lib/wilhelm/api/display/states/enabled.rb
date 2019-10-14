@@ -70,7 +70,7 @@ module Wilhelm
 
         def prog_on(context)
           LOGGER.info(DISPLAY_ENABLED) { '#prog_on' }
-          context.change_state(Busy.new)
+          context.change_state(Busy::Prog.new)
         end
       end
     end
