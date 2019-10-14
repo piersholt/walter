@@ -10,6 +10,7 @@
 
 0x43: :gt2
 0x44: :ews
+0x46: :cid # Central Information Display (CID) no idea?
 0x47: :rcm
 
 0x50: :mfl

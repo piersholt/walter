@@ -17,6 +17,7 @@ module Wilhelm
         CLASS_MAP = {
           bmbt: 'BMBT',
           cdc: 'CDC',
+          cid: 'CID',
           dia: 'Diagnostics',
           dsp: 'DSP',
           gfx: 'GFX',

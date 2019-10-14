@@ -20,6 +20,7 @@ require_relative 'device/constants'
 
 require_relative 'device/bmbt'
 require_relative 'device/cdc'
+require_relative 'device/cid'
 require_relative 'device/diagnostics'
 require_relative 'device/dsp'
 require_relative 'device/gfx'
