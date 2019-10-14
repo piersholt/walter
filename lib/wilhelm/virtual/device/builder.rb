@@ -26,6 +26,7 @@ module Wilhelm
           mid: 'MID',
           mfl: 'MFL',
           rad: 'Radio',
+          rcm: 'RCM',
           ses: 'SES',
           tcu: 'TCU',
           tel: 'Telephone',
