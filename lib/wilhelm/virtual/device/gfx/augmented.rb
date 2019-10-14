@@ -50,6 +50,9 @@ module Wilhelm
             when INPUT
               logger.debug(moi) { "Tx: Input (#{d2h(INPUT)})" }
               evaluate_input(message.command)
+            when DSP_SET
+              logger.debug(moi) { "Tx: Input (#{d2h(DSP_SET)})" }
+              evaluate_dsp_set(message.command)
             when OBC_BOOL
               logger.debug(moi) { "Tx: OBC Boolean (#{d2h(OBC_BOOL)})" }
               evaluate_obc_bool(message.command)

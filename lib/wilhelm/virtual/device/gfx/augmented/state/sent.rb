@@ -48,24 +48,33 @@ module Wilhelm
                 end
               end
 
+              # Command 0x34 DSP-SET
+              def evaluate_dsp_set(*)
+                notify_observers(
+                  event,
+                  device: ident,
+                  menu: :dsp
+                )
+              end
+
               # Command 0x40 OBC-VAR
               def evaluate_obc_var(command)
                 id = command.field.value
                 # Notify when a parameter is requested for render.
                 # Used to set API::Display state to Busy when
                 # display is OBC, Settings, or Aux. Heat/Vent.
-                return false unless REQUESTED_FIELDS.include?(id)
+                return false unless VARIABLE_FIELDS.include?(id)
                 changed
                 event =
                   case id
-                  when *OBC_FIELDS
-                    GFX_OBC_BOOL
-                  when *AUX_FIELDS
-                    GFX_AUX_BOOL
-                  when *SET_FIELDS
+                  when *FIELDS_VAR_SETTINGS
                     GFX_SET_BOOL
-                  when *CODE_FIELDS
+                  when *FIELDS_VAR_OBC
+                    GFX_OBC_BOOL
+                  when *FIELDS_VAR_CODE
                     GFX_CODE_BOOL
+                  when *FIELDS_VAR_AUX
+                    GFX_AUX_BOOL
                   end
                 notify_observers(
                   event,
@@ -84,12 +93,12 @@ module Wilhelm
                 changed
                 event =
                   case id
-                  when *OBC_FIELDS
-                    GFX_OBC_BOOL
-                  when *AUX_FIELDS
-                    GFX_AUX_BOOL
-                  when *SET_FIELDS
+                  when *FIELDS_BOOL_SETTINGS
                     GFX_SET_BOOL
+                  when *FIELDS_BOOL_OBC
+                    GFX_OBC_BOOL
+                  when *FIELDS_BOOL_AUX
+                    GFX_AUX_BOOL
                   end
                 notify_observers(
                   event,
