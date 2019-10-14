@@ -39,6 +39,11 @@ module Wilhelm
           LOGGER.info(DISPLAY_BUSY) { '#code_on' }
           context.change_state(Busy::Code.new)
         end
+
+        def prog_on(context)
+          LOGGER.info(DISPLAY_BUSY) { '#prog_on' }
+          context.change_state(Busy::Prog.new)
+        end
       end
     end
   end
