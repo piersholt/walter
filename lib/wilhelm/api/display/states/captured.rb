@@ -22,7 +22,7 @@ module Wilhelm
         end
 
         def render_header(context, view)
-          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_header(context, view)' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#render_header(context, view)' }
           context.default_header = view
           context.header = view
 
