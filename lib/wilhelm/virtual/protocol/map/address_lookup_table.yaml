@@ -10,7 +10,6 @@
 
 0x43: :gt2
 0x44: :ews
-0x46: :tv2
 0x47: :unknown
 
 0x50: :mfl
@@ -25,6 +24,7 @@
 
 0x80: :ike
 
+# 0xa0: :fid # Multi-information display, rear passenger compartment
 0xa4: :mrs
 0xac: :ehc
 
@@ -38,7 +38,7 @@
 
 0xd0: :lcm
 
-0xe0: :iris
+# 0xe0: :iris integrated radio and information system
 0xe7: :anzv
 0xe8: :rls
 0xed: :tv
@@ -54,4 +54,3 @@
 # Tire Pressure Control/Warning (RDC/W)
 # Radio clock (RCC)
 
-# 0xa0 Multi-information display, rear passenger compartment (FID)
