@@ -61,25 +61,16 @@ module Wilhelm
           CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 
           DIAGNOSTICS = [
-            DIA_HELLO,
-            DIA_ERR_READ,
-            DIA_ERR_DEL,
-            DIA_MEM_READ,
-            DIA_MEM_WRITE,
-            DIA_COD_READ,
-            DIA_COD_WRITE,
-            DIA_STATUS,
-            DIA_VEH_CTRL,
-            SLF_CHK,
-            EHC_DIG,
-            EWS_ISN,
-            EWS_KEY,
-            EWS_COD,
-            EWS_INT,
-            DIA_TRANS,
-            EWS_X,
-            DIA_DATA,
-            EWS_END
+            0x00,
+            0x04, 0x05,
+            0x06, 0x07,
+            0x08, 0x09,
+            0x0b,
+            0x0c,
+            0x30, 0x3f,
+            0x60, 0x61, 0x65, 0x69, 0x6b,
+            0x9c, 0x9d, 0x9e, 0x9f,
+            0xa0, 0xa1
           ].freeze
 
           NOISEY_NG = {

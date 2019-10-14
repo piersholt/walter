@@ -117,23 +117,6 @@ module Wilhelm
 
           DIA_COD_READ  = 0x08
           DIA_COD_WRITE = 0x09
-
-          DIA_STATUS    = 0x0b
-          DIA_VEH_CTRL  = 0x0c
-
-          SLF_CHK       = 0x30
-          EHC_DIG       = 0x3f
-
-          EWS_ISN       = 0x60
-          EWS_KEY       = 0x65
-          EWS_COD       = 0x69
-          EWS_INT       = 0x6b
-
-          DIA_TRANS     = 0x9c
-          EWS_X         = 0x9f
-
-          DIA_DATA      = 0xa0
-          EWS_END       = 0xa2
         end
       end
     end

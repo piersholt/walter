@@ -539,7 +539,7 @@
           :states:
             0b000: :off
             0b001: :high_single
-            0b010: :high_continuous
+            0b010: :high_tone
             0b011: :high_double
             0b100: :low_single
           :dictionary:
@@ -2552,13 +2552,18 @@
         0x0e: (OBC) Timer                   # [On, Off]
         0x1a: (OBC) Timer (Lap)             # [Lap]
 
+        # CODE
+        # 0x0d: (Code) Code
+
         # AUX. HEAT/VENTILATION
         0x0f: (Aux.) Timer 1                # [On, Off]
         0x10: (Aux.) Timer 2                # [On, Off]
+        # 0x11..0x14 do not use control!
         0x11: (Aux.) Heating (Off)          # --
         0x12: (Aux.) Heating (On)           # --
         0x13: (Aux.) Vent. (Off)            # --
         0x14: (Aux.) Vent. (On)             # --
+        # Nothing from January to October.. KL-R???
         0x1b: (Aux.) Status                 # [Boolean Request]
     :control:
       :type: :map
@@ -2566,17 +2571,63 @@
         0x00: --
       :dictionary:
         0b0000_0001: Variable Request
+        # 0x01: (Settings) Time
+        # 0x02: (Settings) Date
+        # 0x0c: (Settings) Memo
+        # 0x03: (OBC) Temperature
+        # 0x04: (OBC) Consump. 1
+        # 0x05: (OBC) Consump. 2
+        # 0x06: (OBC) Range
+        # 0x07: (OBC) Distance
+        # 0x08: (OBC) Arrival
+        # 0x09: (OBC) Limit
+        # 0x0a: (OBC) Avg. Speed
+        # 0x0e: (OBC) Timer
+        # 0x1a: (OBC) Timer (Lap)
+        # 0x0f: (Aux.) Timer 1
+        # 0x10: (Aux.) Timer 2
+
         0b0000_0010: Boolean Request
+        # 0x0c: (Settings) Memo
+        # 0x09: (OBC) Limit
+        # 0x0e: (OBC) Timer
+        # 0x0d: (Code) Code
+        # 0x0f: (Aux.) Timer 1
+        # 0x10: (Aux.) Timer 2
+        # 0x1b: (Aux.) Status
+
         0b0000_0100: 'On/Start'
         0b0000_1000: 'Off/Stop'
+        # 0x0c: (Settings) Memo
+        # 0x09: (OBC) Limit
+        # 0x0e: (OBC) Timer
+        # 0x0f: (Aux.) Timer 1
+        # 0x10: (Aux.) Timer 2
 
         0b0001_0000: Recalculate
+        # 0x04: (OBC) Consump. 1
+        # 0x05: (OBC) Consump. 2
+        # 0x0a: (OBC) Avg. Speed
+
         0b0010_0000: Set As Current Speed
-        0b0100_0000: '0b0100_0000'
-        0b1000_0000: '0b1000_0000'
+        # 0x09: (OBC) Limit
+
+        0b0000_0011: '0b0000_0011'
+        # 0x09 (OBC) Limit
+        # 0x0e (OBC) Timer
+        # 0x1b (Aux.) Status
   :index:
     :field: 0
     :control: 1
+  :meta:
+    - 0x1b Aux:
+      - TV has multiple controls
+      - ED 05 80 41 1B 01 33
+      - ED 05 80 41 1B 02 30
+      - ED 05 80 41 1B 04 36
+      - GFX
+      - 3B 05 80 41 1B 02 E6
+      - 3B 05 80 41 1B 03 E7
 
 0x42: # PROG
   :properties:
@@ -2620,7 +2671,7 @@
             1: :on
         :info:
           :type: :switch
-          :label: Split Coded?
+          :label: Soft Button (Info)
           :states:
             0: :off
             1: :on
@@ -2953,10 +3004,10 @@
     - :bmbt
     - :tv
     - :nav_jp
-  :bmbt:
+  :bmbt: # this is actually :gfx (but conflicts with :nav_jp)
     :klass: Parameterized::Base
     :properties:
-      :short_name: MON-GT*
+      :short_name: GFX-BMBT*
       :long_name: Display Output
     :meta:
       # Navigation Computer
@@ -2995,14 +3046,14 @@
               0b10: :video
               0b11: :off
             :dictionary:
-              0b00: Navigation (GT)
+              0b00: Navigation GT
               0b01: TV
-              0b10: Video Module (GT)
+              0b10: Video GT
 
   :tv:
     :klass: Parameterized::Base
     :properties:
-      :short_name: MON-TV*
+      :short_name: TV-BMBT*
       :long_name: Display Output
     :index:
       :a: 0
@@ -3045,13 +3096,13 @@
               0b01: "NTSC"
               0b10: "PAL"
     :meta:
+      - 11 01 Menu 4:3
+      - 11 11 Menu 16:19
+      - 11 11 NTSC (AV/Teletext)
+      - 11 31 Menu Zoom
       - 11 02 4:3
       - 11 12 16:9
       - 11 32 Zoom
-      - 11 11 NTSC (AV/Teletext)
-      - 11 01 Menu 4:3
-      - 11 11 Menu 16:19
-      - 11 31 Menu Zoom
 
       - 11 11 (without actual RGB switch... it's darker...)
       - 12 11 Off
@@ -3156,7 +3207,7 @@
           :states:
             0b000: :off
             0b001: :high_single
-            0b010: :high_continuous
+            0b010: :high_tone
             0b011: :high_double
             0b100: :low_single
           :dictionary:
@@ -3924,11 +3975,69 @@
 
 # TBC ------------------------------------------------------
 
-0x9E: # 0x9E
+0x9C: # DIA-RAD
   :properties:
-    :short_name: TBC-9E
+    :short_name: DIA-9C
+    :long_name: Diagnostics Transport Mode?
+  :klass: Base
+  :parameters:
+    :index:
+      :mode: 0
+    :mode:
+      :type: :switch
+      :states:
+        0x00: :off
+        0x02: :on
+  :meta:
+    - 3F 04 68 9C 00 CF radio transport mode off
+    - 3F 04 68 9C 02 CD radio transport mode on
+
+0x9D: # DIA-BMBT (NO ARGS)
+  :properties:
+    :short_name: ???-9D
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - 3F 03 F0 9D 51 (BMBT)
+
+0x9E: # GFX-RCM?
+  :properties:
+    :short_name: GFX-RCM?
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - 3B 04 47 9E 01 E7 (RCM?)
+
+0x9F: # DIA-EWS, DIA-DSPC (NO ARGS)
+  :properties:
+    :short_name: DIA-9F
+    :long_name: Unknown?
+  :klass: Base
+  :meta:
+    - 3F 03 44 9F E7 (EWS)
+    - 3F 03 EA 9F 49 (DSPC)
+
+# TELEMATICS ------------------------------------------------------------------
+
+0xA0: # DIA-A0
+  :properties:
+    :short_name: DIA-A0
+    :long_name: Diagnostics Data
+  :klass: Base
+  :meta:
+    - 0x3B
+    - 0x7F
+    - 0xD0
+    - 0xF0
+
+0xA1: # DIA-A1 (NO ARGS)
+  :properties:
+    :short_name: DIA-A1
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - 3B 03 3F A1 A6
+    - 7F 03 3F A1 E2
 
 # TELEMATICS ------------------------------------------------------------------
 
@@ -4308,19 +4417,23 @@
 0xAA: # GFX2-NAV-AA
   :properties:
     :short_name: GFX2-NAV-AA
-    :long_name: Unknown
+    :long_name: Request NAV GT switch to navigation for routing to RCM
   :klass: Base
   :meta:
     - control from rear display?
+    - 43 04 7F AA 21 B3
+    - 7F 04 43 AB 01 92
 
 0xAB: # NAV-GFX2-AB
   :properties:
     :short_name: NAV-GFX2-AB
-    :long_name: Unknown
+    :long_name: NAV GT UI state?
   :klass: Base
   :meta:
-    - 0x21 is sent whenever main is rendered
-    - other value is 0x11 which is sporadic
+    - 0x01: nav (only ever received upon using 0xAA)
+    - 0x20: seems to come after 0x01 (only ever received upon using 0xAA)
+    - 0x21: main menu
+    - 0x11: resume guidance/directions
 
 0xAF: # NAV-VOICE-AF
   :properties:
@@ -4343,13 +4456,6 @@
   :properties:
     :short_name: PONG
     :long_name: Status Response
-    :status_map:
-      0x00: 'Reply'
-      0x01: 'Announce'
-      0x30: 'External Offline Respond'
-      0x31: 'External Offline Reset'
-      0x40: 'Alt. Reply'
-      0x41: 'Alt. Announce'
   :klass: Parameterized::Base
   :parameters:
     :status:
@@ -4361,6 +4467,13 @@
         0x31: 'External Offline Reset'
         0x40: 'Alt. Reply'
         0x41: 'Alt. Announce'
+      :map:
+        0x00: :reply
+        0x01: :announce
+        0x30: :external_offline_respond
+        0x31: :external_offline_reset
+        0x40: :alt_reply
+        0x41: :alt_announce
   :index:
     :status: 0
   :meta:
@@ -4635,43 +4748,5 @@
     :short_name: EWS-INT
     :long_name: EWS Internal State
   :klass: Base
-
-# DIAGNOSTICS: MODULE?
-
-0x9c: # SLS-TRAN
-  :properties:
-    :short_name: SLS-TRAN
-    :long_name: Diagnostics Transport Mode?
-  :klass: Base
-  :parameters:
-    :mode:
-      :type: :switch
-      :states:
-        0x02: :on
-        0x00: :off
-  :index:
-    :mode: 0
-  :meta:
-    - also send to LCM?
-    - DIA	LCM	9C 00
-    - DIA	LCM	9C 00
-
-0x9f: # EWS-X?
-  :properties:
-    :short_name: EWS-X?
-    :long_name: Unknown?
-  :klass: Base
-
-0xA0: # DIA-DATA
-  :properties:
-    :short_name: DIA-DATA
-    :long_name: Diagnostics Data
-  :klass: Base
-
-0xA1: # DIA-DATA-NAV
-  :properties:
-    :short_name: DIA-DATA-NAV
-    :long_name: Unknown
-    :klass: Base
 
 ...

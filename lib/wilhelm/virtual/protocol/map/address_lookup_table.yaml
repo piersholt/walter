@@ -10,10 +10,11 @@
 
 0x43: :gt2
 0x44: :ews
-0x46: :cid # Central Information Display (CID) no idea?
+0x46: :cid    # Central Information Display (CID) X3?
 0x47: :rcm
 
 0x50: :mfl
+0x53: :tbc
 0x5b: :ihka
 
 0x60: :pdc
@@ -25,7 +26,7 @@
 
 0x80: :ike
 
-# 0xa0: :fid # Multi-information display, rear passenger compartment
+0xa0: :fid    # Multi-information display, rear passenger compartment (FOND ZIS)
 0xa4: :mrs
 0xac: :ehc
 
@@ -33,14 +34,15 @@
 0xbb: :nav_jp
 0xbf: :glo_l
 
-0xc0: :mid
+0xc0: :mid    # Multi-information display (ZIS)
 0xc8: :tel
 0xca: :tcu
 
 0xd0: :lcm
 
-# 0xe0: :iris integrated radio and information system
-0xe7: :anzv
+0xe0: :iris   # integrated radio and information system
+0xea: :dspc   # DSP control set (E38?)
+0xe7: :anzv   # Display = "Anzeige"
 0xe8: :rls
 0xed: :tv
 
@@ -54,4 +56,3 @@
 # UNVERIFIED
 # Tire Pressure Control/Warning (RDC/W)
 # Radio clock (RCC)
-
