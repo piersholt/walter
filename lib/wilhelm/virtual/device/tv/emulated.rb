@@ -10,12 +10,15 @@ module Wilhelm
 
           PROC = 'TV::Emulated'
 
+          SUBSCRIBE = [PING].freeze
+
           def handle_virtual_receive(message)
             command_id = message.command.d
-            case command_id
-            when DSP_SET
-              true
-            end
+            return false unless subscribe?(command_id)
+            # case command_id
+            # when 0x00
+            #   logger.debug(PROC) { "Rx: 0x00 0x#{d2h(0x00)}" }
+            # end
 
             super(message)
           end
