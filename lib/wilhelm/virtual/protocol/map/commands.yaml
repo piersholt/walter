@@ -13,6 +13,15 @@
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
   :klass: Base
+  :schemas:
+    - :gfx
+
+  # SCHEMA 0x10 DIA-10*
+  :gfx:
+    :properties:
+      :short_name: DIA-10*
+      :long_name: Unknown
+    :klass: Base
 
 0x11: # IGN
   :properties:
@@ -3975,7 +3984,7 @@
 
 # TBC ------------------------------------------------------
 
-0x9C: # DIA-RAD
+0x9C: # DIA-9C (RAD)
   :properties:
     :short_name: DIA-9C
     :long_name: Diagnostics Transport Mode?
@@ -3992,23 +4001,23 @@
     - 3F 04 68 9C 00 CF radio transport mode off
     - 3F 04 68 9C 02 CD radio transport mode on
 
-0x9D: # DIA-BMBT (NO ARGS)
+0x9D: # DIA-9D (BMBT) (NO ARGS)
   :properties:
-    :short_name: ???-9D
+    :short_name: DIA-9D
     :long_name: Unknown
   :klass: Base
   :meta:
     - 3F 03 F0 9D 51 (BMBT)
 
-0x9E: # GFX-RCM?
+0x9E: # GFX-9E
   :properties:
-    :short_name: GFX-RCM?
+    :short_name: GFX-9E
     :long_name: Unknown
   :klass: Base
   :meta:
     - 3B 04 47 9E 01 E7 (RCM?)
 
-0x9F: # DIA-EWS, DIA-DSPC (NO ARGS)
+0x9F: # DIA-9F (EWS, DSPC) (NO ARGS)
   :properties:
     :short_name: DIA-9F
     :long_name: Unknown?
@@ -4017,7 +4026,7 @@
     - 3F 03 44 9F E7 (EWS)
     - 3F 03 EA 9F 49 (DSPC)
 
-# TELEMATICS ------------------------------------------------------------------
+# DIAGNOSTICS -----------------------------------------------------------------
 
 0xA0: # DIA-A0
   :properties:
@@ -4025,10 +4034,10 @@
     :long_name: Diagnostics Data
   :klass: Base
   :meta:
-    - 0x3B
-    - 0x7F
-    - 0xD0
-    - 0xF0
+    - 0x3B GFX
+    - 0x7F NAV
+    - 0xD0 LCM
+    - 0xF0 BMBT
 
 0xA1: # DIA-A1 (NO ARGS)
   :properties:
@@ -4449,7 +4458,6 @@
   :properties:
     :short_name: PING
     :long_name: Status Request
-    :verbose: false
   :klass: Base
 
 0x02: # PONG
@@ -4457,6 +4465,8 @@
     :short_name: PONG
     :long_name: Status Response
   :klass: Parameterized::Base
+  :index:
+    :status: 0
   :parameters:
     :status:
       :type: :map
@@ -4474,84 +4484,6 @@
         0x31: :external_offline_reset
         0x40: :alt_reply
         0x41: :alt_announce
-  :index:
-    :status: 0
-  :meta:
-    # - 0x41 will cause IGN reply
-    :desc: ''
-    :recipients:
-      0xFF: GLO-H
-      0xBF: GLO-L
-    :audience:
-      0x80: IKE
-      0x3B: GFX
-    :notes:
-      - after reset (KL15) devices will announce (0x01):
-        - 13:53:15 [INFO ] RAD	GLO-H	PONG	Announce
-        - 13:53:16 [INFO ] TEL	GLO-H	PONG	Announce
-        - 13:53:16 [INFO ] BMBT	GLO-L	PONG	Announce
-      - PONG is always broadcast, not addressed to a single module:
-        - "`MessageHandler.i.command(2).recipients => [FF, BF]`"
-        - 13:53:25 [INFO ] BMBT	RAD      PING	--
-        - 13:53:25 [INFO ] RAD	GLO-H	   PONG	Respond
-        - 14:01:06 [INFO ] GFX	IKE      PING	--
-        - 14:01:06 [INFO ] IKE	GLO-L    PONG	Respond
-      - RAD looks for accessories:
-        - 13:53:17 [INFO ] RAD	DSP	PING	--
-      - BMBT looks for accessories (note ACK to GLO-H):
-        - 13:53:25 [INFO ] BMBT	RAD	  PING	--
-        - 13:53:25 [INFO ] RAD	GLO-H	PONG	Respond
-      - BMBT will continue to PING all devices every 10 seconds:
-      - GFX only awake on KL15 (makes sense given screen is off at KLR)
-      - GFX looks for IKE?:
-        - 14:01:06 [INFO ] GFX	IKE	PING	--
-      - GFX looks for accessories (akin to RAD):
-        - DSP:
-          - 14:01:06 [INFO ] GFX	DSP	PING	--
-        - TEL:
-          - 14:01:06 [INFO ] GFX	TEL	PING	--
-          - 14:01:06 [INFO ] TEL	GLO-H	PONG	Respond
-      - Retry for no PONG:
-        - 14:01:06 [INFO ] GFX	DSP	PING	--
-        - 14:01:17 [INFO ] GFX	DSP	PING	--
-      - KBUS:
-        - PDC announces on KL30:
-          - 14:01:07 [INFO ] PDC	GLO-L	PONG	Announce
-        - GM doesn't seem to respond to a PING? (KL15):
-          - 13:56:36 [INFO ] GM3	GLO-L	PONG	Respond
-          - 14:00:04 [INFO ] GM3	GLO-L	PONG	Respond
-      - '0x40 and 0x41':
-        - GFX is the only device to use these variants
-        - it's always sent to GLO-L
-        - the lowest bit useage is consistent with 0x00/0x01:
-          - KL30:
-            - GM3   GLO-L PONG 00 (KBUS)
-            - BMBT  GLO-L PONG 01 (reset)
-            - TV    GLO-H PONG 01 (reset)
-            - GFX   GLO-L PONG 41 (reset)
-            - RAD   GLO-H PONG 01 (reset)
-            - TEL   GLO-H PONG 01 (reset)
-            - BMBT  GLO-L PONG 01 (reset)
-            - CCM   GLO-L PONG 00
-            - GFX   GLO-L PONG 40
-            - IKE   GLO-L PONG 00
-            - TEL   GLO-H PONG 00
-            - PDC   GLO-L PONG 01 (KBUS)
-            - RAD   GLO-H PONG 00
-          - 'Normal operation':
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - GM3 GLO-L PONG 00,
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - RAD GLO-H PONG 00,
-            - GFX GLO-L PONG 40,
-    :examples:
-      - BMBT  RAD	  PING	--
-      - RAD	  GLO-H	PONG	Respond
 
 # DIAGNOSTICS -----------------------------------------------------------------
 

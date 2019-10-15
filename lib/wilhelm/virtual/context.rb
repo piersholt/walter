@@ -14,8 +14,10 @@ module Wilhelm
 
       def setup_bus
         Bus::Initialization
-          .new(augmented: %i[gfx bmbt mfl ike lcm], emulated: %i[rad tel dsp tv ses dia mid tcu gt2 rcm cid])
-          .execute
+          .new(
+            augmented: %i[gfx bmbt mfl ike lcm],
+            emulated: %i[rad tel dsp tv ses dia]
+          ).execute
       end
 
       def setup_event_handling(application_object, core_context)

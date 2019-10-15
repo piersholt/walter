@@ -8,13 +8,10 @@
 0x3b: :gfx
 0x3f: :dia
 
-0x43: :gt2
 0x44: :ews
-0x46: :cid    # Central Information Display (CID) X3?
-0x47: :rcm
+0x46: :cid    # Central Information Display (CID) [E83 X3]
 
 0x50: :mfl
-0x53: :tbc
 0x5b: :ihka
 
 0x60: :pdc
@@ -36,7 +33,6 @@
 
 0xc0: :mid    # Multi-information display (ZIS)
 0xc8: :tel
-0xca: :tcu
 
 0xd0: :lcm
 
@@ -49,10 +45,21 @@
 0xf0: :bmbt
 0xff: :glo_h
 
-# 540i TBC:
+# UNCONFIRMED
+
+0x43: :gt2    # 7F 04 43 AB 21 B2
+              # 43 04 7F AA .. ..
+0x47: :rcm    # 3B 04 47 9E 01 E7
+0x53: :tbc    # 3B 05 53 01 32 00 5E
+              # 3B 05 53 01 00 00 6C
+0xca: :tcu
+
+# 540i UNCONFIRMED
+
 # Automatic headlight adjustment (LWR)
 # Center Console Switch Center (SZM)
 
-# UNVERIFIED
+# UNKNOWN
+
 # Tire Pressure Control/Warning (RDC/W)
 # Radio clock (RCC)
