@@ -4453,6 +4453,14 @@
   :meta:
     - 7F 04 B0 AF 04 60
 
+0xB1: # DIA-B1 (NO ARGS)
+  :properties:
+    :short_name: DIA-B1
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - returned by MFL when requesting possible out of range addresses
+
 # PING/PONG -------------------------------------------------------------------
 
 0x01: # PING
