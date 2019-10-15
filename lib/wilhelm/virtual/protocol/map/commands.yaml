@@ -4429,9 +4429,9 @@
     :long_name: Request NAV GT switch to navigation for routing to RCM
   :klass: Base
   :meta:
-    - control from rear display?
-    - 43 04 7F AA 21 B3
-    - 7F 04 43 AB 01 92
+    - control from rear GT (E38 3 socket TV module)
+    - seemingly limited to switching navi. GT to GPS Navigation
+    - rear monitor controls then likely routed directly to navi. GT
 
 0xAB: # NAV-GFX2-AB
   :properties:
@@ -4440,9 +4440,10 @@
   :klass: Base
   :meta:
     - 0x01: nav (only ever received upon using 0xAA)
-    - 0x20: seems to come after 0x01 (only ever received upon using 0xAA)
-    - 0x21: main menu
-    - 0x11: resume guidance/directions
+    - 0x20: seems to immediately preceed 0x21 (only if 0xAA is sent)
+    - 0x21: main menu (what i've received until now)
+    - 0x11: resume guidance/directions (rare!)
+    - looks a lot like SRC-GFX???
 
 0xAF: # NAV-VOICE-AF
   :properties:
