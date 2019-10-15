@@ -3,8 +3,8 @@
 puts "\tLoading wilhelm/virtual/device/constants/events"
 
 require_relative 'events/bmbt'
-require_relative 'events/cluster'
-require_relative 'events/display'
+require_relative 'events/ike'
+require_relative 'events/gfx'
 require_relative 'events/lcm'
 require_relative 'events/mfl'
 require_relative 'events/radio'

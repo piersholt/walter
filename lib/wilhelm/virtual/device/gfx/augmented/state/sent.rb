@@ -51,7 +51,7 @@ module Wilhelm
               # Command 0x34 DSP-SET
               def evaluate_dsp_set(*)
                 notify_observers(
-                  event,
+                  GFX_DSP,
                   device: ident,
                   menu: :dsp
                 )
