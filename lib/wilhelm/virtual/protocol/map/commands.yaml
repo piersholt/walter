@@ -4426,7 +4426,23 @@
   :properties:
     :short_name: ASSIST-A9
     :long_name: Unknown
-  :klass: Base
+  :klass: Parameterized::Base
+  :index:
+    :dataset: !ruby/range
+                begin: 0
+                end: 2
+                excl: false
+    :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+  :parameters:
+    :dataset:
+      :type: :data
+      :label: Dataset
+    :chars:
+      :type: :chars
+
   :meta:
     0x01: Request / unknown
     0x02: Reply? / unknown

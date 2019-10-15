@@ -17,8 +17,8 @@ module Wilhelm
             end
 
             # 0xA9 ASSIST-A9
-            def assist(from: :tel, to: :nav, arguments:)
-              try(from, to, ASSIST, bytes(*arguments))
+            def assist(from: :tel, to: :nav, **arguments)
+              try(from, to, ASSIST, arguments)
             end
           end
         end
