@@ -34,9 +34,9 @@ module Wilhelm
             ARRIVAL     => 'Arrival',
             LIMIT       => 'Limit',
             AVG_SPEED   => 'Avg. Speed',
-            TIMER       => 'Stopwatch ("Timer")',
-            AUX_TIMER_1 => 'Aux. Timer 1',
-            AUX_TIMER_2 => 'Aux. Timer 2',
+            TIMER       => 'Timer',
+            AUX_TIMER_1 => '(Aux.) Timer 1',
+            AUX_TIMER_2 => '(Aux.) Timer 2',
             NO_FUNCTION => nil
           }.freeze
 
@@ -50,7 +50,7 @@ module Wilhelm
             ARRIVAL     => :arrival,
             LIMIT       => :limit,
             AVG_SPEED   => :avg_speed,
-            TIMER       => :stopwatch,
+            TIMER       => :timer,
             AUX_TIMER_1 => :aux_timer_1,
             AUX_TIMER_2 => :aux_timer_2,
             NO_FUNCTION => nil

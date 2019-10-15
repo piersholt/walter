@@ -58,6 +58,7 @@ module Wilhelm
 
         def kl_30(context)
           LOGGER.info(DISPLAY_ENABLED) { '#kl_30' }
+          LOGGER.warn(DISPLAY_ENABLED) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
@@ -69,7 +70,7 @@ module Wilhelm
 
         def prog_on(context)
           LOGGER.info(DISPLAY_ENABLED) { '#prog_on' }
-          context.change_state(Busy.new)
+          context.change_state(Busy::Prog.new)
         end
       end
     end

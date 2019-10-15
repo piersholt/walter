@@ -10,19 +10,14 @@ module Wilhelm
 
         DISPLAY_UNPOWERED = 'Display (Unpowered)'
 
-        def announce(context)
-          LOGGER.info(DISPLAY_UNPOWERED) { '#announce' }
-          context.change_state(Enabled.new)
-        end
-
         def kl_r(context)
           LOGGER.info(DISPLAY_UNPOWERED) { '#kl_r' }
-          context.change_state(Enabled.new)
+          context.change_state(Unknown.new)
         end
 
         def kl_15(context)
           LOGGER.info(DISPLAY_UNPOWERED) { '#kl_15' }
-          context.change_state(Enabled.new)
+          context.change_state(Unknown.new)
         end
 
         def code_on(context)

@@ -22,7 +22,7 @@ module Wilhelm
         end
 
         def render_header(context, view)
-          LOGGER.unknown(DISPLAY_CAPTURED) { '#render_header(context, view)' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#render_header(context, view)' }
           context.default_header = view
           context.header = view
 
@@ -92,6 +92,7 @@ module Wilhelm
 
         def kl_30(context)
           LOGGER.info(DISPLAY_CAPTURED) { '#kl_30' }
+          LOGGER.warn(DISPLAY_CAPTURED) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
@@ -103,7 +104,7 @@ module Wilhelm
 
         def prog_on(context)
           LOGGER.info(DISPLAY_CAPTURED) { '#prog_on' }
-          context.change_state(Busy.new)
+          context.change_state(Busy::Prog.new)
         end
       end
     end

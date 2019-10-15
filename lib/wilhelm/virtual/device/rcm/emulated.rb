@@ -3,22 +3,22 @@
 module Wilhelm
   module Virtual
     class Device
-      module TV
-        # TV::Emulated
+      module RCM
+        # RCM::Emulated
         class Emulated < Device::Emulated
-          include Capabilities
+          include Capabilities::Ready
 
-          PROC = 'TV::Emulated'
+          PROC = 'RCM::Emulated'
 
-          SUBSCRIBE = [PING].freeze
+          SUBSCRIBE = [PING, 0x9e].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)
-            # case command_id
-            # when 0x00
-            #   logger.debug(PROC) { "Rx: 0x00 0x#{d2h(0x00)}" }
-            # end
+            case command_id
+            when 0x9e
+              logger.debug(PROC) { "Rx: UNKNOWN 0x#{d2h(0x9e)}" }
+            end
 
             super(message)
           end

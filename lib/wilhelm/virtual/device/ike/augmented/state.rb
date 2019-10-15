@@ -55,7 +55,7 @@ module Wilhelm
             def ignition!(value)
               xor = state[:ignition] ^ value
               logger.debug(ident) { "Ignition: #{d2b(state[:ignition], true, true)} XOR #{d2b(value, true, true)} = #{d2b(xor, true, true)}" }
-              modified = bitwise_on?(xor, BITMASKS[:kl_30], BITMASKS[:kl_r], BITMASKS[:kl_15], BITMASKS[:kl_50])
+              modified = bitwise_any?(xor, BITMASKS[:kl_30], BITMASKS[:kl_r], BITMASKS[:kl_15], BITMASKS[:kl_50])
               logger.debug(ident) { "Ignition modified? #{modified}" }
               # NOTE: case might have multiple bits... I only allow for single modified!
               # case xor
@@ -71,7 +71,7 @@ module Wilhelm
               state[:ignition] = value
               return state[:ignition] unless modified
 
-              case value
+              case state[:ignition]
               when 0b0000_0000
                 changed
                 notify_observers(KL_30, device: ident)

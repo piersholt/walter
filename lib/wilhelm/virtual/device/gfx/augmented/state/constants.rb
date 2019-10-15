@@ -63,42 +63,84 @@ module Wilhelm
               SELECT = (0x40..0x70)
               TONE = (0x80..0xff)
 
-              # OBC-BOOL 0x41 -------------------------------------------------
+              # OBC-VAR/BOOL FIELDS -------------------------------------------
+              # Settings Fields
+              SET_TIME         = 0x01
+              SET_DATE         = 0x02
+              SET_MEMO         = 0x0c
               # OBC Fields
               OBC_OUTSIDE_TEMP = 0x03
               OBC_ECON_1       = 0x04
               OBC_ECON_2       = 0x05
               OBC_RANGE        = 0x06
-              OBC_SPEED_LIMIT  = 0x09
+              OBC_DISTANCE     = 0x07
+              OBC_ARRIVAL      = 0x08
+              OBC_LIMIT        = 0x09
               OBC_AVG_SPEED    = 0x0a
               OBC_TIMER        = 0x0e
               OBC_TIMER_LAP    = 0x1a
-              # Aux. Heating/Vent. Fields
-              AUX_TIMER_1  = 0x0f
-              AUX_TIMER_2  = 0x10
-              AUX_HEAT_OFF = 0x11
-              AUX_HEAT_ON  = 0x12
-              AUX_VENT_OFF = 0x13
-              AUX_VENT_ON  = 0x14
-              # Settings Fields
-              SET_TIME     = 0x01
-              SET_DATE     = 0x02
-              SET_MEMO     = 0x0c
+              # Nav? Fields
+              NAV_ARRIVAL_TIME = 0x05
+              NAV_DIST_TO_DEST = 0x06
               # Code
-              CODE_INPUT   = 0x0d
+              CODE_INPUT       = 0x0d
+              # Aux. Heating/Vent. Fields
+              AUX_TIMER_1      = 0x0f
+              AUX_TIMER_2      = 0x10
+              AUX_HEAT_OFF     = 0x11
+              AUX_HEAT_ON      = 0x12
+              AUX_VENT_OFF     = 0x13
+              AUX_VENT_ON      = 0x14
 
-              OBC_FIELDS = [
+              # OBC-VAR 0x40 -------------------------------------------------
+              FIELDS_VAR_SETTINGS = [
+                SET_TIME,
+                SET_DATE
+              ].freeze
+
+              FIELDS_VAR_OBC = [
+                OBC_DISTANCE,
+                OBC_LIMIT
+              ].freeze
+
+              FIELDS_VAR_CODE = [
+                CODE_INPUT
+              ].freeze
+
+              FIELDS_VAR_AUX = [
+                AUX_TIMER_1,
+                AUX_TIMER_2
+              ].freeze
+
+              VARIABLE_FIELDS = [
+                *FIELDS_VAR_SETTINGS,
+                *FIELDS_VAR_OBC,
+                *FIELDS_VAR_CODE,
+                *FIELDS_VAR_AUX
+              ].freeze
+
+              # OBC-BOOL 0x41 -------------------------------------------------
+
+              FIELDS_BOOL_SETTINGS = [
+                SET_TIME,
+                SET_DATE,
+                SET_MEMO
+              ].freeze
+
+              FIELDS_BOOL_OBC = [
                 OBC_OUTSIDE_TEMP,
                 OBC_ECON_1,
                 OBC_ECON_2,
                 OBC_RANGE,
-                OBC_SPEED_LIMIT,
+                OBC_DISTANCE,
+                OBC_ARRIVAL,
+                OBC_LIMIT,
                 OBC_AVG_SPEED,
                 OBC_TIMER,
                 OBC_TIMER_LAP
               ].freeze
 
-              AUX_FIELDS = [
+              FIELDS_BOOL_AUX = [
                 AUX_TIMER_1,
                 AUX_TIMER_2,
                 AUX_HEAT_OFF,
@@ -107,21 +149,10 @@ module Wilhelm
                 AUX_VENT_ON
               ].freeze
 
-              SET_FIELDS = [
-                SET_TIME,
-                SET_DATE,
-                SET_MEMO
-              ].freeze
-
-              CODE_FIELDS = [
-                CODE_INPUT
-              ].freeze
-
               REQUESTED_FIELDS = [
-                *OBC_FIELDS,
-                *AUX_FIELDS,
-                *SET_FIELDS,
-                *CODE_FIELDS
+                *FIELDS_BOOL_SETTINGS,
+                *FIELDS_BOOL_OBC,
+                *FIELDS_BOOL_AUX,
               ].freeze
             end
           end

@@ -8,9 +8,8 @@
 0x3b: :gfx
 0x3f: :dia
 
-0x43: :gt2
 0x44: :ews
-0x46: :tv2
+0x46: :cid    # Central Information Display (CID) [E83 X3]
 
 0x50: :mfl
 0x5b: :ihka
@@ -24,6 +23,7 @@
 
 0x80: :ike
 
+0xa0: :fid    # Multi-information display, rear passenger compartment (FOND ZIS)
 0xa4: :mrs
 0xac: :ehc
 
@@ -31,26 +31,35 @@
 0xbb: :nav_jp
 0xbf: :glo_l
 
-0xc0: :mid
+0xc0: :mid    # Multi-information display (ZIS)
 0xc8: :tel
-0xca: :tcu
 
 0xd0: :lcm
 
-0xe0: :iris
-0xe7: :anzv
+0xe0: :iris   # integrated radio and information system
+0xea: :dspc   # DSP control set (E38?)
+0xe7: :anzv   # Display = "Anzeige"
 0xe8: :rls
 0xed: :tv
 
 0xf0: :bmbt
 0xff: :glo_h
 
-# 540i TBC:
+# UNCONFIRMED
+
+0x43: :gt2    # 7F 04 43 AB 21 B2
+              # 43 04 7F AA .. ..
+0x47: :rcm    # 3B 04 47 9E 01 E7
+0x53: :tbc    # 3B 05 53 01 32 00 5E
+              # 3B 05 53 01 00 00 6C
+0xca: :tcu
+
+# 540i UNCONFIRMED
+
 # Automatic headlight adjustment (LWR)
 # Center Console Switch Center (SZM)
 
-# UNVERIFIED
+# UNKNOWN
+
 # Tire Pressure Control/Warning (RDC/W)
 # Radio clock (RCC)
-
-# 0xa0 Multi-information display, rear passenger compartment (FID)

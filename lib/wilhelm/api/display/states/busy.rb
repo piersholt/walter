@@ -30,6 +30,7 @@ module Wilhelm
 
         def kl_30(context)
           LOGGER.info(DISPLAY_BUSY) { '#kl_30' }
+          LOGGER.warn(DISPLAY_BUSY) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
@@ -37,6 +38,11 @@ module Wilhelm
         def code_on(context)
           LOGGER.info(DISPLAY_BUSY) { '#code_on' }
           context.change_state(Busy::Code.new)
+        end
+
+        def prog_on(context)
+          LOGGER.info(DISPLAY_BUSY) { '#prog_on' }
+          context.change_state(Busy::Prog.new)
         end
       end
     end
