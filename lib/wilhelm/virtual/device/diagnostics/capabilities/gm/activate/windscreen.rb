@@ -6,9 +6,11 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module GM
-            # Diagnostics::Capabilities::Body::Windscreen
-            module Windscreen
-              include Constants
+            module Activate
+              # Diagnostics::Capabilities::GM::Windscreen
+              module Windscreen
+                include Constants
+              end
             end
           end
         end

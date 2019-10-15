@@ -6,12 +6,10 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module GM
-            # Diagnostics::Capabilities::Body::CentralLocking
-            module CentralLocking
-              include Constants
-
-              def rear_window_unlock
-                body_diag(BUTTON_REAR_WINDOW)
+            module Activate
+              # Diagnostics::Capabilities::GM::AntiTheft
+              module AntiTheft
+                include Constants
               end
             end
           end

@@ -8,11 +8,12 @@ module Wilhelm
           module BMBT
             include API
 
-            def bmbt_service_mode(string)
-              mapped_integers = string.split(' ').map { |i| i.to_i(16) }
-              arguments = array(mapped_integers)
-              api_service_mode_reply(from: :bmbt, to: :gfx, arguments: arguments)
-            end
+            # @deprecated API deleted
+            # def bmbt_service_mode(string)
+            #   mapped_integers = string.split(' ').map { |i| i.to_i(16) }
+            #   arguments = array(mapped_integers)
+            #   api_service_mode_reply(from: :bmbt, to: :gfx, arguments: arguments)
+            # end
 
             # BMBT --> LKM : Light dimmer status request
             # // To NAV locat F0 03 D0 5D 7E

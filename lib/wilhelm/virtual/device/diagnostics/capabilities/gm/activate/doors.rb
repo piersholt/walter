@@ -6,9 +6,11 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module GM
-            # Diagnostics::Capabilities::Body::Doors
-            module Doors
-              include Constants
+            module Activate
+              # Diagnostics::Capabilities::GM::Doors
+              module Doors
+                include Constants
+              end
             end
           end
         end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'capabilities/constants'
 require_relative 'capabilities/gm'
 require_relative 'capabilities/lcm'
 require_relative 'capabilities/bmbt'
@@ -14,6 +13,11 @@ module Wilhelm
           include GM
           include BMBT
           include LCM
+
+          # TODO: module specific methods required
+          def hello(ident)
+            api_hello(to: ident)
+          end
         end
       end
     end
