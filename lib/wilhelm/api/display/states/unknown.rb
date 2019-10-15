@@ -51,11 +51,6 @@ module Wilhelm
           LOGGER.info(DISPLAY_UNKNOWN) { '#prog_on' }
           context.change_state(Busy::Prog.new)
         end
-
-        # def code_off(context)
-        #   LOGGER.info(DISPLAY_UNKNOWN) { '#code_off' }
-        #   context.change_state(Busy.new)
-        # end
       end
     end
   end

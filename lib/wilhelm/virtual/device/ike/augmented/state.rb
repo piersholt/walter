@@ -23,6 +23,14 @@ module Wilhelm
 
             # 0x2A ANZV-BOOL
             def anzv_bool!(value)
+              # Can't rely upon XOR == 1 as first IKE sensor message
+              # is published before monitor is on, the Unpowered state of which
+              # will discard the code on event.
+              if bitwise_on?(value, BITMASKS[:code])
+                changed
+                notify_observers(CODE_ON, device: ident)
+              end
+
               xor = state[:anzv_bool] ^ value
               logger.debug(ident) { "ANZV-BOOL: #{d2b(state[:anzv_bool], true, true)} XOR #{d2b(value, true, true)} = #{d2b(xor, true, true)}" }
               modified = bitwise_on?(
