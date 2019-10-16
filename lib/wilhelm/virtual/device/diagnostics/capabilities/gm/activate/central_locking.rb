@@ -11,6 +11,7 @@ module Wilhelm
               module CentralLocking
                 include Constants
 
+                # NOTE: there's probably a motor activate too
                 def rear_window_unlock
                   activate(BUTTON_REAR_WINDOW)
                 end

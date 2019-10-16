@@ -1,5 +1,6 @@
 # frozen_string_literal: false
 
+require_relative 'activate/constants'
 require_relative 'activate/anti_theft'
 require_relative 'activate/central_locking'
 require_relative 'activate/doors'

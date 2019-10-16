@@ -1,6 +1,5 @@
 # frozen_string_literal: false
 
-require_relative 'gm/constants'
 require_relative 'gm/activate'
 require_relative 'gm/coding'
 require_relative 'gm/memory'
