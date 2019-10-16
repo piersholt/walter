@@ -2562,7 +2562,7 @@
         0x1a: (OBC) Timer (Lap)             # [Lap]
 
         # CODE
-        # 0x0d: (Code) Code
+        0x0d: (Code) Code
 
         # AUX. HEAT/VENTILATION
         0x0f: (Aux.) Timer 1                # [On, Off]
@@ -2579,7 +2579,8 @@
       :map:
         0x00: --
       :dictionary:
-        0b0000_0001: Variable Request
+        0b0000_0001: Variable Request (0x24)
+        # IKE will send 0x24 for respective field.
         # 0x01: (Settings) Time
         # 0x02: (Settings) Date
         # 0x0c: (Settings) Memo
@@ -2596,7 +2597,8 @@
         # 0x0f: (Aux.) Timer 1
         # 0x10: (Aux.) Timer 2
 
-        0b0000_0010: Boolean Request
+        0b0000_0010: Boolean Request (0x2A)
+        # IKE will send 0x2A.
         # 0x0c: (Settings) Memo
         # 0x09: (OBC) Limit
         # 0x0e: (OBC) Timer
@@ -2621,7 +2623,9 @@
         0b0010_0000: Set As Current Speed
         # 0x09: (OBC) Limit
 
-        0b0000_0011: '0b0000_0011'
+        0b0000_0011: 'Variable and Boolean Request'
+        # Presumably get both the boolean state, and string.
+        # i.e. Limit: on/off, and value.
         # 0x09 (OBC) Limit
         # 0x0e (OBC) Timer
         # 0x1b (Aux.) Status
