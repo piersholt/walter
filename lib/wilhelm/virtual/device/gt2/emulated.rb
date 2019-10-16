@@ -14,7 +14,7 @@ module Wilhelm
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)
-            logger.unknown(PROC) { "Rx: #{message}" }
+            logger.debug(PROC) { "Rx: #{message}" }
 
             super(message)
           end

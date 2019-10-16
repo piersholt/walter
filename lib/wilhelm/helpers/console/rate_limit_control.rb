@@ -3,8 +3,8 @@
 module Wilhelm
   module Helpers
     module Console
-      # Console::Delayable
-      module Delayable
+      # Console::RateLimitControl
+      module RateLimitControl
         def interface_read_thread
           @core.interface.read_thread
         end

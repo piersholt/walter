@@ -2,10 +2,10 @@
 
 puts "\tLoading wilhelm/helpers/console"
 
-require_relative 'console/delayable'
+require_relative 'console/maps'
+require_relative 'console/rate_limit_control'
 require_relative 'console/session'
 require_relative 'console/threads'
-# require_relative 'console/yabber'
 # require_relative 'console/frames'
 
 module Wilhelm
@@ -13,19 +13,13 @@ module Wilhelm
     # Helpers::Console
     # Helpers for common tasks in console mode (pry).
     module Console
-      include Delayable
+      include Maps
+      include RateLimitControl
       include Session
       include Threads
-      # include Yabber
 
       PROC_MOD = 'Console'.freeze
       NEW_LINE = 'New Line'.freeze
-
-      def command_map
-        Wilhelm::Virtual::Map::Command.instance
-      end
-
-      alias cm command_map
 
       def new_line
         new_line_thread = Thread.new do

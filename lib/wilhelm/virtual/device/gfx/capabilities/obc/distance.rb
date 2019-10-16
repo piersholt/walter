@@ -11,6 +11,7 @@ module Wilhelm
               include API
               include Constants
 
+              MOD_PROG = 'GFX::OBC::Limit'.freeze
               NUMBER_KLASS = Integer
               VALID_NUMBERS = (0..999)
 
@@ -23,7 +24,7 @@ module Wilhelm
 
               # Distance 0x07 Value (kms vs. miles?)
               def input_distance(distance)
-                LOGGER.debug('GFX::OBC::Limit') { "#input_distance(#{distance})" }
+                LOGGER.debug(MOD_PROG) { "#input_distance(#{distance})" }
                 validate_distance(distance)
                 distance_byte_array = base_256_digits(distance)
                 pad_byte_array(distance_byte_array, INPUT_DISTANCE_LENGTH)

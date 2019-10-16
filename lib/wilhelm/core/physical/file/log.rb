@@ -9,7 +9,7 @@ module Wilhelm
           extend Forwardable
           include ManageableThreads
           include Configuration
-          include Wilhelm::Helpers::Delayable
+          include Wilhelm::Helpers::RateLimiter
           include State
           include Errors
 
@@ -83,6 +83,7 @@ module Wilhelm
                 delay_defaults
                 each_byte do |byte|
                   private_input_buffer.push(byte)
+                  # RateLimiter
                   delay
                 end
               rescue EOFError

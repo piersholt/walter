@@ -6,9 +6,14 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module GM
-            # Diagnostics::Capabilities::Body::AntiTheft
-            module AntiTheft
+            # Diagnostics::Capabilities::GM::Coding
+            module Coding
               include Constants
+
+              def gm_coding
+                false
+                # coding_read(to: :gm, arguments: [address])
+              end
             end
           end
         end

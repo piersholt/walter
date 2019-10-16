@@ -6,7 +6,7 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module GM
-            # Diagnostics::Capabilities::Body::Memory
+            # Diagnostics::Capabilities::GM::Memory
             module Memory
               include Constants
             end

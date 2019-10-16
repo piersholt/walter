@@ -11,6 +11,7 @@ module Wilhelm
               include API
               include Constants
 
+              MOD_PROG = 'GFX::OBC::Limit'.freeze
               NUMBER_KLASS = Integer
               VALID_NUMBERS = (0..299)
 
@@ -39,7 +40,7 @@ module Wilhelm
 
               # Speed Limit 0x09 Value (mph vs. kmph?)
               def input_limit(speed)
-                LOGGER.debug('GFX::OBC::Limit') { "#input_limit(#{speed})" }
+                LOGGER.debug(MOD_PROG) { "#input_limit(#{speed})" }
                 validate_limit(speed)
                 speed_byte_array = base_256_digits(speed)
                 pad_byte_array(speed_byte_array, INPUT_LIMIT_LENGTH)

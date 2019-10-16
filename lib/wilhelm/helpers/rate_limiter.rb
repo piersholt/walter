@@ -3,7 +3,7 @@
 module Wilhelm
   module Helpers
     # Thread safe timing control for loops.
-    module Delayable
+    module RateLimiter
       DEFAULT_ENABLED = true
       DEFAULT_DELAY = 5
 
