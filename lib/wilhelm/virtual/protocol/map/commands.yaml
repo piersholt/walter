@@ -3989,7 +3989,7 @@
 0x9D: # DIA-9D (BMBT) (NO ARGS)
   :properties:
     :short_name: DIA-9D
-    :long_name: Unknown
+    :long_name: ERROR ECU REJECTED
   :klass: Base
   :meta:
     - 3F 03 F0 9D 51 (BMBT)
@@ -4438,6 +4438,12 @@
   :meta:
     - 7F 04 B0 AF 04 60
 
+0xB0: # DIA-B0 (NO ARGS)
+  :properties:
+    :short_name: DIA-B0
+    :long_name: ERROR ECU PARAMETER
+  :klass: Base
+
 0xB1: # DIA-B1 (NO ARGS)
   :properties:
     :short_name: DIA-B1
@@ -4660,6 +4666,9 @@
     :short_name: SLF-CHK
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - bmbt
+    - nav/gt
 
 0x3f: # SLS-DIG
   :properties:
