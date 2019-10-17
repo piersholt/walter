@@ -9,7 +9,7 @@ module Wilhelm
           include DSP::API
           PROC = 'DSP::Emulated'
 
-          SUBSCRIBE = [PING, DSP_SET].freeze
+          SUBSCRIBE = [PING, IGNITION_REP, DSP_SET].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
@@ -20,6 +20,10 @@ module Wilhelm
             end
 
             super(message)
+          end
+
+          def announce
+            super(to: :glo_l, status: 0x00)
           end
         end
       end

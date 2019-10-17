@@ -20,6 +20,10 @@ module Wilhelm
             dh.f_c(*READY)
           end
 
+          def status
+            dh.f_c(*READY, *IGNITION)
+          end
+
           def input
             dh.f_c(INPUT)
           end

@@ -35,24 +35,6 @@
         0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
-  :meta:
-    :ignition:
-      # KL 0 = OFF (ignition off position)
-      # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
-      # KL 15 = ignition position 2 ("accessory" - all electronics & modules re powered)
-      # KL 50 = ignition start position
-      # KL 30 = ignition position 3 (where the ignition defauts after starting the engine)
-      0b0: Off (Position I)
-      0b1: KLR
-      0b11: KL15 (Position II)
-      0b111: KL50
-  :meta:
-    :senders:
-      - IKE
-    :examples:
-      - 0b00000000
-      - 0b00000011
-      - 0b00000111
 
 0x12: # SEN-REQ
   :properties:
@@ -4491,10 +4473,10 @@
         # 0x11 3b: 3 (@ ff)
         0b0001_0001: '3B -> FF [Announce]'
 
+        # Only WIDESCREEN BMBT uses 0x30
         # 0x30: 18880
         # f0:   18845 (18642 to 0x3b)
         0b0011_0000: 'F0 -> 3B [Reply]'
-
         # 0x31  2019
         # f0:   2018  (all to 0xbf)
         0b0011_0001: 'F0 -> BF [Announce]'

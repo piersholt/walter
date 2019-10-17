@@ -28,6 +28,13 @@ module Wilhelm
           case command_id
           when PING
             pong
+          when IGNITION_REP
+            case message.command.position.ugly
+            when :kl_30
+              unannounce!
+            when :kl_r
+              announce unless announced?
+            end
           end
         end
       end
