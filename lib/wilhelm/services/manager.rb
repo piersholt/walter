@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Manager
-
 require_relative 'manager/constants'
 require_relative 'manager/logging'
 
@@ -23,6 +21,30 @@ require_relative 'manager/requests'
 require_relative 'manager/replies'
 require_relative 'manager/controls'
 require_relative 'manager/context'
-require_relative 'manager/service'
 
+module Wilhelm
+  module Services
+    # Bluetooth Device Manager
+    class Manager
+      include Wilhelm::Helpers::Observation
+      include Logging
+      include State
+      include Properties
+      include Notifications
+      include Controls
+      include Actions
+      include Requests
+      include Replies
+      include Context
+      include Yabber::API
+
+      def initialize
+        @state = Disabled.new
+        register_controls(Wilhelm::API::Controls.instance)
+      end
+    end
+  end
+end
+
+# TODO: confirm if Manager is a dependency for UI
 require_relative 'manager/ui'
