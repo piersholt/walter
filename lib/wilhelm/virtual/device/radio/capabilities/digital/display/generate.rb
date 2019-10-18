@@ -26,8 +26,8 @@ module Wilhelm
                   "21 #{d2h(layout)} #{d2h(m2)} #{d2h(index)} #{genc(length)}"
                 end
 
-                def generate_23(gfx, ike, length = 10)
-                  "23 #{d2h(gfx)} #{d2h(ike)} #{genc(length)}"
+                def generate_23(gt, ike, length = 10)
+                  "23 #{d2h(gt)} #{d2h(ike)} #{genc(length)}"
                 end
               end
             end

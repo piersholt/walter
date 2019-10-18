@@ -26,7 +26,7 @@ module Wilhelm
             when CDC_REQ
               LOGGER.debug(ident) { "#handle_message => CDC_REQ (#{CDC_REQ})" }
               handle_cd_changer_request(message.command)
-              # when TXT_GFX
+              # when TXT_GT
               #   handle_cd_changer_request(message.command)
             end
 

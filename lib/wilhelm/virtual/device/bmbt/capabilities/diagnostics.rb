@@ -22,7 +22,7 @@ module Wilhelm
                 0x86, 0x91, 0x33, 0x87, hw_level, 0x00, diag_index, bus_index,
                 0x22, 0x01, supplier, sw_level, encoding_index, 0x00, 0x00, 0x00
               )
-              memory_read(to: :gfx, arguments: args)
+              memory_read(to: :gt, arguments: args)
             end
 
             def service_mode_key_function(
@@ -33,7 +33,7 @@ module Wilhelm
               args = integers_to_byte_array(
                 key, obm_increment_sensor, radio_increment_sensor
               )
-              memory_read(to: :gfx, arguments: args)
+              memory_read(to: :gt, arguments: args)
             end
           end
         end

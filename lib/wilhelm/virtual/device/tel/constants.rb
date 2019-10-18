@@ -71,7 +71,7 @@ module Wilhelm
           #          3 => 0b0001_0100 }.freeze
 
           # -------------------------------------------------------------------
-          # GFX STATUS 0x22
+          # GT STATUS 0x22
           # -------------------------------------------------------------------
 
           STATUS_CLEAR        = 0x00
@@ -83,14 +83,14 @@ module Wilhelm
           # TXT-23 0x23
           # -------------------------------------------------------------------
 
-          # Parameter :gfx
+          # Parameter :gt
           # IKE via MFL
           MFL_CLEAR                = 0x40
           MFL_RADIO_MODE           = 0x41
           MFL_CONTACT              = 0x42 # "TEL1-MessageBank"
           MFL_CONTACT_CALL         = 0x43 # "TEL    98272742"
 
-          # GFX via BMBT
+          # GT via BMBT
           DEFAULT_TITLE            = 0x00
           PIN_TITLE                = 0x05
           DIRECTORY_CONTACT_NAME   = 0x52 # "MUM"
@@ -114,7 +114,7 @@ module Wilhelm
           # ANZV-TEL-VAR* 0x24
           # -------------------------------------------------------------------
 
-          # Parameter :gfx
+          # Parameter :gt
           STRENGTH          = 0x91 # Array.new(7) { 0xb8 }.join
           CALL_COST_CURRENT = 0x93 # "     0"
           CALL_COST_TOTAL   = 0x94 # "      0"

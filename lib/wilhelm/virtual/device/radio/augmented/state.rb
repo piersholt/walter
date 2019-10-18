@@ -30,7 +30,7 @@ module Wilhelm
             end
 
             def evaluate_display_layout(command)
-              case command.gfx.value
+              case command.gt.value
               when (0x40..0x5F)
                 radio
                 radio_layout

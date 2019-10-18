@@ -9,7 +9,7 @@ module Wilhelm
           include Constants::Command::Aliases
           include Device::API::BaseAPI
 
-          def dsp_reply(from: :dsp, to: :gfx, **arguments)
+          def dsp_reply(from: :dsp, to: :gt, **arguments)
             # LOGGER.unknown('API::DSP') { "#{from}, #{to}, #{arguments}" }
             try(from, to, DSP_REP, arguments)
           end

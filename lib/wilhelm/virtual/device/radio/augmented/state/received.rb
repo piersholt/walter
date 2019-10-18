@@ -10,7 +10,7 @@ module Wilhelm
             module Received
               include Constants
 
-              def handle_menu_gfx(command)
+              def handle_menu_gt(command)
                 # logger.unknown(command.instance_variables)
                 # logger.unknown(command.config.class)
                 # logger.unknown(command.config.instance_variables)

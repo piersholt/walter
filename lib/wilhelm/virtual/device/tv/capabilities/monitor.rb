@@ -12,7 +12,7 @@ module Wilhelm
             include Helpers::Parse
 
             def monitor(*args)
-              src_gfx(arguments: bytes(*args))
+              src_gt(arguments: bytes(*args))
             end
           end
         end

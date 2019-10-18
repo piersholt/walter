@@ -35,11 +35,11 @@ module Wilhelm
         # STATE
         def update_state(event, properties = {})
           case event
-          when GFX_MONITOR_ON
-            logger.debug(NAME) { "#update(#{GFX_MONITOR_ON})" }
+          when GT_MONITOR_ON
+            logger.debug(NAME) { "#update(#{GT_MONITOR_ON})" }
             monitor_on
-          when GFX_MONITOR_OFF
-            logger.debug(NAME) { "#update(#{GFX_MONITOR_OFF})" }
+          when GT_MONITOR_OFF
+            logger.debug(NAME) { "#update(#{GT_MONITOR_OFF})" }
             monitor_off
           when CODE_ON
             logger.debug(NAME) { "#update(#{CODE_ON})" }
@@ -53,20 +53,20 @@ module Wilhelm
           when PROG_OFF
             logger.unknown(NAME) { "#update(#{PROG_OFF})" }
             prog_off
-          when GFX_PING
-            logger.debug(NAME) { "#update(#{GFX_PING})" }
+          when GT_PING
+            logger.debug(NAME) { "#update(#{GT_PING})" }
             ping
-          when GFX_ANNOUNCE
-            logger.debug(NAME) { "#update(#{GFX_ANNOUNCE})" }
+          when GT_ANNOUNCE
+            logger.debug(NAME) { "#update(#{GT_ANNOUNCE})" }
             announce
-          when GFX_OBC_BOOL
-            logger.debug(NAME) { "#update(#{GFX_OBC_BOOL}, #{properties})" }
+          when GT_OBC_BOOL
+            logger.debug(NAME) { "#update(#{GT_OBC_BOOL}, #{properties})" }
             obc_request
-          when GFX_AUX_BOOL
-            logger.debug(NAME) { "#update(#{GFX_AUX_BOOL}, #{properties})" }
+          when GT_AUX_BOOL
+            logger.debug(NAME) { "#update(#{GT_AUX_BOOL}, #{properties})" }
             aux_request
-          when GFX_SET_BOOL
-            logger.debug(NAME) { "#update(#{GFX_SET_BOOL}, #{properties})" }
+          when GT_SET_BOOL
+            logger.debug(NAME) { "#update(#{GT_SET_BOOL}, #{properties})" }
             settings_request
           when KL_30
             logger.debug(NAME) { "#update(#{KL_30}, #{properties})" }
@@ -83,8 +83,8 @@ module Wilhelm
         # CONTROL
         def update_control(event, properties = {})
           case event
-          when GFX_CONTROL
-            logger.debug(NAME) { "#update(#{GFX_CONTROL}, #{properties})" }
+          when GT_CONTROL
+            logger.debug(NAME) { "#update(#{GT_CONTROL}, #{properties})" }
             data_select(properties)
           when BMBT_CONTROL
             logger.debug(NAME) { "#update(#{BMBT_CONTROL}, #{properties})" }

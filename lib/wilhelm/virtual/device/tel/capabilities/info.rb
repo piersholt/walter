@@ -11,7 +11,7 @@ module Wilhelm
             include Constants
 
             def info_header(header = 'Info Title')
-              draw_23(gfx: INFO_HEADER, chars: header)
+              draw_23(gt: INFO_HEADER, chars: header)
             end
 
             # 0x91 Strength

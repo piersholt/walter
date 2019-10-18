@@ -24,7 +24,7 @@ module Wilhelm
       # Walter Virtual
 
       def targets
-        %i[gfx rad bmbt mfl ike]
+        %i[gt rad bmbt mfl ike]
       end
 
       # STATES ---------------------------------------------

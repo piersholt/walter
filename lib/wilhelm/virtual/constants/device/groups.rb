@@ -9,15 +9,15 @@ module Wilhelm
           include Aliases
 
           MEDIA = [
-            CDC, CD, RAD, DSP, GFX, TV, BMBT
+            CDC, CD, RAD, DSP, GT, TV, BMBT
           ].freeze
 
           CD_PLAYER = [
-            CDC, CD, RAD, GFX, BMBT, MFL
+            CDC, CD, RAD, GT, BMBT, MFL
           ].freeze
 
           TELEPHONE = [
-            TEL, IKE, RAD, GFX, ANZV, BMBT
+            TEL, IKE, RAD, GT, ANZV, BMBT
           ].freeze
 
           NAVIGATION = [

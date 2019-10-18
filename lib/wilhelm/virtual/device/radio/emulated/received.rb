@@ -10,8 +10,8 @@ module Wilhelm
             include Virtual::Constants::Events::Radio
             include Constants
 
-            # MENU_GFX 0x45
-            def handle_menu_gfx(command)
+            # MENU_GT 0x45
+            def handle_menu_gt(command)
               case Kernel.format('%8.8b', command.config.value)[7]
               when '1'
                 acknowledge_menu

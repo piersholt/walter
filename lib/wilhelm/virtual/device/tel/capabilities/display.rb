@@ -18,7 +18,7 @@ module Wilhelm
 
             def d23(layout, ike, chars)
               draw_23(
-                gfx: layout,
+                gt: layout,
                 ike: ike,
                 chars: chars
               )

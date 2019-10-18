@@ -38,7 +38,7 @@ module Wilhelm
                       item.to_s
                     )
                   end
-                  return title(gfx: layout, chars: title.to_s) if title
+                  return title(gt: layout, chars: title.to_s) if title
                   render(layout)
                   true
                 end

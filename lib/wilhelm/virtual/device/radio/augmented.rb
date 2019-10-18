@@ -14,8 +14,8 @@ module Wilhelm
 
           PROC = 'Radio::Augmented'
 
-          PUBLISH   = [PING, PONG, TXT_MID, TXT_GFX, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
-          SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GFX, INPUT]
+          PUBLISH   = [PING, PONG, TXT_MID, TXT_GT, TXT_NAV, CDC_REQ, MENU_RAD, RAD_LED, RAD_ALT]
+          SUBSCRIBE = [PING, MFL_VOL, CDC_REP, BMBT_A, SRC_CTL, SRC_SND, MENU_GT, INPUT]
 
           def handle_virtual_transmit(message)
             command_id = message.command.d
@@ -31,8 +31,8 @@ module Wilhelm
               # seen
             when TXT_MID
               # logger.debug('Radio') {Tx:  "Drawing to MID!" }
-            when TXT_GFX
-              logger.debug('Radio') { "Tx: TXT_GFX 0x#{d2h(TXT_GFX)}" }
+            when TXT_GT
+              logger.debug('Radio') { "Tx: TXT_GT 0x#{d2h(TXT_GT)}" }
               # foreground
               evaluate_display_layout(message.command)
             when TXT_NAV
@@ -79,9 +79,9 @@ module Wilhelm
               # logger.debug(PROC) { "Rx: SRC_CTL not implemented." }
               # can get tape
               handle_source_sound(message.command)
-            when MENU_GFX
-              logger.debug(PROC) { "Rx: Handling: MENU_GFX"  }
-              handle_menu_gfx(message.command)
+            when MENU_GT
+              logger.debug(PROC) { "Rx: Handling: MENU_GT"  }
+              handle_menu_gt(message.command)
             when INPUT
               # logger.debug(PROC) { "Rx: Handling: INPUT"  }
               # handle_tel_data(message.command)

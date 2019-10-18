@@ -14,8 +14,8 @@ module Wilhelm
           # State related events
           module State
             RADIO_BODY_CLEARED = :radio_body_cleared
-            PRIORITY_RADIO     = :gfx_priority_radio
-            PRIORITY_GFX       = :gfx_priority_gfx
+            PRIORITY_RADIO     = :gt_priority_radio
+            PRIORITY_GT        = :gt_priority_gt
           end
 
           include Control
