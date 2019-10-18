@@ -8,8 +8,8 @@ module Wilhelm
         module Ready
           include API::Readiness
 
-          REPLY = 0x00
-          ANNOUNCE = 0x01
+          REPLY    = 0b0000_0000
+          ANNOUNCE = 0b0000_0001
 
           # Request
           def ping(to)
@@ -17,35 +17,34 @@ module Wilhelm
           end
 
           # Reply
-          def pong(to: :glo_l)
-            p0ng(from: me, to: to, status: REPLY)
+          def pong(to: :glo_l, status: REPLY)
+            p0ng(from: me, to: to, status: status)
           end
 
           # Broadcast
-          def announce
+          def announce(to: :glo_l, status: ANNOUNCE)
             return false if announced?
-            p0ng(from: me, status: ANNOUNCE)
+            p0ng(from: me, to: to, status: status)
             announced!
           end
 
-          # Force announce...
-          def announce!
-            p0ng(from: me, status: ANNOUNCE)
+          def announce!(to: :glo_l, status: ANNOUNCE)
+            p0ng(from: me, to: to, status: status)
             announced!
           end
 
           private
 
           def announced?
-            announced
+            @announced ||= false
           end
 
           def announced!
             @announced = true
           end
 
-          def announced
-            @announced ||= false
+          def unannounce!
+            @announced = false
           end
         end
       end

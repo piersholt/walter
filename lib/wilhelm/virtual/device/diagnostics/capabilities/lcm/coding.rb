@@ -33,9 +33,9 @@ module Wilhelm
               # 3F 04 D0 08 11 F2
               # 3F 04 D0 08 12 F1
 
-              def lcm_coding(address)
+              def lcm_coding(*address)
                 return false unless valid_lcm_coding_address?(address)
-                coding_read(to: :lcm, arguments: [address])
+                coding_read(to: :lcm, arguments: [*address])
               end
 
               # WRITE

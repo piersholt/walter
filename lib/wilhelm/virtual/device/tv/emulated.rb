@@ -10,7 +10,7 @@ module Wilhelm
 
           PROC = 'TV::Emulated'
 
-          SUBSCRIBE = [PING].freeze
+          SUBSCRIBE = [PING, IGNITION_REP].freeze
 
           def handle_virtual_receive(message)
             command_id = message.command.d
@@ -21,6 +21,12 @@ module Wilhelm
             # end
 
             super(message)
+          end
+
+          # ED 04 FF 02 01 15
+          # No using announce bit as emulated device is driven by IGN anyway...
+          def announce
+            super(to: :glo_h, status: 0x00)
           end
         end
       end

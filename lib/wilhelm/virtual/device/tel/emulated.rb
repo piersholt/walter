@@ -41,6 +41,7 @@ module Wilhelm
 
           SUBSCRIBE = [
             PING, PONG,
+            IGNITION_REP,
             TEL_OPEN,
             INPUT,
             MFL_VOL, MFL_FUNC,
@@ -90,6 +91,14 @@ module Wilhelm
             end
 
             super(message)
+          end
+
+          def pong
+            super(to: :glo_h, status: 0x30)
+          end
+
+          def announce
+            super(to: :glo_h, status: 0x30)
           end
         end
       end

@@ -13,15 +13,6 @@
     :short_name: IGN-REQ
     :long_name: Ignition Status Request
   :klass: Base
-  :schemas:
-    - :gfx
-
-  # SCHEMA 0x10 DIA-10*
-  :gfx:
-    :properties:
-      :short_name: DIA-10*
-      :long_name: Unknown
-    :klass: Base
 
 0x11: # IGN
   :properties:
@@ -44,24 +35,6 @@
         0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
-  :meta:
-    :ignition:
-      # KL 0 = OFF (ignition off position)
-      # KL R = ignition position 1 ("run" - some electonics & modules are powered up)
-      # KL 15 = ignition position 2 ("accessory" - all electronics & modules re powered)
-      # KL 50 = ignition start position
-      # KL 30 = ignition position 3 (where the ignition defauts after starting the engine)
-      0b0: Off (Position I)
-      0b1: KLR
-      0b11: KL15 (Position II)
-      0b111: KL50
-  :meta:
-    :senders:
-      - IKE
-    :examples:
-      - 0b00000000
-      - 0b00000011
-      - 0b00000111
 
 0x12: # SEN-REQ
   :properties:
@@ -2516,14 +2489,14 @@
         0x02: (Settings) Date
 
         # NAVIGATION
-        0x05: (Navi.) Arrival Time             # 0x05: (OBC) Consump. 2
-        0x06: (Navi.) Distance to Destination  # 0x06: (OBC) Range
+        # I'm not seeing GFX send these fields now?
+        0x05: (Navi.) Arrival?                  # 0x05: (OBC) Consump. 2
+        0x06: (Navi.) Distance?                 # 0x06: (OBC) Range
 
         # ON-BOARD COMPUTER
-        # How is this distinct from 0x06?
-        # Only sent if manual input, or an update of original value?
-        0x07: (OBC) Distance to Destination    # 0x07: (OBC) Distance
-        0x08: (Navi.) Arrival?                 # 0x08: (OBC) Arrival
+        0x07: (OBC) Distance                    # 0x07: (OBC) Distance
+        0x08: (OBC) Arrival?                    # 0x08: (OBC) Arrival
+
         0x09: (OBC) Limit
 
         # CODE
@@ -3074,6 +3047,19 @@
     :properties:
       :short_name: TV-BMBT*
       :long_name: Display Output
+    :meta:
+      - 11 = Monitor On, Source TV
+      - 11 01 Menu 4:3
+      - 11 11 Menu 16:19
+      - 11 11 NTSC (AV/Teletext)
+      - 11 31 Menu Zoom
+      - 11 02 4:3
+      - 11 12 16:9
+      - 11 32 Zoom
+
+      - 11 11 (without actual RGB switch... it's darker...)
+      - 12 11 Off
+      - 14 11
     :index:
       :a: 0
       :b: 1
@@ -3114,18 +3100,6 @@
             :dictionary:
               0b01: "NTSC"
               0b10: "PAL"
-    :meta:
-      - 11 01 Menu 4:3
-      - 11 11 Menu 16:19
-      - 11 11 NTSC (AV/Teletext)
-      - 11 31 Menu Zoom
-      - 11 02 4:3
-      - 11 12 16:9
-      - 11 32 Zoom
-
-      - 11 11 (without actual RGB switch... it's darker...)
-      - 12 11 Off
-      - 14 11
 
   :nav_jp:
     :klass: Base
@@ -3691,11 +3665,15 @@
             0: :off
             1: :ok
       :index:
-        :boot: 1
-        :unlock: 2
-        :lock: 3
+        #         0
+        :boot:    1
+        :unlock:  2
+        :lock:    3
+
+        #         4
         :coding1: 5
         :coding2: 6
+        #         7
   :index:
     :b1: 0
 
@@ -4014,7 +3992,7 @@
 0x9D: # DIA-9D (BMBT) (NO ARGS)
   :properties:
     :short_name: DIA-9D
-    :long_name: Unknown
+    :long_name: ERROR ECU REJECTED
   :klass: Base
   :meta:
     - 3F 03 F0 9D 51 (BMBT)
@@ -4502,6 +4480,12 @@
   :meta:
     - 7F 04 B0 AF 04 60
 
+0xB0: # DIA-B0 (NO ARGS)
+  :properties:
+    :short_name: DIA-B0
+    :long_name: ERROR ECU PARAMETER
+  :klass: Base
+
 0xB1: # DIA-B1 (NO ARGS)
   :properties:
     :short_name: DIA-B1
@@ -4529,19 +4513,43 @@
     :status:
       :type: :map
       :dictionary:
-        0x00: 'Reply'
-        0x01: 'Announce'
-        0x30: 'External Offline Respond'
-        0x31: 'External Offline Reset'
-        0x40: 'Alt. Reply'
-        0x41: 'Alt. Announce'
+        0b0000_0000: 'Reply'
+        0b0000_0001: 'Announce'
+
+        # 0x10 3b: 2 (@ c8)
+        0b0001_0000: '3B -> C8 [Reply]'
+        # 0x11 3b: 3 (@ ff)
+        0b0001_0001: '3B -> FF [Announce]'
+
+        # Only WIDESCREEN BMBT uses 0x30
+        # 0x30: 18880
+        # f0:   18845 (18642 to 0x3b)
+        0b0011_0000: 'F0 -> 3B [Reply]'
+        # 0x31  2019
+        # f0:   2018  (all to 0xbf)
+        0b0011_0001: 'F0 -> BF [Announce]'
+
+        # 0x40: 621
+        # 3b:   620 (609 to BF, 11 to 68)
+        0b0100_0000: '3B -> BF [Reply]'
+
+        # 0x41: 619
+        # 3b:   392 (all to BF)
+        # 7f:   226 (all to BF)
+        0b0100_0001: '3B/7F -> BF [Announce]'
+
+        # Only messages greater than 0x40
+        # 7f:       11 (all to BF)
+        0b1100_0001: '7F -> BF (Guidance Active) [Announce]'
       :map:
-        0x00: :reply
-        0x01: :announce
-        0x30: :external_offline_respond
-        0x31: :external_offline_reset
-        0x40: :alt_reply
-        0x41: :alt_announce
+        0b0000_0000: :reply
+        0b0000_0001: :announce
+        0b0001_0000: :unknown
+        0b0001_0001: :unknown
+        0b0011_0000: :external_offline_respond
+        0b0011_0001: :external_offline_reset
+        0b0100_0000: :alt_reply
+        0b0100_0001: :alt_announce
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
@@ -4700,6 +4708,9 @@
     :short_name: SLF-CHK
     :long_name: Unknown
   :klass: Base
+  :meta:
+    - bmbt
+    - nav/gt
 
 0x3f: # SLS-DIG
   :properties:
