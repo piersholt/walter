@@ -2486,14 +2486,14 @@
         0x02: (Settings) Date
 
         # NAVIGATION
-        0x05: (Navi.) Arrival Time             # 0x05: (OBC) Consump. 2
-        0x06: (Navi.) Distance to Destination  # 0x06: (OBC) Range
+        # I'm not seeing GFX send these fields now?
+        0x05: (Navi.) Arrival?                  # 0x05: (OBC) Consump. 2
+        0x06: (Navi.) Distance?                 # 0x06: (OBC) Range
 
         # ON-BOARD COMPUTER
-        # How is this distinct from 0x06?
-        # Only sent if manual input, or an update of original value?
-        0x07: (OBC) Distance to Destination    # 0x07: (OBC) Distance
-        0x08: (Navi.) Arrival?                 # 0x08: (OBC) Arrival
+        0x07: (OBC) Distance                    # 0x07: (OBC) Distance
+        0x08: (OBC) Arrival?                    # 0x08: (OBC) Arrival
+
         0x09: (OBC) Limit
 
         # CODE
