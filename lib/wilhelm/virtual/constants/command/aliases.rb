@@ -26,19 +26,17 @@ module Wilhelm
 
           SPEED         = 0x18
 
-          TEMP_REP      = 0x19
           TEMP_REQ      = 0x1d
+          TEMP_REP      = 0x19
 
           TXT_CCM       = 0x1a
           HUD_STATUS    = 0x1b
 
-          UTC           = 0x1f
-
           TEL_OPEN      = 0x20
 
           TXT_MID       = 0x21
-          GFX_STATUS    = 0x22
-          TXT_GFX       = 0x23
+          GT_STATUS     = 0x22
+          TXT_GT       = 0x23
           TXT_NAV       = 0xa5
 
           ANZV_VAR      = 0x24
@@ -64,7 +62,7 @@ module Wilhelm
 
           PROG          = 0x42
 
-          MENU_GFX      = 0x45
+          MENU_GT      = 0x45
           MENU_RAD      = 0x46
 
           BMBT_I        = 0x47
@@ -74,7 +72,7 @@ module Wilhelm
           RAD_LED       = 0x4a
           SRC_CTL       = 0x4b
           SRC_SND       = 0x4e
-          SRC_GFX       = 0x4f
+          SRC_GT        = 0x4f
 
           CCM_END       = 0x51
           CCM_RLY       = 0x52
@@ -99,13 +97,11 @@ module Wilhelm
           DOOR_REQ      = 0x79
           DOOR_REP      = 0x7a
 
-          # Telematics
-          COORD         = 0xa2
-          ADDR          = 0xa4
-          ICON          = 0xa6
+          UTC           = 0x1f
+          COORDINATES   = 0xa2
+          ADDRESS       = 0xa4
           ASSIST        = 0xa9
-
-          GFX2          = 0xab
+          GT2           = 0xab
           SES           = 0xaf
 
           # Diagnostics

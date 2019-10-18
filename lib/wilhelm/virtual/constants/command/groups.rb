@@ -28,23 +28,21 @@ module Wilhelm
           # 0x2a, 0x24, 0x40, 0x41
           OBC = [ANZV_BOOL, ANZV_VAR,  OBC_VAR, OBC_BOOL].freeze
           # 0x21 0x23 0x24 0xa5 0x22
-          DISPLAY = [TXT_MID, TXT_GFX, ANZV_VAR, TXT_NAV, GFX_STATUS].freeze
+          DISPLAY = [TXT_MID, TXT_GT, ANZV_VAR, TXT_NAV, GT_STATUS].freeze
           # 0x1a, 0x51, 0x52, 0x57
           HUD = [TXT_CCM, HUD_STATUS, CCM_END, CCM_RLY].freeze
           # 0x1a, 0x52
           CCM = [TXT_CCM, CCM_RLY].freeze
 
           # 0x1f 0xa2 0xa4
-          GPS = [UTC, COORD, ADDR].freeze
+          GPS = [UTC, COORDINATES, ADDRESS].freeze
           # 0xa9 0xab 0xaf
-          NAVIGATION = [GFX2, ASSIST].freeze
-          # 0xA2, 0xA4
-          TELEMATICS = [COORD, ADDR].freeze
+          NAVIGATION = [GT2, ASSIST].freeze
 
           # 0x23 0x46
-          MENUS = [MENU_GFX, MENU_RAD].freeze
+          MENUS = [MENU_GT, MENU_RAD].freeze
           # 0x21 0x22
-          MID = [TXT_MID, GFX_STATUS].freeze
+          MID = [TXT_MID, GT_STATUS].freeze
 
           # 0x32 0x3b
           MFL  = [MFL_VOL, MFL_FUNC].freeze
@@ -56,7 +54,7 @@ module Wilhelm
 
           # 0x20, 0x2b, 0x2c, 0x31, 0x21, 0x23, 0x24
           TELEPHONE = [
-            TEL_OPEN, TEL_LED, TEL_STATE, INPUT, TXT_MID, TXT_GFX, ANZV_VAR
+            TEL_OPEN, TEL_LED, TEL_STATE, INPUT, TXT_MID, TXT_GT, ANZV_VAR
           ].freeze
 
           # 0x38 0x39
@@ -113,12 +111,12 @@ module Wilhelm
             RAD_ALT,
             OBC_VAR,
             OBC_BOOL,
-            MENU_GFX,
+            MENU_GT,
             MENU_RAD,
             RAD_LED,
             SRC_CTL,
             SRC_SND,
-            SRC_GFX
+            SRC_GT
           ].freeze
         end
       end
