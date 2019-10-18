@@ -38,13 +38,13 @@ namespace :source do
       username = host.user
 
       list = %x(ls -A).split
-      restricted_files = %w(.git .gitignore .ruby-version log)
+      restricted_files = %w(.git .gitignore .ruby-version log tmp .DS_Store)
       restricted_files.each { |file| list.delete(file) }
       # puts %x`scp -r . #{username}@#{hostname}:#{fetch :deploy_to}`
+      puts list.join("\n")
       file_arg = list.join(' ')
-      # puts file_arg
       # puts "scp -B -C -r #{file_arg} #{username}@#{hostname}:#{fetch :deploy_to}"
-      %x`scp -r #{file_arg} #{username}@#{hostname}:#{fetch :deploy_to}`
+      puts %x`scp -r #{file_arg} #{username}@#{hostname}:#{fetch :deploy_to}`
       puts Time.now
     end
   end
