@@ -34,7 +34,7 @@ module Wilhelm
                 state!(power: POWER[OFF])
                 log_state(power: POWER[OFF])
                 changed
-                notify_observers(PRIORITY_GFX, device: :rad)
+                notify_observers(PRIORITY_GT, device: :rad)
                 self
               end
 

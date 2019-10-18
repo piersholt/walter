@@ -11,7 +11,7 @@
 0x2e: :edc      # Electronic Damper Control (EDC)
 
 0x30: :ccm      # Check Control Module (CCM)
-0x3b: :gfx      # Graphics Stage (Navi. GT, or Video Module GT)
+0x3b: :gt       # Graphics Stage (Navi. GT, or Video Module GT) [Note 4]
 0x3f: :dia      # Diagnostics (routed by IKE from D-BUS)
 
 0x44: :ews      # Drive Away Protection System (EWS)
@@ -78,6 +78,8 @@
 #     is messaged following a query to LCM.
 # [3] Earlier versions of MRS have control units that will only communicate
 #     via diagnostics, despite being accessed via K-Bus.
+# [4] The navigation computer GT was only available from MKII onwards. MKI
+#     equipped vehicles use the video module GT exclusively.
 
 # UNCONFIRMED
 

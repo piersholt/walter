@@ -16,12 +16,12 @@ module Wilhelm
             end
 
             def dial_clear
-              draw_23(gfx: DIAL_CLEAR, chars: STRING_BLANK)
+              draw_23(gt: DIAL_CLEAR, chars: STRING_BLANK)
             end
 
             def dial_number(digits = dial_buffer)
               # add_dial_digit(digit)
-              draw_23(gfx: DIAL_DIGIT, chars: digits)
+              draw_23(gt: DIAL_DIGIT, chars: digits)
             end
           end
         end

@@ -21,13 +21,13 @@ module Wilhelm
 
                 # Title 11 chars
                 def title(
-                  gfx: LAYOUT_HEADER,
+                  gt: LAYOUT_HEADER,
                   ike: 0b0001_0000,
                   chars: genc(LENGTH_TITLE)
                 )
                   # padded_chars = pad_chars(chars, LENGTH_TITLE)
                   padded_chars = chars
-                  draw_23(gfx: gfx, ike: ike, chars: padded_chars)
+                  draw_23(gt: gt, ike: ike, chars: padded_chars)
                 end
 
                 def a1(

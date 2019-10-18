@@ -23,7 +23,7 @@ module Wilhelm
           cid: 'CID',
           dia: 'Diagnostics',
           dsp: 'DSP',
-          gfx: 'GFX',
+          gt:  'GT',
           gt2: 'GT2',
           ike: 'IKE',
           lcm: 'LCM',

@@ -15,7 +15,7 @@ module Wilhelm
               # NOTE: avoid duplicating brightness constants?
 
               # Reply Brightness
-              # bmbt  gfx	  0x06  7F
+              # bmbt  gt	  0x06  7F
               def brightness(level)
                 lcd_brightness_reply(arguments: bytes(level))
               end

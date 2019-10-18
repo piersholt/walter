@@ -12,7 +12,7 @@ module Wilhelm
             # def bmbt_service_mode(string)
             #   mapped_integers = string.split(' ').map { |i| i.to_i(16) }
             #   arguments = array(mapped_integers)
-            #   api_service_mode_reply(from: :bmbt, to: :gfx, arguments: arguments)
+            #   api_service_mode_reply(from: :bmbt, to: :gt, arguments: arguments)
             # end
 
             # BMBT --> LKM : Light dimmer status request

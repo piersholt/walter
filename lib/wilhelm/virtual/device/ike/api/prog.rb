@@ -10,7 +10,7 @@ module Wilhelm
             include Device::API::BaseAPI
 
             # 0x42 PROG
-            def prog(from: :ike, to: :gfx, **arguments)
+            def prog(from: :ike, to: :gt, **arguments)
               dispatch_raw_command(from, to, PROG, arguments)
             end
           end

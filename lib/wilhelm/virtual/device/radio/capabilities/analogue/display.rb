@@ -10,20 +10,20 @@ module Wilhelm
             module Display
               include API
 
-              # rad  gfx  23  CA 20  "CD 1-01",
-              # rad  gfx  23  CA 20  "CD 1-01",
-              # rad  gfx  23  CA 20  "CD 1-01",
-              # rad  gfx  23  CA 20  "CD 1-01",
+              # rad  gt  23  CA 20  "CD 1-01",
+              # rad  gt  23  CA 20  "CD 1-01",
+              # rad  gt  23  CA 20  "CD 1-01",
+              # rad  gt  23  CA 20  "CD 1-01",
 
               STATION    = [70, 77, 32, 3, 49, 48, 53, 46, 57, 4, 32, 32, 32]
               STATION_ST = [70, 77, 32, 3, 49, 48, 53, 46, 57, 4, 32, 83, 84]
 
-              def station(to: :gfx, chars: integer_array_to_chars(STATION))
-                primary(to: to, gfx: 0x40, ike: 0x20, chars: chars)
+              def station(to: :gt, chars: integer_array_to_chars(STATION))
+                primary(to: to, gt: 0x40, ike: 0x20, chars: chars)
               end
 
-              def st(to: :gfx, chars: integer_array_to_chars(STATION_ST))
-                primary(to: to, gfx: 0x50, ike: 0x20, chars: chars)
+              def st(to: :gt, chars: integer_array_to_chars(STATION_ST))
+                primary(to: to, gt: 0x50, ike: 0x20, chars: chars)
               end
 
               # def p(index)
@@ -54,14 +54,14 @@ module Wilhelm
 
               def preset!(index = 1, block = true)
                 b = block ? 0x00 : 0x01
-                secondary(gfx: 0x62, ike: b, zone: 0x42, chars: " P #{index} ")
+                secondary(gt: 0x62, ike: b, zone: 0x42, chars: " P #{index} ")
                 # Kernel.sleep(2)
-                # secondary(gfx: 0x62, ike: 0x00, zone: 0x42, chars: " P #{index+1} ")
+                # secondary(gt: 0x62, ike: 0x00, zone: 0x42, chars: " P #{index+1} ")
               end
 
               def channel!(index = 1, block = true)
                 b = block ? 0x00 : 0x01
-                secondary(gfx: 0x62, ike: b, zone: 0x01, chars: " FM#{index} ")
+                secondary(gt: 0x62, ike: b, zone: 0x01, chars: " FM#{index} ")
               end
             end
           end

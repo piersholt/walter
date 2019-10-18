@@ -141,15 +141,15 @@
 
 0x14: # RGN-REQ
   :schemas:
-    - :gfx
+    - :gt
     - :ccm
   :properties:
     :short_name: REGION?
     :long_name: Country Coding Status Request
   :klass: Base
-  :gfx:
+  :gt:
     :properties:
-      :short_name: REGION-GFX?
+      :short_name: REGION-GT?
       :long_name: Country Coding Status Request
     :klass: Base
   :ccm:
@@ -160,14 +160,14 @@
 
   :meta:
     :senders:
-      - gfx (0x3b) settings UI?
+      - gt (0x3b) settings UI?
       - ccm (0x30) temp. and speed?
       - rad (0x68) language? (x10)
       - tel (0xc8) not sure? (x1)
 
 0x15: # REGION
   :schemas:
-    - :gfx
+    - :gt
     - :ike
   :properties:
     :short_name: REGION
@@ -244,7 +244,7 @@
     :b4:
       :type: :integer
   :klass: Base
-  :gfx:
+  :gt:
     :properties:
       :short_name: REGION-SET
       :long_name: Country Coding
@@ -727,7 +727,7 @@
   :klass: Base
   :meta:
     :examples:
-      - from GFX 02 0C
+      - from GT  02 0C
       - from VID 00 0C if 'incoming' is set!
 
 # BMBT/MID --------------------------------------------------------------------
@@ -877,7 +877,7 @@
             :states:
               0: :off
               1: :on
-          # no GFX-CACHE using this using MK1 GFX
+          # no GT-CACHE using this using MK1 GT
           :block:
             :type: :switch
             :label: Block
@@ -1039,14 +1039,14 @@
       :short_name: RAD-23
       :long_name: Update Text Display (BMBT, IKE)
     :index:
-      :gfx: 0
+      :gt: 0
       :ike: 1
       :chars: !ruby/range
                 begin: 2
                 end: -1
                 excl: false
     :parameters:
-      :gfx:
+      :gt:
         :type: :map
         :dictionary:
           # Service Mode
@@ -1247,14 +1247,14 @@
       :short_name: TEL-23*
       :long_name: Update Text Display (BMBT, IKE)
     :index:
-      :gfx: 0
+      :gt: 0
       :ike: 1
       :chars: !ruby/range
                 begin: 2
                 end: -1
                 excl: false
     :parameters:
-      :gfx:
+      :gt:
         :type: :map
         :dictionary:
           # to: ANZV
@@ -1269,7 +1269,7 @@
           0x4_2: '[IKE] Contact Name'             # "TEL1-MessageBank"
           0x4_3: '[IKE] Contact Number/Call'      # "TEL1-101" / "TEL    98272742"
 
-          # to: GFX
+          # to: GT
           0x0_5: '[Pin] Number'
 
           0x5_2: '[Directory] Contact Name'         # "MUM"
@@ -1298,18 +1298,18 @@
     :recipients:
       0xFF: GLO-H
       0x80: IKE
-      0x3B: GFX
+      0x3B: GT
     :notes:
       - How you change the radio station affects what messages are sent
       - Changing via MFL will send to GLO-H as the message is consumed by
-        multiple devices (GFX and HUD set)
-      - Changing via BMBT will only send to GFX as the IKE display is not
+        multiple devices (GT and HUD set)
+      - Changing via BMBT will only send to GT as the IKE display is not
         updated.
       - When the change is made via BMBT the message will still contain the
         sub command for the IKE but it will always be 0x20
       - The text sub command contains control characters of 0x04, 0x03 etc,
         but I'm not sure what their purpose is yet.
-      - i know the GFX has multiple zones and it might denote the substrings
+      - i know the GT has multiple zones and it might denote the substrings
         intended for each screen element
     :examples:
       - MFL (Next/Previous)
@@ -1327,7 +1327,7 @@
 0x24: # ANZV-VAR / ANZV-VAR-IKE* / ANZV-VAR-TEL* / ANZV-VAR-RAD*
   :properties:
     :short_name: ANZV-VAR
-    :long_name: OBC Display (IKE, GFX)
+    :long_name: OBC Display (IKE, GT)
   :klass: Parameterized::Base
   :schemas:
     - :tel
@@ -1358,7 +1358,7 @@
     :klass: Parameterized::Base
     :properties:
       :short_name: ANZV-VAR-IKE*
-      :long_name: OBC Display (IKE, GFX)
+      :long_name: OBC Display (IKE, GT)
     :parameters:
       :field:
         :type: :map
@@ -1406,7 +1406,7 @@
     :klass: Parameterized::Base
     :properties:
       :short_name: ANZV-VAR-RAD*
-      :long_name: OBC Display (IKE, GFX)
+      :long_name: OBC Display (IKE, GT)
     :parameters:
       :field:
         :type: :map
@@ -1866,11 +1866,11 @@
             *button_state
   :meta:
     :sos:
-      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Press
+      - BMBT  	GT   	BMBT-BTN-1	[Confirm] Press
       - Open SOS from default layout ->
-      - GFX   	TEL   	TEL-DATA    00 05 08
-      - 'TEL   	GFX   	TXT-MEDIA 	C0 20	"SOS: 112!"'
-      - BMBT  	GFX   	BMBT-BTN-1	[Confirm] Release
+      - GT   	TEL   	TEL-DATA    00 05 08
+      - 'TEL   	GT   	TXT-MEDIA 	C0 20	"SOS: 112!"'
+      - BMBT  	GT   	BMBT-BTN-1	[Confirm] Release
 
 0x32: # VOL-RAD* / VOL-TEL*
   :schemas:
@@ -2489,7 +2489,7 @@
         0x02: (Settings) Date
 
         # NAVIGATION
-        # I'm not seeing GFX send these fields now?
+        # I'm not seeing GT send these fields now?
         0x05: (Navi.) Arrival?                  # 0x05: (OBC) Consump. 2
         0x06: (Navi.) Distance?                 # 0x06: (OBC) Range
 
@@ -2617,7 +2617,7 @@
       - ED 05 80 41 1B 01 33
       - ED 05 80 41 1B 02 30
       - ED 05 80 41 1B 04 36
-      - GFX
+      - GT
       - 3B 05 80 41 1B 02 E6
       - 3B 05 80 41 1B 03 E7
 
@@ -2637,7 +2637,7 @@
 
 # UI --------------------------------------------------------------------------
 
-0x45: # UI-GFX
+0x45: # UI-GT
   :properties:
     :short_name: UI-CFG
     :long_name: Radio UI Config.
@@ -2681,7 +2681,7 @@
   :index:
     :config: 0
   :meta:
-    - the source of this is GFX module
+    - the source of this is GT module
     - seemingly to tell the radio when and what to render
     - used when audio disply is requested/falls back to
     - used when switching back from TV?
@@ -2779,11 +2779,11 @@
     - F0 05 FF 47 00 38 75
     - F0 05 FF 47 00 B8 F5
 
-0x48: # BMBT-GLO / BMBT-RAD* / BMBT-TEL* / BMBT-GFX*
+0x48: # BMBT-GLO / BMBT-RAD* / BMBT-TEL* / BMBT-GT*
   :schemas:
     - :tel
     - :rad
-    - :gfx
+    - :gt
   :properties:
     :short_name: BMBT-GLO
     :long_name: BMBT Buttons
@@ -2873,9 +2873,9 @@
     :index: *bmbt_index
     :parameters:
       :action: *bmbt_action
-  :gfx:
+  :gt:
     :properties:
-      :short_name: BMBT-GFX*
+      :short_name: BMBT-GT*
       :long_name: BMBT Buttons
     :klass: Parameterized::Button::BMBT
     :index: *bmbt_index
@@ -2991,15 +2991,15 @@
     - 3B 05 68 4E XX 3F 4B (Voice command/set navi. volume)
     - telephone mute is switched input
 
-0x4F: # SRC-GFX
+0x4F: # SRC-GT
   :schemas:
     - :bmbt
     - :tv
     - :nav_jp
-  :bmbt: # this is actually :gfx (but conflicts with :nav_jp)
+  :bmbt: # this is actually :gt (but conflicts with :nav_jp)
     :klass: Parameterized::Base
     :properties:
-      :short_name: GFX-BMBT*
+      :short_name: GT-BMBT*
       :long_name: Display Output
     :meta:
       # Navigation Computer
@@ -3997,9 +3997,9 @@
   :meta:
     - 3F 03 F0 9D 51 (BMBT)
 
-0x9E: # GFX-9E
+0x9E: # GT-9E
   :properties:
-    :short_name: GFX-9E
+    :short_name: GT-9E
     :long_name: Unknown
   :klass: Base
   :meta:
@@ -4022,7 +4022,7 @@
     :long_name: Diagnostics Data
   :klass: Base
   :meta:
-    - 0x3B GFX
+    - 0x3B GT
     - 0x7F NAV
     - 0xD0 LCM
     - 0xF0 BMBT
@@ -4372,16 +4372,16 @@
         :type: :chars
   :meta:
     :notes:
-      - 540 RAD sending this to GFX
-      - command 0x23 with gfx argument of 0x60..0x7f must be used to change display layout to 'nav'
+      - 540 RAD sending this to GT
+      - command 0x23 with gt argument of 0x60..0x7f must be used to change display layout to 'nav'
     :examples:
-      - RAD GFX	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
-      - RAD GFX	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
-      - RAD GFX	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
-      - RAD GFX	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
-      - RAD GFX	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
-      - RAD GFX	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
-      - RAD GFX	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
+      - RAD GT	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
+      - RAD GT	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
+      - RAD GT	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
+      - RAD GT	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
+      - RAD GT	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
+      - RAD GT	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
+      - RAD GT	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
 
 0xA6: # TEL-ANZV-A6
   :properties:
@@ -4450,9 +4450,9 @@
     0x34: Reply / Vehicle Type
     0x35: Reply / Colour
 
-0xAA: # GFX2-NAV-AA
+0xAA: # GT2-NAV-AA
   :properties:
-    :short_name: GFX2-NAV-AA
+    :short_name: GT2-NAV-AA
     :long_name: Request NAV GT switch to navigation for routing to RCM
   :klass: Base
   :meta:
@@ -4460,9 +4460,9 @@
     - seemingly limited to switching navi. GT to GPS Navigation
     - rear monitor controls then likely routed directly to navi. GT
 
-0xAB: # NAV-GFX2-AB
+0xAB: # NAV-GT2-AB
   :properties:
-    :short_name: NAV-GFX2-AB
+    :short_name: NAV-GT2-AB
     :long_name: NAV GT UI state?
   :klass: Base
   :meta:
@@ -4470,7 +4470,7 @@
     - 0x20: seems to immediately preceed 0x21 (only if 0xAA is sent)
     - 0x21: main menu (what i've received until now)
     - 0x11: resume guidance/directions (rare!)
-    - looks a lot like SRC-GFX???
+    - looks a lot like SRC-GT???
 
 0xAF: # NAV-VOICE-AF
   :properties:
@@ -4568,7 +4568,7 @@
       - BMBT	(0xF0):	126
       - LCM	  (0xD0):	208
       - MFL	  (0x50):	25
-      - GFX	  (0x3B):	82
+      - GT	  (0x3B):	82
       - TV	  (0xED):	121
       - 0xE0	(0xE0):	9
       - RAD	  (0x68):	272
@@ -4593,7 +4593,7 @@
       - DIA     RAD     B-PONG          01
       - RAD     DIA     DIA-D           00 00 40 00 80
   :recipients:
-    - GFX    	01
+    - GT    	01
     - TV     	01
     - RAD    	01
     - RAD    	01
@@ -4604,20 +4604,20 @@
     :long_name: Diagnostics Clear Error Memeory?
   :klass: Base
   :schemas:
-    - :gfx
-  :gfx:
+    - :gt
+  :gt:
     :klass: Base
     :properties:
       :short_name: LCD-SET
       :long_name: LCD Brightness
     :meta:
       - Request BMBT LCD Brightness:
-        - gfx bmbt 05 40 01
-        - bmbt gfx 06 7F
+        - gt bmbt 05 40 01
+        - bmbt gt 06 7F
         - this will update brightness value in Settings
       - Set BMBT LCD Brightness:
-        - gfx bmbt 05 41 01 60
-        - gfx bmbt 05 42 01 60
+        - gt bmbt 05 41 01 60
+        - gt bmbt 05 42 01 60
         - 0x41 and 0x42 may represent BMBT and RCM
         - when in service mode, only 0x41 is sent!
 

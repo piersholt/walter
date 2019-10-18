@@ -17,15 +17,15 @@ module Wilhelm
             end
 
             def directory_name(name = 'MUM')
-              draw_23(gfx: DIRECTORY_CONTACT_NAME, chars: name)
+              draw_23(gt: DIRECTORY_CONTACT_NAME, chars: name)
             end
 
             def directory_number(number = '98764321')
-              draw_23(gfx: DIRECTORY_CONTACT_NUMBER, chars: number)
+              draw_23(gt: DIRECTORY_CONTACT_NUMBER, chars: number)
             end
 
             def directory_clear
-              draw_23(gfx: DIRECTORY_CLEAR, chars: STRING_BLANK)
+              draw_23(gt: DIRECTORY_CLEAR, chars: STRING_BLANK)
             end
 
             def prep

@@ -17,7 +17,7 @@ module Wilhelm
 
           SUBSCRIBE = [
             PING,
-            MENU_GFX,
+            MENU_GT,
             MFL_VOL,
             MFL_FUNC,
             BMBT_I, BMBT_A, BMBT_B
@@ -28,9 +28,9 @@ module Wilhelm
             return false unless subscribe?(command_id)
 
             case command_id
-            when MENU_GFX
-              logger.debug(PROC) { "Rx: MENU_GFX 0x#{d2h(MENU_GFX)}" }
-              handle_menu_gfx(message.command)
+            when MENU_GT
+              logger.debug(PROC) { "Rx: MENU_GT 0x#{d2h(MENU_GT)}" }
+              handle_menu_gt(message.command)
             when MFL_FUNC
               logger.debug(PROC) { "Rx: MFL_FUNC 0x#{d2h(MFL_FUNC)}" }
               handle_mfl_func(message.command)

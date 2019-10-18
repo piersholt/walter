@@ -10,9 +10,9 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
-            # 0x4F SRC-GFX
-            def src_gfx(from: :tv, to: :bmbt, arguments:)
-              try(from, to, SRC_GFX, arguments)
+            # 0x4F SRC-GT
+            def src_gt(from: :tv, to: :bmbt, arguments:)
+              try(from, to, SRC_GT, arguments)
             end
           end
         end

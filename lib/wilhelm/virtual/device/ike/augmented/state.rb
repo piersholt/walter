@@ -98,9 +98,9 @@ module Wilhelm
             # NOTE: api requires byte array of length 2
             # return value will need to be padded shoud value be 0
             # see -
-            #   lib/wilhelm/virtual/device/gfx/capabilities/obc.rb
+            #   lib/wilhelm/virtual/device/gt/capabilities/obc.rb
             # usage -
-            #   lib/wilhelm/virtual/device/gfx/capabilities/obc/limit.rb:45
+            #   lib/wilhelm/virtual/device/gt/capabilities/obc/limit.rb:45
             def settings_bool
               base_256_digits(state[:anzv_bool])
             end

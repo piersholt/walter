@@ -10,7 +10,7 @@ module Wilhelm
           CD     = :cd
           RAD    = :rad
           DSP    = :dsp
-          GFX    = :gfx
+          GT     = :gt
           TV     = :tv
           BMBT   = :bmbt
           MFL    = :mfl

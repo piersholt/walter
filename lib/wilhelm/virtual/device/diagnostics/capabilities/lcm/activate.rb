@@ -53,7 +53,7 @@ module Wilhelm
                 # lcm    glo_l   LAMP2? 0x8a (1000 1010)
                 # lcm    glo_l   LAMP2? 0x7e (0111 1110)
                 # lcm    glo_l   LAMP   (0000 0011) LOW [ON] Parking [ON]
-                # gfx    lcm     LAMP-REQ        --
+                # gt     lcm     LAMP-REQ        --
                 # lcm    glo_l   LAMP   (0000 0011) LOW [ON] Parking [ON]
                 # lcm    glo_l   LAMP   (0000 0011) LOW [ON] Parking [ON]
                 # lcm    glo_l   LAMP   (0000 0011) LOW [ON] Parking [ON]

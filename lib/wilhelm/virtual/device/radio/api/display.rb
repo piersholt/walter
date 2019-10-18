@@ -10,15 +10,15 @@ module Wilhelm
             include Device::API::BaseAPI
 
             # 0x23
-            def draw_23(from: :rad, to: :gfx, **arguments)
+            def draw_23(from: :rad, to: :gt, **arguments)
               format_chars!(arguments)
-              try(from, to, TXT_GFX, arguments)
+              try(from, to, TXT_GT, arguments)
             end
 
             alias primary draw_23
 
             # 0x21
-            def draw_21(from: :rad, to: :gfx, **arguments)
+            def draw_21(from: :rad, to: :gt, **arguments)
               format_chars!(arguments)
               try(from, to, TXT_MID, arguments)
             end
@@ -26,7 +26,7 @@ module Wilhelm
             alias list draw_21
 
             # 0xA5
-            def draw_a5(from: :rad, to: :gfx, **arguments)
+            def draw_a5(from: :rad, to: :gt, **arguments)
               format_chars!(arguments)
               try(from, to, TXT_NAV, arguments)
             end

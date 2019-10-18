@@ -15,16 +15,16 @@ module Wilhelm
 
             def open_pin(chars = DEFAULT_PIN)
               logger.unknown(MOD_PROG) { '#open_pin()' }
-              draw_23(to: :glo_h, gfx: PIN_TITLE, chars: chars)
+              draw_23(to: :glo_h, gt: PIN_TITLE, chars: chars)
             end
 
             def pin_clear
               # clear_pin_buffer
-              draw_23(gfx: DIAL_CLEAR, chars: STRING_BLANK)
+              draw_23(gt: DIAL_CLEAR, chars: STRING_BLANK)
             end
 
             def pin_number(chars = pin_buffer)
-              draw_23(gfx: PIN_TITLE, chars: chars)
+              draw_23(gt: PIN_TITLE, chars: chars)
             end
           end
         end
