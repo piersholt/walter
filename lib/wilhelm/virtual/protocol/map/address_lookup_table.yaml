@@ -1,65 +1,111 @@
 ---
 
-0x00: :gm
+0x00: :gm       # General Module (GM)
+                # Active Seat (AS) [Note 2]
+0x08: :shd      # Tilt/Slide Sunroof (SHD) [E46]
 
-0x18: :cdc
+0x18: :cdc      # CD Changer
 
-0x30: :ccm
-0x3b: :gfx
-0x3f: :dia
+0x24: :tlm      # Trunk lid module [D-BUS]
+0x28: :rcc      # Radio Clock (RCC) [E38]
+0x2e: :edc      # Electronic Damper Control (EDC)
 
-0x44: :ews
-0x46: :cid    # Central Information Display (CID) [E83 X3]
+0x30: :ccm      # Check Control Module (CCM)
+0x3b: :gfx      # Graphics Stage (Navi. GT, or Video Module GT)
+0x3f: :dia      # Diagnostics (routed by IKE from D-BUS)
 
-0x50: :mfl
-0x5b: :ihka
+0x44: :ews      # Drive Away Protection System (EWS)
+0x46: :cid      # Central Information Display (CID) [E83 X3]
+0x47: :rcm      # Rear Compartment Monitor [E38]
 
-0x60: :pdc
-0x68: :rad
-0x6a: :dsp
+0x50: :mfl      # Multifunction Steering Wheel (MFL)
+0x51: :mmp      # Mirror Memory (Passenger) [E46]
+0x57: :lws      # Steering Angle Sensor (LWS) [D-BUS]
+0x5b: :ihka     # Integrated Automatic Heating/Air Conditioning (IHKA)
 
-0x76: :cd
-0x7f: :nav
+0x60: :pdc      # Park Distance Control (PDC)
+0x68: :rad      # Radio
+0x6a: :dsp      # Digital Sound Processor (DSP)
+0x6b: :heat     # Auxiliary Heating (Webasto) (TIS A14)
 
-0x80: :ike
+0x70: :rdc      # Tire Pressure Control/Warning (RDC/W)
+0x72: :smd      # Seat Memory (Driver) [SM] [E46]
+0x76: :cd       # CD Player (Business)
+0x7f: :nav      # Navigation
 
-0xa0: :fid    # Multi-information display, rear passenger compartment (FOND ZIS)
-0xa4: :mrs
-0xac: :ehc
+0x80: :ike      # Instrument Cluster Electronics (IKE)
+                # Instrument Cluster (KOMBI)
+0x86: :xenr     # Xenon Light Right [E46?]
 
-0xb0: :ses
-0xbb: :nav_jp
-0xbf: :glo_l
+0x98: :xenl     # Xenon Light Left [E46?]
+0x9a: :lwr      # Automatic Headlight Vertical Aim Control (LRA/LWR) [Note 1]
+0x9b: :mmd      # Mirror Memory (Driver) [seat control, driver (SBFA)] [E46]
+0x9c: :cvm      # The Convertible Top Module (CVM) [E46]
+0x9e: :rps      # Roll-over Protection System (RPS) [D-BUS] [E46?]
 
-0xc0: :mid    # Multi-information display (ZIS)
-0xc8: :tel
+0xa0: :fmid     # Rear compartment Multi-information display (FOND ZIS) [E38]
+0xa4: :mrs      # Multiple Restraint System (MRS) [Note 3]
+0xa7: :fhk      # Rear compartment heating/air conditioning [E38]
+0xac: :ehc      # Electronic Height Control (EHC)
 
-0xd0: :lcm
+0xb0: :ses      # Voice input (SES)
+0xbb: :nav_jp   # Navigation [Japan]
+0xbf: :glo_l    # Broadcast
 
-0xe0: :iris   # integrated radio and information system
-0xea: :dspc   # DSP control set (E38?)
-0xe7: :anzv   # Display = "Anzeige"
-0xe8: :rls
-0xed: :tv
+0xc0: :mid      # Multi-information display (ZIS)
+0xc8: :tel      # Telephone
 
-0xf0: :bmbt
-0xff: :glo_h
+0xd0: :lcm      # Lamp Check Module (LCM)
+                # Light Switch Center (LSZ) [E46]
+0xda: :smb      # Seat Memory (Passenger) [passenger seat memory (SMB)] [E46]
+
+0xe0: :iris     # Integrated Radio and Information System (IRIS)
+0xea: :dspc     # DSP Control??? [E38]
+0xe7: :anzv     # Display = "Anzeige"
+0xe8: :rls      # Rain/driving light sensor (RLS)
+                # Automatic Interval Control (AIC)
+0xed: :tv       # Video Module (VM) incl. TV
+
+0xf0: :bmbt     # On-board computer control panel (BMBT)
+0xf5: :szm      # Center Console Switch Center (SZM)
+0xff: :glo_h    # Broadcast
+
+# NOTES
+
+# [1] LCM is queried by diagnostics prior to sending commands to
+#     LWR control unit. Possibly a determine which LWR system in place?
+# [2] Active Seat mighn't be at 0x00. Possibly similar to LWR, which
+#     is messaged following a query to LCM.
+# [3] Earlier versions of MRS have control units that will only communicate
+#     via diagnostics, despite being accessed via K-Bus.
 
 # UNCONFIRMED
 
-0x43: :gt2    # 7F 04 43 AB 21 B2
-              # 43 04 7F AA .. ..
-0x47: :rcm    # 3B 04 47 9E 01 E7
-0x53: :tbc    # 3B 05 53 01 32 00 5E
-              # 3B 05 53 01 00 00 6C
-0xca: :tcu
+0x40: :rc       # INPA "remote controls"??? [E38, E39]
+                # With respect to bus arbitration, it seems to low an address
+                # to be UI controls?
+                # Did the infrared keyless entry FBZV not interface directly
+                # with the ZKE, and have intermediary control unit on the
+                # K-Bus? Long shot...
 
-# 540i UNCONFIRMED
+0x43: :gt2      # E38 Video Module secondary GT for RCM?
+                # Nothing on D-BUS sent to this address for E39, E38, and E46.
+                # Virtual address akin to GT or TV?
+                # Navi. GT sends the below whenever Main Menu is rendered:
+                # 7F 04 43 AB 21 B2
+                # After some wildcard testing, 0xAA can be used to load GPS navigation:
+                # 43 04 7F AA 01 93
+                # I'm guessing E38 video module has discrete GT for RCM,
+                # and similar to TV, selecting GPS from the rear will switch
+                # video signal to Navi- thus the need to control the Nav UI.
 
-# Automatic headlight adjustment (LWR)
-# Center Console Switch Center (SZM)
+0x53: :tbc      # I've not seen 0x01 with arguments?
+                # Given the sender is 0x3B, I'd hazard a guess this
+                # is also E38 VM/RCM related...
+                # 3B 05 53 01 32 00 5E  2019-01-07.bin
+                # 3B 05 53 01 32 00 5E  2019-10-14.bin
+                # 3B 05 53 01 00 00 6C  2019-10-14.bin
 
-# UNKNOWN
+0x66: :alc      # adaptive light control???
 
-# Tire Pressure Control/Warning (RDC/W)
-# Radio clock (RCC)
+0xca: :tcu      # ???
