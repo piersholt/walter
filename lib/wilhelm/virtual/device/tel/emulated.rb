@@ -28,7 +28,6 @@ module Wilhelm
           def handle_virtual_receive(message)
             command_id = message.command.d
             return false unless subscribe?(command_id)
-            # LOGGER.debug(PROC) { "handle message id: #{command_id}" }
             case command_id
             when PONG
               logger.debug(PROC) { "Rx: PONG 0x#{d2h(PONG)}" }
@@ -53,10 +52,12 @@ module Wilhelm
             super(message)
           end
 
+          # @override Device::Capabilities::Ready.pong
           def pong
             super(to: :glo_h, status: 0x30)
           end
 
+          # @override Device::Capabilities::Ready.announce
           def announce
             super(to: :glo_h, status: 0x30)
           end

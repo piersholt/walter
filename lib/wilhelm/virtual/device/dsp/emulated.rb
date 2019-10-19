@@ -7,6 +7,7 @@ module Wilhelm
         # DSP::Emulated
         class Emulated < Device::Emulated
           include DSP::API
+
           PROC = 'DSP::Emulated'
 
           SUBSCRIBE = [PING, IGNITION_REP, DSP_SET].freeze
@@ -22,6 +23,7 @@ module Wilhelm
             super(message)
           end
 
+          # @override Device::Capabilities::Ready.announce
           def announce
             super(to: :glo_l, status: 0x00)
           end
