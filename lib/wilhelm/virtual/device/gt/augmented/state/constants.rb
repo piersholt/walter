@@ -65,9 +65,9 @@ module Wilhelm
 
               # OBC-VAR/BOOL FIELDS -------------------------------------------
               # Settings Fields
-              SET_TIME         = 0x01
-              SET_DATE         = 0x02
-              SET_MEMO         = 0x0c
+              SETTINGS_TIME    = 0x01
+              SETTINGS_DATE    = 0x02
+              SETTINGS_MEMO    = 0x0c
               # OBC Fields
               OBC_OUTSIDE_TEMP = 0x03
               OBC_ECON_1       = 0x04
@@ -80,8 +80,8 @@ module Wilhelm
               OBC_TIMER        = 0x0e
               OBC_TIMER_LAP    = 0x1a
               # Nav? Fields
-              NAV_ARRIVAL_TIME = 0x05
-              NAV_DIST_TO_DEST = 0x06
+              # NAV_ARRIVAL_TIME = 0x05
+              # NAV_DIST_TO_DEST = 0x06
               # Code
               CODE_INPUT       = 0x0d
               # Aux. Heating/Vent. Fields
@@ -93,13 +93,16 @@ module Wilhelm
               AUX_VENT_ON      = 0x14
 
               # OBC-VAR 0x40 -------------------------------------------------
+
               FIELDS_VAR_SETTINGS = [
-                SET_TIME,
-                SET_DATE
+                SETTINGS_TIME,
+                SETTINGS_DATE
               ].freeze
 
+              # Distance can be input by user via OBC, but navigation
+              # computer will also update distance during guidance causing
+              # an OBC false positive, thus it is not included.
               FIELDS_VAR_OBC = [
-                OBC_DISTANCE,
                 OBC_LIMIT
               ].freeze
 
@@ -122,9 +125,9 @@ module Wilhelm
               # OBC-BOOL 0x41 -------------------------------------------------
 
               FIELDS_BOOL_SETTINGS = [
-                SET_TIME,
-                SET_DATE,
-                SET_MEMO
+                SETTINGS_TIME,
+                SETTINGS_DATE,
+                SETTINGS_MEMO
               ].freeze
 
               FIELDS_BOOL_OBC = [
@@ -152,7 +155,7 @@ module Wilhelm
               REQUESTED_FIELDS = [
                 *FIELDS_BOOL_SETTINGS,
                 *FIELDS_BOOL_OBC,
-                *FIELDS_BOOL_AUX,
+                *FIELDS_BOOL_AUX
               ].freeze
             end
           end

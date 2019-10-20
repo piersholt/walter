@@ -2490,13 +2490,13 @@
 
         # NAVIGATION
         # I'm not seeing GT send these fields now?
-        0x05: (Navi.) Arrival?                  # 0x05: (OBC) Consump. 2
-        0x06: (Navi.) Distance?                 # 0x06: (OBC) Range
+        0x05: (Nav.) Arrival?                  # 0x05: (OBC) Consump. 2
+        0x06: (Nav.) Distance?                 # 0x06: (OBC) Range
+        # NOTE: Distance set by both Nav. and user via OBC.
+        0x07: (OBC/Nav.) Distance              # 0x07: (OBC) Distance
+        0x08: (Nav.) Arrival                   # 0x08: (OBC) Arrival
 
         # ON-BOARD COMPUTER
-        0x07: (OBC) Distance                    # 0x07: (OBC) Distance
-        0x08: (OBC) Arrival?                    # 0x08: (OBC) Arrival
-
         0x09: (OBC) Limit
 
         # CODE

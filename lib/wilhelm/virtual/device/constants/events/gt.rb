@@ -26,10 +26,10 @@ module Wilhelm
             GT_PING           = :gt_ping
             GT_ANNOUNCE       = :gt_announce
 
-            GT_OBC_BOOL       = :gt_obc_req
-            GT_AUX_BOOL       = :gt_aux_req
-            GT_SET_BOOL       = :gt_set_req
-            GT_CODE_BOOL      = :gt_code_req
+            GT_SETTINGS       = :gt_settings
+            GT_OBC            = :gt_obc
+            GT_CODE           = :gt_code
+            GT_AUX            = :gt_aux
 
             GT_DSP            = :gt_dsp
 
