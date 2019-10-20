@@ -59,14 +59,14 @@ module Wilhelm
           when GT_ANNOUNCE
             logger.debug(NAME) { "#update(#{GT_ANNOUNCE})" }
             announce
-          when GT_OBC_BOOL
-            logger.debug(NAME) { "#update(#{GT_OBC_BOOL}, #{properties})" }
+          when GT_OBC
+            logger.debug(NAME) { "#update(#{GT_OBC}, #{properties})" }
             obc_request
-          when GT_AUX_BOOL
-            logger.debug(NAME) { "#update(#{GT_AUX_BOOL}, #{properties})" }
+          when GT_AUX
+            logger.debug(NAME) { "#update(#{GT_AUX}, #{properties})" }
             aux_request
-          when GT_SET_BOOL
-            logger.debug(NAME) { "#update(#{GT_SET_BOOL}, #{properties})" }
+          when GT_SETTINGS
+            logger.debug(NAME) { "#update(#{GT_SETTINGS}, #{properties})" }
             settings_request
           when KL_30
             logger.debug(NAME) { "#update(#{KL_30}, #{properties})" }

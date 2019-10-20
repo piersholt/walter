@@ -31,7 +31,7 @@ module Wilhelm
               def evaluate_lcd_set(*)
                 changed
                 notify_observers(
-                  GT_SET_BOOL,
+                  GT_SETTINGS,
                   device: ident,
                   menu: :on_board_computer
                 )
@@ -60,21 +60,26 @@ module Wilhelm
               # Command 0x40 OBC-VAR
               def evaluate_obc_var(command)
                 id = command.field.value
-                # Notify when a parameter is requested for render.
-                # Used to set API::Display state to Busy when
-                # display is OBC, Settings, or Aux. Heat/Vent.
+                # Notify when a parameter is set by user.
+                # Applies to:
+                # - Settings: Time, Date
+                # - OBC: Distance, Limit
+                # - Code: Code
+                # - Aux: Timer 1, Timer 2
+                # Used by API::Display to assist in sychronising
+                # state with UI.
                 return false unless VARIABLE_FIELDS.include?(id)
                 changed
                 event =
                   case id
                   when *FIELDS_VAR_SETTINGS
-                    GT_SET_BOOL
+                    GT_SETTINGS
                   when *FIELDS_VAR_OBC
-                    GT_OBC_BOOL
+                    GT_OBC_VAR
                   when *FIELDS_VAR_CODE
-                    GT_CODE_BOOL
+                    GT_CODE_VAR
                   when *FIELDS_VAR_AUX
-                    GT_AUX_BOOL
+                    GT_AUX_VAR
                   end
                 notify_observers(
                   event,
@@ -94,11 +99,11 @@ module Wilhelm
                 event =
                   case id
                   when *FIELDS_BOOL_SETTINGS
-                    GT_SET_BOOL
+                    GT_SETTINGS
                   when *FIELDS_BOOL_OBC
-                    GT_OBC_BOOL
+                    GT_OBC
                   when *FIELDS_BOOL_AUX
-                    GT_AUX_BOOL
+                    GT_AUX
                   end
                 notify_observers(
                   event,
