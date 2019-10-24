@@ -21,16 +21,15 @@ module Wilhelm
           # Left Panel
           BMBT_MODE_PREV = :bmbt_mode_prev
           BMBT_MODE_NEXT = :bmbt_mode_next
-          BMBT_MODE = BMBT_MODE_PREV
           BMBT_OVERLAY = :bmbt_overlay
 
           # Rotary Radio
           BMBT_VOL_DOWN     = :vol_down
           BMBT_VOL_UP       = :vol_up
-          BMBT_VOL_RAD_DOWN = :vol_rad_down
-          BMBT_VOL_RAD_UP   = :vol_rad_up
-          BMBT_VOL_TEL_DOWN = :vol_tel_down
-          BMBT_VOL_TEL_UP   = :vol_tel_up
+          BMBT_VOL_DOWN_RAD = :vol_rad_down
+          BMBT_VOL_UP_RAD   = :vol_rad_up
+          BMBT_VOL_DOWN_TEL = :vol_tel_down
+          BMBT_VOL_UP_TEL   = :vol_tel_up
           BMBT_POWER = :bmbt_power
 
           BMBT_CONSTANTS = constants.map { |c| const_get(c) }

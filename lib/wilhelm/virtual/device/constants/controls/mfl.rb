@@ -9,17 +9,17 @@ module Wilhelm
           # Left
           MFL_PREV     = :mfl_prev
           MFL_NEXT     = :mfl_next
-          MFL_TEL_PREV = :mfl_tel_prev
-          MFL_TEL_NEXT = :mfl_tel_next
+          MFL_PREV_TEL = :mfl_tel_prev
+          MFL_NEXT_TEL = :mfl_tel_next
           MFL_PREV_RAD = :mfl_rad_prev
           MFL_NEXT_RAD = :mfl_rad_next
 
           MFL_VOL_DOWN     = :vol_down
           MFL_VOL_UP       = :vol_up
-          MFL_VOL_RAD_DOWN = :vol_rad_down
-          MFL_VOL_RAD_UP   = :vol_rad_up
-          MFL_VOL_TEL_DOWN = :vol_tel_down
-          MFL_VOL_TEL_UP   = :vol_tel_up
+          MFL_VOL_DOWN_TEL = :vol_tel_down
+          MFL_VOL_UP_TEL   = :vol_tel_up
+          MFL_VOL_DOWN_RAD = :vol_rad_down
+          MFL_VOL_UP_RAD   = :vol_rad_up
 
           MFL_TEL      = :mfl_tel
 
