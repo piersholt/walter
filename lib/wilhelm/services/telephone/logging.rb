@@ -25,6 +25,8 @@ module Wilhelm
         end
 
         def state_string
+          # @todo states....
+          return 'Telephone'
           case state
           when Disabled
             TEL_STATE_DISABLED
