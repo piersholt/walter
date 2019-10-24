@@ -11,7 +11,7 @@ module Wilhelm
         LOGGER_NAME = AUDIO_CONTROLS
 
         CONTROL_REGISTER = {
-          BMBT_MODE => STATELESS_CONTROL,
+          BMBT_MODE_PREV => STATELESS_CONTROL,
           BMBT_OVERLAY => STATELESS_CONTROL,
           BMBT_POWER => STATELESS_CONTROL,
           BMBT_NEXT => TWO_STAGE_CONTROL,
@@ -19,14 +19,15 @@ module Wilhelm
           MFL_NEXT_RAD => TWO_STAGE_CONTROL,
           MFL_PREV_RAD => TWO_STAGE_CONTROL,
           MFL_TEL => STATELESS_CONTROL,
-          MFL_VOL_RAD_UP => STATELESS_CONTROL,
-          MFL_VOL_RAD_DOWN => STATELESS_CONTROL,
-          BMBT_VOL_RAD_UP => STATELESS_CONTROL,
-          BMBT_VOL_RAD_DOWN => STATELESS_CONTROL
+          MFL_VOL_UP_RAD => STATELESS_CONTROL,
+          MFL_VOL_DOWN_RAD => STATELESS_CONTROL,
+          BMBT_VOL_UP_RAD => STATELESS_CONTROL,
+          BMBT_VOL_DOWN_RAD => STATELESS_CONTROL
         }.freeze
 
         CONTROL_ROUTES = {
-          BMBT_MODE => {
+          # @todo check if BMBT emits MODE_NEXT
+          BMBT_MODE_PREV => {
             load_audio: STATELESS
           },
           BMBT_OVERLAY => {
@@ -54,16 +55,16 @@ module Wilhelm
           MFL_TEL => {
             pause: STATELESS
           },
-          MFL_VOL_RAD_UP => {
+          MFL_VOL_UP_RAD => {
             volume_up: STATELESS
           },
-          MFL_VOL_RAD_DOWN => {
+          MFL_VOL_DOWN_RAD => {
             volume_down: STATELESS
           },
-          BMBT_VOL_RAD_UP => {
+          BMBT_VOL_UP_RAD => {
             volume_up: STATELESS
           },
-          BMBT_VOL_RAD_DOWN => {
+          BMBT_VOL_DOWN_RAD => {
             volume_down: STATELESS
           }
         }.freeze
