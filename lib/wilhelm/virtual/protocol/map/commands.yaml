@@ -2441,8 +2441,8 @@
             :type: :map
             :dictionary:
               0b0000: '-'
-              0b0001: "[Next]"
-              0b1000: "[Prev]"
+              0b0001: "[TEL Next]"
+              0b1000: "[TEL Prev]"
             :map:
               0b0000: :mfl_seek_null
               0b0001: :mfl_tel_next
@@ -2466,8 +2466,8 @@
             :type: :map
             :dictionary:
               0b0000: '-'
-              0b0001: "[Next]"
-              0b1000: "[Prev]"
+              0b0001: "[RAD Next]"
+              0b1000: "[RAD Prev]"
             :map:
               0b0000: :mfl_seek_null
               0b0001: :mfl_rad_next
