@@ -27,7 +27,7 @@ module Wilhelm
                 end
               end
 
-              # 0xA2 COORD
+              # 0xA2 COORDINATES
               def handle_telematics_coord(command)
                 logger.debug(PROC) { '#handle_telematics_coord' }
                 telematics_signal(command)

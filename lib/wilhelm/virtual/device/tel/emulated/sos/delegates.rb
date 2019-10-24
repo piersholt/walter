@@ -20,7 +20,7 @@ module Wilhelm
 
               # UPDATES -------------------------------------------------------
 
-              # 0xA2 COORD
+              # 0xA2 COORDINATES
               def telematics_signal(command)
                 case command.signal?
                 when true
@@ -32,7 +32,7 @@ module Wilhelm
                 end
               end
 
-              # 0xA2 COORD
+              # 0xA2 COORDINATES
               def telematics_coordinates(latitude:, longitude:, vertical:)
                 telematics_coordinates!(latitude.to_h, longitude.to_h, vertical)
               end

@@ -46,7 +46,7 @@ module Wilhelm
             INPUT,
             MFL_VOL, MFL_FUNC,
             BMBT_A,
-            COORD, ADDR, ASSIST
+            COORDINATES, ADDRESS, ASSIST
           ].freeze
 
           LogActually.is_all_around(:tel)
@@ -78,11 +78,11 @@ module Wilhelm
             when BMBT_A
               logger.debug(PROC) { "Rx: BMBT_A 0x#{d2h(BMBT_A)}" }
               handle_bmbt_button_1(message.command)
-            when COORD
-              logger.debug(PROC) { "Rx: COORD 0x#{d2h(COORD)}" }
+            when COORDINATES
+              logger.debug(PROC) { "Rx: COORDINATES 0x#{d2h(COORDINATES)}" }
               handle_telematics_coord(message.command)
-            when ADDR
-              logger.debug(PROC) { "Rx: ADDR 0x#{d2h(ADDR)}" }
+            when ADDRESS
+              logger.debug(PROC) { "Rx: ADDRESS 0x#{d2h(ADDRESS)}" }
               handle_telematics_addr(message.command)
             when ASSIST
               logger.debug(PROC) { "Rx: ASSIST 0x#{d2h(ASSIST)}" }
