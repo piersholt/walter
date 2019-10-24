@@ -11,8 +11,10 @@ module Wilhelm
             include Virtual::Constants::Events::BMBT
 
             # 0x32 VOLUME
+            # @note 0x32 used by both MFL and BMBT
             def evaluate_mfl_vol_button(command)
               logger.debug(moi) { "MFL VOL -> #{command.pretty}" }
+              # NOTE: volume handled by recipient, i.e. TEL, or RAD
               # notify_of_button(command)
             end
 

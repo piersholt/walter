@@ -19,8 +19,10 @@ module Wilhelm
             end
 
             # MFL_VOL 0x32
+            # @note 0x32 used by both MFL and BMBT
             def handle_mfl_vol(command)
               logger.debug(ident) { "MFL_VOL -> #{command.pretty}" }
+              # NOTE: MFL::Augmented does not send button event
               notify_of_button(command)
             end
 
