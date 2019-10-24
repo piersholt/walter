@@ -26,14 +26,17 @@ module Wilhelm
         }.freeze
 
         CONTROL_ROUTES = {
-          MFL_RT_RAD => { mode_off: STATELESS },
-          MFL_RT_TEL => { mode_on: STATELESS },
+          MFL_RT_RAD        => { mode_off: STATELESS },
+          MFL_RT_TEL        => { mode_on: STATELESS },
 
-          MFL_VOL_DOWN_TEL => { volume_down: STATELESS },
+          MFL_VOL_DOWN_TEL  => { volume_down: STATELESS },
           BMBT_VOL_DOWN_TEL => { volume_down: STATELESS },
 
-          MFL_VOL_UP_TEL => { volume_up: STATELESS },
-          BMBT_VOL_UP_TEL => { volume_up: STATELESS }
+          MFL_VOL_UP_TEL    => { volume_up: STATELESS },
+          BMBT_VOL_UP_TEL   => { volume_up: STATELESS },
+
+          MFL_PREV_TEL        => { backward: STATEFUL },
+          MFL_NEXT_TEL        => { forward: STATEFUL }
         }.freeze
       end
     end

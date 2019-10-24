@@ -4,6 +4,9 @@
 require_relative 'telephone/constants'
 require_relative 'telephone/logging'
 
+require_relative 'telephone/actions'
+require_relative 'telephone/controls'
+
 require_relative 'telephone/mock'
 
 module Wilhelm
@@ -12,6 +15,8 @@ module Wilhelm
     class Telephone
       include Helpers::Observation
       include Logging
+      include Controls
+      include Actions
       include Mock
       include Virtual::Constants::Events::Telephone
 
@@ -20,6 +25,7 @@ module Wilhelm
       def initialize(api_object = Wilhelm::API::Telephone.instance)
         @api_object = api_object
         @api_object.register_telephone_listener(self)
+        register_controls(Wilhelm::API::Controls.instance)
       end
 
       def telephone_update(event, args)
