@@ -3,6 +3,7 @@
 require_relative 'capabilities/bmbt'
 require_relative 'capabilities/gm'
 require_relative 'capabilities/lcm'
+require_relative 'capabilities/gt'
 
 module Wilhelm
   module Virtual
@@ -13,6 +14,7 @@ module Wilhelm
           include BMBT
           include GM
           include LCM
+          include GT
 
           # TODO: module specific methods required
           def hello(ident)
