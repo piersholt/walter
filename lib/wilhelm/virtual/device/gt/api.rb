@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'api/diagnostics'
 require_relative 'api/monitor'
 require_relative 'api/radio'
 require_relative 'api/settings'
@@ -11,6 +12,7 @@ module Wilhelm
       module GT
         # Top level GT API
         module API
+          include Diagnostics
           include Monitor
           include Radio
           include Settings

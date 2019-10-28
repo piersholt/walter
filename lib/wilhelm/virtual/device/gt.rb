@@ -12,3 +12,5 @@ require_relative 'gt/augmented/state/sent'
 require_relative 'gt/augmented/state/received'
 require_relative 'gt/augmented/state'
 require_relative 'gt/augmented'
+
+require_relative 'gt/emulated'
