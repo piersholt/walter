@@ -15,6 +15,8 @@
   :klass: Base
 
 0x11: # IGN
+  :schemas:
+    - :dia
   :properties:
     :short_name: IGN
     :long_name: Ignition Status Response
@@ -35,6 +37,11 @@
         0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
+  :dia:
+    :properties:
+      :short_name: DIA-11
+      :long_name: Nav. Type
+    :klass: Base
 
 0x12: # SEN-REQ
   :properties:
@@ -3986,7 +3993,7 @@
     - 3F 04 68 9C 00 CF radio transport mode off
     - 3F 04 68 9C 02 CD radio transport mode on
 
-0x9D: # DIA-9D (BMBT) (NO ARGS)
+0x9D: # DIA-9D ERROR ECU REJECTED
   :properties:
     :short_name: DIA-9D
     :long_name: ERROR ECU REJECTED
@@ -4438,7 +4445,7 @@
   :meta:
     - 7F 04 B0 AF 04 60
 
-0xB0: # DIA-B0 (NO ARGS)
+0xB0: # DIA-B0 ERROR ECU PARAMETER
   :properties:
     :short_name: DIA-B0
     :long_name: ERROR ECU PARAMETER
@@ -4461,6 +4468,13 @@
   :klass: Base
 
 0x02: # PONG
+  :dia:
+    :properties:
+      :short_name: DIA-02-VIN
+      :long_name: LCM VIN Request
+      :klass: Base
+  :schemas:
+    - :dia
   :properties:
     :short_name: PONG
     :long_name: Status Response
@@ -4511,9 +4525,9 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0x00: # DIA-HELLO
+0x00: # DIA-00-HELLO
   :properties:
-    :short_name: DIA-HELLO
+    :short_name: DIA-00-HELLO
     :long_name: Module General Information (and Ping)
   :klass: Base
   :meta:
@@ -4625,9 +4639,9 @@
     :long_name: Diagnostics WRITE Coding Data
   :klass: Base
 
-0x0b: # DIA-STATUS
+0x0b: # DIA-0B-STATUS
   :properties:
-    :short_name: DIA-STATUS
+    :short_name: DIA-0B-STATUS
     :long_name: Unknown
   :klass: Base
   :meta:
