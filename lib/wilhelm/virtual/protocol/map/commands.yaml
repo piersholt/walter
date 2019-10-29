@@ -4472,7 +4472,11 @@
     :properties:
       :short_name: DIA-02-VIN
       :long_name: LCM VIN Request
-      :klass: Base
+    :klass: Base
+    :meta:
+      lcm:
+        0x00: SII-Data
+        0x02: VIN
   :schemas:
     - :dia
   :properties:
