@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
-require_relative 'gt/constants'
 require_relative 'gt/coding'
+require_relative 'gt/memory'
 
 module Wilhelm
   module Virtual
@@ -11,6 +11,7 @@ module Wilhelm
           # Diagnostics::Capabilities::GT
           module GT
             include Coding
+            include Memory
           end
         end
       end
