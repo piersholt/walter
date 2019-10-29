@@ -20,6 +20,9 @@ module Wilhelm
           INFO_BUS_INDEX    = [0x31, 0x34].freeze
           INFO_MANU_DATE    = [0x32, 0x35, 0x30, 0x33].freeze
           INFO_SW_NUMBER    = [0x30, 0x30].freeze
+          INFO_SUPPLIER     = [
+            0x30, 0x31, 0x30, 0x38, 0x37, 0x38, 0x38, 0x2E, 0x31, 0x30
+          ].freeze
 
           INFO = [
             *INFO_PART_NUMBER,
@@ -28,9 +31,7 @@ module Wilhelm
             *INFO_DIAG_INDEX,
             *INFO_BUS_INDEX,
             *INFO_MANU_DATE,
-            # Unknown
-            0x30, 0x31, 0x30, 0x38, 0x37,
-            0x38, 0x38, 0x2E, 0x31, 0x30,
+            *INFO_SUPPLIER,
             *INFO_SW_NUMBER
           ].freeze
 
