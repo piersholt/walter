@@ -14,7 +14,9 @@
     :long_name: Ignition Status Request
   :klass: Base
 
-0x11: # IGN
+0x11: # IGN / DIA-11*
+  :schemas:
+    - :dia
   :properties:
     :short_name: IGN
     :long_name: Ignition Status Response
@@ -35,6 +37,11 @@
         0b111: :KL-50 (Pos. III)
   :index:
     :position: 0
+  :dia:
+    :properties:
+      :short_name: DIA-11*
+      :long_name: Nav. Type
+    :klass: Base
 
 0x12: # SEN-REQ
   :properties:
@@ -623,7 +630,7 @@
           # Key 0x74
           - KEY IN IGNITION LOCK
 
-0x1B: # HUD-STATUS / # DIA-PDC*
+0x1B: # HUD-STATUS / DIA-1B-PDC*
   :properties:
     :short_name: HUD-STATUS
     :long_name: IKE Text Status?
@@ -638,12 +645,10 @@
   :index:
     :hud_status: 0
   :schemas:
-    - 0x3F
-  0x3F:
-    :id:
-      :d: 27
+    - :dia
+  :dia:
     :properties:
-      :short_name: DIA-PDC
+      :short_name: DIA-1B-PDC*
       :long_name: Test PDC Sensors
     :klass: Base
   :meta:
@@ -2368,7 +2373,7 @@
     :track:
       :type: :integer
 
-# MFL -------------------------------------------------------------------------
+# CONTROLS -------------------------------------------------------------------------
 
 0x3B: # MFL-RAD* / MFL-TEL*
   :schemas:
@@ -2991,11 +2996,13 @@
     - 3B 05 68 4E XX 3F 4B (Voice command/set navi. volume)
     - telephone mute is switched input
 
-0x4F: # SRC-GT
+0x4F: # SRC-GT / GT-BMBT* / TV-BMBT* / GT-NAV_JP
   :schemas:
     - :bmbt
     - :tv
     - :nav_jp
+
+  # SCHEMA: GT-BMBT*
   :bmbt: # this is actually :gt (but conflicts with :nav_jp)
     :klass: Parameterized::Base
     :properties:
@@ -3042,6 +3049,7 @@
               0b01: TV
               0b10: Video GT
 
+  # SCHEMA: TV-BMBT*
   :tv:
     :klass: Parameterized::Base
     :properties:
@@ -3101,6 +3109,7 @@
               0b01: "NTSC"
               0b10: "PAL"
 
+  # SCHEMA: GT-NAV_JP
   :nav_jp:
     :klass: Base
     :properties:
@@ -3153,7 +3162,7 @@
     :b1:
       :type: :bit_array
       :index:
-        :func:  !ruby/range
+        :priority:  !ruby/range
                   begin: 0
                   end: 3
                   excl: false
@@ -3162,7 +3171,7 @@
                   end: 7
                   excl: false
       :parameters:
-        :func:
+        :priority:
           :type: :map
           :dictionary:
             0b0001: '[RANGE]'
@@ -3266,7 +3275,7 @@
     :long_name: Request LCM Redundant Data Storage
   :klass: Base
 
-0x54: # VEH-LCM
+0x54: # VEH-LCM / DIA-54-VEH*
   :schemas:
     - :dia
   :properties:
@@ -3304,7 +3313,7 @@
   :dia:
     :klass: Parameterized::Base
     :properties:
-      :short_name: VEH*
+      :short_name: DIA-54-VEH*
       :long_name: Diagnostics Control
     :parameters:
       :b1:
@@ -3972,7 +3981,7 @@
 
 # TBC ------------------------------------------------------
 
-0x9C: # DIA-9C (RAD)
+0x9C: # DIA-9C
   :properties:
     :short_name: DIA-9C
     :long_name: Diagnostics Transport Mode?
@@ -3989,7 +3998,7 @@
     - 3F 04 68 9C 00 CF radio transport mode off
     - 3F 04 68 9C 02 CD radio transport mode on
 
-0x9D: # DIA-9D (BMBT) (NO ARGS)
+0x9D: # DIA-9D "ERROR ECU REJECTED"
   :properties:
     :short_name: DIA-9D
     :long_name: ERROR ECU REJECTED
@@ -4005,7 +4014,7 @@
   :meta:
     - 3B 04 47 9E 01 E7 (RCM?)
 
-0x9F: # DIA-9F (EWS, DSPC) (NO ARGS)
+0x9F: # DIA-9F
   :properties:
     :short_name: DIA-9F
     :long_name: Unknown?
@@ -4021,13 +4030,8 @@
     :short_name: DIA-A0
     :long_name: Diagnostics Data
   :klass: Base
-  :meta:
-    - 0x3B GT
-    - 0x7F NAV
-    - 0xD0 LCM
-    - 0xF0 BMBT
 
-0xA1: # DIA-A1 (NO ARGS)
+0xA1: # DIA-A1
   :properties:
     :short_name: DIA-A1
     :long_name: Unknown
@@ -4038,7 +4042,7 @@
 
 # TELEMATICS ------------------------------------------------------------------
 
-0xA2: # NAV-TEL-COORD
+0xA2: # NAV-TEL-COORD / DIA-A2*
   :properties:
     :short_name: NAV-TEL-COORD
     :long_name: GPS Coordinates
@@ -4105,7 +4109,7 @@
   :dia:
     :klass: Base
     :properties:
-      :short_name: EWS-END
+      :short_name: DIA-A2*
       :long_name: Diagnostics Control
 
 0xA4: # NAV-TEL-ADDR
@@ -4480,13 +4484,15 @@
   :meta:
     - 7F 04 B0 AF 04 60
 
-0xB0: # DIA-B0 (NO ARGS)
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0xB0: # DIA-B0 "ERROR ECU PARAMETER"
   :properties:
     :short_name: DIA-B0
     :long_name: ERROR ECU PARAMETER
   :klass: Base
 
-0xB1: # DIA-B1 (NO ARGS)
+0xB1: # DIA-B1
   :properties:
     :short_name: DIA-B1
     :long_name: Unknown
@@ -4502,7 +4508,18 @@
     :long_name: Status Request
   :klass: Base
 
-0x02: # PONG
+0x02: # PONG / DIA-02-VIN*
+  :dia:
+    :properties:
+      :short_name: DIA-02-VIN
+      :long_name: LCM VIN Request
+    :klass: Base
+    :meta:
+      lcm:
+        0x00: SII-Data
+        0x02: VIN
+  :schemas:
+    - :dia
   :properties:
     :short_name: PONG
     :long_name: Status Response
@@ -4553,9 +4570,9 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0x00: # DIA-HELLO
+0x00: # DIA-00
   :properties:
-    :short_name: DIA-HELLO
+    :short_name: DIA-00
     :long_name: Module General Information (and Ping)
   :klass: Base
   :meta:
@@ -4667,9 +4684,9 @@
     :long_name: Diagnostics WRITE Coding Data
   :klass: Base
 
-0x0b: # DIA-STATUS
+0x0b: # DIA-0B-STATUS
   :properties:
-    :short_name: DIA-STATUS
+    :short_name: DIA-0B-STATUS
     :long_name: Unknown
   :klass: Base
   :meta:
@@ -4681,9 +4698,9 @@
       - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
       - another error and the next field was STATUS AUX ADAPTER
 
-0x0C: # DIA-VEH-CTRL
+0x0C: # DIA-0C-ACT
   :properties:
-    :short_name: DIA-VEH-CTRL
+    :short_name: DIA-0C-ACT
     :long_name: Vehicle Control
     :verbose: true
   :klass: Base

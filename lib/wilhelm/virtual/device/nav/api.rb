@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'api/assist'
+require_relative 'api/diagnostics'
 
 module Wilhelm
   module Virtual
