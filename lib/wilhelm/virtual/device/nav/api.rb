@@ -12,6 +12,7 @@ module Wilhelm
           include Device::API::BaseAPI
 
           include Assist
+          include Diagnostics
         end
       end
     end
