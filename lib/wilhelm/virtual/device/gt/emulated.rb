@@ -13,6 +13,7 @@ module Wilhelm
 
           # INFO --------------------------------------------------------------
 
+          # MK4
           INFO_PART_NUMBER  = [0x36, 0x39, 0x32, 0x30, 0x31, 0x38, 0x32].freeze
           INFO_HW_NUMBER    = [0x31, 0x30].freeze
           INFO_CODING_INDEX = [0x30, 0x38].freeze
@@ -23,6 +24,18 @@ module Wilhelm
           INFO_SUPPLIER     = [
             0x30, 0x31, 0x30, 0x38, 0x37, 0x38, 0x38, 0x2E, 0x31, 0x30
           ].freeze
+
+          # MK1 VM
+          # INFO_PART_NUMBER  = [0x38, 0x33, 0x37, 0x35, 0x31, 0x32, 0x36].freeze
+          # INFO_HW_NUMBER    = [0x35, 0x30].freeze
+          # INFO_CODING_INDEX = [0x30, 0x31].freeze
+          # INFO_DIAG_INDEX   = [0x30, 0x31].freeze
+          # INFO_BUS_INDEX    = [0x30, 0x35].freeze
+          # INFO_MANU_DATE    = [0x30, 0x37, 0x39, 0x37].freeze
+          # INFO_SW_NUMBER    = [0x30, 0x30].freeze
+          # INFO_SUPPLIER     = [
+          #   0x31, 0x30, 0x33, 0x37, 0x30, 0x38, 0x32, 0x31, 0x37, 0x32
+          # ].freeze
 
           INFO = [
             *INFO_PART_NUMBER,
