@@ -4407,6 +4407,12 @@
       - 3F is navi. volume on 0x4E..
       - registration of... sources?
 
+0xA8: # RAD-NAV-A8
+  :properties:
+    :short_name: RAD-NAV-A8
+    :long_name: Unknown
+  :klass: Base
+
 0xA9: # ASSIST-A9
   :properties:
     :short_name: ASSIST-A9
