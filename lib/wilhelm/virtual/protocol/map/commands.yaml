@@ -763,13 +763,14 @@
       :layout:
         :type: :map
         :dictionary:
-          0x41: 'Presets'
-          0x43: 'Source'
-          0x60: 'RDS Menu A'
-          0x61: 'RDS Menu B'
-          0x63: 'RDS Static'
-          0x83: 'Tape Side/Dolby'
-          0xc0: 'CDC Discs'
+          0x41: '[Radio] Presets'
+          0x43: '[Radio] Source'
+          0x60: '[Digital] Menu A'
+          0x61: '[Digital] Menu B'
+          0x62: '[Digital] Header'
+          0x63: '[Digital] Static'
+          0x83: '[Tape] Side/Dolby'
+          0xc0: '[CDC] Discs'
       :m2:
         :meta:
           - 0x41:

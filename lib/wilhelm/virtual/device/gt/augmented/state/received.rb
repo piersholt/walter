@@ -17,68 +17,21 @@ module Wilhelm
               # RENDERING -------------------------------------------------
 
               def handle_draw_23(command)
-                case command.gt.value
-                when HEADER[:service]
-                  layout = :digital
-                  # radio_header(:service)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_SERVICE, source: ident)
-                when HEADER[:weather_band]
-                  layout = :weather_band
-                  # radio_header(:weather_band)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_WEATHER_BAND, source: ident)
-                when HEADER[:radio]
-                  layout = :radio
-                  # radio_header(:radio)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_RADIO, source: ident)
-                when HEADER[:digital]
-                  layout = :digital
-                  # radio_header(:digital)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_DIGITAL, source: ident)
-                when HEADER[:tape]
-                  layout = :tape
-                  # radio_header(:tape)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_TAPE, source: ident)
-                when HEADER[:traffic]
-                  layout = :traffic
-                  # radio_header(:traffic)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_TRAFFIC, source: ident)
-                when HEADER[:cdc]
-                  layout = :cdc
-                  # radio_header(:cdc)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_CDC, source: ident)
-                when HEADER[:unknown]
-                  # radio_header(:unknown)
-                  # radio_display_on
-                  # changed
-                  # notify_observers(RADIO_LAYOUT_UNKNOWN, source: ident)
-                  layout = :unknown
-                else
-                  layout = false
-                end
-
-                return unless layout
+                return false unless HEADERS[:digital]&.cover?(command.gt.value)
 
                 changed
-                notify_observers(HEADER_WRITE, layout: layout, index: 0, chars: command.chars.value)
+                notify_observers(
+                  HEADER_WRITE,
+                  layout: :digital,
+                  index: 0,
+                  chars: command.chars.value
+                )
               end
 
               def handle_draw_a5(command)
                 layout = command.layout.value
                 zone = command.zone.parameters[:zone].value
+
                 case layout
                 when MENU_BASIC
                   event = zone.zero? ? MENU_WRITE : MENU_CACHE
@@ -93,19 +46,24 @@ module Wilhelm
                   event = zone.zero? ? MENU_WRITE : MENU_CACHE
                   layout = :static
                 else
-                  LOGGER.warn('AugmentedGT') { 'No 0xA5 write event...?' }
                   event = false
                 end
 
                 return unless event
 
                 changed
-                notify_observers(event, layout: layout, index: zone, chars: command.chars.value)
+                notify_observers(
+                  event,
+                  layout: layout,
+                  index: zone,
+                  chars: command.chars.value
+                )
               end
 
               def handle_draw_21(command)
                 layout = command.layout.value
                 zone = command.m3.parameters[:index].value
+
                 case layout
                 when MENU_BASIC
                   event = MENU_CACHE
@@ -120,14 +78,18 @@ module Wilhelm
                   event = MENU_CACHE
                   layout = :static
                 else
-                  LOGGER.warn('AugmentedGT') { 'No 0x21 write event...?' }
                   event = false
                 end
 
                 return unless event
 
                 changed
-                notify_observers(event, layout: layout, index: zone, chars: command.chars.value)
+                notify_observers(
+                  event,
+                  layout: layout,
+                  index: zone,
+                  chars: command.chars.value
+                )
               end
 
               # MENUS -------------------------------------------------
