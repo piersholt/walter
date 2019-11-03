@@ -11,7 +11,7 @@ module Wilhelm
             include Constants
 
             def open_dial
-              logger.unknown(PROC) { '#open_dial()' }
+              logger.debug(PROC) { '#open_dial()' }
               draw_21(layout: LAYOUT_DIAL, m2: FUNCTION_DIGIT, m3: M3_FLUSH, chars: CHARS_EMPTY)
             end
 

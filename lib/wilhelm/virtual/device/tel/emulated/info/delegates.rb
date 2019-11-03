@@ -13,7 +13,7 @@ module Wilhelm
               MOD_PROG = 'Info'
 
               def info_open
-                LOGGER.unknown(MOD_PROG) { '#info_open' }
+                LOGGER.debug(MOD_PROG) { '#info_open' }
                 info!
                 info_open!
                 # info_clear

@@ -11,14 +11,14 @@ module Wilhelm
               MOD_PROG = 'LastNumbers'
 
               def last_numbers_back
-                LOGGER.unknown(MOD_PROG) { '#last_numbers_back' }
+                LOGGER.debug(MOD_PROG) { '#last_numbers_back' }
                 last_numbers!
                 @last_numbers_page = last_numbers_page - 1
                 last_numbers_back!(page: last_numbers_page)
               end
 
               def last_numbers_forward
-                LOGGER.unknown(MOD_PROG) { '#last_numbers_forward' }
+                LOGGER.debug(MOD_PROG) { '#last_numbers_forward' }
                 last_numbers!
                 @last_numbers_page = last_numbers_page + 1
                 last_numbers_forward!(page: last_numbers_page)

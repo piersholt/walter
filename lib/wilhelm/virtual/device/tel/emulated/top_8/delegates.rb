@@ -13,14 +13,14 @@ module Wilhelm
               MOD_PROG = 'Top 8'
 
               def top_8_open
-                LOGGER.unknown(MOD_PROG) { '#top_8_open' }
+                LOGGER.debug(MOD_PROG) { '#top_8_open' }
                 top_8!
                 top_8_open!
                 # top_8_clear
               end
 
               def top_8_select(index)
-                LOGGER.unknown(MOD_PROG) { "#top_8_select(#{index})" }
+                LOGGER.debug(MOD_PROG) { "#top_8_select(#{index})" }
                 top_8!
                 i = ACTION_CONTACT_INDICIES.index(index)
                 top_8_select!(index: i)

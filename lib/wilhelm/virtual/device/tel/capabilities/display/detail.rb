@@ -14,7 +14,7 @@ module Wilhelm
               MOD_PROG = 'Display::Detail'
 
               def macro_detail(layout, function, lines, title = '')
-                LOGGER.unknown(MOD_PROG) { "#macro_detail(#{layout}, #{function}, #{lines}, #{title})" }
+                LOGGER.debug(MOD_PROG) { "#macro_detail(#{layout}, #{function}, #{lines}, #{title})" }
                 lines.each.with_index do |item, i|
                   next if item.nil?
                   index = LAYOUT_INDICES[layout].slice(i)

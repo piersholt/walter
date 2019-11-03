@@ -14,7 +14,7 @@ module Wilhelm
               MOD_PROG = 'Display::Index'
 
               def macro_index(layout, function, items, title = '')
-                LOGGER.unknown(MOD_PROG) { "#macro_index(#{layout}, #{function}, #{items}, #{title})" }
+                LOGGER.debug(MOD_PROG) { "#macro_index(#{layout}, #{function}, #{items}, #{title})" }
                 items.each.with_index do |item, i|
                   next if item.nil?
                   index = LAYOUT_INDICES[layout].slice(i)

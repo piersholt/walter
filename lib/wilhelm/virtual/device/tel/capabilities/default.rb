@@ -14,7 +14,7 @@ module Wilhelm
             TITLE_DEFAULT = 'Default Title'
 
             def open_default(chars = TITLE_DEFAULT)
-              logger.unknown(MOD_PROG) { '#open_default()' }
+              logger.debug(MOD_PROG) { '#open_default()' }
               draw_23(gt: DEFAULT_TITLE, chars: chars)
             end
           end
