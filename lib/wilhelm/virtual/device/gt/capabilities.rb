@@ -4,6 +4,7 @@ require_relative 'capabilities/constants'
 
 require_relative 'capabilities/auxiliary'
 require_relative 'capabilities/code'
+require_relative 'capabilities/controls'
 require_relative 'capabilities/obc'
 require_relative 'capabilities/monitor'
 require_relative 'capabilities/settings'
@@ -18,6 +19,7 @@ module Wilhelm
         module Capabilities
           include AuxiliaryVentilation
           include Code
+          include Controls
           include OnBoardComputer
           include Monitor
           include Settings
