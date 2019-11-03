@@ -14,6 +14,14 @@ module Wilhelm
             end
 
             alias button bmbt_btn_a
+
+            # 0x31 SOFT-INPUT
+            # @param Integer layout
+            # @param Integer function
+            # @param Integer button
+            def soft_input(from: :bmbt, to:, **arguments)
+              try(from, to, INPUT, arguments)
+            end
           end
         end
       end
