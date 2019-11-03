@@ -6,7 +6,7 @@ require_relative 'notifications/constants'
 require_relative 'notifications/states/inactive'
 require_relative 'notifications/states/active'
 require_relative 'notifications/listener'
-require_relative 'notifications/debug_handler'
+require_relative 'notifications/context_handler'
 
 module Wilhelm
   module SDK

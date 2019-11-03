@@ -27,8 +27,8 @@ module Wilhelm
               def navigation_item
                 navigation(
                   index: NAVIGATION_INDEX,
-                  label: 'Debug Menu',
-                  action: :debug_index
+                  label: 'Context Menu',
+                  action: :context_index
                 )
               end
 

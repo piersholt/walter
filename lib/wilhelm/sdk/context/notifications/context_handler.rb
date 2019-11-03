@@ -4,8 +4,8 @@ module Wilhelm
   module SDK
     class Context
       class Notifications
-        # Context::Notifications::DebugHandler
-        class DebugHandler
+        # Context::Notifications::ContextHandler
+        class ContextHandler
           include Singleton
           include Yabber::NotificationDelegate
           include Yabber::Constants

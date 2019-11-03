@@ -31,7 +31,7 @@ module Wilhelm
           end
 
           def configure_incomining_notifications_delegates(notifications_context)
-            debug_handler     = DebugHandler.instance
+            debug_handler     = ContextHandler.instance
             debug_handler.context = notifications_context.environment
 
             notifications_context
