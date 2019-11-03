@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
+require_relative 'api/assist'
 require_relative 'api/diagnostics'
 
 module Wilhelm
   module Virtual
     class Device
       module Navigation
-        # Top level Navigation API
+        # Navigation::API
         module API
+          include Constants::Command::Aliases
+          include Device::API::BaseAPI
+
+          include Assist
           include Diagnostics
         end
       end

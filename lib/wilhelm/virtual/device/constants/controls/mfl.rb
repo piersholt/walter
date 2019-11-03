@@ -6,26 +6,28 @@ module Wilhelm
       module Controls
         # Controls::MFL
         module MFL
-          # Left
-          MFL_PREV     = :mfl_prev
-          MFL_NEXT     = :mfl_next
-          MFL_PREV_TEL = :mfl_tel_prev
-          MFL_NEXT_TEL = :mfl_tel_next
-          MFL_PREV_RAD = :mfl_rad_prev
-          MFL_NEXT_RAD = :mfl_rad_next
+          # Left Cluster
+          MFL_PREV          = :mfl_prev
+          MFL_PREV_RAD      = :mfl_rad_prev
+          MFL_PREV_TEL      = :mfl_tel_prev
 
-          MFL_VOL_DOWN     = :vol_down
-          MFL_VOL_UP       = :vol_up
-          MFL_VOL_DOWN_TEL = :vol_tel_down
-          MFL_VOL_UP_TEL   = :vol_tel_up
-          MFL_VOL_DOWN_RAD = :vol_rad_down
-          MFL_VOL_UP_RAD   = :vol_rad_up
+          MFL_NEXT          = :mfl_next
+          MFL_NEXT_RAD      = :mfl_rad_next
+          MFL_NEXT_TEL      = :mfl_tel_next
 
-          MFL_TEL      = :mfl_tel
+          MFL_VOL_DOWN      = :vol_down
+          MFL_VOL_DOWN_RAD  = :vol_rad_down
+          MFL_VOL_DOWN_TEL  = :vol_tel_down
 
-          # Right
-          MFL_RT_RAD   = :mfl_rt_rad
-          MFL_RT_TEL   = :mfl_rt_tel
+          MFL_VOL_UP        = :vol_up
+          MFL_VOL_UP_RAD    = :vol_rad_up
+          MFL_VOL_UP_TEL    = :vol_tel_up
+
+          MFL_TEL           = :mfl_tel
+
+          # Right Cluster
+          MFL_RT_RAD        = :mfl_rt_rad
+          MFL_RT_TEL        = :mfl_rt_tel
 
           MFL_CONSTANTS = constants.map { |c| const_get(c) }
 

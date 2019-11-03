@@ -16,14 +16,14 @@ module Wilhelm
             DEFAULT_SOS = 'SOS: 112!'
             HEADER = 'Your current position is:'
 
-            def open_sos(loc_a, loc_b, lat, long)
-              logger.unknown(MOD_PROG) { "#open_sos(#{loc_a},#{loc_b},#{lat},#{long})" }
+            def open_sos(city:, street:, latitude:, longitude:)
+              logger.debug(MOD_PROG) { "#open_sos(#{city},#{street},#{latitude},#{longitude})" }
               lines = [
                 HEADER,
-                loc_a, loc_b, nil,
-                lat, long
+                city, street, nil,
+                latitude, longitude
               ]
-              macro_detail(LAYOUT_SOS, FUNCTION_SOS, lines, DEFAULT_SOS)
+              macro_detail(LAYOUT_SOS, FUNCTION_TELEMATICS, lines, DEFAULT_SOS)
             end
           end
         end

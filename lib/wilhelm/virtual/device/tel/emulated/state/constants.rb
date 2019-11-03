@@ -35,8 +35,8 @@ module Wilhelm
 
               # STATUS 0x2c  ----------------------------------------------
 
+              STATUS_BIT_0    = :bit_0
               STATUS_BIT_1    = :bit_1
-              STATUS_BIT_2    = :bit_2
               STATUS_ACTIVE   = :active
               STATUS_POWER    = :power
               STATUS_DISPLAY  = :display
@@ -54,8 +54,8 @@ module Wilhelm
 
               POWER_STATES = [STATUS_ON, STATUS_OFF].freeze
 
-              STATUS_SHIFT_BIT_1    = 7
-              STATUS_SHIFT_BIT_2    = 6
+              STATUS_SHIFT_BIT_0    = 7
+              STATUS_SHIFT_BIT_1    = 6
               STATUS_SHIFT_ACTIVE   = 5
               STATUS_SHIFT_POWER    = 4
               STATUS_SHIFT_DISPLAY  = 3

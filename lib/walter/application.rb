@@ -89,6 +89,7 @@ module Walter
     def setup_services(environment)
       @manager = Wilhelm::Services::Manager.new
       @audio = Wilhelm::Services::Audio.new
+      @telephone = Wilhelm::Services::Telephone.new
 
       manager.disable!
       audio.disable!

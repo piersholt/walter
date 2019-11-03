@@ -1282,7 +1282,7 @@
           0x5_3: '[Directory] Contact Number/Clear' # "98272742"
 
           0x6_1: '[Dial/Recent] Clear'
-          0x6_3: '[Dial/Recent] Number'
+          0x6_3: '[Dial/Recent/Info] Number'
 
           0x8_0: '[Top 8] Clear'
           0x8_1: '[Top 8] Contact Name'
@@ -1579,12 +1579,15 @@
     :leds:
       :type: :bit_array
       :index:
-        :red: 7
-        :red_blink: 6
-        :yellow: 5
+        # MSB          0
+        # MSB          1
+        :green_blink:  2
+        :green:        3
+
         :yellow_blink: 4
-        :green: 3
-        :green_blink: 2
+        :yellow:       5
+        :red_blink:    6
+        :red:          7
       :parameters:
         :red:
           :label: Red
@@ -2445,8 +2448,8 @@
             :type: :map
             :dictionary:
               0b0000: '-'
-              0b0001: "[Next]"
-              0b1000: "[Prev]"
+              0b0001: "[TEL Next]"
+              0b1000: "[TEL Prev]"
             :map:
               0b0000: :mfl_seek_null
               0b0001: :mfl_tel_next
@@ -2470,8 +2473,8 @@
             :type: :map
             :dictionary:
               0b0000: '-'
-              0b0001: "[Next]"
-              0b1000: "[Prev]"
+              0b0001: "[RAD Next]"
+              0b1000: "[RAD Prev]"
             :map:
               0b0000: :mfl_seek_null
               0b0001: :mfl_rad_next
@@ -4396,10 +4399,12 @@
 0xA6: # TEL-ANZV-A6
   :properties:
     :short_name: TEL-ANZV-A6
-    :long_name: Unknown
+    :long_name: Message/Mail Icon
   :klass: Base
   :meta:
-    - A6 00 00 from Ted
+    - tel:
+      - only second byte has effect
+      - bitfield LSB mail icom on BMBT
 
 0xA7: # NAV-RAD-A7
   :properties:
@@ -4427,7 +4432,44 @@
   :properties:
     :short_name: ASSIST-A9
     :long_name: Unknown
-  :klass: Base
+  :klass: Parameterized::Base
+  :index:
+    :dataset: !ruby/range
+                begin: 0
+                end: 2
+                excl: false
+    :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+  :parameters:
+    :dataset:
+      :type: :data
+      :label: Dataset
+    :chars:
+      :type: :chars
+
+  :meta:
+    0x01: Request / unknown
+    0x02: Reply? / unknown
+
+    0x03: Request / 'current network request'
+    0x04: Reply? / 'current network request'
+
+    0x0a: Request / 'current phone status'
+    0x0b: Reply / 'current phone status'
+
+    0x12: Request / 0x12
+    0x13: Reply / 0x13
+
+    0x1c: Request / 0x1c
+    0x1d: Reply? / 0x1d
+
+    0x31: Request / Telematics
+    0x32: Reply / VIN
+    0x33: Reply / Registration
+    0x34: Reply / Vehicle Type
+    0x35: Reply / Colour
 
 0xAA: # GT2-NAV-AA
   :properties:
