@@ -34,7 +34,7 @@ module Wilhelm
               RIGHT_INPUT = (0x81..0x88)
 
               # TXT-RAD 0x23 --------------------------------------------------
-              HEADER = {
+              HEADERS = {
                 service: (0x00..0x1f),
                 weather_band: (0x20..0x3f),
                 radio: (0x40..0x5f),
@@ -43,6 +43,8 @@ module Wilhelm
                 traffic: (0xa0..0xbf),
                 cdc: (0xc0..0xdf)
               }.freeze
+
+              HEADER = HEADERS
 
               HEADERS_VALID = %i[
                 service weather_band radio

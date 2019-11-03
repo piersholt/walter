@@ -10,6 +10,10 @@ module Wilhelm
             def coding_read(from: :dia, to:, arguments:)
               try(from, to, 0x08, arguments)
             end
+
+            def coding_write(from: :dia, to:, arguments:)
+              try(from, to, 0x09, arguments)
+            end
           end
         end
       end

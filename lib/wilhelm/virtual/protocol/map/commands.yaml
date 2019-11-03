@@ -763,13 +763,14 @@
       :layout:
         :type: :map
         :dictionary:
-          0x41: 'Presets'
-          0x43: 'Source'
-          0x60: 'RDS Menu A'
-          0x61: 'RDS Menu B'
-          0x63: 'RDS Static'
-          0x83: 'Tape Side/Dolby'
-          0xc0: 'CDC Discs'
+          0x41: '[Radio] Presets'
+          0x43: '[Radio] Source'
+          0x60: '[Digital] Menu A'
+          0x61: '[Digital] Menu B'
+          0x62: '[Digital] Header'
+          0x63: '[Digital] Static'
+          0x83: '[Tape] Side/Dolby'
+          0xc0: '[CDC] Discs'
       :m2:
         :meta:
           - 0x41:
@@ -2293,7 +2294,7 @@
       :type: :map
       :dictionary:
         0x00: Stopped
-        0x01: (BM53) Ready?
+        0x01: Paused
         0x02: Playing
         0x03: FFW
         0x04: RWD
@@ -2304,6 +2305,7 @@
         0x09: CD Check
         0x0a: Eject!
       :notes:
+        - 0x01 - Pause Playing (shit will legit mute if you tell the RAD you're paused)
         - when CD play is first requested, CDC sends back 0x00
         - it's not until it responds with 0x02 that the audio is routed
     :status:
@@ -3270,10 +3272,17 @@
 # VEHICLE DATA ----------------------------------------------------------------
 
 0x53: # VEH-LCM-REQ
+  :schemas:
+    - :dia
   :properties:
     :short_name: VEH-LCM-REQ
     :long_name: Request LCM Redundant Data Storage
   :klass: Base
+  :dia:
+    :properties:
+      :short_name: DIA-53-PIN?
+      :long_name: Radio 14 digit number (pin?)
+    :klass: Base
 
 0x54: # VEH-LCM / DIA-54-VEH*
   :schemas:
@@ -4399,8 +4408,8 @@
 
 0xA7: # NAV-RAD-A7
   :properties:
-    :short_name: NAV-RAD-A7
-    :long_name: Unknown
+    :short_name: TMC-REQ
+    :long_name: TMC Data Request
   :klass: Base
   :meta:
     - 7F 04 68 A7 10 A4
@@ -4410,6 +4419,14 @@
       - 7F 05 68 A7 3F 00 8A
       - 3F is navi. volume on 0x4E..
       - registration of... sources?
+
+0xA8: # RAD-NAV-A8
+  :properties:
+    :short_name: TMC
+    :long_name: TMC Data
+  :klass: Base
+  :meta:
+    - TMC data
 
 0xA9: # ASSIST-A9
   :properties:
@@ -4704,19 +4721,13 @@
     :long_name: Vehicle Control
     :verbose: true
   :klass: Base
-  # :parameters:
-  #   :action:
-  #     :type: :map
-  #     :dictionary:
-  #       0x07: Seek Up
-  #       0x08: Seek Down
-  #       0x09: Activate Audio Button?
-  #       0x0B: Radio Off
-  #       0x0C: Radio On
-  # :index:
-  #   :action: 0
   :meta:
-    :notes:
+    radio:
+      0x07: Seek Up
+      0x08: Seek Down
+      0x09: Activate Audio Button?
+      0x0b: Radio Off
+      0x0c: Radio On
 
 # DIAGNOSTICS: MODULE?
 
@@ -4743,9 +4754,9 @@
     :long_name: Diagnostics?
   :klass: Base
 
-0x63: # DIA-ID-63
+0x63: # DIA-63-IDENT
   :properties:
-    :short_name: DIA-IDENT?
+    :short_name: DIA-63-IDENT?
     :long_name: Diagnostics?
   :klass: Base
 
@@ -4766,5 +4777,13 @@
     :short_name: EWS-INT
     :long_name: EWS Internal State
   :klass: Base
+
+0xFF: # DIA-FF "ERROR ECU NACK"
+  :properties:
+    :short_name: DIA-FF
+    :long_name: ERROR ECU NACK
+  :klass: Base
+  :meta:
+    - when radio sent 0x63 (IDENT) on.. ident 14 digit radio number
 
 ...

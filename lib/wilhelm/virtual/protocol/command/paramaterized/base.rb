@@ -11,7 +11,7 @@ module Wilhelm
           end
 
           def format_things
-            result = parameters.map do |param|
+            result = @parameters.map do |param|
               next nil if public_send(param).nil?
               format_thing(param)
             end

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require_relative 'api/display'
+require_relative 'api/diagnostics'
 require_relative 'api/led'
+require_relative 'api/tmc'
 
 module Wilhelm
   module Virtual
@@ -12,6 +14,8 @@ module Wilhelm
           include Device::API::BaseAPI
           include Display
           include LED
+          include Diagnostics
+          include TMC
 
           # CD CHANGER
 

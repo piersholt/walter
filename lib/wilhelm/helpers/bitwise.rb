@@ -12,6 +12,8 @@ module Wilhelm
         bitmasks.reduce(:^)
       end
 
+      alias xor bitwise_xor
+
       def bitwise_and(*bitmasks)
         bitmasks.reduce(:&)
       end

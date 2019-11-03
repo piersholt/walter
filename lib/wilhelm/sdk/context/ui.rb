@@ -45,13 +45,22 @@ module Wilhelm
         end
 
         def renderer_update(new_state)
-          LOGGER.debug(PROG) { "#renderer_update(#{new_state.class})" }
+          LOGGER.debug(PROG) do
+            string = new_state.is_a?(Symbol) ? new_state : new_state.class
+            "#renderer_update(#{string})"
+          end
           case new_state
           when :destroy
+            LOGGER.debug(PROG) { "API::Display " }
             emit_destroy
           when API::Display::Busy
+            LOGGER.debug(PROG) { "#renderer_update: API::Display::Busy => #emit_destroy!" }
             emit_destroy
           when API::Display::Off
+            LOGGER.debug(PROG) { "#renderer_update: API::Display::Off => #emit_destroy!" }
+            emit_destroy
+          when API::Display::Unpowered
+            LOGGER.debug(PROG) { "#renderer_update: API::Display::Unpowered => #emit_destroy!" }
             emit_destroy
           end
         end
