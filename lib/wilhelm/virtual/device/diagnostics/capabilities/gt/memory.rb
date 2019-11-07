@@ -16,6 +16,10 @@ module Wilhelm
               def gt_memory(*args)
                 memory_read(to: :gt, arguments: [*args])
               end
+
+              # WRITE
+              # 3F 09 3B 07 [01] (FF FF FF FF 00) 0B
+              # 3F 09 3B 07 [01] (FF 81 FF 86 00) 0C
             end
           end
         end
