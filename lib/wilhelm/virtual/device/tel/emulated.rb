@@ -50,7 +50,7 @@ module Wilhelm
           ].freeze
 
           LogActually.is_all_around(:tel)
-          LogActually.tel.d
+          LogActually.tel.i
 
           def logger
             LogActually.tel
