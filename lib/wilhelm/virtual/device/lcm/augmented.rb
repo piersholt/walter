@@ -10,7 +10,7 @@ module Wilhelm
         # LCM::Augmented
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
-          include API
+          include Capabilities
 
           include State
           include Sent
