@@ -14,7 +14,6 @@ module Wilhelm
 
           PROC = 'Radio::Emulated'
 
-
           SUBSCRIBE = [
             PING,
             MENU_GT,
@@ -22,14 +21,6 @@ module Wilhelm
             MFL_FUNC,
             BMBT_I, BMBT_A, BMBT_B,
             DIA_HELLO, DIA_COD_READ
-          ].freeze
-
-          INFO = [
-            0x86, 0x90, 0x42, 0x13, 0x01, 0x01, 0x32, 0x11, 0x42, 0x01, 0x20, 0x63, 0x30, 0x33
-          ].freeze
-
-          CODING = [
-            0x00, 0x04, 0x19, 0x01, 0x40, 0x01, 0x01, 0x00
           ].freeze
 
           def handle_virtual_receive(message)
@@ -51,10 +42,10 @@ module Wilhelm
               handle_bmbt_button_1(message.command)
             when DIA_HELLO
               logger.debug(PROC) { "Rx: DIA_HELLO 0x#{d2h(DIA_HELLO)}" }
-              a0(arguments: INFO)
+              info!
             when DIA_COD_READ
               logger.debug(PROC) { "Rx: DIA_COD_READ 0x#{d2h(DIA_COD_READ)}" }
-              a0(arguments: CODING)
+              coding!
             end
 
             super(message)

@@ -13,6 +13,11 @@ module Wilhelm
             def a0(from: :rad, to: :dia, arguments:)
               try(from, to, 0xa0, arguments)
             end
+
+            # 0xb0 DIA-A0
+            def b0(from: :rad, to: :dia, arguments:)
+              try(from, to, 0xb0, arguments)
+            end
           end
         end
       end

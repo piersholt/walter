@@ -6,6 +6,7 @@ require_relative 'capabilities/cdc'
 require_relative 'capabilities/digital'
 require_relative 'capabilities/led'
 require_relative 'capabilities/user_interface'
+require_relative 'capabilities/diagnostics'
 
 module Wilhelm
   module Virtual
@@ -20,6 +21,7 @@ module Wilhelm
           include RDS
           include LED
           include UserInterface
+          include Diagnostics
         end
       end
     end
