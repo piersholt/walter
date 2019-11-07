@@ -115,6 +115,9 @@ module Wilhelm
 
           DIA_COD_READ  = 0x08
           DIA_COD_WRITE = 0x09
+
+          DIA_STATUS    = 0x0b
+          DIA_ACTIVATE  = 0x0c
         end
       end
     end

@@ -5,11 +5,11 @@ module Wilhelm
     class Device
       module Diagnostics
         module API
-          # Diagnostics::API::Info
-          module Info
-            # 0x00
-            def api_hello(from: :dia, to:, arguments: [])
-              try(from, to, DIA_HELLO, arguments)
+          # Diagnostics::API::Status
+          module Status
+            # 0x0b
+            def api_status(from: :dia, to:, arguments: [])
+              try(from, to, DIA_STATUS, arguments)
             end
           end
         end
