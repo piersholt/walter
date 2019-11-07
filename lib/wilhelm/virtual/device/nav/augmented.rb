@@ -7,7 +7,7 @@ module Wilhelm
         # Navigation::Augmented
         class Augmented < Device::Augmented
           include Wilhelm::Helpers::DataTools
-          include API
+          include Capabilities
 
           PUBLISH   = [ASSIST].freeze
           SUBSCRIBE = [ASSIST].freeze
