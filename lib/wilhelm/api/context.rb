@@ -4,12 +4,13 @@ module Wilhelm
   module API
     # API container
     class Context
-      attr_reader :display, :controls, :audio, :telephone
+      attr_reader :display, :controls, :audio, :telephone, :vehicle
 
       alias d display
       alias c controls
       alias a audio
       alias t telephone
+      alias v vehicle
 
       # @note backwards compatibility
       alias display_api   display
@@ -22,11 +23,13 @@ module Wilhelm
         @controls  = Controls.instance
         @audio     = Audio.instance
         @telephone = Telephone.instance
+        @vehicle   = Vehicle.instance
 
         display.bus   = virtual_context
         controls.bus  = virtual_context
         audio.bus     = virtual_context
         telephone.bus = virtual_context
+        vehicle.bus   = virtual_context
 
         controls.targets.each do |target|
           device = virtual_context.public_send(target)

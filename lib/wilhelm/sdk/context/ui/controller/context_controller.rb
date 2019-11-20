@@ -76,6 +76,8 @@ module Wilhelm
                 ui_context.launch(:encoding, :index)
               when :shutdown
                 LOGGER.warn(NAME) { `/usr/bin/sudo /sbin/shutdown -h 5` }
+              when :hatch
+                Wilhelm::API::Vehicle.instance.rear_window_unlock
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

@@ -19,7 +19,7 @@ module Wilhelm
               end
 
               def titles
-                [BaseMenuItem.new(label: 'Debug')]
+                [BaseMenuItem.new(label: 'Context')]
               end
 
               def menu_items
@@ -29,7 +29,7 @@ module Wilhelm
               private
 
               def indexed_options
-                options = %w[Services Encoding Shutdown]
+                options = %w[Services Encoding Shutdown Hatch]
                 options.first(COLUMN_ONE_MAX).map.with_index do |option, index|
                   indexed_option =
                   BaseMenuItem.new(label: option, action: option.downcase.to_sym)

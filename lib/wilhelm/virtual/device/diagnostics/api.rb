@@ -12,7 +12,6 @@ module Wilhelm
       module Diagnostics
         # API for command related to keys
         module API
-          include Device::API::BaseAPI
           include Info
           include Coding
           include Memory

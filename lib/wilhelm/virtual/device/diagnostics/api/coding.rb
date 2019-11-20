@@ -7,6 +7,7 @@ module Wilhelm
         module API
           # Diagnostics::API::Coding
           module Coding
+            include Device::API::BaseAPI
             # 0x08
             def coding_read(from: :dia, to:, arguments:)
               try(from, to, DIA_COD_READ, arguments)

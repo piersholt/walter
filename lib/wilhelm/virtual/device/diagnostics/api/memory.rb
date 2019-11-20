@@ -7,6 +7,7 @@ module Wilhelm
         module API
           # Diagnostics::API::Memory
           module Memory
+            include Device::API::BaseAPI
             # 0x06
             def memory_read(from: :dia, to:, arguments:)
               try(from, to, DIA_MEM_READ, arguments)
