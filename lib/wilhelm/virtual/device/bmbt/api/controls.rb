@@ -9,7 +9,7 @@ module Wilhelm
           module Controls
             include Device::API::BaseAPI
 
-            def bmbt_btn_a(from: :bmbt, to:, arguments:)
+            def bmbt_btn_a(from: :bmbt, to:, **arguments)
               try(from, to, BMBT_A, arguments)
             end
 

@@ -3,7 +3,7 @@
 require_relative 'capabilities/constants'
 require_relative 'capabilities/diagnostics'
 require_relative 'capabilities/settings'
-require_relative 'capabilities/user_controls'
+require_relative 'capabilities/controls'
 
 module Wilhelm
   module Virtual
@@ -13,7 +13,7 @@ module Wilhelm
         module Capabilities
           include Helpers::Button
           include Settings
-          include UserControls
+          include Controls
           include Diagnostics
         end
       end
