@@ -11,7 +11,7 @@ module Wilhelm
             include Device::API::BaseAPI
 
             # 0x4F SRC-GT
-            def src_gt(from: :tv, to: :bmbt, arguments:)
+            def src_gt(from: :tv, to: :bmbt, **arguments)
               try(from, to, SRC_GT, arguments)
             end
           end
