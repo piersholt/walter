@@ -46,7 +46,7 @@ module Wilhelm
             self[0..-2]
           end
 
-          alias checksum fsc
+          alias checksum fcs
 
           private
 
