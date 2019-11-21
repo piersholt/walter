@@ -45,7 +45,7 @@ module Wilhelm
           end
 
           def delimitered_chars(delimiter = 6, items = 2)
-            items.times.map do
+            Array.new(items) do
               "#{delimiter.chr}#{genc(5)}"
             end.join
           end
