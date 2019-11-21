@@ -4731,18 +4731,18 @@
 
 # DIAGNOSTICS: MODULE?
 
-0x30: # SLF-CHK
+0x30: # DIA-CHCK
   :properties:
-    :short_name: SLF-CHK
+    :short_name: DIA-CHCK
     :long_name: Unknown
   :klass: Base
   :meta:
     - bmbt
     - nav/gt
 
-0x3f: # SLS-DIG
+0x3f: # DIA-EHC
   :properties:
-    :short_name: SLS-DIG
+    :short_name: DIA-EHC
     :long_name: Unknown
   :klass: Base
 
