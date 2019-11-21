@@ -11,7 +11,7 @@ module Wilhelm
             include Device::API::BaseAPI
 
             # 0x46 MENU-GT
-            def config(from: :gt, to: :rad, arguments:)
+            def config(from: :gt, to: :rad, **arguments)
               try(from, to, MENU_GT, arguments)
             end
 

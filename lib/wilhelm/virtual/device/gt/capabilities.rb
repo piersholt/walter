@@ -8,8 +8,7 @@ require_relative 'capabilities/controls'
 require_relative 'capabilities/obc'
 require_relative 'capabilities/monitor'
 require_relative 'capabilities/settings'
-require_relative 'capabilities/user_controls'
-require_relative 'capabilities/user_interface'
+require_relative 'capabilities/ui'
 
 module Wilhelm
   module Virtual
@@ -23,7 +22,6 @@ module Wilhelm
           include OnBoardComputer
           include Monitor
           include Settings
-          include UserControls
           include UserInterface
         end
       end

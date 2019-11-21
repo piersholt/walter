@@ -5,7 +5,6 @@ require_relative 'api/diagnostics'
 require_relative 'api/monitor'
 require_relative 'api/radio'
 require_relative 'api/settings'
-require_relative 'api/telephone'
 
 module Wilhelm
   module Virtual
@@ -18,7 +17,6 @@ module Wilhelm
           include Monitor
           include Radio
           include Settings
-          include Telephone
         end
       end
     end

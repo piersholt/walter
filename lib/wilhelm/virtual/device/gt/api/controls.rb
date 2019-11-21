@@ -16,6 +16,8 @@ module Wilhelm
             def soft_input(from: :gt, to:, **arguments)
               try(from, to, INPUT, arguments)
             end
+
+            alias user_input soft_input
           end
         end
       end
