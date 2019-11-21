@@ -9,6 +9,7 @@ module Wilhelm
           include Errors
           VALID_SIZE = (2..2)
 
+          # D-Bus (2..255)
           MIN_LENGTH_VALUE = (3..255)
           LENGTH_INDEX = 1
 

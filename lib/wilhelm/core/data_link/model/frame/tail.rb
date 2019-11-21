@@ -7,6 +7,7 @@ module Wilhelm
         # Core::DataLink::Frame::Tail
         class Tail < Bytes
           include Errors
+          # D-Bus (2..255)
           VALID_SIZE = (3..255)
 
           MSG_INVALID_SIZE = 'invalid tail length'.freeze
