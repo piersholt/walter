@@ -9,7 +9,7 @@ module Wilhelm
           DISPLAY_CODE = 'Display (Code)'
 
           def code_off(context)
-            LOGGER.info(DISPLAY_CODE) { '#code_off' }
+            LOGGER.debug(DISPLAY_CODE) { '#code_off' }
             context.change_state(Enabled.new)
           end
         end

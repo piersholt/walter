@@ -47,7 +47,7 @@ module Wilhelm
 
       def change_state(new_state)
         return false if new_state.class == @state.class
-        logger.unknown(self) { "State => #{new_state.class}" }
+        logger.debug(self) { "State => #{new_state.class}" }
         @state = new_state
         changed
         notify_observers(state)

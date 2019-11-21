@@ -15,7 +15,7 @@ module Wilhelm
         end
 
         def input_menu(context)
-          LOGGER.info(DISPLAY_CAPTURED) { '#input_menu' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#input_menu' }
           context.changed
           context.notify_observers(:destroy)
           context.change_state(Enabled.new)
@@ -91,19 +91,19 @@ module Wilhelm
         end
 
         def kl_30(context)
-          LOGGER.info(DISPLAY_CAPTURED) { '#kl_30' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#kl_30' }
           LOGGER.warn(DISPLAY_CAPTURED) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
 
         def code_on(context)
-          LOGGER.info(DISPLAY_CAPTURED) { '#code_on' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#code_on' }
           context.change_state(Busy::Code.new)
         end
 
         def prog_on(context)
-          LOGGER.info(DISPLAY_CAPTURED) { '#prog_on' }
+          LOGGER.debug(DISPLAY_CAPTURED) { '#prog_on' }
           context.change_state(Busy::Prog.new)
         end
       end

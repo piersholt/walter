@@ -9,7 +9,7 @@ module Wilhelm
           DISPLAY_PROG = 'Display (Prog)'
 
           def prog_off(context)
-            LOGGER.info(DISPLAY_PROG) { '#prog_off' }
+            LOGGER.debug(DISPLAY_PROG) { '#prog_off' }
             context.change_state(Enabled.new)
           end
         end

@@ -9,7 +9,7 @@ module Wilhelm
           DISPLAY_DSP = 'Display (DSP)'
 
           def xxx(context)
-            LOGGER.info(DISPLAY_DSP) { '#xxx' }
+            LOGGER.debug(DISPLAY_DSP) { '#xxx' }
             context.change_state(Enabled.new)
           end
         end

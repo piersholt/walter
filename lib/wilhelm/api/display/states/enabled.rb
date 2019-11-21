@@ -57,19 +57,19 @@ module Wilhelm
         end
 
         def kl_30(context)
-          LOGGER.info(DISPLAY_ENABLED) { '#kl_30' }
+          LOGGER.debug(DISPLAY_ENABLED) { '#kl_30' }
           LOGGER.warn(DISPLAY_ENABLED) { 'Clear cache!' }
           context.cache.clear!
           context.change_state(Unpowered.new)
         end
 
         def code_on(context)
-          LOGGER.info(DISPLAY_ENABLED) { '#code_on' }
+          LOGGER.debug(DISPLAY_ENABLED) { '#code_on' }
           context.change_state(Busy::Code.new)
         end
 
         def prog_on(context)
-          LOGGER.info(DISPLAY_ENABLED) { '#prog_on' }
+          LOGGER.debug(DISPLAY_ENABLED) { '#prog_on' }
           context.change_state(Busy::Prog.new)
         end
       end

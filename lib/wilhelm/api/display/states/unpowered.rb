@@ -11,12 +11,12 @@ module Wilhelm
         DISPLAY_UNPOWERED = 'Display (Unpowered)'
 
         def kl_r(context)
-          LOGGER.info(DISPLAY_UNPOWERED) { '#kl_r' }
+          LOGGER.debug(DISPLAY_UNPOWERED) { '#kl_r' }
           context.change_state(Unknown.new)
         end
 
         def kl_15(context)
-          LOGGER.info(DISPLAY_UNPOWERED) { '#kl_15' }
+          LOGGER.debug(DISPLAY_UNPOWERED) { '#kl_15' }
           context.change_state(Unknown.new)
         end
       end

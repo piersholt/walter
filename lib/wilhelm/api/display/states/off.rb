@@ -11,22 +11,22 @@ module Wilhelm
         DISPLAY_DISABLED = 'Display (Off)'
 
         def announce(context)
-          LOGGER.info(DISPLAY_DISABLED) { '#announce' }
+          LOGGER.debug(DISPLAY_DISABLED) { '#announce' }
           context.change_state(Enabled.new)
         end
 
         def monitor_on(context)
-          LOGGER.info(DISPLAY_DISABLED) { '#monitor_on' }
+          LOGGER.debug(DISPLAY_DISABLED) { '#monitor_on' }
           context.change_state(Enabled.new)
         end
 
         def input_menu(context)
-          LOGGER.info(DISPLAY_DISABLED) { '#input_menu' }
+          LOGGER.debug(DISPLAY_DISABLED) { '#input_menu' }
           context.change_state(Enabled.new)
         end
 
         def kl_30(context)
-          LOGGER.info(DISPLAY_DISABLED) { '#kl_30' }
+          LOGGER.debug(DISPLAY_DISABLED) { '#kl_30' }
           context.change_state(Unpowered.new)
         end
       end
