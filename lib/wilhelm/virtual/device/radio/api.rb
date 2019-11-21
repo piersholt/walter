@@ -4,6 +4,7 @@ require_relative 'api/display'
 require_relative 'api/diagnostics'
 require_relative 'api/led'
 require_relative 'api/tmc'
+require_relative 'api/ui'
 
 module Wilhelm
   module Virtual
@@ -16,24 +17,13 @@ module Wilhelm
           include LED
           include Diagnostics
           include TMC
+          include UserInterface
 
           # CD CHANGER
 
           # 0x38
           def cd_changer_request(from: :rad, to: :cdc, arguments:)
             try(from, to, CDC_REQ, arguments)
-          end
-
-          # MENU/USER INTERFACE
-
-          # 0x46 MENU-RAD
-          def menu_rad(from: :rad, to: :gt, arguments:)
-            try(from, to, MENU_RAD, arguments)
-          end
-
-          # 0x37 RAD-ALT
-          def rad_alt(from: :rad, to: :gt, **arguments)
-            try(from, to, RAD_ALT, arguments)
           end
         end
       end
