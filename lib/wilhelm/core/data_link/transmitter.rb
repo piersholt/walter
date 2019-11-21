@@ -43,8 +43,8 @@ module Wilhelm
             add_thread(@write_thread)
             true
           rescue StandardError => e
-            LOGGER.error(e)
-            e.backtrace.each { |l| LOGGER.error(l) }
+            LOGGER.error(name) { e }
+            e.backtrace.each { |line| LOGGER.error(name) { line } }
             raise e
           end
           true
@@ -69,7 +69,7 @@ module Wilhelm
           more_transmission(write_queue, output_buffer) while TRUE
         rescue StandardError => e
           LOGGER.error(name) { "#{tn}: Exception: #{e}" }
-          e.backtrace.each { |l| LOGGER.error(l) }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
           binding.pry
         end
 
@@ -80,10 +80,10 @@ module Wilhelm
           transmit(output_buffer, frame_to_write)
         rescue TransmissionError => e
           LOGGER.error(THREAD_NAME) { e }
-          e.backtrace.each { |l| LOGGER.error(l) }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
         rescue StandardError => e
           LOGGER.error(THREAD_NAME) { e }
-          e.backtrace.each { |l| LOGGER.error(l) }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
         end
 
         def transmit(output_buffer, frame_to_write)

@@ -44,14 +44,14 @@ module Wilhelm
           add_thread(@read_thread)
           true
         rescue StandardError => e
-          LOGGER.error(e)
-          e.backtrace.each { |l| LOGGER.error(l) }
+          LOGGER.error(name) { e }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
           raise e
         end
 
         private
 
-        # ------------------------------ THREADS ------------------------------ #
+        # ----------------------------- THREADS ----------------------------- #
 
         def thread_read_buffer(input_buffer, output_buffer)
           LOGGER.debug(name) { 'New Thread: Frame Read.' }
@@ -69,7 +69,7 @@ module Wilhelm
           synchronise_frame(input_buffer) while TRUE
         rescue StandardError => e
           LOGGER.error(name) { "#{SYNC_ERROR} Shift thread exception..! #{e}" }
-          e.backtrace.each { |l| LOGGER.error(l) }
+          e.backtrace.each { |line| LOGGER.error(name) { line } }
           binding.pry
         end
 
@@ -93,7 +93,7 @@ module Wilhelm
           clean_up(input_buffer, synchronisation.frame)
         rescue StandardError => e
           LOGGER.error(name) { e }
-          e.backtrace.each { |line| LOGGER.warn(line) }
+          e.backtrace.each { |line| LOGGER.warn(name) { line } }
           clean_up(input_buffer, synchronisation.frame)
           binding.pry
         end

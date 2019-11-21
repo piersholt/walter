@@ -20,10 +20,6 @@ module Wilhelm
             self[0..-2]
           end
 
-          # ************************************************************************* #
-          #                                 BYTE MAP
-          # ************************************************************************* #
-
           def to
             self[0]
           end
@@ -49,18 +45,13 @@ module Wilhelm
             self[0..-2]
           end
 
-          # ************************************************************************* #
-          #                             HEADER PROPERTIES
-          # ************************************************************************* #
-
-          def checksum
-            fcs
-          end
+          alias checksum fsc
 
           private
 
           def validate_args(bytes)
-            raise(TailValidationError, MSG_INVALID_SIZE) unless VALID_SIZE.include?(bytes.length)
+            return true if VALID_SIZE.include?(bytes.length)
+            raise(TailValidationError, MSG_INVALID_SIZE)
           end
         end
       end

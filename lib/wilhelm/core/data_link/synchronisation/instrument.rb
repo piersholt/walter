@@ -9,7 +9,7 @@ module Wilhelm
           include Constants
           include Errors
 
-          NAME = 'Sync::I/K_Bus'
+          NAME = 'Sync::I-Bus'
 
           attr_reader :buffer, :frame
 

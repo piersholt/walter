@@ -26,7 +26,7 @@ module Wilhelm
           add_thread(@write_thread)
           true
         rescue StandardError => e
-          LOGGER.error(e)
+          LOGGER.error(name) { e }
           e.backtrace.each { |line| LOGGER.error(name) { line } }
           raise e
         end

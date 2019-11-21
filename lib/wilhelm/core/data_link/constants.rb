@@ -4,8 +4,11 @@ puts "\tLoading wilhelm/core/data_link/constants"
 
 module Wilhelm
   module Core
+    # Core::DataLink
     module DataLink
+      # Core::DataLink::Constants
       module Constants
+        # Core::DataLink::Constants::Events
         module Events
           include Core::Constants::Events
         end
