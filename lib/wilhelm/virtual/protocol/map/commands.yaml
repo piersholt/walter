@@ -4551,39 +4551,37 @@
         0b0000_0001: 'Announce'
 
         # 0x10 3b: 2 (@ c8)
-        0b0001_0000: '3B -> C8 [Reply]'
+        0b0001_0000: 'Vid. GT (MK3) -> C8 [Reply]'
         # 0x11 3b: 3 (@ ff)
-        0b0001_0001: '3B -> FF [Announce]'
+        0b0001_0001: 'Vid. GT (MK3) -> FF [Announce]'
 
-        # Only WIDESCREEN BMBT uses 0x30
         # 0x30: 18880
         # f0:   18845 (18642 to 0x3b)
-        0b0011_0000: 'F0 -> 3B [Reply]'
+        0b0011_0000: 'BMBT (Wide)/Tel (Motorola) -> 3B [Reply]'
         # 0x31  2019
         # f0:   2018  (all to 0xbf)
-        0b0011_0001: 'F0 -> BF [Announce]'
+        0b0011_0001: 'BMBT (Wide)/Tel (Motorola) -> BF [Announce]'
 
         # 0x40: 621
         # 3b:   620 (609 to BF, 11 to 68)
-        0b0100_0000: '3B -> BF [Reply]'
-
+        0b0100_0000: 'Navi. GT (MK1/4) -> BF [Reply]'
         # 0x41: 619
         # 3b:   392 (all to BF)
         # 7f:   226 (all to BF)
-        0b0100_0001: '3B/7F -> BF [Announce]'
+        0b0100_0001: 'Navi. GT (MK1/4) -> BF [Announce]'
 
         # Only messages greater than 0x40
         # 7f:       11 (all to BF)
-        0b1100_0001: '7F -> BF (Guidance Active) [Announce]'
+        0b1100_0001: 'Navi. Computer -> BF [Announce]'
       :map:
         0b0000_0000: :reply
         0b0000_0001: :announce
-        0b0001_0000: :unknown
-        0b0001_0001: :unknown
-        0b0011_0000: :external_offline_respond
-        0b0011_0001: :external_offline_reset
-        0b0100_0000: :alt_reply
-        0b0100_0001: :alt_announce
+        0b0001_0000: :vid_gt_reply
+        0b0001_0001: :vid_gt_announce
+        0b0011_0000: :bmbt_wide_reply
+        0b0011_0001: :bmbt_wide_announce
+        0b0100_0000: :nav_gt_reply
+        0b0100_0001: :nav_gt_announce
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
