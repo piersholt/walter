@@ -17,9 +17,14 @@ module Wilhelm
                   padding: PADDING_NONE,
                   indices: LAYOUT_INDICES[LAYOUT_HEADER]
                 )
-                  indices.each do |index|
-                    chars = generate_a5(layout, padding, index)
-                    draw_row_a5(layout, padding, index, chars)
+                  indices.each_with_index do |zone_index, index|
+                    chars = generate_a5(layout, padding, zone_index)
+                    draw_row_a5(
+                      layout,
+                      padding,
+                      zone_index | BLOCK | (index.zero? ? FLUSH : 0),
+                      chars
+                    )
                   end
                   render(layout)
                 end
@@ -33,7 +38,12 @@ module Wilhelm
                 )
                   indices.each do |index|
                     chars = generate_a5(layout, m2, index)
-                    draw_row_21(layout, m2, index, chars)
+                    draw_row_21(
+                      layout,
+                      m2,
+                      index,
+                      chars
+                    )
                   end
                   render(layout)
                 end

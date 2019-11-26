@@ -19,9 +19,14 @@ module Wilhelm
                   m2: ZERO,
                   indices: LAYOUT_INDICES[layout]
                 )
-                  indices.each do |index|
-                    chars = generate_21(layout, m2, index, Random.rand(5..10))
-                    draw_row_21(layout, m2, index, chars)
+                  indices.each_with_index do |zone_index, index|
+                    chars = generate_21(layout, m2, zone_index, Random.rand(5..10))
+                    draw_row_21(
+                      layout,
+                      m2,
+                      zone_index | BLOCK | (index.zero? ? FLUSH : 0)
+                      chars
+                    )
                   end
                   render(layout)
                   true
