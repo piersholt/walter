@@ -84,6 +84,13 @@ module Wilhelm
               )
             end
 
+            def eject
+              press_and_release(
+                press:    EJECT_PRESS,
+                release:  EJECT_RELEASE
+              )
+            end
+
             alias radio_mode overlay
 
             private

@@ -23,6 +23,11 @@ module Wilhelm
             TP            = 0x32
             RDS           = 0x22
             OVERLAY       = 0x30
+            EJECT         = 0x24
+
+            EJECT_PRESS   = EJECT | STATE_PRESS
+            EJECT_HOLD    = EJECT | STATE_HOLD
+            EJECT_RELEASE = EJECT | STATE_RELEASE
 
             POWER_PRESS   = POWER | STATE_PRESS
             POWER_HOLD    = POWER | STATE_HOLD
