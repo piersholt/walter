@@ -24,7 +24,7 @@ module Wilhelm
                     draw_row_21(
                       layout,
                       m2,
-                      zone_index | BLOCK | (index.zero? ? FLUSH : 0)
+                      zone_index | BLOCK | (index.zero? ? FLUSH : 0),
                       chars
                     )
                   end
