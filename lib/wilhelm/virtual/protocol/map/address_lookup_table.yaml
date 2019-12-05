@@ -101,12 +101,12 @@
                 # and similar to TV, selecting GPS from the rear will switch
                 # video signal to Navi- thus the need to control the Nav UI.
 
-0x53: :tbc      # I've not seen 0x01 with arguments?
-                # Given the sender is 0x3B, I'd hazard a guess this
-                # is also E38 VM/RCM related...
-                # 3B 05 53 01 32 00 5E  2019-01-07.bin
+0x53: :tbc      # 3B 05 53 01 32 00 5E  2019-01-07.bin
                 # 3B 05 53 01 32 00 5E  2019-10-14.bin
                 # 3B 05 53 01 00 00 6C  2019-10-14.bin
+                # 3B 05 53 01 32 00 5E  2019-11-25.log
+                # 3B 05 53 01 00 00 6C  2019-11-25.log
+                # This is sent when installing nav. OS.
 
 0x66: :alc      # adaptive light control???
 
