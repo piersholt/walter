@@ -22,12 +22,12 @@ module Wilhelm
                 #   end
                 # end
                 case command.config.value
-                when 0b0000_0001
+                when HIDE_RADIO
                   background
                   audio_obc_off
-                when 0b0000_0010
+                when HEADER_ONLY
                   audio_obc_on
-                when 0b0000_0011
+                when HIDE_RADIO | HEADER_ONLY
                   background
                   audio_obc_on
                 end
@@ -35,9 +35,9 @@ module Wilhelm
 
               def handle_source_sound(command)
                 case command.source.value
-                when 0x00
+                when SOURCE_RADIO
                   radio
-                when 0x01
+                when SOURCE_TV
                   background
                   tv
                 else

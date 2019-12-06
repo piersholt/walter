@@ -12,41 +12,36 @@ module Wilhelm
 
               def evaluate_menu_rad(command)
                 case command.state.value
-                when 0b0000_0001
+                when MAIN_MENU
                   background
-                when 0b0000_0010
+                when HIDE_HEADER
                   background
-                when 0b0000_0100
+                when HIDE_SELECT
                   body_select!
-                when 0b0000_1000
+                when HIDE_TONE
                   body_eq!
-                when 0b0000_1100
+                when HIDE_MENU
                   body_cleared
-                when (0b0000_0010..0b0000_1111)
+                when (HIDE_HEADER..0b0000_1111)
                   body_cleared
                 end
               end
 
               def evaluate_display_layout(command)
                 case command.gt.value
-                when (0x40..0x5F)
+                when RADIO_LAYOUTS
                   radio
                   radio_layout
-                when (0x60..0x7F)
+                when RDS_LAYOUTS
                   digital_layout
-                when (0x80..0x9F)
+                when TAPE_LAYOUTS
                   tape
                   tape_layout
-                when (0xc0..0xcF)
+                when CDC_LAYOUTS
                   cdc
                   cdc_layout
                 end
               end
-
-              RADIO_LAYOUTS = (0x40..0x5F)
-              RDS_LAYOUTS = (0x60..0x7F)
-              TAPE_LAYOUTS = (0x80..0x9F)
-              CDC_LAYOUTS = (0xc0..0xcF)
 
               def evaluate_nav_layout(command)
                 case command.layout.value
@@ -64,17 +59,15 @@ module Wilhelm
                 end
               end
 
-              RAD_LED_RESET = 0x90
-
               def evaluate_radio_led(command)
                 case command.led.value
-                when 0x00
+                when RAD_LED_OFF
                   off
                 when RAD_LED_RESET
                   # off
-                when 0xFF
+                when RAD_LED_ON
                   on
-                when 0x48
+                when RAD_LED_RADIO
                   radio
                   on
                 when (0x41..0x45)
@@ -83,8 +76,8 @@ module Wilhelm
                 when (0x5a..0x5e)
                   # tape
                   # on
-                when 95
-                  logger.info(self.class) { "Radio LED 95?" }
+                when 0x5f
+                  logger.info(self.class) { "Radio LED 0x5f?" }
                 else
                   logger.warn(self.class) { "Unknown RAD-LED value: #{command.led.value}" }
                 end

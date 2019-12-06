@@ -8,6 +8,8 @@ module Wilhelm
           module State
             # Radio related command constants
             module Constants
+              include Capabilities::UserInterface::Constants
+
               # Power
               ON = :on
               OFF = :off
@@ -60,6 +62,22 @@ module Wilhelm
               OVERLAY_RELEASE = 0xB0
 
               AUX_HEAT_PRESS = 0x07
+
+              RADIO_LAYOUTS = (0x40..0x5F)
+              RDS_LAYOUTS = (0x60..0x7F)
+              TAPE_LAYOUTS = (0x80..0x9F)
+              CDC_LAYOUTS = (0xc0..0xcF)
+
+              RAD_LED_RESET = 0x90
+              RAD_LED_OFF = 0x00
+              RAD_LED_ON = 0xFF
+              RAD_LED_RADIO = 0x48
+
+              HIDE_RADIO     = 0b0000_0001
+              HEADER_ONLY   = 0b0000_0010
+
+              SOURCE_RADIO = 0x00
+              SOURCE_TV = 0x01
             end
           end
         end
