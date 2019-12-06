@@ -24,32 +24,32 @@ module Wilhelm
             case command_id
             when PING
               dependent = message.to
-              # logger.debug('Radio') { "Tx: Depends on: #{dependent}" }
+              # logger.debug(PROC) { "Tx: Depends on: #{dependent}" }
               depend(dependent)
             when PONG
-              # logger.debug('Radio') {Tx:  "Ready." }
+              # logger.debug(PROC) {Tx:  "Ready." }
               # seen
             when TXT_MID
-              # logger.debug('Radio') {Tx:  "Drawing to MID!" }
+              # logger.debug(PROC) {Tx:  "Drawing to MID!" }
             when TXT_GT
-              logger.debug('Radio') { "Tx: TXT_GT 0x#{d2h(TXT_GT)}" }
+              logger.debug(PROC) { "Tx: TXT_GT 0x#{d2h(TXT_GT)}" }
               # foreground
               evaluate_display_layout(message.command)
             when TXT_NAV
-              # logger.debug('Radio') { "Tx: TXT_NAV 0x#{d2h(TXT_NAV)}" }
+              # logger.debug(PROC) { "Tx: TXT_NAV 0x#{d2h(TXT_NAV)}" }
               # evaluate_nav_layout(message.command)
             when CDC_REQ
-              # logger.debug('Radio') { "Tx: CDC_REQ 0x#{d2h(CDC_REQ)}!" }
+              # logger.debug(PROC) { "Tx: CDC_REQ 0x#{d2h(CDC_REQ)}!" }
               evaluate_cdc_request(message.command)
             when MENU_RAD
-              logger.debug('Radio') { "Tx: MENU_RAD 0x#{d2h(MENU_RAD)}" }
+              logger.debug(PROC) { "Tx: MENU_RAD 0x#{d2h(MENU_RAD)}" }
               # background
               evaluate_menu_rad(message.command)
             when RAD_LED
-              logger.debug('Radio') { "Tx: RAD_LED 0x#{d2h(RAD_LED)}!" }
+              logger.debug(PROC) { "Tx: RAD_LED 0x#{d2h(RAD_LED)}!" }
               evaluate_radio_led(message.command)
             when RAD_ALT
-              logger.debug('Radio') { "Tx: RAD_ALT 0x#{d2h(RAD_ALT)}" }
+              logger.debug(PROC) { "Tx: RAD_ALT 0x#{d2h(RAD_ALT)}" }
               evaluate_radio_alt(message.command)
             end
 
@@ -87,8 +87,8 @@ module Wilhelm
               # handle_tel_data(message.command)
             end
           rescue StandardError => e
-            logger.error(self.class) { e }
-            e.backtrace.each { |line| logger.error(self.class) { line } }
+            logger.error(PROC) { e }
+            e.backtrace.each { |line| logger.error(PROC) { line } }
           end
         end
       end
