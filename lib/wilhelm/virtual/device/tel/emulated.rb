@@ -99,7 +99,7 @@ module Wilhelm
 
           # @override Device::Capabilities::Ready.announce
           def announce
-            super(to: :glo_h, status: 0x30)
+            super(to: :glo_h, status: 0x31)
           end
         end
       end
