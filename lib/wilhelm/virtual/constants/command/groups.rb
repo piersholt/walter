@@ -60,6 +60,17 @@ module Wilhelm
           # 0x38 0x39
           CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 
+          UI = [
+            # IGNITION_REP,
+            MENU_GT, MENU_RAD,
+            RAD_LED,
+            # BMBT_I, BMBT_A,
+            # RAD_EQ, RAD_ALT,
+            RAD_ALT,
+            TXT_MID, TXT_GT, TXT_NAV,
+            DSP_SET, DSP_REP
+          ].freeze
+
           DIAGNOSTICS = [
             0x00,
             0x04, 0x05,
@@ -88,7 +99,7 @@ module Wilhelm
             navigation: NAVIGATION,
             gps: GPS,
             cdc: CD_CHANGER,
-            bmbt: BMBT,
+            # bmbt: BMBT,
             mfl: MFL
           }.freeze
 
@@ -107,18 +118,18 @@ module Wilhelm
             gps: GPS
           }.freeze
 
-          UI = [
-            RAD_EQ,
-            RAD_ALT,
-            OBC_VAR,
-            OBC_BOOL,
-            MENU_GT,
-            MENU_RAD,
-            RAD_LED,
-            SRC_CTL,
-            SRC_SND,
-            SRC_GT
-          ].freeze
+          # UI = [
+          #   RAD_EQ,
+          #   RAD_ALT,
+          #   OBC_VAR,
+          #   OBC_BOOL,
+          #   MENU_GT,
+          #   MENU_RAD,
+          #   RAD_LED,
+          #   SRC_CTL,
+          #   SRC_SND,
+          #   SRC_GT
+          # ].freeze
         end
       end
     end
