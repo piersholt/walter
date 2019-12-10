@@ -7,6 +7,7 @@ require_relative 'capabilities/code'
 require_relative 'capabilities/controls'
 require_relative 'capabilities/obc'
 require_relative 'capabilities/monitor'
+require_relative 'capabilities/remote_control'
 require_relative 'capabilities/settings'
 require_relative 'capabilities/ui'
 
@@ -21,6 +22,7 @@ module Wilhelm
           include Controls
           include OnBoardComputer
           include Monitor
+          include RemoteControl
           include Settings
           include UserInterface
         end
