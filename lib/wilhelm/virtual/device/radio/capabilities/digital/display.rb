@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'display/generate'
+require_relative 'display/helpers'
 require_relative 'display/header'
 require_relative 'display/menu'
 require_relative 'display/sdk'
