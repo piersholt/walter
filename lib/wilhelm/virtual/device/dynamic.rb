@@ -63,6 +63,8 @@ module Wilhelm
           @dynamic_state.virtual_transmit(self, message)
         end
 
+        protected
+
         def publish?(command_id)
           self.class.const_get(:PUBLISH).include?(command_id)
         end
@@ -70,6 +72,8 @@ module Wilhelm
         def subscribe?(command_id)
           self.class.const_get(:SUBSCRIBE).include?(command_id)
         end
+
+        public
 
         def handle_virtual_receive(*)
           LOGGER.debug(PROC) { 'handle_virtual_receive not overridden!' }
