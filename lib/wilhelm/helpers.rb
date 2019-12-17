@@ -24,6 +24,19 @@ module Wilhelm
     include Module
     extend Module
     include Name
+
+    # @param String string "C8 04 BF 02 38 49"
+    # Valid hex representations: C8, 0xC8, C8H
+    # @return String [0xC8, 0x04, 0xBF, 0x02, 0x38, 0x49]
+    def hex_string_to_string(string)
+      string
+        &.split
+        &.map { |c| c.to_i(16) }
+        &.map(&:chr)
+        &.join
+    end
+
+    alias s2s hex_string_to_string
   end
 end
 
