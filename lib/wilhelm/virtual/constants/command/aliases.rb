@@ -91,10 +91,15 @@ module Wilhelm
           CLUSTER_REQ   = 0x5d
 
           REMOTE        = 0x72
-          KEY_REQ       = 0x73
+
+          KEY_REQ       = 0x73 # Request
           KEY_REP       = 0x74
 
-          DOOR_REQ      = 0x79
+          DOOR_LOCK     = 0x76
+
+          MEMORY        = 0x78
+
+          DOOR_REQ      = 0x79 # Request
           DOOR_REP      = 0x7a
 
           UTC           = 0x1f

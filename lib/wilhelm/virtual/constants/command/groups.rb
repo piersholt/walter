@@ -57,6 +57,10 @@ module Wilhelm
             TEL_OPEN, TEL_LED, TEL_STATE, INPUT, TXT_MID, TXT_GT, ANZV_VAR
           ].freeze
 
+          KEYLESS = [
+            REMOTE, DOOR_LOCK, DOOR_REP
+          ].freeze
+
           # 0x38 0x39
           CD_CHANGER = [CDC_REQ, CDC_REP].freeze
 

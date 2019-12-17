@@ -92,6 +92,10 @@ module Wilhelm
           def ui
             dh.f_c(*UI)
           end
+
+          def keyless
+            dh.f_c(*KEYLESS)
+          end
         end
       end
     end
