@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'digital/constants'
-require_relative 'digital/display'
+require_relative 'tape/constants'
+require_relative 'tape/display'
 
 module Wilhelm
   module Virtual
     class Device
       module Radio
         module Capabilities
-          # RDS/Digital
-          module RDS
+          # Tape
+          module Tape
             include Display
           end
         end

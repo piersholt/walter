@@ -15,7 +15,7 @@ module Wilhelm
                 include Helpers::Data
 
                 def generate_menu_21(
-                  layout: LAYOUT_MENU_A,
+                  layout: DIGITAL_MENU_A,
                   m2: ZERO,
                   indices: LAYOUT_INDICES[layout]
                 )
@@ -24,7 +24,7 @@ module Wilhelm
                     draw_row_21(
                       layout,
                       m2,
-                      zone_index | BLOCK | (index.zero? ? FLUSH : 0),
+                      zone_index | BLOCK | (index == 0x01 ? FLUSH : 0),
                       chars
                     )
                   end
@@ -37,7 +37,7 @@ module Wilhelm
                 # index 0 is title in 0x62 which is written by
                 # 0x23...
                 def generate_menu_a5(
-                  layout: LAYOUT_MENU_A,
+                  layout: DIGITAL_MENU_A,
                   padding: PADDING_NONE,
                   indices: LAYOUT_INDICES[layout]
                 )

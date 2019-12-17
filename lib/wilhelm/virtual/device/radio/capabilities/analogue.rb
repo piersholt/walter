@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'analogue/constants'
 require_relative 'analogue/display'
 
 module Wilhelm

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'cdc/constants'
 require_relative 'cdc/display'
 require_relative 'cdc/playback'
-require_relative 'cdc/select'
 
 module Wilhelm
   module Virtual
@@ -11,9 +11,8 @@ module Wilhelm
         module Capabilities
           # CD Changer
           module CDChanger
-            include Playback
-            include Select
             include Display
+            include Playback
           end
         end
       end

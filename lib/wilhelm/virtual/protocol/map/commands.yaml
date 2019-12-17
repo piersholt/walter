@@ -763,14 +763,14 @@
       :layout:
         :type: :map
         :dictionary:
-          0x41: '[Radio] Presets'
-          0x43: '[Radio] Source'
+          0x41: '[Analogue] (Band+Preset) Presets (Index: 0x00)'
+          0x43: '[Analogue] (Band+RDS) Source (Index: 0x06)'
           0x60: '[Digital] Menu A'
           0x61: '[Digital] Menu B'
           0x62: '[Digital] Header'
           0x63: '[Digital] Static'
-          0x83: '[Tape] Side/Dolby'
-          0xc0: '[CDC] Discs'
+          0x83: '[Tape] (Dolby) Side/Dolby'
+          0xc0: '[CDC] Discs/Source'
       :m2:
         :meta:
           - 0x41:
@@ -794,79 +794,85 @@
           - 0x61:
             - as per 0x60, the value for an index is returned by INPUT 0x30
             - likely due to layout also being used by SOS
-        :type: :bit_array
-        :index:
-          :band:  !ruby/range
-                    begin: 0
-                    end: 2
-                    excl: false
-          :preset:  !ruby/range
-                    begin: 5
-                    end: 7
-                    excl: false
-        :parameters:
-          # Layout 0x43 (Source) only!
-          :band:
-            :type: :map
-            :label: 'Band (0x43)'
-            :map:
-              0b0_00: :fm_a
-              0b0_01: :fm_1
-              0b0_10: :fm_2
-
-              0b1_10: :am_a
-              0b1_11: :am_1
-            :dictionary:
-              0b0_00: 'FMA'    # " A1☐A2 ☐ A3☐A4 ☐ A5☐A6 "
-              0b0_01: 'FM1'    # " 1 ☐ 2 ☐*3 ☐ 4 ☐ 5 ☐ 6 "
-
-              0b0_10: 'FM2'    # " 7 ☐ 8 ☐ 9 ☐10 ☐ 11☐12 "
-              0b1_10: 'AMA'    # " A1☐A2 ☐*A3☐A4 ☐ A5☐A6 "
-              0b1_11: 'AM1'    # "*1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
-          # Layout 0x41 (Preset) and 0x83 (Dolby) only!
-          :preset:
-            :type: :map
-            :label: 'Preset (0x41), Dolby: (0x83)'
-            :map:
-              0b000: :none
-              0b001: :p1
-              0b010: :p2
-              0b011: :p3
-              0b100: :p4
-              0b101: :p5
-              0b110: :p6
-              # 0x41:
-              #   0b000: :none
-              #   0b001: :p1
-              #   0b010: :p2
-              #   0b011: :p3
-              #   0b100: :p4
-              #   0b101: :p5
-              #   0b110: :p6
-              # 0x83:
-              #   0b000: :dolby_off
-              #   0b001: :dolby_b
-              #   0b010: :dolby_c
-            :dictionary:
-              0b000: 'No Preset'
-              0b001: 'P1'
-              0b010: 'P2'
-              0b011: 'P3'
-              0b100: 'P4'
-              0b101: 'P5'
-              0b110: 'P6'
-              # 0x41:
-              #   0b000: 'No Preset'
-              #   0b001: 'P1'
-              #   0b010: 'P2'
-              #   0b011: 'P3'
-              #   0b100: 'P4'
-              #   0b101: 'P5'
-              #   0b110: 'P6'
-              # :0x83:
-              #   0b000: 'Dolby Off'
-              #   0b001: 'Dolby B'
-              #   0b010: 'Dolby C'
+        :type: :integer
+        # :index:
+        #   # Layout 0x43 (Source) only!
+        #   :band:  !ruby/range
+        #             begin: 0
+        #             end: 2
+        #             excl: false
+        #   # Layout 0x41 (Preset) and 0x83 (Dolby) only!
+        #   :preset:  !ruby/range
+        #             begin: 5
+        #             end: 7
+        #             excl: false
+        # :parameters:
+        #   # Layout 0x43 (Source) only!
+        #   :band:
+        #     :type: :map
+        #     :label: 'Band (0x43)'
+        #     :map:
+        #       0b0_00: :fm_a
+        #       0b0_01: :fm_1
+        #       0b0_10: :fm_2
+        #       0b0_11: :mw
+        #       0b1_00: :lw
+        #       0b1_01: :sw
+        #       0b1_10: :am_a
+        #       0b1_11: :am_1
+        #     :dictionary:
+        #       0b0_00: 'FMA'    # " A1☐A2 ☐ A3☐A4 ☐ A5☐A6 "
+        #       0b0_01: 'FM1'    # " 1 ☐ 2 ☐*3 ☐ 4 ☐ 5 ☐ 6 "
+        #       0b0_10: 'FM2'    # " 7 ☐ 8 ☐ 9 ☐10 ☐ 11☐12 "
+        #       0b0_11: 'Mediumwave (AM)'
+        #       0b1_00: 'Longwave (AM)'
+        #       0b1_01: 'Shortwave (AM)'
+        #       0b1_10: 'AMA'    # " A1☐A2 ☐*A3☐A4 ☐ A5☐A6 "
+        #       0b1_11: 'AM1'    # "*1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 "
+        #   # Layout 0x41 (Preset) and 0x83 (Dolby) only!
+        #   :preset:
+        #     :type: :map
+        #     :label: 'Preset (0x41), Dolby: (0x83)'
+        #     :map:
+        #       0b000: :none
+        #       0b001: :p1
+        #       0b010: :p2
+        #       0b011: :p3
+        #       0b100: :p4
+        #       0b101: :p5
+        #       0b110: :p6
+        #       # 0x41:
+        #       #   0b000: :none
+        #       #   0b001: :p1
+        #       #   0b010: :p2
+        #       #   0b011: :p3
+        #       #   0b100: :p4
+        #       #   0b101: :p5
+        #       #   0b110: :p6
+        #       # 0x83:
+        #       #   0b000: :dolby_off
+        #       #   0b001: :dolby_b
+        #       #   0b010: :dolby_c
+        #     :dictionary:
+        #       0b000: 'No Preset'
+        #       0b001: 'P1'
+        #       0b010: 'P2'
+        #       0b011: 'P3'
+        #       0b100: 'P4'
+        #       0b101: 'P5'
+        #       0b110: 'P6'
+        #       # 0x41:
+        #       #   0b000: 'No Preset'
+        #       #   0b001: 'P1'
+        #       #   0b010: 'P2'
+        #       #   0b011: 'P3'
+        #       #   0b100: 'P4'
+        #       #   0b101: 'P5'
+        #       #   0b110: 'P6'
+        #       # :0x83:
+        #       #   0b000: 'Dolby Off'
+        #       #   0b001: 'Dolby B'
+        #       #   0b010: 'Dolby C'
       :m3:
         :meta:
           - 0x60:
@@ -1063,17 +1069,8 @@
           0x0_6: (Service) DSP
           0x0_7: (Service) Seek Level
           0x0_8: (Service) TP Volume
-
           0x0_9: (Service) AF
           0x0_a: (Service) Region
-
-          0x1_2: (Service) Serial Number
-          0x1_3: (Service) Software Version
-          0x1_4: (Service) GAL
-          0x1_5: (Service) F & Q?
-          0x1_6: (Service) DSP
-          0x1_7: (Service) Seek Level
-          0x1_8: (Service) TP Volume
 
           # Weather Band
           0x2_0: (Weather Band) No Station
@@ -1097,78 +1094,71 @@
           0x3_8: (Weather Band) WB
 
           # Radio
-          0x4_0: (Radio) Set Station
-          0x4_1: (Radio) m    # Mode: Manual
-          0x4_2: (Radio) SCAN # Mode: SCAN
-          0x4_3: (Radio) II   # Mode: Search (Sensitive)
-          0x4_4: (Radio) I    # Mode: Search (Non Sensitive)
-          0x4_5: (Radio) --
-          0x4_6: (Radio) T    # Traffic Reports
-          0x4_7: (Radio) TP   # Traffic Program
-          0x4_8: (Radio) T (upper right?)
-          0x4_9: (Radio) m + T
-          0x4_a: (Radio) Scan + T
-          0x4_b: (Radio) II + T
-          0x4_c: (Radio) I? + T
-          0x4_d: (Radio) T
-          0x4_e: (Radio) T + T
-          0x4_f: (Radio) TP + T
+          # Field C
+          0b0100_0000: (Analogue) [Set Station]
+          0b0100_0001: (Analogue) [m]       # Mode: Manual
+          0b0100_0010: (Analogue) [SCAN]    # Mode: SCAN
+          0b0100_0011: (Analogue) [II]      # Mode: Search (Sensitive)
+          0b0100_0100: (Analogue) [I]       # Mode: Search (Non Sensitive)
+          0b0100_0101: (Analogue) --
+          0b0100_0110: (Analogue) [T]       # Traffic Reports
+          0b0100_0111: (Analogue) [TP]      # Traffic Program
 
-          0x5_0: (Radio) Stereo
-          0x5_1: (Radio) m
-          0x5_2: (Radio) SCAN
-          0x5_3: (Radio) II
-          0x5_4: (Radio) I
-          0x5_5: (Radio) --
-          0x5_6: (Radio) T
-          0x5_7: (Radio) TP
-          0x5_8: (Radio) T (upper right)
-          0x5_9: (Radio) m + T
-          0x5_a: (Radio) Scan + T
-          0x5_b: (Radio) II + T
-          0x5_c: (Radio) I? + T
-          0x5_d: (Radio) T
-          0x5_e: (Radio) T + T
-          0x5_f: (Radio) TP + T
+          0b0100_1001: (Analogue) [m]     + [T] (D)
+          0b0100_1010: (Analogue) [SCAN]  + [T] (D)
+          0b0100_1011: (Analogue) [II]    + [T] (D)
+          0b0100_1100: (Analogue) [I]     + [T] (D)
+          0b0100_1101: (Analogue) --      + [T] (D)
+          0b0100_1110: (Analogue) [T] (C) + [T] (D)
+          0b0100_1111: (Analogue) [TP]    + [T] (D)
+
+          # Field D
+          0b0100_1000: (Analogue) [T]   (D)
+          0b0101_0000: (Analogue) [ST]  (D)
+          0b0101_1000: (Analogue) [T]   (D)
+
+          0b0101_0001: (Analogue) [m]
+          0b0101_0010: (Analogue) [SCAN]
+          0b0101_0011: (Analogue) [II]
+          0b0101_0100: (Analogue) [I]
+          0b0101_0101: (Analogue) --
+          0b0101_0110: (Analogue) [T]
+          0b0101_0111: (Analogue) [TP]
+
+          0b0101_1001: (Analogue) [m]     + [T] (D)
+          0b0101_1010: (Analogue) [SCAN]  + [T] (D)
+          0b0101_1011: (Analogue) [II]    + [T] (D)
+          0b0101_1100: (Analogue) [I]?    + [T] (D)
+          0b0101_1101: (Analogue) --      + [T] (D)
+          0b0101_1110: (Analogue) [T]     + [T] (D)
+          0b0101_1111: (Analogue) [TP]    + [T] (D)
 
           # 0x60 to 0x7F are 'nav' screens
           # so far... only 0x62 sets anything
-          0x6_0: (RDS)
-          0x6_1: (RDS)
-          0x6_2: (RDS)
+          0x6_0: (Digital)
+          0x6_1: (Digital)
+          0x6_2: (Digital)
 
           # Tape
-          0x8_0: Tape Error
-          0x8_1: --
-          0x8_2: Tape (1) ▶︎
-          0x8_3: Tape (1) ▷▷▷
-          0x8_4: Tape (1) ◁◁◁
-          0x8_6: Tape (1) ▷▷
-          0x8_7: Tape (1) ◁◁
-          0x8_8: Tape Clean
-          0x8_9: Tape (A) <<>>
-          0x8_a: Tape (A)
-          0x8_b: --
-          0x8_c: --
-          0x8_d: --
-          0x8_e: --
-          0x8_f: --
+          0b1000_0000: (Tape) \"Tape Error\"        # " TAPE ERROR"
 
-          0x9_0: Tape Error
-          0x9_1: --
-          0x9_2: Tape (2) ▶︎
-          0x9_3: Tape (2) ▷▷▷
-          0x9_4: Tape (2) ◁◁◁
-          0x9_6: Tape (2) ▷▷
-          0x9_7: Tape (2) ◁◁
-          0x9_8: Tape Clean
-          0x9_9: Tape (B) <<>>
-          0x9_a: Tape (B)
-          0x9_b: --
-          0x9_c: --
-          0x9_d: --
-          0x9_e: --
-          0x9_f: --
+          0b1000_0010: (Tape) \"Tape 1\"            # " TAPE A     " / "PRES OFF" / "PRES ON "
+          0b1000_0011: (Tape) \"Tape 1|A\" [>>]     # " TAPE A   >>"
+          0b1000_0100: (Tape) \"Tape 1|A\" [<<R]    # " TAPE A <<R "
+          0b1000_0110: (Tape) \"Tape 1|A\" [>]      # " TAPE A   > "
+          0b1000_0111: (Tape) \"Tape 1|A\" [<R]     # " TAPE A  <R "
+          0b1000_1000: (Tape) \"Tape [A] Clean\"    # " TAPE CLEAN"
+          0b1000_1001: (Tape) \"Tape 1|A\" [<<>>]   # " TAPE A     "
+          0b1000_1010: (Tape) \"Tape A'"
+
+          0b1001_0010: (Tape) \"Tape 2\"            # " TAPE B     "
+          0b1001_0011: (Tape) \"Tape 2|B [>>]\"     # " TAPE B   >>"
+          0b1001_0100: (Tape) \"Tape 2|B [<<R]\"    # " TAPE B <<R "
+          0b1001_0110: (Tape) \"Tape 2|B [>]\"      # " TAPE B   > "
+          0b1001_0111: (Tape) \"Tape 2|B [<R]\"     # " TAPE B  <R "
+          0b1001_1000: (Tape) \"Tape [B] Clean\"    # " TAPE CLEAN"
+          0b1001_1001: (Tape) \"Tape 2|B [<<>>]\"
+          0b1001_1010: (Tape) \"Tape B\"
 
           # RDS: TP?
           # On a Euro car, the button you have labelled as TRAFFIC becomes
@@ -1176,36 +1166,6 @@
           0xa_0: (Traffic) No Station
           0xa_1: (Traffic) Traffic 1
           0xa_2: (Traffic) Traffic 2
-          0xa_3: --
-          0xa_4: (Traffic) No Station
-          0xa_5: (Traffic) Traffic 1
-          0xa_6: (Traffic) Traffic 2
-          0xa_7: --
-          0xa_8: (Traffic) No Station
-          0xa_9: (Traffic) Traffic 1
-          0xa_a: (Traffic) Traffic 2
-          0xa_b: --
-          0xa_c: --
-          0xa_d: --
-          0xa_e: --
-          0xa_f: --
-
-          0xb_0: Untested
-          0xb_1: Untested
-          0xb_2: Untested
-          0xb_3: Untested
-          0xb_4: Untested
-          0xb_5: Untested
-          0xb_6: Untested
-          0xb_7: Untested
-          0xb_8: Untested
-          0xb_9: Untested
-          0xb_a: Untested
-          0xb_b: Untested
-          0xb_c: Untested
-          0xb_d: Untested
-          0xb_e: Untested
-          0xb_f: Untested
 
           # all the way through to C0, then
           # C0..DF: display text
@@ -1217,22 +1177,18 @@
           # To have the 'Track' layout applied, the below format must be used
           # otherwise the zone defaults to 11 characters without a layout.
           # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
-          0xc_0: --
-          0xc_1: (CD) No Magazine!
-          0xc_2: (CD) No Disc!
-          0xc_3: --
-          0xc_4: (CD) [< >] Disc/Track
-          0xc_5: (CD) >>
-          0xc_6: (CD) <<R
-          0xc_7: (CD) [SCAN]
-          0xc_8: (CD) [RANDOM]
-          0xc_9: --
-          0xc_a: (CD) [<< >>] Fast Forward/Reverse
+          0xc_1: (CD) No Magazine
+          0xc_2: (CD) No Disc
+
+          0xc_5: (CD) [>>]
+          0xc_6: (CD) [<<R]
+
+          0xc_4: (CD) [< >]   (Select) Music Search
+          0xc_7: (CD) [SCAN]  (Select) Track sample
+          0xc_8: (CD) [RND]   (Select) Random generator
+          0xc_a: (CD) [<< >>] (Select) Fast Forward/Reverse
+
           0xc_b: (CD) Empty Casette Track Change?
-          0xc_c: --
-          0xc_d: --
-          0xc_e: --
-          0xc_f: --
       :ike: &ike_options
         :type: :map
         :map:

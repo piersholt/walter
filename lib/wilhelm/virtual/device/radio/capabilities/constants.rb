@@ -7,76 +7,32 @@ module Wilhelm
         module Capabilities
           # Radio::Capabilities::Constants
           module Constants
-            ZERO = 0x00
-            NO_PADDING = 0x00
-            NO_INDEX = 0x00
-            NO_CHARS = ''
+            # LAYOUT ----------------------------------------------------------
+            SOURCE_SERVICE  = 0b000 << 5 # 0x00
+            SOURCE_WEATHER  = 0b001 << 5 # 0x20
+            SOURCE_ANALOGUE = 0b010 << 5 # 0x40
+            SOURCE_DIGITAL  = 0b011 << 5 # 0x60
+            SOURCE_TAPE     = 0b100 << 5 # 0x80
+            SOURCE_TMC      = 0b101 << 5 # 0xa0
+            SOURCE_CDC      = 0b110 << 5 # 0xc0
+            SOURCE_NA       = 0b111 << 5 # 0xe0
 
-            LAYOUT_MENU_A = 0x6_0 # SIMPLE MENU
-            LAYOUT_MENU_B = 0x6_1 # MENU WITH HEADER
-            LAYOUT_HEADER = 0x6_2
-            LAYOUT_STATIC = 0x6_3
+            # M2 / PADDING ----------------------------------------------------
+            # 0x21
+            RDS                 = 0b0_0010
+            TP                  = 0b0_0100
+            TP_ACTIVE           = 0b0_1000
 
-            PADDING_NONE = 0x01
+            # 0xA5
+            PADDING_NONE        = 0b0000_0001
 
-            INDEX_0  = 0b0000
-            INDEX_1  = 0b0001
-            INDEX_2  = 0b0010
-            INDEX_3  = 0b0011
-            INDEX_4  = 0b0100
-            INDEX_5  = 0b0101
-            INDEX_6  = 0b0110
-            INDEX_7  = 0b0111
-            INDEX_8  = 0b1000
-            INDEX_9  = 0b1001
-            INDEX_10 = 0b1010
+            # M3 / ZONE -------------------------------------------------------
 
-            FLUSH = 0b0010_0000
-            BLOCK = 0b0100_0000
-
-            SELECTED   = 0b1000_0000
-
-            # HEADER
-            HEADER_INDICES = [
-              INDEX_1,
-              INDEX_2,
-              INDEX_3,
-              INDEX_4,
-              INDEX_5,
-              INDEX_6,
-              INDEX_7
-            ].freeze
-
-            # MENU
-            MENU_INDICES = [
-              INDEX_0,
-              INDEX_1,
-              INDEX_2,
-              INDEX_3,
-              INDEX_4,
-              INDEX_5,
-              INDEX_6,
-              INDEX_7,
-              INDEX_8,
-              INDEX_9,
-              INDEX_10
-            ].freeze
-
-            # MENU (Static)
-            LINE_INDICES = [
-              INDEX_1,
-              INDEX_2,
-              INDEX_3,
-              INDEX_4,
-              INDEX_5
-            ].freeze
-
-            LAYOUT_INDICES = {
-              LAYOUT_MENU_A => MENU_INDICES,
-              LAYOUT_MENU_B => MENU_INDICES,
-              LAYOUT_HEADER => HEADER_INDICES,
-              LAYOUT_STATIC => LINE_INDICES
-            }.freeze
+            # CHARS -----------------------------------------------------------
+            P_BREAK     = 0x05
+            P_CR        = 0x06
+            P_PAD       = 0x20
+            P_STAR      = 0x2a
           end
         end
       end

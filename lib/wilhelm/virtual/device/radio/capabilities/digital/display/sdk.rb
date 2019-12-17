@@ -12,23 +12,8 @@ module Wilhelm
                 include API
                 include Constants
 
-                def update_menu(layout, indexed_items)
-                  LAYOUT_INDICES[layout].each_with_index do |zone_index, index|
-                    item = indexed_items.fetch(index, false)
-                    next unless item
-                    draw_row_21(
-                      layout,
-                      ZERO,
-                      zone_index | BLOCK,
-                      item.to_s
-                    )
-                  end
-                  render(layout)
-                  true
-                end
-
                 def build_header(layout, indexed_items, title = nil)
-                  LAYOUT_INDICES[LAYOUT_HEADER].each_with_index do |zone_index, index|
+                  LAYOUT_INDICES[DIGITAL_HEADER].each_with_index do |zone_index, index|
                     item = indexed_items.fetch(index, false)
                     next unless item
                     draw_row_a5(
@@ -51,6 +36,21 @@ module Wilhelm
                       layout,
                       ZERO,
                       zone_index | BLOCK | (index.zero? ? FLUSH : 0),
+                      item.to_s
+                    )
+                  end
+                  render(layout)
+                  true
+                end
+
+                def update_menu(layout, indexed_items)
+                  LAYOUT_INDICES[layout].each_with_index do |zone_index, index|
+                    item = indexed_items.fetch(index, false)
+                    next unless item
+                    draw_row_21(
+                      layout,
+                      ZERO,
+                      zone_index | BLOCK,
                       item.to_s
                     )
                   end

@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'digital/constants'
-require_relative 'digital/display'
+# require_relative 'analogue/display'
 
 module Wilhelm
   module Virtual
     class Device
       module Radio
         module Capabilities
-          # RDS/Digital
-          module RDS
+          # Radio::Capabilities::Service
+          module Service
             include Display
           end
         end

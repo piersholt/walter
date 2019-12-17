@@ -6,59 +6,145 @@ module Wilhelm
       module Radio
         module Capabilities
           module CDChanger
-            # CD Changer Display
+            # Capabilities::CDChanger::Display
             module Display
               include API
+              include Constants
 
-              # rad  gt  23  CA 20  "CD 1-01",
-              # rad  gt  23  CA 20  "CD 1-01",
-              # rad  gt  23  CA 20  "CD 1-01",
-              # rad  gt  23  CA 20  "CD 1-01",
-
-              # def alt(mode = :scanning)
-              #   case mode
-              #   when :scanning
-              #
-              #   end
-              # end
-
-              # [< >] Music search
-              def seek(to: :gt)
-                primary(to: to, gt: 0xc4, ike: 0x20, chars: 'CD 7-SK')
+              # rad  gt  23  C5 20  "CD 1-01  >>",
+              def fast_forward(
+                to: :gt,
+                chars: DEFAULT_FAST_FORWARD
+              )
+                draw_23(
+                  to:     to,
+                  gt:     SOURCE_CDC | CDC_FAST_FORWARD,
+                  ike:    0x20,
+                  chars:  chars
+                )
               end
 
-              # rad  gt  23  C5 20  "CD 1-01  >>",
-              # rad  gt  23  C5 20  "CD 1-01  >>",
-              # rad  gt  23  C5 20  "CD 1-01  >>",
-              def fast_forward(to: :gt)
-                primary(to: to, gt: 0xc5, ike: 0x20, chars: 'CD 9-FF >>')
-              end
+              alias ff fast_forward
 
               # rad  gt  23  C6 20  "CD 1-01 <<R",
-              def rewind(to: :gt, chars: 'CD 9-RW <<R')
-                primary(to: to, gt: 0xc6, ike: 0x20, chars: chars)
+              def rewind(
+                to: :gt,
+                chars: DEFAULT_REWIND
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_REWIND,
+                  ike: 0x20,
+                  chars: chars
+                )
               end
 
-              # [SCAN] Track samole
-              # rad     gt     23      C7 20   "CD 1-13  SC"
-              # rad     gt     23      C7 20   "CD 1-14  SC"
-              def sample(to: :gt)
-                primary(to: to, gt: 0xc7, ike: 0x20, chars: 'CD 7-99')
-              end
+              alias rw rewind
 
-              # [RANDOM] Random generator
-              # rad     gt     23      C8 20   "CD 1-11 RND"
-              # rad     gt     23      C8 20   "CD 1-12 RND"
-              # rad     gt     23      C8 20   "CD 1-13 RND"
-              def shuffle(to: :gt)
-                primary(to: to, gt: 0xc8, ike: 0x20, chars: 'CD 7-99')
+              # [< >] Music search
+              def seek(
+                to: :gt,
+                chars: DEFAULT_SEEK
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_SEEK,
+                  ike: 0x20,
+                  chars: chars
+                )
               end
 
               # [<< >>] Fast forward/reverse
               # rad  gt  23  C4 20  "CD 1-01 << >>"
-              # rad  gt  23  C4 20  "CD 1-01 << >>"
-              def scan(to: :gt, chars: 'CD 7-99')
-                primary(to: to, gt: 0xca, ike: 0x20, chars: chars)
+              def scan(
+                to: :gt,
+                chars: DEFAULT_SCAN
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_SCAN,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # [SCAN] Track samole
+              # rad     gt     23      C7 20   "CD 1-13  SC"
+              def sample(
+                to: :gt,
+                chars: DEFAULT_SAMPLE
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_SAMPLE,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # [RANDOM] Random generator
+              # rad     gt     23      C8 20   "CD 1-11 RND"
+              def shuffle(
+                to: :gt,
+                chars: DEFAULT_SHUFFLE
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_SHUFFLE,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # "NO MAGAZINE"
+              def no_magazine(
+                to: :gt,
+                chars: DEFAULT_NO_MAGAZINE
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | NO_MAGAZINE,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # "NO DISC"
+              def no_disc(
+                to: :gt,
+                chars: DEFAULT_NO_DISC
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_NO_DISC,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # "CD  -   "
+              def disc_load(
+                to: :gt,
+                chars: DEFAULT_DISC_LOAD
+              )
+                draw_23(
+                  to: to,
+                  gt: SOURCE_CDC | CDC_DISC_LOAD,
+                  ike: 0x20,
+                  chars: chars
+                )
+              end
+
+              # ------------------------------------------------------------
+
+              def cd_rds(bitmask = 0b0000_0000)
+                draw_21(
+                  to: :gt,
+                  layout: 0xc0,
+                  m2: bitmask,
+                  m3: 0x06,
+                  chars: "FM\x05AM\x05PTY\x05RDS\x05SC\x05MODE"
+                )
               end
             end
           end
