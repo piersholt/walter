@@ -107,6 +107,8 @@
                 # 3B 05 53 01 32 00 5E  2019-11-25.log
                 # 3B 05 53 01 00 00 6C  2019-11-25.log
                 # This is sent when installing nav. OS.
+                # 32 00 sent when restarting prior to install
+                # 00 00 when disc ejected
 
 0x66: :alc      # adaptive light control???
 
