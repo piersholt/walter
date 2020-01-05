@@ -20,6 +20,10 @@ module Wilhelm
             def anzv_bool(from: :ike, to: :anzv, **arguments)
               try(from, to, ANZV_BOOL, arguments)
             end
+
+            def boolean!
+              anzv_bool(control_a: control_a, control_b: control_b)
+            end
           end
         end
       end

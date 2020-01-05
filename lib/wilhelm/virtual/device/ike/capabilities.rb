@@ -3,6 +3,7 @@
 require_relative 'capabilities/auxiliary'
 require_relative 'capabilities/check_control'
 require_relative 'capabilities/ignition'
+require_relative 'capabilities/region'
 require_relative 'capabilities/settings'
 
 module Wilhelm
@@ -14,11 +15,8 @@ module Wilhelm
           include AuxiliaryVentilation
           include CheckControl
           include Ignition
+          include Region
           include Settings
-
-          def boolean!
-            anzv_bool(control_a: control_a, control_b: control_b)
-          end
         end
       end
     end
