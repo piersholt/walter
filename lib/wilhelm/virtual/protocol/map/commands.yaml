@@ -140,7 +140,16 @@
         :door: 6
         :ignition: 7
     :s3:
-      :type: :integer
+      :type: :bit_array
+      :index:
+        :aux_ventilation: 4
+      :parameters:
+        :aux_ventilation:
+          :type: :switch
+          :label: '(Aux.) Vent.'
+          :states:
+            0: :inactive
+            1: :on
   :index:
     :s1: 0
     :s2: 1
