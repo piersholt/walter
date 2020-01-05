@@ -51,6 +51,31 @@ module Wilhelm
 
       SWITCH_INACTIVE = 'OFF'
 
+      # IKE Region
+      SWITCH_DE       = 'DE'
+      SWITCH_GB       = 'GB'
+      SWITCH_US       = 'US'
+      SWITCH_IT       = 'IT'
+      SWITCH_ES       = 'ES'
+      SWITCH_JP       = 'JP'
+      SWITCH_FR       = 'FR'
+      SWITCH_CA       = 'CA'
+      SWITCH_AR       = 'AR'
+
+      SWITCH_24H      = '24H'
+      SWITCH_12H      = '12H'
+
+      SWITCH_KM       = 'KM'
+      SWITCH_MLS      = 'MLS'
+
+      SWITCH_L_100    = 'l/100km'
+      SWITCH_MPG_UK   = 'mpg UK'
+      SWITCH_MPG_US   = 'mpg US'
+      SWITCH_KM_L     = 'km/l'
+
+      SWITCH_C        = "\u00b0C"
+      SWITCH_F        = "\u00b0F"
+
       SWITCH_STATE_MAP = {
         off:          [:as_normal, SWITCH_OFF],
         on:           [:as_green,  SWITCH_ON],
@@ -79,7 +104,26 @@ module Wilhelm
         wide:         [:as_green,  SWITCH_16_9],
         zoom:         [:as_yellow, SWITCH_ZOOM],
         ntsc:         [:as_green,  SWITCH_NTSC],
-        pal:          [:as_green,  SWITCH_PAL]
+        pal:          [:as_green,  SWITCH_PAL],
+        de:           [:as_green, SWITCH_DE],
+        gb:           [:as_green, SWITCH_GB],
+        us:           [:as_green, SWITCH_US],
+        it:           [:as_green, SWITCH_IT],
+        es:           [:as_green, SWITCH_ES],
+        jp:           [:as_green, SWITCH_JP],
+        fr:           [:as_green, SWITCH_FR],
+        ca:           [:as_green, SWITCH_CA],
+        ar:           [:as_green, SWITCH_AR],
+        h24:          [:as_green, SWITCH_24H],
+        h12:          [:as_green, SWITCH_12H],
+        km:           [:as_green, SWITCH_KM],
+        mls:          [:as_green, SWITCH_MLS],
+        celsius:      [:as_green, SWITCH_C],
+        fahrenheit:   [:as_green, SWITCH_F],
+        l_100:        [:as_green, SWITCH_L_100],
+        mpg_uk:       [:as_green, SWITCH_MPG_UK],
+        mpg_us:       [:as_green, SWITCH_MPG_US],
+        km_l:         [:as_green, SWITCH_KM_L]
       }.freeze
 
       LIGHT_GREEN  = 92

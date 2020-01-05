@@ -146,36 +146,56 @@
     :s2: 1
     :s3: 2
 
-0x14: # RGN-REQ
+0x14: # REGION? / *REGION-GT? / *REGION-CCM?
   :schemas:
     - :gt
     - :ccm
+    - :tel
+    - :rad
+  :klass: Base
   :properties:
     :short_name: REGION?
     :long_name: Country Coding Status Request
-  :klass: Base
   :gt:
+    :klass: Base
     :properties:
       :short_name: REGION-GT?
       :long_name: Country Coding Status Request
-    :klass: Base
   :ccm:
+    :klass: Base
     :properties:
       :short_name: REGION-CCM?
       :long_name: Country Coding Status Request
+  :tel:
     :klass: Base
-
+    :properties:
+      :short_name: REGION-TEL?
+      :long_name: Country Coding Status Request
+  :rad:
+    :klass: Base
+    :properties:
+      :short_name: REGION-RAD?
+      :long_name: Country Coding Status Request
   :meta:
     :senders:
-      - gt (0x3b) settings UI?
-      - ccm (0x30) temp. and speed?
-      - rad (0x68) language? (x10)
-      - tel (0xc8) not sure? (x1)
+      - 0x30:
+        - 733 times
+        - temperature and speed units?
+      - 0x3b:
+        - 825 times
+        - gt settings UI?
+      - 0x68:
+        - 46 times
+        - rad language? (x10)
+      - 0xc8:
+        - 1 times
+        - tel not sure? (x1)
 
-0x15: # REGION
+0x15: # REGION / *REGION-SET
   :schemas:
     - :gt
     - :ike
+  :klass: Base
   :properties:
     :short_name: REGION
     :long_name: Country Coding
@@ -188,69 +208,143 @@
     :lang:
       :type: :map
       :dictionary:
-        0: 'D'
-        1: 'GB'
-        3: 'I'
+        0b0000: DE
+        0b0001: EN_GB
+        0b0010: EN_US
+        0b0011: IT
+        0b0100: ES
+        0b0101: JP
+        0b0110: FR
+        0b0111: EN_CA
+        0b1000: AR
     :b2:
       :type: :bit_array
       :index:
-        :time_format: 0
-        # :miles: !ruby/range
-        #         begin: 1
-        #         end: 3
-        #         excl: false
-        :temp_format: 6
-        :date_format: 7
+        :arrival_format:  0
+        :distance_unit:   1
+        :limit_unit:      2
+        :avg_speed_unit:  3
+        # none            4
+        # none            5
+        :temp_unit:       6
+        :time_format:     7
       :parameters:
+        :arrival_format:
+          :label: Arrival
+          :type: :switch
+          :states:
+            0: :h24
+            1: :h12
+        :distance_unit:
+          :label: Distance
+          :type: :switch
+          :states:
+            0: :km
+            1: :mls
+        :limit_unit:
+          :label: Limit
+          :type: :switch
+          :states:
+            0: :km
+            1: :mls
+        :avg_speed_unit:
+          :label: Avg. Speed
+          :type: :switch
+          :states:
+            0: :km
+            1: :mls
+        :temp_unit:
+          :label: Temp.
+          :type: :switch
+          :states:
+            0: :celsius
+            1: :fahrenheit
         :time_format:
           :label: Time
-          :type: :map
-          :dictionary:
-            0: (24h)
-            1: (12h)
-        # :miles:
-        #   :label: Miles??
-        #   :type: :map
-        #   :dictionary:
-        #     0b000: 'km?'
-        #     0b111: 'mls?'
-        :temp_format:
-          :label: Temp.
-          :type: :map
-          :dictionary:
-            0: '(C.)'
-            1: '(F.)'
-        :date_format:
-          :label: Date
-          :type: :map
-          :dictionary:
-            0: (dd.mm)
-            1: (mm/dd)
+          :type: :switch
+          :states:
+            0: :h24
+            1: :h12
     :b3:
       :type: :bit_array
-      :parameters:
-        :distance:
-          :label: Distance
-          :type: :map
-          :dictionary:
-            0: (km)
-            1: (miles)
-        :consumption:
-          :label: Consump.
-          :type: :map
-          :dictionary:
-            0b0000: (l/100km)
-            0b0101: (mpg)
-            0b1111: (km/l)
       :index:
-        :distance: 3
-        :consumption: !ruby/range
-                begin: 4
-                end: 7
+        # none            0
+        :timer_2_format:  1
+        :timer_1_format:  2
+        :range_unit:      3
+        :consump_2_format: !ruby/range
+                begin:    4
+                end:      5
                 excl: false
+        :consump_1_format: !ruby/range
+                begin:    6
+                end:      7
+                excl: false
+      :parameters:
+        :timer_2_format:
+          :label: Timer 2.
+          :type: :switch
+          :states:
+            0: :h24
+            1: :h12
+        :timer_1_format:
+          :label: Timer 1.
+          :type: :switch
+          :states:
+            0: :h24
+            1: :h12
+        :range_unit:
+          :label: Range
+          :type: :switch
+          :states:
+            0: :km
+            1: :mls
+        :consump_2_format:
+          :label: Consump. 2
+          :type: :switch
+          :states:
+            0b00: :l_100
+            0b01: :mpg_uk
+            0b10: :mpg_us
+            0b11: :km_l
+        :consump_1_format:
+          :label: Consump. 1
+          :type: :switch
+          :states:
+            0b00: :l_100
+            0b01: :mpg_uk
+            0b10: :mpg_us
+            0b11: :km_l
     :b4:
-      :type: :integer
-  :klass: Base
+      :type: :bit_array
+      :index:
+        # none            0
+        :aux_control:     1
+        # none            2
+        # none            3
+        # none            4
+        # none            5
+        :aux_ventilation: 6
+        :aux_heating:     7
+      :parameters:
+        :aux_control:
+          :label: '(Aux.) Control.'
+          :type: :map
+          :dictionary:
+            0: BMBT from 09/96
+            1: BMBT to 09/96, None
+        :aux_ventilation:
+          :type: :switch
+          :label: '(Aux.) Vent.'
+          :states:
+            0: :off
+            1: :enabled
+        :aux_heating:
+          :type: :switch
+          :label: '(Aux.) Heat.'
+          :states:
+            0: :off
+            1: :enabled
   :gt:
     :properties:
       :short_name: REGION-SET
