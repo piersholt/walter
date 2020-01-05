@@ -40,6 +40,9 @@ module Wilhelm
             command_id = message.command.d
             return false unless subscribe?(command_id)
             case command_id
+            when 0x02
+              logger.debug(moi) { "Rx: 0x02 #{d2h(command_id)}" }
+              # si!
             when ODO_REP
               logger.debug(moi) { "Rx: ODO_REP #{d2h(command_id)}" }
             when VEH_LCM_REQ

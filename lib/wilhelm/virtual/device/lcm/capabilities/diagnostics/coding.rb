@@ -28,6 +28,19 @@ module Wilhelm
               def coding!(data = coding)
                 a0(arguments: data)
               end
+
+              def si!
+                a0(
+                  arguments: [
+                      0x00,
+                      0x42, 0x5A, 0x00, 0x90, 0x10,
+                      0x09, 0x87,
+                      0x40, 0x48,
+                      0x00, 0x00,
+                      0x04, 0x38
+                    ]
+                  )
+              end
             end
           end
         end
