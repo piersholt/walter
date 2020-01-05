@@ -43,7 +43,7 @@ module Wilhelm
               end
 
               def brightness_range?(*values)
-                range?(BRIGHTNESS_RANGE, *values)
+                valid_range?(BRIGHTNESS_RANGE, *values)
               end
             end
           end

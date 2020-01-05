@@ -10,6 +10,15 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
+            # 0x15 REGION-SET
+            def region(from: :gt, to: :ike, **arguments)
+              try(from, to, COUNTRY_REP, arguments)
+            end
+
+            def region!(lang = 0x01, b2 = 0xf4, b3 = 0x70, b4 = 0x42)
+              region(lang: lang, b2: b2, b3: b3, b4: b4)
+            end
+
             # 0x40 OBC-VAR
             def obc_var(from: :gt, to: :ike, **arguments)
               try(from, to, OBC_VAR, arguments)

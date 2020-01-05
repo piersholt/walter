@@ -25,7 +25,7 @@ module Wilhelm
               integers.any?(&:negative?)
             end
 
-            def range?(range, *values)
+            def valid_range?(range, *values)
               values.all? { |i| range.cover?(i) }
             end
           end

@@ -37,6 +37,14 @@ module Wilhelm
               timer?
               distance?
             end
+
+            # Testing distance units set via 0x15
+            def distances?
+              range?
+              distance?
+              limit?
+              average_speed?
+            end
           end
         end
       end
