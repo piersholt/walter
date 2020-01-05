@@ -14,7 +14,7 @@ module Wilhelm
               dispatch_raw_command(from, to, SENSORS_REP, arguments)
             end
 
-            def sensors!(s1, s2, s3 = 0x00)
+            def sensors!(s1 = 0x00, s2 = 0x00, s3 = 0x00)
               sensors(s1: s1, s2: s2, s3: s3)
             end
           end
