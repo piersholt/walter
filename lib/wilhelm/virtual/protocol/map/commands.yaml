@@ -1444,6 +1444,9 @@
           0x0e: (OBC) Timer          # "13.0  SEC "
           0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
 
+          # CODE
+          0x0d: (Code) Code          # 00 00 00 00 "☐☐☐☐"
+
           # AUX. HEAT/VENTILATION
           0x0f: (Aux.) Timer 1       # " 1:33PM"
           0x10: (Aux.) Timer 2       # "12:06AM"
