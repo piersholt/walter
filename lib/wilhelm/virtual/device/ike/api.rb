@@ -3,6 +3,7 @@
 require_relative 'api/check_control'
 require_relative 'api/ignition'
 require_relative 'api/prog'
+require_relative 'api/redundant'
 require_relative 'api/region'
 require_relative 'api/settings'
 require_relative 'api/sensors'
@@ -18,6 +19,7 @@ module Wilhelm
           include CheckControl
           include Ignition
           include Prog
+          include Redundant
           include Region
           include Sensors
           include Settings
