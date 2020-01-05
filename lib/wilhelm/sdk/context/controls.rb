@@ -12,11 +12,14 @@ module Wilhelm
           LOGGER_NAME = WILHELM
 
           CONTROL_REGISTER = {
-            BMBT_AUX_HEAT => STATELESS_CONTROL
+            BMBT_AUX_HEAT => TWO_STAGE_CONTROL
           }.freeze
 
           CONTROL_ROUTES = {
-            BMBT_AUX_HEAT => { load_debug: :stateless }
+            BMBT_AUX_HEAT => {
+              load_debug: :stateless,
+              shutdown: :stateful
+            }
           }.freeze
 
           # TODO: these needs to be programatically added by services

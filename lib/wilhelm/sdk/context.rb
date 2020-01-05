@@ -9,6 +9,7 @@ require_relative 'context/constants'
 require_relative 'context/logging'
 require_relative 'context/states'
 require_relative 'context/environment'
+require_relative 'context/actions'
 require_relative 'context/registration'
 require_relative 'context/states/defaults'
 require_relative 'context/states/offline'
@@ -27,6 +28,7 @@ module Wilhelm
         include Environment
         include Registration
         include Controls
+        include Actions
 
         attr_accessor :commands, :notifications
 

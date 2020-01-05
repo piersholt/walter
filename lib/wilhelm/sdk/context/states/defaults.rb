@@ -6,7 +6,7 @@ module Wilhelm
       class ServicesContext
         # Context::Services::Defaults
         module Defaults
-          # User Control
+          include Logging
 
           def load_ui(*); end
 
@@ -39,6 +39,10 @@ module Wilhelm
           def load_now_playing(*); end
 
           def alive?(*); end
+
+          def shutdown
+            LOGGER.warn(stateful) { `/usr/bin/sudo /sbin/shutdown -h now` }
+          end
         end
       end
     end
