@@ -28,7 +28,7 @@ module Wilhelm
 
           def ui!(*); end
 
-          def load_debug(*); end
+          def load_context(*); end
 
           def load_services(*); end
 

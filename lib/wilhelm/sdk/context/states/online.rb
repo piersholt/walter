@@ -40,8 +40,8 @@ module Wilhelm
 
           # Application Context
 
-          def load_debug(context)
-            context.ui.launch(:debug, :index)
+          def load_context(context)
+            context.ui.launch(:context, :index)
           end
 
           def load_services(context)
@@ -82,7 +82,7 @@ module Wilhelm
             end
             ui_context.register_service_controllers(
               header:  UserInterface::Controller::HeaderController,
-              debug:  UserInterface::Controller::ContextController,
+              context:  UserInterface::Controller::ContextController,
               services:  UserInterface::Controller::ServicesController,
               encoding:  UserInterface::Controller::EncodingController
             )
