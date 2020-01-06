@@ -2196,51 +2196,116 @@
   :properties:
     :short_name: RAD-ALT
     :long_name: Radio Alternative Function
-  # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Base
+  :klass: Parameterized::Base
   :index:
     :mode: 0
+    :opts: !ruby/range
+            begin: 1
+            end: -1
+            excl: false
   :parameters:
     :mode:
       :type: :map
       :dictionary:
+        0x0_8: Emulate Mode Next
+
+        # SELECT BM53 (via soft Select)
+        0b0000_0100: (Select) "m" Manual Staion Choice
+        0b0000_0101: (Select) "< m >" Manual Staion Choice [Selected]
+        0b0000_1100: (Select) "<< >>" Fast forward/reverse
+        0b0000_1101: (Select) "<< >>" Fast forward/reverse [Selected]
+        # [RADIO] [m]    Manual Staion Choice
+        # [CDC]   [<< >>] Fast forward/reverse
+
+        0b0001_0100: (Select) "SCAN" Station sample
+        0b0001_0101: (Select) "SCAN" Station sample [Selected]
+        0b0001_1100: (Select) "SCAN" Track sample
+        0b0001_1101: (Select) "SCAN" Track sample [Selected]
+        # [RADIO] [SCAN]   Station sample
+        # [CDC]   [SCAN] Track sample
+
+        0b0010_0100: (Select) "II" Search sensitive
+        0b0010_0101: (Select) "< II >" Search sensitive [Selected]
+        0b0010_1100: (Select) "RANDOM" Random generator
+        0b0010_1101: (Select) "RANDOM" Random generator [Selected]
+        # [RADIO] [II]   Search sensitive
+        # [CDC]   [RANDOM] Random generator
+
+        0b0011_0100: (Select) "I"
+        0b0011_0101: (Select) "< I >" [Selected]
+        0b0011_1100: (Select) "< >"  Music Search
+        0b0011_1101: (Select) "< >"  Music Search [Selected]
+        # [RADIO] [I]     Search non sensitive
+        # [CDC]   [< >]  Music Search
+
+        0x4_4: (Select) (C23) A
+        0x4_5: (Select) (C23) A [Selected]
+        # [RADIO] [m] Manual Staion Choice
+        # [CDC]   [<< >>] Fast forward/reverse
+        # [TAPE]  [<< >>] fast forward/reverse
+
+        0x5_4: (Select) (C23) B
+        0x5_5: (Select) (C23) B [Selected]
+        # [RADIO] [SCAN] Station sample
+        # [CDC]   [SCAN] Track Sample
+        # [TAPE]  [< >]  music search
+
+        0x6_4: (Select) (C23) C
+        0x6_5: (Select) (C23) C [Selected]
+        # [RADIO] [a] Automatic Search
+        # [CDC]   [RANDOM] Track Sample
+
+        0x7_4: (Select) (C23) D
+        0x7_5: (Select) (C23) D [Selected]
+        # [CDC] [< >] Music Search
+
+
         # SELECT C23
-        0x4_0: (Select) A
-          # [RADIO] [m] Manual Staion Choice
-          # [TAPE] fast forward/reverse
-        0x5_0: (Select) B
-          # [RADIO] [SCAN] Radio Station Sample
-          # [TAPE] music search
-        0x6_0: (Select) C
-          # [RADIO] [a] Automatic Search
-        0x7_0: (Select) D
-          # [CDC] [< >] Music Search
+        0x4_0: (Select) [C23] A
+        0x5_0: (Select) [C23] B
+        0x6_0: (Select) [C23] C
+        0x7_0: (Select) [C23] D
 
-        # SELECT BM53
-        0x0_4: (Select) A
-          # [RADIO] [m]    Manual Staion Choice
-          # [CDC]   [< >]  Music Search
-        0x1_4: (Select) B
-          # [RADIO] [SCAN]   Station sample
-          # [CDC]   [RANDOM] Random generator
-        0x2_4: (Select) C
-          # [RADIO] [II]   Search sensitive
-          # [CDC]   [SCAN] Track sample
-        0x3_4: (Select) D
-          # [RADIO] [I]     Search non sensitive
-          # [CDC]   [<< >>] Fast forward/reverse
-
-        # TONE C23
-        0x8_0: (Tone) [?] Equalizer
-
-        0x8_4: (Tone) [CDC] Equalizer
-        0x8_6: (Tone) [RADIO] Equalizer
-        0x9_0: (Tone) [RADIO] Equalizer
+        # TONE
+        0x8_0: (Tone) EQ. Set
+        0x8_1: (Tone) EQ. Set
+        0x8_2: (Tone) EQ. Set
+        0x8_3: (Tone) EQ. Set
+        0x8_4: (Tone) EQ. Set
+        0x8_5: (Tone) EQ. Set
+        0x8_6: (Tone) EQ. Set
+        0x8_7: (Tone) EQ. Set
+        0x8_8: (Tone) EQ. Set
+        0x8_9: (Tone) EQ. Set
+        0x8_a: (Tone) EQ. Set
+        0x8_b: (Tone) EQ. Set
+        0x8_c: (Tone) EQ. Set
+        0x8_d: (Tone) EQ. Set
+        0x8_e: (Tone) EQ. Set
+        0x8_f: (Tone) EQ. Set
+        0x9_0: (Tone) EQ. Set
+        0x9_1: (Tone) EQ. Set
+        0x9_2: (Tone) EQ. Set
+        0x9_3: (Tone) EQ. Set
+        0x9_4: (Tone) EQ. Set
+        0x9_5: (Tone) EQ. Set
+        0x9_6: (Tone) EQ. Set
+        0x9_7: (Tone) EQ. Set
+        0x9_8: (Tone) EQ. Set
+        0x9_9: (Tone) EQ. Set
+        0x9_a: (Tone) EQ. Set
+        0x9_b: (Tone) EQ. Set
+        0x9_c: (Tone) EQ. Set
+        0x9_d: (Tone) EQ. Set
+        0x9_e: (Tone) EQ. Set
+        0x9_f: (Tone) EQ. Set
 
         0xc_0: (Tone) EQ. Bass
         0xd_0: (Tone) EQ. Treble
         0xe_0: (Tone) EQ. Fader
         0xf_0: (Tone) EQ. Balance
+    :opts:
+      :type: :data
 
 # CDC -------------------------------------------------------------------------
 
