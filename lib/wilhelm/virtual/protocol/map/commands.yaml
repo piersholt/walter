@@ -2824,11 +2824,11 @@
           :type: :map
           :label: 'ID'
           :map:
-            0x0_f: :bmbt_soft_select
-            0x3_8: :bmbt_soft_info
+            0b0000_1111: :bmbt_soft_select
+            0b0011_1000: :bmbt_soft_info
           :dictionary:
-            0x0_f: "[Select]"
-            0x3_8: "[Info]"
+            0b0000_1111: "[Select]"
+            0b0011_1000: "[Info]"
         :state:
           :type: :switch
           :label: 'State'
@@ -2843,9 +2843,11 @@
   :notes:
     - replaces TP and RDS buttons
     - also doubles up on SELECT
-    - six messages in total since started logs
-    - 3 of each
+    - F0 05 FF 47 00 0F 42
+    - F0 05 FF 47 00 4F 02
+    - F0 05 FF 47 00 8F C2
     - F0 05 FF 47 00 38 75
+    - F0 05 FF 47 00 78 35
     - F0 05 FF 47 00 B8 F5
 
 0x48: # BMBT-GLO / BMBT-RAD* / BMBT-TEL* / BMBT-GT*
