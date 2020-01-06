@@ -3342,12 +3342,12 @@
 
 # VEHICLE DATA ----------------------------------------------------------------
 
-0x53: # VEH-LCM-REQ
+0x53: # VEH-REQ
   :schemas:
     - :dia
   :properties:
-    :short_name: VEH-LCM-REQ
-    :long_name: Request LCM Redundant Data Storage
+    :short_name: VEH-REQ
+    :long_name: Request LCM Vehicle Data (Total Odometer Mileage/Service Interval)
   :klass: Base
   :dia:
     :properties:
@@ -3355,27 +3355,13 @@
       :long_name: Radio 14 digit number (pin?)
     :klass: Base
 
-0x54: # VEH-LCM / DIA-54-VEH*
+0x54: # VEH / DIA-54-VEH*
   :schemas:
     - :dia
   :properties:
-    :short_name: VEH-LCM
-    :long_name: Redundant Total Ddometer Mileage/Service Interval
+    :short_name: VEH
+    :long_name: LCM Vehicle Data (Total Odometer Mileage/Service Interval)
   :klass: Parameterized::Base
-  :parameters:
-    :vin:
-      :type: :chars
-    :mileage:
-      :label: Mileage Indicator (km)
-      :type: :data
-      :multiplier: 1000
-    :fuel:
-      :label: Consumed Fuel Quantity (litre)
-      :type: :data
-      :multiplier: 10
-    :time:
-      :label: Time Inspection Counter (days)
-      :type: :data
   :index:
       :vin: !ruby/range
               begin: 0
@@ -3385,11 +3371,25 @@
                   begin: 5
                   end: 6
                   excl: false
-      :fuel: 8
+      :fuel: 0x08
       :time: !ruby/range
-                  begin: 11
-                  end: 12
+                  begin: 0x0b
+                  end: 0x0c
                   excl: false
+  :parameters:
+    :vin:
+      :type: :chars
+    :mileage:
+      :label: Mileage Indicator (km)
+      :type: :data
+      :multiplier: 100
+    :fuel:
+      :label: Consumed Fuel Quantity (litre)
+      :type: :data
+      :multiplier: 10
+    :time:
+      :label: Time Inspection Counter (days)
+      :type: :data
   :dia:
     :klass: Parameterized::Base
     :properties:
@@ -3416,10 +3416,10 @@
     - "IKE   	LCM   	53        --"
     - "LCM   	IKE   	54        42 5A 00 90 10 09 83 40 40 00 00 02 64"
 
-0x55: # VEH-IKE
+0x55: # VEH-UPDATE
   :properties:
-    :short_name: VEH-IKE
-    :long_name: Total Ddometer Mileage/Service Interval
+    :short_name: VEH-UPDATE
+    :long_name: Update LCM Vehicle Data (Total Odometer Mileage/Service Interval)
   :klass: Parameterized::Base
   :index:
     :mileage: !ruby/range
@@ -3435,7 +3435,7 @@
     :mileage:
       :label: Mileage Indicator (km)
       :type: :data
-      :multiplier: 1000
+      :multiplier: 100
     :fuel:
       :label: Consumed Fuel Quantity (litre)
       :type: :data
