@@ -2705,31 +2705,31 @@
 
 0x45: # UI-GT
   :properties:
-    :short_name: UI-CFG
+    :short_name: UI-GT
     :long_name: Radio UI Config.
   :klass: Parameterized::Base
   :parameters:
     :config:
       :type: :bit_array
       :parameters:
-        :unknown:
+        :new_hide:
           :type: :map
-          :label: Screen
+          :label: New UI Hide?
           :map:
             0: :off
-            1: :on
+            1: :enabled
           :dictionary:
-            0: Split
-            1: Full
+            0: Off
+            1: On
+        :new_ui:
+          :type: :switch
+          :label: New UI
+          :states:
+            0: :disabled
+            1: :enabled
         :audio_obc:
           :type: :switch
           :label: Audio+OBC (MK1/TV)
-          :states:
-            0: :off
-            1: :on
-        :info:
-          :type: :switch
-          :label: Soft Button (Info)
           :states:
             0: :off
             1: :on
@@ -2740,8 +2740,8 @@
             0: :off
             1: :on
       :index:
-        :unknown: 0
-        :info: 3
+        :new_hide: 0
+        :new_ui: 3
         :audio_obc: 6
         :main_menu: 7
   :index:
@@ -2761,21 +2761,22 @@
     :state:
       :type: :bit_array
       :parameters:
-        :hide_alt:
-          :type: :switch
-          :label: Hide Select?
-          :states:
-            0: :off
-            1: :on
-        :hide_eq:
-          :type: :switch
-          :label: Hide EQ?
-          :states:
-            0: :off
-            1: :on
+        :hide:
+          :type: :map
+          :label: Hide
+          :map:
+            0b00: :off
+            0b01: :on
+            0b10: :on
+            0b11: :on
+          :dictionary:
+            0b00: --
+            0b01: Select
+            0b10: Tone
+            0b11: Menu
         :hide_panel:
           :type: :switch
-          :label: Hide Panel (C23)
+          :label: Hide Header
           :states:
             0: :off
             1: :on
@@ -2786,8 +2787,10 @@
             0: :off
             1: :on
       :index:
-        :hide_eq: 4
-        :hide_alt: 5
+        :hide: !ruby/range
+                    begin: 4
+                    end: 5
+                    excl: false
         :hide_panel: 6
         :main_menu: 7
   :index:
