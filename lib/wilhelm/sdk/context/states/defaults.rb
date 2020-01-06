@@ -40,8 +40,14 @@ module Wilhelm
 
           def alive?(*); end
 
-          def shutdown
-            LOGGER.warn(stateful) { `/usr/bin/sudo /sbin/shutdown -h now` }
+          def shutdown(___, toggle)
+            logger.debug(self) { "#shutdown(#{toggle})" }
+            case toggle
+            when :on
+              logger.warn(self) { `/usr/bin/sudo /sbin/shutdown -h now` }
+            when :off
+              false
+            end
           end
         end
       end

@@ -9,9 +9,9 @@ module Wilhelm
           include Logging
 
           # via Controls
-          def shutdown
-            logger.debug(stateful) { "#shutdown" }
-            @state.shutdown(self)
+          def shutdown(toggle)
+            logger.debug(self) { "#shutdown(#{toggle})" }
+            @state.shutdown(self, toggle)
           end
         end
       end
