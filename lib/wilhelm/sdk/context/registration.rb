@@ -25,12 +25,6 @@ module Wilhelm
               attr_reader service_name
             end
           end
-
-          private
-
-          def semaphore
-            @semaphore ||= Mutex.new
-          end
         end
       end
     end

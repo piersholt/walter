@@ -20,23 +20,11 @@ module Wilhelm
 
           def close(*); end
 
-          def manager!(*); end
-
-          def audio!(*); end
-
           def notifications!(*); end
 
           def ui!(*); end
 
           def load_context(*); end
-
-          def load_services(*); end
-
-          def load_manager(*); end
-
-          def load_audio(*); end
-
-          def load_now_playing(*); end
 
           def alive?(*); end
 

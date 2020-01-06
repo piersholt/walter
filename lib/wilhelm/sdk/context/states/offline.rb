@@ -18,7 +18,6 @@ module Wilhelm
           def online!(context)
             logger.debug(WILHELM_OFFLINE) { '#online!' }
             context.change_state(Online.new(context))
-
           end
         end
       end

@@ -13,11 +13,6 @@ module Wilhelm
             @state.load_context(self)
           end
 
-          def load_services
-            logger.debug(LOGGER_NAME) { '#load_services()' }
-            @state.load_services(self)
-          end
-
           # via Controls
           def shutdown(toggle)
             logger.debug(self) { "#shutdown(#{toggle})" }

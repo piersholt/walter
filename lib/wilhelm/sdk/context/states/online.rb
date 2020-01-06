@@ -19,7 +19,6 @@ module Wilhelm
           def offline!(context)
             logger.debug(WILHELM_ONLINE) { '#offline' }
             context.change_state(Offline.new(context))
-            # Application Context
           end
 
           # APPLICATION CONTEXT -----------------------------------------------
@@ -42,10 +41,6 @@ module Wilhelm
 
           def load_context(context)
             context.ui.launch(:context, :index)
-          end
-
-          def load_services(context)
-            context.ui.launch(:services, :index)
           end
 
           private

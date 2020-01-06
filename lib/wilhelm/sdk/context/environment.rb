@@ -10,7 +10,6 @@ module Wilhelm
 
           attr_writer :ui
 
-
           def ui
             semaphore.synchronize do
               @ui
@@ -23,6 +22,12 @@ module Wilhelm
 
           def ui!
             @state.ui!(self)
+          end
+
+          private
+
+          def semaphore
+            @semaphore ||= Mutex.new
           end
         end
       end
