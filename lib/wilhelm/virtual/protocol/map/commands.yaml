@@ -3828,6 +3828,9 @@
     :long_name: Unknown
   :klass: Base
   :meta:
+    - 82: something else?
+    - 02: doing an operation
+    - 00: operation done
     - send following keyless entry/lock
     - gm	glo_l	76 02
     - gm	glo_l	76 00
