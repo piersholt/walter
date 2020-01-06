@@ -3717,7 +3717,7 @@
 0x72: # REMOTE
   :properties:
     :short_name: REMOTE
-    :long_name: Remote Central Locking
+    :long_name: Remote (Keyless) Entry
   :klass: Parameterized::Base
   :parameters:
     :b1:
