@@ -126,12 +126,12 @@ module Wilhelm
               end
 
               def handle_radio_alt(command)
-                case command.mode.value
-                when SELECT
-                  # radio_body(:select)
-                when TONE
-                  # radio_body(:eq)
-                end
+                # case command.mode.value
+                # when SELECT
+                #   # radio_body(:select)
+                # when TONE
+                #   # radio_body(:eq)
+                # end
               end
             end
           end
