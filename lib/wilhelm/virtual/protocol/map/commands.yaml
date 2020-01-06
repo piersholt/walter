@@ -3021,8 +3021,7 @@
       - BMBT
 
 0x4B: # TAPE
-  # NOTE: defaulted to Base to due to Parameterized parsing issues
-  :klass: Base
+  :klass: Parameterized::Base
   :properties:
     :short_name: TAPE
     :long_name: Audio Device Control
@@ -3035,19 +3034,26 @@
     :mode:
       :type: :map
       :dictionary:
-        0x12: Tape / (1/A) ▶︎
-        0x11: Tape / (2/B) ▶︎
-        0x30: Tape / Stopped
-        0x41: Tape / ◁◁◁
-        0x42: Tape / ▷▷▷
-        0x51: Tape / ▷▷
-        0x61: Tape / ◁◁
-        0x81: Tape / Dolby Off
-        0x84: Tape / Dolby B
-        0x82: Tape / Dolby C
-        0xe1: Tape / 0xe1
-        0xe2: Tape / 0xe2
-        0xF0: Error
+        0x11: (Tape) ▶︎ (2|B)
+        0x12: (Tape) ▶︎ (1|A)
+
+        0x30: (Tape) ■
+
+        0x41: (Tape) ◁◁◁
+        0x42: (Tape) ▷▷▷
+
+        0x51: (Tape) ▷▷
+
+        0x61: (Tape) ◁◁
+
+        0x81: (Tape) Dolby OFF
+        0x82: (Tape) Dolby C
+        0x84: (Tape) Dolby B
+
+        0xe1: (Tape) 0xe1
+        0xe2: (Tape) 0xe2
+
+        0xf0: Error
   :index:
     :control: 0
     :mode: 1
