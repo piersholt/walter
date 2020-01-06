@@ -2993,24 +2993,25 @@
       :type: :map
       :dictionary:
         0x00: (LED) Off
-        0x90: (LED) Off (Reset)
-        0xff: (LED) On
 
-        0x40: (Tape) Eject
+        0x40: (Tape) ⏏
         0x41: (Tape) ▶︎
         0x42: (Tape) ▷▷▷
         0x43: (Tape) ◁◁◁
         0x44: (Tape) ▷▷
         0x45: (Tape) ◁◁
-        0x48: (Tape) Stop
-        0x5a: (Tape) ▶︎ 1/A
-        0x5b: (Tape) ▶︎ 2/B
+        0x48: (Tape) ■
+        0x4a: something? (reply => 0xe2)
+        0x4b: something? (reply => 0xe1)
+
+        0x5a: (Tape) ▶︎ (1|A)
+        0x5b: (Tape) ▶︎ (2|B)
         0x5d: (Tape) Dolby B
         0x5e: (Tape) Dolby C
         0x5f: (Tape) Dolby OFF
 
-        0x4a: something? (reply => 0xe2)
-        0x4b: something? (reply => 0xe1)
+        0x90: (LED) Off (Reset)
+        0xff: (LED) On
   :index:
     :led: 0
   :meta:
