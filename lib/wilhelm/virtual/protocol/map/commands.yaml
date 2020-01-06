@@ -4629,6 +4629,10 @@
         # 0x11 3b: 3 (@ ff)
         0b0001_0001: 'Vid. GT (MK3) -> FF [Announce]'
 
+        # From Ted:
+        0b0010_0000: 'Radio Business Nav. [Reply]'
+        0b0010_0001: 'Radio Business Nav. [Announce]'
+
         # 0x30: 18880
         # f0:   18845 (18642 to 0x3b)
         0b0011_0000: 'BMBT (Wide)/Tel (Motorola) -> 3B [Reply]'
