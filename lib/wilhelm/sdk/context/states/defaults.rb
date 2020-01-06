@@ -27,16 +27,6 @@ module Wilhelm
           def load_context(*); end
 
           def alive?(*); end
-
-          def shutdown(___, toggle)
-            logger.debug(self) { "#shutdown(#{toggle})" }
-            case toggle
-            when :on
-              logger.warn(self) { `/usr/bin/sudo /sbin/shutdown -h now` }
-            when :off
-              false
-            end
-          end
         end
       end
     end

@@ -75,7 +75,7 @@ module Wilhelm
               when :encoding
                 ui_context.launch(:encoding, :index)
               when :shutdown
-                LOGGER.warn(NAME) { `/usr/bin/sudo /sbin/shutdown -h 5` }
+                context.schedule_shutdown(3)
               when :hatch
                 Wilhelm::API::Vehicle.instance.rear_window_unlock
               else
