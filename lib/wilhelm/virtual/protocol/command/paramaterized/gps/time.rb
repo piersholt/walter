@@ -14,14 +14,21 @@ module Wilhelm
 
             include Wilhelm::Helpers::PositionalNotation
 
-            GPS_EPOCH = 2**10 * 7 * 24 * 60 * 60
+            # Epoch 0: 1980-01-06
+            # Epoch 1: 1999-08-22
+            # Epoch 2: 2019-04-07
+
+            # 2^10 (1024) weeks
+            GPS_EPOCH = (2**10) * (7 * 24 * 60 * 60)
 
             def initialize(id, props, **arguments)
               super
             end
 
             def to_s
-              "#{sn}\t#{time_object.iso8601}\t(#{::Time.now.utc})"
+              "#{sn}" \
+              "\t#{time_object.iso8601}" \
+              "\t#{(time_object + GPS_EPOCH).iso8601}"
             end
 
             # https://en.wikipedia.org/wiki/ISO_8601
@@ -48,7 +55,7 @@ module Wilhelm
                 time(:hour),
                 time(:minute),
                 time(:second)
-              ) + GPS_EPOCH
+              )
             end
 
             # def format_date(year, month, day)

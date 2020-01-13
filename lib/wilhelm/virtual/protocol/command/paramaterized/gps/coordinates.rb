@@ -30,11 +30,17 @@ module Wilhelm
             end
 
             def to_s
-              "#{sn}\t#{signal}\t#{format_coordinates}\t#{format_time}\t(Now: #{::Time.now.utc})"
+              "#{sn}" \
+              "\t#{signal}" \
+              "\t#{format_coordinates}" \
+              "\t#{format_time}\t(Now: #{::Time.now.utc})"
             end
 
             def coordinates
-              @coordinates ||= Coordinates.new(latitude, longitude, parse(vertical.calculated))
+              @coordinates ||=
+                Coordinates.new(
+                  latitude, longitude, parse(vertical.calculated)
+                )
             end
 
             def signal?
