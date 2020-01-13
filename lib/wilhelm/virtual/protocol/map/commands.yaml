@@ -795,10 +795,10 @@
 
 # TIME ------------------------------------------------------------------------
 
-0x1F: # NAV-IKE-TIME
+0x1F: # GPST
   :properties:
-    :short_name: NAV-IKE-TIME
-    :long_name: UTC time and date
+    :short_name: GPST
+    :long_name: GPS Time
   :klass: Parameterized::GPS::Time
   :index:
     :tz: 0
