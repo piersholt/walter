@@ -801,25 +801,19 @@
     :long_name: GPS Time
   :klass: Parameterized::GPS::Time
   :index:
-    :tz: 0
     :hour: 1
     :minute: 2
     :day: 3
-    :second: 4
     :month: 5
     :year:  !ruby/range
               begin: 6
               end: 7
   :parameters:
-    :tz:
-      :type: :data
     :hour:
       :type: :data
     :minute:
       :type: :data
     :day:
-      :type: :data
-    :second:
       :type: :data
     :month:
       :type: :data

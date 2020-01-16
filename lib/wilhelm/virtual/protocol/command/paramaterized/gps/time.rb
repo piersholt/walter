@@ -10,7 +10,7 @@ module Wilhelm
           # Virtual::Command::UTC
           class Time < Base
             class_variable_set(:@@configured, true)
-            attr_accessor(:tz, :hour, :minute, :day, :second, :month, :year)
+            attr_accessor(:hour, :minute, :day, :month, :year)
 
             include Wilhelm::Helpers::PositionalNotation
 
@@ -88,7 +88,7 @@ module Wilhelm
               when :minute
                 format(TIME_MASK, parse(*minute.calculated))
               when :second
-                format(TIME_MASK, parse(*second.calculated))
+                format(TIME_MASK, 0)
               end
             end
 
