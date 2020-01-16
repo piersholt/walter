@@ -48,7 +48,7 @@ module Wilhelm
             end
 
             def create_time
-              ::Time.local(
+              ::Time.utc(
                 date(:year),
                 date(:month),
                 date(:day),

@@ -22,7 +22,7 @@ module Wilhelm
               def format_time
                 "#{ftime(:hour)}#{TIME_DELIMITER}" \
                 "#{ftime(:minute)}#{TIME_DELIMITER}" \
-                "#{ftime(:second)}"
+                "#{ftime(:second)} UTC"
               end
 
               def ptime(element)
