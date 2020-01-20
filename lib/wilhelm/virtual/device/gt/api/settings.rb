@@ -10,6 +10,10 @@ module Wilhelm
             include Constants::Command::Aliases
             include Device::API::BaseAPI
 
+            def region?(from: :gt, to: :ike, **arguments)
+              try(from, to, 0x14, arguments)
+            end
+
             # 0x15 REGION-SET
             def region(from: :gt, to: :ike, **arguments)
               try(from, to, COUNTRY_REP, arguments)
