@@ -874,6 +874,7 @@
       :layout:
         :type: :map
         :dictionary:
+          0x00: --
           0x41: '[Analogue] (Band+Preset) Presets (Index: 0x00)'
           0x43: '[Analogue] (Band+RDS) Source (Index: 0x06)'
           0x60: '[Digital] Menu A'
@@ -1050,6 +1051,7 @@
           - so too do they appear to be used for Bluetooth pairing (header only)
         :type: :map
         :dictionary:
+          0x00: --
           0x42: 'Dial'
           0x43: 'Directory'
           0x80: 'Top 8'
@@ -1078,7 +1080,7 @@
             - no icons available via control characters
         :type: :map
         :dictionary:
-          0x00: Default
+          0x00: --
           0x01: Contact
           0x02: Digit
           0x05: SOS
