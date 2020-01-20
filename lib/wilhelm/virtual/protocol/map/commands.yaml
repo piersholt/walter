@@ -1601,6 +1601,12 @@
           is the reduced chat array length because it's sneding so fast?
           reduced traffic or because it's a partial update to the display?
 
+0x27: # 0x27
+    :properties:
+      :short_name: NEW-27
+      :long_name: Unknown
+    :klass: Base
+
 0x2A: # ANZV-BOOL / ANZV-IKE (IKE)
   :klass: Parameterized::Base
   :properties:
@@ -4074,6 +4080,12 @@
       - GM3
     :recipients:
       - GLO-L
+
+0x7C: # SMD-7C
+    :properties:
+      :short_name: SMD-7C
+      :long_name: Unknown
+    :klass: Base
 
 0x7D: # GM-SHD-7D
   :properties:
