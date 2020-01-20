@@ -834,7 +834,7 @@
 
 # BMBT/MID --------------------------------------------------------------------
 
-0x21: # MID-21 / RAD-21* / TEL-21*
+0x21: # MID-21 / RAD-21* / TEL-21* / IKE-21*
   :properties:
     :short_name: MID-21
     :long_name: MID Display
@@ -842,6 +842,7 @@
   :schemas:
     - :tel
     - :rad
+    - :ike
   # SCHEMA 0x21 RAD-21*
   :rad:
     :klass: Parameterized::MID::Radio
@@ -1118,6 +1119,70 @@
 
       :chars:
         :type: :chars
+  # SCHEMA 0x21 IKE-21*
+  :ike:
+    :klass: Parameterized::MID::IKE
+    :properties:
+      :short_name: IKE-21*
+      :long_name: MID Display
+    :index:
+      :layout: 0
+      :m2: 1
+      :m3: 2
+      :chars: !ruby/range
+              begin: 3
+              end: -1
+              excl: false
+    :parameters:
+      :layout: &ike_layout
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x01: OBC
+          0x02: Conf.
+          0x03: SET Time
+          0x04: SET Date
+          0x08: INPUT Limit
+          0x0b: INPUT Speed
+      :m2:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x20: Err?
+      :m3:
+        :type: :bit_array
+        :parameters:
+          :selected:
+            :type: :switch
+            :label: Selected
+            :states:
+              0: :off
+              1: :on
+          # no GT-CACHE using this using MK1 GT
+          :block:
+            :type: :switch
+            :label: Block
+            :states:
+              0: :off
+              1: :on
+          :flush:
+            :type: :switch
+            :label: Flush
+            :states:
+              0: :off
+              1: :on
+          :index:
+            :type: :integer
+        :index:
+          :selected: 0
+          :block: 1
+          :flush: 2
+          :index:  !ruby/range
+                    begin: 3
+                    end: 7
+                    excl: false
+      :chars:
+        :type: :chars
 
 0x22: # MID-22
   :properties:
@@ -1142,6 +1207,7 @@
   :schemas:
     - :tel
     - :rad
+    - :ike
   :rad: # RAD-23*
     :klass: Parameterized::Base
     :properties:

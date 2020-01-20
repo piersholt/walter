@@ -1,16 +1,13 @@
 # frozen_string_literal: false
 
-require_relative 'mid/base'
-require_relative 'mid/ike'
-require_relative 'mid/rad'
-require_relative 'mid/tel'
-
 module Wilhelm
   module Virtual
     class Command
       module Parameterized
-        # Command::Parameterized::MID
         module MID
+          # Command::Parameterized::MID::IKE
+          class IKE < MID::Base
+          end
         end
       end
     end
