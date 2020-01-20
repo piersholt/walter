@@ -822,11 +822,24 @@
 
 # TELEPHONE -------------------------------------------------------------------
 
-0x20: # TEL-OPEN
+0x20: # OPEN / GT-OPEN* / MID-OPEN*
+  :schemas:
+    - :gt
+    - :mid
   :properties:
-    :short_name: TEL-OPEN
+    :short_name: OPEN
     :long_name: Unknown
   :klass: Base
+  :gt:
+    :properties:
+      :short_name: GT-OPEN*
+      :long_name: Unknown
+    :klass: Base
+  :mid:
+    :properties:
+      :short_name: MID-OPEN*
+      :long_name: Unknown
+    :klass: Base
   :meta:
     :examples:
       - from GT  02 0C
