@@ -3795,11 +3795,17 @@
     - A4 06 BF 70 03 00 0A 64
     - A4 06 BF 70 00 00 1F 72
 
-# KEY -------------------------------------------------------------------------
+# REMOTE (KEYLESS) ENTRY ------------------------------------------------------
 
-0x72: # REMOTE
+0x71: # KEYLESS-REQ
   :properties:
-    :short_name: REMOTE
+    :short_name: KEYLESS-REQ
+    :long_name: Remote (Keyless) Entry Request
+  :klass: Base
+
+0x72: # KEYLESS
+  :properties:
+    :short_name: KEYLESS
     :long_name: Remote (Keyless) Entry
   :klass: Parameterized::Base
   :parameters:
@@ -3849,11 +3855,16 @@
   :index:
     :b1: 0
 
+# KEY (IMMOBILIZER) -----------------------------------------------------------
+
 0x73: # KEY-REQ
   :properties:
     :short_name: KEY-REQ
     :long_name: Key Status Request
   :klass: Base
+  :meta:
+    - 30 06 44 73 00 00 80 81
+    - 68 06 44 73 00 00 80 D9
 
 0x74: # KEY
   :properties:
