@@ -3916,6 +3916,12 @@
         - password
         - disabled
 
+0x75: # RLS-GM-75
+  :properties:
+    :short_name: RLS-GM-75
+    :long_name: Unknown
+  :klass: Base
+
 0x76: # REMOTE2
   :properties:
     :short_name: REMOTE2
@@ -3929,8 +3935,15 @@
     - gm	glo_l	76 02
     - gm	glo_l	76 00
     - I believe GM is too old for car/key memory
+    - but also only had this...
+    - 00 04 BF 76 02 CF
+    - 00 04 BF 76 00 CD
 
-0x77: # GM to RLS?
+0x77: # GM-RLS-77
+  :properties:
+    :short_name: GM-RLS-77
+    :long_name: Unknown
+  :klass: Base
   :meta:
     - 2018 10 01
     - 00 04 E8 77 01 9A
@@ -3972,6 +3985,15 @@
             0b001: '1'
             0b010: '2'
             0b100: '3'
+  :meta:
+    - x5.log: 72 05 BF 78 04 00 B4
+    - x5.log: 00 04 BF 78 04 C7
+    - x5.log: 72 05 BF 78 00 00 B0
+    - x5.log: 00 04 BF 78 00 C3
+    - x5.log: 72 05 BF 78 01 00 B1
+    - x5.log: 00 04 BF 78 01 C2
+    - x5.log: 72 05 BF 78 00 00 B0
+    - x5.log: 00 04 BF 78 00 C3
 
 # DOORS/WINDOWS ---------------------------------------------------------------
 
@@ -4109,9 +4131,9 @@
     :recipients:
       - GLO-L
 
-0x7C: # SMD-7C
+0x7C: # SHD-GLO-7C
     :properties:
-      :short_name: SMD-7C
+      :short_name: SHD-GLO-7C
       :long_name: Unknown
     :klass: Base
 
