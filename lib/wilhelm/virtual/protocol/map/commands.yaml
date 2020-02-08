@@ -3280,29 +3280,31 @@
       - 12 Monitor ON (TV OFF)
       # - 14
 
-# CLUSTER/HUD -----------------------------------------------------------------
+# CHECK CONTROL ---------------------------------------------------------------
 
-0x51: # CCM-END
+0x50: # CCM-50
   :klass: Base
   :properties:
-    :short_name: CCM-END
-    :long_name: Ignition off CCM update?
-  :parameters:
-    :status:
-      :type: :map
-      :map:
-        0x00: NO_WARNINGS
-      :dictionary:
-        0x00: No Warnings
-  :index:
-    :status: 0
-  :notes:
-    - CCM to IKE (always)
-    - IKE responds with 0x52
+    :short_name: CCM-50
+    :long_name: Request CCM Status
+  :meta:
+    - sent by cluster on test bench (no LCM/CCM)
+    - 80 03 30 50 E3
 
-0x52: # CCM-RLY
+0x51: # CCM-51
+  :klass: Base
   :properties:
-    :short_name: CCM-RLY
+    :short_name: CCM-51
+    :long_name: CCM Status
+  :notes:
+    - 2019-10-15-pi.log
+    - 30 04 BF 51 00 DA
+    - 30 04 BF 51 20 FA
+    - 30 04 BF 51 04 DE
+
+0x52: # IKE-CCM
+  :properties:
+    :short_name: IKE-CCM
     :long_name: IKE CCM Forward?
   :klass: Parameterized::Base
   :index:
