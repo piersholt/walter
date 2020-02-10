@@ -104,7 +104,7 @@ module Wilhelm
               when :audio
                 ui_context.launch(:audio, :index)
               when :context_index
-                ui_context.launch(:debug, :index)
+                ui_context.launch(:context, :index)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end

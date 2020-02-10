@@ -107,7 +107,7 @@ module Wilhelm
               when :control
                 launch(:encoding, :control)
               when :context_index
-                launch(:debug, :index)
+                launch(:context, :index)
               else
                 LOGGER.debug(NAME) { "#update: #{action} not implemented." }
               end
