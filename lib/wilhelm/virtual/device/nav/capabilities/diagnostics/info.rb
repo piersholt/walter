@@ -30,7 +30,11 @@ module Wilhelm
                 *INFO_SW_NUMBER
               ].freeze
 
-              def info(data = INFO)
+              def info
+                @info ||= INFO.dup
+              end
+
+              def info!(data = info)
                 a0(arguments: data)
               end
             end
