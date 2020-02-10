@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module GM
+          module ZKE
             # Diagnostics::Capabilities::GM::Coding
             module Coding
               include Constants

@@ -5,7 +5,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module GM
+          module ZKE
             module Activate
               # Diagnostics::Capabilities::GM::Activate::Constants
               module Constants

@@ -5,10 +5,12 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module GM
-            # Diagnostics::Capabilities::GM::Memory
-            module Memory
-              include Constants
+          module ZKE
+            module Activate
+              # Diagnostics::Capabilities::GM::Doors
+              module Doors
+                include Constants
+              end
             end
           end
         end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'capabilities/bmbt'
-require_relative 'capabilities/gm'
 require_relative 'capabilities/lcm'
 require_relative 'capabilities/gt'
 require_relative 'capabilities/radio'
+require_relative 'capabilities/zke'
 
 module Wilhelm
   module Virtual
@@ -13,10 +13,10 @@ module Wilhelm
         # Device::Diagnostics::Capabilities
         module Capabilities
           include BMBT
-          include GM
           include LCM
           include GT
           include Radio
+          include ZKE
 
           # TODO: module specific methods required
           def hello(ident)

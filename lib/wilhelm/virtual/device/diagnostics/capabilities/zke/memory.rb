@@ -5,12 +5,10 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          module GM
-            module Activate
-              # Diagnostics::Capabilities::GM::Windscreen
-              module Windscreen
-                include Constants
-              end
+          module ZKE
+            # Diagnostics::Capabilities::GM::Memory
+            module Memory
+              include Constants
             end
           end
         end

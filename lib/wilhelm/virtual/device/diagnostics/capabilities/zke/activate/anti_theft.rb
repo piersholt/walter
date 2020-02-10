@@ -1,14 +1,14 @@
-# frozen_string_literal: false
+# frozen_string_literal: true
 
 module Wilhelm
   module Virtual
     class Device
       module Diagnostics
         module Capabilities
-          module GM
+          module ZKE
             module Activate
-              # Diagnostics::Capabilities::GM::Doors
-              module Doors
+              # Diagnostics::Capabilities::GM::AntiTheft
+              module AntiTheft
                 include Constants
               end
             end

@@ -1,8 +1,8 @@
 # frozen_string_literal: false
 
-require_relative 'gm/activate'
-require_relative 'gm/coding'
-require_relative 'gm/memory'
+require_relative 'zke/activate'
+require_relative 'zke/coding'
+require_relative 'zke/memory'
 
 module Wilhelm
   module Virtual
@@ -10,7 +10,7 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           # Diagnostics::Capabilities::GM
-          module GM
+          module ZKE
             include Helpers::Data
             include API
 
