@@ -15,7 +15,7 @@ module Wilhelm
 
           # via Controls
           def shutdown(toggle = :on)
-            logger.debug(self) { "#shutdown(#{toggle})" }
+            logger.debug(LOGGER_NAME) { "#shutdown(#{toggle})" }
             case toggle
             when :on
               schedule_shutdown(1)
@@ -26,7 +26,7 @@ module Wilhelm
 
           # @todo command should be via env. conf.
           def schedule_shutdown(time = 1)
-            logger.warn(self) { `/usr/bin/sudo /sbin/shutdown -h #{time}` }
+            logger.warn(LOGGER_NAME) { `/usr/bin/sudo /sbin/shutdown -h #{time}` }
           end
         end
       end

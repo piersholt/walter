@@ -12,6 +12,8 @@ module Wilhelm
           WILHELM_ONLINE = 'Wilhelm (Online)'
 
           PING_INTERVAL = 30
+
+          LOGGER_NAME = WILHELM
         end
       end
     end

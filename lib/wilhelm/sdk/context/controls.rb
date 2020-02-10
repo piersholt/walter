@@ -9,8 +9,6 @@ module Wilhelm
           include Logging
           include Wilhelm::SDK::Controls::Register
 
-          LOGGER_NAME = WILHELM
-
           CONTROL_REGISTER = {
             BMBT_AUX_HEAT => TWO_STAGE_CONTROL
           }.freeze
