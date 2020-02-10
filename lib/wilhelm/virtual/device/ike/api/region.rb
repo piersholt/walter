@@ -10,7 +10,7 @@ module Wilhelm
             include Device::API::BaseAPI
 
             # 0x15 REGION
-            def region(from: :ike, to: :gt, **arguments)
+            def region(from: :ike, to: :glo_l, **arguments)
               dispatch_raw_command(from, to, COUNTRY_REP, arguments)
             end
 
