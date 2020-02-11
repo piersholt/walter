@@ -1,6 +1,10 @@
 # frozen_string_literal: false
 
-require_relative 'activate/constants'
+require_relative 'activate/gm'
+require_relative 'activate/ft'
+require_relative 'activate/bt'
+require_relative 'activate/pm'
+require_relative 'activate/sd'
 
 module Wilhelm
   module Virtual
@@ -8,9 +12,13 @@ module Wilhelm
       module Diagnostics
         module Capabilities
           module ZKE
-            # Diagnostics::Capabilities::GM::Activate
+            # ZKE Activate
             module Activate
-              include Constants
+              include GM
+              include FT
+              include BT
+              include SD
+              include PM
 
               # NOTE: this will conflict with other device modules
               def activate(byte_array)
@@ -35,46 +43,6 @@ module Wilhelm
               def get_constant(constant)
                 self.class.const_get(constant.to_sym.upcase)
               end
-
-              public
-
-              # NOTE: there's probably a motor activate too
-              def rear_window_unlock
-                activate(BUTTON_REAR_WINDOW)
-              end
-
-              def window_driver_open
-                activate(WINDOW_DRIVER_OPEN)
-              end
-
-              def window_driver_close
-                activate(WINDOW_DRIVER_CLOSE)
-              end
-
-              def window_passenger_open
-                activate(WINDOW_PASS_OPEN)
-              end
-
-              def window_passenger_close
-                activate(WINDOW_PASS_CLOSE)
-              end
-
-              def window_driver_rear_close
-                activate(WINDOW_DRIVER_REAR_CLOSE)
-              end
-
-              def window_driver_rear_open
-                activate(WINDOW_DRIVER_REAR_OPEN)
-              end
-
-              def window_passenger_rear_close
-                activate(WINDOW_PASS_REAR_CLOSE)
-              end
-
-              def window_passenger_rear_open
-                activate(WINDOW_PASS_REAR_OPEN)
-              end
-
             end
           end
         end

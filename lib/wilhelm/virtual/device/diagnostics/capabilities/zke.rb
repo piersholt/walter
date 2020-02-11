@@ -9,7 +9,7 @@ module Wilhelm
     class Device
       module Diagnostics
         module Capabilities
-          # Diagnostics::Capabilities::GM
+          # Central Body Electronics (ZKE)
           module ZKE
             include Helpers::Data
             include API
