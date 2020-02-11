@@ -2,7 +2,7 @@
 
 0x00: :gm       # General Module (GM)
                 # Active Seat (AS) [Note 2]
-0x08: :shd      # Tilt/Slide Sunroof (SHD) [E46]
+0x08: :shd      # Tilt/Slide Sunroof (SHD) [ZKE5]
 
 0x18: :cdc      # CD Changer
 
@@ -14,22 +14,25 @@
 0x3b: :gt       # Graphics Stage (Navi. GT, or Video Module GT) [Note 4]
 0x3f: :dia      # Diagnostics (routed by IKE from D-BUS)
 
+0x40: :fbzv     # Remote Control for Central Locking [E38]
 0x44: :ews      # Drive Away Protection System (EWS)
+0x45: :dwa      # Anti-Theft System (DWA3, DWA4)
 0x46: :cid      # Central Information Display (CID) [E83 X3]
-0x47: :rcm      # Rear Compartment Monitor [E38]
+0x47: :rcm      # Rear Compartment Monitor (FOND_BT) [E38]
 
 0x50: :mfl      # Multifunction Steering Wheel (MFL)
-0x51: :mmp      # Mirror Memory (Passenger) [E46]
+0x51: :mmp      # Mirror Memory (Passenger) [ZKE5]
 0x57: :lws      # Steering Angle Sensor (LWS) [D-BUS]
 0x5b: :ihka     # Integrated Automatic Heating/Air Conditioning (IHKA)
 
 0x60: :pdc      # Park Distance Control (PDC)
+0x66: :alc      # Active Light Control (ALC) [E46]
 0x68: :rad      # Radio
 0x6a: :dsp      # Digital Sound Processor (DSP)
 0x6b: :heat     # Auxiliary Heating (Webasto) (TIS A14)
 
 0x70: :rdc      # Tire Pressure Control/Warning (RDC/W)
-0x72: :smd      # Seat Memory (Driver) [SM] [E46]
+0x72: :smd      # Seat Memory (Driver) [SM] [ZKE5]
 0x76: :cd       # CD Player (Business)
 0x7f: :nav      # Navigation
 
@@ -39,36 +42,43 @@
 
 0x98: :xenl     # Xenon Light Left [E46?]
 0x9a: :lwr      # Automatic Headlight Vertical Aim Control (LRA/LWR) [Note 1]
-0x9b: :mmd      # Mirror Memory (Driver) [seat control, driver (SBFA)] [E46]
-0x9c: :cvm      # The Convertible Top Module (CVM) [E46]
+0x9b: :mmd      # Mirror Memory (Driver) [seat control, driver (SBFA)] [ZKE5]
+0x9c: :cvm      # The Convertible Top Module (CVM) [ZKE5]
 0x9e: :rps      # Roll-over Protection System (RPS) [D-BUS] [E46?]
 
 0xa0: :fmid     # Rear compartment Multi-information display (FOND ZIS) [E38]
 0xa4: :mrs      # Multiple Restraint System (MRS) [Note 3]
+0xa6: :cc       # GR2, FGR2, FGR2_5, FGR_KW
 0xa7: :fhk      # Rear compartment heating/air conditioning [E38]
 0xac: :ehc      # Electronic Height Control (EHC)
+                # Self Leveling Suspension (SLS)
 
 0xb0: :ses      # Voice input (SES)
+0xb9: :rc       # compact radio remote control (FUNKKOMP)
+                # compact infrared remote control (IRS_KOMP)
 0xbb: :nav_jp   # Navigation [Japan]
 0xbf: :glo_l    # Broadcast
 
 0xc0: :mid      # Multi-information display (ZIS)
+0xc2: :svt_83   # Servotronic for E83
 0xc8: :tel      # Telephone
 
 0xd0: :lcm      # Lamp Check Module (LCM)
                 # Light Switch Center (LSZ) [E46]
-0xda: :smb      # Seat Memory (Passenger) [passenger seat memory (SMB)] [E46]
+0xda: :smb      # Seat Memory (Passenger) [passenger seat memory (SMB)] [ZKE5]
 
 0xe0: :iris     # Integrated Radio and Information System (IRIS)
-0xea: :dspc     # DSP Control??? [E38]
+0xea: :dspc     # DSP Controler (DSP_BT) [E38]
 0xe7: :anzv     # Display = "Anzeige"
 0xe8: :rls      # Rain/driving light sensor (RLS)
                 # Automatic Interval Control (AIC)
 0xed: :tv       # Video Module (VM) incl. TV
 
 0xf0: :bmbt     # On-board computer control panel (BMBT)
-0xf5: :szm      # Center Console Switch Center (SZM)
+0xf5: :szm      # Center Console Switch Center (SZM) [E38, E46]
+                # Lamp control module (LKM2) [E31]
 0xff: :glo_h    # Broadcast
+
 
 # NOTES
 
@@ -82,13 +92,6 @@
 #     equipped vehicles use the video module GT exclusively.
 
 # UNCONFIRMED
-
-0x40: :rc       # INPA "remote controls"??? [E38, E39]
-                # With respect to bus arbitration, it seems to low an address
-                # to be UI controls?
-                # Did the infrared keyless entry FBZV not interface directly
-                # with the ZKE, and have intermediary control unit on the
-                # K-Bus? Long shot...
 
 0x43: :gt2      # E38 Video Module secondary GT for RCM?
                 # Nothing on D-BUS sent to this address for E39, E38, and E46.
@@ -109,7 +112,5 @@
                 # This is sent when installing nav. OS.
                 # 32 00 sent when restarting prior to install
                 # 00 00 when disc ejected
-
-0x66: :alc      # adaptive light control???
 
 0xca: :tcu      # ???
