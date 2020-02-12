@@ -19,9 +19,18 @@ module Wilhelm
           ARRIVAL     = 0x08
           LIMIT       = 0x09
           AVG_SPEED   = 0x0a
+          # PROG      = 0x0b  "PROG"
+          # MEMO      = 0x0c
+          # CODE      = 0x0d  "CODE"
           TIMER       = 0x0e
           AUX_TIMER_1 = 0x0f
           AUX_TIMER_2 = 0x10
+          # HEAT_OFF  = 0x11
+          # HEAT_ON   = 0x12
+          # VENT_OFF  = 0x13
+          # VENT_ON   = 0x14
+          # CODE      = 0x16  "CODE"
+          # TIMER_LAP = 0x1a  "STOPW"
           NO_FUNCTION = 0xff
 
           DICTIONARY = {

@@ -1521,14 +1521,12 @@
 
           # CODE
           0x0d: (Code) Code          # 00 00 00 00 "☐☐☐☐"
+          0x16: (Code) Emergency Disarm # Wait X minutes.
 
           # AUX. HEAT/VENTILATION
           0x0f: (Aux.) Timer 1       # " 1:33PM"
           0x10: (Aux.) Timer 2       # "12:06AM"
 
-          # CODE
-          # Wait X minutes.
-          0x16: '(Code) Emergency Disarm'
       :ike:
         :type: :map
         :dictionary:
