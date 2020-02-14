@@ -1904,6 +1904,9 @@
     - :tel
     - :rad
   :klass: Base
+  :properties:
+    :short_name: INPUT*
+    :long_name: Menu Soft Buttom
   :rad:
     :klass: Parameterized::Base
     :properties:
