@@ -1271,11 +1271,52 @@
   :properties:
     :short_name: TXT-23
     :long_name: Update Text Display (BMBT, IKE)
-  :klass: Base
+  :klass: Parameterized::Base
   :schemas:
     - :tel
     - :rad
-    - :ike
+  :index:
+    :gt: 0
+    :ike: 1
+    :chars: !ruby/range
+              begin: 2
+              end: -1
+              excl: false
+  :parameters:
+    # NOTE: duplicate GT dictionary hash from 0x24!
+    :gt:
+      :type: :map
+      :dictionary:
+        0x01: (Settings) Time
+        0x02: (Settings) Date
+        0x03: (OBC) Temperature
+        0x04: (OBC) Consump. 1
+        0x05: (OBC) Consump. 2
+        0x06: (OBC) Range
+        0x07: (OBC) Distance
+        0x08: (OBC) Arrival
+        0x09: (OBC) Limit
+        0x0a: (OBC) Avg. Speed
+        0x0e: (OBC) Timer
+        0x1a: (OBC) Timer (Lap)
+        0x0d: (Code) Code
+        0x16: (Code) Emergency Disarm
+        0x0f: (Aux.) Timer 1
+        0x10: (Aux.) Timer 2
+    :ike: &ike_options
+      :type: :map
+      :map:
+        0b0000_0000: :off
+        0b0001_0000: :overwrite
+        0b0010_0000: :flush
+        0b0011_0000: :replace
+      :dictionary:
+        0b0000_0000: --
+        0b0001_0000: Overwrite
+        0b0010_0000: Reset
+        0b0011_0000: Replace
+    :chars:
+      :type: :chars
   :rad: # RAD-23*
     :klass: Parameterized::Base
     :properties:
@@ -1420,18 +1461,7 @@
           0xc_a: (CD) [<< >>] (Select) Fast Forward/Reverse
 
           0xc_b: (CD) Empty Casette Track Change?
-      :ike: &ike_options
-        :type: :map
-        :map:
-          0b0000_0000: :off
-          0b0001_0000: :overwrite
-          0b0010_0000: :flush
-          0b0011_0000: :replace
-        :dictionary:
-          0b0000_0000: --
-          0b0001_0000: Overwrite
-          0b0010_0000: Reset
-          0b0011_0000: Replace
+      :ike: *ike_options
       :chars:
         :type: :chars
   :tel: # TEL-23*
