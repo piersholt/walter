@@ -209,23 +209,46 @@
     :short_name: REGION
     :long_name: Country Coding
   :index: &region_index
-    :lang: 0
+    :b1: 0
     :b2: 1
     :b3: 2
     :b4: 3
   :parameters: &region_parameters
-    :lang:
-      :type: :map
-      :dictionary:
-        0b0000: DE
-        0b0001: EN_GB
-        0b0010: EN_US
-        0b0011: IT
-        0b0100: ES
-        0b0101: JP
-        0b0110: FR
-        0b0111: EN_CA
-        0b1000: AR
+    :b1:
+      :type: :bit_array
+      :index:
+        :language: !ruby/range
+                begin:    4
+                end:      7
+                excl: false
+        :cluster: !ruby/range
+                begin:    0
+                end:      3
+                excl: false
+      :parameters:
+        :language:
+          :type: :map
+          :label: Language
+          :dictionary:
+            0b0000: DE
+            0b0001: EN_GB
+            0b0010: EN_US
+            0b0011: IT
+            0b0100: ES
+            0b0101: JP
+            0b0110: FR
+            0b0111: EN_CA
+            0b1000: GOLF
+        :cluster:
+          :type: :map
+          :label: Cluster
+          :dictionary:
+            0b0000: IKE (High)
+            0b0011: KOMBI (E39) (Low)
+            0b0100: KOMBI (E46)
+            0b0110: KOMBI (E46)
+            0b1111: KOMBI (E46)
+            0b1010: E85
     :b2:
       :type: :bit_array
       :index:
@@ -233,8 +256,8 @@
         :distance_unit:   1
         :limit_unit:      2
         :avg_speed_unit:  3
-        # none            4
-        # none            5
+        :obc_resume:      4
+        :obc_correction:  5
         :temp_unit:       6
         :time_format:     7
       :parameters:
@@ -262,6 +285,18 @@
           :states:
             0: :km
             1: :mls
+        :obc_resume:
+          :label: OBC Resume KL-R
+          :type: :switch
+          :states:
+            0: :inactive
+            1: :on
+        :obc_correction:
+          :label: OBC Speed Correction
+          :type: :switch
+          :states:
+            0: :inactive
+            1: :on
         :temp_unit:
           :label: Temp.
           :type: :switch
@@ -277,7 +312,7 @@
     :b3:
       :type: :bit_array
       :index:
-        # none            0
+        :memo:            0
         :timer_2_format:  1
         :timer_1_format:  2
         :range_unit:      3
@@ -290,6 +325,12 @@
                 end:      7
                 excl: false
       :parameters:
+        :memo:
+          :label: Memo
+          :type: :map
+          :dictionary:
+            0: Cluster
+            1: LCM
         :timer_2_format:
           :label: Timer 2.
           :type: :switch
@@ -328,20 +369,32 @@
       :type: :bit_array
       :index:
         # none            0
-        :aux_control:     1
+        :aux_controller:  1
         # none            2
-        # none            3
-        # none            4
+        :rcc:             3
+        :motor:           4
         # none            5
         :aux_ventilation: 6
         :aux_heating:     7
       :parameters:
-        :aux_control:
-          :label: '(Aux.) Control.'
+        :aux_controller:
+          :label: 'Aux. Controller'
           :type: :map
           :dictionary:
-            0: BMBT from 09/96
-            1: BMBT to 09/96, None
+            0: BMBT pre-PU96
+            1: BMBT post-PU96
+        :rcc:
+          :label: RCC
+          :type: :switch
+          :states:
+            0: :inactive
+            1: :on
+        :motor:
+          :label: Motor
+          :type: :map
+          :dictionary:
+            0: Petrol
+            1: Diesel
         :aux_ventilation:
           :type: :switch
           :label: '(Aux.) Vent.'
