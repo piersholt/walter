@@ -4059,9 +4059,21 @@
     :short_name: DOOR
     :long_name: Door/Flap Status
   :klass: Parameterized::Base
+  :index:
+    :byte1: 0
+    :byte2: 1
   :parameters:
     :byte1:
       :type: :bit_array
+      :index:
+        # :unallocated: 0
+        :lamp_interior: 1
+        :locked:        2
+        :unknown:       3
+        :door_left:     4
+        :door_right:    5
+        :door_pass:     6
+        :door_driver:   7
       :parameters:
         :lamp_interior:
           :type: :switch
@@ -4105,17 +4117,17 @@
           :states:
             0: :closed
             1: :open
-      :index:
-        # :unallocated: 0
-        :lamp_interior: 1
-        :locked:        2
-        :unknown:       3
-        :door_left:     4
-        :door_right:    5
-        :door_pass:     6
-        :door_driver:   7
     :byte2:
       :type: :bit_array
+      :index:
+        :release:       0
+        :bonnet:        1
+        :hatch:         2
+        :sunroof:       3
+        :window_left:   4
+        :window_right:  5
+        :window_pass:   6
+        :window_driver: 7
       :parameters:
         :release:
           :type: :switch
@@ -4165,23 +4177,6 @@
           :states:
             0: :closed
             1: :open
-      :index:
-        :release:       0
-        :bonnet:        1
-        :hatch:         2
-        :sunroof:       3
-        :window_left:   4
-        :window_right:  5
-        :window_pass:   6
-        :window_driver: 7
-  :index:
-    :byte1: 0
-    :byte2: 1
-  :meta:
-    :senders:
-      - GM3
-    :recipients:
-      - GLO-L
 
 0x7C: # SHD-GLO-7C
     :properties:
