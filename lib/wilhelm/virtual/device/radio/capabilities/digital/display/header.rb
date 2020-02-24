@@ -43,7 +43,7 @@ module Wilhelm
                 def title(
                   gt: DIGITAL_HEADER,
                   ike: 0b0001_0000,
-                  chars: genc(LENGTH_TITLE)
+                  chars: gens(LENGTH_TITLE)
                 )
                   draw_23(
                     gt: gt,
@@ -53,7 +53,7 @@ module Wilhelm
                 end
 
                 # 5 chars
-                def a1(chars: pad_chars(genc(LENGTH_5), LENGTH_5))
+                def a1(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -63,7 +63,7 @@ module Wilhelm
                 end
 
                 # 5 chars
-                def a2(chars: pad_chars(genc(LENGTH_5), LENGTH_5))
+                def a2(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -73,7 +73,7 @@ module Wilhelm
                 end
 
                 # 5 chars
-                def a3(chars: pad_chars(genc(LENGTH_5), LENGTH_5))
+                def a3(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -83,7 +83,7 @@ module Wilhelm
                 end
 
                 # 7 chars
-                def b1(chars: pad_chars(genc(LENGTH_7), LENGTH_7))
+                def b1(chars: pad_chars(gens(LENGTH_7), LENGTH_7))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -93,7 +93,7 @@ module Wilhelm
                 end
 
                 # 7 chars
-                def b2(chars: pad_chars(genc(LENGTH_7), LENGTH_7))
+                def b2(chars: pad_chars(gens(LENGTH_7), LENGTH_7))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -103,7 +103,7 @@ module Wilhelm
                 end
 
                 # Subtitles 20 chars
-                def h2(chars: pad_chars(genc(LENGTH_20), LENGTH_20))
+                def h2(chars: pad_chars(gens(LENGTH_20), LENGTH_20))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
@@ -113,7 +113,7 @@ module Wilhelm
                 end
 
                 # Subtitles 20 chars
-                def h3(chars: pad_chars(genc(LENGTH_20), LENGTH_20))
+                def h3(chars: pad_chars(gens(LENGTH_20), LENGTH_20))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
                     padding:  PADDING_NONE,
