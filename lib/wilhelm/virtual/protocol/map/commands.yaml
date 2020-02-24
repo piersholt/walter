@@ -638,35 +638,33 @@
 
 # CCM/HUD ---------------------------------------------------------------------
 
-0x1A: # CCM-ALRT
+0x1A: # CCM
   :klass: Parameterized::Base
   :properties:
-    :short_name: CCM-ALRT
-    :long_name: CCM Cluster Warning
+    :short_name: CCM
+    :long_name: Check Control Message
     :verbose: false
   :index:
-    :mode: 0
-    :control: 1
+    :b1: 0
+    :b2: 1
     :chars: !ruby/range
               begin: 2
               end: -1
               excl: false
   :parameters:
-    :mode:
+    :b1:
       :type: :map
       :map:
         0b0011_0000: :clear
-        0b0011_0101: :request
         0b0011_0110: :persist
+        0b0011_0101: :request
         0b0011_0111: :alert
-        0b0011_1111: :unknown
       :dictionary:
-        0b0011_000_0: CCM Clear
-        0b0011_011_0: CCM Persist Indicators
-        0b0011_010_1: CCM Recall
-        0b0011_011_1: CCM Alert
-        0b0011_111_1: CCM Special?
-    :control:
+        0b0011_0000: CCM Clear
+        0b0011_0110: CCM Persist Indicators
+        0b0011_0101: CCM Recall
+        0b0011_0111: CCM Alert
+    :b2:
       :type: :bit_array
       :index:
         :gong: !ruby/range
@@ -687,22 +685,30 @@
             0b010: :high_tone
             0b011: :high_double
             0b100: :low_single
+            0b101: :off
+            0b110: :off
+            0b111: :off
           :dictionary:
             0b000: 'None'
             0b001: '[High] Single'
             0b010: '[High] Continuous'
             0b011: '[High] Double'
             0b100: '[Low] Single'
+            0b101: 'None'
+            0b110: 'None'
+            0b111: 'None'
         :chevron:
           :type: :switch
           :label: Chevron
           :states:
             0b00: :off
             0b01: :on
+            0b10: :off
             0b11: :blink
           :dictionary:
             0b00: 'Off'
             0b01: 'On'
+            0b10: 'Off'
             0b11: 'Blink'
     :chars:
       :type: :chars
@@ -3386,9 +3392,9 @@
     - 30 04 BF 51 20 FA
     - 30 04 BF 51 04 DE
 
-0x52: # IKE-CCM
+0x52: # CCM-RLY
   :properties:
-    :short_name: IKE-CCM
+    :short_name: CCM-RLY
     :long_name: IKE CCM Forward?
   :klass: Parameterized::Base
   :index:
