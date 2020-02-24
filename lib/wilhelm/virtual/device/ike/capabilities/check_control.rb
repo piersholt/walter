@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'check_control/constants'
-
 module Wilhelm
   module Virtual
     class Device
@@ -10,38 +8,90 @@ module Wilhelm
           # Device::IKE::Capabilities::CheckControl
           module CheckControl
             include API
-            include Constants
 
-            def warn_code(
-              layout  = LAYOUT_CODE_SET,
-              options = OPTS_CODE_SET,
-              chars   = CHARS_CODE_DEFAULT
-            )
-              ccm_relay(layout: layout, options: options, chars: chars)
+            # Byte 1
+            # 0b0011_0000
+            CODE                = 0b0011_0000
+            PROG                = 0b0010_0000
+            RANGE               = 0b0001_0000
+
+            # 0b0000_0011
+            OVERWRITE           = 0b0000_0011
+            SET                 = 0b0000_0001
+            CLEAR               = 0b0000_0000
+
+            # Byte 2
+            # TBC   0b1111_0000
+            RANGE_SET           = 0b1010_0000
+            RANGE_CLEAR         = 0b1000_0000
+            CODE                = 0b0100_0000
+            PROG                = 0b0100_0000
+
+            # Gong  0b0000_0111
+            GONG_LOW_SINGLE     = 0b0000_0100
+            GONG_HIGH_DOUBLE    = 0b0000_0011
+            GONG_HIGH_TONE      = 0b0000_0010
+            GONG_HIGH_SINGLE    = 0b0000_0001
+            GONG_OFF            = 0b0000_0000
+
+            # Byte 3+
+            CHARS_RANGE_DEFAULT = '   RANGE  99 KM     '
+            CHARS_PROG_DEFAULT  = '        PROG        '
+            CHARS_CODE_DEFAULT  = '      CODE ----     '
+            CHARS_EMPTY_STRING  = ''
+
+            # CODE -------------------------------------------------
+
+            def warn_code
+              ccm_relay(
+                b1:     CODE | SET,
+                b2:     GONG_LOW_SINGLE,
+                chars:  CHARS_CODE_DEFAULT
+              )
             end
 
-            def warn_code_clear(
-              layout  = LAYOUT_CODE_CLEAR,
-              options = OPTS_CODE_CLEAR,
-              chars   = CHARS_EMPTY_STRING
-            )
-              ccm_relay(layout: layout, options: options, chars: chars)
+            def warn_code_clear
+              ccm_relay(
+                b1:     CODE | CLEAR,
+                b2:     GONG_OFF,
+                chars:  CHARS_EMPTY_STRING
+              )
             end
 
-            def warn_range(
-              layout  = LAYOUT_RANGE_SET,
-              options = OPTS_RANGE_SET,
-              chars   = CHARS_RANGE_DEFAULT
-            )
-              ccm_relay(layout: layout, options: options, chars: chars)
+            # PROG -------------------------------------------------
+
+            def warn_prog
+              ccm_relay(
+                b1:     PROG | SET,
+                b2:     GONG_LOW_SINGLE,
+                chars:  CHARS_PROG_DEFAULT
+              )
             end
 
-            def warn_range_clear(
-              layout  = LAYOUT_RANGE_CLEAR,
-              options = OPTS_RANGE_CLEAR,
-              chars   = CHARS_EMPTY_STRING
-            )
-              ccm_relay(layout: layout, options: options, chars: chars)
+            def warn_prog_clear
+              ccm_relay(
+                b1:     PROG | CLEAR,
+                b2:     GONG_OFF,
+                chars:  CHARS_EMPTY_STRING
+              )
+            end
+
+            # RANGE -------------------------------------------------
+
+            def warn_range
+              ccm_relay(
+                b1:     RANGE | SET,
+                b2:     GONG_LOW_SINGLE,
+                chars:  CHARS_RANGE_DEFAULT
+              )
+            end
+
+            def warn_range_clear
+              ccm_relay(
+                b1:     RANGE | CLEAR,
+                b2:     GONG_OFF,
+                chars:  CHARS_EMPTY_STRING
+              )
             end
           end
         end

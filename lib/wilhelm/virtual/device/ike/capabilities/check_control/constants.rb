@@ -8,27 +8,41 @@ module Wilhelm
           module CheckControl
             # Device::IKE::Capabilities::CheckControl::Constants
             module Constants
-              LAYOUT_RANGE_SET   = 0b0001_0001  # 0x11
-              LAYOUT_RANGE_CLEAR = 0b0001_0000  # 0x10
+              # Byte 1
+              # 0b0000_0011
+              CLEAR               = 0b000000_00
+              SET                 = 0b000000_01
+              OVERWRITE           = 0b000000_11
 
-              LAYOUT_CODE_SET    = 0b0011_0001  # 0x31
-              LAYOUT_CODE_CLEAR  = 0b0011_0011  # 0x33
+              # 0b0011_0000
+              RANGE               = 0b00_01_0000
+              PROG                = 0b00_10_0000
+              CODE                = 0b00_11_0000
 
-              # CCM_CLEAR          = 0b0011_0000  # 0x30
-              # CCM_RECALL         = 0b0011_0101  # 0x35
-              # CCM_PERSIST        = 0b0011_0110  # 0x36
-              # CCM_ALERT          = 0b0011_0111  # 0x37
-              # CCM_UNKNOWN        = 0b0011_1111  # 0x3f
+              # Byte 2
+              # Gong  0b0000_0111
+              GONG_OFF            = 0b00000_000
+              GONG_HIGH_SINGLE    = 0b00000_001
+              GONG_HIGH_TONE      = 0b00000_010
+              GONG_HIGH_DOUBLE    = 0b00000_011
+              GONG_LOW_SINGLE     = 0b00000_100
 
-              OPTS_RANGE_SET     = 0xa4
-              OPTS_RANGE_CLEAR   = 0x80
+              # TBC   0b1111_0000
+              CODE                = 0b0100_0000
+              PROG                = 0b0100_0000
+              RANGE_CLEAR         = 0b1000_0000
+              RANGE_SET           = 0b1010_0000
 
-              OPTS_CODE_SET      = 0x44
-              OPTS_CODE_CLEAR    = 0x40
+              OPTS_RANGE_SET     = 0b1010 << 3 | GONG_LOW_SINGLE
+              OPTS_RANGE_CLEAR   = 0b1000 << 3 | GONG_OFF
+              OPTS_PROG_CLEAR    = 0b0100 << 3 | GONG_OFF
+              OPTS_CODE_SET      = 0b0100 << 3 | GONG_LOW_SINGLE
+              OPTS_CODE_CLEAR    = 0b0100 << 3 | GONG_OFF
 
+              # Byte 3+
               CHARS_RANGE_DEFAULT = '   RANGE  34 KM     '
+              CHARS_PROG_DEFAULT  = '        PROG        '
               CHARS_CODE_DEFAULT  = '      CODE ----     '
-
               CHARS_EMPTY_STRING  = ''
             end
           end
