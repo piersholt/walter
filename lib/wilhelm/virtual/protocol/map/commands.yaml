@@ -6,6 +6,222 @@
       :verbose: true
     :klass: Base
 
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0x00: # DIA-00
+  :properties:
+    :short_name: DIA-00
+    :long_name: Module General Information (and Ping)
+  :klass: Base
+  :meta:
+    :senders:
+      - DIA
+      - GM (0x00)
+    :recipients:
+      - GM3   (0x00): '?'
+      - TEL	  (0xC8):	1
+      - BMBT	(0xF0):	126
+      - LCM	  (0xD0):	208
+      - MFL	  (0x50):	25
+      - GT	  (0x3B):	82
+      - TV	  (0xED):	121
+      - 0xE0	(0xE0):	9
+      - RAD	  (0x68):	272
+      - PDC	  (0x60):	63
+      - 0x9A	(0x9A):	3
+
+# PING/PONG -------------------------------------------------------------------
+
+0x01: # PING
+  :properties:
+    :short_name: PING
+    :long_name: Status Request
+  :klass: Base
+
+0x02: # PONG / DIA-02-VIN*
+  :dia:
+    :properties:
+      :short_name: DIA-02-VIN
+      :long_name: LCM VIN Request
+    :klass: Base
+    :meta:
+      lcm:
+        0x00: SII-Data
+        0x02: VIN
+  :schemas:
+    - :dia
+  :properties:
+    :short_name: PONG
+    :long_name: Status Response
+  :klass: Parameterized::Base
+  :index:
+    :status: 0
+  :parameters:
+    :status:
+      :type: :map
+      :dictionary:
+        0b0000_0000: 'Reply'
+        0b0000_0001: 'Announce'
+
+        # 0x10 3b: 2 (@ c8)
+        0b0001_0000: 'Vid. GT (MK3) -> C8 [Reply]'
+        # 0x11 3b: 3 (@ ff)
+        0b0001_0001: 'Vid. GT (MK3) -> FF [Announce]'
+
+        # From Ted:
+        0b0010_0000: 'Radio Business Nav. [Reply]'
+        0b0010_0001: 'Radio Business Nav. [Announce]'
+
+        # 0x30: 18880
+        # f0:   18845 (18642 to 0x3b)
+        0b0011_0000: 'BMBT (Wide)/Tel (Motorola) -> 3B [Reply]'
+        # 0x31  2019
+        # f0:   2018  (all to 0xbf)
+        0b0011_0001: 'BMBT (Wide)/Tel (Motorola) -> BF [Announce]'
+
+        # 0x40: 621
+        # 3b:   620 (609 to BF, 11 to 68)
+        0b0100_0000: 'Navi. GT (MK1/4) -> BF [Reply]'
+        # 0x41: 619
+        # 3b:   392 (all to BF)
+        # 7f:   226 (all to BF)
+        0b0100_0001: 'Navi. GT (MK1/4) -> BF [Announce]'
+
+        # Only messages greater than 0x40
+        # 7f:       11 (all to BF)
+        0b1100_0001: 'Navi. Computer -> BF [Announce]'
+      :map:
+        0b0000_0000: :reply
+        0b0000_0001: :announce
+        0b0001_0000: :vid_gt_reply
+        0b0001_0001: :vid_gt_announce
+        0b0011_0000: :bmbt_wide_reply
+        0b0011_0001: :bmbt_wide_announce
+        0b0100_0000: :nav_gt_reply
+        0b0100_0001: :nav_gt_announce
+
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0x04: # DIA-ERR-READ
+  :properties:
+    :short_name: DIA-ERR-READ
+    :long_name: BUS Status Reponse?
+  :klass: Base
+  :meta:
+  :notes:
+    - send when reading error memory
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+      - this had no errors
+      - see screenshot
+    - if i hit F1/READ in this screen, the same is sent again
+    - :example:
+      - DIA     RAD     B-PONG          01
+      - RAD     DIA     DIA-D           00 00 40 00 80
+  :recipients:
+    - GT    	01
+    - TV     	01
+    - RAD    	01
+    - RAD    	01
+
+0x05: # DIA-ERR-DEL / LCD-SET*
+  :properties:
+    :short_name: DIA-ERR-DEL
+    :long_name: Diagnostics Clear Error Memeory?
+  :klass: Base
+  :schemas:
+    - :gt
+  :gt:
+    :klass: Base
+    :properties:
+      :short_name: LCD-SET
+      :long_name: LCD Brightness
+    :meta:
+      - Request BMBT LCD Brightness:
+        - gt bmbt 05 40 01
+        - bmbt gt 06 7F
+        - this will update brightness value in Settings
+      - Set BMBT LCD Brightness:
+        - gt bmbt 05 41 01 60
+        - gt bmbt 05 42 01 60
+        - 0x41 and 0x42 may represent BMBT and RCM
+        - when in service mode, only 0x41 is sent!
+
+  :meta:
+    - when radio clear error memory selected
+    - :example:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
+    - another selection
+    - example1:
+      - DIA     RAD     DIA-ERR-DEL     --
+      - RAD     DIA     DIA-D           --
+
+0x06: # DIA-MEM-READ / LCD-REP*
+  :properties:
+    :short_name: DIA-MEM-READ
+    :long_name: Diagnostics Read Memory
+  :klass: Base
+  :schemas:
+    - :bmbt
+  :bmbt:
+    :klass: Base
+    :properties:
+      :short_name: LCD-REP
+      :long_name: LCD Brightness
+  :meta:
+    - the read memory function in INPA?
+    - used to populate BMBT service mode displays
+
+0x07: # DIA-MEM-WRITE
+  :properties:
+    :short_name: DIA-MEM-WRITE
+    :long_name: Diagnostics Write Memory
+  :klass: Base
+  :meta:
+    - if above is correct, then presumably the write...
+
+0x08: # DIA-COD-READ
+  :properties:
+    :short_name: DIA-COD-READ
+    :long_name: Diagnostics READ Coding Data Universal
+  :klass: Base
+
+0x09: # DIA-COD-WRITE
+  :properties:
+    :short_name: DIA-COD-WRITE
+    :long_name: Diagnostics WRITE Coding Data
+  :klass: Base
+
+0x0b: # DIA-0B-STATUS
+  :properties:
+    :short_name: DIA-0B-STATUS
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    :notes:
+      - radio got an error after this
+      - :example:
+        - DIA     RAD     0B              --
+        - RAD     DIA     DIA-D           30 00 30 30 30 30 30 30 00 00
+      - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
+      - another error and the next field was STATUS AUX ADAPTER
+
+0x0C: # DIA-0C-ACT
+  :properties:
+    :short_name: DIA-0C-ACT
+    :long_name: Vehicle Control
+    :verbose: true
+  :klass: Base
+  :meta:
+    radio:
+      0x07: Seek Up
+      0x08: Seek Down
+      0x09: Activate Audio Button?
+      0x0b: Radio Off
+      0x0c: Radio On
+
 # SENSORS ---------------------------------------------------------------------
 
 0x10: # IGN-REQ
@@ -1933,6 +2149,17 @@
     :recipients:
       - ANZV
 
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0x30: # DIA-CHCK
+  :properties:
+    :short_name: DIA-CHCK
+    :long_name: Unknown
+  :klass: Base
+  :meta:
+    - bmbt
+    - nav/gt
+
 # CONTROLS --------------------------------------------------------------------
 
 0x31: # INPUT / INPUT-RAD* / INPUT-TEL*
@@ -2709,6 +2936,14 @@
               0b0000: :mfl_seek_null
               0b0001: :mfl_rad_next
               0b1000: :mfl_rad_prev
+
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0x3f: # DIA-EHC
+  :properties:
+    :short_name: DIA-EHC
+    :long_name: Unknown
+  :klass: Base
 
 # CONFIG ----------------------------------------------------------------------
 
@@ -3864,12 +4099,42 @@
       - IKE 03 LCM  5D 0E
       - LCM 05 BF   5C FF 00 C9
 
-# EHC -------------------------------------------------------------------------
+# DIAGNOSTICS -----------------------------------------------------------------
+
+0x60: # EWS-ISN-60
+  :properties:
+    :short_name: EWS-ISN?
+    :long_name: Diagnostics?
+  :klass: Base
 
 0x61: # EHC-STAT?
   :properties:
     :short_name: EHC-STAT?
     :long_name: Unknown
+  :klass: Base
+
+0x63: # DIA-63-IDENT
+  :properties:
+    :short_name: DIA-63-IDENT?
+    :long_name: Diagnostics?
+  :klass: Base
+
+0x65: # EWS-KEY-65
+  :properties:
+    :short_name: EWS-KEY
+    :long_name: Diagnostics?
+  :klass: Base
+
+0x69: # EWS-COD-69
+  :properties:
+    :short_name: EWS-COD?
+    :long_name: Diagnostics?
+  :klass: Base
+
+0x6B: # EWS-INT-6B
+  :properties:
+    :short_name: EWS-INT
+    :long_name: EWS Internal State
   :klass: Base
 
 # MRS -------------------------------------------------------------------------
@@ -4798,269 +5063,6 @@
   :klass: Base
   :meta:
     - returned by MFL when requesting possible out of range addresses
-
-# PING/PONG -------------------------------------------------------------------
-
-0x01: # PING
-  :properties:
-    :short_name: PING
-    :long_name: Status Request
-  :klass: Base
-
-0x02: # PONG / DIA-02-VIN*
-  :dia:
-    :properties:
-      :short_name: DIA-02-VIN
-      :long_name: LCM VIN Request
-    :klass: Base
-    :meta:
-      lcm:
-        0x00: SII-Data
-        0x02: VIN
-  :schemas:
-    - :dia
-  :properties:
-    :short_name: PONG
-    :long_name: Status Response
-  :klass: Parameterized::Base
-  :index:
-    :status: 0
-  :parameters:
-    :status:
-      :type: :map
-      :dictionary:
-        0b0000_0000: 'Reply'
-        0b0000_0001: 'Announce'
-
-        # 0x10 3b: 2 (@ c8)
-        0b0001_0000: 'Vid. GT (MK3) -> C8 [Reply]'
-        # 0x11 3b: 3 (@ ff)
-        0b0001_0001: 'Vid. GT (MK3) -> FF [Announce]'
-
-        # From Ted:
-        0b0010_0000: 'Radio Business Nav. [Reply]'
-        0b0010_0001: 'Radio Business Nav. [Announce]'
-
-        # 0x30: 18880
-        # f0:   18845 (18642 to 0x3b)
-        0b0011_0000: 'BMBT (Wide)/Tel (Motorola) -> 3B [Reply]'
-        # 0x31  2019
-        # f0:   2018  (all to 0xbf)
-        0b0011_0001: 'BMBT (Wide)/Tel (Motorola) -> BF [Announce]'
-
-        # 0x40: 621
-        # 3b:   620 (609 to BF, 11 to 68)
-        0b0100_0000: 'Navi. GT (MK1/4) -> BF [Reply]'
-        # 0x41: 619
-        # 3b:   392 (all to BF)
-        # 7f:   226 (all to BF)
-        0b0100_0001: 'Navi. GT (MK1/4) -> BF [Announce]'
-
-        # Only messages greater than 0x40
-        # 7f:       11 (all to BF)
-        0b1100_0001: 'Navi. Computer -> BF [Announce]'
-      :map:
-        0b0000_0000: :reply
-        0b0000_0001: :announce
-        0b0001_0000: :vid_gt_reply
-        0b0001_0001: :vid_gt_announce
-        0b0011_0000: :bmbt_wide_reply
-        0b0011_0001: :bmbt_wide_announce
-        0b0100_0000: :nav_gt_reply
-        0b0100_0001: :nav_gt_announce
-
-# DIAGNOSTICS -----------------------------------------------------------------
-
-0x00: # DIA-00
-  :properties:
-    :short_name: DIA-00
-    :long_name: Module General Information (and Ping)
-  :klass: Base
-  :meta:
-    :senders:
-      - DIA
-      - GM (0x00)
-    :recipients:
-      - GM3   (0x00): '?'
-      - TEL	  (0xC8):	1
-      - BMBT	(0xF0):	126
-      - LCM	  (0xD0):	208
-      - MFL	  (0x50):	25
-      - GT	  (0x3B):	82
-      - TV	  (0xED):	121
-      - 0xE0	(0xE0):	9
-      - RAD	  (0x68):	272
-      - PDC	  (0x60):	63
-      - 0x9A	(0x9A):	3
-
-0x04: # DIA-ERR-READ
-  :properties:
-    :short_name: DIA-ERR-READ
-    :long_name: BUS Status Reponse?
-  :klass: Base
-  :meta:
-  :notes:
-    - send when reading error memory
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-      - this had no errors
-      - see screenshot
-    - if i hit F1/READ in this screen, the same is sent again
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-  :recipients:
-    - GT    	01
-    - TV     	01
-    - RAD    	01
-    - RAD    	01
-
-0x05: # DIA-ERR-DEL / LCD-SET*
-  :properties:
-    :short_name: DIA-ERR-DEL
-    :long_name: Diagnostics Clear Error Memeory?
-  :klass: Base
-  :schemas:
-    - :gt
-  :gt:
-    :klass: Base
-    :properties:
-      :short_name: LCD-SET
-      :long_name: LCD Brightness
-    :meta:
-      - Request BMBT LCD Brightness:
-        - gt bmbt 05 40 01
-        - bmbt gt 06 7F
-        - this will update brightness value in Settings
-      - Set BMBT LCD Brightness:
-        - gt bmbt 05 41 01 60
-        - gt bmbt 05 42 01 60
-        - 0x41 and 0x42 may represent BMBT and RCM
-        - when in service mode, only 0x41 is sent!
-
-  :meta:
-    - when radio clear error memory selected
-    - :example:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-    - another selection
-    - example1:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-
-0x06: # DIA-MEM-READ / LCD-REP*
-  :properties:
-    :short_name: DIA-MEM-READ
-    :long_name: Diagnostics Read Memory
-  :klass: Base
-  :schemas:
-    - :bmbt
-  :bmbt:
-    :klass: Base
-    :properties:
-      :short_name: LCD-REP
-      :long_name: LCD Brightness
-  :meta:
-    - the read memory function in INPA?
-    - used to populate BMBT service mode displays
-
-0x07: # DIA-MEM-WRITE
-  :properties:
-    :short_name: DIA-MEM-WRITE
-    :long_name: Diagnostics Write Memory
-  :klass: Base
-  :meta:
-    - if above is correct, then presumably the write...
-
-0x08: # DIA-COD-READ
-  :properties:
-    :short_name: DIA-COD-READ
-    :long_name: Diagnostics READ Coding Data Universal
-  :klass: Base
-
-0x09: # DIA-COD-WRITE
-  :properties:
-    :short_name: DIA-COD-WRITE
-    :long_name: Diagnostics WRITE Coding Data
-  :klass: Base
-
-0x0b: # DIA-0B-STATUS
-  :properties:
-    :short_name: DIA-0B-STATUS
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    :notes:
-      - radio got an error after this
-      - :example:
-        - DIA     RAD     0B              --
-        - RAD     DIA     DIA-D           30 00 30 30 30 30 30 30 00 00
-      - when i proceeded, the field that popped up was STATUS ANTENNA DIVERSITY
-      - another error and the next field was STATUS AUX ADAPTER
-
-0x0C: # DIA-0C-ACT
-  :properties:
-    :short_name: DIA-0C-ACT
-    :long_name: Vehicle Control
-    :verbose: true
-  :klass: Base
-  :meta:
-    radio:
-      0x07: Seek Up
-      0x08: Seek Down
-      0x09: Activate Audio Button?
-      0x0b: Radio Off
-      0x0c: Radio On
-
-# DIAGNOSTICS: MODULE?
-
-0x30: # DIA-CHCK
-  :properties:
-    :short_name: DIA-CHCK
-    :long_name: Unknown
-  :klass: Base
-  :meta:
-    - bmbt
-    - nav/gt
-
-0x3f: # DIA-EHC
-  :properties:
-    :short_name: DIA-EHC
-    :long_name: Unknown
-  :klass: Base
-
-# DIAGNOSTICS: EWS?
-
-0x60: # EWS-ISN-60
-  :properties:
-    :short_name: EWS-ISN?
-    :long_name: Diagnostics?
-  :klass: Base
-
-0x63: # DIA-63-IDENT
-  :properties:
-    :short_name: DIA-63-IDENT?
-    :long_name: Diagnostics?
-  :klass: Base
-
-0x65: # EWS-KEY-65
-  :properties:
-    :short_name: EWS-KEY
-    :long_name: Diagnostics?
-  :klass: Base
-
-0x69: # EWS-COD-69
-  :properties:
-    :short_name: EWS-COD?
-    :long_name: Diagnostics?
-  :klass: Base
-
-0x6B: # EWS-INT-6B
-  :properties:
-    :short_name: EWS-INT
-    :long_name: EWS Internal State
-  :klass: Base
 
 0xFF: # DIA-FF "ERROR ECU NACK"
   :properties:
