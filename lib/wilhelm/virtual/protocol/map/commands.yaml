@@ -2884,10 +2884,10 @@
       :type: :bit_array
       :parameters:
         :new_hide:
-          :type: :map
-          :label: New UI Hide?
-          :map:
-            0: :off
+          :type: :switch
+          :label: New UI (on Hide)
+          :states:
+            0: :inactive
             1: :enabled
           :dictionary:
             0: Off
@@ -2896,7 +2896,7 @@
           :type: :switch
           :label: New UI
           :states:
-            0: :disabled
+            0: :inactive
             1: :enabled
         :audio_obc:
           :type: :switch
