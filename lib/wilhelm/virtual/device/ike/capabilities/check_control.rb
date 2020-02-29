@@ -9,6 +9,12 @@ module Wilhelm
           module CheckControl
             include API
 
+            # 80 19 30 52
+            # 0b0001_0001 RANGE | SET
+            # 0b1001_0100 RANGE_540 | GONG_LOW_SINGLE
+            # "   RANGE  50 KM     "
+            # 02
+
             # Byte 1
             # 0b0011_0000
             CODE                = 0b0011_0000
@@ -22,13 +28,14 @@ module Wilhelm
 
             # Byte 2
             # TBC   0b1111_0000
-            RANGE_SET           = 0b1010_0000
+            RANGE_SET           = 0b1010_0000 # 0xa0
+            RANGE_540           = 0b1001_0000 # 0x9
             RANGE_CLEAR         = 0b1000_0000
             CODE                = 0b0100_0000
             PROG                = 0b0100_0000
 
             # Gong  0b0000_0111
-            GONG_LOW_SINGLE     = 0b0000_0100
+            GONG_LOW_SINGLE     = 0b0000_0100 # 0x04
             GONG_HIGH_DOUBLE    = 0b0000_0011
             GONG_HIGH_TONE      = 0b0000_0010
             GONG_HIGH_SINGLE    = 0b0000_0001
