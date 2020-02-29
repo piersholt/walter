@@ -37,7 +37,7 @@ GEM
     pry-byebug (3.6.0)
       byebug (~> 10.0)
       pry (~> 0.10)
-    rake (12.3.2)
+    rake (13.0.1)
     rb-readline (0.5.5)
     rbczmq (1.7.9)
     rspec (3.7.0)
