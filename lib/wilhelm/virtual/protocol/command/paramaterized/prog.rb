@@ -19,9 +19,9 @@ module Wilhelm
           ARRIVAL     = 0x08
           LIMIT       = 0x09
           AVG_SPEED   = 0x0a
-          # PROG      = 0x0b  "PROG"
+          PROG        = 0x0b # "PROG"
           # MEMO      = 0x0c
-          # CODE      = 0x0d  "CODE"
+          CODE        = 0x0d # "CODE"
           TIMER       = 0x0e
           AUX_TIMER_1 = 0x0f
           AUX_TIMER_2 = 0x10
@@ -29,8 +29,8 @@ module Wilhelm
           # HEAT_ON   = 0x12
           # VENT_OFF  = 0x13
           # VENT_ON   = 0x14
-          # CODE      = 0x16  "CODE"
-          # TIMER_LAP = 0x1a  "STOPW"
+          CODE_DISARM = 0x16 # "CODE" Emergency Disarm
+          TIMER_LAP   = 0x1a # "STOPW"
           NO_FUNCTION = 0xff
 
           DICTIONARY = {
@@ -43,9 +43,13 @@ module Wilhelm
             ARRIVAL     => 'Arrival',
             LIMIT       => 'Limit',
             AVG_SPEED   => 'Avg. Speed',
+            PROG        => '<PROG>',
+            CODE        => '<CODE>',
             TIMER       => 'Timer',
             AUX_TIMER_1 => '(Aux.) Timer 1',
             AUX_TIMER_2 => '(Aux.) Timer 2',
+            CODE_DISARM => '<CODE> (Emergency Disarm)',
+            TIMER_LAP   => '<STOPW>',
             NO_FUNCTION => nil
           }.freeze
 
@@ -59,9 +63,13 @@ module Wilhelm
             ARRIVAL     => :arrival,
             LIMIT       => :limit,
             AVG_SPEED   => :avg_speed,
+            PROG        => :prog,
+            CODE        => :code,
             TIMER       => :timer,
             AUX_TIMER_1 => :aux_timer_1,
             AUX_TIMER_2 => :aux_timer_2,
+            CODE_DISARM => :code_emergency_disarm,
+            TIMER_LAP   => :stopw,
             NO_FUNCTION => nil
           }.freeze
 
