@@ -28,6 +28,22 @@ module Wilhelm
             def valid_range?(range, *values)
               values.all? { |i| range.cover?(i) }
             end
+
+            include API
+            include Helpers::Data
+
+            # obc_var(field: FIELD_CODE, input: code_byte_array)
+            def input(field = 0x00, input = genc(10))
+              obc_var(field: field, input: input)
+            end
+
+            def output(field = 0x00, chars = genc(10))
+              anzv_var(field: field, ike: 0x30, chars: chars)
+            end
+
+            def code?
+              obc_bool(field: 0x0d, control: 0x03)
+            end
           end
         end
       end

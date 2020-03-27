@@ -39,6 +39,17 @@ module Wilhelm
             end
 
             alias obc_config obc_var
+
+            # 0x24 ANZV-VAR-IKE
+            def anzv_var(from: :gt, to: :ike, **arguments)
+              # format_chars!(arguments)
+              try(from, to, ANZV_VAR, arguments)
+            end
+
+            # 0x2a ANZV-BOOL-IKE
+            def anzv_bool(from: :gt, to: :ike, **arguments)
+              try(from, to, ANZV_BOOL, arguments)
+            end
           end
         end
       end

@@ -10,7 +10,11 @@ module Wilhelm
             include API
             include Helpers::Data
 
+            def output(field = 0x00, chars = genc(10))
+              anzv_var(from: :ike, field: field, ike: 0x30, chars: chars)
+            end
 
+            alias write output
           end
         end
       end

@@ -31,6 +31,10 @@ module Wilhelm
             GT_CODE           = :gt_code
             GT_AUX            = :gt_aux
 
+            GT_OBC_VAR        = :gt_obc_var
+            GT_CODE_VAR       = :gt_code_var
+            GT_AUX_VAR        = :gt_aux_var
+
             GT_DSP            = :gt_dsp
 
             GT_STATES = constants.map { |i| const_get(i) }
