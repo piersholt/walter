@@ -10,6 +10,10 @@ module Wilhelm
             include API
             include Helpers::Data
 
+            def kl30
+              ignition(position: 0b0000_0000)
+            end
+
             def klr
               ignition(position: 0b0000_0001)
             end
