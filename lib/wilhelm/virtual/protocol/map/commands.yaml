@@ -1487,9 +1487,12 @@
   :klass: Parameterized::Base
   :parameters:
     :status:
-      :type: :integer
+      :type: :data
   :index:
-    :status: 0
+    :status:  !ruby/range
+              begin: 0
+              end: -1
+              excl: false
   :meta:
     - when 0x21 is sent without block flag, all cached writes are rendered
     - the value returned is the number of cells written
@@ -3669,8 +3672,9 @@
           :type: :map
           :dictionary:
             0b0001: '[RANGE]'
-            0b0010: '[PROG]'
-            0b0011: '[CODE]'
+            0b0010: '[PROG ]'
+            0b0011: '[CODE ]'
+            0b1000: '[MEMO ]'
         :opts:
           :type: :map
           :dictionary:
@@ -3692,10 +3696,12 @@
         :tbc:
           :type: :map
           :dictionary:
+            0b0000: '[540] Clear'
             0b0100: 'Code/Prog Clear'
+            0b0101: '[540] Prog'
             0b0110: 'Prog Set'
             0b1000: 'Range Clear'
-            0b1001: 'Range Set (540i)'
+            0b1001: '[540] Range Set'
             0b1010: 'Range Set'
         :gong:
           :type: :switch
