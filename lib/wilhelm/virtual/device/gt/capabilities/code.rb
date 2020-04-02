@@ -16,6 +16,11 @@ module Wilhelm
             CODE_LENGTH = 4
             CODE_KLASS = Integer
 
+            # Code 0x0d Request Boolean
+            def code?(control = CONTROL_BOOLEAN)
+              obc_bool(field: FIELD_CODE, control: control)
+            end
+
             # Code 0x0d User input of four digit code
             # @note alias code
             def input_code(*digits)
@@ -23,6 +28,7 @@ module Wilhelm
               number = parse_base_10_digits(*digits)
               # @note may need padding like OBC
               code_byte_array = base_256_digits(number)
+              pad_byte_array(code_byte_array, INPUT_CODE_LENGTH)
 
               obc_var(field: FIELD_CODE, input: code_byte_array)
             end

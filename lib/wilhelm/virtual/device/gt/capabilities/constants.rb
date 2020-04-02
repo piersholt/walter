@@ -36,11 +36,13 @@ module Wilhelm
             # INPUTS (OBC-VAR)
             INPUT_LIMIT_LENGTH    = 2
             INPUT_DISTANCE_LENGTH = 2
+            INPUT_CODE_LENGTH     = 2
 
             # CONTROLS (OBC-BOOL)
             CONTROL_NIL           = 0x00
             CONTROL_LAP           = 0x01
             CONTROL_REQUEST       = 0x01
+            CONTROL_BOOLEAN       = 0x02
             CONTROL_ON            = 0x04
             CONTROL_START         = 0x04
             CONTROL_OFF           = 0x08

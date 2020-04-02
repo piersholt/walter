@@ -40,10 +40,6 @@ module Wilhelm
             def output(field = 0x00, chars = genc(10))
               anzv_var(field: field, ike: 0x30, chars: chars)
             end
-
-            def code?
-              obc_bool(field: 0x0d, control: 0x03)
-            end
           end
         end
       end
