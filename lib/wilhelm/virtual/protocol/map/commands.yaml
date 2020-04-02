@@ -222,6 +222,12 @@
       0x0b: Radio Off
       0x0c: Radio On
 
+0x0e: # DIA-0E
+  :properties:
+    :short_name: DIA-0E
+    :long_name: Pending
+  :klass: Base
+
 # SENSORS ---------------------------------------------------------------------
 
 0x10: # IGN-REQ
@@ -2948,6 +2954,13 @@
 # CONFIG ----------------------------------------------------------------------
 
 0x40: # CONF-VAR
+  :schemas:
+    - :dia
+  :dia:
+    :properties:
+      :short_name: DIA-40
+      :long_name: DIA-40
+    :klass: Base
   :properties:
     :short_name: CONF-VAR
     :long_name: Configuration variables.
@@ -4536,6 +4549,12 @@
     - no arguments, presumably a request?
 
 # TBC ------------------------------------------------------
+
+0x9A: # DIA-9A
+  :properties:
+    :short_name: DIA-9A
+    :long_name: Diagnostics Transport Mode?
+  :klass: Base
 
 0x9C: # DIA-9C
   :properties:
