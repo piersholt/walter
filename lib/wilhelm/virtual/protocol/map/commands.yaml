@@ -1120,11 +1120,21 @@
     :properties:
       :short_name: MID-OPEN*
       :long_name: Unknown
-    :klass: Base
+    :klass: Parameterized::Base
+    :index:
+      :s1: 0
+      :s2: 1
+      :s3: 2
+    :parameters:
+      :s1:
+        :type: :data
+      :s2:
+        :type: :data
+      :s3:
+        :type: :data
   :meta:
-    :examples:
-      - from GT  02 0C
-      - from VID 00 0C if 'incoming' is set!
+    - from GT  02 0C
+    - from VID 00 0C if 'incoming' is set!
 
 # BMBT/MID --------------------------------------------------------------------
 

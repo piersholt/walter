@@ -6,6 +6,8 @@ module Wilhelm
       module MID
         # MID::Emulated
         class Emulated < Device::Emulated
+          include Capabilities
+
           PROC = 'MID::Emulated'
 
           SUBSCRIBE = [PING].freeze
