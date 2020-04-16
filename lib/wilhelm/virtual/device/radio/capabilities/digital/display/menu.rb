@@ -38,12 +38,12 @@ module Wilhelm
                 # 0x23...
                 def generate_menu_a5(
                   layout: DIGITAL_MENU_A,
-                  padding: PADDING_NONE,
+                  pos: PADDING_NONE,
                   indices: LAYOUT_INDICES[layout]
                 )
                   indices.each do |index|
-                    chars = generate_a5(layout, padding, index, Random.rand(5..10))
-                    draw_row_a5(layout, padding, index, chars)
+                    chars = generate_a5(layout, pos, index, Random.rand(5..10))
+                    draw_row_a5(layout, pos, index, chars)
                   end
                   render(layout)
                   true

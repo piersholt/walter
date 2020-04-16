@@ -15,8 +15,8 @@ module Wilhelm
             Kernel.format("%-#{required_length}s", string)
           end
 
-          def generate_a5(layout, padding, index, length = 10)
-            "a5 #{d2h(layout)} #{d2h(padding)} #{d2h(index)} #{gens(length)}"
+          def generate_a5(layout, pos, index, length = 10)
+            "a5 #{d2h(layout)} #{d2h(pos)} #{d2h(index)} #{gens(length)}"
           end
 
           alias g_a5 generate_a5

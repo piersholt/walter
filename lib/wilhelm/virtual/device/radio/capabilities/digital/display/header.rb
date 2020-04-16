@@ -56,7 +56,7 @@ module Wilhelm
                 def a1(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_1,
                     chars:    chars
                   )
@@ -66,7 +66,7 @@ module Wilhelm
                 def a2(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_2,
                     chars:    chars
                   )
@@ -76,7 +76,7 @@ module Wilhelm
                 def a3(chars: pad_chars(gens(LENGTH_5), LENGTH_5))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_3,
                     chars:    chars
                   )
@@ -86,7 +86,7 @@ module Wilhelm
                 def b1(chars: pad_chars(gens(LENGTH_7), LENGTH_7))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_4,
                     chars:    chars
                   )
@@ -96,7 +96,7 @@ module Wilhelm
                 def b2(chars: pad_chars(gens(LENGTH_7), LENGTH_7))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_5,
                     chars:    chars
                   )
@@ -106,7 +106,7 @@ module Wilhelm
                 def h2(chars: pad_chars(gens(LENGTH_20), LENGTH_20))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_6,
                     chars:    chars
                   )
@@ -116,7 +116,7 @@ module Wilhelm
                 def h3(chars: pad_chars(gens(LENGTH_20), LENGTH_20))
                   draw_a5(
                     layout:   DIGITAL_HEADER,
-                    padding:  PADDING_NONE,
+                    pos:  PADDING_NONE,
                     zone:     INDEX_7,
                     chars:    chars
                   )

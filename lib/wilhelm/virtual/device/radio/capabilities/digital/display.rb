@@ -21,7 +21,7 @@ module Wilhelm
               def render(layout)
                 draw_a5(
                   layout:   layout,
-                  padding:  PADDING_NONE,
+                  pos:  PADDING_NONE,
                   zone:     NO_INDEX,
                   chars:    NO_CHARS
                 )
@@ -36,10 +36,10 @@ module Wilhelm
                 )
               end
 
-              def draw_row_a5(layout, padding, index, chars)
+              def draw_row_a5(layout, pos, index, chars)
                 draw_a5(
                   layout:   layout,
-                  padding:  padding,
+                  pos:  pos,
                   zone:     index,
                   chars:    chars
                 )

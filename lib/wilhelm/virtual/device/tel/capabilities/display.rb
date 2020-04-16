@@ -33,10 +33,10 @@ module Wilhelm
               )
             end
 
-            def da5(layout, padding, zone, chars)
+            def da5(layout, pos, zone, chars)
               draw_a5(
                 layout: layout,
-                padding: padding,
+                pos: pos,
                 zone: zone,
                 chars: chars
               )
@@ -53,13 +53,13 @@ module Wilhelm
             # @deprecated
             def header(
               layout:,
-              padding: PADDING_NONE,
+              pos: PADDING_NONE,
               zone: INDEX_ZERO,
               chars: g_a5(layout, PADDING_NONE, INDEX_ZERO, 10)
             )
               draw_a5(
                 layout: layout,
-                padding: padding,
+                pos: pos,
                 zone: zone,
                 chars: chars
               )
@@ -69,7 +69,7 @@ module Wilhelm
             def render(layout, chars = STRING_BLANK)
               draw_a5(
                 layout: layout,
-                padding: PADDING_NONE,
+                pos: PADDING_NONE,
                 zone: INDEX_ZERO,
                 chars: chars
               )

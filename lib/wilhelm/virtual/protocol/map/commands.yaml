@@ -4735,7 +4735,7 @@
     :klass: Parameterized::Base
     :index:
       :layout: 0
-      :padding: 1
+      :pos: 1
       :zone: 2
       :chars: !ruby/range
                 begin: 3
@@ -4750,14 +4750,14 @@
         :map:
           0xf0: :sms_index
           0xf1: :sms_show
-      :padding:
+      :pos:
         :type: :bit_array
         :index:
           :tbc:  !ruby/range
             begin: 0
             end: 1
             excl: false
-          :padding: !ruby/range
+          :pos: !ruby/range
             begin: 2
             end: 7
             excl: false
@@ -4765,7 +4765,7 @@
           :tbc:
             :type: :data
             :label: TBC
-          :padding:
+          :pos:
             :type: :map
             :dictionary:
               0: Do nothing?
@@ -4850,7 +4850,7 @@
     :klass: Parameterized::Base
     :index:
       :layout: 0
-      :padding: 1
+      :pos: 1
       :zone: 2
       :chars: !ruby/range
                 begin: 3
@@ -4870,7 +4870,7 @@
           0x61: :rds_2
           0x62: :rds_title
           0x63: :rds_static
-      :padding:
+      :pos:
         :type: :map
         :dictionary:
           0: Do nothing?
