@@ -17,6 +17,10 @@ module Wilhelm
 
             alias primary draw_23
 
+            def draw_23!(from = :ike, gt = 0x00, ike = 0x20, chars)
+              draw_23(from: from, to: :gt, gt: gt, ike: ike, chars: chars)
+            end
+
             # 0x21
             def draw_21(from: :rad, to: :gt, **arguments)
               format_chars!(arguments)
