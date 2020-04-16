@@ -1165,28 +1165,6 @@
           0x83: '[Tape] (Dolby) Side/Dolby'
           0xc0: '[CDC] Discs/Source'
       :m2:
-        :meta:
-          - 0x41:
-            - applies to radio source
-            - lowest 3 bits is the selected preset
-            - presumably affects MID only
-          - 0x43:
-            - applies when source is Radio
-            - highest 3 bits are the selected freq. band
-            - likely to only affect MID
-            - unsure of what effect they have?
-          - 0x83:
-            - tape is the only source to which Dolby B/C applies
-            - presumably then, this applies to source tape
-            - 'lowest 3 bits are dolby: off, B, or C'
-          - 0x60:
-            - value of m2 will be returned by command INPUT 0x30
-            - this applies from 0x00..0xff, so no other use for byte
-            - each cell can be set to an different value value
-            - I believe this is the only layout in which checkbox works
-          - 0x61:
-            - as per 0x60, the value for an index is returned by INPUT 0x30
-            - likely due to layout also being used by SOS
         :type: :integer
         # :index:
         #   # Layout 0x43 (Source) only!
@@ -1267,13 +1245,6 @@
         #       #   0b001: 'Dolby B'
         #       #   0b010: 'Dolby C'
       :m3:
-        :meta:
-          - 0x60:
-            - highest bit will render display with preselected cell
-          - 0x61:
-            - highest bit will render display with preselected cell
-            - highest bit can be used to preselect one of the four buttons
-            - calling 0x21 for a given button index will render it
         :type: :bit_array
         :parameters:
           :selected:
@@ -1323,13 +1294,6 @@
               excl: false
     :parameters:
       :layout:
-        :meta:
-          - I suspect 0xf0, and 0xf1 are only supported by MK3/4
-          - 0xf0 and 0xf1 appear to be the basis for:
-            - SMS
-            - SOS/Emergency
-            - Bluetooth pairing (title only)
-          - so too do they appear to be used for Bluetooth pairing (header only)
         :type: :map
         :dictionary:
           0x00: --
@@ -1339,26 +1303,6 @@
           0xf0: 'SMS Index'
           0xf1: 'SMS Show'
       :m2:
-        :meta:
-          - 0x42:
-            - the MK1/2 dial, or MK3/4 'home' telephone layout
-            - I have tried setting m2 for Top 8, Recent, etc with no luck
-          - 0x43 and 0x80:
-            - directory and top 8 respectively
-            - no luck setting m2 to change value returned by 0x30
-          - 0xf0:
-            - used for SMS Message index
-            - value of m2 will be returned by command INPUT 0x30
-            - each cell can be set to an different value value
-            - does not work on back button which is always navigate (0x07)
-            - it's possible to add item to top right cell via higher index
-            - i've not been able to find any special control chars/icons
-          - 0xf1:
-            - the layout used for SMS view
-            - looks to also be the SOS display
-            - as per 0x60, the value for an index is returned by INPUT 0x30
-            - likely due to layout also being used by SOS
-            - no icons available via control characters
         :type: :map
         :dictionary:
           0x00: --
@@ -1369,19 +1313,6 @@
           0x08: Info
           0x09: SMS/Telematics
       :m3:
-        :meta:
-          - 0x42, 0x43, 0x80:
-            - these appear to be backwards compatible MID layouts
-            - use of index has no bearing on the BMBT
-            - contacts must be delimitered in order to render multiple
-          - 0xf0:
-            - highest bit will render display with preselected cell
-            - highest index bit will render back and top right cell
-          - 0xf1:
-            - highest bit can be used to preselect one of the four buttons
-            - it's possible to render any combition of buttons
-            - calling 0x21 at the given index will render it
-            - highest index bit will render back and three buttons
         :type: :bit_array
         :index:
           :selected: 0
@@ -2080,11 +2011,6 @@
           :states:
             0: :off
             1: :on
-  :meta:
-    :senders:
-      - TEL
-    :recipients:
-      - ANZV
 
 0x2C: # ANZV-BOOL-TEL (TEL-STATUS)
   :properties:
@@ -3436,11 +3362,6 @@
         0xff: (LED) On
   :index:
     :led: 0
-  :meta:
-    :senders:
-      - RAD
-    :recipients:
-      - BMBT
 
 0x4B: # TAPE
   :klass: Parameterized::Base
