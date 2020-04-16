@@ -27,8 +27,8 @@ module Wilhelm
 
             def to_s
               "#{sn}" \
-              "\t#{time_object.iso8601}" \
-              "\t#{(time_object + GPS_EPOCH).iso8601}"
+              "\tEpoch 2: #{time_object.iso8601}" \
+              "\tEpoch 3: #{(time_object + GPS_EPOCH).iso8601}"
             end
 
             # https://en.wikipedia.org/wiki/ISO_8601
