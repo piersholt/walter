@@ -6,7 +6,7 @@ module Wilhelm
     class SwitchedParameter < BaseParameter
       PROC = 'SwitchedParameter'
 
-      STATES_HIDDEN = %i[ok off closed].freeze
+      STATES_HIDDEN = %i[ok off closed inactive].freeze
 
       WARN_NO_PRETTY_MAP = '@states is no defined!'
       ERROR_NIL_SWITCH_STATE = '@states does not have key!'
@@ -165,7 +165,7 @@ module Wilhelm
 
       alias ugly state
 
-      # No output: [:off, :on, :ok]
+      # No output: [:off, :on, :ok, :inactive]
       def pretty
         switch_state = SWITCH_STATE_MAP.fetch(state, nil)
         raise(IndexError, ERROR_NIL_SWITCH_STATE) unless switch_state

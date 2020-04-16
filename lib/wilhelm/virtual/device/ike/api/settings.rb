@@ -21,8 +21,8 @@ module Wilhelm
               try(from, to, ANZV_BOOL, arguments)
             end
 
-            def boolean!(control_a, control_b)
-              anzv_bool(control_a: control_a, control_b: control_b)
+            def boolean!(b1, b2)
+              anzv_bool(b1: b1, b2: b2)
             end
           end
         end

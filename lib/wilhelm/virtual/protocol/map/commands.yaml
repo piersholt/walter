@@ -1940,10 +1940,10 @@
     :short_name: ANZV-BOOL-IKE
     :long_name: IKE to ANZV OBC Display
   :index:
-    :control_a: 0
-    :control_b: 1
+    :b1: 0
+    :b2: 1
   :parameters:
-    :control_a:
+    :b1:
       :type: :bit_array
       :index:
         :memo:  2
@@ -1952,7 +1952,7 @@
       :parameters:
         :memo:
           :type: :switch
-          :label: '(Settings) Memo'
+          :label: 'Memo'
           :states:
             0b00: :inactive
             0b01: :on
@@ -1960,17 +1960,17 @@
             0b11: :on
         :timer:
           :type: :switch
-          :label: '(OBC) Timer'
+          :label: 'Timer'
           :states:
             0: :inactive
             1: :on
         :limit:
           :type: :switch
-          :label: '(OBC) Limit'
+          :label: 'Limit'
           :states:
             0b0: :inactive
             0b1: :on
-    :control_b:
+    :b2:
       :type: :bit_array
       :index:
         :code:            1
@@ -1981,7 +1981,7 @@
       :parameters:
         :code:
           :type: :switch
-          :label: '(Code) Lock'
+          :label: 'Code'
           :states:
             0: :inactive
             1: :on
@@ -1991,25 +1991,25 @@
             - the emergency disarm variant is set via 0x24.
         :aux_heating:
           :type: :switch
-          :label: '(Aux.) Heating'
+          :label: 'Aux. Heat.'
           :states:
             0: :inactive
             1: :on
         :aux_timer_2:
           :type: :switch
-          :label: '(Aux.) Timer 2'
+          :label: 'Aux. Timer 2'
           :states:
             0: :inactive
             1: :on
         :aux_ventilation:
           :type: :switch
-          :label: '(Aux.) Vent.'
+          :label: 'Aux. Vent.'
           :states:
             0: :inactive
             1: :on
         :aux_timer_1:
           :type: :switch
-          :label: '(Aux.) Timer 1'
+          :label: 'Aux. Timer 1'
           :states:
             0: :inactive
             1: :on

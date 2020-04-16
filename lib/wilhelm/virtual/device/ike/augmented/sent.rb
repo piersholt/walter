@@ -24,8 +24,8 @@ module Wilhelm
             def evaluate_anzv_bool(command)
               anzv_bool!(
                 parse_base_256_digits(
-                  command.control_a.value,
-                  command.control_b.value
+                  command.b1.value,
+                  command.b2.value
                 )
               )
             end

@@ -11,7 +11,7 @@ module Wilhelm
             include Helpers::Data
 
             def auxiliary_direct(enabled = true)
-              anzv_bool(control_a: x, control_b: y)
+              anzv_bool(b1: x, b2: y)
             end
           end
         end
