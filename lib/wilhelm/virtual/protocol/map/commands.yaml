@@ -1375,17 +1375,18 @@
         :type: :map
         :dictionary:
           0x00: --
-          0x01: OBC
-          0x02: Conf.
-          0x03: SET Time
-          0x04: SET Date
-          0x08: INPUT Limit
-          0x0b: INPUT Speed
+          0x01: OBC         # "☐1CONSUM2☐RANGE☐DIST ARR☐SPEED☐LIMIT☐CODE☐SET"
+          0x02: Clock       # "☐STPWATCH☐VENT ON ☐1TIMER 2☐DATE☐MEMO ON ☐12H☐SET"
+          0x03: SET > Time  # "☐- HRS  +☐- MIN  +☐☐SET"
+          0x04: SET > Date
+          0x08: SET > Limit # " 1☐2 ☐ 3☐4 ☐ 5☐6 ☐ 7☐8 ☐ 9☐0 ☐CLR☐SET"
+          0x0a: SET > Code  # " 1☐2 ☐ 3☐4 ☐ 5☐6 ☐ 7☐8 ☐ 9☐0 ☐CLR☐SET"
+          0x0b: SET > Speed # " 1☐2 ☐ 3☐4 ☐ 5☐6 ☐ 7☐8 ☐ 9☐0 ☐CLR☐SET"
       :m2:
         :type: :map
         :dictionary:
           0x00: --
-          0x20: Err?
+          0x20: Err? # the X% cluster always wrote to 0x21 with this set
       :m3:
         :type: :bit_array
         :parameters:
@@ -1515,6 +1516,8 @@
           0x0_8: (Service) TP Volume
           0x0_9: (Service) AF
           0x0_a: (Service) Region
+
+          0x1_0: EQ # MID
 
           # Weather Band
           0x2_0: (Weather Band) No Station
@@ -1773,6 +1776,8 @@
           0x0a: (OBC) Avg. Speed     # "--.- MPH "
           0x0e: (OBC) Timer          # "13.0  SEC "
           0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
+
+          0x0d: PROG                 # " 1  CONS1   " (MID)
 
           # CODE
           0x0d: (Code) Code          # 00 00 00 00 "☐☐☐☐"
@@ -2111,6 +2116,7 @@
   :schemas:
     - :tel
     - :rad
+    - :ike
   :klass: Base
   :properties:
     :short_name: INPUT*
@@ -2168,6 +2174,7 @@
               0x08: '8'
               0x09: '9'
               0x0a: '10'
+              0x0b: '11'
           :state: &button_state
             :type: :switch
             :label: 'State'
@@ -2273,6 +2280,72 @@
               0x1d: Open SMS
               0x1e: Open Dial
               0x1f: Open Directory
+          :state:
+            *button_state
+  :ike:
+    :klass: Parameterized::Base
+    :properties:
+      :short_name: INPUT-IKE*
+      :long_name: Cluster Menu Soft Buttom
+    :index:
+      :layout: 0
+      :function: 1
+      :action: 2
+    :parameters:
+      :layout:
+        :type: :map
+        :dictionary:
+          0x00: --
+          0x01: OBC
+          0x02: Clock
+          0x03: SET > Time
+          0x04: SET > Date
+          0x08: SET > Limit
+          0x0a: SET > Code
+          0x0b: SET > Speed
+        :map:
+          0x00: :default
+          0x01: :obc
+          0x02: :clock
+          0x03: :set_time
+          0x04: :set_date
+          0x08: :set_limit
+          0x0a: :set_code
+          0x0b: :set_speed
+      :function:
+        :type: :map
+        :dictionary:
+          0x00: --
+        :map:
+          0x00: :no_function
+      :action:
+        :type: :bit_array
+        :index:
+          :state: !ruby/range
+                          begin: 1
+                          end: 2
+                          excl: false
+          :id: !ruby/range
+                        begin: 3
+                        end: 7
+                        excl: false
+        :parameters:
+          :id:
+            :type: :map
+            :label: 'Index'
+            :dictionary:
+              0x00: '0'
+              0x01: '1'
+              0x02: '2'
+              0x03: '3'
+              0x04: '4'
+              0x05: '5'
+              0x06: '6'
+              0x07: '7'
+              0x08: '8'
+              0x09: '9'
+              0x0a: '10'
+              0x0b: '11'
           :state:
             *button_state
   :meta:
