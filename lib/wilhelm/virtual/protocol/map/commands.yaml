@@ -4240,9 +4240,9 @@
     - 30 06 44 73 00 00 80 81
     - 68 06 44 73 00 00 80 D9
 
-0x74: # KEY
+0x74: # EWS-KEY
   :properties:
-    :short_name: KEY
+    :short_name: EWS-KEY
     :long_name: Key Status
   :klass: Command::Parameterized
   :parameters:
@@ -4281,14 +4281,11 @@
     :key: 1
   :klass: Parameterized::Base
   :meta:
-    :senders:
-      - EWS
-    :notes:
-      - invalid reasons:
-        - changing code
-        - identification
-        - password
-        - disabled
+    - invalid reasons:
+      - changing code
+      - identification
+      - password
+      - disabled
 
 0x75: # RLS-GM-75
   :properties:
@@ -4296,22 +4293,15 @@
     :long_name: Unknown
   :klass: Base
 
-0x76: # REMOTE2
+0x76: # GM-REMOTE2
   :properties:
-    :short_name: REMOTE2
+    :short_name: GM-REMOTE2
     :long_name: Unknown
   :klass: Base
   :meta:
-    - 82: something else?
-    - 02: doing an operation
+    - 02: during keyless operation (or holding keyless button)
     - 00: operation done
-    - send following keyless entry/lock
-    - gm	glo_l	76 02
-    - gm	glo_l	76 00
-    - I believe GM is too old for car/key memory
-    - but also only had this...
-    - 00 04 BF 76 02 CF
-    - 00 04 BF 76 00 CD
+    - 82: occured after rain.. many things not working
 
 0x77: # GM-RLS-77
   :properties:
@@ -4323,9 +4313,9 @@
     - 00 04 E8 77 01 9A
     - 00 04 E8 77 00 9B
 
-0x78: # MEMORY
+0x78: # GM-MEM
   :properties:
-    :short_name: MEMORY
+    :short_name: GM-MEM
     :long_name: Control unit, seat/steering column memory
   :klass: Parameterized::Base
   :index:
