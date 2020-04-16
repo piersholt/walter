@@ -9,7 +9,7 @@ module Wilhelm
           module Monitor
             include API
             include Constants
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
 
             # BYTE 1
             # Source:       0b0000_0011

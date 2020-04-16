@@ -7,7 +7,7 @@ module Wilhelm
         module API
           # Navigation::API::Assist
           module Assist
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
             include Constants
 
             # 0xA9 ASSIST-A9

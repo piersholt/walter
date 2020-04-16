@@ -8,7 +8,7 @@ module Wilhelm
           # BMBT::Capabilities::Diagnostics
           module Diagnostics
             include API
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
 
             def service_mode_version(
               sw_level:       0x01,

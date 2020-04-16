@@ -4,29 +4,9 @@ module Wilhelm
   module Virtual
     class Device
       module Helpers
-        # Parse arguments for raw device APIs
-        module Parse
-          def integers_to_byte_array(*integers)
-            byte_array = integers.map do |i|
-              Wilhelm::Core::Byte.new(i)
-            end
-            Core::Bytes.new(byte_array)
-          end
-
-          alias bytes integers_to_byte_array
-        end
-
         # Device::Helpers
         module Data
-          include Parse
-
-          # BMBT::UserControls::UserControls
-          alias integers_input bytes
-
-          # Radio::Capabilities::CDChangerDisplay
-          def integer_array_to_chars(array)
-            array.map(&:chr).join
-          end
+          include Wilhelm::Helpers::Parse
 
           def wait
             Kernel.sleep(0.01)
@@ -58,9 +38,9 @@ module Wilhelm
             end.join
           end
 
-          alias genc            generate_chars
-          alias gens            generate_string
-          alias geni            generate_ints
+          alias genc generate_chars
+          alias gens generate_string
+          alias geni generate_ints
         end
       end
     end

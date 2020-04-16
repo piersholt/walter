@@ -7,7 +7,7 @@ module Wilhelm
         module API
           # GT2::API::Menu
           module Menu
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
             include Constants
 
             def menu(from: :gt2, to: :nav, arguments:)

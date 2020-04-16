@@ -17,6 +17,7 @@ module Wilhelm
       include RateLimitControl
       include Session
       include Threads
+      include Parse
 
       PROC_MOD = 'Console'.freeze
       NEW_LINE = 'New Line'.freeze

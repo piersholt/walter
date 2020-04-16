@@ -10,7 +10,7 @@ module Wilhelm
             module Brightness
               include API
               include Constants
-              include Helpers::Parse
+              include Wilhelm::Helpers::Parse
 
               # NOTE: avoid duplicating brightness constants?
 

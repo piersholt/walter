@@ -7,7 +7,7 @@ module Wilhelm
         module API
           # Telephone::API::Assist
           module Assist
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
             include Device::API::BaseAPI
             include Constants
 

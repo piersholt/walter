@@ -9,7 +9,7 @@ module Wilhelm
           module Controls
             include API
             include Constants
-            include Wilhelm::Virtual::Device::Helpers::Parse
+            include Wilhelm::Helpers::Parse
             include Wilhelm::Virtual::Device::Helpers::Data
 
             def power

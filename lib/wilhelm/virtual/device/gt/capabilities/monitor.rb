@@ -9,7 +9,7 @@ module Wilhelm
           module Monitor
             include API
             include Constants
-            include Helpers::Parse
+            include Wilhelm::Helpers::Parse
 
             def monitor(*args)
               src_gt(arguments: bytes(*args))
