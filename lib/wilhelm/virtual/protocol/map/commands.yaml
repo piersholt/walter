@@ -3956,14 +3956,16 @@
     :l1:
       :type: :bit_array
       :index:
-        :turn_rapid: 0
-        :turn_right: 1
-        :turn_left:  2
-        :fog_rear:   3
-        :fog_front:  4
-        :beam_high:  5
-        :beam_low:   6
-        :parking:    7
+        # Symbol lit on IKE
+        :turn_rapid: 0  # 0x80
+        :turn_right: 1  # 0x40
+        :turn_left:  2  # 0x20
+        :fog_rear:   3  # 0x10
+
+        :fog_front:  4  # 0x08
+        :beam_high:  5  # 0x04
+        :beam_low:   6  # 0x02
+        :parking:    7  # 0x01
       :parameters:
         :turn_rapid:
           :label: Rapid.
@@ -4016,9 +4018,15 @@
     :l2:
       :type: :bit_array
       :index:
-        :fault_turn_right: 1
-        :fault_turn_left:  2
-        :fault_fog_rear:   3
+        # :fault_rapid?    0  # 0x80
+        :fault_turn_right: 1  # 0x40
+        :fault_turn_left:  2  # 0x20
+        :fault_fog_rear:   3  # 0x10
+
+        :fault_fog_front:  4  # 0x08
+        :fault_high:       5  # 0x04
+        :fault_low:        6  # 0x02
+        :fault_park:       7  # 0x01
       :parameters:
         :fault_turn_right:
           :type: :switch
@@ -4041,9 +4049,15 @@
     :l3:
       :type: :bit_array
       :index:
-        :fault_reverse: 2
-        :indicators:    5
-        :fault_brake:   6
+                          # 0x80
+                          # 0x40
+        :fault_reverse: 2 # 0x20
+                          # 0x10
+
+                          # 0x08
+        :indicators:    5 # 0x04
+        :fault_brake:   6 # 0x02
+                          # 0x01
       :parameters:
         :fault_reverse:
           :type: :switch
@@ -4066,9 +4080,15 @@
     :l4:
       :type: :bit_array
       :index:
-        :fog_rear_switch:   1
-        :fault_brake_left:  6
-        :fault_brake_right: 7
+                              # 0x80
+        :fog_rear_switch:   1 # 0x40
+        :fault_low_left:    2 # 0x20
+        :fault_low_right:   3 # 0x10
+
+                              # 0x08
+                              # 0x04
+        :fault_brake_left:  6 # 0x02
+        :fault_brake_right: 7 # 0x01
       :parameters:
         :fog_rear_switch:
           :type: :switch
