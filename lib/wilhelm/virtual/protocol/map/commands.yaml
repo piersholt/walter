@@ -11,24 +11,8 @@
 0x00: # DIA-00
   :properties:
     :short_name: DIA-00
-    :long_name: Module General Information (and Ping)
+    :long_name: Diagnostics IDENT
   :klass: Base
-  :meta:
-    :senders:
-      - DIA
-      - GM (0x00)
-    :recipients:
-      - GM3   (0x00): '?'
-      - TEL	  (0xC8):	1
-      - BMBT	(0xF0):	126
-      - LCM	  (0xD0):	208
-      - MFL	  (0x50):	25
-      - GT	  (0x3B):	82
-      - TV	  (0xED):	121
-      - 0xE0	(0xE0):	9
-      - RAD	  (0x68):	272
-      - PDC	  (0x60):	63
-      - 0x9A	(0x9A):	3
 
 # PING/PONG -------------------------------------------------------------------
 
@@ -102,33 +86,16 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0x04: # DIA-ERR-READ
+0x04: # DIA-04-ERRORS
   :properties:
-    :short_name: DIA-ERR-READ
-    :long_name: BUS Status Reponse?
+    :short_name: DIA-04-ERR
+    :long_name: Diagnostics > Errors
   :klass: Base
-  :meta:
-  :notes:
-    - send when reading error memory
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-      - this had no errors
-      - see screenshot
-    - if i hit F1/READ in this screen, the same is sent again
-    - :example:
-      - DIA     RAD     B-PONG          01
-      - RAD     DIA     DIA-D           00 00 40 00 80
-  :recipients:
-    - GT    	01
-    - TV     	01
-    - RAD    	01
-    - RAD    	01
 
-0x05: # DIA-ERR-DEL / LCD-SET*
+0x05: # DIA-05 / LCD-SET*
   :properties:
-    :short_name: DIA-ERR-DEL
-    :long_name: Diagnostics Clear Error Memeory?
+    :short_name: DIA-05
+    :long_name: Diagnostics > Errors > Clear
   :klass: Base
   :schemas:
     - :gt
@@ -148,20 +115,10 @@
         - 0x41 and 0x42 may represent BMBT and RCM
         - when in service mode, only 0x41 is sent!
 
-  :meta:
-    - when radio clear error memory selected
-    - :example:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-    - another selection
-    - example1:
-      - DIA     RAD     DIA-ERR-DEL     --
-      - RAD     DIA     DIA-D           --
-
-0x06: # DIA-MEM-READ / LCD-REP*
+0x06: # DIA-06-MEM-R / LCD-REP*
   :properties:
-    :short_name: DIA-MEM-READ
-    :long_name: Diagnostics Read Memory
+    :short_name: DIA-06-MEM-R
+    :long_name: Diagnostics > Memory > Read
   :klass: Base
   :schemas:
     - :bmbt
@@ -170,17 +127,12 @@
     :properties:
       :short_name: LCD-REP
       :long_name: LCD Brightness
-  :meta:
-    - the read memory function in INPA?
-    - used to populate BMBT service mode displays
 
-0x07: # DIA-MEM-WRITE
+0x07: # DIA-07-MEM-W
   :properties:
-    :short_name: DIA-MEM-WRITE
-    :long_name: Diagnostics Write Memory
+    :short_name: DIA-07-MEM-W
+    :long_name: Diagnostics > Memory > WRITE
   :klass: Base
-  :meta:
-    - if above is correct, then presumably the write...
 
 0x08: # DIA-COD-READ
   :properties:
@@ -2779,10 +2731,6 @@
         0x08: CDs Ready
         0x09: CD Check
         0x0a: Eject!
-      :notes:
-        - 0x01 - Pause Playing (shit will legit mute if you tell the RAD you're paused)
-        - when CD play is first requested, CDC sends back 0x00
-        - it's not until it responds with 0x02 that the audio is routed
     :status:
       :type: :map
       :label: Playing
@@ -4144,39 +4092,39 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0x60: # EWS-ISN-60
+0x60: # DIA-60-EWS
   :properties:
-    :short_name: EWS-ISN?
-    :long_name: Diagnostics?
+    :short_name: DIA-60-EWS-ISN
+    :long_name: Diagnostics > EWS > Status > ISN PW
   :klass: Base
 
-0x61: # EHC-STAT?
+0x61: # EHC-61
   :properties:
-    :short_name: EHC-STAT?
+    :short_name: EHC-61
     :long_name: Unknown
   :klass: Base
 
-0x63: # DIA-63-IDENT
+0x63: # DIA-63
   :properties:
-    :short_name: DIA-63-IDENT?
-    :long_name: Diagnostics?
+    :short_name: DIA-63
+    :long_name: Diagnostics
   :klass: Base
 
-0x65: # EWS-KEY-65
+0x65: # DIA-65-EWS
   :properties:
-    :short_name: EWS-KEY
-    :long_name: Diagnostics?
+    :short_name: DIA-65-EWS-KEY
+    :long_name: Diagnostics > EWS > Status > Key Data
   :klass: Base
 
-0x69: # EWS-COD-69
+0x69: # DIA-69-EWS
   :properties:
-    :short_name: EWS-COD?
-    :long_name: Diagnostics?
+    :short_name: DIA-69-EWS
+    :long_name: Diagnostics > EWS > Coding > Vehicle Ident Number
   :klass: Base
 
-0x6B: # EWS-INT-6B
+0x6B: # DIA-6B-EWS
   :properties:
-    :short_name: EWS-INT
+    :short_name: DIA-6B-EWS
     :long_name: EWS Internal State
   :klass: Base
 
