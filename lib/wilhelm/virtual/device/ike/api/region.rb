@@ -15,7 +15,7 @@ module Wilhelm
             end
 
             def region!(b1 = 0x01, b2 = 0x04, b3 = 0x00, b4 = 0x03)
-              region(b1: b1, b2: b2, b3: b3, b4: b4)
+              region(to: :gt, b1: b1, b2: b2, b3: b3, b4: b4)
             end
           end
         end

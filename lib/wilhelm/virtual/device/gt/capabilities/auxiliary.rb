@@ -12,6 +12,11 @@ module Wilhelm
           module AuxiliaryVentilation
             include Direct
             include Timer
+
+            # Aux. Status 0x15
+            def auxiliary?
+              obc_bool(field: 0x1b, control: 0x02)
+            end
           end
         end
       end

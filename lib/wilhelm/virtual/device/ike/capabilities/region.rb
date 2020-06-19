@@ -10,6 +10,8 @@ module Wilhelm
             include API
             include Helpers::Data
 
+            CLUSTER_HIGH        = 0b0000_0000
+
             # :lang
             LANG_DE             = 0b000_0000
             LANG_GB             = 0b000_0001
@@ -41,34 +43,42 @@ module Wilhelm
             ARRIVAL_12H         = 0b1000_0000
 
             # :b3
+            # CONSUMPTION_1 0b0000_0011
             CONSUMP_1_L_100     = 0b0000_0000
             CONSUMP_1_MPG_UK    = 0b0000_0001
             CONSUMP_1_MPG_US    = 0b0000_0010
             CONSUMP_1_KM_L      = 0b0000_0011
 
+            # CONSUMPTION_2 0b0000_1100
             CONSUMP_2_L_100     = 0b0000_0000
             CONSUMP_2_MPG_UK    = 0b0000_0100
             CONSUMP_2_MPG_US    = 0b0000_1000
             CONSUMP_2_KM_L      = 0b0000_1100
 
+            RANGE_KM            = 0b0000_0000
             RANGE_MLS           = 0b0001_0000
+
+            TIMER_1_24H         = 0b0000_0000
             TIMER_1_12H         = 0b0010_0000
+
+            TIMER_2_24H         = 0b0000_0000
             TIMER_2_12H         = 0b0100_0000
-            # NA                = 0b1000_0000
 
             # Byte 4
-            AUX_HEAT            = 0b0000_0001
-            AUX_VENT            = 0b0000_0010
-            TEMP_GONG           = 0b0000_0100
-            DIST_MLS            = 0b0000_1000
+            AUX_HEATING         = 0b0000_0001
+            AUX_VENTILATION     = 0b0000_0010
+            MOTOR_DIESEL        = 0b0000_1000
 
-            # NA                = 0b0001_0000
-            # NA                = 0b0010_0000
-            AUX_OP_NONE_OLD     = 0b0100_0000
-            # NA                = 0b1000_0000
+            RCC_TIME            = 0b0001_0000
+            BMBT_POST_PU96      = 0b0100_0000
 
-            def aux_test
-              region!(0x01, 0x85, 0x60, 0x42)
+            def aux_equip
+              region!(
+                CLUSTER_HIGH | LANG_GB,
+                TIME_24H | TEMP_C | AVG_SPEED_KMH | LIMIT_KMH | DISTANCE_KM | ARRIVAL_24H,
+                CONSUMP_1_L_100 | CONSUMP_2_L_100 | RANGE_KM | TIMER_1_24H | TIMER_2_24H,
+                AUX_HEATING | AUX_VENTILATION | BMBT_POST_PU96
+              )
             end
           end
         end

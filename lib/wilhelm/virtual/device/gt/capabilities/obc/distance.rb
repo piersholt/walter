@@ -13,7 +13,7 @@ module Wilhelm
 
               MOD_PROG = 'GT::OBC::Limit'.freeze
               NUMBER_KLASS = Integer
-              VALID_NUMBERS = (0..999)
+              VALID_NUMBERS = (0..9999)
 
               # Distance 0x07 Request draw OBC
               def distance?

@@ -16,6 +16,10 @@ module Wilhelm
               try(from, to, ANZV_VAR, arguments)
             end
 
+            def anzv_var!(field, chars)
+              anzv_var(field: field, ike: 0x00, chars: chars.bytes)
+            end
+
             # 0x2a ANZV-BOOL-IKE
             def anzv_bool(from: :ike, to: :anzv, **arguments)
               try(from, to, ANZV_BOOL, arguments)
