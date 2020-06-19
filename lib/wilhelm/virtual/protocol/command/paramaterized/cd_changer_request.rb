@@ -114,17 +114,18 @@ module Wilhelm
 
 
           def modes
-            MODE_MAP.vaues
+            MODE_MAP.values
           end
 
           def mode?
-            case mode.value
+            case mode.value.first
             when 0x00
               :forward
             when 0x01
               :backward
             else
-              raise StandardError, "Unknown mode value?! #{mode.value}"
+              :cunt
+              # raise StandardError, "Unknown mode value?! #{mode.value} [#{mode.value.class}]"
             end
           end
         end

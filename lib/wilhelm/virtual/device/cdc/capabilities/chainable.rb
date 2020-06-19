@@ -12,57 +12,57 @@ module Wilhelm
             # CONTROL ---------------------------------------------------------------
 
             def stopped
-              state!(control: CONTROL[:stopped])
+              state!(control: ARG_CONTROL[:stopped])
               self
             end
 
             def playing_new
-              state!(control: CONTROL[:playing_new])
+              state!(control: ARG_CONTROL[:playing_new])
               self
             end
 
             def playing
-              state!(control: CONTROL[:playing])
+              state!(control: ARG_CONTROL[:playing])
               self
             end
 
             def fwd
-              state!(control: CONTROL[:fwd])
+              state!(control: ARG_CONTROL[:fwd])
               self
             end
 
             def rwd
-              state!(control: CONTROL[:rwd])
+              state!(control: ARG_CONTROL[:rwd])
               self
             end
 
             def next
-              state!(control: CONTROL[:next])
+              state!(control: ARG_CONTROL[:next])
               self
             end
 
             def previous
-              state!(control: CONTROL[:previous])
+              state!(control: ARG_CONTROL[:previous])
               self
             end
 
             def pending
-              state!(control: CONTROL[:pending])
+              state!(control: ARG_CONTROL[:pending])
               self
             end
 
             def ready
-              state!(control: CONTROL[:ready])
+              state!(control: ARG_CONTROL[:ready])
               self
             end
 
             def check
-              state!(control: CONTROL[:check])
+              state!(control: ARG_CONTROL[:check])
               self
             end
 
             def eject
-              state!(control: CONTROL[:eject])
+              state!(control: ARG_CONTROL[:eject])
               self
             end
 

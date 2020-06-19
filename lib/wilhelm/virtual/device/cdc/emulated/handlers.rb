@@ -39,14 +39,14 @@ module Wilhelm
                 stop!
               when :seek
                 LOGGER.debug(name) { "=> :seek!" }
-                handle_seek(request_mode: command.mode.value)
+                handle_seek(request_mode: command.mode.value.first)
                 play!
               when :scan
                 LOGGER.debug(name) { "=> :scan!" }
-                handle_scan(request_mode: command.mode.value)
+                handle_scan(request_mode: command.mode.value.first)
               when :change_disc
                 LOGGER.debug(name) { "=> :change_disc!" }
-                handle_change_disc(request_mode: command.mode.value)
+                handle_change_disc(request_mode: command.mode.value.first)
               when :change_track
                 LOGGER.debug(name) { "=> :change_track!" }
                 handle_change_track(request_mode: command)
@@ -101,17 +101,17 @@ module Wilhelm
               active
               LOGGER.debug(ident) { "Active => #{mapped}" }
               case current_control
-              when CONTROL[:fwd]
+              when ARG_CONTROL[:fwd]
                 track(next_track) if too_short_to_be_scan?
-              when CONTROL[:rwd]
+              when ARG_CONTROL[:rwd]
                 track(previous_track)  if too_short_to_be_scan?
-              when CONTROL[:off]
+              when ARG_CONTROL[:off]
                 state!(cd: 0, track: 0)
-              when CONTROL[:playing]
+              when ARG_CONTROL[:playing]
                 cd(current_cd)
                 track(current_track)
                 LOGGER.debug(ident) { "CD & Track => #{mapped}" }
-              when CONTROL[:playing_new]
+              when ARG_CONTROL[:playing_new]
                 cd(current_cd)
                 track(current_track)
                 LOGGER.debug(ident) { "CD & Track => #{mapped}" }
@@ -201,7 +201,7 @@ module Wilhelm
 
               stopped
               active
-              cd(1)
+              cd(requested_disc)
               track(1)
             end
           end

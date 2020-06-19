@@ -22,7 +22,7 @@ module Wilhelm
             CONTROL_CHECK    = 0x09
             CONTROL_EJECT    = 0x0a
 
-            CONTROL = {
+            ARG_CONTROL = {
               stopped: CONTROL_STOPPED,
               playing_new: CONTROL_PLAYING_NEW,
               playing: CONTROL_PLAYING,

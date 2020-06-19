@@ -12,10 +12,10 @@ module Wilhelm
             include Chainable
 
             DEFAULT_STATE = {
-              control: CONTROL[:stopped],
+              control: ARG_CONTROL[:stopped],
               status: STATUS[:idle],
               magazine: MAGAZINE[:ok],
-              loader: LOADER_ONE,
+              loader: LOADER_SIX,
               cd: 1,
               track: 1,
               b4: 0
