@@ -4568,20 +4568,17 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0xA0: # DIA-A0
+0xA0: # DIA-A0-OKAY
   :properties:
-    :short_name: DIA-A0
-    :long_name: Diagnostics Data
+    :short_name: DIA-A0-OKAY
+    :long_name: Diagnostics / Job Result: OKAY
   :klass: Base
 
-0xA1: # DIA-A1
+0xA1: # DIA-A1-BUSY
   :properties:
-    :short_name: DIA-A1
-    :long_name: Unknown
+    :short_name: DIA-A1-BUSY
+    :long_name: Diagnostics / Job Result: BUSY
   :klass: Base
-  :meta:
-    - 3B 03 3F A1 A6
-    - 7F 03 3F A1 E2
 
 # TELEMATICS ------------------------------------------------------------------
 
@@ -5037,19 +5034,17 @@
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
-0xB0: # DIA-B0 "ERROR ECU PARAMETER"
+0xB0: # DIA-B0 "ERROR_ECU_PARAMETER"
   :properties:
     :short_name: DIA-B0
-    :long_name: ERROR ECU PARAMETER
+    :long_name: Diagnostics / Job Result: ERROR_ECU_PARAMETER
   :klass: Base
 
-0xB1: # DIA-B1
+0xB1: # DIA-B1 "ERROR_ECU_FUNCTION"
   :properties:
     :short_name: DIA-B1
-    :long_name: Unknown
+    :long_name: Diagnostics / Job Result: ERROR_ECU_FUNCTION
   :klass: Base
-  :meta:
-    - returned by MFL when requesting possible out of range addresses
 
 0xFF: # DIA-FF "ERROR ECU NACK"
   :properties:
