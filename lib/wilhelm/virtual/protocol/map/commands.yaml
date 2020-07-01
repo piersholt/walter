@@ -4571,13 +4571,13 @@
 0xA0: # DIA-A0-OKAY
   :properties:
     :short_name: DIA-A0-OKAY
-    :long_name: Diagnostics / Job Result: OKAY
+    :long_name: "Diagnostics / Job Result: OKAY"
   :klass: Base
 
 0xA1: # DIA-A1-BUSY
   :properties:
     :short_name: DIA-A1-BUSY
-    :long_name: Diagnostics / Job Result: BUSY
+    :long_name: "Diagnostics / Job Result: BUSY"
   :klass: Base
 
 # TELEMATICS ------------------------------------------------------------------
@@ -5037,13 +5037,13 @@
 0xB0: # DIA-B0 "ERROR_ECU_PARAMETER"
   :properties:
     :short_name: DIA-B0
-    :long_name: Diagnostics / Job Result: ERROR_ECU_PARAMETER
+    :long_name: "Diagnostics / Job Result: ERROR_ECU_PARAMETER"
   :klass: Base
 
 0xB1: # DIA-B1 "ERROR_ECU_FUNCTION"
   :properties:
     :short_name: DIA-B1
-    :long_name: Diagnostics / Job Result: ERROR_ECU_FUNCTION
+    :long_name: "Diagnostics / Job Result: ERROR_ECU_FUNCTION"
   :klass: Base
 
 0xFF: # DIA-FF "ERROR ECU NACK"
