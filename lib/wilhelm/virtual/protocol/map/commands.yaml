@@ -73,7 +73,7 @@
 
         # Only messages greater than 0x40
         # 7f:       11 (all to BF)
-        0b1100_0001: 'Navi. Computer -> BF [Announce]'
+        0b1100_0001: 'Navi. (BMW Assist) -> BF [Announce]'
       :map:
         0b0000_0000: :reply
         0b0000_0001: :announce
@@ -83,6 +83,7 @@
         0b0011_0001: :bmbt_wide_announce
         0b0100_0000: :nav_gt_reply
         0b0100_0001: :nav_gt_announce
+        0b1100_0001: :nav_bmw_assist
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
