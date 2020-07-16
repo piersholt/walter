@@ -325,10 +325,16 @@
           :states:
             0: :inactive
             1: :on
+    :opts:
+      :type: :data
   :index:
     :s1: 0
     :s2: 1
     :s3: 2
+    :opts: !ruby/range
+            begin: 3
+            end: -1
+            excl: false
 
 0x14: # REGION? / *REGION-GT? / *REGION-CCM?
   :schemas:
@@ -2589,38 +2595,40 @@
         0x7_0: (Select) [C23] D
 
         # TONE
-        0x8_0: (Tone) EQ. Set
-        0x8_1: (Tone) EQ. Set
-        0x8_2: (Tone) EQ. Set
-        0x8_3: (Tone) EQ. Set
-        0x8_4: (Tone) EQ. Set
-        0x8_5: (Tone) EQ. Set
-        0x8_6: (Tone) EQ. Set
-        0x8_7: (Tone) EQ. Set
-        0x8_8: (Tone) EQ. Set
-        0x8_9: (Tone) EQ. Set
-        0x8_a: (Tone) EQ. Set
-        0x8_b: (Tone) EQ. Set
-        0x8_c: (Tone) EQ. Set
-        0x8_d: (Tone) EQ. Set
-        0x8_e: (Tone) EQ. Set
-        0x8_f: (Tone) EQ. Set
-        0x9_0: (Tone) EQ. Set
-        0x9_1: (Tone) EQ. Set
-        0x9_2: (Tone) EQ. Set
-        0x9_3: (Tone) EQ. Set
-        0x9_4: (Tone) EQ. Set
-        0x9_5: (Tone) EQ. Set
-        0x9_6: (Tone) EQ. Set
-        0x9_7: (Tone) EQ. Set
-        0x9_8: (Tone) EQ. Set
-        0x9_9: (Tone) EQ. Set
-        0x9_a: (Tone) EQ. Set
-        0x9_b: (Tone) EQ. Set
-        0x9_c: (Tone) EQ. Set
-        0x9_d: (Tone) EQ. Set
-        0x9_e: (Tone) EQ. Set
-        0x9_f: (Tone) EQ. Set
+        # 68 07 3B 37 8C 09 03 12 F7
+        # 68 07 3B 37 86 0C 02 1B F0
+        0b100_0_0000: (Tone) EQ. Set
+        0b100_0_0001: (Tone) EQ. Set
+        0b100_0_0010: (Tone) EQ. Set
+        0b100_0_0011: (Tone) EQ. Set
+        0b100_0_0100: (Tone) EQ. Set
+        0b100_0_0101: (Tone) EQ. Set
+        0b100_0_0110: (Tone) EQ. Set
+        0b100_0_0111: (Tone) EQ. Set
+        0b100_0_1000: (Tone) EQ. Set
+        0b100_0_1001: (Tone) EQ. Set
+        0b100_0_1010: (Tone) EQ. Set
+        0b100_0_1011: (Tone) EQ. Set
+        0b100_0_1100: (Tone) EQ. Set
+        0b100_0_1101: (Tone) EQ. Set
+        0b100_0_1110: (Tone) EQ. Set
+        0b100_0_1111: (Tone) EQ. Set
+        0b100_1_0000: (Tone) EQ. Set
+        0b100_1_0001: (Tone) EQ. Set
+        0b100_1_0010: (Tone) EQ. Set
+        0b100_1_0011: (Tone) EQ. Set
+        0b100_1_0100: (Tone) EQ. Set
+        0b100_1_0101: (Tone) EQ. Set
+        0b100_1_0110: (Tone) EQ. Set
+        0b100_1_0111: (Tone) EQ. Set
+        0b100_1_1000: (Tone) EQ. Set
+        0b100_1_1001: (Tone) EQ. Set
+        0b100_1_1010: (Tone) EQ. Set
+        0b100_1_1011: (Tone) EQ. Set
+        0b100_1_1100: (Tone) EQ. Set
+        0b100_1_1101: (Tone) EQ. Set
+        0b100_1_1110: (Tone) EQ. Set
+        0b100_1_1111: (Tone) EQ. Set
 
         0xc_0: (Tone) EQ. Bass
         0xd_0: (Tone) EQ. Treble
