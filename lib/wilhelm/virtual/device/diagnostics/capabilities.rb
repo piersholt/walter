@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'capabilities/bmbt'
+require_relative 'capabilities/ihka'
 require_relative 'capabilities/lcm'
 require_relative 'capabilities/gt'
 require_relative 'capabilities/radio'
@@ -13,6 +14,7 @@ module Wilhelm
         # Device::Diagnostics::Capabilities
         module Capabilities
           include BMBT
+          include IHKA
           include LCM
           include GT
           include Radio
