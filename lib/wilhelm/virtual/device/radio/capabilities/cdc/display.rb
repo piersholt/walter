@@ -14,7 +14,7 @@ module Wilhelm
               # rad  gt  23  C5 20  "CD 1-01  >>",
               def fast_forward(
                 to: :gt,
-                chars: DEFAULT_FAST_FORWARD
+                chars: DEFAULT_FF
               )
                 draw_23(
                   to:     to,
@@ -29,7 +29,7 @@ module Wilhelm
               # rad  gt  23  C6 20  "CD 1-01 <<R",
               def rewind(
                 to: :gt,
-                chars: DEFAULT_REWIND
+                chars: DEFAULT_RW
               )
                 draw_23(
                   to: to,
