@@ -76,6 +76,12 @@ module Wilhelm
       SWITCH_C        = "\u00b0C"
       SWITCH_F        = "\u00b0F"
 
+      SWITCH_NFI      = 'NFI'
+      SWITCH_BALANCE  = 'Balance'
+      SWITCH_BASS     = 'Bass'
+      SWITCH_FADER    = 'Fader'
+      SWITCH_TREBLE   = 'Treble'
+
       SWITCH_STATE_MAP = {
         off:          [:as_normal, SWITCH_OFF],
         on:           [:as_green,  SWITCH_ON],
@@ -123,7 +129,12 @@ module Wilhelm
         l_100:        [:as_green, SWITCH_L_100],
         mpg_uk:       [:as_yellow, SWITCH_MPG_UK],
         mpg_us:       [:as_yellow, SWITCH_MPG_US],
-        km_l:         [:as_green, SWITCH_KM_L]
+        km_l:         [:as_green, SWITCH_KM_L],
+        balance:      [:as_blue,   SWITCH_BALANCE],
+        bass:         [:as_blue,   SWITCH_BASS],
+        fader:        [:as_blue,   SWITCH_FADER],
+        treble:       [:as_blue,   SWITCH_TREBLE],
+        nfi:          [:as_yellow, SWITCH_NFI]
       }.freeze
 
       LIGHT_GREEN  = 92

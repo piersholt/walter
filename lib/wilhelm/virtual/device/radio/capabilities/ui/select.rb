@@ -11,36 +11,40 @@ module Wilhelm
               include Constants
               include API
 
+              # BM53
+
               def select_a
-                rad_37(mode: SELECT_OPTION_1 | SELECT_BM53 | SELECT_RADIO | SELECT_HIGHLIGHT)
+                rad_37(mode: SELECT_BM53 | SELECT_A | SOURCE_RADIO | SELECT_HIGHLIGHT)
               end
 
               def select_b
-                rad_37(mode: SELECT_OPTION_2 | SELECT_BM53 | SELECT_RADIO | SELECT_HIGHLIGHT)
+                rad_37(mode: SELECT_BM53 | SELECT_B | SOURCE_RADIO | SELECT_HIGHLIGHT)
               end
 
               def select_c
-                rad_37(mode: SELECT_OPTION_3 | SELECT_BM53 | SELECT_RADIO | SELECT_HIGHLIGHT)
+                rad_37(mode: SELECT_BM53 | SELECT_C | SOURCE_RADIO | SELECT_HIGHLIGHT)
               end
 
               def select_d
-                rad_37(mode: SELECT_OPTION_4 | SELECT_BM53 | SELECT_RADIO | SELECT_HIGHLIGHT)
+                rad_37(mode: SELECT_BM53 | SELECT_D | SOURCE_RADIO | SELECT_HIGHLIGHT)
               end
 
+              # C23 BM
+
               def select_c23_a
-                rad_37(mode: SELECT_OPTION_1 | SELECT_C23)
+                rad_37(mode: SELECT_C23 | SELECT_A)
               end
 
               def select_c23_b
-                rad_37(mode: SELECT_OPTION_2 | SELECT_C23)
+                rad_37(mode: SELECT_C23 | SELECT_B)
               end
 
               def select_c23_c
-                rad_37(mode: SELECT_OPTION_3 | SELECT_C23)
+                rad_37(mode: SELECT_C23 | SELECT_C)
               end
 
               def select_c23_d
-                rad_37(mode: SELECT_OPTION_4 | SELECT_C23)
+                rad_37(mode: SELECT_C23 | SELECT_D)
               end
             end
           end

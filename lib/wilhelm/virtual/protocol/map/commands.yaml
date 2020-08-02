@@ -2406,6 +2406,7 @@
             0b100: 2khz
             0b101: 5khz
             0b110: 12khz
+            0b111: Unknown
         :sign:
           :type: :map
           :label: '±'
@@ -2476,9 +2477,11 @@
           :label: 'Magnitude'
           :type: :integer
 
-0x36: # RAD-EQ
+0x36: # GT-EQ / DSP-EQ*
+  :schemas:
+    - :dsp
   :properties:
-    :short_name: RAD-EQ
+    :short_name: GT-EQ
     :long_name: Radio EQ Control
   :klass: Parameterized::Base
   :index:
@@ -2498,27 +2501,35 @@
                     excl: false
       :parameters:
         :parameter:
-          :type: :map
-          :map:
-            0b010: :balance
-            0b011: :bass
-            0b100: :fader
-            0b110: :treble
-          :dictionary:
-            0b010: Balance
-            0b011: Bass
-            0b100: Fader
-            0b110: Treble
+          :type: :switch
+          :label: Parameter
+          :states:
+            # Due to DSP... presumably additional bands
+            0b000: :nfi
+            0b001: :nfi
+            0b101: :nfi
+            0b111: :nfi
+
+            0b010: :balance   # 0x40..0x5f
+            0b011: :bass      # 0x60..0x7f
+            0b100: :fader     # 0x80..0x9f
+            0b110: :treble    # 0xc0..0xdf
         :sign:
           :type: :map
+          :label: Sign
           :map:
-            0b0: :negative
-            0b1: :positive
+            0b0: :positive
+            0b1: :negative
           :dictionary:
-            0b0: '-'
-            0b1: '+'
+            0b0: '+/Front/Left'
+            0b1: '-/Rear/Right'
         :magnitude:
           :type: :integer
+  :dsp:
+    :properties:
+      :short_name: DSP-EQ*
+      :long_name: Radio EQ Control
+    :klass: Base
 
 0x37: # RAD-ALT
   :properties:
@@ -2537,85 +2548,73 @@
       :dictionary:
         0x0_8: Emulate Mode Next
 
-        # SELECT BM53 (via soft Select)
+        # SELECT (BM53)
+        0b00_00_01_00: (Select) (Radio) "m" Manual Staion Choice
+        0b00_00_01_01: (Select) (Radio) "< m >" Manual Staion Choice [Selected]
+        0b00_01_01_00: (Select) (Radio) "SCAN" Station sample
+        0b00_01_01_01: (Select) (Radio) "SCAN" Station sample [Selected]
+        0b00_10_01_00: (Select) (Radio) "II" Search sensitive
+        0b00_10_01_01: (Select) (Radio) "< II >" Search sensitive [Selected]
+        0b00_11_01_00: (Select) (Radio) "I"
+        0b00_11_01_01: (Select) (Radio) "< I >" [Selected]
 
-        # [RADIO] [m]    Manual Staion Choice
-        # [CDC]   [<< >>] Fast forward/reverse
-        0b0000_01_00: (Select) "m" Manual Staion Choice
-        0b0000_01_01: (Select) "< m >" Manual Staion Choice [Selected]
-        0b0000_11_00: (Select) "<< >>" Fast forward/reverse
-        0b0000_11_01: (Select) "<< >>" Fast forward/reverse [Selected]
+        0b00_00_11_00: (Select) (CDC) "<< >>" Fast forward/reverse
+        0b00_00_11_01: (Select) (CDC) "<< >>" Fast forward/reverse [Selected]
+        0b00_01_11_00: (Select) (CDC) "SCAN" Track sample
+        0b00_01_11_01: (Select) (CDC) "SCAN" Track sample [Selected]
+        0b00_10_11_00: (Select) (CDC) "RANDOM" Random generator
+        0b00_10_11_01: (Select) (CDC) "RANDOM" Random generator [Selected]
+        0b00_11_11_00: (Select) (CDC) "< >"  Music Search
+        0b00_11_11_01: (Select) (CDC) "< >"  Music Search [Selected]
 
-        # [RADIO] [SCAN]   Station sample
-        # [CDC]   [SCAN] Track sample
-        0b0001_01_00: (Select) "SCAN" Station sample
-        0b0001_01_01: (Select) "SCAN" Station sample [Selected]
-        0b0001_11_00: (Select) "SCAN" Track sample
-        0b0001_11_01: (Select) "SCAN" Track sample [Selected]
-
-        # [RADIO] [II]   Search sensitive
-        # [CDC]   [RANDOM] Random generator
-        0b0010_01_00: (Select) "II" Search sensitive
-        0b0010_01_01: (Select) "< II >" Search sensitive [Selected]
-        0b0010_11_00: (Select) "RANDOM" Random generator
-        0b0010_11_01: (Select) "RANDOM" Random generator [Selected]
-
-        # [RADIO] [I]     Search non sensitive
-        # [CDC]   [< >]  Music Search
-        0b0011_01_00: (Select) "I"
-        0b0011_01_01: (Select) "< I >" [Selected]
-        0b0011_11_00: (Select) "< >"  Music Search
-        0b0011_11_01: (Select) "< >"  Music Search [Selected]
-
-        # SELECT C23
-
-        0b0100_00_00: (Select) [C23] A
-        0b0101_00_00: (Select) [C23] B
-        0b0110_00_00: (Select) [C23] C
-        0b0111_00_00: (Select) [C23] D
+        # SELECT (C23)
+        0b01_00_00_00: (Select) [C23] A
+        0b01_01_00_00: (Select) [C23] B
+        0b01_10_00_00: (Select) [C23] C
+        0b01_11_00_00: (Select) [C23] D
 
         # TONE
         # Set EQ bands parameters
         # 68 07 3B 37 8C 09 03 12 F7
         # 68 07 3B 37 86 0C 02 1B F0
-        0b100_0_0000: (Tone) EQ. Set
-        0b100_0_0001: (Tone) EQ. Set
-        0b100_0_0010: (Tone) EQ. Set
-        0b100_0_0011: (Tone) EQ. Set
-        0b100_0_0100: (Tone) EQ. Set
-        0b100_0_0101: (Tone) EQ. Set
-        0b100_0_0110: (Tone) EQ. Set
-        0b100_0_0111: (Tone) EQ. Set
-        0b100_0_1000: (Tone) EQ. Set
-        0b100_0_1001: (Tone) EQ. Set
-        0b100_0_1010: (Tone) EQ. Set
-        0b100_0_1011: (Tone) EQ. Set
-        0b100_0_1100: (Tone) EQ. Set
-        0b100_0_1101: (Tone) EQ. Set
-        0b100_0_1110: (Tone) EQ. Set
-        0b100_0_1111: (Tone) EQ. Set
-        0b100_1_0000: (Tone) EQ. Set
-        0b100_1_0001: (Tone) EQ. Set
-        0b100_1_0010: (Tone) EQ. Set
-        0b100_1_0011: (Tone) EQ. Set
-        0b100_1_0100: (Tone) EQ. Set
-        0b100_1_0101: (Tone) EQ. Set
-        0b100_1_0110: (Tone) EQ. Set
-        0b100_1_0111: (Tone) EQ. Set
-        0b100_1_1000: (Tone) EQ. Set
-        0b100_1_1001: (Tone) EQ. Set
-        0b100_1_1010: (Tone) EQ. Set
-        0b100_1_1011: (Tone) EQ. Set
-        0b100_1_1100: (Tone) EQ. Set
-        0b100_1_1101: (Tone) EQ. Set
-        0b100_1_1110: (Tone) EQ. Set
-        0b100_1_1111: (Tone) EQ. Set
+        0b10_0_00000: (Tone) Set
+        0b10_0_00001: (Tone) Set
+        0b10_0_00010: (Tone) Set
+        0b10_0_00011: (Tone) Set
+        0b10_0_00100: (Tone) Set
+        0b10_0_00101: (Tone) Set
+        0b10_0_00110: (Tone) Set
+        0b10_0_00111: (Tone) Set
+        0b10_0_01000: (Tone) Set
+        0b10_0_01001: (Tone) Set
+        0b10_0_01010: (Tone) Set
+        0b10_0_01011: (Tone) Set
+        0b10_0_01100: (Tone) Set
+        0b10_0_01101: (Tone) Set
+        0b10_0_01110: (Tone) Set
+        0b10_0_01111: (Tone) Set
+        0b10_0_10000: (Tone) Set
+        0b10_0_10001: (Tone) Set
+        0b10_0_10010: (Tone) Set
+        0b10_0_10011: (Tone) Set
+        0b10_0_10100: (Tone) Set
+        0b10_0_10101: (Tone) Set
+        0b10_0_10110: (Tone) Set
+        0b10_0_10111: (Tone) Set
+        0b10_0_11000: (Tone) Set
+        0b10_0_11001: (Tone) Set
+        0b10_0_11010: (Tone) Set
+        0b10_0_11011: (Tone) Set
+        0b10_0_11100: (Tone) Set
+        0b10_0_11101: (Tone) Set
+        0b10_0_11110: (Tone) Set
+        0b10_0_11111: (Tone) Set
 
         # Select band
-        0b1100_0000: (Tone) EQ. Bass
-        0b1101_0000: (Tone) EQ. Treble
-        0b1110_0000: (Tone) EQ. Fader
-        0b1111_0000: (Tone) EQ. Balance
+        0b11_00_0000: (Tone) Bass
+        0b11_01_0000: (Tone) Treble
+        0b11_10_0000: (Tone) Fader
+        0b11_11_0000: (Tone) Balance
 
         # Non-factory hybrid nonsense
         0x4_4: (Select) (C23) A
