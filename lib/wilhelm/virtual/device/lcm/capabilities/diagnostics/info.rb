@@ -10,6 +10,9 @@ module Wilhelm
             module Info
               include API
 
+              #             PN .. .. .. HW CI DI BI DATE  SU SW
+              # D0 0F 3F A0 06 90 84 65 02 18 13 00 07 01 09 42 73
+
               INFO_PART_NUMBER  = [0x06, 0x90, 0x84, 0x65].freeze
               INFO_HW_NUMBER    = [0x02].freeze
               INFO_CODING_INDEX = [0x18].freeze

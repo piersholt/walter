@@ -14,6 +14,10 @@ module Wilhelm
             include Activate
             include Coding
             include Memory
+
+            def lcm_status
+              api_status(from: :dia, to: :lcm, arguments: [])
+            end
           end
         end
       end
