@@ -16,6 +16,10 @@ module Wilhelm
             dh.f_c(*ids)
           end
 
+          def h_c(*ids)
+            dh.h_c(*ids)
+          end
+
           def ready
             dh.f_c(*READY)
           end
