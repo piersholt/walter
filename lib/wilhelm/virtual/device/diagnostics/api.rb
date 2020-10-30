@@ -17,6 +17,11 @@ module Wilhelm
           include Memory
           include Activate
           include Status
+
+          # 0x9f
+          def api_end(from: :dia, to:, arguments: [])
+            try(from, to, 0x9f, arguments)
+          end
         end
       end
     end
