@@ -13,92 +13,90 @@ module Wilhelm
           end
 
           def f_c(*ids)
-            dh.f_c(*ids)
+            dh.filter_commands(*ids)
           end
 
-          def h_c(*ids)
-            dh.h_c(*ids)
-          end
+          alias fc f_c
 
           def ready
-            dh.f_c(*READY)
+            dh.filter_commands(*READY)
           end
 
           def status
-            dh.f_c(*READY, *IGNITION)
+            dh.filter_commands(*READY, *IGNITION)
           end
 
           def input
-            dh.f_c(INPUT)
+            dh.filter_commands(INPUT)
           end
 
           def buttons
-            dh.f_c(*BUTTON)
+            dh.filter_commands(*BUTTON)
           end
 
           def volume
-            dh.f_c(*VOLUME)
+            dh.filter_commands(*VOLUME)
           end
 
           def menus
-            dh.f_c(*MENUS)
+            dh.filter_commands(*MENUS)
           end
 
           def diag
-            dh.f_c(*DIAGNOSTICS)
+            dh.filter_commands(*DIAGNOSTICS)
           end
 
           def obc
-            dh.f_c(*OBC)
+            dh.filter_commands(*OBC)
           end
 
           def ign
-            dh.f_c(*IGNITION)
+            dh.filter_commands(*IGNITION)
           end
 
           def tel
-            dh.f_c(*TELEPHONE)
+            dh.filter_commands(*TELEPHONE)
           end
 
           def odo
-            dh.f_c(*ODOMETER)
+            dh.filter_commands(*ODOMETER)
           end
 
           def si
-            dh.f_c(*VEHICLE)
+            dh.filter_commands(*VEHICLE)
           end
 
           alias vehicle si
           alias veh     si
 
           def ccm
-            dh.f_c(*CCM)
+            dh.filter_commands(*CCM)
           end
 
           def lamp
-            dh.f_c(*LAMP)
+            dh.filter_commands(*LAMP)
           end
 
           def gps
-            dh.f_c(*GPS)
+            dh.filter_commands(*GPS)
           end
 
           def temp
-            dh.f_c(*TEMPERATURE)
+            dh.filter_commands(*TEMPERATURE)
           end
 
           def country
-            dh.f_c(*COUNTRY)
+            dh.filter_commands(*COUNTRY)
           end
 
           alias region country
 
           def ui
-            dh.f_c(*UI)
+            dh.filter_commands(*UI)
           end
 
           def keyless
-            dh.f_c(*KEYLESS)
+            dh.filter_commands(*KEYLESS)
           end
         end
       end

@@ -8,14 +8,20 @@ module Wilhelm
         module Hide
           include Constants::Command::Groups
 
+          def h_c(*ids)
+            dh.hide_commands(*ids)
+          end
+
+          alias hc h_c
+
           def shutup!(set = NOISEY_NG)
-            dh.h_c_s(set)
+            dh.hide_command_set(set)
           end
 
           alias shh! shutup!
 
           def touch!
-            dh.h_c(*BUTTON)
+            dh.hide_commands(*BUTTON)
           end
         end
       end
