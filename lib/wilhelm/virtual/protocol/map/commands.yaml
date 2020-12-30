@@ -4289,7 +4289,6 @@
     - 08: high beams flash
     - 80: unknown
 
-
 0x77: # GM-RLS-77
   :properties:
     :short_name: GM-RLS-77
