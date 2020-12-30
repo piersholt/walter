@@ -58,7 +58,7 @@ module Wilhelm
           ].freeze
 
           KEYLESS = [
-            REMOTE, DOOR_LOCK, DOOR_REP
+            REMOTE, VIS_ACK, DOOR_REP
           ].freeze
 
           # 0x38 0x39

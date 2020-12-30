@@ -4276,15 +4276,19 @@
     :long_name: Unknown
   :klass: Base
 
-0x76: # GM-REMOTE2
+0x76: # VIS-ACK
   :properties:
-    :short_name: GM-REMOTE2
-    :long_name: Unknown
+    :short_name: VIS-ACK
+    :long_name: Visual Indicators (Central Locking, DWA)
   :klass: Base
   :meta:
-    - 02: during keyless operation (or holding keyless button)
-    - 00: operation done
-    - 82: occured after rain.. many things not working
+    - 00: off
+    - 01: hazard lights flash
+    - 02: turn signal flash
+    - 04: low beams flash
+    - 08: high beams flash
+    - 80: unknown
+
 
 0x77: # GM-RLS-77
   :properties:

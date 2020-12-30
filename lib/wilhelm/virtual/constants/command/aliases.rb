@@ -95,7 +95,7 @@ module Wilhelm
           KEY_REQ       = 0x73 # Request
           KEY_REP       = 0x74
 
-          DOOR_LOCK     = 0x76
+          VIS_ACK       = 0x76
 
           MEMORY        = 0x78
 
