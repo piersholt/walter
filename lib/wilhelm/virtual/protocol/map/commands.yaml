@@ -1356,14 +1356,28 @@
     - the value returned is the number of cells written
     - i.e. 3 writes with block, 1 write without block => 3
 
-0x23: # TXT-23 / RAD-23* / TEL-23*
+0x23: # TXT-23 / IKE-23* / RAD-23* / TEL-23*
   :properties:
     :short_name: TXT-23
     :long_name: Update Text Display (BMBT, IKE)
   :klass: Parameterized::Base
   :schemas:
+    - :ike
     - :tel
     - :rad
+  :parameters:
+    :gt:
+      :type: :map
+      :dictionary:
+        0x00: --
+    :ike:
+      :type: :map
+      :dictionary:
+        0x00: --
+        0x20: Set
+        0x30: Update
+    :chars:
+      :type: :chars
   :index:
     :gt: 0
     :ike: 1
@@ -1371,44 +1385,63 @@
               begin: 2
               end: -1
               excl: false
-  :parameters:
-    # NOTE: duplicate GT dictionary hash from 0x24!
-    :gt:
-      :type: :map
-      :dictionary:
-        0x01: (Settings) Time
-        0x02: (Settings) Date
-        0x03: (OBC) Temperature
-        0x04: (OBC) Consump. 1
-        0x05: (OBC) Consump. 2
-        0x06: (OBC) Range
-        0x07: (OBC) Distance
-        0x08: (OBC) Arrival
-        0x09: (OBC) Limit
-        0x0a: (OBC) Avg. Speed
-        0x0e: (OBC) Timer
-        0x1a: (OBC) Timer (Lap)
-        0x0b: PROG
-        0x0d: (Code) Code
-        0x16: (Code) Emergency Disarm
-        0x0f: (Aux.) Timer 1
-        0x10: (Aux.) Timer 2
-    :ike: &ike_options
-      :type: :map
-      :map:
-        0b0000_0000: :off
-        0b0001_0000: :overwrite
-        0b0010_0000: :flush
-        0b0011_0000: :replace
-        0b0110_0000: :block_clear
-      :dictionary:
-        0b0000_0000: --
-        0b0001_0000: Overwrite
-        0b0010_0000: Clear
-        0b0011_0000: Replace
-        0b0110_0000: Block+Clear
-    :chars:
-      :type: :chars
+  :ike: # IKE-23*
+    :properties:
+      :short_name: IKE-23*
+      :long_name: Update Text Display (BMBT, IKE)
+    :klass: Parameterized::Base
+    :index:
+      :gt: 0
+      :ike: 1
+      :chars: !ruby/range
+                begin: 2
+                end: -1
+                excl: false
+    :parameters:
+      :gt: &fields_ike
+        :type: :map
+        :dictionary:
+          # SETTINGS
+          0x01: (Settings) Time           # "17:27  "
+          0x02: (Settings) Date           # "22.07.2019"
+
+          # ON-BOARD COMPUTER
+          0x03: (OBC) Temperature         # "+14.5"
+          0x04: (OBC) Consump. 1          # "--.- L/100"
+          0x05: (OBC) Consump. 2          # "--.- L/100"
+          0x06: (OBC) Range               # " 59 MLS"
+          0x07: (OBC) Distance            # "   5 MLS"
+          0x08: (OBC) Arrival             # "17:39  "
+          0x09: (OBC) Limit               # "--- MPH "
+          0x0a: (OBC) Avg. Speed          # "--.- MPH "
+          0x0e: (OBC) Timer               # "13.0  SEC "
+          0x1a: (OBC) Timer (Lap)         # " 6.2  SEC "
+
+          0x0b: PROG                      # " 1  CONS1   " (MID)
+
+          # CODE
+          0x0d: (Code) Code               # 00 00 00 00 "☐☐☐☐"
+          0x16: (Code) Emergency Disarm   # Wait X minutes.
+
+          # AUX. HEAT/VENTILATION
+          0x0f: (Aux.) Timer 1            # " 1:33PM"
+          0x10: (Aux.) Timer 2            # "12:06AM"
+      :ike: &ike_options
+        :type: :map
+        :map:
+          0b0000_0000: :off
+          0b0001_0000: :overwrite
+          0b0010_0000: :flush
+          0b0011_0000: :replace
+          0b0110_0000: :block_clear
+        :dictionary:
+          0b0000_0000: --
+          0b0001_0000: Overwrite
+          0b0010_0000: Clear
+          0b0011_0000: Replace
+          0b0110_0000: Block+Clear
+      :chars:
+        :type: :chars
   :rad: # RAD-23*
     :klass: Parameterized::Base
     :properties:
@@ -1687,35 +1720,7 @@
       :short_name: ANZV-VAR-IKE*
       :long_name: OBC Display (IKE, GT)
     :parameters:
-      :field:
-        :type: :map
-        :dictionary:
-          # SETTINGS
-          0x01: (Settings) Time           # "17:27  "
-          0x02: (Settings) Date           # "22.07.2019"
-
-          # ON-BOARD COMPUTER
-          0x03: (OBC) Temperature    # "+14.5"
-          0x04: (OBC) Consump. 1     # "--.- L/100"
-          0x05: (OBC) Consump. 2     # "--.- L/100"
-          0x06: (OBC) Range          # " 59 MLS"
-          0x07: (OBC) Distance       # "   5 MLS"
-          0x08: (OBC) Arrival        # "17:39  "
-          0x09: (OBC) Limit          # "--- MPH "
-          0x0a: (OBC) Avg. Speed     # "--.- MPH "
-          0x0e: (OBC) Timer          # "13.0  SEC "
-          0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
-
-          0x0b: PROG                 # " 1  CONS1   " MID writes to 0x23 template
-
-          # CODE
-          0x0d: (Code) Code          # 00 00 00 00 "☐☐☐☐"
-          0x16: (Code) Emergency Disarm # Wait X minutes.
-
-          # AUX. HEAT/VENTILATION
-          0x0f: (Aux.) Timer 1       # " 1:33PM"
-          0x10: (Aux.) Timer 2       # "12:06AM"
-
+      :field: *fields_ike
       :ike:
         :type: :map
         :dictionary:
