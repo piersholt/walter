@@ -1224,15 +1224,19 @@
           0x80: 'Top 8'
           0xf0: 'SMS Index'
           0xf1: 'SMS Show'
+          # MID
+          0x20: 'Menu B [On Call?] (MID)' # TIMER, SMS
+          0x40: 'Menu A (MID)'            # DIAL, DIR., NOTE PAD, SOS
+          0x44: 'Dial/Note? (MID)'
       :m2:
         :type: :map
         :dictionary:
           0x00: --
-          0x01: Contact
+          0x01: Contact/Note (MID)
           0x02: Digit
           0x05: SOS
           0x07: Navigation
-          0x08: Info
+          0x08: Info/Directory (MID)      # MID 0x43 0x08 = Contact Name
           0x09: SMS/Telematics
       :m3:
         :type: :bit_array
