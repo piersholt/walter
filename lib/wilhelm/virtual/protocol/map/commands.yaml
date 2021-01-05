@@ -1706,7 +1706,7 @@
           0x0e: (OBC) Timer          # "13.0  SEC "
           0x1a: (OBC) Timer (Lap)    # " 6.2  SEC "
 
-          0x0d: PROG                 # " 1  CONS1   " (MID)
+          0x0b: PROG                 # " 1  CONS1   " MID writes to 0x23 template
 
           # CODE
           0x0d: (Code) Code          # 00 00 00 00 "☐☐☐☐"
