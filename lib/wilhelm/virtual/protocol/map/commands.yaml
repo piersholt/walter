@@ -223,11 +223,6 @@
     :short_name: SEN-REQ
     :long_name: IKE Sensor Status REQ
   :klass: Base
-  :meta:
-    :senders:
-      - CCM
-    :recipients:
-      - IKE
 
 0x13: # SEN
   :properties:
@@ -608,59 +603,6 @@
     :short_name: ODO-REQ
     :long_name: Odometer Request
   :klass: Base
-  :meta:
-    - from EWS 0x44
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
-    - 44 03 80 16 D1
 
 0x17: # ODO
   :properties:
@@ -692,11 +634,6 @@
     :speed: 0
     :rpm: 1
   :klass: Parameterized::Base
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - GLO-L (0xBF)
 
 0x19: # TEMP
   :schemas:
@@ -764,11 +701,6 @@
       :unknown:
         :type: :data
         :label: Unknown
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - GLO-L
 
 # CCM/HUD ---------------------------------------------------------------------
 
@@ -975,16 +907,6 @@
     :short_name: TEMP-REQ
     :long_name: Temperature Request
   :klass: Base
-  :meta:
-    - from IHKA
-    - 5B 03 80 1D C5
-    - 5B 03 80 1D C5
-    - 5B 03 80 1D C5
-    - 5B 03 80 1D C5
-    - 5B 03 80 1D C5
-    - from LCM
-    - D0 03 80 1D 4E
-    - D0 03 80 1D 4E
 
 # TIME ------------------------------------------------------------------------
 
@@ -1652,35 +1574,6 @@
       :ike: *ike_options
       :chars:
         :type: :chars
-  :meta:
-    :desc: used to updated display with media informtion upon change. Text displayed
-      is based upon the media mode (radio, tape, CDC).
-    :recipients:
-      0xFF: GLO-H
-      0x80: IKE
-      0x3B: GT
-    :notes:
-      - How you change the radio station affects what messages are sent
-      - Changing via MFL will send to GLO-H as the message is consumed by
-        multiple devices (GT and HUD set)
-      - Changing via BMBT will only send to GT as the IKE display is not
-        updated.
-      - When the change is made via BMBT the message will still contain the
-        sub command for the IKE but it will always be 0x20
-      - The text sub command contains control characters of 0x04, 0x03 etc,
-        but I'm not sure what their purpose is yet.
-      - i know the GT has multiple zones and it might denote the substrings
-        intended for each screen element
-    :examples:
-      - MFL (Next/Previous)
-      - display radio freuqnecy (with CLEAR display text being displayed)
-        - RAD	GLO-H	23	40 20	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
-      - update radio freuqnecy (with EXISITING text being displayed)
-        - RAD	GLO-H	23	40 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04
-      - update radio frequency updaed \'ST\'
-        - RAD	GLO-H	23	50 30	07 20 2D 35 2D 20 08 46 4D 20 03 31 30 35 2E 31 04 20 53 54
-      - clear IKE display
-      - RAD	IKE	  23	50 20
 
 # ANZV ------------------------------------------------------------------------
 
@@ -1803,12 +1696,6 @@
         # 0xB7 = 2 bars
         # 0x5F = 1 bar
         # 0xB8 = 0 bars
-  :meta:
-      :rad:
-        - RAD GLO-H TXT-1 Radio HUD "102.1   "
-        - this is when it's rapidly scrolling...
-          is the reduced chat array length because it's sneding so fast?
-          reduced traffic or because it's a partial update to the display?
 
 0x27: # 0x27
     :properties:
@@ -1895,13 +1782,6 @@
           :states:
             0: :inactive
             1: :on
-  :meta:
-    :senders:
-      - IKE
-    :recipients:
-      - ANZV
-    :length:
-      - always 2 bytes
 
 # ANZV (TELEPHONE) ------------------------------------------------------------
 
@@ -3160,11 +3040,6 @@
         :main_menu: 7
   :index:
     :config: 0
-  :meta:
-    - the source of this is GT module
-    - seemingly to tell the radio when and what to render
-    - used when audio disply is requested/falls back to
-    - used when switching back from TV?
 
 0x46: # UI-RAD
   :properties:
@@ -4108,22 +3983,6 @@
     :short_name: '58G-REQ'
     :long_name: Instrument Lighting
   :klass: Base
-  :meta:
-    :notes:
-      - always from IKE 0x80 to LCM 0xD0
-      - seems to preceed 0x5C
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
-      - IKE 03 LCM  5D 0E
-      - LCM 05 BF   5C FF 00 C9
 
 # DIAGNOSTICS -----------------------------------------------------------------
 
@@ -4952,18 +4811,6 @@
               0b111: 'H3/7'
       :chars:
         :type: :chars
-  :meta:
-    :notes:
-      - 540 RAD sending this to GT
-      - command 0x23 with gt argument of 0x60..0x7f must be used to change display layout to 'nav'
-    :examples:
-      - RAD GT	TXT? 	62 01 [7, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("☐                    ")
-      - RAD GT	TXT? 	62 01 [65, 32, 70, 77, 50, 32] ("A FM2 ")
-      - RAD GT	TXT? 	62 01 [66, 32, 80, 32, 49, 32] ("B P 1 ")
-      - RAD GT	TXT? 	62 01 [67, 32, 32, 32, 32, 32] ("C     ")
-      - RAD GT	TXT? 	62 01 [68, 32, 32, 32, 32, 32] ("D     ")
-      - RAD GT	TXT? 	62 01 [69, 32, 32, 82, 68, 83, 32, 32] ("E  RDS  ")
-      - RAD GT	TXT? 	62 01 [70, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] ("F                    ")
 
 0xA6: # TEL-ANZV-A6
   :properties:
