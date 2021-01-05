@@ -1388,6 +1388,7 @@
         0x0a: (OBC) Avg. Speed
         0x0e: (OBC) Timer
         0x1a: (OBC) Timer (Lap)
+        0x0b: PROG
         0x0d: (Code) Code
         0x16: (Code) Emergency Disarm
         0x0f: (Aux.) Timer 1
@@ -1399,11 +1400,13 @@
         0b0001_0000: :overwrite
         0b0010_0000: :flush
         0b0011_0000: :replace
+        0b0110_0000: :block_clear
       :dictionary:
         0b0000_0000: --
         0b0001_0000: Overwrite
-        0b0010_0000: Reset
+        0b0010_0000: Clear
         0b0011_0000: Replace
+        0b0110_0000: Block+Clear
     :chars:
       :type: :chars
   :rad: # RAD-23*
@@ -1540,6 +1543,7 @@
           # To have the 'Track' layout applied, the below format must be used
           # otherwise the zone defaults to 11 characters without a layout.
           # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
+          0xc_0: (CD) MID
           0xc_1: (CD) No Magazine
           0xc_2: (CD) No Disc
 
@@ -1592,17 +1596,26 @@
           0x6_1: '[Dial/Recent] Clear'
           0x6_3: '[Dial/Recent/Info] Number'
 
+          0x7_2: '[Note]'                           # MID
+
           0x8_0: '[Top 8] Clear'
           0x8_1: '[Top 8] Contact Name'
           0x8_2: '[Top 8] Contact Number'
+
+          0x9_0: '[Info] Title?'                    # MID
+          0x9_5: '[Info] (Call Time)'               # MID
+          0x9_6: '[Info] (Call Time) minutes'       # MID template for 0x24 writes
+          0x9_7: '[Info] (Call Time) seconds'       # MID template for 0x24 writes
 
           # TBC
           # This is used when there was no SIM card inserted.
           # It just had emergency button from memory
           0x0_0: '[Default] Title?'
-          0x9_0: '[Info] Title?'
+
           # This might have been "SOS: 112!"?
           0xc_0: '[SOS] Title?'
+
+          0xf_0: '[SMS] Default'                    # MID "SMS NOT SUPPORTED"
       :ike: *ike_options
       :chars:
         :type: :chars
