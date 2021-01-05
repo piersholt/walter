@@ -1778,10 +1778,12 @@
           0x81: (Incoming) Header 0x81
           0x82: (Incoming) Header 0x82
           0x91: (Info) Signal Strength
-          0x93: (Info) Call cost current
-          0x94: (Info) Call cost total
-          0x96: (Info) Call Time minutes
-          0x97: (Info) Call time seconds
+          # 0x92: (Info) Call Cost via 0x23?
+          0x93: (Info) [Call Cost] current
+          0x94: (Info) [Call Cost] total
+          # 0x95: (Info) Call Time "CALL TIME:" via 0x23
+          0x96: (Info) [Call Time] minutes
+          0x97: (Info) [Call Time] seconds
       :ike:
         :type: :map
         :dictionary:
