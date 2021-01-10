@@ -1421,7 +1421,6 @@
           0b0100_0010: (Analogue) [SCAN]    # Mode: SCAN
           0b0100_0011: (Analogue) [II]      # Mode: Search (Sensitive)
           0b0100_0100: (Analogue) [I]       # Mode: Search (Non Sensitive)
-          0b0100_0101: (Analogue) --
           0b0100_0110: (Analogue) [T]       # Traffic Reports
           0b0100_0111: (Analogue) [TP]      # Traffic Program
 
@@ -1429,11 +1428,9 @@
           0b0100_1010: (Analogue) [SCAN]  + [T] (D)
           0b0100_1011: (Analogue) [II]    + [T] (D)
           0b0100_1100: (Analogue) [I]     + [T] (D)
-          0b0100_1101: (Analogue) --      + [T] (D)
           0b0100_1110: (Analogue) [T] (C) + [T] (D)
           0b0100_1111: (Analogue) [TP]    + [T] (D)
 
-          # Field D
           0b0100_1000: (Analogue) [T]   (D)
           0b0101_0000: (Analogue) [ST]  (D)
           0b0101_1000: (Analogue) [T]   (D)
@@ -1442,7 +1439,6 @@
           0b0101_0010: (Analogue) [SCAN]
           0b0101_0011: (Analogue) [II]
           0b0101_0100: (Analogue) [I]
-          0b0101_0101: (Analogue) --
           0b0101_0110: (Analogue) [T]
           0b0101_0111: (Analogue) [TP]
 
@@ -1450,7 +1446,6 @@
           0b0101_1010: (Analogue) [SCAN]  + [T] (D)
           0b0101_1011: (Analogue) [II]    + [T] (D)
           0b0101_1100: (Analogue) [I]?    + [T] (D)
-          0b0101_1101: (Analogue) --      + [T] (D)
           0b0101_1110: (Analogue) [T]     + [T] (D)
           0b0101_1111: (Analogue) [TP]    + [T] (D)
 
@@ -1498,9 +1493,10 @@
           # To have the 'Track' layout applied, the below format must be used
           # otherwise the zone defaults to 11 characters without a layout.
           # Pattern = "CD [0-9]{1}-[a-zA-Z0-9]{2}"
-          0xc_0: (CD) MID
-          0xc_1: (CD) No Magazine
-          0xc_2: (CD) No Disc
+          0xc_0: (CD) Error         # "CD ERROR"
+          0xc_1: (CD) No Magazine   # "NO MAGAZINE"
+          0xc_2: (CD) No Disc       # "NO DISC"
+          0xc_3: (CD) CD Check      # "CD CHECK"
 
           0xc_5: (CD) [>>]
           0xc_6: (CD) [<<R]
