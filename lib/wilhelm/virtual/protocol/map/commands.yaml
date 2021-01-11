@@ -1424,6 +1424,8 @@
           0b0100_0110: (Analogue) [T]       # Traffic Reports
           0b0100_0111: (Analogue) [TP]      # Traffic Program
 
+          # Traffic 0b0100_1000
+          0b0100_1000: (Analogue)           [T] (D)
           0b0100_1001: (Analogue) [m]     + [T] (D)
           0b0100_1010: (Analogue) [SCAN]  + [T] (D)
           0b0100_1011: (Analogue) [II]    + [T] (D)
@@ -1431,10 +1433,8 @@
           0b0100_1110: (Analogue) [T] (C) + [T] (D)
           0b0100_1111: (Analogue) [TP]    + [T] (D)
 
-          0b0100_1000: (Analogue) [T]   (D)
+          # Stereo 0b0101_0000
           0b0101_0000: (Analogue) [ST]  (D)
-          0b0101_1000: (Analogue) [T]   (D)
-
           0b0101_0001: (Analogue) [m]
           0b0101_0010: (Analogue) [SCAN]
           0b0101_0011: (Analogue) [II]
@@ -1442,6 +1442,9 @@
           0b0101_0110: (Analogue) [T]
           0b0101_0111: (Analogue) [TP]
 
+          # Stereo + Traffic 0b0101_1000
+          # If [T] is traffic report.. I don't think ST and T is plausible
+          0b0101_1000: (Analogue) [T] (D)
           0b0101_1001: (Analogue) [m]     + [T] (D)
           0b0101_1010: (Analogue) [SCAN]  + [T] (D)
           0b0101_1011: (Analogue) [II]    + [T] (D)
