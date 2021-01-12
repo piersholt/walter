@@ -4162,14 +4162,55 @@
   :properties:
     :short_name: VIS-ACK
     :long_name: Visual Indicators (Central Locking, DWA)
-  :klass: Base
-  :meta:
-    - 00: off
-    - 01: hazard lights flash
-    - 02: turn signal flash
-    - 04: low beams flash
-    - 08: high beams flash
-    - 80: unknown
+  :klass: Parameterized::Base
+  :index:
+    :flash: 0
+  :parameters:
+    :flash:
+      :type: :bit_array
+      :index:
+        :unknown:     0 # 0b1000_0000
+        :high_beam:   4 # 0b0000_1000
+        :low_beam:    5 # 0b0000_0100
+        :turn_signal: 6 # 0b0000_0010
+        :hazard:      7 # 0b0000_0001
+      :parameters:
+        :hazard:
+          :type: :switch
+          :label: Hazard Lights
+          :states:
+            0: :off
+            1: :on
+        :turn_signal:
+          :type: :switch
+          :label: Turn Signals
+          :states:
+            0: :off
+            1: :on
+        :low_beam:
+          :type: :switch
+          :label: Low Beams
+          :states:
+            0: :off
+            1: :on
+        :low_beam:
+          :type: :switch
+          :label: Low Beams
+          :states:
+            0: :off
+            1: :on
+        :high_beam:
+          :type: :switch
+          :label: High Beams
+          :states:
+            0: :off
+            1: :on
+        :unknown:
+          :type: :switch
+          :label: Unknown
+          :states:
+            0: :off
+            1: :on
 
 0x77: # GM-RLS-77
   :properties:
