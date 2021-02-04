@@ -8,8 +8,6 @@ module Wilhelm
           module Service
             # Radio::Capabilities::Service::Constants
             module Constants
-              include Capabilities::Constants
-
               SERVICE_SERIAL_NO   = 0b0_0010 << 0  # 0x02
               SERVICE_SW_VER      = 0b0_0011 << 0  # 0x03
               SERVICE_GAL         = 0b0_0100 << 0  # 0x04

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# require_relative 'analogue/display'
+require_relative 'service/constants'
+require_relative 'service/display'
 
 module Wilhelm
   module Virtual
