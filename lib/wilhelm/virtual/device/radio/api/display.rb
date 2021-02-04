@@ -21,6 +21,16 @@ module Wilhelm
               draw_23(from: from, to: :gt, gt: gt, ike: ike, chars: chars)
             end
 
+            # 0x24
+            def draw_24(from: :rad, to: :gt, **arguments)
+              format_chars!(arguments)
+              try(from, to, ANZV_VAR, arguments)
+            end
+
+            def draw_24!(from = :rad, field = 0x00, ike = 0x20, chars)
+              draw_24(from: from, to: :gt, field: field, ike: ike, chars: chars)
+            end
+
             # 0x21
             def draw_21(from: :rad, to: :gt, **arguments)
               format_chars!(arguments)
