@@ -103,7 +103,7 @@ module Wilhelm
               )
                 draw_23(
                   to: to,
-                  gt: SOURCE_CDC | NO_MAGAZINE,
+                  gt: SOURCE_CDC | CDC_NO_MAGAZINE,
                   ike: 0x20,
                   chars: chars
                 )
@@ -132,18 +132,6 @@ module Wilhelm
                   gt: SOURCE_CDC | CDC_DISC_LOAD,
                   ike: 0x20,
                   chars: chars
-                )
-              end
-
-              # ------------------------------------------------------------
-
-              def cd_rds(bitmask = 0b0000_0000)
-                draw_21(
-                  to: :gt,
-                  layout: 0xc0,
-                  m2: bitmask,
-                  m3: 0x06,
-                  chars: "FM\x05AM\x05PTY\x05RDS\x05SC\x05MODE"
                 )
               end
             end

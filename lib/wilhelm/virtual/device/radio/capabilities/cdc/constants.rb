@@ -46,6 +46,17 @@ module Wilhelm
               DEFAULT_NO_MAGAZINE = 'NO MAGAZINE'
               DEFAULT_NO_DISC     = 'NO DISC'
               DEFAULT_DISC_LOAD   = 'CD 0-00'
+
+              # 0x38
+              CONTROL_STATUS        = 0x00
+              CONTROL_STOP          = 0x01
+              CONTROL_PLAY          = 0x03
+              CONTROL_SCAN          = 0x04  # RWD/FFD
+              CONTROL_SEEK          = 0x05  # Previous/Next
+              CONTROL_CHANGE_DISC   = 0x06
+              CONTROL_SCAN_MODE     = 0x07
+              CONTROL_RANDOM_MODE   = 0x08
+              CONTROL_CHANGE_TRACK  = 0x0A
             end
           end
         end

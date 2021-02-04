@@ -9,57 +9,43 @@ module Wilhelm
             # CD Changer Playback Control
             module Playback
               include API
-
-              # 0x00: Status!
-              # 0x01: Stop!
-              # 0x03: Play!
-              # 0x04: Scan! (RWD/FFD)
-              # 0x05: Seek! (Previous/Next)
-              # 0x06: Change Disc!
-              # 0x07: Scan Mode!
-              # 0x08: Random Mode!
-              # 0x0A: Change Track!
+              include Constants
 
               def status!
-                cd_changer_request(arguments: { control: 0x00, mode: 0x00 })
+                cd_changer_request(control: CONTROL_STATUS, mode: 0x00)
               end
 
               def stop!
-                cd_changer_request(arguments: { control: 0x01, mode: 0x00 })
+                cd_changer_request(control: CONTROL_STOP, mode: 0x00)
               end
 
               def play!
-                cd_changer_request(arguments: { control: 0x03, mode: 0x00 })
+                cd_changer_request(control: CONTROL_PLAY, mode: 0x00)
               end
 
-              # SCAN (FWD/RWD), SEEK (next, previous)
-
               def fwd!
-                cd_changer_request(arguments: { control: 0x04, mode: 0x00 })
+                cd_changer_request(control: CONTROL_SCAN, mode: 0x00)
                 Kernel.sleep(2)
                 play!
               end
 
-              # alt mode
               def rwd!
-                cd_changer_request(arguments: { control: 0x04, mode: 0x01 })
+                cd_changer_request(control: CONTROL_SCAN, mode: 0x01)
                 Kernel.sleep(2)
                 play!
               end
 
               def next!
-                cd_changer_request(arguments: { control: 0x05, mode: 0x00 })
+                cd_changer_request(control: CONTROL_SEEK, mode: 0x00)
               end
 
               def previous!
-                cd_changer_request(arguments: { control: 0x05, mode: 0x01 })
+                cd_changer_request(control: CONTROL_SEEK, mode: 0x01)
               end
 
               def change_disc!(disc)
-                cd_changer_request(arguments: { control: 0x06, mode: disc })
+                cd_changer_request(control: CONTROL_CHANGE_DISC, mode: disc)
               end
-
-              def track!; end
             end
           end
         end

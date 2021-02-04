@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'api/cdc'
 require_relative 'api/display'
 require_relative 'api/diagnostics'
 require_relative 'api/led'
@@ -14,17 +15,11 @@ module Wilhelm
         module API
           include Device::API::BaseAPI
           include Display
+          include CDC
           include LED
           include Diagnostics
           include TMC
           include UserInterface
-
-          # CD CHANGER
-
-          # 0x38
-          def cd_changer_request(from: :rad, to: :cdc, arguments:)
-            try(from, to, CDC_REQ, arguments)
-          end
         end
       end
     end
