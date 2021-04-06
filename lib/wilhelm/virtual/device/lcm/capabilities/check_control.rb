@@ -8,31 +8,7 @@ module Wilhelm
           # LCM::Capabilities::CheckControl
           module CheckControl
             include Helpers::Data
-
-            # Byte 1
-            # 0b0011_0000
-            CHEVRON     = 0b0010_0000 # enabled "chevron" flags
-            GONG        = 0b0001_0000 # enabled "gong" flags
-
-            # 0b0000_1111
-            UPDATE      = 0b0000_1000
-            Y           = 0b0000_0100
-            X           = 0b0000_0010
-            FAINT       = 0b0000_0001 # very faint if preceeded by 0
-            FLUSH       = 0b0000_0000
-
-            # Byte 2
-            # Gong  0b0001_1100
-            GONG_5      = 0b0001_0000
-            GONG_4      = 0b0000_1100
-            GONG_3      = 0b0000_1000
-            GONG_2      = 0b0000_0100
-            GONG_1      = 0b0000_0000
-
-            # Chevron 0b0000_0011
-            CHEV_BLINK  = 0b0000_0011
-            CHEV_ON     = 0b0000_0001
-            CHEV_OFF    = 0b0000_0000
+            include Constants
 
             def check(
               byte1,
@@ -40,6 +16,46 @@ module Wilhelm
               chars = generate_chars(5..20)
             )
               ccm(b1: byte1, b2: byte2, chars: chars)
+            end
+
+            def check_chars(nap = 3)
+              char_set = (0x00..0xff).to_a
+              until char_set.empty? do
+                char_array = char_set.slice!(0, 20)
+                char_array.fill(0x20, char_array.size, 4) if char_array.size < 20
+                check(0x37, 0x00, char_array)
+                sleep(nap)
+              end
+            end
+
+            def cc_ok
+              check(
+                CHEVRON | GONG | DISPLAY_Y | DISPLAY_UPDATE,
+                GONG_NONE | CHEV_OFF,
+                MSG_OK.bytes
+              )
+            end
+
+            def cc_clear
+              check(
+                CHEVRON | GONG | DISPLAY_OFF,
+                GONG_NONE | CHEV_OFF,
+                MSG_NIL.bytes
+              )
+            end
+
+            # MSG_ALL.shuffle.first.bytes
+            # generate_chars(1..20, 65..90)
+            def cc(
+              arg1 = CHEVRON | GONG,
+              arg2 = GONG_NONE | CHEV_OFF,
+              chars = generate_chars(21..21, 65..90)
+            )
+              check(
+                arg1,
+                arg2,
+                chars
+              )
             end
           end
         end

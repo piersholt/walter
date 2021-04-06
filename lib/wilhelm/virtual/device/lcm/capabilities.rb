@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'capabilities/constants'
+
 require_relative 'capabilities/check_control'
 require_relative 'capabilities/diagnostics'
 
