@@ -36,7 +36,7 @@ module Wilhelm
 
           TXT_MID       = 0x21
           GT_STATUS     = 0x22
-          TXT_GT       = 0x23
+          TXT_GT        = 0x23
           TXT_NAV       = 0xa5
 
           ANZV_VAR      = 0x24
@@ -62,7 +62,7 @@ module Wilhelm
 
           PROG          = 0x42
 
-          MENU_GT      = 0x45
+          MENU_GT       = 0x45
           MENU_RAD      = 0x46
 
           BMBT_I        = 0x47
@@ -74,7 +74,8 @@ module Wilhelm
           SRC_SND       = 0x4e
           SRC_GT        = 0x4f
 
-          CCM_END       = 0x51
+          CCM_REQ       = 0x50  # IKE to CCM if no 0x51 at KL-15
+          CCM_END       = 0x51  # CCM status.. announce at KL-15
           CCM_RLY       = 0x52
           IKE_BTN       = 0x57
 
@@ -85,21 +86,19 @@ module Wilhelm
           LAMP_REQ      = 0x5a
           LAMP_REP      = 0x5b
 
-          # 58G
-          CLUSTER_REP   = 0x5c
-          # 58G-REQ
-          CLUSTER_REQ   = 0x5d
+          CLUSTER_REP   = 0x5c  # 58G
+          CLUSTER_REQ   = 0x5d  # 58G-REQ
 
           REMOTE        = 0x72
 
-          KEY_REQ       = 0x73 # Request
+          KEY_REQ       = 0x73
           KEY_REP       = 0x74
 
           VIS_ACK       = 0x76
 
           MEMORY        = 0x78
 
-          DOOR_REQ      = 0x79 # Request
+          DOOR_REQ      = 0x79
           DOOR_REP      = 0x7a
 
           UTC           = 0x1f

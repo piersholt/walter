@@ -31,8 +31,13 @@ module Wilhelm
           DISPLAY = [TXT_MID, TXT_GT, ANZV_VAR, TXT_NAV, GT_STATUS].freeze
           # 0x1a, 0x51, 0x52, 0x57
           HUD = [TXT_CCM, HUD_STATUS, CCM_END, CCM_RLY].freeze
-          # 0x1a, 0x52
-          CCM = [TXT_CCM, CCM_RLY].freeze
+          # 0x1a, 0x1b, 0x50, 0x51, 0x52, 0x57
+          CCM = [
+            TXT_CCM, HUD_STATUS,
+            CCM_REQ, CCM_END,
+            CCM_RLY,
+            IKE_BTN
+          ].freeze
 
           # 0x1f 0xa2 0xa4
           GPS = [UTC, COORDINATES, ADDRESS].freeze
