@@ -36,6 +36,22 @@ module Wilhelm
               )
             end
 
+            def cc_recall
+              check(
+                RECALL,
+                GONG_NONE | CHEV_OFF,
+                MSG_ALL.shuffle.first.bytes
+              )
+            end
+
+            def cc_persist
+              check(
+                0x30,
+                GONG_NONE | CHEV_ON,
+                MSG_NIL.bytes
+              )
+            end
+
             def cc_clear
               check(
                 CHEVRON | GONG | DISPLAY_OFF,
