@@ -32,6 +32,7 @@ module Wilhelm
           mid: 'MID',
           nav: 'Navigation',
           rad: 'Radio',
+          rcc: 'RadioControlledClock',
           rcm: 'RCM',
           ses: 'SES',
           tcu: 'TCU',
