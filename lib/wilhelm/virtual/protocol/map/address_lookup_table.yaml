@@ -6,7 +6,7 @@
 
 0x18: :cdc      # CD Changer
 
-0x24: :tlm      # Trunk lid module [D-BUS]
+0x24: :hkm      # Trunk lid module
 0x28: :rcc      # Radio Clock (RCC) [E38]
 0x2e: :edc      # Electronic Damper Control (EDC)
 

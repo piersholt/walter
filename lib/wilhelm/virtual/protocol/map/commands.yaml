@@ -29,6 +29,12 @@
       :long_name: LCM VIN Request
     :klass: Base
     :meta:
+      ike:
+        0x01: aif_gwsz_lesen (mileage)
+        0x02: aif_fg_nr_lesen (VIN)
+        0x03: aif_sia_daten_lesen
+        0x04: aif_zentralcode_lesen (central code)
+        0x05: aif_datum_fz_lesen (veh. manu. date)
       lcm:
         0x00: SII-Data
         0x02: VIN
