@@ -4296,8 +4296,10 @@
       :index:
         # :unallocated: 0
         :lamp_interior: 1
-        :locked:        2
-        :unknown:       3
+        :central_locking: !ruby/range
+              begin:    2
+              end:      3
+              excl: false
         :door_left:     4
         :door_right:    5
         :door_pass:     6
@@ -4309,18 +4311,14 @@
           :states:
             0: :off
             1: :on
-        :locked:
-          :type: :switch
-          :label: 'Central Lock.'
-          :states:
-            0: :off
-            1: :on
-        :unknown:
-          :type: :switch
-          :label: 'Unknown'
-          :states:
-            0: :closed
-            1: :open
+        :central_locking:
+          :type: :map
+          :label: Central Locking
+          :dictionary:
+            0b00: NFI
+            0b01: Unlocked
+            0b10: Locked (Single)
+            0b11: Arrested (Double)
         :door_left:
           :type: :switch
           :label: 'Door Rear Left'
