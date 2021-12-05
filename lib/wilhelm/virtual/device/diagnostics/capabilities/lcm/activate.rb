@@ -18,6 +18,17 @@ module Wilhelm
               RIGHT = 0x40
               OFF = 0x00
 
+              DRLZ_LEFT   = 0x01
+              DRLZ_RIGHT  = 0x20
+
+              def drlz!
+                lcm(
+                  0x00, 0x00, 0x00, 0x00,
+                  0x00, DRLZ_LEFT, DRLZ_RIGHT, 0x00,
+                  0x00, 0x80, 0x80, 0x00
+                )
+              end
+
               def indicate!(mask = 0x00)
                 lcm(
                   0x00, 0x00, mask, 0x00,
