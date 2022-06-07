@@ -2181,6 +2181,7 @@
   :schemas:
     - :tel
     - :rad
+    - :dsp
   :properties:
     :short_name: VOL
     :long_name: Volume Control
@@ -2234,6 +2235,28 @@
     :properties:
       :short_name: VOL-RAD*
       :long_name: Radio Volume Control
+    :klass: Parameterized::Rotary
+    :index: *volume_index
+    :parameters:
+      :rotation:
+        :type: :bit_array
+        :index: *volume_rotation_index
+        :parameters:
+          :direction:
+            :type: :map
+            :label: Volume
+            :dictionary:
+              0: Down
+              1: Up
+            :map:
+              0: :vol_rad_down
+              1: :vol_rad_up
+          :steps:
+            :type: :integer
+  :dsp:
+    :properties:
+      :short_name: VOL-DSP*
+      :long_name: DSP Volume Control
     :klass: Parameterized::Rotary
     :index: *volume_index
     :parameters:
