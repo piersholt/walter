@@ -2281,7 +2281,7 @@
 0x34: # GT-DSP-34
   :properties:
     :short_name: GT-DSP-34
-    :long_name: DSP EQ. Button
+    :long_name: GT set/update DSP EQ parameters
   :klass: Parameterized::Base
   :index:
     :mode: 0
