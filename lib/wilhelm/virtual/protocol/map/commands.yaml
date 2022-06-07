@@ -2355,12 +2355,12 @@
     :long_name: DSP Reply?
   :klass: Base
 
-0x36: # GT-EQ / DSP-EQ*
+0x36: # EQ-GT-36 / RAD-DSP-36*
   :schemas:
     - :dsp
   :properties:
-    :short_name: GT-EQ
-    :long_name: Radio EQ Control
+    :short_name: EQ-GT-36
+    :long_name: Radio Set/Update GT EQ UI
   :klass: Parameterized::Base
   :index:
     :setting: 0
@@ -2399,8 +2399,8 @@
           :type: :integer
   :dsp:
     :properties:
-      :short_name: DSP-EQ*
-      :long_name: Radio DSP EQ Control
+      :short_name: RAD-DSP-36*
+      :long_name: Radio Set/Update DSP EQ parameters
     :klass: Parameterized::Base
     :index:
       :setting: 0
@@ -2422,27 +2422,15 @@
             :type: :map
             :label: Band
             :dictionary:
-              0b001: ???          # 0x20  30
-              0b101: ???          # 0xa0  AF, A1
-              0b111: ???          # 0xe0  E1
+              0b101: 5khz     # 0xa0  AF, AF, A1 (seen three times when RAD to DSP)
+              0b100: 2khz     # 0x80  80/81
+              0b010: 500hz    # 0x40  40/41
+              0b110: 12khz    # 0xc0  CC/C0
+              0b011: 1khz     # 0x60  7C/60
+              0b001: 200hz    # 0x20  30
+              0b111: ???      # 0xe0  E1
 
-              0b010: balance      # 0x40  40
-              0b011: bass         # 0x60  7C
-              0b100: fader        # 0x80  80
-              0b110: treble       # 0xc0  CC
-
-              0b000: ???          # 0x00  no data?
-            :map:
-              0b001: :unknown
-              0b101: :unknown
-              0b111: :unknown
-
-              0b010: :balance
-              0b011: :bass
-              0b100: :fader
-              0b110: :treble
-
-              0b000: :unknown
+              0b000: 80hz     # 0x00  no data?
           :sign:
             :type: :map
             :label: '±'
