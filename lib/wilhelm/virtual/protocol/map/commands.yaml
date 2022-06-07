@@ -2499,7 +2499,7 @@
               0b000: :unknown
           :sign:
             :type: :map
-            :label: Sign
+            :label: '±'
             :map:
               0b0: :positive
               0b1: :negative
@@ -2508,6 +2508,7 @@
               0b1: '-'
           :magnitude:
             :type: :integer
+            :label: 'Magnitude'
 
 0x37: # RAD-ALT
   :properties:
